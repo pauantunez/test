@@ -1,0 +1,441 @@
+import React from 'react';
+import { Link } from 'react-router-dom'
+import Button from '@mui/material/Button';
+import { styled } from '@mui/material/styles';
+import { withRouter } from "react-router";
+import axios from 'axios';
+import AppContext from '../AppContext'
+import Disclaimer from './disclaimer/disclaimer';
+import Liability from './liability/liability';
+import { withTranslation } from 'react-i18next';
+import i18n from 'i18next';
+import styles from '../styles/home.module.css';
+import 'rc-slider/assets/index.css';
+import {ReactComponent as CoinIcon} from '../assets/img/icons/coins.svg';
+import {ReactComponent as PVSunIcon} from '../assets/img/icons/pv_sun_small.svg';
+import {ReactComponent as ElectricitySunIcon} from '../assets/img/icons/electricity_sun_small.svg';
+import {ReactComponent as LightningSmallIcon} from '../assets/img/icons/lightning_small.svg';
+
+import PropTypes from 'prop-types';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+var productEntry;
+var entryParam;
+var selectedTheme;
+var btnColor;
+var themeFont;
+var labelFont;
+var handIcon;
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography component={'span'}>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
+
+
+
+class Welcome extends React.Component {
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      audio: "audiofile.mp3",
+      initialVolumeSet: false,
+      initialLoad: false,
+      backBtn: true,
+      fwdBtn: false,
+      selectedProduct: 0,
+      selectedTab: 0,
+      gainNode: {},
+      mediaSource: {},
+      audioCtx: {},
+      parNo: '44',
+      scenNo: '',
+    }
+  }
+
+  static contextType = AppContext;
+
+  componentWillMount() {
+
+    const { products, btnThemes, fonts } = this.context;
+    const productsProps = Object.getOwnPropertyNames(products);
+    var foundTheme = 0;
+
+    if(urlParams.get('theme')) {
+      entryParam = urlParams.get('theme');
+      //alert(entryParam)
+
+      for(let themes = 0; themes < productsProps.length; themes++) {
+
+        if(entryParam === productsProps[themes]) {
+          console.log(productsProps[themes])
+
+          require("../styles/"+productsProps[themes]+".css");
+          
+          selectedTheme = productsProps[themes];
+          btnColor = btnThemes[entryParam][0];
+          themeFont = fonts[entryParam][0];
+          labelFont = fonts[entryParam][1];
+          console.log(selectedTheme);
+
+          handIcon = require(`../assets/img/hand-pointing-arrows-${selectedTheme}.svg`);
+
+          foundTheme++;
+        } else {
+          require("ignore");
+          console.log("ignore:" + productsProps[themes])
+        }
+        
+      }
+
+      if(foundTheme === 0) {
+        require("../styles/"+productsProps[0]+".css");
+        selectedTheme = productsProps[0];
+        btnColor = btnThemes.bosch[0];
+        themeFont = fonts.bosch[0];
+        labelFont = fonts.bosch[1];
+        handIcon = require(`../assets/img/hand-pointing-arrows-${selectedTheme}.svg`);
+      }
+
+    } else {
+      require("../styles/"+productsProps[0]+".css");
+      selectedTheme = productsProps[0];
+      btnColor = btnThemes.bosch[0];
+      themeFont = fonts.bosch[0];
+      labelFont = fonts.bosch[1];
+      handIcon = require(`../assets/img/hand-pointing-arrows-${selectedTheme}.svg`);
+    }
+  }
+
+  componentWillReceiveProps = (nextProps, nextContext) => {
+
+    const { products, productSelected, navSteps, selectedTab, setSelectedTab, setNavDirection, stepperNavActive, setActiveView, setActiveStep, navDirection, setStepperNav, heatpumpAudio, activeView, activeStep, disableSlider } = this.context
+
+
+    //isEnd
+    if(nextContext.activeView == 0 && nextContext.selectedTab == 2) {
+      this.state.fwdBtn = true;
+      this.state.backBtn = false;
+    }
+    else if(nextContext.activeView == 0 && nextContext.selectedTab == 0) {
+      this.state.backBtn = true;
+      this.state.fwdBtn = false;
+    } else {
+      this.state.backBtn = false;
+      this.state.fwdBtn = false;
+    }
+
+    console.log(nextContext.navDirection)
+    //alert(nextContext.navDirection)
+
+
+  }
+
+  getEntryParameter = async() => {
+
+    const { setProduct } = this.context
+
+    if(urlParams.get('entry')) {
+      entryParam = urlParams.get('entry');
+
+      var productList = await i18n.t('products', {returnObjects:true});
+  
+      var item = await productList.filter(item=>item.slug.toLowerCase().includes(entryParam));
+
+      productEntry = await parseInt(item[0].menuId);
+
+      setProduct(productEntry);
+    
+    } else {
+      setProduct(0);
+    }
+  }
+
+  isTermsAccepted =() => {
+    const { acceptedTerms } = this.context
+
+    if(!acceptedTerms) {
+      //snackbar
+      this.setState({snackbar: true})
+    } else {
+      this.trackingCall()
+    }
+  }
+
+  trackingCall =() => {
+    const { userTracked, trackUser } = this.context
+
+    if(!userTracked) {
+      window.parent.postMessage({event: "HP-Soundtool", eventCategory: "ToolStart", eventAction: window.location.href},"*")
+      trackUser(true);
+
+      console.log(window.location.href)
+    }
+  }
+
+  handleChange =(e) => {
+    const { setProduct } = this.context
+
+    setProduct(e.target.value)
+  }
+
+  handleClose =() => {
+    this.setState({snackbar: false})
+  }
+
+  setTermsState =(e) => {
+    const { setTerms } = this.context
+
+    console.log(e)
+    setTerms(e)
+  }
+
+
+    async playHeatpumpAudio(view, volume, active, origin, menuProduct) {
+        
+      const { heatpumpAudio, products, viewLocation, setHeatpumpVolume, setActiveView, setViewLocation, setViewLocationPrevious } = this.context;
+
+      console.log(this.state.selectedProduct);
+      setHeatpumpVolume(volume);
+
+      if(!origin) {
+        setViewLocationPrevious(viewLocation);
+        setViewLocation(view);
+        setActiveView(active);
+      }
+
+      var heatpump = document.getElementById("heatpumpAudioContainer");
+
+      if(origin) {
+        if(heatpump.duration > 0 && !heatpump.paused) {
+          await heatpump.pause();
+        }
+      }
+        
+        heatpump.src = require(`../assets/audio/${ products[selectedTheme][active].audio[0] }`)
+
+        console.log(heatpump);
+        heatpump.volume = volume;
+
+        if(heatpumpAudio) {
+          heatpump.play();
+        }
+
+      if(!this.state.initialLoad) {
+        this.setState({initialLoad: true})
+      }
+
+    }
+
+
+
+isBeginning =() => {
+  const { selectedTab, activeView } = this.context
+
+  if(activeView == 1 && selectedTab == 0) {
+    return true
+  }
+}
+
+isEnd =() => {
+  const { selectedTab, activeView } = this.context
+
+  //alert(selectedTab)
+
+  if(activeView == 0 && selectedTab == 2) {
+    return true
+  }
+}
+
+getResult =() => { 
+  axios.get(`http://localhost:3000/api/getAll`, { params: { "Par-No": 44, "Scen-No": 42}})
+      .then(res => {
+        //const persons = res.data;
+        //this.setState({ persons });
+        console.log(res.data);
+      })
+}
+
+  render() {
+
+    const { products, productSelected, navSteps, selectedTab, setSelectedTab, stepperNavActive, setActiveView, setActiveStep, setNavDirection, setStepperNav, heatpumpAudio, activeView, activeStep, disableSlider } = this.context
+
+    const { t } = this.props;
+
+  const AntTabs = styled(Tabs)({
+    borderBottom: '1px solid #e8e8e8',
+    '& .MuiTabs-indicator': {
+      backgroundColor: '#1890ff',
+    },
+  });
+  
+  const AntTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) => ({
+    textTransform: 'none',
+    minWidth: 0,
+    [theme.breakpoints.up('sm')]: {
+      minWidth: 0,
+    },
+    fontWeight: theme.typography.fontWeightRegular,
+    marginRight: theme.spacing(1),
+    color: 'rgba(0, 0, 0, 0.85)',
+    fontFamily: [
+      'Bosch-Regular',
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    '&:hover': {
+      color: '#40a9ff',
+      opacity: 1,
+    },
+    '&.Mui-selected': {
+      color: '#1890ff',
+      fontWeight: theme.typography.fontWeightMedium,
+    },
+    '&.Mui-focusVisible': {
+      backgroundColor: '#d1eaff',
+    },
+  }));
+
+    return (
+      <div className={styles.homeContainer}>
+        <div className={styles.setupContainer}>
+
+            <div style={{marginTop: '4%'}}>
+
+            <div>
+              { /*<img src={require(`../assets/img/house-placeholder.png`)} alt="" style={{width: '100%'}} />*/ }
+            </div>
+          
+            <h1 style={{textAlign: 'center', fontSize: '36px !important'}}>Solarstromrechner</h1>
+            <div style={{fontFamily: 'Bosch-Regular', fontSize: '22px', textAlign: 'center'}}>Selbsterzeugten Strom intelligent verbrauchen und Stromkosten sparen.</div>
+
+            <div style={{display: 'flex', margin: '3% 13% 0 13%'}}>
+              <div style={{width: '45%'}}>
+                <p style={{fontFamily: 'Bosch-Bold', fontSize: '16px'}}>
+                  Sparen Sie Stromkosten – mit der smarten Kombination aus Photovoltaik, Wärmepumpe, Wallbox und einem intelligenten Energiemanagementsystem
+                </p>
+                <p style={{paddingTop: '25px'}}>
+                  Ermitteln Sie mit dem Tool für Ihr Einfamilienhaus:
+                </p>
+                <div style={{display: 'flex', flexDirection: 'column', lineHeight: '24px'}}>
+                  <div style={{display: 'flex', flexDirection: 'row', padding: '15px 0 15px 0'}}>
+                    <div><CoinIcon style={{paddingRight: '10px'}} /></div>
+                    <div>
+                      <span style={{fontFamily: 'Bosch-Bold'}}>Stromkostenersparnis:</span> Wieviel Stromkosten kann man durch eine PV-Anlage einsparen?
+                    </div>
+                  </div>
+                  <div style={{display: 'flex', flexDirection: 'row', padding: '15px 0 15px 0'}}>
+                    <div><PVSunIcon style={{paddingRight: '10px'}} /></div>
+                    <div>
+                    <span style={{fontFamily: 'Bosch-Bold'}}>Amortisationszeit:</span> Wann sind die Investitionskosten für eine PV-Anlage durch geringere jährliche Stromkosten erwirtschaftet?
+                    </div>
+                  </div>
+                  <div style={{display: 'flex', flexDirection: 'row', padding: '15px 0 15px 0'}}>
+                    <div><ElectricitySunIcon style={{paddingRight: '10px'}} /></div>
+                    <div>
+                    <span style={{fontFamily: 'Bosch-Bold'}}>Autarkie:</span> Welchen Anteil des Strombedarfs können Sie durch eine PV-Anlage selbst produzieren?
+                    </div>
+                  </div>
+                  <div style={{display: 'flex', flexDirection: 'row', padding: '15px 0 15px 0'}}>
+                    <div><LightningSmallIcon style={{paddingRight: '10px'}} /></div>
+                    <div>
+                    <span style={{fontFamily: 'Bosch-Bold'}}>Eigenverbrauchsanteil:</span> Wieviel des selbst erzeugten PV-Stroms verbrauchen Sie selbst?
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style={{display: 'flex', width: '55%', justifyContent: 'end'}}>
+                <img src={require(`../assets/img/preview.png`)} alt="" style={{width: '85%', height: 'auto', objectFit: 'contain', margin: '14px'}} />
+              </div>
+
+            </div>
+            <div style={{display: 'flex', margin: '3% 5% 0 5%'}}>
+              <div style={{display: 'flex', justifyContent: 'end', alignItems: 'center', width: '50%'}}>
+                
+                  <Link style={{display: 'inline-block', textAlign: 'center', backgroundColor: '#006a9b', color: '#FFF', textDecoration: 'none', margin: '5px 10px 0 0', padding: '10px 20px 10px 20px', fontSize: '14px', fontFamily: 'Bosch-Regular'}} to='./main'>Jetzt Solarstromrechner starten</Link>
+                
+              </div>
+              <div style={{display: 'flex', justifyContent: 'start', alignItems: 'center', width: '50%'}}>
+                <div style={{ margin: '0 0 0 25px', fontSize: '12px', fontFamily: 'Bosch-Regular', color: '#007BC0'}}>Berechnugsgrundlage</div>
+              </div>
+
+            </div>
+
+             
+            
+            </div>
+
+
+        </div>
+
+
+
+        <audio id="heatpumpAudioContainer" className={styles.hide}
+            controls
+            loop
+            src={require(`../assets/audio/${ products[selectedTheme][productSelected].audio[0] }`)}>
+                Your browser does not support the
+                <code>audio</code> element.
+        </audio>
+
+        { /*<Disclaimer theme={selectedTheme} />
+        <Liability theme={selectedTheme} />*/ }
+
+        <div style={{position: 'fixed', width: '100%', bottom: '2%', color: '#A4ABB3', fontSize: '12px', textAlign: 'center'}}>
+        Hinweis: Die Ergebnisse beruhen auf Annahmen und können in der Realität abweichen. Bitte besprechen Sie die Details mit einem Fachbetrieb in Ihrer Nähe.
+        </div>
+
+       </div>
+    );
+  }
+}
+
+export default withRouter(withTranslation()(Welcome))

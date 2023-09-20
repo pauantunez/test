@@ -1,0 +1,95 @@
+{
+    "ui": {
+        "heatpump": "Pompe à chaleur",
+        "distance": {
+            "5meter": "5m",
+            "3meter": "3m",
+            "1meter": "1m",
+            "inside": "Innenansicht",
+            "outside": "Außenansicht",
+            "nightmode": "Mode nuit",
+            "ambient": "Bruit ambiant",
+            "distance": "Distance",
+            "productChoice": "Votre choix de pompe à chaleur",
+            "settings": "Paramètres"
+        },
+        "navigation": {
+            "start": "Sauver et continuer",
+            "heatpump": "Pompe à chaleur arrêt/marche",
+            "1meter": "A une distance de 1 mètre",
+            "3meter": "A une distance de 3 mètres",
+            "bedroom": "Chambre à coucher",
+            "garden": "Jardin"
+        }
+    },
+    "welcome": {
+        "title": "Bienvenue sur le Sound Tool de Bosch pour les pompes à chaleur.",
+        "description": "Notre simulateur vous donne une idée du bruit que la pompe à chaleur fait dans votre maison.<br /><br />Pour une expérience sonore plus authentique, il est préférable d'utiliser des écouteurs.",
+        "sliderTitle": "Sélectionnez un volume confortable"
+    },
+    "disclaimer": {
+      "button": "Informations légales",
+      "description": "Das Sound Simulationstool für Luftwärmepumpen soll Ihnen einen bestmöglichen Eindruck von der Geräuschentwicklung der Bosch Wärmepumpen (5 kW) vermitteln. Die reale Geräuschentwicklung der Luftwärmepumpe kann durch folgende Faktoren beeinflusst werden: individuelle Lautstärkeeinstellung Ihrer Lautsprecher, konkreter Aufstellort des jeweiligen Geräts, diverse Umwelteinflüsse wie Hintergrundgeräusche sowie produkt- und installationsspezifische Besonderheiten. Die abgespielten Sounds beziehen sich auf eine Außentemperatur von +7 Grad (Normwert A7/W55).",
+      "licenses": "Licences OSS"
+    },
+    "imprint": {
+      "button": "Impression"
+    },
+    "terms": {
+      "text": "J'accepte les <a href='https://www.bosch-thermotechnology.com/be/media/country_pool/pdf_1/terms_of_conditions_ttbe_sound_tool_hp_final_v4_fr.pdf' rel='none' target='_blank' style='color: #008ECF;'>conditions d'utilisation</a> de Sound Tool",
+      "alert": "Accepter les conditions d'utilisation"
+    },
+    "products": [
+        {
+          "id": 1,
+          "menuId": "0",
+          "name": "Compress 3400i AWS",
+          "displayName": "",
+          "slug": "compress-3400i-aws",
+          "images": ["remove-later","CS3400_Cam_3m_CS3400_211122_1","CS3400_Cam_1m_CS3400_211122_1","Schlafzimmer_211105_1","Schlafzimmer_211105_1-night","CS3400_Cam_CS3400_211122_1-night","CS3400_Cam_CS3400_211122_1"],
+          "audio": ["3400_SAMPLE3_C70_F650_A7W55_02_Max_Day_6s_8s.mp3","3400_SAMPLE3_C37_F500_A7W55_02_Max_Night_8s.mp3"],
+          "marker3m": ["40%","6%"],
+          "marker1m": ["40%","10%"],
+          "markerBed": ["40%","76%","65%","68%"],
+          "markerGarden": ["74%","70%"],
+          "floatingToggle": ["55%","34%","67%","55%"],
+          "active": false,
+          "productLinkText": "En savoir plus sur le produit",
+          "productLink": "https://www.bosch-thermotechnology.com/be/fr/ocs/residencial/compress-3400i-aws-19378149-p/"
+    },    
+    {
+          "id": 2,
+          "menuId": "1",
+          "name": "Compress 7400i AW",
+          "displayName": "",
+          "slug": "compress-7400i-aw",
+          "images": ["remove-later","CS7400_Cam_3m_CS7400_211122_1","CS7400_Cam_1m_CS7400_211122_1", "Schlafzimmer_211105_1","Schlafzimmer_211105_1-night","CS7400_Cam_CS7400_211122_1-night","CS7400_Cam_CS7400_211122_1"],
+          "audio": ["7400i_A7W55_5kW_Max_Day_Mode_C320_F4.mp3","7400i_A7W55_5kW_Night_Mode_C156_F3.mp3"],
+          "marker3m": ["40%","6%"],
+          "marker1m": ["40%","10%"],
+          "markerBed": ["40%","76%","65%","76%"],
+          "markerGarden": ["74%","70%"],
+          "floatingToggle": ["55%","45%","67%","55%"],
+          "active": false,
+          "productLinkText": "En savoir plus sur le produit",
+          "productLink": "https://www.bosch-thermotechnology.com/be/fr/ocs/residencial/compress-7400i-aw-19014226-p/"
+        },
+        {
+          "id": 3,
+          "menuId": "2",
+          "name": "Compress 6000 AW",
+          "displayName": "",
+          "slug": "compress-6000-aw",
+          "images": ["remove-later","CS7000_Cam_3m_CS7000_211122_1","CS7000_Cam_1m_CS7000_211122_1","Schlafzimmer_211105_1","Schlafzimmer_211105_1-night","CS7000_Cam_CS7000_211122_1-night","CS7000_Cam_CS7000_211122_1"],
+          "audio": ["7000_A7W35_4kW_01_Baseline_C298_F60_7C1_day.mp3","7000_A7W35_4kW_01_Baseline_C240_F55_7C1_night.mp3"],
+          "marker3m": ["40%","6%"],
+          "marker1m": ["40%","10%"],
+          "markerBed": ["40%","76%","65%","76%"],
+          "markerGarden": ["74%","70%"],
+          "floatingToggle": ["55%","45%","67%","55%"],
+          "active": false,
+          "productLinkText": "En savoir plus sur le produit",
+          "productLink": "https://www.bosch-thermotechnology.com/be/fr/ocs/residencial/compress-6000-aw-754517-p/"
+        }
+    ]
+}

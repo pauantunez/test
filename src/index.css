@@ -1,0 +1,50 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+*,*:focus,*:hover{
+  outline:none !important;
+}
+
+.rc-slider-disabled {
+  background-color: transparent !important;
+}
+
+hr {
+  opacity: 1 !important;
+}
+
+@font-face {
+  font-family: 'Bosch-Regular';
+  src: local('Bosch-Regular'), url(./assets/fonts/BoschSans-Regular.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'Bosch-Medium';
+  src: local('Bosch-Medium'), url(./assets/fonts/BoschSans-Medium.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'Bosch-Bold';
+  src: local('Bosch-Bold'), url(./assets/fonts/BoschSans-Bold.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'Helvetica-Neue-Thin';
+  src: local('Helvetica-Neue-Thin'), url(./assets/fonts/helveticaneueltw05-35thin-woff2-data.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Helvetica-Neue-Roman';
+  src: local('Helvetica-Neue-Roman'), url(./assets/fonts/helveticaneueltw05-55roman-woff2-data.woff2) format('woff2');
+}

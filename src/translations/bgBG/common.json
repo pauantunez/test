@@ -1,0 +1,74 @@
+{
+    "ui": {
+        "heatpump": "Термопомпа",
+        "distance": {
+            "5meter": "5m",
+            "3meter": "3 м",
+            "1meter": "1 м",
+            "inside": "Innenansicht",
+            "outside": "Außenansicht",
+            "nightmode": "Нощен режим",
+            "ambient": "Околни шумове",
+            "distance": "Разстояние",
+            "productChoice": "Избран от Вас уред",
+            "settings": "Настройки"
+        },
+        "navigation": {
+            "start": "Запазете и продължете",
+            "heatpump": "Изключване/включване на термопомпата",
+            "1meter": "От 1 м разстояние",
+            "3meter": "От 3 м разстояние",
+            "bedroom": "Спалня",
+            "garden": "Градина"
+        }
+    },
+    "welcome": {
+        "title": "Добре дошли в Приложението за симулация на шум за термопомпи Bosch",
+        "description": "С нашата симулация ще добиете представа как термопомпите Bosch се вписват акустично във Вашата среда.",
+        "sliderTitle": "Моля, изберете приятна сила на звука"
+    },
+    "disclaimer": {
+      "button": "Правна информация",
+      "description": "Das Sound Simulationstool für Luftwärmepumpen soll Ihnen einen bestmöglichen Eindruck von der Geräuschentwicklung der Bosch Wärmepumpen (5 kW) vermitteln. Die reale Geräuschentwicklung der Luftwärmepumpe kann durch folgende Faktoren beeinflusst werden: individuelle Lautstärkeeinstellung Ihrer Lautsprecher, konkreter Aufstellort des jeweiligen Geräts, diverse Umwelteinflüsse wie Hintergrundgeräusche sowie produkt- und installationsspezifische Besonderheiten. Die abgespielten Sounds beziehen sich auf eine Außentemperatur von +7 Grad (Normwert A7/W55).",
+      "licenses": "OSS лицензи"
+    },
+    "imprint": {
+      "button": "Информация/Imprint"
+    },
+    "terms": {
+      "text": "Приемам <a href='https://www.bosch-thermotechnology.com/bg/media/country_pool/residential/home/tc_hp_sound_tool_bg_2.2022.pdf' rel='none' target='_blank' style='color: #008ECF;'>условията за ползване</a> на Приложението за симулация на шум за термопомпи Bosch.",
+      "alert": "Моля, приемете нашите условия за ползване."
+    },
+    "products": [
+            {
+              "id": 1,
+              "menuId": "0",
+              "name": "Compress 6000 AW",
+              "displayName": "",
+              "slug": "compress-6000-aw",
+              "images": ["remove-later","CS7000_Cam_3m_CS7000_211122_1","CS7000_Cam_1m_CS7000_211122_1","Schlafzimmer_211105_1","Schlafzimmer_211105_1-night","CS7000_Cam_CS7000_211122_1-night","CS7000_Cam_CS7000_211122_1"],
+              "audio": ["7000_A7W35_4kW_01_Baseline_C298_F60_7C1_day.mp3","7000_A7W35_4kW_01_Baseline_C240_F55_7C1_night.mp3"],
+              "marker3m": ["40%","6%"],
+              "marker1m": ["40%","10%"],
+              "markerBed": ["40%","76%","65%","76%"],
+              "markerGarden": ["74%","70%"],
+              "floatingToggle": ["55%","45%","67%","55%"],
+              "active": false
+            },        
+            {
+              "id": 2,
+              "menuId": "1",
+              "name": "Compress 3400i AWS",
+              "displayName": "",
+              "slug": "compress-3400i-aws",
+              "images": ["remove-later","CS3400_Cam_3m_CS3400_211122_1","CS3400_Cam_1m_CS3400_211122_1","Schlafzimmer_211105_1","Schlafzimmer_211105_1-night","CS3400_Cam_CS3400_211122_1-night","CS3400_Cam_CS3400_211122_1"],
+              "audio": ["3400_SAMPLE3_C70_F650_A7W55_02_Max_Day_6s_8s.mp3","3400_SAMPLE3_C37_F500_A7W55_02_Max_Night_8s.mp3"],
+              "marker3m": ["40%","6%"],
+              "marker1m": ["40%","10%"],
+              "markerBed": ["40%","76%","65%","68%"],
+              "markerGarden": ["74%","70%"],
+              "floatingToggle": ["55%","34%","67%","55%"],
+              "active": false
+            }
+    ]
+}

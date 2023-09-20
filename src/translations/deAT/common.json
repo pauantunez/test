@@ -1,0 +1,89 @@
+{
+    "ui": {
+        "heatpump": "Wärmepumpe",
+        "distance": {
+            "5meter": "5m",
+            "3meter": "3m",
+            "1meter": "1m",
+            "inside": "Innenansicht",
+            "outside": "Außenansicht",
+            "nightmode": "Nachtmodus",
+            "ambient": "Umgebungsgeräusche",
+            "distance": "Abstand",
+            "productChoice": "Ihre Geräteauswahl",
+            "settings": "Einstellungen"
+        },
+        "navigation": {
+            "start": "Speichern und weiter",
+            "heatpump": "Wärmepumpe aus/an",
+            "1meter": "Aus 1m Entfernung",
+            "3meter": "Aus 3m Entfernung",
+            "bedroom": "Schlafzimmer",
+            "garden": "Garten"
+        }
+    },
+    "welcome": {
+        "title": "Willkommen beim Sound Tool Wärmepumpen von Bosch",
+        "description": "Mit unserer Simulation können Sie sich einen Eindruck davon machen wie sich Wärmepumpen von Bosch akustisch in Ihre Umgebung einfügen.<br /><br />Für ein möglichst authentisches Klangerlebnis nutzen Sie am besten Kopfhörer.",
+        "sliderTitle": "Bitte wählen Sie eine angenehme Lautstärke"
+    },
+    "disclaimer": {
+      "button": "Rechtliche Hinweise",
+      "description": "Das Sound Simulationstool für Luftwärmepumpen soll Ihnen einen bestmöglichen Eindruck von der Geräuschentwicklung der Bosch Wärmepumpen (5 kW) vermitteln. Die reale Geräuschentwicklung der Luftwärmepumpe kann durch folgende Faktoren beeinflusst werden: individuelle Lautstärkeeinstellung Ihrer Lautsprecher, konkreter Aufstellort des jeweiligen Geräts, diverse Umwelteinflüsse wie Hintergrundgeräusche sowie produkt- und installationsspezifische Besonderheiten. Die abgespielten Sounds beziehen sich auf eine Außentemperatur von +7 Grad (Normwert A7/W55).",
+      "licenses": "OSS Lizenzen"
+    },
+    "imprint": {
+      "button": "Impressum"
+    },
+    "terms": {
+      "text": "Ich akzeptiere die <a href='https://www.bosch-thermotechnology.com/at/media/country_pool_1/terms_of_conditions_bosch_sound_tool_hp_final_version_at.pdf' rel='none' target='_blank' style='color: #008ECF;'>Nutzungsbedingungen</a> für die Nutzung des Sound Tools.",
+      "alert": "Bitte akzeptieren Sie unsere Nutzungsbedingungen."
+    },
+    "products": [
+            {
+              "id": 1,
+              "menuId": "0",
+              "name": "Compress 7400i AW",
+              "displayName": "",
+              "slug": "compress-7400i-aw",
+              "images": ["remove-later","CS7400_Cam_3m_CS7400_211122_1","CS7400_Cam_1m_CS7400_211122_1", "Schlafzimmer_211105_1","Schlafzimmer_211105_1-night","CS7400_Cam_CS7400_211122_1-night","CS7400_Cam_CS7400_211122_1"],
+              "audio": ["7400i_A7W55_5kW_Max_Day_Mode_C320_F4.mp3","7400i_A7W55_5kW_Night_Mode_C156_F3.mp3"],
+              "marker3m": ["40%","6%"],
+              "marker1m": ["40%","10%"],
+              "markerBed": ["40%","76%","65%","76%"],
+              "markerGarden": ["74%","70%"],
+              "floatingToggle": ["55%","45%","67%","55%"],
+              "active": false
+            },
+            {
+              "id": 2,
+              "menuId": "1",
+              "name": "Compress 7000i AW",
+              "displayName": "",
+              "slug": "compress-7000i-aw",
+              "images": ["remove-later","CS7000_Cam_3m_CS7000_211122_1","CS7000_Cam_1m_CS7000_211122_1","Schlafzimmer_211105_1","Schlafzimmer_211105_1-night","CS7000_Cam_CS7000_211122_1-night","CS7000_Cam_CS7000_211122_1"],
+              "audio": ["7000_A7W35_4kW_01_Baseline_C298_F60_7C1_day.mp3","7000_A7W35_4kW_01_Baseline_C240_F55_7C1_night.mp3"],
+              "marker3m": ["40%","6%"],
+              "marker1m": ["40%","10%"],
+              "markerBed": ["40%","76%","65%","76%"],
+              "markerGarden": ["74%","70%"],
+              "floatingToggle": ["55%","45%","67%","55%"],
+              "active": false
+            },        
+            {
+              "id": 3,
+              "menuId": "2",
+              "name": "Compress 3400i AWS",
+              "displayName": "",
+              "slug": "compress-3400i-aws",
+              "images": ["remove-later","CS3400_Cam_3m_CS3400_211122_1","CS3400_Cam_1m_CS3400_211122_1","Schlafzimmer_211105_1","Schlafzimmer_211105_1-night","CS3400_Cam_CS3400_211122_1-night","CS3400_Cam_CS3400_211122_1"],
+              "audio": ["3400_SAMPLE3_C70_F650_A7W55_02_Max_Day_6s_8s.mp3","3400_SAMPLE3_C37_F500_A7W55_02_Max_Night_8s.mp3"],
+              "marker3m": ["40%","6%"],
+              "marker1m": ["40%","10%"],
+              "markerBed": ["40%","76%","65%","68%"],
+              "markerGarden": ["74%","70%"],
+              "floatingToggle": ["55%","34%","67%","55%"],
+              "active": false
+            }
+    ]
+}

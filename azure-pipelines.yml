@@ -1,0 +1,57 @@
+parameters:
+  - name: node_version
+    type: string
+    default: 16.16.0
+
+schedules:
+- cron: "0 12 * * 1"
+  displayName: Run once a week, on monday
+  branches:
+    include:
+    - azure-pipelines
+  always: true
+
+variables:
+  - name: NODE_VERSION
+    value: ${{parameters.node_version}}
+    readonly: true
+  - name: YARN_CACHE_FOLDER
+    value: $(Pipeline.Workspace)/.yarn
+    readonly: true
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: Cache@2
+    inputs:
+      key: '"yarn" | "$(Agent.OS)" | yarn.lock'
+      restoreKeys: |
+        yarn | "$(Agent.OS)"
+        yarn
+      path: $(YARN_CACHE_FOLDER)
+    displayName: Cache yarn packages
+  - task: NodeTool@0
+    displayName: Install Node $(NODE_VERSION)
+    inputs:
+      versionSpec: $(NODE_VERSION)
+  - script: yarn install --frozen-lockfile
+    displayName: Restore npm modules
+  - script: yarn run improved-yarn-audit --min-severity high
+    displayName: Run yarn audit
+  - script: yarn build
+    env:
+      NODE_ENV: production
+    displayName: Build
+  - task: ArchiveFiles@2
+    displayName: Archive build artifacts
+    inputs:
+      rootFolderOrFile: build
+      includeRootFolder: false
+      archiveType: zip
+      archiveFile: $(Build.ArtifactStagingDirectory)/SPA.zip
+      replaceExistingArchive: true
+  - publish: $(Build.ArtifactStagingDirectory)/SPA.zip
+    displayName: Publisch build artifacts
+    artifact: SPA
+  

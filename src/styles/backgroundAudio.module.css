@@ -1,0 +1,9 @@
+.backgroundAudio {
+    position: absolute;
+    left: 0;
+    top: 100px;
+    z-index: 999998;
+}
+.hide {
+    display: none;
+}

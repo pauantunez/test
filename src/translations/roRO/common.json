@@ -1,0 +1,78 @@
+{
+    "ui": {
+        "heatpump": "Pompă de căldură",
+        "distance": {
+            "5meter": "5m",
+            "3meter": "3m",
+            "1meter": "1m",
+            "inside": "Innenansicht",
+            "outside": "Außenansicht",
+            "nightmode": "Modul de noapte",
+            "ambient": "Zgomot ambiental",
+            "distance": "Distanţa",
+            "productChoice": "Unitatea selectată",
+            "settings": "Setări"
+        },
+        "navigation": {
+            "start": "Salvează și continuă",
+            "heatpump": "Pompă de căldură oprită/pornită",
+            "1meter": "De la 1 m distanță",
+            "3meter": "De la 3 m distanță",
+            "bedroom": "Dormitor",
+            "garden": "Grădină"
+        }
+    },
+    "welcome": {
+        "title": "Bun venit în Instrumentul Bosch Sound pentru Pompe de căldură",
+        "description": "Cu simularea noastră vă puteți face o impresie despre modul în care pompele de căldură Bosch se îmbină acustic în mediul dumneavoastră.<br /><br />Pentru cea mai autentică experiență de sunet, cel mai bine este să folosiți căști audio.",
+        "sliderTitle": "Vă rugăm să selectați un volum confortabil"
+    },
+    "disclaimer": {
+      "button": "Informații legale",
+      "description": "Das Sound Simulationstool für Luftwärmepumpen soll Ihnen einen bestmöglichen Eindruck von der Geräuschentwicklung der Bosch Wärmepumpen (5 kW) vermitteln. Die reale Geräuschentwicklung der Luftwärmepumpe kann durch folgende Faktoren beeinflusst werden: individuelle Lautstärkeeinstellung Ihrer Lautsprecher, konkreter Aufstellort des jeweiligen Geräts, diverse Umwelteinflüsse wie Hintergrundgeräusche sowie produkt- und installationsspezifische Besonderheiten. Die abgespielten Sounds beziehen sich auf eine Außentemperatur von +7 Grad (Normwert A7/W55).",
+      "licenses": "Licențe OSS"
+    },
+    "imprint": {
+      "button": "Imprint"
+    },
+    "terms": {
+      "text": "Accept termenii și <a href='https://www.bosch-thermotechnology.com/ro/media/termeni_si_conditii_bosch_sound_tool_heat_pumps.pdf' rel='none' target='_blank' style='color: #008ECF;'>condițiile de utilizare</a> ale Instrumentului Bosch Sound.",
+      "alert": "Vă rugăm să acceptați termenii și condițiile de utilizare."
+    },
+    "products": [
+            {
+              "id": 1,
+              "menuId": "0",
+              "name": "Compress 6000 AW",
+              "displayName": "",
+              "slug": "compress-6000-aw",
+              "images": ["remove-later","CS7000_Cam_3m_CS7000_211122_1","CS7000_Cam_1m_CS7000_211122_1","Schlafzimmer_211105_1","Schlafzimmer_211105_1-night","CS7000_Cam_CS7000_211122_1-night","CS7000_Cam_CS7000_211122_1"],
+              "audio": ["7000_A7W35_4kW_01_Baseline_C298_F60_7C1_day.mp3","7000_A7W35_4kW_01_Baseline_C240_F55_7C1_night.mp3"],
+              "marker3m": ["40%","6%"],
+              "marker1m": ["40%","10%"],
+              "markerBed": ["40%","76%","65%","76%"],
+              "markerGarden": ["74%","70%"],
+              "floatingToggle": ["55%","45%","67%","55%"],
+              "active": false,
+              "productLinkText": "Mai multe despre produs",
+              "productLink": "https://www.bosch-thermotechnology.com/ro/ro/ocs/rezidential/compress-6000-aw-758319-p/"
+            },        
+            {
+                "id": 2,
+                "menuId": "1",
+                "name": "Compress 6000 AWM",
+                "displayName": "",
+                "slug": "compress-6000-awm",
+                "images": ["remove-later","CS7000_Cam_3m_CS7000_211122_1","CS7000_Cam_1m_CS7000_211122_1","Schlafzimmer_211105_1","Schlafzimmer_211105_1-night","CS7000_Cam_CS7000_211122_1-night","CS7000_Cam_CS7000_211122_1"],
+                "audio": ["7000_A7W35_4kW_01_Baseline_C298_F60_7C1_day.mp3","7000_A7W35_4kW_01_Baseline_C240_F55_7C1_night.mp3"],
+                "marker3m": ["40%","6%"],
+                "marker1m": ["40%","10%"],
+                "markerBed": ["40%","76%","65%","76%"],
+                "markerGarden": ["74%","70%"],
+                "floatingToggle": ["55%","45%","67%","55%"],
+                "active": false,
+                "productLinkText": "Mai multe despre produs",
+                "productLink": "https://www.bosch-thermotechnology.com/ro/ro/ocs/rezidential/compress-6000-awm-758320-p/"
+              }
+    ]
+}

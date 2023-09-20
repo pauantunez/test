@@ -1,0 +1,15 @@
+<html>
+<head>
+	<script>
+		window.addEventListener('message', function(event) {
+		    if(event.data.event === 'HP-Soundtool') {
+				//perform datalayer push here
+				console.log(event.data);
+			}  
+		});
+	</script>
+</head>
+    <body>
+        <iframe src="https://bosch-acoustic-tool.azurewebsites.net/" width="1280" height="720" style="border: none;"></iframe>
+    </body>
+</html>

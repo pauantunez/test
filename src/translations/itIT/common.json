@@ -1,0 +1,61 @@
+{
+    "ui": {
+        "heatpump": "Pompa di calore",
+        "distance": {
+            "5meter": "5m",
+            "3meter": "3m",
+            "1meter": "1m",
+            "inside": "Innenansicht",
+            "outside": "Außenansicht",
+            "nightmode": "Modalità notte",
+            "ambient": "Ambiente in sottofondo",
+            "distance": "Distanza",
+            "productChoice": "Prodotto",
+            "settings": "Impostazioni"
+        },
+        "navigation": {
+            "start": "Salva e continua",
+            "heatpump": "Pompa di calore spenta/accesa",
+            "1meter": "1 metro di distanza",
+            "3meter": "3 metri di distanza",
+            "bedroom": "Camera da letto",
+            "garden": "Giardino"
+        }
+    },
+    "welcome": {
+        "title": "Scopri la silenziosità delle pompe di calore Bosch",
+        "description": "Con questo semplice simulatore puoi testare la silenziosità delle pompe di calore Bosch.<br /><br />Per un'esperienza più realistica, ti consigliamo di collegare le cuffie.",
+        "sliderTitle": "Imposta il volume"
+    },
+    "disclaimer": {
+      "button": "Note legali",
+      "description": "Das Sound Simulationstool für Luftwärmepumpen soll Ihnen einen bestmöglichen Eindruck von der Geräuschentwicklung der Bosch Wärmepumpen (5 kW) vermitteln. Die reale Geräuschentwicklung der Luftwärmepumpe kann durch folgende Faktoren beeinflusst werden: individuelle Lautstärkeeinstellung Ihrer Lautsprecher, konkreter Aufstellort des jeweiligen Geräts, diverse Umwelteinflüsse wie Hintergrundgeräusche sowie produkt- und installationsspezifische Besonderheiten. Die abgespielten Sounds beziehen sich auf eine Außentemperatur von +7 Grad (Normwert A7/W55).",
+      "licenses": "Licenze OSS"
+    },
+    "imprint": {
+      "button": "Imprint"
+    },
+    "terms": {
+      "text": "Accetto le <a href='https://www.bosch-thermotechnology.com/it/it/residenziale/termini-e-condizioni-uso-bosch-sound-tool/' rel='none' target='_blank' style='color: #008ECF;'>Condizioni generali d'uso</a> del simulatore.",
+      "alert": "Per utilizzare il simulatore è necessario accettare le Condizioni generali d'uso."
+    },
+    "products": [
+            {
+              "id": 1,
+              "menuId": "0",
+              "name": "Compress 7000i AW",
+              "displayName": "",
+              "slug": "compress-7000i-aw",
+              "images": ["remove-later","CS7000_Cam_3m_CS7000_211122_1","CS7000_Cam_1m_CS7000_211122_1","Schlafzimmer_211105_1","Schlafzimmer_211105_1-night","CS7000_Cam_CS7000_211122_1-night","CS7000_Cam_CS7000_211122_1"],
+              "audio": ["7000_A7W35_4kW_01_Baseline_C298_F60_7C1_day.mp3","7000_A7W35_4kW_01_Baseline_C240_F55_7C1_night.mp3"],
+              "marker3m": ["40%","6%"],
+              "marker1m": ["40%","10%"],
+              "markerBed": ["40%","76%","65%","76%"],
+              "markerGarden": ["74%","70%"],
+              "floatingToggle": ["55%","45%","67%","55%"],
+              "active": false,
+              "productLinkText": "Visita la pagina prodotto",
+              "productLink": "https://www.bosch-thermotechnology.com/it/it/ocs/residenziale/pompa-di-calore-aria-acqua-792436-c/"
+            }
+    ]
+}

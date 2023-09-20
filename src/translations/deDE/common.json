@@ -1,0 +1,516 @@
+{
+    "ui": {
+        "heatpump": "Wärmepumpe",
+        "distance": {
+            "5meter": "5m",
+            "3meter": "3m",
+            "1meter": "1m",
+            "inside": "Innenansicht",
+            "outside": "Außenansicht",
+            "nightmode": "Nachtmodus",
+            "ambient": "Umgebungsgeräusche",
+            "distance": "Auswahl",
+            "productChoice": "Ihre Geräteauswahl",
+            "settings": "Einstellungen"
+        },
+        "navigation": {
+            "start": "Speichern und weiter",
+            "heatpump": "Wärmepumpe aus/an",
+            "1meter": "Aus 1m Entfernung",
+            "3meter": "Aus 3m Entfernung",
+            "bedroom": "Schlafzimmer",
+            "garden": "Garten"
+        }
+    },
+    "welcome": {
+        "title": "Willkommen beim Sound Vergleich",
+        "description": "Mit unserem Vergleich können Sie sich einen Eindruck davon machen wie laut ein Bosch Luftreiniger im Vergleich zu anderen Haushaltsgeräten ist.<br /><br />Bitte wählen Sie zum Vergleich ein anderes Geräusch aus.",
+        "sliderTitle": "Bitte wählen Sie zum Vergleich ein anderes Geräusch aus"
+    },
+    "disclaimer": {
+      "button": "OSS-Lizenzen",
+      "description": "Das Sound Simulationstool für Luftwärmepumpen soll Ihnen einen bestmöglichen Eindruck von der Geräuschentwicklung der Bosch Wärmepumpen (5 kW) vermitteln. Die reale Geräuschentwicklung der Luftwärmepumpe kann durch folgende Faktoren beeinflusst werden: individuelle Lautstärkeeinstellung Ihrer Lautsprecher, konkreter Aufstellort des jeweiligen Geräts, diverse Umwelteinflüsse wie Hintergrundgeräusche sowie produkt- und installationsspezifische Besonderheiten. Die abgespielten Sounds beziehen sich auf eine Außentemperatur von +7 Grad (Normwert A7/W55).",
+      "licenses": "OSS Lizenzen"
+    },
+    "imprint": {
+      "button": "Impressum"
+    },
+    "terms": {
+      "text": "Ich akzeptiere die <a href='https://www.bosch-thermotechnology.com/de/media/country_pool/dokumente/agb/nutzungsbedingungen_soundtoolheatpump_bosch.pdf' rel='none' target='_blank' style='color: #008ECF;'>Nutzungsbedingungen</a> für die Nutzung des Sound Tools.",
+      "alert": "Bitte akzeptieren Sie unsere Nutzungsbedingungen."
+    },
+    "buttons": {
+      "bosch": ["#006a9b"],
+      "buderus": ["#ee6103"]
+    },
+    "fonts": {
+      "bosch": ["Bosch-Medium","Bosch-Regular","Bosch-Bold"],
+      "buderus": ["Helvetica-Neue-Roman", "Helvetica-Neue-Roman", "Helvetica-Neue-Roman"]
+    },
+    "themes": {
+      "bosch": [
+        {
+          "id": 0,
+          "menuId": "0",
+          "name": "Bosch Luftreiniger A4000",
+          "displayName": "",
+          "slug": "a4000",
+          "icon": {
+            "filename": "Air_4000.webp",
+            "dimension": "20px",
+            "placement": ["9px","14px"],
+            "link": "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/air-4000-19287220-p/"
+          },
+          "bar": {
+            "height": "98px",
+            "marginLeft": "7px",
+            "leftAlign": "-17px",
+            "background": "linear-gradient(90deg, rgba(33,111,87,1) 0%, rgba(76,145,72,1) 100%)",
+            "label": {
+              "text": "25 dB",
+              "leftAlign": "-13px"
+            },
+            "hasPopover": true,
+            "popover": {
+              "text": "Luftreiniger Air 4000",
+              "dimension": "115px",
+              "placement": ["2px", "-48px"],
+              "padding": "5px",
+              "background": "rgba(0, 106, 155, 0.8)"
+            }
+          },
+          "margin": "left",
+          "audio": ["Bosch_TT_Soundvergleich_Luftreiniger_A4000_silent.mp3"]
+        },
+        {
+          "id": 1,
+          "menuId": "1",
+          "name": "Bosch CS6800i",
+          "displayName": "",
+          "slug": "cs6800",
+          "icon": {
+            "filename": "compress5800.png",
+            "dimension": "32px",
+            "placement": ["0px","14px"],
+            "link": "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/compress-6800i-aw-19312695-p/"
+          },
+          "bar": {
+            "height": "115px",
+            "leftAlign": "-18px",
+            "background": "linear-gradient(90deg, rgba(109,174,68,1) 0%, rgba(114,184,85,1) 100%)",
+            "label": {
+              "text": "39 dB",
+              "leftAlign": "-14px"
+            },
+            "hasPopover": true,
+            "popover": {
+              "text": "Wärmepumpe CS6800i",
+              "dimension": "128px",
+              "placement": ["2px", "-48px"],
+              "padding": "5px",
+              "background": "rgba(0, 106, 155, 0.8)"
+            }
+          },
+          "audio": ["6800_day_06.mp3"]            
+        },
+        {
+          "id": 2,
+          "menuId": "2",
+          "name": "Leafs",
+          "displayName": "",
+          "slug": "leafs",
+          "icon": {
+            "filename": "leaf.svg",
+            "dimension": "28px",
+            "placement": ["-3px","14px"]
+          },
+          "bar": {
+            "height": "130px",
+            "leftAlign": "-18px",
+            "background": "linear-gradient(90deg, rgba(93,182,121,1) 0%, rgba(62,172,171,1) 100%)",
+            "label": {
+              "text": "45 dB",
+              "leftAlign": "-14px"
+            },
+            "hasPopover": false,
+            "popover": {
+              "text": "Luftreiniger Air 4000",
+              "dimension": "128px",
+              "placement": ["-12px", "-33px"],
+              "padding": "5px",
+              "background": "rgba(0, 106, 155, 0.8)"
+            }
+          },
+          "audio": ["Bosch_TT_Soundvergleich_Trockenes_Laub.mp3"]            
+        },
+        {
+          "id": 3,
+          "menuId": "3",
+          "name": "Dishwasher",
+          "displayName": "",
+          "slug": "dishwasher",
+          "icon": {
+            "filename": "dishwasher.svg",
+            "dimension": "24px",
+            "placement": ["1px","14px"]
+          },
+          "bar": {
+            "height": "168px",
+            "leftAlign": "-18px",
+            "background": "linear-gradient(90deg, rgba(52,167,194,1) 0%, rgba(52,162,213,1) 100%)",
+            "label": {
+              "text": "65 dB",
+              "leftAlign": "-14px"
+            },
+            "hasPopover": false,
+            "popover": {
+              "text": "Luftreiniger Air 4000",
+              "dimension": "128px",
+              "placement": ["-12px", "-33px"],
+              "padding": "5px",
+              "background": "rgba(0, 106, 155, 0.8)"
+            }
+          },
+          "audio": ["Bosch_TT_Soundvergleich_Geschirrspueler.mp3"]            
+        },
+        {
+          "id": 4,
+          "menuId": "4",
+          "name": "Microwave",
+          "displayName": "",
+          "slug": "microwave",
+          "icon": {
+            "filename": "microwave.svg",
+            "dimension": "28px",
+            "placement": ["2px","14px"]
+          },
+          "bar": {
+            "height": "188px",
+            "leftAlign": "-18px",
+            "background": "linear-gradient(90deg, rgba(35,122,180,1) 0%, rgba(31,98,152,1) 100%)",
+            "label": {
+              "text": "67 dB",
+              "leftAlign": "-14px"
+            },
+            "hasPopover": false,
+            "popover": {
+              "text": "Luftreiniger Air 4000",
+              "dimension": "128px",
+              "placement": ["-12px", "-33px"],
+              "padding": "5px",
+              "background": "rgba(0, 106, 155, 0.8)"
+            }
+          },
+          "audio": ["Bosch_TT_Soundvergleich_Mikrowelle.mp3"]            
+        },
+        {
+          "id": 5,
+          "menuId": "5",
+          "name": "Kettle",
+          "displayName": "",
+          "slug": "kettle",
+          "icon": {
+            "filename": "kettle.svg",
+            "dimension": "28px",
+            "placement": ["0px","10px"]
+          },
+          "bar": {
+            "height": "208px",
+            "leftAlign": "-18px",
+            "background": "linear-gradient(90deg, rgba(38,78,141,1) 0%, rgba(60,51,130,1) 100%)",
+            "label": {
+              "text": "70 dB",
+              "leftAlign": "-14px"
+            },
+            "hasPopover": false,
+            "popover": {
+              "text": "Luftreiniger Air 4000",
+              "dimension": "128px",
+              "placement": ["-12px", "-33px"],
+              "padding": "5px",
+              "background": "rgba(0, 106, 155, 0.8)"
+            }
+          },
+          "audio": ["Bosch_TT_Soundvergleich_Wasserkocher.mp3"]            
+        },
+        {
+          "id": 6,
+          "menuId": "6",
+          "name": "Hair dryer",
+          "displayName": "",
+          "slug": "hair-dryer",
+          "icon": {
+            "filename": "hairdryer.svg",
+            "dimension": "28px",
+            "placement": ["0px","12px"]
+          },
+          "bar": {
+            "height": "218px",
+            "leftAlign": "-18px",
+            "background": "linear-gradient(90deg, rgba(84,34,126,1) 0%, rgba(125,18,122,1) 100%)",
+            "label": {
+              "text": "71 dB",
+              "leftAlign": "-14px"
+            },
+            "hasPopover": false,
+            "popover": {
+              "text": "Luftreiniger Air 4000",
+              "dimension": "128px",
+              "placement": ["-12px", "-33px"],
+              "padding": "5px",
+              "background": "rgba(0, 106, 155, 0.8)"
+            }
+          },
+          "audio": ["Bosch_TT_Soundvergleich_Haartrockner.mp3"]            
+        },
+        {
+          "id": 7,
+          "menuId": "7",
+          "name": "Vacuum cleaner",
+          "displayName": "",
+          "slug": "vacuum-cleaner",
+          "icon": {
+            "filename": "vacuum-cleaner.svg",
+            "dimension": "28px",
+            "placement": ["0px","10px"]
+          },
+          "bar": {
+            "height": "228px",
+            "marginRight": "7px",
+            "leftAlign": "-23px",
+            "background": "linear-gradient(90deg, rgba(154,11,122,1) 0%, rgba(190,0,122,1) 100%)",
+            "label": {
+              "text": "76 dB",
+              "leftAlign": "-19px"
+            },
+            "hasPopover": false,
+            "popover": {
+              "text": "Luftreiniger Air 4000",
+              "dimension": "128px",
+              "placement": ["-12px", "-33px"],
+              "padding": "5px",
+              "background": "rgba(0, 106, 155, 0.8)"
+            }
+          },
+          "margin": "right",
+          "audio": ["Bosch_TT_Soundvergleich_Staubsauger.mp3"]           
+        }
+      ],
+      "buderus": [
+        {
+          "id": 0,
+          "menuId": "0",
+          "name": "Bosch CS6800i",
+          "displayName": "",
+          "slug": "cs6800",
+          "icon": {
+            "filename": "logatherm.png",
+            "dimension": "32px",
+            "placement": ["0px","14px"],
+            "link": "https://www.buderus.de/de/alle-produkte/195364_logatherm-wlw186i-ar"
+          },
+          "bar": {
+            "height": "115px",
+            "leftAlign": "-18px",
+            "background": "#012D59",
+            "label": {
+              "text": "39 dB",
+              "leftAlign": "-14px"
+            },
+            "hasPopover": true,
+            "popover": {
+              "text": "Logatherm WLW186i AR/ WLW176i AR",
+              "dimension": "142px",
+              "placement": ["2px", "-58px"],
+              "padding": "5px",
+              "background": "rgba(0, 0, 0, .6)"
+            }
+          },
+          "margin": "left",
+          "audio": ["6800_day_06.mp3"]            
+        },
+        {
+          "id": 1,
+          "menuId": "1",
+          "name": "Leafs",
+          "displayName": "",
+          "slug": "leafs",
+          "icon": {
+            "filename": "leaf.svg",
+            "dimension": "28px",
+            "placement": ["-3px","14px"]
+          },
+          "bar": {
+            "height": "130px",
+            "leftAlign": "-18px",
+            "background": "#012D59",
+            "label": {
+              "text": "45 dB",
+              "leftAlign": "-14px"
+            },
+            "hasPopover": false,
+            "popover": {
+              "text": "Luftreiniger Air 4000",
+              "dimension": "128px",
+              "placement": ["-12px", "-33px"],
+              "padding": "5px",
+              "background": "rgba(0, 106, 155, 0.8)"
+            }
+          },
+          "audio": ["Bosch_TT_Soundvergleich_Trockenes_Laub.mp3"]            
+        },
+        {
+          "id": 2,
+          "menuId": "2",
+          "name": "Dishwasher",
+          "displayName": "",
+          "slug": "dishwasher",
+          "icon": {
+            "filename": "dishwasher.svg",
+            "dimension": "24px",
+            "placement": ["1px","14px"]
+          },
+          "bar": {
+            "height": "168px",
+            "leftAlign": "-18px",
+            "background": "#012D59",
+            "label": {
+              "text": "65 dB",
+              "leftAlign": "-14px"
+            },
+            "hasPopover": false,
+            "popover": {
+              "text": "Luftreiniger Air 4000",
+              "dimension": "128px",
+              "placement": ["-12px", "-33px"],
+              "padding": "5px",
+              "background": "rgba(0, 106, 155, 0.8)"
+            }
+          },
+          "audio": ["Bosch_TT_Soundvergleich_Geschirrspueler.mp3"]            
+        },
+        {
+          "id": 3,
+          "menuId": "3",
+          "name": "Microwave",
+          "displayName": "",
+          "slug": "microwave",
+          "icon": {
+            "filename": "microwave.svg",
+            "dimension": "28px",
+            "placement": ["2px","14px"]
+          },
+          "bar": {
+            "height": "188px",
+            "leftAlign": "-18px",
+            "background": "#012D59",
+            "label": {
+              "text": "67 dB",
+              "leftAlign": "-14px"
+            },
+            "hasPopover": false,
+            "popover": {
+              "text": "Luftreiniger Air 4000",
+              "dimension": "128px",
+              "placement": ["-12px", "-33px"],
+              "padding": "5px",
+              "background": "rgba(0, 106, 155, 0.8)"
+            }
+          },
+          "audio": ["Bosch_TT_Soundvergleich_Mikrowelle.mp3"]            
+        },
+        {
+          "id": 4,
+          "menuId": "4",
+          "name": "Kettle",
+          "displayName": "",
+          "slug": "kettle",
+          "icon": {
+            "filename": "kettle.svg",
+            "dimension": "28px",
+            "placement": ["0px","10px"]
+          },
+          "bar": {
+            "height": "208px",
+            "leftAlign": "-18px",
+            "background": "#012D59",
+            "label": {
+              "text": "70 dB",
+              "leftAlign": "-14px"
+            },
+            "hasPopover": false,
+            "popover": {
+              "text": "Luftreiniger Air 4000",
+              "dimension": "128px",
+              "placement": ["-12px", "-33px"],
+              "padding": "5px",
+              "background": "rgba(0, 106, 155, 0.8)"
+            }
+          },
+          "audio": ["Bosch_TT_Soundvergleich_Wasserkocher.mp3"]            
+        },
+        {
+          "id": 5,
+          "menuId": "5",
+          "name": "Hair dryer",
+          "displayName": "",
+          "slug": "hair-dryer",
+          "icon": {
+            "filename": "hairdryer.svg",
+            "dimension": "28px",
+            "placement": ["0px","12px"]
+          },
+          "bar": {
+            "height": "218px",
+            "leftAlign": "-18px",
+            "background": "#012D59",
+            "label": {
+              "text": "71 dB",
+              "leftAlign": "-14px"
+            },
+            "hasPopover": false,
+            "popover": {
+              "text": "Luftreiniger Air 4000",
+              "dimension": "128px",
+              "placement": ["-12px", "-33px"],
+              "padding": "5px",
+              "background": "rgba(0, 106, 155, 0.8)"
+            }
+          },
+          "audio": ["Bosch_TT_Soundvergleich_Haartrockner.mp3"]            
+        },
+        {
+          "id": 6,
+          "menuId": "6",
+          "name": "Vacuum cleaner",
+          "displayName": "",
+          "slug": "vacuum-cleaner",
+          "icon": {
+            "filename": "vacuum-cleaner.svg",
+            "dimension": "28px",
+            "placement": ["0px","10px"]
+          },
+          "bar": {
+            "height": "228px",
+            "marginRight": "7px",
+            "leftAlign": "-23px",
+            "background": "#012D59",
+            "label": {
+              "text": "76 dB",
+              "leftAlign": "-19px"
+            },
+            "hasPopover": false,
+            "popover": {
+              "text": "Luftreiniger Air 4000",
+              "dimension": "128px",
+              "placement": ["-12px", "-33px"],
+              "padding": "5px",
+              "background": "rgba(0, 106, 155, 0.8)"
+            }
+          },
+          "margin": "right",
+          "audio": ["Bosch_TT_Soundvergleich_Staubsauger.mp3"]           
+        }
+      ]
+    }
+}
