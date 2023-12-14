@@ -31,90 +31,9 @@ var fontHeadline;
 var fontRegular;
 var btnColor;
 
-const doughnutData = {
-  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-  datasets: [
-    {
-      label: '# of Votes',
-      data: [12, 19, 3, 5, 2, 3],
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-      ],
-      borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)',
-      ],
-      borderWidth: 1,
-    },
-  ],
-};
 
 const datapoints = [-27300, null, null, null, null, null, null, 0, null, null, null, 8000];
-const lineData = {
-  //labels: ["0", "22"],
-  labels: ["0", "2", "4", "6", "8", "10", "12", "14", "16", "18", "20", "22"],
-  datasets: [
-    {
-      label: false,
-      data: datapoints,
-      borderColor: 'green',
-      fill: false,
-      cubicInterpolationMode: 'monotone',
-      tension: 0.4,
-      spanGaps: true
-    }
-  ]
-};
 
-const lineOptions = {
-  responsive: true,
-  plugins: {
-    legend: {
-      display: false,
-      position: 'top',
-    },
-    title: {
-      display: false,
-      text: 'Chart.js Line Chart',
-    }
-  },
-  animations: {
-    tension: {
-      duration: 1000,
-      easing: 'linear',
-      from: 1,
-      to: 0,
-      loop: true
-    }
-  },
-  scales: {
-    x: {
-      grid: {
-        display: false
-      }
-    },
-    y: {
-      min: -30000,
-      max: 20000,
-      ticks: {
-        stepSize: 10000,
-          // Include a dollar sign in the ticks
-          callback: function(value, index, ticks) {
-              return value + '€';
-          }
-      }
-  }
-  }
-};
 
 class ResultStep1 extends React.Component {
   
@@ -125,14 +44,9 @@ class ResultStep1 extends React.Component {
             overlayToggle: false,
             imprint: [],
             theme: props.theme,
-            TCO_EUR_a: '965.9769603',
-            OPEX_EUR_a: '-535.055231',
-            CAPEX_EUR_a: '1501.032191',
-            CO2_kg_a: '-885.8828844',
-            TCO_thermal_EUR_a: '591.7784389',
-            Power_kW_PV_MFH: '14',
             results: Array,
             Eta_sh_gas_EDWW_MFH_Brine: String,
+            heatpumpPVems: []
         }
 
         this.onInputchange = this.onInputchange.bind(this);
@@ -141,58 +55,9 @@ class ResultStep1 extends React.Component {
     static contextType = AppContext
 
     componentWillMount() {
-
       const { products, btnThemes, fonts, setFwdBtn } = this.context;
-      const productsProps = Object.getOwnPropertyNames(products);
-      var foundTheme = 0;
 
       setFwdBtn(false);
-  
-      if(urlParams.get('theme')) {
-        entryParam = urlParams.get('theme');
-        //alert(entryParam)
-  
-        for(let themes = 0; themes < productsProps.length; themes++) {
-  
-          if(entryParam === productsProps[themes]) {
-            console.log(productsProps[themes])
-  
-            require("../../../styles/"+productsProps[themes]+".css");
-            
-            selectedTheme = productsProps[themes];
-            /*btnColor = btnThemes[entryParam][0];
-            themeFont = fonts[entryParam][0];
-            labelFont = fonts[entryParam][1];
-            console.log(selectedTheme);*/
-  
-            foundTheme++;
-          } else {
-            require("ignore");
-            console.log("ignore:" + productsProps[themes])
-          }
-          
-        }
-  
-        if(foundTheme === 0) {
-          require("../../../styles/"+productsProps[0]+".css");
-          selectedTheme = productsProps[0];
-          /*btnColor = btnThemes.bosch[0];
-          themeFont = fonts.bosch[0];
-          labelFont = fonts.bosch[1];*/
-          
-        }
-  
-      } else {
-        require("../../../styles/"+productsProps[0]+".css");
-        selectedTheme = productsProps[0];
-        /*btnColor = btnThemes.bosch[0];
-        themeFont = fonts.bosch[0];
-        labelFont = fonts.bosch[1];*/
-       
-      }
-
-    
-
     }
 
     componentDidMount() {
@@ -215,7 +80,6 @@ class ResultStep1 extends React.Component {
       this.setState({
         [event.target.name]: event.target.value
       });
-      //alert(event.target.name)
     }
 
     async toggleModal() {
@@ -226,44 +90,6 @@ class ResultStep1 extends React.Component {
           this.setState({overlayToggle: true})
       }
 
-    }
-
-    getResult =() => { 
-      const { Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
-
-      axios.get(`https://bosch-endkundentool-api.azurewebsites.net/results`, { 
-        params: { "TCO_EUR_a": this.state.TCO_EUR_a,
-                  "OPEX_EUR_a": this.state.OPEX_EUR_a,
-                  "CAPEX_EUR_a": this.state.CAPEX_EUR_a,
-                  "CO2_kg_a": this.state.CO2_kg_a,
-                  "TCO_thermal_EUR_a": TCO_thermal_EUR_a,
-                  "Power_kW_PV_MFH": Power_kW_PV_MFH}})
-          .then(res => {
-            //const persons = res.data;
-            //this.setState({ persons });
-            //console.log(res.data);
-            //this.state.results = res.data;
-
-            //console.log(this.state.results)
-
-            //this.state.Eta_sh_gas_EDWW_MFH_Brine = res.data.data[0].Eta_sh_gas_EDWW_MFH_Brine
-            if(res.data.data.length != 0) {
-            var gasBrineResult = res.data.data[0].Eta_sh_gas_EDWW_MFH_Brine.toString().substring(0,4) * 100;
-            var elc_Self_ConsumptionResult = res.data.data[0].elc_Self_Consumption.toString().substring(0,4) * 100;
-            console.log(elc_Self_ConsumptionResult)
-
-            setGasBrine(gasBrineResult)
-            setElc_Self_Consumption(elc_Self_ConsumptionResult)
-
-            }
-
-            console.log(res.data.data[0])
-
-            console.log(res)
-            console.log(res.data)
-            console.log(res.data.data.length)
-            
-          })
     }
 
     render() {
@@ -277,7 +103,7 @@ class ResultStep1 extends React.Component {
             
             <h3 style={{display: 'flex', justifyContent: 'flex-start', textAlign: 'left', fontSize: '24px'}}>Ergebnis Teil 1: Stromkosten und Amortisationszeit Ihrer PV-Anlage</h3>
 
-            <div style={{display: 'flex', width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignContent: 'center'}}>
+            <div class="pie-flex" style={{display: 'flex', width: '100%', flexWrap: 'nowrap', justifyContent: 'space-between', alignContent: 'center'}}>
               <div style={{alignItems: 'end'}}>
                 <div style={{fontFamily: 'Bosch-Bold', fontSize: '20px', textAlign: 'left'}}> Gesamtkosten Strom</div>
                   <div style={{marginTop: '20px'}}>
@@ -287,10 +113,10 @@ class ResultStep1 extends React.Component {
                     </div>
                   </div>
               </div>
-              <div style={{width: '2px', height: '700px', background: '#E0E2E5', marginLeft: '50px', marginRight: '50px'}}>
+              <div class="flex-line" style={{width: '2px', height: '700px', background: '#E0E2E5', marginLeft: '50px', marginRight: '50px'}}>
 
               </div>
-              <div>
+              <div class="top-margins">
                 <div style={{fontFamily: 'Bosch-Bold', fontSize: '20px', textAlign: 'left'}}>Amortisationszeit</div>
                 <div style={{marginTop: '20px'}}>
                   <BreakEven />

@@ -94,93 +94,138 @@ class CustomSwitch extends React.Component {
             overlayToggle: false,
             imprint: [],
             theme: props.theme,
-            TCO_EUR_a: '965.9769603',
-            OPEX_EUR_a: '-535.055231',
-            CAPEX_EUR_a: '1501.032191',
-            CO2_kg_a: '-885.8828844',
-            TCO_thermal_EUR_a: '591.7784389',
-            Power_kW_PV_MFH: '14',
             results: Array,
             Eta_sh_gas_EDWW_MFH_Brine: String,
         }
 
-        //this.onInputchange = this.onInputchange.bind(this);
     }
 
     static contextType = AppContext
 
     componentWillMount() {
-
-      const { products, btnThemes, fonts, setFwdBtn } = this.context;
-      const productsProps = Object.getOwnPropertyNames(products);
-      var foundTheme = 0;
+      const { setLoading, heatpumpType, scenarioInDatabase, kfwValue, ev, homeStorageSizekWh, pvOutputkWh, tabEntries, products, btnThemes, fonts, setFwdBtn } = this.context;
 
       setFwdBtn(false);
-  
-      if(urlParams.get('theme')) {
-        entryParam = urlParams.get('theme');
-        //alert(entryParam)
-  
-        for(let themes = 0; themes < productsProps.length; themes++) {
-  
-          if(entryParam === productsProps[themes]) {
-            console.log(productsProps[themes])
-  
-            require("../../../../styles/"+productsProps[themes]+".css");
-            
-            selectedTheme = productsProps[themes];
-            /*btnColor = btnThemes[entryParam][0];
-            themeFont = fonts[entryParam][0];
-            labelFont = fonts[entryParam][1];
-            console.log(selectedTheme);*/
-  
-            foundTheme++;
-          } else {
-            require("ignore");
-            console.log("ignore:" + productsProps[themes])
-          }
-          
-        }
-  
-        if(foundTheme === 0) {
-          require("../../../../styles/"+productsProps[0]+".css");
-          selectedTheme = productsProps[0];
-          /*btnColor = btnThemes.bosch[0];
-          themeFont = fonts.bosch[0];
-          labelFont = fonts.bosch[1];*/
-          
-        }
-  
-      } else {
-        require("../../../../styles/"+productsProps[0]+".css");
-        selectedTheme = productsProps[0];
-        /*btnColor = btnThemes.bosch[0];
-        themeFont = fonts.bosch[0];
-        labelFont = fonts.bosch[1];*/
-       
-      }
-
-    
+      setLoading(true)
 
     }
 
     componentDidMount() {
-
+      this.getInitialResult();
 
     }
+
+    getInitialResult = () => {
+      const { scenarioInDatabase, kfwValue, ev, homeStorageSizekWh, pvOutputkWh, tabEntries, products, btnThemes, fonts, setFwdBtn } = this.context;
+      
+      //find the correct TAB for the "NO EMS" case
+      let tabInTable = tabEntries.find(o => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === 'Nein');
+      
+      //call getResult for the correct TAB
+      this.getResult(kfwValue+ev,scenarioInDatabase,tabInTable.Tab)
+    }
+
+    energyUsageCombined = (result) => {
+      const { heatpumpType, setHouseholdNoEMSpvPercent, setNoEMSPercentage, setNoEMScombinedEnergyUseKWH, noEMSPercentageOffGrid, energyUsagekWh, odometerIncreaseKWH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+      var Avg_Eff_JAZ_HP;
+
+      if(heatpumpType === "1") {
+        Avg_Eff_JAZ_HP = result.Avg_Eff_JAZ_HP_A_W_MFH
+      } else {
+        Avg_Eff_JAZ_HP = result.Avg_Eff_JAZ_HP_B_W_MFH
+      }
+
+      //Enegery usage heatpump
+      var energyUsageHeatpump = (parseFloat(result.EGen_sh_kWh_HP_A_W_MFH) + parseFloat(result.EGen_sh_kWh_HP_B_W_MFH) + parseFloat(result.EGen_hw_kWh_HP_A_W_MFH) + parseFloat(result.EGen_hw_kWh_HP_B_W_MFH)) / parseFloat(Avg_Eff_JAZ_HP);
+
+      //Energy usage heating rod
+      var energyUsageHeatingRod = (parseFloat(result.EGen_sh_kWh_EDWW_MFH) + parseFloat(result.EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(result.EGen_hw_kWh_EDWW_MFH) + parseFloat(result.EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
+
+      //console.log(energyUsageHeatpump+energyUsageHeatingRod+parseInt(energyUsagekWh)+odometerIncreaseKWH);
+      var combinedResult = energyUsageHeatpump+energyUsageHeatingRod+parseInt(energyUsagekWh)+odometerIncreaseKWH;
+      setNoEMScombinedEnergyUseKWH(combinedResult)
+
+      var pvUsagePercentNoEMS = (parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(combinedResult) * 100;
+      setNoEMSPercentage(pvUsagePercentNoEMS);
+      console.log(pvUsagePercentNoEMS);
+
+      var householdNoEMSPercent = (parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(result.EGen_elc_kWh_PV_MFH) * 100;
+      console.log("HOUSEHOLD NO EMS USAGE: "+ householdNoEMSPercent);
+      setHouseholdNoEMSpvPercent(householdNoEMSPercent)
+
+      return energyUsageHeatpump+energyUsageHeatingRod+parseInt(energyUsagekWh)+odometerIncreaseKWH;
+
+  }
+
+
+    inputOffgridEMS = (event) => { 
+      const { setLoading, kfwValue, ev, setOffgridEMS, offgridEMS, scenarioInDatabase, tabEntries, setTabToSelect, pvOutputkWh, homeStorageSizekWh, homeStorage, setHomeStorage, setHomeStorageSize} = this.context;
+      setOffgridEMS(event.target.checked);
+      setLoading(true)
+
+      if(event.target.checked) {
+        var emsValue = "Ja"
+      } else {
+        var emsValue = "Nein"
+      }
+
+      let tabInTable = tabEntries.find(o => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === emsValue);
+      setTabToSelect(tabInTable.Tab)
+      console.log(tabInTable)
+
+      setTimeout(() => {
+        this.getResult(kfwValue+ev,scenarioInDatabase)
+      }, "500");
+      
+    
+    };
+
+    getResult =(kfw,scenario,noEMSTab) => { 
+      const { setLoading, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, heatpumpCombinedUsage, setOffgridPVPercentageNoEMS, offgridPVPercentageNoEMS, setDatabaseResult, heatpumpType, setTabToSelect, tabToSelect, ev, kfwValue, homeStorageSizekWh, pvOutputkWh, pvOutput, tabEntries, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
+      if(noEMSTab) {
+        var tab = noEMSTab
+      } else {
+        var tab = tabToSelect.toString()
+      }
+
+      axios.get(`https://bosch-endkundentool-api.azurewebsites.net/results`, { 
+        params: { "Document": kfw,
+                  "ScenNo": scenario,
+                  "ConfigNo": heatpumpType.toString(),
+                  "Tab": tab
+                }})
+          .then(res => {
+            if(res.data.data.length != 0) {
+              if(noEMSTab) {
+                this.energyUsageCombined(res.data.data[0])
+              } else {
+                setDatabaseResult(res.data.data[0])
+              }
+
+              setLoading(false)
+            }
+
+            console.log(res.data.data[0])
+            console.log(res)
+            console.log(res.data)
+            console.log(res.data.data.length)
+            
+          })
+    }
+
 
 
     render() {
 
       const { t } = this.props;
       const { overlayToggle } = this.state;
-      const { Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
+      const { offgridEMS, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
 
           return  ( 
           <div>
 
             <Stack direction="row" spacing={1} alignItems="center">
-                <AntSwitch defaultChecked inputProps={{ 'aria-label': 'ant design' }} />
+                <AntSwitch onChange={this.inputOffgridEMS} checked={offgridEMS} inputProps={{ 'aria-label': 'ant design' }} />
             </Stack>
 
 

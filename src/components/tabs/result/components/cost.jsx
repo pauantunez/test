@@ -22,6 +22,10 @@ import pattern from 'patternomaly';
 import {ReactComponent as LightningIcon} from '../../../../assets/img/icons/lightning_chart.svg';
 import {ReactComponent as PVIcon} from '../../../../assets/img/icons/photovoltaic_chart.svg';
 import {ReactComponent as ElectricityIcon} from '../../../../assets/img/icons/electricity_sun_chart.svg';
+import PatternImg from '../../../../assets/img/icons/pattern.svg';
+import PatternRoundImg from '../../../../assets/img/icons/pattern_small_round.svg';
+
+import { BrowserView, MobileView, isBrowser, isMobile, isSafari } from 'react-device-detect';
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title);
 const queryString = window.location.search;
@@ -99,7 +103,6 @@ export const barOptions = {
       },
     },
   };
-  //const barLabels = ['ohne PV', 'mit PV', 'mit PV und Energiemanagement', 'April', 'May', 'June', 'July'];
 
   export const barData = {
     labels,
@@ -128,14 +131,18 @@ class Cost extends React.Component {
             overlayToggle: false,
             imprint: [],
             theme: props.theme,
-            TCO_EUR_a: '965.9769603',
-            OPEX_EUR_a: '-535.055231',
-            CAPEX_EUR_a: '1501.032191',
-            CO2_kg_a: '-885.8828844',
-            TCO_thermal_EUR_a: '591.7784389',
-            Power_kW_PV_MFH: '14',
             results: Array,
             Eta_sh_gas_EDWW_MFH_Brine: String,
+            displayed: props.displayed,
+            electricityCostPVEMSsavings: 0,
+            electricityCostPVsavings: 0,
+            heatpumpPVems: [],
+            runningCostPVonly: [],
+            runningCostPVems: [],
+            totalRunningCostPVonly: 0,
+            totalRunningCostPVems: 0,
+            ranOnce: false,
+            ranceOnceEMS: false
         }
 
         this.onInputchange = this.onInputchange.bind(this);
@@ -144,62 +151,19 @@ class Cost extends React.Component {
     static contextType = AppContext
 
     componentWillMount() {
-
       const { products, btnThemes, fonts, setFwdBtn } = this.context;
-      const productsProps = Object.getOwnPropertyNames(products);
-      var foundTheme = 0;
 
       setFwdBtn(false);
-  
-      if(urlParams.get('theme')) {
-        entryParam = urlParams.get('theme');
-        //alert(entryParam)
-  
-        for(let themes = 0; themes < productsProps.length; themes++) {
-  
-          if(entryParam === productsProps[themes]) {
-            console.log(productsProps[themes])
-  
-            require("../../../../styles/"+productsProps[themes]+".css");
-            
-            selectedTheme = productsProps[themes];
-            /*btnColor = btnThemes[entryParam][0];
-            themeFont = fonts[entryParam][0];
-            labelFont = fonts[entryParam][1];
-            console.log(selectedTheme);*/
-  
-            foundTheme++;
-          } else {
-            require("ignore");
-            console.log("ignore:" + productsProps[themes])
-          }
-          
-        }
-  
-        if(foundTheme === 0) {
-          require("../../../../styles/"+productsProps[0]+".css");
-          selectedTheme = productsProps[0];
-          /*btnColor = btnThemes.bosch[0];
-          themeFont = fonts.bosch[0];
-          labelFont = fonts.bosch[1];*/
-          
-        }
-  
-      } else {
-        require("../../../../styles/"+productsProps[0]+".css");
-        selectedTheme = productsProps[0];
-        /*btnColor = btnThemes.bosch[0];
-        themeFont = fonts.bosch[0];
-        labelFont = fonts.bosch[1];*/
-       
-      }
-
     
-
     }
 
     componentDidMount() {
-        
+      this.runningCostPVonly()
+    }
+
+    componentDidUpdate() {
+      this.resultWithPV()
+      this.resultWithPVandEMS()
     }
 
     inputPower_kW_PV_MFH = (event) => { 
@@ -218,7 +182,6 @@ class Cost extends React.Component {
       this.setState({
         [event.target.name]: event.target.value
       });
-      //alert(event.target.name)
     }
 
     async toggleModal() {
@@ -231,50 +194,190 @@ class Cost extends React.Component {
 
     }
 
-    getResult =() => { 
-      const { Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
-
-      axios.get(`https://bosch-endkundentool-api.azurewebsites.net/results`, { 
-        params: { "TCO_EUR_a": this.state.TCO_EUR_a,
-                  "OPEX_EUR_a": this.state.OPEX_EUR_a,
-                  "CAPEX_EUR_a": this.state.CAPEX_EUR_a,
-                  "CO2_kg_a": this.state.CO2_kg_a,
-                  "TCO_thermal_EUR_a": TCO_thermal_EUR_a,
-                  "Power_kW_PV_MFH": Power_kW_PV_MFH}})
-          .then(res => {
-            //const persons = res.data;
-            //this.setState({ persons });
-            //console.log(res.data);
-            //this.state.results = res.data;
-
-            //console.log(this.state.results)
-
-            //this.state.Eta_sh_gas_EDWW_MFH_Brine = res.data.data[0].Eta_sh_gas_EDWW_MFH_Brine
-            if(res.data.data.length != 0) {
-            var gasBrineResult = res.data.data[0].Eta_sh_gas_EDWW_MFH_Brine.toString().substring(0,4) * 100;
-            var elc_Self_ConsumptionResult = res.data.data[0].elc_Self_Consumption.toString().substring(0,4) * 100;
-            console.log(elc_Self_ConsumptionResult)
-
-            setGasBrine(gasBrineResult)
-            setElc_Self_Consumption(elc_Self_ConsumptionResult)
-
-            }
-
-            console.log(res.data.data[0])
-
-            console.log(res)
-            console.log(res.data)
-            console.log(res.data.data.length)
-            
-          })
+    energyUseEuro =(divided,bar) => { 
+        const { energyUsagekWh, electricityCost, costOverTime } = this.context;
+        var timeToNum;
+        if(this.state.displayed == undefined) {
+           timeToNum = parseInt(costOverTime)
+        } else {
+          if(this.state.displayed == "single") {
+            timeToNum = 1;
+          } else {
+            timeToNum = 20;
+          }
+        }
+       
+        if(!bar) {
+          if(costOverTime === "1") {
+            return '- ' + Math.round(energyUsagekWh * (electricityCost / 100) / 5 * divided * timeToNum).toLocaleString() + ' €';
+          } else {
+            return '- ' + parseInt(this.electricityCostNoPV20Years() / 5 * divided).toLocaleString() + ' €'
+          }
+        } else {
+          return Math.round(energyUsagekWh * (electricityCost / 100) / 5 * divided * timeToNum)
+        }
     }
 
-    energyUseEuro =(divided) => { 
+    energyUseEuroNegative =(multiplier, result) => { 
         const { energyUsagekWh, electricityCost, costOverTime } = this.context;
-        const timeToNum = parseInt(costOverTime)
-        console.log(Math.round(energyUsagekWh * (electricityCost / 100) / 6 * divided * timeToNum).toLocaleString("de-DE"))
+        var timeToNum;
 
-        return Math.round(energyUsagekWh * (electricityCost / 100) / 6 * divided * timeToNum).toLocaleString("de-DE") + ' €';
+        if(this.state.displayed == undefined) {
+           timeToNum = parseInt(costOverTime)
+        } else {
+          if(this.state.displayed == "single") {
+            timeToNum = 1;
+          } else {
+            timeToNum = 20;
+          }
+        }
+       
+        return '+ ' + parseInt(((result / 5) * (multiplier))).toLocaleString() + ' €';
+    }
+
+    electricityCostPV =() => { 
+      const { pvOutput, electricityCostOffGridPercentage, electricityCost } = this.context;
+
+      if(pvOutput == 0) {
+        var pvOutputKW = 4
+      } else if (pvOutput == 1) {
+        var pvOutputKW = 7
+      } else if(pvOutput == 2) {
+        var pvOutputKW = 10
+      } else if(pvOutput == 3) {
+        var pvOutputKW = 14
+      }
+
+      console.log("ELECTRICITY")
+      console.log(parseFloat(electricityCostOffGridPercentage) / 10000)
+      console.log(electricityCostOffGridPercentage)
+
+      return ((parseInt(pvOutputKW) * 1000) * (1 - (parseFloat(electricityCostOffGridPercentage) / 10000)) * (parseFloat(electricityCost) / 100)).toFixed(0)
+    }
+
+    electricityCostPVEMS =() => { 
+      const { setElectricityCostPVEMSsavings, gridRevenue, electricityCostHouseholdPercentage, pvOutput, electricityCostOffGridPercentage, electricityCost } = this.context;
+      
+      if(pvOutput == 0) {
+        var pvOutputKW = 4
+      } else if (pvOutput == 1) {
+        var pvOutputKW = 7
+      } else if(pvOutput == 2) {
+        var pvOutputKW = 10
+      } else if(pvOutput == 3) {
+        var pvOutputKW = 14
+      }
+
+      console.log("ELECTRICITY EMS")
+      console.log(1 - parseFloat(electricityCostHouseholdPercentage / 10000))
+
+      const result = ((parseInt(pvOutputKW) * 1000) * (1 - parseFloat(electricityCostOffGridPercentage / 10000) - (parseFloat(gridRevenue) / 100)) * parseFloat(electricityCost) / 100).toFixed(0);      
+
+      return result
+    }
+
+    electricityCostNoPV20Years =() => { 
+      const { energyUsagekWh, electricityCost } = this.context;
+
+      const result = Math.abs((energyUsagekWh * (parseFloat(electricityCost) / 100)) * (1-(0.02+1) ** 20) / 0.02)
+
+      console.log(energyUsagekWh * (parseFloat(electricityCost) / 100))
+      console.log(Math.abs((energyUsagekWh * (parseFloat(electricityCost) / 100)) * (1-(0.02+1) ** 20) / 0.02))
+
+      return result
+      
+    }
+
+    electricityCostPV20Years =() => {
+      const { PVcostLookupTable, StorageCostLookupTable, pvOutputkWh, homeStorageSize, energyUsagekWh, electricityCost, electricityCostOffGridPercentage } = this.context;
+      var investmentCostResult
+
+      let PVcostInTable = PVcostLookupTable.find(o => o.pv === pvOutputkWh);
+      let StorageCostInTable = StorageCostLookupTable.find(o => o.storage === homeStorageSize);
+
+      if(homeStorageSize === 'none') {
+        investmentCostResult = PVcostInTable.cost
+      } else {
+        investmentCostResult = PVcostInTable.cost + StorageCostInTable.cost
+      }
+
+      console.log(investmentCostResult);
+      
+      const result = Math.abs((1 - (electricityCostOffGridPercentage / 100)) * energyUsagekWh * ((parseFloat(electricityCost) /100) * (1 + 0.02)) * (1 - (0.02 + 1) ** 20) / 0.02)
+
+      console.log(result)
+      
+      return this.electricityCostNoPV20Years()
+    }
+
+    runningCostPVonly =() => {
+      const { PVcostLookupTable, StorageCostLookupTable, pvOutputkWh, homeStorageSize, energyUsagekWh, electricityCost, electricityCostOffGridPercentage } = this.context;
+      var totalRunning = 0;
+
+      if(!this.state.ranOnce) {
+        for (let index = 0; index < 20; index++) {
+
+          if(this.state.runningCostPVonly.length == 0) {
+            this.state.runningCostPVonly.push({expenditure: -Math.abs((1-(electricityCostOffGridPercentage / 100))*4000*((electricityCost/100)*(1+0.02)))})
+            console.log(this.state.runningCostPVonly)
+            
+          } else {
+
+            this.state.runningCostPVonly.push({expenditure: parseFloat(this.state.runningCostPVonly[index-1].expenditure)*(1+0.02)})
+            
+          }
+          
+        }
+
+        for (var i = 0; i < this.state.runningCostPVonly.length; i++) {
+          totalRunning += this.state.runningCostPVonly[i].expenditure
+      }
+
+      console.log(this.state.runningCostPVonly)
+      console.log(totalRunning)
+
+      this.setState({totalRunningCostPVonly: totalRunning})
+      this.setState({ranOnce: true})
+
+      this.runningCostPVems()
+      }
+
+
+    }
+
+    runningCostPVems =() => {
+      const { heatpumpPV, PVcostLookupTable, StorageCostLookupTable, pvOutputkWh, homeStorageSize, energyUsagekWh, electricityCost, electricityCostOffGridPercentage } = this.context;
+      var totalRunning = 0;
+
+      if(!this.state.ranOnceEMS) {
+        for (let index = 0; index < 20; index++) {
+
+          if(this.state.runningCostPVems.length == 0) {
+
+            this.state.runningCostPVems.push({expenditure: Math.abs(heatpumpPV[0].runningCost + (1-((electricityCostOffGridPercentage + 10) / 100)) * 4000 * ((electricityCost / 100) * (1+0.02)))})
+            console.log(this.state.runningCostPVems)
+
+          } else {           
+            this.state.runningCostPVems.push({expenditure: parseFloat(this.state.runningCostPVems[index-1].expenditure)*(1+0.02)})
+          }
+        }
+
+        for (var i = 0; i < this.state.runningCostPVems.length; i++) {
+          totalRunning += this.state.runningCostPVems[i].expenditure
+      }
+
+      console.log(this.state.runningCostPVems)
+      console.log(totalRunning)
+
+      this.setState({totalRunningCostPVems: totalRunning})
+      this.setState({ranOnceEMS: true})
+      }
+
+      return -Math.abs((1-(electricityCostOffGridPercentage / 100))*4000*((electricityCost/100)*(1+0.02)))
+    }
+
+    runningCostPVemsDisplay =() => {
+      return 8888
     }
 
     inputCostOverTime = (event) => { 
@@ -282,21 +385,73 @@ class Cost extends React.Component {
         setCostOverTime(event.target.value);
     };
 
+    resultWithPV =() => {
+      const { costOverTime, setElectricityCostPVsavings, gridRevenue, electricityCostHouseholdPercentage, pvOutput, electricityCostOffGridPercentage, electricityCost } = this.context;
+      var result;
+
+      if(costOverTime === "1") {
+        result = this.electricityCostPV() - this.energyUseEuro(5,true)
+      } else {
+        result = parseInt((parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVonly))
+
+      }
+
+      if(this.state.electricityCostPVsavings != result) {
+        this.setState({ electricityCostPVsavings: result })
+        setElectricityCostPVsavings(result)
+      }
+
+      return result
+    }
+
+    resultWithPVandEMS =() => {
+      const { costOverTime, setElectricityCostPVEMSsavings, gridRevenue, electricityCostHouseholdPercentage, pvOutput, electricityCostOffGridPercentage, electricityCost } = this.context;
+      var result;
+
+      if(costOverTime === "1") {
+        result = this.electricityCostPVEMS() - this.energyUseEuro(5,true)
+      } else {
+        result = parseInt((parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVems))
+
+      }
+
+      if(this.state.electricityCostPVEMSsavings != result) {
+        this.setState({ electricityCostPVEMSsavings: result })
+        setElectricityCostPVEMSsavings(result)
+      }
+
+      return result
+    }
+
+    whichChartLegend =() => {
+      const { costOverTime, electricityCostPVsavings, electricityCostPVEMSsavings } = this.context;
+      
+      if(costOverTime==="1") {
+        return electricityCostPVsavings
+      } else {
+        return electricityCostPVEMSsavings
+      }
+    }
+
     render() {
 
       const { t } = this.props;
       const { overlayToggle } = this.state;
-      const { Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
+      const { electricityCostPVsavings, electricityCostPVEMSsavings, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
 
           return  ( 
           <div>
-
             <div class="flexRow" style={{marginBottom: '30px'}}>
                 <div>
                     <label>
-                    <input type="radio" name="heating" value="1" class="card-input-element" checked={costOverTime === "1"} onChange={this.inputCostOverTime} />
-                        <div class="panel panel-default card-input-wide background-light-grey" style={{height: '40px', width: '250px', fontSize: '14px', margin: '0', border: 'none'}}>
-                            <div class="panel-body" style={{padding: '11px'}}>
+                    {this.state.displayed === undefined &&
+                      <input type="radio" name="heating" value="1" class="card-input-element" checked={costOverTime === "1"} onChange={this.inputCostOverTime} />
+                    }
+                    {this.state.displayed === "single" &&
+                      <input type="radio" name="single-year" id="single-year" value="1" class="card-input-element" checked="true" />
+                    }
+                    <div class="panel panel-default card-input-wide background-light-grey" style={{height: '40px', width: '100%', fontSize: '14px', margin: '0', border: 'none'}}>
+                            <div class="panel-body">
                                 Gesamtkosten pro Jahr
                             </div>
                         </div>
@@ -304,9 +459,14 @@ class Cost extends React.Component {
                 </div>
                 <div>
                     <label>
-                    <input type="radio" name="heating" value="20" class="card-input-element" checked={costOverTime === "20"} onChange={this.inputCostOverTime} />
-                        <div class="panel panel-default card-input-wide background-light-grey" style={{height: '40px', width: '250px', fontSize: '14px', margin: '0', border: 'none'}}>
-                            <div class="panel-body" style={{padding: '11px'}}>
+                    {this.state.displayed === undefined &&
+                      <input type="radio" name="heating" value="20" class="card-input-element" checked={costOverTime === "20"} onChange={this.inputCostOverTime} />
+                    }
+                    {this.state.displayed === "multi" &&
+                      <input type="radio" name="multi-year" id="multi-year" value="20" class="card-input-element" checked="true" />
+                    }
+                    <div class="panel panel-default card-input-wide background-light-grey" style={{height: '40px', width: '100%', fontSize: '14px', margin: '0', border: 'none'}}>
+                            <div class="panel-body">
                                 Gesamtkosten über 20 Jahre
                             </div>
                         </div>
@@ -317,43 +477,93 @@ class Cost extends React.Component {
             
             <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
                 
-                <div style={{display: 'flex', flexDirection: 'row', width: '100%', marginLeft: '110px', zIndex: '99999'}}>
-                    <div style={{display: 'flex', width: '73px', height: '219px', background: '#007BC0', color: 'white'}}>
+                <div style={{display: 'flex', flexDirection: 'row', width: '100%', marginLeft: '17%', zIndex: '99999'}}>
+                    <div style={{display: 'flex', width: '73px', height: '110px', background: '#007BC0', color: 'white'}}>
                         <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%', fontSize: '12px', textAlign: 'center'}}>
-                            { this.energyUseEuro(6) }
+                            { costOverTime=="1" && this.energyUseEuro(5) }
+                            
+                            { costOverTime=="20" && 
+                              <span>-&nbsp;</span>
+                            }
+                            { costOverTime=="20" && 
+                               parseInt(this.electricityCostNoPV20Years()).toLocaleString() 
+                            }
+                            { costOverTime=="20" && 
+                              <span>&nbsp;€</span>
+                            }
                         </div>
                         
                     </div>
-                    <div style={{display: 'flex', flexDirection: 'column', width: '73px', height: '219px', color: 'white', marginLeft: '72px'}}>
-                        <div style={{width: '100%', height: '44%', textAlign: 'center'}} class="pattern">
+                    <div style={{display: 'flex', flexDirection: 'column', marginTop: '110px', width: '73px', height: '108px', color: 'white', marginLeft: '15%'}}>
+
+                      { isSafari &&
+                        <div style={{width: '100%', height: '100%', textAlign: 'center'}} class="pattern-safari">
                             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#007BC0', fontSize: '12px', width: '100%', height: '100%'}}>
-                                <span style={{background: '#FFF', padding: '3px', fontFamily: 'Bosch-Bold'}}>1.225 €</span>
+                                <span style={{background: '#FFF', padding: '3px', fontFamily: 'Bosch-Bold'}}>
+                                { costOverTime=="1" && this.resultWithPV() }
+                                { costOverTime=="1" && <span>&nbsp;€</span> }
+                                { costOverTime=="20" && parseInt((parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVonly)).toLocaleString() }
+                                { costOverTime=="20" && 
+                                  <span>&nbsp;€</span>
+                                }
+                                </span>
                             </div>
                         </div>
-                        <div style={{width: '100%', height: '56%', marginTop: '3px', textAlign: 'center', background: '#007BC0'}} >
-                            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFF', fontSize: '12px', width: '100%', height: '100%'}}>1.575 €</div>
+                      }
+                      { !isSafari &&
+                        <div style={{width: '100%', height: '100%', top: '0%', textAlign: 'center'}} class="pattern">
+                            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#007BC0', fontSize: '12px', width: '100%', height: '100%'}}>
+                                <span style={{background: '#FFF', padding: '3px', fontFamily: 'Bosch-Bold'}}>
+                                { costOverTime=="1" && this.resultWithPV() }
+                                { costOverTime=="1" && <span>&nbsp;€</span> }
+                                { costOverTime=="20" && parseInt((parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVonly)).toLocaleString() }
+                                { costOverTime=="20" && 
+                                  <span>&nbsp;€</span>
+                                }
+                                  </span>
+                            </div>
                         </div>
+                      }
+
+
                     </div>
-                    <div style={{display: 'flex', flexDirection: 'column', width: '73px', height: '219px', color: 'white', marginLeft: '72px'}}>
-                        <div style={{width: '100%', height: '50%', textAlign: 'center'}} class="pattern">
+                    <div style={{display: 'flex', flexDirection: 'column', marginTop: '110px', width: '73px', height: '108px', color: 'white', marginLeft: '15%'}}>
+
+                      { isSafari &&
+                        <div style={{width: '100%', height: '100%', textAlign: 'center'}} class="pattern-safari">
                             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#007BC0', fontSize: '12px', width: '100%', height: '100%'}}>
-                                <span style={{background: '#FFF', padding: '3px', fontFamily: 'Bosch-Bold'}}>1.400 €</span>
+                                <span style={{background: '#FFF', padding: '3px', fontFamily: 'Bosch-Bold'}}>
+                                { costOverTime=="1" && this.resultWithPVandEMS() }
+                                { costOverTime=="1" && <span>&nbsp;€</span> }
+                                { costOverTime=="20" && parseInt((parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVems)).toLocaleString() }
+                                { costOverTime=="20" && 
+                                  <span>&nbsp;€</span>
+                                }
+                                </span>
                             </div>
                         </div>
-                        <div style={{width: '100%', height: '50%', marginTop: '3px', textAlign: 'center', background: '#007BC0'}} >
-                            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFF', fontSize: '12px', width: '100%', height: '100%'}}>1.400 €</div>
+                      }
+                      { !isSafari &&
+                        <div style={{width: '100%', height: '100%', textAlign: 'center'}} class="pattern">
+                            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#007BC0', fontSize: '12px', width: '100%', height: '100%'}}>
+                                <span style={{background: '#FFF', padding: '3px', fontFamily: 'Bosch-Bold'}}>
+                                { costOverTime=="1" && this.resultWithPVandEMS() }
+                                { costOverTime=="1" && <span>&nbsp;€</span> }
+                                { costOverTime=="20" && parseInt((parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVems)).toLocaleString() }
+                                { costOverTime=="20" && 
+                                  <span>&nbsp;€</span>
+                                }
+                                </span>
+                            </div>
                         </div>
+                      }
                     </div>
                 </div>
 
-                <div style={{position: 'absolute', zIndex: '99998'}}>
+                <div class="cost-chart-width" style={{position: 'absolute', zIndex: '99998'}}>
                     <div style={{display: 'flex', flexDirection: 'row'}}>
-                        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '219px', textAlign: 'right', fontFamily: 'Bosch-Regular', fontSize: '12px'}}>
-                            <div style={{height: '20px'}}>
-                                { this.energyUseEuro(6) }
-                            
-                            </div>
-                            <div style={{height: '20px'}}>
+                        <div class="bar-chart-left-legend">
+                            <div>
                                 { this.energyUseEuro(5) }
                                 
                             </div>
@@ -371,51 +581,70 @@ class Cost extends React.Component {
                             </div>
                             <div>
                                 { this.energyUseEuro(1) }
-                                
                             </div>
                             <div>
                                 { this.energyUseEuro(0) }
-                                
+                            </div>
+                            <div>
+                                { this.energyUseEuroNegative(1,this.whichChartLegend()) }
+                            </div>
+                            <div>
+                                { this.energyUseEuroNegative(2,this.whichChartLegend()) }
+                            </div>
+                            <div>
+                                { this.energyUseEuroNegative(3,this.whichChartLegend()) }
+                            </div>
+                            <div>
+                                { this.energyUseEuroNegative(4,this.whichChartLegend()) }
+                            </div>
+                            <div>
+                                { this.energyUseEuroNegative(5,this.whichChartLegend()) }
                             </div>
                         </div>
-                        <div style={{display: 'flex', flexDirection: 'column', marginLeft: '3px'}}>
-                            <div style={{marginTop: '7px', height: '1px', width: '420px', borderBottom: '1px solid #EFF1F2'}}></div>
-                            <div style={{marginTop: '34px', height: '1px', width: '420px', borderBottom: '1px solid #EFF1F2'}}></div>
-                            <div style={{marginTop: '36px', height: '1px', width: '420px', borderBottom: '1px solid #EFF1F2'}}></div>
-                            <div style={{marginTop: '31px', height: '1px', width: '420px', borderBottom: '1px solid #EFF1F2'}}></div>
-                            <div style={{marginTop: '29px', height: '1px', width: '420px', borderBottom: '1px solid #EFF1F2'}}></div>
-                            <div style={{marginTop: '31px', height: '1px', width: '420px', borderBottom: '1px solid #EFF1F2'}}></div>
-                            <div style={{marginTop: '37px', height: '1px', width: '420px', borderBottom: '1px solid #EFF1F2'}}></div>
+                        <div data-html2canvas-ignore class="cost-chart-width" style={{display: 'flex', flexDirection: 'column', marginLeft: '3px'}}>
+                            <div class="cost-chart-width" style={{marginTop: '7px', height: '1px', width: '480px', borderBottom: '1px solid #EFF1F2'}}></div>
+                            <div class="cost-chart-width" style={{marginTop: '19px', height: '1px', width: '480px', borderBottom: '1px solid #EFF1F2'}}></div>
+                            <div class="cost-chart-width" style={{marginTop: '18px', height: '1px', width: '480px', borderBottom: '1px solid #EFF1F2'}}></div>
+                            <div class="cost-chart-width" style={{marginTop: '18px', height: '1px', width: '480px', borderBottom: '1px solid #EFF1F2'}}></div>
+                            <div class="cost-chart-width" style={{marginTop: '18px', height: '1px', width: '480px', borderBottom: '1px solid #EFF1F2'}}></div>
+                            <div class="cost-chart-width" style={{marginTop: '18px', height: '1px', width: '480px', borderBottom: '1px solid #000'}}></div>
+                            <div class="cost-chart-width" style={{marginTop: '19px', height: '1px', width: '480px', borderBottom: '1px solid #EFF1F2'}}></div>
+                            <div class="cost-chart-width" style={{marginTop: '19px', height: '1px', width: '480px', borderBottom: '1px solid #EFF1F2'}}></div>
+                            <div class="cost-chart-width" style={{marginTop: '18px', height: '1px', width: '480px', borderBottom: '1px solid #EFF1F2'}}></div>
+                            <div class="cost-chart-width" style={{marginTop: '18px', height: '1px', width: '480px', borderBottom: '1px solid #EFF1F2'}}></div>
+                            <div class="cost-chart-width" style={{marginTop: '18px', height: '1px', width: '480px', borderBottom: '1px solid #EFF1F2'}}></div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div style={{display: 'flex', flexDirection: 'row', width: '100%', marginLeft: '105px'}}>
-                <div style={{display: 'flex', width: '73px', color: 'white'}}>
-                    <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', marginTop: '6px', width: '100%', height: '100%', fontSize: '12px', color: '#000', textAlign: 'center'}}>
-                        <LightningIcon />
-                        <div style={{marginTop: '5px'}}>ohne PV</div>
+            <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
+                
+                <div style={{display: 'flex', flexDirection: 'row', width: '100%', marginTop: '5px', marginLeft: '17%', zIndex: '99999'}}>
+                    <div style={{display: 'flex', width: '73px', height: '40px', color: '#000'}}>
+                        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%', fontSize: '12px', textAlign: 'center'}}>
+                          <LightningIcon />
+                           ohne PV
+                        </div>
                     </div>
-                </div>
-                <div style={{display: 'flex', width: '73px', color: 'white', marginLeft: '75px'}}>
-                    <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', marginTop: '6px', width: '100%', height: '100%', fontSize: '12px', color: '#000', textAlign: 'center'}}>
-                        <PVIcon />
-                        <div style={{marginTop: '5px'}}>mit PV</div>
+                    <div style={{display: 'flex', width: '73px', height: '40px', color: '#000', marginLeft: '15%'}}>
+                        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%', fontSize: '12px', textAlign: 'center'}}>
+                          <PVIcon />
+                           mit PV
+                        </div>
                     </div>
-                </div>
-                <div style={{display: 'flex', width: '73px', color: 'white', marginLeft: '72px'}}>
-                    <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center',  marginTop: '13px', width: '100%', height: '100%', fontSize: '12px', color: '#000', textAlign: 'center'}}>
-                        <div style={{position: 'absolute'}}>
+                    <div style={{display: 'flex', width: '73px', height: '40px', color: '#000', marginLeft: '15%'}}>
+                        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', height: '100%', fontSize: '12px', textAlign: 'center'}}>
                             <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
                                 <PVIcon />
                                 <div style={{display: 'block', margin: '0 2px -2px 2px'}}>+</div>
                                 <ElectricityIcon />
                             </div>
-                            <div style={{marginTop: '5px'}}>mit PV und<br />Energiemanagement</div>
+                           mit PV und EMS
                         </div>
                     </div>
                 </div>
+
             </div>
 
             <div style={{display: 'flex', flexDirection: 'column', marginTop: '25px', fontFamily: 'Bosch-Regular', fontSize: '12px'}}>

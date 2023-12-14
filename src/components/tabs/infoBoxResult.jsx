@@ -33,53 +33,97 @@ class InfoBoxResult extends React.Component {
     static contextType = AppContext
 
     componentDidMount() {
+
+        this.breakEvenPoint()
+    }
+
+    energyUsageCombined = () => {
+        const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+        var Avg_Eff_JAZ_HP;
+
+        if(heatpumpType === "1") {
+          Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_A_W_MFH
+        } else {
+          Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_B_W_MFH
+        }
+
+        //Enegery usage heatpump
+        var energyUsageHeatpump = (parseFloat(EGen_sh_kWh_HP_A_W_MFH) + parseFloat(EGen_sh_kWh_HP_B_W_MFH) + parseFloat(EGen_hw_kWh_HP_A_W_MFH) + parseFloat(EGen_hw_kWh_HP_B_W_MFH)) / parseFloat(Avg_Eff_JAZ_HP);
+        console.log("RESULT: "+ energyUsageHeatpump);
+
+        //Energy usage heating rod
+        var energyUsageHeatingRod = (parseFloat(EGen_sh_kWh_EDWW_MFH) + parseFloat(EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(EGen_hw_kWh_EDWW_MFH) + parseFloat(EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
+        console.log("RESULT HEATING ROD: "+ energyUsageHeatingRod);
+
+        return energyUsageHeatpump+energyUsageHeatingRod+parseInt(energyUsagekWh)+odometerIncreaseKWH;
+    }
+
+    pvUsagePercentage = (type) => {
+        const { noEMSPercentageOffGrid, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;  
+  
+        var pvUsagePercent = (parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(heatpumpCombinedUsage) * 100;
+        console.log("PV USAGE: "+ pvUsagePercent);
+  
+        return pvUsagePercent;
+    }
+
+    gridUsagePercentage = (type) => {
+      const { infoBoxOffGridGridUsage, setInfoBoxOffGridGridUsage, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+      
+      var gridUsagePercent = 100 - ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(heatpumpCombinedUsage) * 100);
+
+      return gridUsagePercent;
+    }
+
+    breakEvenPV = () => {
+        const { heatpumpPV, heatpumpPVems } = this.context;
+        let yearBreakEven = heatpumpPV.findIndex(n => n.expenditure > 0);
+
+        return yearBreakEven;
+    }
+
+    breakEvenPVems = () => {
+        const { heatpumpPV, heatpumpPVems } = this.context;
+        let yearBreakEven = heatpumpPVems.findIndex(n => n.expenditure > 0);
         
+        return yearBreakEven;
+    }
+
+    breakEvenPoint = () => {
+        const { heatpumpPV, heatpumpPVems } = this.context;
+
+        for (let index = 0; index < heatpumpPV.length; index++) {
+            if(heatpumpPVems[index].expenditure > heatpumpPV[index].expenditure) {
+                return index
+            }
+        }
     }
     
 
     render() {
 
       const { t } = this.props;
-      const { BuildingEnegeryStandard, setBuildingEnegeryStandard, kfwValue, insulationValue, setInsulationValue, setKfwValue, OilLNGValue, setOilLNGValue, TCO_thermal_EUR_a, disabledOilUsage, OilUsageLiters, LNGUsage, disabledLNGUsage } = this.context;
-    
-      const LightTooltip = styled(({ className, ...props }) => (
-        <Tooltip {...props} classes={{ popper: className }} />
-        ))(({ theme }) => ({
-            [`& .${tooltipClasses.arrow}`]: {
-                color: '#FFF',
-                fontSize: 16,
-                filter: 'drop-shadow(-2px 1px 1px rgba(130,130,130,0.7))'
-                
-            },
-            [`& .${tooltipClasses.tooltipArrow}`]: {
-                boxShadow: '0px 0px 6px 0px rgba(0,0,0,0.6)',
-                
-            },
-            [`& .${tooltipClasses.tooltip}`]: {
-            backgroundColor: theme.palette.common.white,
-            color: '#000',
-            boxShadow: '0px 0px 6px 0px rgba(0,0,0,0.6)',
-            borderRadius: '0px',
-            fontSize: 11,
-            fontFamily: 'Bosch-Regular',
-            lineHeight: '1.4',
-            padding: '6px 6px 6px 8px'
-            },
-        }));
+      const { costOverTime, electricityCostPVsavings, electricityCostPVEMSsavings, offgridEMS, noEMSPercentageOffGrid, householdNoEMSpvPercent, infoBoxOffGridGridUsage, infoBoxHouseholdGridFeed, infoBoxCombinedHouseholdUsage, BuildingEnegeryStandard, setBuildingEnegeryStandard, kfwValue, insulationValue, setInsulationValue, setKfwValue, OilLNGValue, setOilLNGValue, TCO_thermal_EUR_a, disabledOilUsage, OilUsageLiters, LNGUsage, disabledLNGUsage } = this.context;
         
           return  ( 
-            <Box component="span" class="infobox-container" style={{fontSize: '16px', fontWeight: '400', boxShadow: 'none', marginLeft: '0px', maxWidth: '500px', padding: '16px'}}>
+            <Box component="span" class="infobox-container" style={{fontSize: '16px', fontWeight: '400', boxShadow: 'none', marginLeft: '0px', /*maxWidth: '500px',*/ padding: '16px'}}>
                 <div>
 
                     {this.state.boxType === "left" &&
                     <div>
                         <div class="infobox-row-container">
                             <div class="infobox-row" style={{display: 'block', lineHeight: '24px', borderBottom: 'none'}}>
-                            Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>1.225 € Stromkosten</strong> pro Jahr sparen.
+                            Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{parseInt(electricityCostPVsavings).toLocaleString()} € Stromkosten</strong>
+                            { costOverTime=="1" && <span>&nbsp;pro Jahr sparen.</span> }
+                            { costOverTime=="20" && <span>&nbsp;über 20 Jahre sparen.</span> }
                             <br /><br />
-                            Mit einer <strong>PV-Anlage und einem Energiemanagementsystem</strong> lassen sich bis zu <strong>1.400 € Stromkosten</strong> pro Jahr sparen.
+                            Mit einer <strong>PV-Anlage und einem Energiemanagementsystem</strong> lassen sich bis zu <strong>{parseInt(electricityCostPVEMSsavings).toLocaleString()} € Stromkosten</strong>
+                            { costOverTime=="1" && <span>&nbsp;pro Jahr sparen.</span> }
+                            { costOverTime=="20" && <span>&nbsp;über 20 Jahre sparen.</span> }
                             <br /><br />
-                            Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis um bis zu <strong>175 €</strong> pro Jahr.
+                            { costOverTime=="20" && 
+                                <span>Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis um bis zu <strong>{parseInt(electricityCostPVEMSsavings - electricityCostPVsavings).toLocaleString()} €</strong> über 20 Jahre.</span>
+                            }
                             </div>
                             
                         </div>
@@ -90,11 +134,11 @@ class InfoBoxResult extends React.Component {
                     <div>
                         <div class="infobox-row-container">
                             <div class="infobox-row" style={{display: 'block', lineHeight: '24px', borderBottom: 'none'}}>
-                            Die Investition in eine <strong>PV-Anlage</strong> hat sich nach ca. <strong>19 Jahren</strong> amortisiert.
+                            Die Investition in eine <b>PV-Anlage</b> hat sich nach ca. <strong>{this.breakEvenPV()} Jahren</strong> amortisiert.
                             <br />
-                            Die Investition in eine <strong>PV-Anlage</strong> hat sich durch den Einsatz eines <strong>Energiemanagementsystems</strong> nach ca. <strong>14 Jahren</strong> amortisiert.
+                            Die Investition in eine <strong>PV-Anlage</strong> hat sich durch den Einsatz eines <strong>Energiemanagementsystems</strong> nach ca. <strong>{this.breakEvenPVems()} Jahren</strong> amortisiert.
                             <br />
-                            Die zusätzlichen Kosten für ein <strong>Energiemanagementsystem</strong> haben sich bereits nach ca. <strong>5 Jahren</strong> bezahlt gemacht.
+                            Die zusätzlichen Kosten für ein <strong>Energiemanagementsystem</strong> haben sich bereits nach ca. <strong>{this.breakEvenPoint()} Jahren</strong> bezahlt gemacht.
                             </div>
                             
                         </div>
@@ -105,9 +149,9 @@ class InfoBoxResult extends React.Component {
                     <div>
                         <div class="infobox-row-container">
                             <div class="infobox-row" style={{display: 'block', lineHeight: '24px', fontSize: '14px', borderBottom: 'none'}}>
-                            <h3 style={{marginBlockStart: '0', marginBlockEnd: '8px'}}>Stromverbrauch gesamt:<br />8.000 kWh</h3>
+                            <h3 style={{marginBlockStart: '0', marginBlockEnd: '8px'}}>Stromverbrauch gesamt: {parseFloat(this.energyUsageCombined().toLocaleString())} kWh</h3>
                             
-                            Der errechnete Stromverbrauch aufgeteilt auf die großen Verbraucher, Wärmepumpe, E-Auto und Haushalt​.
+                            Der errechnete Stromverbrauch aufgeteilt auf die großen Verbraucher, Wärmepumpe, E-Auto und Haushalt.
                             </div>
                             
                         </div>
@@ -118,13 +162,26 @@ class InfoBoxResult extends React.Component {
                     <div>
                         <div class="infobox-row-container">
                             <div class="infobox-row" style={{display: 'block', lineHeight: '24px', fontSize: '14px', borderBottom: 'none'}}>
-                            <h3 style={{marginBlockStart: '0', marginBlockEnd: '8px'}}>Autarkiegrad: ca. 65%</h3>
+                            <h3 style={{marginBlockStart: '0', marginBlockEnd: '8px'}}>Autarkiegrad: ca. {this.pvUsagePercentage().toFixed(2)}%</h3>
                             
-                            Das bedeutet: bis zu <strong>65%</strong> Ihres Gesamtstrom-verbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
+                            Das bedeutet: bis zu <strong>{this.pvUsagePercentage().toFixed(2)}%</strong> Ihres Gesamtstrom-verbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
                             <br />
-                            <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>45%.</strong>
+                            <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca.&nbsp; 
+                            {offgridEMS == false &&
+                                <strong>{this.pvUsagePercentage().toFixed(2)}%</strong>
+                            }
+                            {offgridEMS == true &&
+                                <strong>{parseFloat(noEMSPercentageOffGrid).toFixed(2)}%.</strong>
+                            }
                             <br />
-                            Ca. <strong>35%</strong> Ihres Gesamtstromverbrauchs beziehen Sie durch das <strong>öffentliche Stromnetz.</strong>
+                            Ca.&nbsp;
+                            {offgridEMS == false &&
+                                <strong>{parseFloat(this.gridUsagePercentage()).toFixed(2)}%</strong>
+                            }
+                            {offgridEMS == true &&
+                                <strong>{parseFloat(this.gridUsagePercentage()).toFixed(2)}%</strong>
+                            }
+                            &nbsp;Ihres Gesamtstromverbrauchs beziehen Sie durch das <strong>öffentliche Stromnetz.</strong>
                             </div>
                             
                         </div>
@@ -135,13 +192,20 @@ class InfoBoxResult extends React.Component {
                     <div>
                         <div class="infobox-row-container">
                             <div class="infobox-row" style={{display: 'block', lineHeight: '24px', fontSize: '14px', borderBottom: 'none'}}>
-                            <h3 style={{marginBlockStart: '0', marginBlockEnd: '8px'}}>Eigenverbrauchsanteil: ca. 45%</h3>
+                            <h3 style={{marginBlockStart: '0', marginBlockEnd: '8px'}}>Eigenverbrauchsanteil: ca. {parseFloat(householdNoEMSpvPercent).toFixed(2)}%</h3>
                             
-                            Das bedeutet: bis zu <strong>45%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
+                            Das bedeutet: bis zu <strong>{parseFloat(householdNoEMSpvPercent).toFixed(2)}%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
                             <br />
-                            <strong>Mit Energiemanagementsystem</strong> lässt sich der <strong>Eigenverbrauchsanteil</strong> auf bis zu <strong>65%</strong> erhöhen.
+                            <strong>Mit Energiemanagementsystem</strong> lässt sich der <strong>Eigenverbrauchsanteil</strong> auf bis zu <strong>{parseFloat(infoBoxCombinedHouseholdUsage).toFixed(2)}%</strong> erhöhen.
                             <br />
-                            Ca. <strong>55%</strong> Ihres eigens produzierten PV-Stroms speisen Sie in Sie ins <strong>öffentliche Stromnetz</strong> ein.
+                            Ca.&nbsp;
+                            {offgridEMS == false &&
+                                <strong>{parseFloat(100 - parseFloat(householdNoEMSpvPercent)).toFixed(2)}%</strong>
+                            }
+                            {offgridEMS == true &&
+                                <strong>{parseFloat(infoBoxHouseholdGridFeed).toFixed(2)}%</strong>
+                            }
+                            &nbsp;Ihres eigens produzierten PV-Stroms speisen Sie in Sie ins <strong>öffentliche Stromnetz</strong> ein.
                             </div>
                             
                         </div>

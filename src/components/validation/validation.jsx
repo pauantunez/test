@@ -23,6 +23,10 @@ class ValidateFields extends React.Component {
     componentDidMount() {
         
     }
+
+    validateFields() {
+        
+    }
     
 
     render() {

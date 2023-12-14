@@ -22,8 +22,6 @@ import Button from '@mui/material/Button';
 
 import { withTranslation } from 'react-i18next';
 
-
-
 var entryParam;
 var foundTheme;
 var btnFont;
@@ -81,8 +79,25 @@ class HeatDistribution extends React.Component {
     };
 
     inputHeatingDistribution = (event) => { 
-        const { heatDistributionValue, setHeatDistribution, setFwdBtn, steps, setSteps, activeView} = this.context;
+        const { setPreHeatTempOption, preHeatTempOption, buildingTypePreHeatOption, heatDistributionValue, setHeatDistribution, kfwValue, setFwdBtn, steps, setSteps, activeView} = this.context;
+        
         setHeatDistribution(event.target.value);
+
+        let preHeatOptionValue = buildingTypePreHeatOption.find(o => o.buildingType === kfwValue);
+
+        if(preHeatOptionValue.option2 === "-") {
+            setPreHeatTempOption(1)
+            console.log(preHeatOptionValue.option1)
+        } else {
+
+            if(event.target.value == "Radiator") {
+              setPreHeatTempOption(1)
+              console.log(preHeatOptionValue.option1)
+            } else {
+              setPreHeatTempOption(2)
+              console.log(preHeatOptionValue.option2)
+            }
+        }
 
         setFwdBtn(false)
         steps[activeView] = false;
@@ -246,7 +261,10 @@ class HeatDistribution extends React.Component {
                 <div class="cardContent">
                     <div class="flexContent">
                         <div>
-                            <h3 class="cardHeadline">Wärmeverteilsystem</h3>
+                            <div style={{display: 'flex', flexDirection: 'row'}}>
+                                <div class="cardIconInset"><HeatLarge style={{marginLeft: '10px', width: '55px'}} /></div>
+                                <h3 class="cardHeadline">Wärmeverteilsystem</h3>
+                            </div>
                             <span class="cardDescription">Wie werden Ihre Räume beheizt?</span>    
                         </div>
                         <div class="flexRow">

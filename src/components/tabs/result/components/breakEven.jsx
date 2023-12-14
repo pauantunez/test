@@ -34,119 +34,6 @@ var fontHeadline;
 var fontRegular;
 var btnColor;
 
-const datapoints = [-21300, null, null, null, null, null, null, 0, null, null, null, 8000];
-const datapoints2 = [-29300, null, null, null, null, null, null, 0, null, null, null, 17000];
-const datapoints3 = [0, null, null, null, null, null, null, 0, null, null, null, 0];
-const lineData = {
-  //labels: ["0", "22"],
-  labels: ["0", "2", "4", "6", "8", "10", "12", "14", "16", "18", "20", "22"],
-  datasets: [
-    {
-      label: false,
-      data: datapoints,
-      borderColor: '#18837E',
-      backgroundColor: '#18837E',
-      fill: false,
-      cubicInterpolationMode: 'monotone',
-      tension: 0.8,
-      spanGaps: true,
-      pointStyle: 'circle',
-      pointRadius: 5,
-      pointHoverRadius: 5
-    },
-    {
-        label: false,
-        data: datapoints2,
-        borderColor: '#007BC0',
-        backgroundColor: '#007BC0',
-        fill: false,
-        cubicInterpolationMode: 'monotone',
-        tension: 0.8,
-        spanGaps: true,
-        pointStyle: 'circle',
-        pointRadius: 5,
-        pointHoverRadius: 5,
-      },
-      {
-        label: false,
-        data: datapoints3,
-        borderColor: '#9DC9FF',
-        borderDash: [5, 5],
-        fill: false,
-        cubicInterpolationMode: 'monotone',
-        tension: 0.4,
-        spanGaps: true,
-        pointStyle: false
-      }
-  ]
-};
-
-const lineOptions = {
-  responsive: true,
-  plugins: {
-    legend: {
-      display: false,
-      position: 'top',
-    },
-    title: {
-      display: false,
-      text: 'Chart.js Line Chart',
-    },
-    tooltip: {
-        enabled: false
-    },
-    datalabels: {
-        display: false
-    }
-  },
-  animations: false,
-  /*animations: {
-    tension: {
-      duration: 1000,
-      easing: 'linear',
-      from: 1,
-      to: 0,
-      loop: true
-    }
-  },*/
-  scales: {
-    x: {
-      grid: {
-        display: false
-      },
-      border: {
-        display: false
-      },
-      ticks: {
-        color: '#000',
-        font: {
-            size: 12,
-            family: 'Bosch-Regular'
-        }
-      }
-    },
-    y: {
-      min: -30000,
-      max: 20000,
-      border: {
-        display: false
-      },
-      ticks: {
-        stepSize: 10000,
-        color: '#000',
-        font: {
-            size: 12,
-            family: 'Bosch-Regular'
-        },
-        reverse: true,
-        callback: function(value, index, ticks) {
-            return value.toLocaleString('de-DE') + ' €';
-        }
-      }
-  }
-  }
-};
-
 export const options = {
     plugins: {
       title: {
@@ -211,10 +98,9 @@ export const barOptions = {
           }
       },
     },
-  };
-  //const barLabels = ['ohne PV', 'mit PV', 'mit PV und Energiemanagement', 'April', 'May', 'June', 'July'];
+};
 
-  export const barData = {
+export const barData = {
     labels,
     datasets: [
       {
@@ -230,7 +116,7 @@ export const barOptions = {
         barThickness: 60,
       },
     ],
-  };
+};
 
 class BreakEven extends React.Component {
   
@@ -241,14 +127,9 @@ class BreakEven extends React.Component {
             overlayToggle: false,
             imprint: [],
             theme: props.theme,
-            TCO_EUR_a: '965.9769603',
-            OPEX_EUR_a: '-535.055231',
-            CAPEX_EUR_a: '1501.032191',
-            CO2_kg_a: '-885.8828844',
-            TCO_thermal_EUR_a: '591.7784389',
-            Power_kW_PV_MFH: '14',
             results: Array,
             Eta_sh_gas_EDWW_MFH_Brine: String,
+            displayLineChart: false
         }
 
         this.onInputchange = this.onInputchange.bind(this);
@@ -257,62 +138,32 @@ class BreakEven extends React.Component {
     static contextType = AppContext
 
     componentWillMount() {
-
       const { products, btnThemes, fonts, setFwdBtn } = this.context;
-      const productsProps = Object.getOwnPropertyNames(products);
-      var foundTheme = 0;
 
       setFwdBtn(false);
-  
-      if(urlParams.get('theme')) {
-        entryParam = urlParams.get('theme');
-        //alert(entryParam)
-  
-        for(let themes = 0; themes < productsProps.length; themes++) {
-  
-          if(entryParam === productsProps[themes]) {
-            console.log(productsProps[themes])
-  
-            require("../../../../styles/"+productsProps[themes]+".css");
-            
-            selectedTheme = productsProps[themes];
-            /*btnColor = btnThemes[entryParam][0];
-            themeFont = fonts[entryParam][0];
-            labelFont = fonts[entryParam][1];
-            console.log(selectedTheme);*/
-  
-            foundTheme++;
-          } else {
-            require("ignore");
-            console.log("ignore:" + productsProps[themes])
-          }
-          
-        }
-  
-        if(foundTheme === 0) {
-          require("../../../../styles/"+productsProps[0]+".css");
-          selectedTheme = productsProps[0];
-          /*btnColor = btnThemes.bosch[0];
-          themeFont = fonts.bosch[0];
-          labelFont = fonts.bosch[1];*/
-          
-        }
-  
-      } else {
-        require("../../../../styles/"+productsProps[0]+".css");
-        selectedTheme = productsProps[0];
-        /*btnColor = btnThemes.bosch[0];
-        themeFont = fonts.bosch[0];
-        labelFont = fonts.bosch[1];*/
-       
-      }
-
     
-
     }
 
     componentDidMount() {
+      const { heatpumpPVems, breakEvenBase64, setBreakEvenBase64 } = this.context;
+
+      console.log(heatpumpPVems);
+
+      setTimeout(() => {
+
+        const breakEvenCanvas = document.getElementById('breakEvenChart');
+
+        breakEvenCanvas.toBlob((blob) => {
+          const url = URL.createObjectURL(blob);
         
+          setBreakEvenBase64(url);
+
+          console.log(url)
+        });
+
+
+      }, 200);
+      
     }
 
     inputPower_kW_PV_MFH = (event) => { 
@@ -331,7 +182,6 @@ class BreakEven extends React.Component {
       this.setState({
         [event.target.name]: event.target.value
       });
-      //alert(event.target.name)
     }
 
     async toggleModal() {
@@ -342,44 +192,6 @@ class BreakEven extends React.Component {
           this.setState({overlayToggle: true})
       }
 
-    }
-
-    getResult =() => { 
-      const { Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
-
-      axios.get(`https://bosch-endkundentool-api.azurewebsites.net/results`, { 
-        params: { "TCO_EUR_a": this.state.TCO_EUR_a,
-                  "OPEX_EUR_a": this.state.OPEX_EUR_a,
-                  "CAPEX_EUR_a": this.state.CAPEX_EUR_a,
-                  "CO2_kg_a": this.state.CO2_kg_a,
-                  "TCO_thermal_EUR_a": TCO_thermal_EUR_a,
-                  "Power_kW_PV_MFH": Power_kW_PV_MFH}})
-          .then(res => {
-            //const persons = res.data;
-            //this.setState({ persons });
-            //console.log(res.data);
-            //this.state.results = res.data;
-
-            //console.log(this.state.results)
-
-            //this.state.Eta_sh_gas_EDWW_MFH_Brine = res.data.data[0].Eta_sh_gas_EDWW_MFH_Brine
-            if(res.data.data.length != 0) {
-            var gasBrineResult = res.data.data[0].Eta_sh_gas_EDWW_MFH_Brine.toString().substring(0,4) * 100;
-            var elc_Self_ConsumptionResult = res.data.data[0].elc_Self_Consumption.toString().substring(0,4) * 100;
-            console.log(elc_Self_ConsumptionResult)
-
-            setGasBrine(gasBrineResult)
-            setElc_Self_Consumption(elc_Self_ConsumptionResult)
-
-            }
-
-            console.log(res.data.data[0])
-
-            console.log(res)
-            console.log(res.data)
-            console.log(res.data.data.length)
-            
-          })
     }
 
     energyUseEuro =(divided) => { 
@@ -395,22 +207,139 @@ class BreakEven extends React.Component {
         setCostOverTime(event.target.value);
     };
 
+    investmentCost = () => { 
+      const { pvOutputkWh, homeStorageSize, PVcostLookupTable, StorageCostLookupTable, addHeatpumpPVems } = this.context;
+        
+      let PVcostInTable = PVcostLookupTable.find(o => o.pv === pvOutputkWh);
+      let StorageCostInTable = StorageCostLookupTable.find(o => o.storage === homeStorageSize);
+  
+      const investmentCostResult = Math.abs(PVcostInTable.cost)
+
+      return investmentCostResult
+    }
+
+
     render() {
 
       const { t } = this.props;
       const { overlayToggle } = this.state;
-      const { Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
+      const { heatpumpPV, heatpumpPVems, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
 
-          return  ( 
-          <div>
+      const datapoints = [heatpumpPVems[0].expenditure, heatpumpPVems[1].expenditure, heatpumpPVems[2].expenditure, heatpumpPVems[3].expenditure, heatpumpPVems[4].expenditure, heatpumpPVems[5].expenditure, heatpumpPVems[6].expenditure, heatpumpPVems[7].expenditure, heatpumpPVems[8].expenditure, heatpumpPVems[9].expenditure, heatpumpPVems[10].expenditure, heatpumpPVems[11].expenditure, heatpumpPVems[12].expenditure, heatpumpPVems[13].expenditure, heatpumpPVems[14].expenditure, heatpumpPVems[15].expenditure, heatpumpPVems[16].expenditure, heatpumpPVems[17].expenditure, heatpumpPVems[18].expenditure, heatpumpPVems[19].expenditure, heatpumpPVems[20].expenditure,heatpumpPVems[21].expenditure,heatpumpPVems[22].expenditure];
+      const datapoints2 = [heatpumpPV[0].expenditure, heatpumpPV[1].expenditure, heatpumpPV[2].expenditure, heatpumpPV[3].expenditure, heatpumpPV[4].expenditure, heatpumpPV[5].expenditure, heatpumpPV[6].expenditure, heatpumpPV[7].expenditure, heatpumpPV[8].expenditure, heatpumpPV[9].expenditure, heatpumpPV[10].expenditure, heatpumpPV[11].expenditure, heatpumpPV[12].expenditure, heatpumpPV[13].expenditure, heatpumpPV[14].expenditure, heatpumpPV[15].expenditure, heatpumpPV[16].expenditure, heatpumpPV[17].expenditure, heatpumpPV[18].expenditure, heatpumpPV[19].expenditure, heatpumpPV[20].expenditure, heatpumpPV[21].expenditure, heatpumpPV[22].expenditure];
+      const datapoints3 = [0, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null, null, null, null, null, null, 0];
+      
+      const lineData = {
+        labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11","12","13","14","15","16","17","18","19","20","21","22"],
+        datasets: [
+          {
+            label: false,
+            data: datapoints,
+            borderColor: '#18837E',
+            backgroundColor: '#18837E',
+            fill: false,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.8,
+            spanGaps: true,
+            pointStyle: 'circle',
+            pointRadius: 5,
+            pointHoverRadius: 5
+          },
+          {
+              label: false,
+              data: datapoints2,
+              borderColor: '#007BC0',
+              backgroundColor: '#007BC0',
+              fill: false,
+              cubicInterpolationMode: 'monotone',
+              tension: 0.8,
+              spanGaps: true,
+              pointStyle: 'circle',
+              pointRadius: 5,
+              pointHoverRadius: 5,
+            },
+            {
+              label: false,
+              data: datapoints3,
+              borderColor: '#9DC9FF',
+              borderDash: [5, 5],
+              fill: false,
+              cubicInterpolationMode: 'monotone',
+              tension: 0.4,
+              spanGaps: true,
+              pointStyle: false
+            }
+        ]
+      };
+
+      const lineOptions = {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false,
+            position: 'top',
+          },
+          title: {
+            display: false,
+            text: 'Chart.js Line Chart',
+          },
+          tooltip: {
+              enabled: false
+          },
+          datalabels: {
+              display: false
+          }
+        },
+        animations: false,
+        scales: {
+          x: {
+            grid: {
+              display: false
+            },
+            border: {
+              display: false
+            },
+            ticks: {
+              color: '#000',
+              font: {
+                  size: 12,
+                  family: 'Bosch-Regular'
+              }
+            }
+          },
+          y: {
+            min: -34000,
+            max: 20000,
+            border: {
+              display: false
+            },
+            ticks: {
+              stepSize: 10000,
+              color: '#000',
+              font: {
+                  size: 12,
+                  family: 'Bosch-Regular'
+              },
+              reverse: true,
+              callback: function(value, index, ticks) {
+                  return value.toLocaleString('de-DE') + ' €';
+              }
+            }
+        }
+        }
+      };
+
+
+        return  ( 
+          <div id="break-even">
 
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: '20px', fontSize: '16px'}}>
                 <div>Investitionskosten PV-System:</div>
-                <div style={{fontFamily: 'Bosch-Bold'}}>27.500 €</div>
+                <div style={{fontFamily: 'Bosch-Bold'}}>{this.investmentCost().toLocaleString()} €</div>
             </div>
 
             <div style={{maxWidth: '550px'}}>
-                <Line options={lineOptions} data={lineData} />
+             <Line id="breakEvenChart" options={lineOptions} data={lineData} />
             </div>
 
             <div style={{display: 'flex', flexDirection: 'column', marginTop: '25px', fontFamily: 'Bosch-Regular', fontSize: '12px'}}>
@@ -429,7 +358,7 @@ class BreakEven extends React.Component {
             </div>
 
           </div>
-          )
+        )
 
   }
 }

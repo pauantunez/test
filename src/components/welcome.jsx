@@ -11,7 +11,7 @@ import { withTranslation } from 'react-i18next';
 import i18n from 'i18next';
 import styles from '../styles/home.module.css';
 import 'rc-slider/assets/index.css';
-import {ReactComponent as CoinIcon} from '../assets/img/icons/coins.svg';
+import {ReactComponent as CoinIcon} from '../assets/img/icons/coins_small.svg';
 import {ReactComponent as PVSunIcon} from '../assets/img/icons/pv_sun_small.svg';
 import {ReactComponent as ElectricitySunIcon} from '../assets/img/icons/electricity_sun_small.svg';
 import {ReactComponent as LightningSmallIcon} from '../assets/img/icons/lightning_small.svg';
@@ -26,6 +26,8 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+
+import CalculationModal from './tabs/modal'
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -103,8 +105,7 @@ class Welcome extends React.Component {
 
     if(urlParams.get('theme')) {
       entryParam = urlParams.get('theme');
-      //alert(entryParam)
-
+      
       for(let themes = 0; themes < productsProps.length; themes++) {
 
         if(entryParam === productsProps[themes]) {
@@ -118,7 +119,6 @@ class Welcome extends React.Component {
           labelFont = fonts[entryParam][1];
           console.log(selectedTheme);
 
-          handIcon = require(`../assets/img/hand-pointing-arrows-${selectedTheme}.svg`);
 
           foundTheme++;
         } else {
@@ -134,7 +134,6 @@ class Welcome extends React.Component {
         btnColor = btnThemes.bosch[0];
         themeFont = fonts.bosch[0];
         labelFont = fonts.bosch[1];
-        handIcon = require(`../assets/img/hand-pointing-arrows-${selectedTheme}.svg`);
       }
 
     } else {
@@ -143,14 +142,12 @@ class Welcome extends React.Component {
       btnColor = btnThemes.bosch[0];
       themeFont = fonts.bosch[0];
       labelFont = fonts.bosch[1];
-      handIcon = require(`../assets/img/hand-pointing-arrows-${selectedTheme}.svg`);
     }
   }
 
   componentWillReceiveProps = (nextProps, nextContext) => {
 
     const { products, productSelected, navSteps, selectedTab, setSelectedTab, setNavDirection, stepperNavActive, setActiveView, setActiveStep, navDirection, setStepperNav, heatpumpAudio, activeView, activeStep, disableSlider } = this.context
-
 
     //isEnd
     if(nextContext.activeView == 0 && nextContext.selectedTab == 2) {
@@ -166,9 +163,6 @@ class Welcome extends React.Component {
     }
 
     console.log(nextContext.navDirection)
-    //alert(nextContext.navDirection)
-
-
   }
 
   getEntryParameter = async() => {
@@ -230,45 +224,6 @@ class Welcome extends React.Component {
     setTerms(e)
   }
 
-
-    async playHeatpumpAudio(view, volume, active, origin, menuProduct) {
-        
-      const { heatpumpAudio, products, viewLocation, setHeatpumpVolume, setActiveView, setViewLocation, setViewLocationPrevious } = this.context;
-
-      console.log(this.state.selectedProduct);
-      setHeatpumpVolume(volume);
-
-      if(!origin) {
-        setViewLocationPrevious(viewLocation);
-        setViewLocation(view);
-        setActiveView(active);
-      }
-
-      var heatpump = document.getElementById("heatpumpAudioContainer");
-
-      if(origin) {
-        if(heatpump.duration > 0 && !heatpump.paused) {
-          await heatpump.pause();
-        }
-      }
-        
-        heatpump.src = require(`../assets/audio/${ products[selectedTheme][active].audio[0] }`)
-
-        console.log(heatpump);
-        heatpump.volume = volume;
-
-        if(heatpumpAudio) {
-          heatpump.play();
-        }
-
-      if(!this.state.initialLoad) {
-        this.setState({initialLoad: true})
-      }
-
-    }
-
-
-
 isBeginning =() => {
   const { selectedTab, activeView } = this.context
 
@@ -280,27 +235,19 @@ isBeginning =() => {
 isEnd =() => {
   const { selectedTab, activeView } = this.context
 
-  //alert(selectedTab)
-
   if(activeView == 0 && selectedTab == 2) {
     return true
   }
 }
 
-getResult =() => { 
-  axios.get(`http://localhost:3000/api/getAll`, { params: { "Par-No": 44, "Scen-No": 42}})
-      .then(res => {
-        //const persons = res.data;
-        //this.setState({ persons });
-        console.log(res.data);
-      })
-}
 
   render() {
 
-    const { products, productSelected, navSteps, selectedTab, setSelectedTab, stepperNavActive, setActiveView, setActiveStep, setNavDirection, setStepperNav, heatpumpAudio, activeView, activeStep, disableSlider } = this.context
+    const { setCalculationModal, calculationModal, products, productSelected, navSteps, selectedTab, setSelectedTab, stepperNavActive, setActiveView, setActiveStep, setNavDirection, setStepperNav, heatpumpAudio, activeView, activeStep, disableSlider } = this.context
 
     const { t } = this.props;
+
+    const handleOpen = () => setCalculationModal(true);
 
   const AntTabs = styled(Tabs)({
     borderBottom: '1px solid #e8e8e8',
@@ -357,8 +304,8 @@ getResult =() => {
             <h1 style={{textAlign: 'center', fontSize: '36px !important'}}>Solarstromrechner</h1>
             <div style={{fontFamily: 'Bosch-Regular', fontSize: '22px', textAlign: 'center'}}>Selbsterzeugten Strom intelligent verbrauchen und Stromkosten sparen.</div>
 
-            <div style={{display: 'flex', margin: '3% 13% 0 13%'}}>
-              <div style={{width: '45%'}}>
+            <div class="welcomeContainer" style={{display: 'flex'}}>
+              <div>
                 <p style={{fontFamily: 'Bosch-Bold', fontSize: '16px'}}>
                   Sparen Sie Stromkosten – mit der smarten Kombination aus Photovoltaik, Wärmepumpe, Wallbox und einem intelligenten Energiemanagementsystem
                 </p>
@@ -392,46 +339,33 @@ getResult =() => {
                   </div>
                 </div>
               </div>
-              <div style={{display: 'flex', width: '55%', justifyContent: 'end'}}>
+              <div style={{display: 'flex', justifyContent: 'end'}}>
                 <img src={require(`../assets/img/preview.png`)} alt="" style={{width: '85%', height: 'auto', objectFit: 'contain', margin: '14px'}} />
               </div>
 
             </div>
-            <div style={{display: 'flex', margin: '3% 5% 0 5%'}}>
-              <div style={{display: 'flex', justifyContent: 'end', alignItems: 'center', width: '50%'}}>
+            <div class="welcomeBtns" style={{display: 'flex', margin: '3% 5% 0 5%'}}>
+              <div class="startBtn">
                 
                   <Link style={{display: 'inline-block', textAlign: 'center', backgroundColor: '#006a9b', color: '#FFF', textDecoration: 'none', margin: '5px 10px 0 0', padding: '10px 20px 10px 20px', fontSize: '14px', fontFamily: 'Bosch-Regular'}} to='./main'>Jetzt Solarstromrechner starten</Link>
                 
               </div>
-              <div style={{display: 'flex', justifyContent: 'start', alignItems: 'center', width: '50%'}}>
-                <div style={{ margin: '0 0 0 25px', fontSize: '12px', fontFamily: 'Bosch-Regular', color: '#007BC0'}}>Berechnugsgrundlage</div>
+              <div class="explanationBtn">
+                <div class="calculationBase" onClick={handleOpen} style={{fontSize: '12px', fontFamily: 'Bosch-Regular', color: '#007BC0', cursor: 'pointer'}}>Berechnugsgrundlage</div>
               </div>
 
             </div>
-
-             
             
             </div>
 
 
         </div>
 
-
-
-        <audio id="heatpumpAudioContainer" className={styles.hide}
-            controls
-            loop
-            src={require(`../assets/audio/${ products[selectedTheme][productSelected].audio[0] }`)}>
-                Your browser does not support the
-                <code>audio</code> element.
-        </audio>
-
-        { /*<Disclaimer theme={selectedTheme} />
-        <Liability theme={selectedTheme} />*/ }
-
-        <div style={{position: 'fixed', width: '100%', bottom: '2%', color: '#A4ABB3', fontSize: '12px', textAlign: 'center'}}>
+        <div class="noticeBottom" style={{position: 'fixed', width: '100%', bottom: '2%', color: '#A4ABB3', fontSize: '12px', textAlign: 'center'}}>
         Hinweis: Die Ergebnisse beruhen auf Annahmen und können in der Realität abweichen. Bitte besprechen Sie die Details mit einem Fachbetrieb in Ihrer Nähe.
         </div>
+
+        <CalculationModal />
 
        </div>
     );

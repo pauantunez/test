@@ -23,6 +23,7 @@ import Button from '@mui/material/Button';
 
 import { withTranslation } from 'react-i18next';
 import validator, { validate } from 'validate.js';
+import axios from 'axios';
 
 
 var entryParam;
@@ -40,7 +41,13 @@ class EV extends React.Component {
         this.state = {
             overlayToggle: false,
             imprint: [],
-            theme: props.theme
+            theme: props.theme,
+            TCO_EUR_a: '1708.092161',
+            OPEX_EUR_a: '83.06824285',
+            CAPEX_EUR_a: '1625.023918',
+            CO2_kg_a: '-425.1493941',
+            TCO_thermal_EUR_a: '1008.819062',
+            Power_kW_PV_MFH: '14',
         }
     }
 
@@ -80,13 +87,51 @@ class EV extends React.Component {
         setBuildingEnegeryStandard(event.target.value);
     };
 
+    changeEVUsage = (type,value) => {  
+      const { setScenarioInDatabase, BuildingSize, energyUsagekWh, buildingTypePreHeatOption, kfwValue, preHeatTempOption, singlePreHeatOptionNoEVLookupTable, dualPreHeatOptionNoEVLookupTable, singlePreHeatOptionEVLookupTable, dualPreHeatOptionEVLookupTable, ev, setEV, setFwdBtn, steps, setSteps, activeView, odometerIncrease, homeCharging, setOdometerIncrease, setHomeCharging} = this.context;
+      let evProfile;
+
+      if(type=="homeCharging") {
+        evProfile = value+odometerIncrease
+      } else {
+        evProfile = homeCharging+value
+      }
+
+      let validateOptions = buildingTypePreHeatOption.find(o => o.buildingType === kfwValue);
+      let scenarioInDatabase;
+      console.log(validateOptions);
+
+      if(validateOptions.option2 === '-') {
+        //if one, use singlePreHeatOptionNoEVLookupTable as lookup table
+        scenarioInDatabase = singlePreHeatOptionEVLookupTable.find(o => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString() && o.evProfile === evProfile);
+        console.log("HAS FIRST OPTION, NO SECOND OPTION")
+        console.log(scenarioInDatabase);
+      } else {
+        if(preHeatTempOption == 1) {
+          
+          scenarioInDatabase = dualPreHeatOptionEVLookupTable.find(o => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString() && o.evProfile === evProfile);
+          console.log("HAS FIRST OPTION, USE FIRST OPTION")
+          console.log(scenarioInDatabase);
+
+        } else {
+
+          scenarioInDatabase = dualPreHeatOptionEVLookupTable.find(o => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString() && o.evProfile === evProfile);
+          console.log("HAS FIRST OPTION, USE SECOND OPTION")
+          console.log(scenarioInDatabase);
+
+        }
+      }
+      setScenarioInDatabase(scenarioInDatabase.scenario)
+    }
+
     inputEV = (event) => { 
-        const { ev, setEV, setFwdBtn, steps, setSteps, activeView, odometerIncrease, homeCharging, setOdometerIncrease, setHomeCharging} = this.context;
+        const { setScenarioInDatabase, BuildingSize, energyUsagekWh, buildingTypePreHeatOption, kfwValue, preHeatTempOption, singlePreHeatOptionNoEVLookupTable, dualPreHeatOptionNoEVLookupTable, singlePreHeatOptionEVLookupTable, dualPreHeatOptionEVLookupTable, ev, setEV, setFwdBtn, steps, setSteps, activeView, odometerIncrease, homeCharging, setOdometerIncrease, setHomeCharging} = this.context;
         setEV(event.target.value);
         setOdometerIncrease('');
         setHomeCharging('');
 
-        if(event.target.value === "true") {
+
+        if(event.target.value === "EV") {
             
             if(odometerIncrease != '' && homeCharging != '') {
                 setFwdBtn(false)
@@ -97,6 +142,35 @@ class EV extends React.Component {
             }
 
         } else {
+          //noEV
+
+          //check if vorlauftemp has two options, or one
+          let validateOptions = buildingTypePreHeatOption.find(o => o.buildingType === kfwValue);
+          let scenarioInDatabase;
+          console.log(validateOptions);
+                       
+            if(validateOptions.option2 === '-') {
+              //if one, use singlePreHeatOptionNoEVLookupTable as lookup table
+              scenarioInDatabase = singlePreHeatOptionNoEVLookupTable.find(o => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString());
+              console.log("HAS FIRST OPTION, NO SECOND OPTION")
+              console.log(scenarioInDatabase);
+            } else {
+              if(preHeatTempOption == 1) {
+                
+                scenarioInDatabase = dualPreHeatOptionNoEVLookupTable.find(o => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString());
+                console.log("HAS FIRST OPTION, USE FIRST OPTION")
+                console.log(scenarioInDatabase);
+
+              } else {
+
+                scenarioInDatabase = dualPreHeatOptionNoEVLookupTable.find(o => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString());
+                console.log("HAS FIRST OPTION, USE SECOND OPTION")
+                console.log(scenarioInDatabase);
+
+              }
+            }
+            setScenarioInDatabase(scenarioInDatabase.scenario)
+          
             setFwdBtn(false)
             steps[activeView] = false;
         }
@@ -114,10 +188,18 @@ class EV extends React.Component {
     };
 
     inputOdometerValue = (event) => { 
-        const { odometerIncrease, setOdometerIncrease, homeCharging, setFwdBtn, steps, setSteps, activeView} = this.context;
+        const { setOdometerIncreaseKWH, odometerIncrease, setOdometerIncrease, homeCharging, setFwdBtn, steps, setSteps, activeView} = this.context;
         setOdometerIncrease(event.target.value);
 
+        if(event.target.value === '10k') {
+          setOdometerIncreaseKWH(1800);
+        } else {
+          setOdometerIncreaseKWH(3600);
+        }
+
         if(homeCharging !== '') {
+            this.changeEVUsage("odometerIncrease",event.target.value)
+
             setFwdBtn(false)
             steps[activeView] = false;
             setSteps({ ...steps })
@@ -129,6 +211,8 @@ class EV extends React.Component {
         setHomeCharging(event.target.value);
 
         if(odometerIncrease !== '') {
+            this.changeEVUsage("homeCharging",event.target.value)  
+          
             setFwdBtn(false)
             steps[activeView] = false;
             setSteps({ ...steps })
@@ -283,13 +367,16 @@ class EV extends React.Component {
                 <div class="cardContent">
                     <div class="flexContent">
                         <div>
-                            <h3 class="cardHeadline">Elektroauto</h3>
+                            <div style={{display: 'flex', flexDirection: 'row'}}>
+                              <div class="cardIconInset"><EVLargeIcon style={{marginLeft: '10px', width: '55px'}} /></div>
+                              <h3 class="cardHeadline">Elektroauto</h3>
+                            </div>
                             <span class="cardDescription">Ist ein Elektroauto vorhanden oder geplant?</span>    
                         </div>
                         <div class="flexRow">
                             <div>
                                 <label>
-                                <input type="radio" name="heating" value="true" class="card-input-element" checked={ev === 'true'} onChange={this.inputEV} />
+                                <input type="radio" name="heating" value="EV" class="card-input-element" checked={ev === 'EV'} onChange={this.inputEV} />
                                     <div class="panel panel-default card-input">
                                     <div class="panel-heading">  
                                         <AcceptIcon />
@@ -302,7 +389,7 @@ class EV extends React.Component {
                             </div>
                             <div>
                                 <label>
-                                <input type="radio" name="heating" value="false" class="card-input-element" checked={ev === 'false'} onChange={this.inputEV} />
+                                <input type="radio" name="heating" value="noEV" class="card-input-element" checked={ev === 'noEV'} onChange={this.inputEV} />
                                     <div class="panel panel-default card-input">
                                     <div class="panel-heading">
                                         <DenyIcon />
@@ -316,16 +403,16 @@ class EV extends React.Component {
                         </div>
 
                         { /* EV */}
-                        {ev === "true" &&
+                        {ev === "EV" &&
                         <div style={{marginTop: '0px', marginLeft: '10px', fontFamily: 'Bosch-Regular'}}>
                             <div style={{marginTop: '15px'}}>
                             <FormControl>
                                 <RadioGroup name="charging-value">
                                     <div>
-                                        <FormControlLabel value="rarely" control={<StandardRadio />} label="Das E-Auto kann nur selten tagsüber zuhause geladen werden." checked={homeCharging === 'rarely'} onChange={this.inputChargingValue} />
+                                        <FormControlLabel value="Commuter_" control={<StandardRadio />} label="Das E-Auto kann nur selten tagsüber zuhause geladen werden." checked={homeCharging === 'Commuter_'} onChange={this.inputChargingValue} />
                                     </div>
-                                    <div>
-                                        <FormControlLabel value="often" control={<StandardRadio />} label="Das E-Auto wird vorwiegend tagsüber zuhause geladen." checked={homeCharging === 'often'} onChange={this.inputChargingValue} />
+                                    <div class="top-margin-10">
+                                        <FormControlLabel value="Family_" control={<StandardRadio />} label="Das E-Auto wird vorwiegend tagsüber zuhause geladen." checked={homeCharging === 'Family_'} onChange={this.inputChargingValue} />
                                     </div>
                                 </RadioGroup>
                             </FormControl>
@@ -335,10 +422,10 @@ class EV extends React.Component {
                             <FormControl>
                                 <RadioGroup name="odometer-value">
                                     <div>
-                                        <FormControlLabel value="10000" control={<StandardRadio />} label="ca. 10.000 km" checked={odometerIncrease === '10000'} onChange={this.inputOdometerValue} />
+                                        <FormControlLabel value="10k" control={<StandardRadio />} label="ca. 10.000 km" checked={odometerIncrease === '10k'} onChange={this.inputOdometerValue} />
                                     </div>
                                     <div>
-                                        <FormControlLabel value="20000" control={<StandardRadio />} label="ca. 20.000 km" checked={odometerIncrease === '20000'} onChange={this.inputOdometerValue} />
+                                        <FormControlLabel value="20k" control={<StandardRadio />} label="ca. 20.000 km" checked={odometerIncrease === '20k'} onChange={this.inputOdometerValue} />
                                     </div>
                                 </RadioGroup>
                             </FormControl>

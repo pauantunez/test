@@ -86,13 +86,16 @@ class BuildingSize extends React.Component {
                 <div class="cardContent">
                     <div class="flexContent">
                         <div>
-                            <h3 class="cardHeadline">Gebäudegröße</h3>
+                            <div style={{display: 'flex', flexDirection: 'row'}}>
+                                <div class="cardIconInset"><HouseCircleIcon style={{marginLeft: '10px', width: '55px'}} /></div>
+                                <h3 class="cardHeadline">Gebäudegröße</h3>
+                            </div>
                             <span class="cardDescription">Wie viel m&#178; Wohnfläche besitzt Ihr Gebäude?</span>    
                         </div>
                         <div class="flexRow">
                             <div>
                                 <label>
-                                <input type="radio" name="product" value="175" class="card-input-element" checked={BuildingSize === "175"} onChange={this.inputBuildingSize} />
+                                <input type="radio" name="product" value="150" class="card-input-element" checked={BuildingSize === "150"} onChange={this.inputBuildingSize} />
                                     <div class="panel panel-default card-input">
                                     <div class="panel-heading">  
                                         <HouseSunSmallIcon />
@@ -105,7 +108,7 @@ class BuildingSize extends React.Component {
                             </div>
                             <div>
                                 <label>
-                                <input type="radio" name="product" value="225" class="card-input-element" checked={BuildingSize === "225"} onChange={this.inputBuildingSize} />
+                                <input type="radio" name="product" value="200" class="card-input-element" checked={BuildingSize === "200"} onChange={this.inputBuildingSize} />
                                     <div class="panel panel-default card-input">
                                     <div class="panel-heading">
                                         <HouseSunLargeIcon />

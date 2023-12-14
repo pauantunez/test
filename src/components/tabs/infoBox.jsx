@@ -41,31 +41,6 @@ class InfoBox extends React.Component {
 
       const { t } = this.props;
       const { BuildingEnegeryStandard, setBuildingEnegeryStandard, kfwValue, insulationValue, setInsulationValue, setKfwValue, OilLNGValue, setOilLNGValue, TCO_thermal_EUR_a, disabledOilUsage, OilUsageLiters, LNGUsage, disabledLNGUsage } = this.context;
-    
-      const LightTooltip = styled(({ className, ...props }) => (
-        <Tooltip {...props} classes={{ popper: className }} />
-        ))(({ theme }) => ({
-            [`& .${tooltipClasses.arrow}`]: {
-                color: '#FFF',
-                fontSize: 16,
-                filter: 'drop-shadow(-2px 1px 1px rgba(130,130,130,0.7))'
-                
-            },
-            [`& .${tooltipClasses.tooltipArrow}`]: {
-                boxShadow: '0px 0px 6px 0px rgba(0,0,0,0.6)',
-                
-            },
-            [`& .${tooltipClasses.tooltip}`]: {
-            backgroundColor: theme.palette.common.white,
-            color: '#000',
-            boxShadow: '0px 0px 6px 0px rgba(0,0,0,0.6)',
-            borderRadius: '0px',
-            fontSize: 11,
-            fontFamily: 'Bosch-Regular',
-            lineHeight: '1.4',
-            padding: '6px 6px 6px 8px'
-            },
-        }));
         
           return  ( 
             <Box component="span" class="infobox-container">
@@ -166,17 +141,17 @@ class InfoBox extends React.Component {
                         <div class="infobox-row borderDark Bosch-Medium" style={{paddingBottom: '3px'}}>
                             <div class="width-50 padding-left-10" style={{width: '28%'}}></div>
                             <div class="width-50"  style={{width: '33%'}}>Erdwärmepumpe</div>
-                            <div class="width-50" style={{lineHeight: '1.5', width: '39%'}}>Luft-Wasser-Wärmepumpe</div>
+                            <div class="width-50" style={{lineHeight: '1.5', width: '39%', textAlign: 'right'}}>Luft-Wasser-Wärmepumpe</div>
                         </div>
                         <div class="infobox-row">
                             <div class="width-50 padding-left-10 Bosch-Medium"  style={{lineHeight: '2.9', width: '28%'}}>Wärmequelle</div>
                             <div class="width-50" style={{lineHeight: '2.9', width: '33%'}}>Erdreich</div>
-                            <div class="width-50" style={{lineHeight: '2.9', width: '39%'}}>Umgebungsluft</div>
+                            <div class="width-50" style={{lineHeight: '2.9', width: '39%', textAlign: 'right'}}>Umgebungsluft</div>
                         </div>
                         <div class="infobox-row">
                             <div class="width-50 padding-left-10 Bosch-Medium"  style={{lineHeight: '2.9', width: '28%'}}>Eigenschaft</div>
                             <div class="width-50" style={{lineHeight: '2.9', width: '33%'}}>Hohe Effizienz</div>
-                            <div class="width-50"  style={{lineHeight: '2.9', width: '39%'}}>Geringer Platzbedarf</div>
+                            <div class="width-50"  style={{lineHeight: '2.9', width: '39%', textAlign: 'right'}}>Geringer Platzbedarf</div>
                         </div>
                     </div>
                 </div>
@@ -244,6 +219,29 @@ class InfoBox extends React.Component {
                    
                 </div>
                  }
+                
+                { /* Berechnungsgrundlage 1 */}
+                {this.state.boxType === "calculation-1" &&
+                <div>
+                    <div class="infobox-row-container">
+                        <div class="infobox-row borderDark Bosch-Medium" style={{paddingBottom: '3px'}}>
+                            <div class="width-50 padding-left-10" style={{width: '28%'}}></div>
+                            <div class="width-50"  style={{width: '33%'}}>Erdwärmepumpe</div>
+                            <div class="width-50" style={{lineHeight: '1.5', width: '39%'}}>Luft-Wasser-Wärmepumpe</div>
+                        </div>
+                        <div class="infobox-row">
+                            <div class="width-50 padding-left-10 Bosch-Medium"  style={{lineHeight: '2.9', width: '28%'}}>Wärmequelle</div>
+                            <div class="width-50" style={{lineHeight: '2.9', width: '33%'}}>Erdreich</div>
+                            <div class="width-50" style={{lineHeight: '2.9', width: '39%'}}>Umgebungsluft</div>
+                        </div>
+                        <div class="infobox-row">
+                            <div class="width-50 padding-left-10 Bosch-Medium"  style={{lineHeight: '2.9', width: '28%'}}>Eigenschaft</div>
+                            <div class="width-50" style={{lineHeight: '2.9', width: '33%'}}>Hohe Effizienz</div>
+                            <div class="width-50"  style={{lineHeight: '2.9', width: '39%'}}>Geringer Platzbedarf</div>
+                        </div>
+                    </div>
+                </div>
+                }
             </Box>
           )
 

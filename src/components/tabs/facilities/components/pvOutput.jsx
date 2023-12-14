@@ -19,13 +19,21 @@ class PVOutput extends React.Component {
         this.state = {
             overlayToggle: false,
             imprint: [],
-            theme: props.theme
+            theme: props.theme,
+            pvOutputkW: null
         }
     }
 
     static contextType = AppContext
 
     componentDidMount() {
+        const { setTabToSelect, tabEntries, pvOutputkWh, homeStorageSizekWh, pvOutput, setPVOutput} = this.context;
+
+        if(this.state.pvOutputkW == null) {
+            let tabInTable = tabEntries.find(o => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === 'Ja');
+            setTabToSelect(tabInTable.Tab)
+            console.log(tabInTable)
+        }
         
     }
 
@@ -40,16 +48,31 @@ class PVOutput extends React.Component {
         }
     }
 
+    componentDidUpdate(previousProps, previousState) {
+        const { setTabToSelect, tabEntries, pvOutputkWh, homeStorageSizekWh, pvOutput, setPVOutput} = this.context;
+
+        let tabInTable = tabEntries.find(o => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === 'Ja');
+        
+        console.log(previousState.pvOutputkW);
+        console.log(this.state.pvOutputkW);
+        
+        if (previousState.pvOutputkW !== this.state.pvOutputkW) {
+            setTabToSelect(tabInTable.Tab)
+            console.log(tabInTable)
+        }
+    }
+
     inputPVOutput = (value) => { 
-        const { pvOutput, setPVOutput} = this.context;
+        const { setTabToSelect, tabEntries, pvOutputkWh, homeStorageSizekWh, pvOutput, setPVOutput} = this.context;
         setPVOutput(parseInt(value));
+        this.setState({ pvOutputkW: parseInt(value) });
     };
     
 
     render() {
 
       const { t } = this.props;
-      const { BuildingEnegeryStandard, setBuildingEnegeryStandard, kfwValue, insulationValue, setInsulationValue, setKfwValue, OilLNGValue, setOilLNGValue, TCO_thermal_EUR_a, disabledOilUsage, OilUsageLiters, LNGUsage, disabledLNGUsage, heatDistributionValue, energyUsagekWh, pvOutput } = this.context;
+      const { pvMarks, BuildingEnegeryStandard, setBuildingEnegeryStandard, kfwValue, insulationValue, setInsulationValue, setKfwValue, OilLNGValue, setOilLNGValue, TCO_thermal_EUR_a, disabledOilUsage, OilUsageLiters, LNGUsage, disabledLNGUsage, heatDistributionValue, energyUsagekWh, pvOutput } = this.context;
 
           return  ( 
           <div>
@@ -60,11 +83,14 @@ class PVOutput extends React.Component {
                 <div class="cardContent">
                     <div class="flexContent">
                         <div>
-                            <h3 class="cardHeadline">PV-Leistung</h3>
+                            <div style={{display: 'flex', flexDirection: 'row'}}>
+                            <div class="cardIconInset"><HouseholdEnergyUseIcon style={{marginLeft: '10px', width: '55px'}} /></div>
+                                <h3 class="cardHeadline">PV-Leistung</h3>
+                            </div>
                             <span class="cardDescription">Welche Leistung hat die installierte oder geplante PV-Anlage?</span>    
                         </div>
                         <div class="flexRow" style={{flexDirection: 'column'}}>
-                            <div style={{width: '85%', marginLeft: '15px'}}>
+                            <div class="slider-size">
                             <Slider
                                 min={0}
                                 max={3}
@@ -83,6 +109,7 @@ class PVOutput extends React.Component {
                                 }}
                                 onChange={this.inputPVOutput}
                                 />
+
                             <div style={{position: 'relative', top: '5px', left: 0, fontFamily: 'Bosch-Regular', fontSize: '12px' }}>
                                 <div style={{position: 'absolute', left: '0%', transform: 'translateX(-50%)'}}>
                                     <div style={{width: '1px', height: '10px', background: '#000'}}></div>
@@ -99,7 +126,7 @@ class PVOutput extends React.Component {
                             </div>
                             <div style={{position: 'relative', top: '17px', left: 0, fontFamily: 'Bosch-Regular', fontSize: '16px' }}>
                                 <div style={{position: 'absolute', left: '0%', transform: 'translateX(-50%)'}}>
-                                    5
+                                    4
                                 </div>
                                 <div style={{position: 'absolute', left: '33.333%', transform: 'translateX(-50%)'}}>
                                     7

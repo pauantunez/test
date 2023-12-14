@@ -202,13 +202,16 @@ class Heatpump extends React.Component {
                 <div class="cardContent">
                     <div class="flexContent">
                         <div>
-                            <h3 class="cardHeadline">Wärmepumpe</h3>
+                            <div style={{display: 'flex', flexDirection: 'row'}}>
+                              <div class="cardIconInset"><HeatpumpLarge style={{marginLeft: '10px', width: '55px'}} /></div>
+                              <h3 class="cardHeadline">Wärmepumpe</h3>
+                            </div>
                             <span class="cardDescription">Welche Art Wärmepumpe ist verbaut oder geplant?</span>    
                         </div>
                         <div class="flexRow">
                             <div>
                                 <label>
-                                <input type="radio" name="heating" value="Geothermal" class="card-input-element" checked={heatpumpType === "Geothermal"} onChange={this.inputHeatpumpType} />
+                                <input type="radio" name="heating" value="2" class="card-input-element" checked={heatpumpType === "2"} onChange={this.inputHeatpumpType} />
                                     <div class="panel panel-default card-input-wide">
                                     <div class="panel-heading">  
                                         <GeothermalHeatpumpIcon />
@@ -221,7 +224,7 @@ class Heatpump extends React.Component {
                             </div>
                             <div>
                                 <label>
-                                <input type="radio" name="heating" value="AirWater" class="card-input-element" checked={heatpumpType === "AirWater"} onChange={this.inputHeatpumpType} />
+                                <input type="radio" name="heating" value="1" class="card-input-element" checked={heatpumpType === "1"} onChange={this.inputHeatpumpType} />
                                     <div class="panel panel-default card-input-wide">
                                     <div class="panel-heading">
                                         <AirWaterHeatpumpIcon />

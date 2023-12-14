@@ -25,7 +25,7 @@ import 'rc-slider/assets/index.css';
 
 
 import { withTranslation } from 'react-i18next';
-
+import axios from 'axios';
 
 
 var entryParam;
@@ -43,7 +43,8 @@ class HomeStorage extends React.Component {
         this.state = {
             overlayToggle: false,
             imprint: [],
-            theme: props.theme
+            theme: props.theme,
+            homeStorageSizekW: null
         }
     }
 
@@ -58,6 +59,17 @@ class HomeStorage extends React.Component {
 
       if(steps[activeView] === false) {
           setFwdBtn(false);
+      }
+    }
+
+    componentDidUpdate(previousProps, previousState) {
+      const { setTabToSelect, tabEntries, pvOutputkWh, homeStorageSizekWh, pvOutput, setPVOutput} = this.context;
+
+      let tabInTable = tabEntries.find(o => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === 'Ja');
+      
+      if (previousState.homeStorageSizekW !== this.state.homeStorageSizekW) {
+          setTabToSelect(tabInTable.Tab)
+          console.log(tabInTable)
       }
   }
     
@@ -84,8 +96,21 @@ class HomeStorage extends React.Component {
     };
 
     inputHomeStorage = (event) => { 
-        const { homeStorage, setHomeStorage, setFwdBtn, steps, setSteps, activeView} = this.context;
+        const { homeStorageSize, ev, kfwValue, scenarioInDatabase, tabEntries, setTabToSelect, pvOutputkWh, homeStorageSizekWh, homeStorage, setHomeStorage, setHomeStorageSize, setFwdBtn, steps, setSteps, activeView} = this.context;
         setHomeStorage(event.target.value);
+
+        if(event.target.value === 'false') {
+          setHomeStorageSize('none')
+
+          let tabInTable = tabEntries.find(o => o.PV_size === pvOutputkWh.toString() && o.Storage_size === '0' && o.EMS === 'Ja');
+          setTabToSelect(tabInTable.Tab)
+          console.log(tabInTable)
+
+        } else {
+          setHomeStorageSize(0)
+          this.setState({ homeStorageSizekW: 0 });
+        }
+
 
         setFwdBtn(false)
         steps[activeView] = false;
@@ -136,8 +161,10 @@ class HomeStorage extends React.Component {
     };
 
     inputStorageSize = (value) => { 
-        const { homeStorageSize, setHomeStorageSize} = this.context;
+        const { kfwValue, ev, scenarioInDatabase, homeStorageSize, setHomeStorageSize} = this.context;
         setHomeStorageSize(parseInt(value));
+        this.setState({ homeStorageSizekW: parseInt(value) });
+
     };
     
 
@@ -264,7 +291,10 @@ class HomeStorage extends React.Component {
                 <div class="cardContent">
                     <div class="flexContent">
                         <div>
-                            <h3 class="cardHeadline">Battereispeicher</h3>
+                            <div style={{display: 'flex', flexDirection: 'row'}}>
+                              <div class="cardIconInset"><BatteryIcon style={{marginLeft: '10px', width: '55px'}} /></div>
+                              <h3 class="cardHeadline">Batteriespeicher</h3>
+                            </div>
                             <span class="cardDescription">Ist ein Batteriespeicher installiert oder geplant?</span>    
                         </div>
                         <div class="flexRow">
@@ -298,9 +328,9 @@ class HomeStorage extends React.Component {
 
                         { /* Storage Size */}
                         {homeStorage === "true" &&
-                        <div style={{marginTop: '0px', marginLeft: '10px', fontFamily: 'Bosch-Regular'}}>
+                        <div style={{marginTop: '0px', marginLeft: '0px', marginRight: '0px', fontFamily: 'Bosch-Regular'}}>
                             <div style={{marginTop: '15px'}}>Wie groß ist Ihr installierter oder geplanter Batteriespeicher?</div>
-                            <div style={{position: 'relative', width: '84%', height: '90px', marginTop: '25px', marginLeft: '15px'}}>
+                            <div class="slider-size" style={{position: 'relative', height: '90px', marginTop: '25px'}}>
                             <Slider
                                 min={0}
                                 max={3}

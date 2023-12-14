@@ -55,7 +55,6 @@ class FacilitiesStep3 extends React.Component {
       this.setState({
         [event.target.name]: event.target.value
       });
-      //alert(event.target.name)
     }
 
     inputPower_kW_PV_MFH = (event) => { 

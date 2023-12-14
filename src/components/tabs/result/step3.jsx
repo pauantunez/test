@@ -7,7 +7,11 @@ import {
 } from 'reactstrap';
 import axios from 'axios';
 import Additional from './components/additional';
-
+import BreakEven from './components/breakEven';
+import Cost from './components/cost';
+import OffGrid from './components/offGrid';
+import ElectricityUse from './components/electricityUse';
+import HouseholdUse from './components/householdUse';
 
 import {Typography} from '@mui/material';
 import { withTranslation } from 'react-i18next';
@@ -24,6 +28,11 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import Switch from '@mui/material/Switch';
 
+import {ReactComponent as BoschLogo} from '../../../assets/img/bosch.svg';
+
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
+import html2canvas from 'html2canvas';
 
 var entryParam;
 var foundTheme;
@@ -56,7 +65,6 @@ class ResultStep3 extends React.Component {
       this.setState({
         [event.target.name]: event.target.value
       });
-      //alert(event.target.name)
     }
 
     inputPower_kW_PV_MFH = (event) => { 
@@ -103,9 +111,9 @@ class ResultStep3 extends React.Component {
       const { overlayToggle, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, BuildingEnegeryStandard, SetBuildingEnegeryStandard, EnergyUse, setEnergyUse, BuildingSize, GasOilSwitch } = this.context;
 
           return  ( 
-          <div>
+          <div style={{marginLeft: '3%', marginRight: '3%'}}>
 
-            <Additional />
+            <Additional/>
 
           </div>
           )

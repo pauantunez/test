@@ -21,6 +21,10 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+
 
 import { withTranslation } from 'react-i18next';
 import validator, { validate } from 'validate.js';
@@ -121,8 +125,12 @@ class HouseholdEnergyUse extends React.Component {
     };
 
     inputEnergyUsageKWH = (event) => { 
-        const { energyUsagekWh, setEnergyUsageKWH, setFwdBtn, steps, setSteps, activeView} = this.context;
+        const { setElectricityCostPercentage, kWhUsageLookupTable, energyUsagekWh, setEnergyUsageKWH, setFwdBtn, steps, setSteps, activeView} = this.context;
         setEnergyUsageKWH(event.target.value);
+
+        var percentageInTable = kWhUsageLookupTable.find(o => o.kwh === event.target.value.toString());
+        setElectricityCostPercentage(percentageInTable.offGridPercentage, percentageInTable.householdPercentage)
+        console.log(percentageInTable);
 
         var inputNumber = parseInt(event.target.value);
 
@@ -262,12 +270,30 @@ class HouseholdEnergyUse extends React.Component {
                 <div class="cardContent">
                     <div class="flexContent">
                         <div>
-                            <h3 class="cardHeadline">Haushaltsstromverbrauch</h3>
+                            <div style={{display: 'flex', flexDirection: 'row'}}>
+                              <div class="cardIconInset"><HouseholdEnergyUseIcon style={{marginLeft: '10px', width: '55px'}} /></div>
+                              <h3 class="cardHeadline">Haushaltsstromverbrauch</h3>
+                            </div>
                             <span class="cardDescription">Wie groß ist ihr Haushaltsstromverbrauch pro Jahr<br /> (ohne Stromverbrauch für Wärmepumpe und E-Auto)?</span>    
                         </div>
                         <div class="flexRow" style={{flexDirection: 'column'}}>
-                            <div>
-                                <TextField id="filled-basic" style={{width: '100%', marginLeft: '5px', marginTop: '12px'}} name="energyUsagekWh" value={energyUsagekWh} label="Stromverbrauch in kWh" variant="filled" InputLabelProps={{shrink: true,}} onChange={this.inputEnergyUsageKWH} />
+                            <div class="input-margins">
+                                { /*<TextField id="filled-basic" type="number" style={{width: '100%'}} name="energyUsagekWh" value={energyUsagekWh} label="Stromverbrauch in kWh" variant="filled" InputLabelProps={{shrink: true,}} onChange={this.inputEnergyUsageKWH} />*/ }
+
+                                <FormControl variant="filled" sx={{ minWidth: 120, width: '100%' }}>
+                                  <InputLabel id="demo-simple-select-filled-label">Stromverbrauch in kWh</InputLabel>
+                                  <Select
+                                    labelId="demo-simple-select-filled-label"
+                                    id="demo-simple-select-filled"
+                                    value={energyUsagekWh}
+                                    onChange={this.inputEnergyUsageKWH} 
+                                  >
+                                    <MenuItem value={4000}>4.000 kWh</MenuItem>
+                                    <MenuItem value={6000}>6.000 kWh</MenuItem>
+                                    <MenuItem value={8000}>8.000 kWh</MenuItem>
+                                  </Select>
+                                </FormControl>
+
                             </div>
                             <div style={{marginTop: '20%'}}>
                                 <InfoBox box="2-row-2-col" />

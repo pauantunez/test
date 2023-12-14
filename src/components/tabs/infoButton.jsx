@@ -26,7 +26,12 @@ class InfoButton extends React.Component {
             text: props.text,
             color: props.color,
             size: props.size,
-            placement: props.placement
+            placement: props.placement,
+            tooltip1: false,
+            tooltip2: false,
+            tooltip3: false,
+            tooltip4: false,
+            tooltipId: props.tooltipId
         }
     }
 
@@ -46,21 +51,21 @@ class InfoButton extends React.Component {
         <Tooltip {...props} classes={{ popper: className }} />
         ))(({ theme }) => ({
             [`& .${tooltipClasses.arrow}`]: {
-                color: '#FFF',
+                color: '#8A9097',
                 fontSize: 16,
-                filter: 'drop-shadow(-2px 1px 1px rgba(130,130,130,0.7))'
+                /*filter: 'drop-shadow(-2px 1px 1px rgba(130,130,130,0.7))'*/
                 
             },
             [`& .${tooltipClasses.tooltipArrow}`]: {
-                boxShadow: '0px 0px 6px 0px rgba(0,0,0,0.6)',
+                /*boxShadow: '0px 0px 6px 0px rgba(0,0,0,0.6)',*/
                 
             },
             [`& .${tooltipClasses.tooltip}`]: {
-            backgroundColor: theme.palette.common.white,
-            color: this.state.color,
-            boxShadow: '0px 0px 6px 0px rgba(0,0,0,0.6)',
+            backgroundColor: '#8A9097',
+            color: '#FFF',
+            /*boxShadow: '0px 0px 6px 0px rgba(0,0,0,0.6)',*/
             borderRadius: '0px',
-            fontSize: this.state.size,
+            fontSize: '12px',
             fontFamily: 'Bosch-Regular',
             lineHeight: '1.4',
             padding: '6px 6px 6px 8px'
@@ -68,7 +73,7 @@ class InfoButton extends React.Component {
         }));
         
           return  ( 
-            <LightTooltip arrow title={this.state.text} placement={this.state.placement}>
+            <LightTooltip enterTouchDelay={0} leaveTouchDelay={5000} arrow tooltipId={this.state.tooltipId} title={this.state.text} placement={this.state.placement}>
                 <Button style={{minWidth: 'unset', padding: 0}}>
                     <InfoIcon />
                 </Button>

@@ -11,7 +11,7 @@ import {ReactComponent as UnderfloorHeatingIcon} from '../../../../assets/img/ic
 import {ReactComponent as UnderfloorRadiatorIcon} from '../../../../assets/img/icons/underfloor_radiator.svg';
 import {ReactComponent as HeatLarge} from '../../../../assets/img/icons/heat_large.svg';
 import {ReactComponent as InfoIcon} from '../../../../assets/img/icons/info.svg';
-import {ReactComponent as HouseholdEnergyUseIcon} from '../../../../assets/img/icons/household_energy_use_icon.svg';
+import {ReactComponent as Coins} from '../../../../assets/img/icons/coins.svg';
 import { styled } from '@mui/material/styles';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -48,7 +48,8 @@ class Investment extends React.Component {
     static contextType = AppContext
 
     componentDidMount() {
-        
+      const { EGen_sh_kWh_HP_A_W_MFH, energy_to_grid_kWh_PV_MFH} = this.context;
+      console.log(energy_to_grid_kWh_PV_MFH);
     }
 
     componentWillMount() { 
@@ -277,32 +278,35 @@ class Investment extends React.Component {
           <div>
             <div class="cardContainer">
                 <div class="cardLargeIcon">   
-                    <HouseholdEnergyUseIcon />
+                    <Coins />
                 </div>
                 <div class="cardContent">
                     <div class="flexContent">
                         <div>
-                            <h3 class="cardHeadline">Investitionskosten</h3>
+                            <div style={{display: 'flex', flexDirection: 'row'}}>
+                              <div class="cardIconInset"><Coins style={{marginLeft: '10px', width: '55px'}} /></div>
+                              <h3 class="cardHeadline">Investitionskosten</h3>
+                            </div>
                             <span class="cardDescription">Wie viel hat das PV-System gekostet oder wird es kosten<br />(inkl. Kosten des Batteriespeichers und Kosten für Montage)?</span>    
                         </div>
                         <div class="flexRow" style={{flexDirection: 'column'}}>
-                        <div style={{marginTop: '10px', marginLeft: '10px', fontFamily: 'Bosch-Regular'}}>
-                            
-                            <FormControl>
-                                <RadioGroup
-                                    sx={{flexWrap: 'inherit', flexDirection: 'row'}}
-                                    name="oil-lng-value"
-                                    row
-                                >
-                                    <div style={{display: 'flex', flexDirection: 'column'}}>
-                                        <FormControlLabel value="false" control={<OilLNGRadio />} style={{marginRight: '0px'}} label="Ich kenne die Investitionskosten nicht." checked={investmentCost === "false"} onChange={this.inputInvestmentCost} />
-                                        <FormControlLabel value="true" control={<OilLNGRadio />} style={{marginRight: '0px'}} label="Der Gesamtbetrag beläuft sich auf folgende Summe" checked={investmentCost === "true"} onChange={this.inputInvestmentCost} />
-                                        <TextField disabled={disabledInvestmentCost} id="filled-basic" style={{marginTop: '12px'}} name="Investment" value={investmentCostEUR} label="Gesamtinvestitionskosten inkl. Montage in EUR (ohne MwSt.)" variant="filled" InputLabelProps={{shrink: true,}} onChange={this.inputInvestmentCostEUR} />
-                                    </div>
-                                </RadioGroup>
-                            </FormControl>
-                            
-                        </div>
+                          <div style={{marginTop: '10px', marginLeft: '10px', fontFamily: 'Bosch-Regular'}}>
+                              
+                              <FormControl>
+                                  <RadioGroup
+                                      sx={{flexWrap: 'inherit', flexDirection: 'row'}}
+                                      name="oil-lng-value"
+                                      row
+                                  >
+                                      <div style={{display: 'flex', flexDirection: 'column'}}>
+                                          <FormControlLabel value="false" control={<OilLNGRadio />} style={{marginRight: '0px'}} label="Ich kenne die Investitionskosten nicht." checked={investmentCost === "false"} onChange={this.inputInvestmentCost} />
+                                          <FormControlLabel value="true" control={<OilLNGRadio />} style={{marginRight: '0px'}} label="Der Gesamtbetrag beläuft sich auf folgende Summe" checked={investmentCost === "true"} onChange={this.inputInvestmentCost} />
+                                          <TextField disabled={disabledInvestmentCost} id="filled-basic" type="number" style={{marginTop: '12px'}} name="Investment" value={investmentCostEUR} label="Gesamtinvestitionskosten inkl. Montage in EUR (ohne MwSt.)" variant="filled" InputLabelProps={{shrink: true,}} onChange={this.inputInvestmentCostEUR} />
+                                      </div>
+                                  </RadioGroup>
+                              </FormControl>
+                              
+                          </div>
                             <div style={{marginTop: '18%'}}>
                                 <InfoBox box="1-row-1-col" />
                             </div>

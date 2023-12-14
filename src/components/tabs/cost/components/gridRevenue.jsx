@@ -11,7 +11,7 @@ import {ReactComponent as UnderfloorHeatingIcon} from '../../../../assets/img/ic
 import {ReactComponent as UnderfloorRadiatorIcon} from '../../../../assets/img/icons/underfloor_radiator.svg';
 import {ReactComponent as HeatLarge} from '../../../../assets/img/icons/heat_large.svg';
 import {ReactComponent as InfoIcon} from '../../../../assets/img/icons/info.svg';
-import {ReactComponent as LightningIcon} from '../../../../assets/img/icons/lightning_large.svg';
+import {ReactComponent as GridRevenueIcon} from '../../../../assets/img/icons/grid_revenue.svg';
 import { styled } from '@mui/material/styles';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -267,17 +267,20 @@ class GridRevenue extends React.Component {
           <div>
             <div class="cardContainer">
                 <div class="cardLargeIcon">   
-                    <LightningIcon />
+                    <GridRevenueIcon />
                 </div>
                 <div class="cardContent">
                     <div class="flexContent">
                         <div>
-                            <h3 class="cardHeadline">Einspeisevergütung</h3>
+                            <div style={{display: 'flex', flexDirection: 'row'}}>
+                              <div class="cardIconInset"><GridRevenueIcon style={{marginLeft: '10px', width: '55px'}} /></div>
+                              <h3 class="cardHeadline">Einspeisevergütung</h3>
+                            </div>
                             <span class="cardDescription">Wie hoch ist die Einspeisevergütung?</span>    
                         </div>
                         <div class="flexRow" style={{flexDirection: 'column'}}>
-                            <div>
-                                <TextField id="filled-basic" style={{width: '100%', marginLeft: '5px', marginTop: '12px'}} name="gridRevenue" value={gridRevenue} label="Einspeisevergütung in Ct/kWh" variant="filled" InputLabelProps={{shrink: true,}} onChange={this.inputGridRevenue} />
+                            <div class="input-margins">
+                                <TextField id="filled-basic" style={{width: '100%'}} name="gridRevenue" type="number" value={gridRevenue} label="Einspeisevergütung in Ct/kWh" variant="filled" InputLabelProps={{shrink: true,}} onChange={this.inputGridRevenue} />
                             </div>
                             <div style={{marginTop: '20%'}}>
                                 <InfoBox box="2-row-2-col-revenue" />

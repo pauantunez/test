@@ -238,24 +238,6 @@ class ElectricityCost extends React.Component {
             backgroundColor: '#106ba3',
         },
       });
-      
-      function OilLNGRadio(props) {
-        return (
-          <Radio
-            disableRipple
-            color="default"
-            checkedIcon={<OilLNGCheckedIcon />}
-            icon={<OilLNGIcon />}
-            sx={{
-              "&, & + .MuiFormControlLabel-label": {
-                marginRight: '5px',
-                fontFamily: 'Bosch-Regular',
-              }
-          }}
-            {...props}
-          />
-        );
-      }
 
           return  ( 
           <div>
@@ -266,12 +248,15 @@ class ElectricityCost extends React.Component {
                 <div class="cardContent">
                     <div class="flexContent">
                         <div>
-                            <h3 class="cardHeadline">Stromkosten</h3>
+                            <div style={{display: 'flex', flexDirection: 'row'}}>
+                              <div class="cardIconInset"><LightningIcon style={{marginLeft: '10px', width: '55px'}} /></div>
+                              <h3 class="cardHeadline">Stromkosten</h3>
+                            </div>
                             <span class="cardDescription">Wie viel kostet der bezogene Strom aus dem Netz?</span>    
                         </div>
                         <div class="flexRow" style={{flexDirection: 'column'}}>
-                            <div>
-                                <TextField id="filled-basic" style={{width: '100%', marginLeft: '5px', marginTop: '12px'}} name="electricityCost" value={electricityCost} label="Stromkosten in Ct/kWh (inkl. MwSt.)" variant="filled" InputLabelProps={{shrink: true,}} onChange={this.inputElectricityCost} />
+                            <div class="input-margins">
+                                <TextField id="filled-basic" style={{width: '100%'}} name="electricityCost" type="number" value={electricityCost} label="Stromkosten in Ct/kWh (inkl. MwSt.)" variant="filled" InputLabelProps={{shrink: true,}} onChange={this.inputElectricityCost} />
                             </div>
                             <div style={{marginTop: '20%'}}>
                                 <InfoBox box="1-row-1-col-electricity" />
