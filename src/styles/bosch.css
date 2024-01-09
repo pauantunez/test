@@ -1061,20 +1061,38 @@ a {
 }
 
 .cardContainer {
+  width:100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
   margin-top: 30px;
   margin-bottom: 80px;
+  
 }
 
+.cardLargeIcon {
+  
+  /*display: none;*/
+}
 
+.cardLargeIcon {
+  /*display: flex;*/
+  margin-left: 15%;
+  flex: 1 1 0;
+  padding: 0 12px 12px 12px;
+}
+
+.cardLargeIcon > svg {
+  float :right;
+}
 
 .cardContent {
-  display: flex;
-  justify-content: start;
-  align-items: start;
+  /*display: flex;*/
+  flex: 3 1 0;
+  margin-right: 30%;
+  /*justify-content: start;
+  align-items: start;*/
 }
 
 .flexContent {
@@ -1379,9 +1397,7 @@ a {
     height: 170px;
   }
 
-  .cardLargeIcon {
-    display: none;
-  }
+  
 
   .pie-flex {
     flex-direction: column;
@@ -1482,10 +1498,7 @@ a {
     height: 170px;
   }
 
-  .cardLargeIcon {
-    display: flex;
-    padding: 0 12px 12px 12px;
-  }
+  
 
   .cardIconInset {
     display: none;
