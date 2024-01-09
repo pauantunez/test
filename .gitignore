@@ -1,5 +1,6 @@
 node_modules
 st
 .history
+yarn.lock
 package-lock.json
 yarn.lock
