@@ -1073,7 +1073,7 @@ a {
 
 .cardLargeIcon {
   /*display: flex;*/
-  margin-left: 15%;
+  margin-left: 25%;
   flex: 1 1 0;
   padding: 0 12px 12px 12px;
 }
