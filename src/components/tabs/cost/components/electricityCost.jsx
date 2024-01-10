@@ -256,7 +256,7 @@ class ElectricityCost extends React.Component {
                         </div>
                         <div class="flexRow" style={{flexDirection: 'column'}}>
                             <div class="input-margins">
-                                <TextField id="filled-basic" style={{width: '100%'}} name="electricityCost" type="number" value={electricityCost} label="Stromkosten in Ct/kWh (inkl. MwSt.)" variant="filled" InputLabelProps={{shrink: true,}} onChange={this.inputElectricityCost} />
+                                <TextField id="filled-basic" style={{width: '100%'}} name="electricityCost" placeholder="35" type="number" value={electricityCost} label="Stromkosten in Ct/kWh (inkl. MwSt.)" variant="filled" InputLabelProps={{shrink: true,}} onChange={this.inputElectricityCost} />
                             </div>
                             <div style={{marginTop: '20%'}}>
                                 <InfoBox box="1-row-1-col-electricity" />
