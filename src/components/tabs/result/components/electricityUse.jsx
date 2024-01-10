@@ -205,21 +205,20 @@ class ElectricityUse extends React.Component {
       const { t } = this.props;
       const { overlayToggle } = this.state;
       const { odometerIncreaseKWH, pieChartSize, pieIconSize, innerRadiusMargin, pieLabelFontSize, xPositionHeatpumpLabel, xPositionEVLabel, xPositionHouseholdLabel, yPositionHeatpumpLabel, yPositionEVLabel, yPositionHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
-      const VictoryPieData = 
-      [
-          { x: 3, y: this.heatpumpUsageKWH(), name: "heatpump", label:  parseInt(this.heatpumpUsageKWH()).toLocaleString()+" kWh", img: "/img/heatpump_small.svg", color: "#004975" },
-          { x: 2, y: odometerIncreaseKWH, name: "ev", label: odometerIncreaseKWH.toLocaleString()+" kWh", img: "/img/ev_small.svg", color: "#C535BC" },
-          { x: 1, y: parseInt(energyUsagekWh), name: "household", label: energyUsagekWh.toLocaleString()+" kWh", img: "/img/household_small.svg", color: "#9E2896" },
-      ]
-  
-          const VictoryPieData2 = 
-      [
-          { x: 3, y: this.heatpumpUsageKWH(), name: "heatpump", label: this.energyUsagePercentage("heatpump") + "%", img: "/img/heatpump_small.svg", color: "#004975" },
-          { x: 2, y: odometerIncreaseKWH, name: "ev", label: this.energyUsagePercentage("ev") + "%", img: "/img/ev_small.svg", color: "#C535BC" },
-          { x: 1, y: parseInt(energyUsagekWh), name: "household", label: this.energyUsagePercentage("household") + "%", img: "/img/household_small.svg", color: "#9E2896" },
-      ]
 
-
+      const VictoryPieData = [
+        { x: 3, y: this.heatpumpUsageKWH(), name: "heatpump", label: parseInt(this.heatpumpUsageKWH()).toLocaleString() + " kWh", img: "/img/heatpump_small.svg", color: "#004975" },
+        ...(odometerIncreaseKWH !== 0 ? [{ x: 2, y: odometerIncreaseKWH, name: "ev", label: odometerIncreaseKWH.toLocaleString() + " kWh", img: "/img/ev_small.svg", color: "#C535BC" }] : []),
+        { x: 1, y: parseInt(energyUsagekWh), name: "household", label: energyUsagekWh.toLocaleString() + " kWh", img: "/img/household_small.svg", color: "#9E2896" },
+      ];
+      
+      const VictoryPieData2 = [
+        { x: 3, y: this.heatpumpUsageKWH(), name: "heatpump", label: Math.round(this.energyUsagePercentage("heatpump")) + "%", img: "/img/heatpump_small.svg", color: "#004975" },
+        ...(odometerIncreaseKWH !== 0 ? [{ x: 2, y: odometerIncreaseKWH, name: "ev", label: Math.round(this.energyUsagePercentage("ev")) + "%", img: "/img/ev_small.svg", color: "#C535BC" }] : []),
+        { x: 1, y: parseInt(energyUsagekWh), name: "household", label: Math.round(this.energyUsagePercentage("household")) + "%", img: "/img/household_small.svg", color: "#9E2896" },
+      ];
+      
+      
           return  ( 
           <div>
             <div style={{display: 'flex', justifyContent: 'center'}}>
@@ -263,7 +262,7 @@ class ElectricityUse extends React.Component {
                 </div>
             </div>
 
-            <div class="additional-flex" style={{display: 'flex', justifyContent: 'space-between', marginTop: '0px', fontFamily: 'Bosch-Regular', fontSize: '14px'}}>
+            <div class="additional-flex" style={{display: 'flex', justifyContent: 'space-around', marginTop: '0px', fontFamily: 'Bosch-Regular', fontSize: '14px'}}>
                 <div style={{display: 'flex', flexDirection: 'row', color: '#9E2896'}}>
                     <div style={{marginRight: '10px'}}>
                         <div style={{marginTop: '2px', width: '12px', height: '12px', background: '#9E2896', borderRadius: '12px'}}></div>
@@ -276,7 +275,7 @@ class ElectricityUse extends React.Component {
                     </div>
                     <div>Wärmepumpe</div>
                 </div>
-                <div style={{display: 'flex', flexDirection: 'row', color: '#C535BC'}}>
+                <div style={{display: odometerIncreaseKWH === 0 ? 'none' : 'flex', flexDirection: 'row', color: '#C535BC'}}>
                     <div style={{marginRight: '10px'}}>
                         <div style={{marginTop: '2px', width: '12px', height: '12px', background: '#C535BC', borderRadius: '12px'}}></div>
                     </div>

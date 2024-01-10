@@ -270,9 +270,9 @@ class HouseholdUse extends React.Component {
     
         VictoryPieData2 = 
         [
-            { x: 3, y: this.gridFeedPercentage(), name: "grid", label: parseFloat(this.gridFeedPercentage()).toFixed(2) + "%", img: "/img/grid_out.svg", color: "#A4ABB3" },
-            { x: 2, y: this.householdUsagePercentage() - householdNoEMSpvPercent, name: "plug", label: parseFloat(this.householdUsagePercentage() - householdNoEMSpvPercent).toFixed(2)+"%", img: "/img/plug.svg", color: "#00884A" },
-            { x: 1, y: this.householdUsagePercentage(), name: "pv", label: parseFloat(householdNoEMSpvPercent).toFixed(2) + "%", img: "/img/house_pv.svg", color: "#18837E" },
+            { x: 3, y: this.gridFeedPercentage(), name: "grid", label: Math.round(parseFloat(this.gridFeedPercentage()).toFixed(2)) + "%", img: "/img/grid_out.svg", color: "#A4ABB3" },
+            { x: 2, y: this.householdUsagePercentage() - householdNoEMSpvPercent, name: "plug", label: Math.round(parseFloat(this.householdUsagePercentage() - householdNoEMSpvPercent).toFixed(2)) + "%", img: "/img/plug.svg", color: "#00884A" },
+            { x: 1, y: this.householdUsagePercentage(), name: "pv", label: Math.round(parseFloat(householdNoEMSpvPercent).toFixed(2)) + "%", img: "/img/house_pv.svg", color: "#18837E" },
         ]
 
         pieColors = ["#A4ABB3", "#00884A", "#18837E" ];
@@ -285,8 +285,8 @@ class HouseholdUse extends React.Component {
     
         VictoryPieData2 = 
         [
-            { x: 2, y: this.gridFeedPercentageNoEMS(), name: "grid", label: parseFloat(this.gridFeedPercentageNoEMS()).toFixed(2)+"%", img: "/img/grid_out.svg", color: "#A4ABB3" },
-            { x: 1, y: householdNoEMSpvPercent, name: "pv", label:  parseFloat(householdNoEMSpvPercent).toFixed(2)+"%", img: "/img/house_pv.svg", color: "#18837E" },
+            { x: 2, y: this.gridFeedPercentageNoEMS(), name: "grid", label: Math.round(parseFloat(this.gridFeedPercentageNoEMS()).toFixed(2)) + "%", img: "/img/grid_out.svg", color: "#A4ABB3" },
+            { x: 1, y: householdNoEMSpvPercent, name: "pv", label:  Math.round(parseFloat(householdNoEMSpvPercent).toFixed(2)) + "%", img: "/img/house_pv.svg", color: "#18837E" },
         ]
 
         pieColors = ["#A4ABB3", "#18837E" ];

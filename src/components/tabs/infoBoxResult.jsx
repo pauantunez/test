@@ -135,10 +135,12 @@ class InfoBoxResult extends React.Component {
                         <div class="infobox-row-container">
                             <div class="infobox-row" style={{display: 'block', lineHeight: '24px', borderBottom: 'none'}}>
                             Die Investition in eine <b>PV-Anlage</b> hat sich nach ca. <strong>{this.breakEvenPV()} Jahren</strong> amortisiert.
-                            <br />
+                            <br /><br />
                             Die Investition in eine <strong>PV-Anlage</strong> hat sich durch den Einsatz eines <strong>Energiemanagementsystems</strong> nach ca. <strong>{this.breakEvenPVems()} Jahren</strong> amortisiert.
-                            <br />
+                            <br /><br />
                             Die zusätzlichen Kosten für ein <strong>Energiemanagementsystem</strong> haben sich bereits nach ca. <strong>{this.breakEvenPoint()} Jahren</strong> bezahlt gemacht.
+                            <br /><br />
+                            <small>* Bei Einsatz Fronius / Sungrow (ab Ende Q1/24) Wechselrichter</small>
                             </div>
                             
                         </div>
@@ -162,24 +164,24 @@ class InfoBoxResult extends React.Component {
                     <div>
                         <div class="infobox-row-container">
                             <div class="infobox-row" style={{display: 'block', lineHeight: '24px', fontSize: '14px', borderBottom: 'none'}}>
-                            <h3 style={{marginBlockStart: '0', marginBlockEnd: '8px'}}>Autarkiegrad: ca. {this.pvUsagePercentage().toFixed(2)}%</h3>
+                            <h3 style={{marginBlockStart: '0', marginBlockEnd: '8px'}}>Autarkiegrad: ca. {Math.round(this.pvUsagePercentage().toFixed(2))}%</h3>
                             
-                            Das bedeutet: bis zu <strong>{this.pvUsagePercentage().toFixed(2)}%</strong> Ihres Gesamtstrom-verbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
+                            Das bedeutet: bis zu <strong>{Math.round(this.pvUsagePercentage().toFixed(2))}%</strong> Ihres Gesamtstrom-verbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
                             <br />
                             <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca.&nbsp; 
                             {offgridEMS == false &&
-                                <strong>{this.pvUsagePercentage().toFixed(2)}%</strong>
+                                <strong>{Math.round(this.pvUsagePercentage().toFixed(2))}%</strong>
                             }
                             {offgridEMS == true &&
-                                <strong>{parseFloat(noEMSPercentageOffGrid).toFixed(2)}%.</strong>
+                                <strong>{Math.round(parseFloat(noEMSPercentageOffGrid).toFixed(2))}%.</strong>
                             }
                             <br />
                             Ca.&nbsp;
                             {offgridEMS == false &&
-                                <strong>{parseFloat(this.gridUsagePercentage()).toFixed(2)}%</strong>
+                                <strong>{Math.round(parseFloat(this.gridUsagePercentage()).toFixed(2))}%</strong>
                             }
                             {offgridEMS == true &&
-                                <strong>{parseFloat(this.gridUsagePercentage()).toFixed(2)}%</strong>
+                                <strong>{Math.round(parseFloat(this.gridUsagePercentage()).toFixed(2))}%</strong>
                             }
                             &nbsp;Ihres Gesamtstromverbrauchs beziehen Sie durch das <strong>öffentliche Stromnetz.</strong>
                             </div>
@@ -192,18 +194,18 @@ class InfoBoxResult extends React.Component {
                     <div>
                         <div class="infobox-row-container">
                             <div class="infobox-row" style={{display: 'block', lineHeight: '24px', fontSize: '14px', borderBottom: 'none'}}>
-                            <h3 style={{marginBlockStart: '0', marginBlockEnd: '8px'}}>Eigenverbrauchsanteil: ca. {parseFloat(householdNoEMSpvPercent).toFixed(2)}%</h3>
+                            <h3 style={{marginBlockStart: '0', marginBlockEnd: '8px'}}>Eigenverbrauchsanteil: ca. {Math.round(parseFloat(householdNoEMSpvPercent).toFixed(2))}%</h3>
                             
-                            Das bedeutet: bis zu <strong>{parseFloat(householdNoEMSpvPercent).toFixed(2)}%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
+                            Das bedeutet: bis zu <strong>{Math.round(parseFloat(householdNoEMSpvPercent).toFixed(2))}%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
                             <br />
-                            <strong>Mit Energiemanagementsystem</strong> lässt sich der <strong>Eigenverbrauchsanteil</strong> auf bis zu <strong>{parseFloat(infoBoxCombinedHouseholdUsage).toFixed(2)}%</strong> erhöhen.
+                            <strong>Mit Energiemanagementsystem</strong> lässt sich der <strong>Eigenverbrauchsanteil</strong> auf bis zu <strong>{Math.round(parseFloat(infoBoxCombinedHouseholdUsage).toFixed(2))}%</strong> erhöhen.
                             <br />
                             Ca.&nbsp;
                             {offgridEMS == false &&
-                                <strong>{parseFloat(100 - parseFloat(householdNoEMSpvPercent)).toFixed(2)}%</strong>
+                                <strong>{Math.round(parseFloat(100 - parseFloat(householdNoEMSpvPercent)).toFixed(2))}%</strong>
                             }
                             {offgridEMS == true &&
-                                <strong>{parseFloat(infoBoxHouseholdGridFeed).toFixed(2)}%</strong>
+                                <strong>{Math.round(parseFloat(infoBoxHouseholdGridFeed).toFixed(2))}%</strong>
                             }
                             &nbsp;Ihres eigens produzierten PV-Stroms speisen Sie in Sie ins <strong>öffentliche Stromnetz</strong> ein.
                             </div>

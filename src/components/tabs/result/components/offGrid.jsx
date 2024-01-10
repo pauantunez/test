@@ -250,9 +250,9 @@ class OffGrid extends React.Component {
     
         VictoryPieDataTest = 
         [
-            { x: 3, y: this.gridUsagePercentage(), name: "grid", label: parseFloat(this.gridUsagePercentage()).toFixed(2) + "%", img: "img/grid_in.svg", color: "#A4ABB3" },
-            { x: 2, y: this.pvUsagePercentage() - noEMSPercentageOffGrid, name: "plug", label: parseFloat(this.pvUsagePercentage() - noEMSPercentageOffGrid).toFixed(2) + "%", img: "img/plug.svg", color: "#00884A" },
-            { x: 1, y: this.pvUsagePercentage(), name: "pv", label: parseFloat(noEMSPercentageOffGrid).toFixed(2) + "%", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
+            { x: 3, y: this.gridUsagePercentage(), name: "grid", label: Math.round(parseFloat(this.gridUsagePercentage()).toFixed(2)) + "%", img: "img/grid_in.svg", color: "#A4ABB3" },
+            { x: 2, y: this.pvUsagePercentage() - noEMSPercentageOffGrid, name: "plug", label: Math.round(parseFloat(this.pvUsagePercentage() - noEMSPercentageOffGrid).toFixed(2)) + "%", img: "img/plug.svg", color: "#00884A" },
+            { x: 1, y: this.pvUsagePercentage(), name: "pv", label: Math.round(parseFloat(noEMSPercentageOffGrid).toFixed(2)) + "%", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
         ]
 
         pieColors = ["#A4ABB3", "#00884A", "#18837E"];
@@ -266,8 +266,8 @@ class OffGrid extends React.Component {
     
         VictoryPieDataTest = 
         [
-            { x: 3, y: this.gridUsagePercentage(), name: "grid", label: parseFloat(this.gridUsagePercentage().toFixed(2)) + " %", img: "img/grid_in.svg", color: "#A4ABB3" },
-            { x: 1, y: this.pvUsagePercentage(), name: "pv", label: parseFloat(this.pvUsagePercentage()).toFixed(2) + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
+            { x: 3, y: this.gridUsagePercentage(), name: "grid", label: Math.round(parseFloat(this.gridUsagePercentage().toFixed(2))) + " %", img: "img/grid_in.svg", color: "#A4ABB3" },
+            { x: 1, y: this.pvUsagePercentage(), name: "pv", label: Math.round(parseFloat(this.pvUsagePercentage()).toFixed(2)) + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
         ]
 
         pieColors = ["#A4ABB3", "#18837E"]
