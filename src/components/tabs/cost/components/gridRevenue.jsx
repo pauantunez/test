@@ -130,10 +130,11 @@ class GridRevenue extends React.Component {
       setElectricityCost(event.target.value);
     };
 
-    avoidPointCharacter = (event) => {
-      if(event.key==='.'){
+    avoidPointAndCharacters = (event) => {
+      
+      let ASCIICode = (event.which) ? event.which : event.keyCode;
+      if(!/[0-9,]/.test(event.key) && ASCIICode!=8){
         event.preventDefault();
-        return false;
       }
     };
 
@@ -287,7 +288,7 @@ class GridRevenue extends React.Component {
                         </div>
                         <div class="flexRow" style={{flexDirection: 'column'}}>
                             <div class="input-margins">
-                                <TextField id="filled-basic" style={{width: '100%'}} name="gridRevenue" placeholder="8,2" type="number" value={gridRevenue} label="Einspeisevergütung in Ct/kWh" variant="filled" InputLabelProps={{shrink: true,}} onChange={this.inputGridRevenue}  />
+                                <TextField id="filled-basic" style={{width: '100%'}} name="gridRevenue" placeholder="8,2" type="number" value={gridRevenue} label="Einspeisevergütung in Ct/kWh" variant="filled" InputLabelProps={{shrink: true,}} onChange={this.inputGridRevenue} onKeyDown={this.avoidPointAndCharacters} />
                             </div>
                             <div style={{marginTop: '20%'}}>
                                 <InfoBox box="2-row-2-col-revenue" />

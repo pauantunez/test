@@ -141,6 +141,14 @@ class ElectricityCost extends React.Component {
 
       setSteps({ ...steps })
     };
+
+    avoidPointAndCharacters = (event) => {
+      
+      let ASCIICode = (event.which) ? event.which : event.keyCode;
+      if(!/[0-9,]/.test(event.key) && ASCIICode!=8){
+        event.preventDefault();
+      }
+    };
     
 
     render() {
@@ -256,7 +264,7 @@ class ElectricityCost extends React.Component {
                         </div>
                         <div class="flexRow" style={{flexDirection: 'column'}}>
                             <div class="input-margins">
-                                <TextField id="filled-basic" style={{width: '100%'}} name="electricityCost" placeholder="35" type="number" value={electricityCost} label="Stromkosten in Ct/kWh (inkl. MwSt.)" variant="filled" InputLabelProps={{shrink: true,}} onChange={this.inputElectricityCost} />
+                                <TextField id="filled-basic" style={{width: '100%'}} name="electricityCost" placeholder="35" type="number" value={electricityCost} label="Stromkosten in Ct/kWh (inkl. MwSt.)" variant="filled" InputLabelProps={{shrink: true,}} onChange={this.inputElectricityCost} onKeyDown={this.avoidPointAndCharacters}  />
                             </div>
                             <div style={{marginTop: '20%'}}>
                                 <InfoBox box="1-row-1-col-electricity" />
