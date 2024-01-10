@@ -1072,11 +1072,6 @@ a {
 }
 
 .cardLargeIcon {
-  
-  /*display: none;*/
-}
-
-.cardLargeIcon {
   /*display: flex;*/
   margin-left: 15%;
   flex: 1 1 0;
@@ -1087,6 +1082,12 @@ a {
   float :right;
 }
 
+@media only screen and (max-width: 600px) {
+  .cardLargeIcon {
+    display:none;
+  }
+}
+
 .cardContent {
   /*display: flex;*/
   flex: 3 1 0;
@@ -1095,10 +1096,18 @@ a {
   align-items: start;*/
 }
 
+@media only screen and (max-width: 600px) {
+  .cardContent {
+    margin-right: 0px;
+  }
+}
+
 .flexContent {
   display: flex;
   flex-direction: column;
 }
+
+
 
 .flexRow {
   display: flex;
