@@ -352,7 +352,7 @@ class OffGrid extends React.Component {
                         />
                     </div>
 
-                    <div id="offgrid-1" style={{position: 'absolute', width: '100%', height: '300px', zIndex: "99999999999"}}>
+                    <div id="offgrid-1" style={{position: 'absolute', width: '100%', height: '300px' }}>
                         <VictoryPie
                         data={VictoryPieDataTest}
                         width={pieChartSize}
@@ -373,7 +373,7 @@ class OffGrid extends React.Component {
                         />
                         </div>
 
-                        <div id="offgrid-2" style={{position: 'absolute', width: '100%', height: '300px', zIndex: "9999999999"}}>
+                        <div id="offgrid-2" style={{position: 'absolute', width: '100%', height: '300px' }}>
                         <VictoryPie
                         data={VictoryPieData}
                         width={pieChartSize}
