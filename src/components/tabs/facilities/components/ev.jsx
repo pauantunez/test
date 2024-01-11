@@ -125,10 +125,11 @@ class EV extends React.Component {
     }
 
     inputEV = (event) => { 
-        const { setScenarioInDatabase, BuildingSize, energyUsagekWh, buildingTypePreHeatOption, kfwValue, preHeatTempOption, singlePreHeatOptionNoEVLookupTable, dualPreHeatOptionNoEVLookupTable, singlePreHeatOptionEVLookupTable, dualPreHeatOptionEVLookupTable, ev, setEV, setFwdBtn, steps, setSteps, activeView, odometerIncrease, homeCharging, setOdometerIncrease, setHomeCharging} = this.context;
+        const { setScenarioInDatabase, BuildingSize, energyUsagekWh, buildingTypePreHeatOption, kfwValue, preHeatTempOption, singlePreHeatOptionNoEVLookupTable, dualPreHeatOptionNoEVLookupTable, singlePreHeatOptionEVLookupTable, dualPreHeatOptionEVLookupTable, ev, setEV, setFwdBtn, steps, setSteps, activeView, odometerIncrease, homeCharging,setOdometerIncreaseKWH, setOdometerIncrease, setHomeCharging} = this.context;
         setEV(event.target.value);
         setOdometerIncrease('');
         setHomeCharging('');
+        setOdometerIncreaseKWH(0);
 
 
         if(event.target.value === "EV") {
