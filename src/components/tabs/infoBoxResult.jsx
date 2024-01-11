@@ -14,6 +14,9 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
+import IconButton from "@mui/material/IconButton";
+import { ReactComponent as EditIcon } from "../../assets/img/icons/pencil-7.svg";
+
 import { withTranslation } from 'react-i18next';
 
 class InfoBoxResult extends React.Component {
@@ -99,6 +102,10 @@ class InfoBoxResult extends React.Component {
         }
     }
     
+    goToView = (newValue) => {
+        const { selectedTab, activeView, activeStep, setActiveView, setActiveStep, steps, setSteps, setFwdBtn, setMenuBackdrop } = this.context;
+        setActiveView(newValue);
+    }
 
     render() {
 
@@ -151,7 +158,18 @@ class InfoBoxResult extends React.Component {
                     <div>
                         <div class="infobox-row-container">
                             <div class="infobox-row" style={{display: 'block', lineHeight: '24px', fontSize: '14px', borderBottom: 'none'}}>
-                            <h3 style={{marginBlockStart: '0', marginBlockEnd: '8px'}}>Stromverbrauch gesamt: {parseFloat(this.energyUsageCombined().toLocaleString())} kWh</h3>
+                            <h3 style={{marginBlockStart: '0', marginBlockEnd: '8px'}}>Stromverbrauch gesamtttttttt: {parseFloat(this.energyUsageCombined().toLocaleString())} kWh
+                            <IconButton 
+                                id="editBtn" 
+                                aria-label="edit" 
+                                size="small"
+                                onClick={() => {
+                                    this.goToView(3);
+                                  }}
+                            >
+                                <EditIcon/>
+                            </IconButton>
+                            </h3>
                             
                             Der errechnete Stromverbrauch aufgeteilt auf die großen Verbraucher, Wärmepumpe, E-Auto und Haushalt.
                             </div>
