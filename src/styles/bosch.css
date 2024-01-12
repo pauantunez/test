@@ -1181,6 +1181,7 @@ a {
 
 .infobox-container {
   display: block;
+  /* margin-top: 50px; */
   /*margin-left: 5px;*/
   padding: 10px;
   background: #EFF1F2;
