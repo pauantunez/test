@@ -29,6 +29,7 @@ var entryParam;
     const imgHeight = props.iconSize;
     const imgWidth = props.iconSize;
     const fontSize = props.fontSize;
+    const pieLabelFontSize = props.pieLabelFontSize;
     const xPositionIconMargin = props.xPositionIconMargin;
     const yPositionIconMargin = props.yPositionIconMargin;
     const xPositionEVIconMargin = props.xPositionEVIconMargin;
@@ -59,7 +60,7 @@ var entryParam;
 
         iconToUse = <Heatpump width={imgWidth} height={imgHeight} x={xPositionIcon} y={y - 30} />
     }
-    else if(datum.name == "ev") {
+    else if(datum.name == "ev") { 
         xPositionIcon = x - xPositionEVIconMargin;
         yPositionIcon = y + yPositionEVIconMargin;
         xPositionLabel = x + xPositionEVLabel;
@@ -68,10 +69,10 @@ var entryParam;
         iconToUse = <EV width={imgWidth} height={imgHeight} x={xPositionIcon} y={y - 30} />
     }
     else if(datum.name == "household") {
-        xPositionIcon = x - xPositionHouseholdIconMargin;
-        yPositionIcon = y + yPositionHouseholdIconMargin;
-        xPositionLabel = x - xPositionHouseholdLabel;
-        yPositionLabel = y - yPositionHouseholdLabel;
+          xPositionIcon = x - xPositionHouseholdIconMargin;
+          yPositionIcon = y + yPositionHouseholdIconMargin;
+          xPositionLabel = xPositionIcon - xPositionHouseholdLabel;
+          yPositionLabel = yPositionIcon - yPositionHouseholdLabel;
 
         iconToUse = <Household width={imgWidth} height={imgHeight} x={xPositionIcon} y={y - 30} />
     }
@@ -112,9 +113,9 @@ class ElectricityUse extends React.Component {
         console.log(window.innerWidth);
 
         if (window.innerWidth < 1300) {
-            setPieSize(290, 50, 37, 16, 16, 2, 65, 0, 0, 36, 40, 15, 55, 5, 10, 0)
+            setPieSize(320, 50, 37, 16, 16, 2, 65, 0, 0, 36, 40, 15, 55, 5, 10, 0)
         } else if(window.innerWidth > 1300) {
-            setPieSize(330, 75, 55, 20, 38, 28, 90, 0, 0, 34, 40, 15, 55, 5, 20, 0)
+            setPieSize(350, 75, 55, 20, 38, 28, 90, 0, 0, 34, 40, 15, 55, 5, 20, 0)
         }
 
       }
@@ -262,7 +263,7 @@ class ElectricityUse extends React.Component {
                 </div>
             </div>
 
-            <div class="additional-flex" style={{display: 'flex', justifyContent: 'space-around', marginTop: '0px', fontFamily: 'Bosch-Regular', fontSize: '14px'}}>
+            <div class="additional-flex" style={{display: 'flex', justifyContent: 'space-around', marginTop: '38px', fontFamily: 'Bosch-Regular', fontSize: '14px'}}>
                 <div style={{display: 'flex', flexDirection: 'row', color: '#9E2896'}}>
                     <div style={{marginRight: '10px'}}>
                         <div style={{marginTop: '2px', width: '12px', height: '12px', background: '#9E2896', borderRadius: '12px'}}></div>

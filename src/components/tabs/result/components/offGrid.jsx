@@ -400,7 +400,7 @@ class OffGrid extends React.Component {
              </div>
             }
 
-            <div data-html2canvas-ignore style={{display: 'flex', justifyContent: 'flex-start', flexDirection: 'row'}}>
+            <div data-html2canvas-ignore style={{display: 'flex', marginTop: '30px', justifyContent: 'flex-start', flexDirection: 'row'}}>
                 <CustomSwitch />
                 <div style={{marginLeft: '12px', marginRight: '12px', paddingTop: '2px', fontFamily: 'Bosch-Regular', fontSize: '16px'}}>
                     Mit Energiemanagementsystem
