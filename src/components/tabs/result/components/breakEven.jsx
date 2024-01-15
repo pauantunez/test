@@ -16,7 +16,7 @@ import { ReactComponent as LightningIcon } from "../../../../assets/img/icons/li
 import { ReactComponent as PVIcon } from "../../../../assets/img/icons/photovoltaic_chart.svg";
 import { ReactComponent as ElectricityIcon } from "../../../../assets/img/icons/electricity_sun_chart.svg";
 
-ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip);
+ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title);
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 var selectedTheme;
@@ -316,7 +316,25 @@ class BreakEven extends React.Component {
           text: "Chart.js Line Chart",
         },
         tooltip: {
-          enabled: false,
+          enabled: true,
+          callbacks: {
+            title: function () {
+              return ""; // Para ocultar la etiqueta del eje x en el tooltip
+            },
+            label: function (tooltipItem) {
+              const index = tooltipItem.dataIndex;
+              switch (index) {
+                case closestPosition02:
+                  return "Amortisierung PV-Anlage ohne EMS";
+                case closestPosition01:
+                  return "Amortisierung PV-Anlage mit EMS";
+                case closestIntersectionPosition:
+                  return "Amortisierung EMS";
+                default:
+                  return "";
+              }
+            },
+          },
         },
         datalabels: {
           display: false,
@@ -340,13 +358,13 @@ class BreakEven extends React.Component {
           },
         },
         y: {
-          sugestedmin: -34000,
-          sugestedmax: 20000,
+          suggestedMin: -34000,
+          suggestedMax: 20000,
           border: {
             display: false,
           },
           ticks: {
-            sugestedstepSize: 10000,
+            suggestedStepSize: 10000,
             color: "#000",
             font: {
               size: 12,
