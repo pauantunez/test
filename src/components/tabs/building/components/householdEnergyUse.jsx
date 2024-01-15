@@ -54,6 +54,9 @@ class HouseholdEnergyUse extends React.Component {
   componentWillMount() {
     const { BuildingEnegeryStandard, setFwdBtn, fwdBtn, steps, setSteps, activeView, kfwValue } = this.context;
 
+    steps[activeView] = false;
+    setSteps({ ...steps });
+
     if (steps[activeView] === false) {
       setFwdBtn(false);
     }
