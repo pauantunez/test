@@ -13,6 +13,7 @@ var productEntry = 0;
 class SimulatorProvider extends Component {
 
   state = {
+      directLink: false,
       loading: false,
       viewLocation: 'outdoor',
       viewLocationPrevious: 'outdoor',
@@ -1940,6 +1941,11 @@ class SimulatorProvider extends Component {
       this.setState((prevState) => ({ loading: status }))
     }
 
+    setDirectLink = (value) => {
+      
+      this.setState((prevState) => ({ directLink: value}))
+    }
+
     loading
 
     render() {
@@ -1974,8 +1980,9 @@ class SimulatorProvider extends Component {
         StorageCostLookupTable,
         heatpumpPVems,
         heatpumpPV,
-        loading } = this.state
-      const { setProduct, setEntryProduct, setProducts, setHeatpumpAudio, setHeatpumpVolume, setActiveView, setActiveStep, setActiveMilestone, setMilestoneHeadline, setSelectedTab, setNavDirection, setStepperNav, setTime, setAppVolume, setBackgroundVolume, setSelectedBackgroundAudio, setViewLocation, setViewLocationPrevious, setMenu, setMenuFloating, setAmbient, setInitialLoad, setAudioContext, setGainNode, setMediaSource, trackUser, setTerms, setSliderState, setGasBrine, setElc_Self_Consumption, setPower_kW_PV_MFH, setTCO_thermal_EUR_a, setBuildingEnegeryStandard, setEnergyUse, setBuildingSize, setGasOilSwitch, setKfwValue, setInsulationValue, setOilLNGValue, setDisabledOilUsage, setOilUsageLiters, setLNGUsage, setDisabledLNGUsage, setHeatDistribution, setEnergyUsageKWH, setHeatpumpType, setEV, setOdometerIncrease, setOdometerIncreaseKWH, setHomeCharging, setPVOutput, setHomeStorage, setHomeStorageSize, setInvestmentCost, setDisabledInvestmentCost, setInvestmentCostEUR, setElectricityCost, setGridRevenue, setBackBtn, setFwdBtn, setSteps, setCostOverTime, setPieSize, setAnchorEl, setBackdrop, setOffGrid1SVG, setOffGrid2SVG, setElectricityUse1SVG, setElectricityUse2SVG, setHouseholdUse1SVG, setHouseholdUse2SVG, setBreakEvenBase64, setHouseholdEMS, setOffgridEMS, setTestSVG, setOffgrid1SVG_NoEMS_Hidden, setOffgrid2SVG_NoEMS_Hidden, setOffgrid1SVG_EMS_Hidden, setOffgrid2SVG_EMS_Hidden, setHousehold1SVG_EMS_Hidden, setHousehold2SVG_EMS_Hidden, setHousehold1SVG_NoEMS_Hidden, setHousehold2SVG_NoEMS_Hidden, setCalculationModal, setActiveCalculationView, setMenuBackdrop, setWindowWidth, setWindowHeight, setTabToSelect, setPreHeatTempOption, setScenarioInDatabase, setDatabaseResult, setHeatpumpCombinedUsage, setOffgridPVPercentageNoEMS, setNoEMScombinedEnergyUseKWH, setNoEMSPercentage, setHouseholdNoEMSpvPercent, setInfoBoxCombinedHouseholdUsage, setInfoBoxHouseholdGridFeed, setInfoBoxOffGridGridUsage, setElectricityCostPercentage, setElectricityCostPVsavings, setElectricityCostPVEMSsavings, addHeatpumpPVems, addHeatpumpPV, setLoading} = this
+        loading,
+        directLink } = this.state
+      const { setProduct, setEntryProduct, setProducts, setHeatpumpAudio, setHeatpumpVolume, setActiveView, setActiveStep, setActiveMilestone, setMilestoneHeadline, setSelectedTab, setNavDirection, setStepperNav, setTime, setAppVolume, setBackgroundVolume, setSelectedBackgroundAudio, setViewLocation, setViewLocationPrevious, setMenu, setMenuFloating, setAmbient, setInitialLoad, setAudioContext, setGainNode, setMediaSource, trackUser, setTerms, setSliderState, setGasBrine, setElc_Self_Consumption, setPower_kW_PV_MFH, setTCO_thermal_EUR_a, setBuildingEnegeryStandard, setEnergyUse, setBuildingSize, setGasOilSwitch, setKfwValue, setInsulationValue, setOilLNGValue, setDisabledOilUsage, setOilUsageLiters, setLNGUsage, setDisabledLNGUsage, setHeatDistribution, setEnergyUsageKWH, setHeatpumpType, setEV, setOdometerIncrease, setOdometerIncreaseKWH, setHomeCharging, setPVOutput, setHomeStorage, setHomeStorageSize, setInvestmentCost, setDisabledInvestmentCost, setInvestmentCostEUR, setElectricityCost, setGridRevenue, setBackBtn, setFwdBtn, setSteps, setCostOverTime, setPieSize, setAnchorEl, setBackdrop, setOffGrid1SVG, setOffGrid2SVG, setElectricityUse1SVG, setElectricityUse2SVG, setHouseholdUse1SVG, setHouseholdUse2SVG, setBreakEvenBase64, setHouseholdEMS, setOffgridEMS, setTestSVG, setOffgrid1SVG_NoEMS_Hidden, setOffgrid2SVG_NoEMS_Hidden, setOffgrid1SVG_EMS_Hidden, setOffgrid2SVG_EMS_Hidden, setHousehold1SVG_EMS_Hidden, setHousehold2SVG_EMS_Hidden, setHousehold1SVG_NoEMS_Hidden, setHousehold2SVG_NoEMS_Hidden, setCalculationModal, setActiveCalculationView, setMenuBackdrop, setWindowWidth, setWindowHeight, setTabToSelect, setPreHeatTempOption, setScenarioInDatabase, setDatabaseResult, setHeatpumpCombinedUsage, setOffgridPVPercentageNoEMS, setNoEMScombinedEnergyUseKWH, setNoEMSPercentage, setHouseholdNoEMSpvPercent, setInfoBoxCombinedHouseholdUsage, setInfoBoxHouseholdGridFeed, setInfoBoxOffGridGridUsage, setElectricityCostPercentage, setElectricityCostPVsavings, setElectricityCostPVEMSsavings, addHeatpumpPVems, addHeatpumpPV, setLoading, setDirectLink} = this
 
       return (
         <AppContext.Provider
@@ -2136,6 +2143,7 @@ class SimulatorProvider extends Component {
             heatpumpPVems,
             heatpumpPV,
             loading,
+            directLink,
             setProduct,
             setEntryProduct,
             setProducts,
@@ -2241,7 +2249,8 @@ class SimulatorProvider extends Component {
             setElectricityCostPVEMSsavings,
             addHeatpumpPVems,
             addHeatpumpPV,
-            setLoading
+            setLoading,
+            setDirectLink
           }}
         >
           {children}
