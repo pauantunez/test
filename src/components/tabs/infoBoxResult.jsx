@@ -103,7 +103,8 @@ class InfoBoxResult extends React.Component {
     }
     
     goToView = (newValue) => {
-        const { selectedTab, activeView, activeStep, setActiveView, setActiveStep, steps, setSteps, setFwdBtn, setMenuBackdrop } = this.context;
+        const { selectedTab, activeView, activeStep, setActiveView, setActiveStep, steps, setSteps, setFwdBtn, setMenuBackdrop, setDirectLink } = this.context;
+        setDirectLink(true);
         setActiveView(newValue);
     }
 
