@@ -49,8 +49,8 @@ class SimulatorProvider extends Component {
     investmentCost: "",
     disabledInvestmentCost: true,
     investmentCostEUR: "",
-    electricityCost: "",
-    gridRevenue: "",
+    electricityCost: "35",
+    gridRevenue: "8.2",
     costOverTime: "1",
     selectedBackgroundAudio: "",
     initialLoad: true,
@@ -174,8 +174,8 @@ class SimulatorProvider extends Component {
     },
     pvMarks: [
       {
-        value: 5,
-        label: "5",
+        value: 4,
+        label: "4",
       },
       {
         value: 7,

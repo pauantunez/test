@@ -86,7 +86,7 @@ class PVOutput extends React.Component {
                 </div>
                 <span class="cardDescription">Welche Leistung hat die installierte oder geplante PV-Anlage?</span>
               </div>
-              <div class="flexRow" style={{ flexDirection: "column" }}>
+              <div class="flexRow" style={{ flexDirection: "column", marginTop: "20px" }}>
                 <div class="slider-size">
                   <Slider
                     min={0}
@@ -129,7 +129,7 @@ class PVOutput extends React.Component {
                     <div style={{ position: "absolute", left: "100%", marginLeft: "29px" }}>kWp</div>
                   </div>
                 </div>
-                <div style={{ marginTop: "20%" }}>
+                <div style={{ marginTop: "105px" }}>
                   <InfoBox box="4-row-2-col" />
                 </div>
               </div>

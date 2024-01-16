@@ -31,7 +31,7 @@ class InfoBox extends React.Component {
 
   static contextType = AppContext;
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   render() {
     const { t } = this.props;
@@ -183,7 +183,7 @@ class InfoBox extends React.Component {
                 <div class="width-50 padding-left-10">
                   24m<sup>2</sup>
                 </div>
-                <div class="width-50">5 kWp</div>
+                <div class="width-50">4 kWp</div>
               </div>
               <div class="infobox-row">
                 <div class="width-50 padding-left-10">
@@ -216,7 +216,7 @@ class InfoBox extends React.Component {
                 <div class="width-50">Größe Batteriespeicher</div>
               </div>
               <div class="infobox-row">
-                <div class="width-50 padding-left-10">5 kWp</div>
+                <div class="width-50 padding-left-10">4 kWp</div>
                 <div class="width-50">6 kWh</div>
               </div>
               <div class="infobox-row">

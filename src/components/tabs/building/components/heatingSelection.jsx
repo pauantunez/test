@@ -44,7 +44,7 @@ class HeatingSelection extends React.Component {
 
   static contextType = AppContext;
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   componentWillMount() {
     const { BuildingEnegeryStandard, setFwdBtn, fwdBtn, steps, setSteps, activeView, kfwValue } = this.context;
@@ -415,15 +415,15 @@ class HeatingSelection extends React.Component {
                 {/* Gebäudeenergiestandard */}
                 {BuildingEnegeryStandard === "BuildingEnergyStandard" && (
                   <div style={{ marginTop: "30px", marginLeft: "10px", fontFamily: "Bosch-Regular" }}>
-                    Welchen Energiestandard besitzt Ihr Gebäude?
+                    Welchen Energiestandard besitzt Ihr Gebäude? <InfoButton tooltipId="1" text="Die auschlaggebenden Faktoren für die Gebäudedämmung sind das Dach, die Gebäudehülle und die Fenster. Bei einer vollständig, sehr guten Dämmung wurden alle Faktoren bereits auf den neusten Stand gebracht." color="#000" />
                     <div style={{ marginTop: "15px" }}>
                       <FormControl>
                         <RadioGroup name="kfw-value" id="kfw-value">
-                          <FormControlLabel value="kfW_40_" control={<BpRadio />} label="KfW 40" checked={kfwValue === "kfW_40_"} onChange={this.inputKfwValue} />
-                          <FormControlLabel value="kfW_55_" control={<BpRadio />} label="KfW 55" checked={kfwValue === "kfW_55_"} onChange={this.inputKfwValue} />
-                          <FormControlLabel value="kfW_70_" control={<BpRadio />} label="KfW 70" checked={kfwValue === "kfW_70_"} onChange={this.inputKfwValue} />
-                          <FormControlLabel value="kfW_85_" control={<BpRadio />} label="KfW 85" checked={kfwValue === "kfW_85_"} onChange={this.inputKfwValue} />
-                          <FormControlLabel value="kfW_100_" control={<BpRadio />} label="KfW 100" checked={kfwValue === "kfW_100_"} onChange={this.inputKfwValue} />
+                          <FormControlLabel value="kfW_40_" control={<OilLNGRadio />} label="KfW 40" checked={kfwValue === "kfW_40_"} onChange={this.inputKfwValue} />
+                          <FormControlLabel value="kfW_55_" control={<OilLNGRadio />} label="KfW 55" checked={kfwValue === "kfW_55_"} onChange={this.inputKfwValue} />
+                          <FormControlLabel value="kfW_70_" control={<OilLNGRadio />} label="KfW 70" checked={kfwValue === "kfW_70_"} onChange={this.inputKfwValue} />
+                          <FormControlLabel value="kfW_85_" control={<OilLNGRadio />} label="KfW 85" checked={kfwValue === "kfW_85_"} onChange={this.inputKfwValue} />
+                          <FormControlLabel value="kfW_100_" control={<OilLNGRadio />} label="KfW 100" checked={kfwValue === "kfW_100_"} onChange={this.inputKfwValue} />
                         </RadioGroup>
                       </FormControl>
                     </div>
@@ -461,19 +461,19 @@ class HeatingSelection extends React.Component {
                         <RadioGroup name="insulation-value">
                           <div>
                             <FormControlLabel value="kfW_40_" control={<OilLNGRadio />} label="Vollständig sehr gut isoliert" checked={insulationValue === "kfW_40_"} onChange={this.inputInsulationValue} />
-                            <InfoButton tooltipId="1" text="Die ausschlaggebenden Faktoren für die Gebäudedämmung sind das Dach, die Gebäudehülle und die Fenster. Bei einer vollständig, sehr guten Dämmung wurden alle Faktoren bereits auf den neusten Stand gebracht." color="#000" />
+                            <InfoButton tooltipId="1" text="Die auschlaggebenden Faktoren für die Gebäudedämmung sind das Dach, die Gebäudehülle und die Fenster. Bei einer vollständig, sehr guten Dämmung wurden alle Faktoren bereits auf den neusten Stand gebracht." color="#000" />
                           </div>
                           <div>
                             <FormControlLabel value="kfW_70_" control={<OilLNGRadio />} label="Größtenteils gut isoliert" checked={insulationValue === "kfW_70_"} onChange={this.inputInsulationValue} />
-                            <InfoButton tooltipId="2" text="Die ausschlaggebenden Faktoren für die Gebäudedämmung sind das Dach, die Gebäudehülle und die Fenster. Bei einer größtenteils guten Dämmung wurden mindestens 2 Faktoren bereits auf den neusten Stand gebracht." color="#000" />
+                            <InfoButton tooltipId="2" text="Die auschlaggebenden Faktoren für die Gebäudedämmung sind das Dach, die Gebäudehülle und die Fenster. Bei einer größtenteils guten Dämmung wurden mindestens 2 Faktoren bereits auf den neusten Stand gebracht." color="#000" />
                           </div>
                           <div>
                             <FormControlLabel value="kfW_100_" control={<OilLNGRadio />} label="Teilweise isoliert" checked={insulationValue === "kfW_100_"} onChange={this.inputInsulationValue} />
-                            <InfoButton tooltipId="3" text="Die ausschlaggebenden Faktoren für die Gebäudedämmung sind das Dach, die Gebäudehülle und die Fenster. Bei einer Teil-Dämmung wurde mindestens ein Faktor bereits aus den neusten Stand gebracht." color="#000" />
+                            <InfoButton tooltipId="3" text="Die auschlaggebenden Faktoren für die Gebäudedämmung sind das Dach, die Gebäudehülle und die Fenster. Bei einer Teil-Dämmung wurde mindestens ein Faktor bereits auf den neusten Stand gebracht." color="#000" />
                           </div>
                           <div>
                             <FormControlLabel value="un_ren_" control={<OilLNGRadio />} label="Schlecht bis gar nicht isoliert" checked={insulationValue === "un_ren_"} onChange={this.inputInsulationValue} />
-                            <InfoButton tooltipId="4" text="Die ausschlaggebenden Faktoren für die Gebäudedämmung sind das Dach, die Gebäudehülle und die Fenster. Nicht isoliert bedeutet, dass noch kein Faktor aus den neusten Stand gebracht wurde." color="#000" />
+                            <InfoButton tooltipId="4" text="Die auschlaggebenden Faktoren für die Gebäudedämmung sind das Dach, die Gebäudehülle und die Fenster. Nicht isoliert bedeutet, dass noch kein Faktor auf den neusten Stand gebracht wurde." color="#000" />
                           </div>
                         </RadioGroup>
                       </FormControl>

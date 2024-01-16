@@ -51,7 +51,7 @@ class Additional extends React.Component {
 
   static contextType = AppContext;
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   inputPVOutput = (value) => {
     const { pvOutput, setPVOutput } = this.context;
@@ -293,7 +293,7 @@ class Additional extends React.Component {
                   <div>Finden Sie einen Experten in Ihrer Nähe, der Sie bei der Umsetzung unterstützt</div>
                 </div>
                 <div style={{ display: "flex", alignItems: "end" }}>
-                  <Button variant="outlined" startIcon={<MagnifyingGlassIcon />} disabled={this.state.restart} style={{ height: "70px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
+                  <Button variant="outlined" startIcon={<MagnifyingGlassIcon />} disabled={this.state.restart} style={{ width: "225px", height: "70px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
                     Jetzt Fachbetrieb finden
                   </Button>
                 </div>
