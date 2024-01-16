@@ -113,9 +113,9 @@ class ElectricityUse extends React.Component {
         console.log(window.innerWidth);
 
         if (window.innerWidth < 1300) {
-            setPieSize(320, 50, 37, 16, 16, 2, 65, 0, 0, 36, 40, 15, 55, 5, 10, 0)
+            setPieSize(290, 50, 37, 16, 16, 2, 65, 0, 0, 36, 40, 15, 55, 5, 10, 0)
         } else if(window.innerWidth > 1300) {
-            setPieSize(350, 75, 55, 20, 38, 28, 90, 0, 0, 34, 40, 15, 55, 5, 20, 0)
+            setPieSize(330, 75, 55, 20, 38, 28, 90, 0, 0, 34, 40, 15, 55, 5, 20, 0)
         }
 
       }
@@ -214,9 +214,9 @@ class ElectricityUse extends React.Component {
       ];
       
       const VictoryPieData2 = [
-        { x: 3, y: this.heatpumpUsageKWH(), name: "heatpump", label: Math.round(this.energyUsagePercentage("heatpump")) + "%", img: "/img/heatpump_small.svg", color: "#004975" },
-        ...(odometerIncreaseKWH !== 0 ? [{ x: 2, y: odometerIncreaseKWH, name: "ev", label: Math.round(this.energyUsagePercentage("ev")) + "%", img: "/img/ev_small.svg", color: "#C535BC" }] : []),
-        { x: 1, y: parseInt(energyUsagekWh), name: "household", label: Math.round(this.energyUsagePercentage("household")) + "%", img: "/img/household_small.svg", color: "#9E2896" },
+        { x: 3, y: this.heatpumpUsageKWH(), name: "heatpump", label: parseFloat(this.energyUsagePercentage("heatpump")) + "%", img: "/img/heatpump_small.svg", color: "#004975" },
+        ...(odometerIncreaseKWH !== 0 ? [{ x: 2, y: odometerIncreaseKWH, name: "ev", label: parseFloat(this.energyUsagePercentage("ev")) + "%", img: "/img/ev_small.svg", color: "#C535BC" }] : []),
+        { x: 1, y: parseInt(energyUsagekWh), name: "household", label: parseFloat(this.energyUsagePercentage("household")) + "%", img: "/img/household_small.svg", color: "#9E2896" },
       ];
       
       
