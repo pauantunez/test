@@ -49,7 +49,14 @@ class HouseholdEnergyUse extends React.Component {
 
   static contextType = AppContext;
 
-  componentDidMount() {}
+  componentDidMount() {
+    const { setElectricityCostPercentage, kWhUsageLookupTable, energyUsagekWh, setEnergyUsageKWH, setFwdBtn, steps, setSteps, activeView } = this.context;
+
+    var percentageInTable = kWhUsageLookupTable.find((o) => o.kwh === energyUsagekWh.toString());
+
+    setElectricityCostPercentage(percentageInTable.offGridPercentage, percentageInTable.householdPercentage);
+    console.log(percentageInTable);
+  }
 
   componentWillMount() {
     const { BuildingEnegeryStandard, setFwdBtn, fwdBtn, steps, setSteps, activeView, kfwValue } = this.context;
