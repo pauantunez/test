@@ -134,11 +134,12 @@ class InfoBoxResult extends React.Component {
                   {costOverTime == "20" && <span>&nbsp;über 20 Jahre sparen.</span>}
                   <br />
                   <br />
-                  {costOverTime == "20" && (
-                    <span>
-                      Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis um bis zu <strong>{parseInt(electricityCostPVEMSsavings - electricityCostPVsavings).toLocaleString()} €</strong> über 20 Jahre.
-                    </span>
-                  )}
+                  Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis um bis zu <strong>{parseInt(electricityCostPVEMSsavings - electricityCostPVsavings).toLocaleString()} €</strong> {costOverTime == "1" && <span>&nbsp;pro Jahr.</span>}
+                  {costOverTime == "20" && <span>&nbsp;über 20 Jahre.</span>}
+                  {/* über 20 Jahre. */}
+                  {/* {costOverTime == "20" && (
+                    
+                  )} */}
                 </div>
               </div>
             </div>
