@@ -279,7 +279,7 @@ class HouseholdEnergyUse extends React.Component {
                   <br /> (ohne Stromverbrauch für Wärmepumpe und E-Auto)?
                 </span>
               </div>
-              <div class="flexRow" style={{ flexDirection: "column" }}>
+              <div class="flexRow" style={{ flexDirection: "column", marginTop: "20px" }}>
                 <div class="slider-size">
                   <Slider
                     min={4000}
@@ -316,11 +316,11 @@ class HouseholdEnergyUse extends React.Component {
                     <div style={{ position: "absolute", left: "0%", transform: "translateX(-50%)" }}>4000</div>
                     <div style={{ position: "absolute", left: "50%", transform: "translateX(-50%)" }}>6000</div>
                     <div style={{ position: "absolute", left: "100%", transform: "translateX(-50%)" }}>8000</div>
-                    <div style={{ position: "absolute", left: "115%", transform: "translateX(-50%)" }}>kWp</div>
+                    <div style={{ position: "absolute", left: "115%", transform: "translateX(-50%)" }}>kWh</div>
                   </div>
                 </div>
 
-                <div style={{ marginTop: "20%" }}>
+                <div style={{ marginTop: "105px" }}>
                   <InfoBox box="2-row-2-col" />
                 </div>
               </div>
