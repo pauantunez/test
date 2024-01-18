@@ -313,9 +313,9 @@ class HouseholdEnergyUse extends React.Component {
                     </div>
                   </div>
                   <div style={{ position: "relative", top: "17px", left: 0, fontFamily: "Bosch-Regular", fontSize: "16px" }}>
-                    <div style={{ position: "absolute", left: "0%", transform: "translateX(-50%)" }}>4000</div>
-                    <div style={{ position: "absolute", left: "50%", transform: "translateX(-50%)" }}>6000</div>
-                    <div style={{ position: "absolute", left: "100%", transform: "translateX(-50%)" }}>8000</div>
+                    <div style={{ position: "absolute", left: "0%", transform: "translateX(-50%)" }}>{(4000).toLocaleString()}</div>
+                    <div style={{ position: "absolute", left: "50%", transform: "translateX(-50%)" }}>{(6000).toLocaleString()}</div>
+                    <div style={{ position: "absolute", left: "100%", transform: "translateX(-50%)" }}>{(8000).toLocaleString()}</div>
                     <div style={{ position: "absolute", left: "115%", transform: "translateX(-50%)" }}>kWh</div>
                   </div>
                 </div>

@@ -155,7 +155,7 @@ class InfoBoxResult extends React.Component {
                   Die Investition in eine <strong>PV-Anlage</strong> hat sich durch den Einsatz eines <strong>Energiemanagementsystems</strong> nach ca. <strong>{this.breakEvenPVems()} Jahren</strong> amortisiert.
                   <br />
                   <br />
-                  Die zusätzlichen Kosten für ein <strong>Energiemanagementsystem</strong> von <strong>{this.amortizationDifference()} € *</strong> haben sich bereits nach ca. <strong>{this.breakEvenPoint()} Jahren</strong> bezahlt gemacht.
+                  Die zusätzlichen Kosten für ein <strong>Energiemanagementsystem</strong> von <strong>{this.amortizationDifference().toLocaleString()} € *</strong> haben sich bereits nach ca. <strong>{this.breakEvenPoint()} Jahren</strong> bezahlt gemacht.
                   <br />
                   <br />
                   <small>* Bei Einsatz Fronius / Sungrow (ab Ende Q1/24) Wechselrichter</small>
