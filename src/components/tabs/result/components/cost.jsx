@@ -447,6 +447,7 @@ class Cost extends React.Component {
       var scale1 = 0
       var scale2 = 0
       var scale3 = 0
+      var differenceScale = 0
 
       if (value1 >= value2 && value1 >= value3) {
         scale1 = maxHeight;
@@ -459,7 +460,10 @@ class Cost extends React.Component {
       } else {
         scale1 = (value1 / value3) * maxHeight;
         scale2 = (value2 / value3) * maxHeight;
-        scale3 = maxHeight;
+        
+        // Modified
+        differenceScale = (differenceValue2 / value3) * maxHeight
+        scale3 = maxHeight - differenceScale;
       }
       
       const height2 = maxHeight - scale2;
@@ -469,22 +473,19 @@ class Cost extends React.Component {
       // return [110, 110, 110, 110];
     }
 
-    getHighestValue =(value1, value2, differenceValue2, value3, differenceValue3) => {
-      var value2WithDifference = value2 + differenceValue2;
-      var value3WithDifference = value3 + differenceValue3;
-      // var value3WithDifference = value3 + (-differenceValue3);
+    getHighestValue =(value1, value2, value3) => {
 
-      if (value1 >= value2WithDifference && value1 >= value3WithDifference) {
+      if (value1 >= value2 && value1 >= value3) {
         return value1;
-      } else if (value2WithDifference >= value1 && value2WithDifference >= value3WithDifference) {
-        return value2WithDifference;
+      } else if (value2 >= value1 && value2 >= value3) {
+        return value2;
       } else {
-        return value3WithDifference;
+        return value3;
       }
     }
 
     divideValuesForChart =(step, value) => {
-      return parseInt((value / 5) * step).toLocaleString("de-DE");
+      return parseInt((value / 5) * step).toLocaleString();
     }
 
     render() {
@@ -515,8 +516,8 @@ class Cost extends React.Component {
       var barHeights20years = this.adjustBarHeight(220, ohnePv20years, mitPv20years, differencePv20years, mitPvUndEms20years, differencePvUndEms20years);
       var selectedBarHeights = costOverTime == "1" ? barHeights1year : barHeights20years;
 
-      var highestValue1year = this.getHighestValue(ohnePv1year, mitPv1year, differencePv1year, mitPvUndEms1year, differencePvUndEms1year);
-      var highestValue20years = this.getHighestValue(ohnePv20years, mitPv20years, differencePv20years, mitPvUndEms20years, differencePvUndEms20years); 
+      var highestValue1year = this.getHighestValue(ohnePv1year, mitPv1year + differencePv1year, mitPvUndEms1year + differencePvUndEms1year);
+      var highestValue20years = this.getHighestValue(ohnePv20years, mitPv20years + differencePv20years, mitPvUndEms20years + differencePvUndEms20years); 
 
           return  ( 
           <div>
@@ -561,12 +562,12 @@ class Cost extends React.Component {
                     {/* ohne PV */}
                     <div style={{display: 'flex', width: '73px', height: `${selectedBarHeights[0]}px`, background: '#007BC0', color: 'white', marginTop: 'auto' }}>
                         <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%', fontSize: '12px', textAlign: 'center'}}>
-                            { costOverTime=="1" && ohnePv1year.toLocaleString("de-DE") }
+                            { costOverTime=="1" && ohnePv1year.toLocaleString() }
                             { costOverTime=="1" && 
                               <span>&nbsp;€</span>
                             }
                             { costOverTime=="20" && 
-                               ohnePv20years.toLocaleString("de-DE")
+                               ohnePv20years.toLocaleString()
                             }
                             { costOverTime=="20" && 
                               <span>&nbsp;€</span>
@@ -585,9 +586,9 @@ class Cost extends React.Component {
                         <div style={{width: '100%', height: '100%', textAlign: 'center'}} class="pattern-safari">
                           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#007BC0', fontSize: '12px', width: '100%', height: '100%'}}>
                             <span style={{background: '#FFF', padding: '3px', fontFamily: 'Bosch-Bold'}}>
-                            { costOverTime=="1" && differencePv1year.toLocaleString("de-DE") }
+                            { costOverTime=="1" && differencePv1year.toLocaleString() }
                             { costOverTime=="1" && <span>&nbsp;€</span> }
-                            { costOverTime=="20" && differencePv20years.toLocaleString("de-DE") }
+                            { costOverTime=="20" && differencePv20years.toLocaleString() }
                             { costOverTime=="20" && 
                               <span>&nbsp;€</span>
                             }
@@ -599,9 +600,9 @@ class Cost extends React.Component {
                         <div style={{width: '100%', height: '100%', top: '0%', textAlign: 'center'}} class="pattern">
                           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#007BC0', fontSize: '12px', width: '100%', height: '100%'}}>
                             <span style={{background: '#FFF', padding: '3px', fontFamily: 'Bosch-Bold'}}>
-                            { costOverTime=="1" && differencePv1year.toLocaleString("de-DE") }
+                            { costOverTime=="1" && differencePv1year.toLocaleString() }
                             { costOverTime=="1" && <span>&nbsp;€</span> }
-                            { costOverTime=="20" && differencePv20years.toLocaleString("de-DE") }
+                            { costOverTime=="20" && differencePv20years.toLocaleString() }
                             { costOverTime=="20" && 
                               <span>&nbsp;€</span>
                             }
@@ -617,9 +618,9 @@ class Cost extends React.Component {
                         <div style={{width: '100%', height: '100%', textAlign: 'center'}}>
                           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#007BC0', color: 'white', fontSize: '12px', width: '100%', height: '100%'}}>
                             <span style={{background: '#007BC0', padding: '3px', fontFamily: 'Bosch-Bold'}}>
-                            { costOverTime=="1" && mitPv1year.toLocaleString("de-DE") }
+                            { costOverTime=="1" && mitPv1year.toLocaleString() }
                             { costOverTime=="1" && <span>&nbsp;€</span> }
-                            { costOverTime=="20" && mitPv20years.toLocaleString("de-DE") }
+                            { costOverTime=="20" && mitPv20years.toLocaleString() }
                             { costOverTime=="20" && 
                               <span>&nbsp;€</span>
                             }
@@ -632,9 +633,9 @@ class Cost extends React.Component {
                         <div style={{width: '100%', height: '100%', top: '0%', textAlign: 'center'}}>
                           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#007BC0', color: 'white', fontSize: '12px', width: '100%', height: '100%'}}>
                             <span style={{background: '#007BC0', padding: '3px', fontFamily: 'Bosch-Bold'}}>
-                            { costOverTime=="1" && mitPv1year.toLocaleString("de-DE") }
+                            { costOverTime=="1" && mitPv1year.toLocaleString() }
                             { costOverTime=="1" && <span>&nbsp;€</span> }
-                            { costOverTime=="20" && mitPv20years.toLocaleString("de-DE") }
+                            { costOverTime=="20" && mitPv20years.toLocaleString() }
                             { costOverTime=="20" && 
                               <span>&nbsp;€</span>
                             }
@@ -655,9 +656,9 @@ class Cost extends React.Component {
                         <div style={{width: '100%', height: '100%', textAlign: 'center'}} class="pattern-safari">
                           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#007BC0', fontSize: '12px', width: '100%', height: '100%'}}>
                             <span style={{background: '#FFF', padding: '3px', fontFamily: 'Bosch-Bold'}}>
-                            { costOverTime=="1" && differencePvUndEms1year.toLocaleString("de-DE") }
+                            { costOverTime=="1" && differencePvUndEms1year.toLocaleString() }
                             { costOverTime=="1" && <span>&nbsp;€</span> }
-                            { costOverTime=="20" && differencePvUndEms20years.toLocaleString("de-DE") }
+                            { costOverTime=="20" && differencePvUndEms20years.toLocaleString() }
                             { costOverTime=="20" && 
                               <span>&nbsp;€</span>
                             }
@@ -669,9 +670,9 @@ class Cost extends React.Component {
                         <div style={{width: '100%', height: '100%', textAlign: 'center'}} class="pattern">
                           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#007BC0', fontSize: '12px', width: '100%', height: '100%'}}>
                             <span style={{background: '#FFF', padding: '3px', fontFamily: 'Bosch-Bold'}}>
-                            { costOverTime=="1" && differencePvUndEms1year.toLocaleString("de-DE") }
+                            { costOverTime=="1" && differencePvUndEms1year.toLocaleString() }
                             { costOverTime=="1" && <span>&nbsp;€</span> }
-                            { costOverTime=="20" && differencePvUndEms20years.toLocaleString("de-DE") }
+                            { costOverTime=="20" && differencePvUndEms20years.toLocaleString() }
                             { costOverTime=="20" && 
                               <span>&nbsp;€</span>
                             }
@@ -687,9 +688,9 @@ class Cost extends React.Component {
                         <div style={{width: '100%', height: '100%', textAlign: 'center'}} class="pattern-safari">
                           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#007BC0', color: 'white', fontSize: '12px', width: '100%', height: '100%'}}>
                             <span style={{background: '#007BC0', padding: '3px', fontFamily: 'Bosch-Bold'}}>
-                            { costOverTime=="1" && mitPvUndEms1year.toLocaleString("de-DE") }
+                            { costOverTime=="1" && mitPvUndEms1year.toLocaleString() }
                             { costOverTime=="1" && <span>&nbsp;€</span> }
-                            { costOverTime=="20" && mitPvUndEms20years.toLocaleString("de-DE") }
+                            { costOverTime=="20" && mitPvUndEms20years.toLocaleString() }
                             { costOverTime=="20" && 
                               <span>&nbsp;€</span>
                             }
@@ -701,9 +702,9 @@ class Cost extends React.Component {
                         <div style={{width: '100%', height: '100%', textAlign: 'center'}} class="pattern">
                           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#007BC0', color: 'white', fontSize: '12px', width: '100%', height: '100%'}}>
                             <span style={{background: '#007BC0', padding: '3px', fontFamily: 'Bosch-Bold'}}>
-                            { costOverTime=="1" && mitPvUndEms1year.toLocaleString("de-DE") }
+                            { costOverTime=="1" && mitPvUndEms1year.toLocaleString() }
                             { costOverTime=="1" && <span>&nbsp;€</span> }
-                            { costOverTime=="20" && mitPvUndEms20years.toLocaleString("de-DE") }
+                            { costOverTime=="20" && mitPvUndEms20years.toLocaleString() }
                             { costOverTime=="20" && 
                               <span>&nbsp;€</span>
                             }
