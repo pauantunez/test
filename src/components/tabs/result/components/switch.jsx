@@ -103,10 +103,11 @@ class CustomSwitch extends React.Component {
     static contextType = AppContext
 
     componentWillMount() {
-      const { setLoading, heatpumpType, scenarioInDatabase, kfwValue, ev, homeStorageSizekWh, pvOutputkWh, tabEntries, products, btnThemes, fonts, setFwdBtn } = this.context;
+      const { setLoading, setLoadingOffGrid, heatpumpType, scenarioInDatabase, kfwValue, ev, homeStorageSizekWh, pvOutputkWh, tabEntries, products, btnThemes, fonts, setFwdBtn } = this.context;
 
       setFwdBtn(false);
       setLoading(true)
+      //setLoadingOffGrid(true)
 
     }
 
@@ -159,9 +160,11 @@ class CustomSwitch extends React.Component {
 
 
     inputOffgridEMS = (event) => { 
-      const { setLoading, kfwValue, ev, setOffgridEMS, offgridEMS, scenarioInDatabase, tabEntries, setTabToSelect, pvOutputkWh, homeStorageSizekWh, homeStorage, setHomeStorage, setHomeStorageSize} = this.context;
-      setOffgridEMS(event.target.checked);
+
+      const { setLoading, setLoadingOffGrid, kfwValue, ev, setOffgridEMS, offgridEMS, scenarioInDatabase, tabEntries, setTabToSelect, pvOutputkWh, homeStorageSizekWh, homeStorage, setHomeStorage, setHomeStorageSize} = this.context;
+      setOffgridEMS(event.target.checked)
       setLoading(true)
+      //setLoadingOffGrid(true)
 
       if(event.target.checked) {
         var emsValue = "Ja"
@@ -169,19 +172,20 @@ class CustomSwitch extends React.Component {
         var emsValue = "Nein"
       }
 
-      let tabInTable = tabEntries.find(o => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === emsValue);
+      let tabInTable = tabEntries.find(o => o.PV_size === pvOutputkWh.toString() 
+                                        && o.Storage_size === homeStorageSizekWh.toString() 
+                                        && o.EMS === emsValue);
       setTabToSelect(tabInTable.Tab)
-      console.log(tabInTable)
+      // console.log("Tab entries: " + tabInTable)
 
       setTimeout(() => {
         this.getResult(kfwValue+ev,scenarioInDatabase)
       }, "500");
       
-    
     };
 
     getResult =(kfw,scenario,noEMSTab) => { 
-      const { setLoading, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, heatpumpCombinedUsage, setOffgridPVPercentageNoEMS, offgridPVPercentageNoEMS, setDatabaseResult, heatpumpType, setTabToSelect, tabToSelect, ev, kfwValue, homeStorageSizekWh, pvOutputkWh, pvOutput, tabEntries, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
+      const { setLoading, setLoadingOffGrid, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, heatpumpCombinedUsage, setOffgridPVPercentageNoEMS, offgridPVPercentageNoEMS, setDatabaseResult, heatpumpType, setTabToSelect, tabToSelect, ev, kfwValue, homeStorageSizekWh, pvOutputkWh, pvOutput, tabEntries, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
       if(noEMSTab) {
         var tab = noEMSTab
       } else {
@@ -203,6 +207,7 @@ class CustomSwitch extends React.Component {
               }
 
               setLoading(false)
+              //setLoadingOffGrid(false)
             }
 
             console.log(res.data.data[0])
@@ -219,20 +224,18 @@ class CustomSwitch extends React.Component {
 
       const { t } = this.props;
       const { overlayToggle } = this.state;
+      const { switchId } = this.state;
       const { offgridEMS, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
 
-          return  ( 
-          <div>
-
-            <Stack direction="row" spacing={1} alignItems="center">
-                <AntSwitch onChange={this.inputOffgridEMS} checked={offgridEMS} inputProps={{ 'aria-label': 'ant design' }} />
-            </Stack>
-
-
-          </div>
-          )
-
-  }
+      return (
+        <div>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <AntSwitch onChange={this.inputOffgridEMS} checked={offgridEMS} inputProps={{ 'aria-label': 'ant design' }} />
+          </Stack>
+        </div>
+      );
+      
+    }
 }
 
 export default withRouter(withTranslation()(CustomSwitch));

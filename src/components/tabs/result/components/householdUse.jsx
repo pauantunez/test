@@ -149,9 +149,9 @@ class HouseholdUse extends React.Component {
 
       if (window.innerWidth < 1300) {
           //size, iconSize, innerRadius, fontSize, xHeatpumpLabel, xEVLabel, xHouseholdLabel, yHeatpumpLabel, yEVLabel, yHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin
-          setPieSize(290, 50, 37, 16, 16, 2, 65, 0, 0, 36, 40, 15, 45, -10, 10, 0)
+          setPieSize(290, 50, 37, 14, 16, 2, 65, 0, 0, 36, 40, 15, 45, -10, 10, 0)
       } else if(window.innerWidth > 1300) {
-          setPieSize(330, 75, 55, 20, 38, 28, 90, 0, 0, 34, 40, 15, 55, -20, 20, 0)
+          setPieSize(320, 70, 55, 18, 38, 25, 90, 0, 0, 34, 40, 15, 55, -20, 20, 0)
       }
 
     }
@@ -159,8 +159,9 @@ class HouseholdUse extends React.Component {
     componentDidMount() {
       window.addEventListener("resize", this.handleResize);
 
-      const { loading, setHouseholdUse1SVG, setHouseholdUse2SVG, setHousehold1SVG_EMS_Hidden, setHousehold2SVG_EMS_Hidden, setHousehold1SVG_NoEMS_Hidden, setHousehold2SVG_NoEMS_Hidden } = this.context;
+      const { loading, loadingHousehold, setHouseholdUse1SVG, setHouseholdUse2SVG, setHousehold1SVG_EMS_Hidden, setHousehold2SVG_EMS_Hidden, setHousehold1SVG_NoEMS_Hidden, setHousehold2SVG_NoEMS_Hidden } = this.context;
   
+      // if(!loadingHousehold) {
       if(!loading) {
         const householdUseChart1 = document.getElementById('householdUse-1');
         const householdUseChart2 = document.getElementById('householdUse-2');
@@ -245,12 +246,24 @@ class HouseholdUse extends React.Component {
       return gridFeedPercentNoEMS;
     }
 
+    adjustPercentage(value1, value2, value3 = 0) {
+      const total = value1 + value2 + value3;
+    
+      if (total > 100) {
+        return value1 - 1;
+      } else if (total < 100) {
+        return value1 + 1;
+      } else {
+        return value1;
+      }
+    }
+
 
     render() {
 
       const { t } = this.props;
       const { overlayToggle } = this.state;
-      const { loading, householdNoEMSpvPercent, offgridEMS, householdEMS, pieChartSize, pieIconSize, innerRadiusMargin, pieLabelFontSize, xPositionHeatpumpLabel, xPositionEVLabel, xPositionHouseholdLabel, yPositionHeatpumpLabel, yPositionEVLabel, yPositionHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
+      const { loading, loadingHousehold, householdNoEMSpvPercent, offgridEMS, householdEMS, pieChartSize, pieIconSize, innerRadiusMargin, pieLabelFontSize, xPositionHeatpumpLabel, xPositionEVLabel, xPositionHouseholdLabel, yPositionHeatpumpLabel, yPositionEVLabel, yPositionHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
       var VictoryPieData = [];
       var VictoryPieData2 = [];
       var pieColors = [];
@@ -260,6 +273,8 @@ class HouseholdUse extends React.Component {
       var VictoryPieData1NoEMS = [];
       var pieColors2NoEMS = [];
 
+
+      // if(householdEMS === true) {
       if(offgridEMS === true) {
         VictoryPieData = 
         [
@@ -268,25 +283,36 @@ class HouseholdUse extends React.Component {
             { x: 1, y: this.householdUsagePercentage(), name: "pv", label: "1.000 kWh", img: "/img/house_pv.svg", color: "#9E2896" },
         ]
     
+        // Rounded values for VictoryPieData2
+        var roundedGridFeedPercentage = Math.round(parseFloat(this.gridFeedPercentage()));
+        var roundedHouseholdUsagePercentage = Math.round(parseFloat(this.householdUsagePercentage()) - householdNoEMSpvPercent);
+        var roundedHouseholdNoEMSpvPercent = Math.round(parseFloat(householdNoEMSpvPercent));
+        roundedGridFeedPercentage = this.adjustPercentage(roundedGridFeedPercentage, roundedHouseholdUsagePercentage, roundedHouseholdNoEMSpvPercent)
         VictoryPieData2 = 
         [
-            { x: 3, y: this.gridFeedPercentage(), name: "grid", label: Math.round(parseFloat(this.gridFeedPercentage())) + "%", img: "/img/grid_out.svg", color: "#A4ABB3" },
-            { x: 2, y: this.householdUsagePercentage() - householdNoEMSpvPercent, name: "plug", label: Math.round(parseFloat(this.householdUsagePercentage() - Math.round(householdNoEMSpvPercent))) + "%", img: "/img/plug.svg", color: "#00884A" },
-            { x: 1, y: this.householdUsagePercentage(), name: "pv", label: Math.round(parseFloat(householdNoEMSpvPercent)) + "%", img: "/img/house_pv.svg", color: "#18837E" },
+            { x: 3, y: this.gridFeedPercentage(), name: "grid", label: roundedGridFeedPercentage + "%", img: "/img/grid_out.svg", color: "#A4ABB3" },
+            { x: 2, y: this.householdUsagePercentage() - householdNoEMSpvPercent, name: "plug", label: roundedHouseholdUsagePercentage + "%", img: "/img/plug.svg", color: "#00884A" },
+            { x: 1, y: this.householdUsagePercentage(), name: "pv", label: roundedHouseholdNoEMSpvPercent + "%", img: "/img/house_pv.svg", color: "#18837E" },
         ]
 
         pieColors = ["#A4ABB3", "#00884A", "#18837E" ];
+      // } else if(householdEMS === false) { 
       } else if(offgridEMS === false) { 
+        
         VictoryPieData = 
         [
             { x: 2, y: this.gridFeedPercentageNoEMS(), name: "grid", label: "3.000 kWh", img: "/img/grid_out.svg", color: "#A4ABB3" },
             { x: 1, y: householdNoEMSpvPercent, name: "pv", label: "1.000 kWh", img: "/img/house_pv.svg", color: "#18837E" },
         ]
     
+        // Rounded values for VictoryPieData2.
+        var roundedGridFeedPercentageNoEMS = Math.round(parseFloat(this.gridFeedPercentageNoEMS()));
+        var roundedHouseholdNoEMSpvPercent = Math.round(parseFloat(householdNoEMSpvPercent));
+        roundedHouseholdNoEMSpvPercent = this.adjustPercentage(roundedHouseholdNoEMSpvPercent, roundedGridFeedPercentageNoEMS)
         VictoryPieData2 = 
         [
-            { x: 2, y: this.gridFeedPercentageNoEMS(), name: "grid", label: Math.round(parseFloat(this.gridFeedPercentageNoEMS())) + "%", img: "/img/grid_out.svg", color: "#A4ABB3" },
-            { x: 1, y: householdNoEMSpvPercent, name: "pv", label:  Math.round(parseFloat(householdNoEMSpvPercent)) + "%", img: "/img/house_pv.svg", color: "#18837E" },
+            { x: 2, y: this.gridFeedPercentageNoEMS(), name: "grid", label: roundedGridFeedPercentageNoEMS + "%", img: "/img/grid_out.svg", color: "#A4ABB3" },
+            { x: 1, y: householdNoEMSpvPercent, name: "pv", label: roundedHouseholdNoEMSpvPercent + "%", img: "/img/house_pv.svg", color: "#18837E" },
         ]
 
         pieColors = ["#A4ABB3", "#18837E" ];
@@ -313,6 +339,7 @@ class HouseholdUse extends React.Component {
 
           return  ( 
           <div>
+            {/* {!loadingHousehold && */}
             {!loading &&
             <div style={{display: 'flex', justifyContent: 'center'}}>
 
@@ -408,6 +435,7 @@ class HouseholdUse extends React.Component {
             </div>
             }
 
+            {/* {loadingHousehold && */}
             {loading &&
              <div style={{display: 'flex', justifyContent: 'center'}}>
                 <div style={{position: 'relative', width: '100%', height: '300px', top: '0', left: '0'}}>
@@ -419,6 +447,7 @@ class HouseholdUse extends React.Component {
             }
 
             <div data-html2canvas-ignore style={{display: 'flex', marginTop: '30px', justifyContent: 'flex-start', flexDirection: 'row'}}>
+                {/* <HouseholdSwitch /> */}
                 <CustomSwitch />
                 <div style={{marginLeft: '12px', marginRight: '12px', paddingTop: '2px', fontFamily: 'Bosch-Regular', fontSize: '16px'}}>
                     Mit Energiemanagementsystem

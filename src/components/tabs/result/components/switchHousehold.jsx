@@ -103,10 +103,10 @@ class HouseholdSwitch extends React.Component {
     static contextType = AppContext
 
     componentWillMount() {
-      const { setLoading, products, btnThemes, fonts, setFwdBtn } = this.context;
+      const { setLoadingHousehold, products, btnThemes, fonts, setFwdBtn } = this.context;
 
       setFwdBtn(false);
-      setLoading(true)
+      setLoadingHousehold(true)
     
     }
 
@@ -119,7 +119,7 @@ class HouseholdSwitch extends React.Component {
       
       //find the correct TAB for the "NO EMS" case
       let tabInTable = tabEntries.find(o => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === 'Nein');
-      
+
       //call getResult for the correct TAB
       this.getResult(kfwValue+ev,scenarioInDatabase,tabInTable.Tab)
       
@@ -137,7 +137,7 @@ class HouseholdSwitch extends React.Component {
     }
 
     getResult =(kfw,scenario,noEMSTab) => { 
-      const { setLoading, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, heatpumpCombinedUsage, setOffgridPVPercentageNoEMS, offgridPVPercentageNoEMS, setDatabaseResult, heatpumpType, setTabToSelect, tabToSelect, ev, kfwValue, homeStorageSizekWh, pvOutputkWh, pvOutput, tabEntries, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
+      const { setLoadingHousehold, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, heatpumpCombinedUsage, setOffgridPVPercentageNoEMS, offgridPVPercentageNoEMS, setDatabaseResult, heatpumpType, setTabToSelect, tabToSelect, ev, kfwValue, homeStorageSizekWh, pvOutputkWh, pvOutput, tabEntries, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
 
       if(noEMSTab) {
         var tab = noEMSTab
@@ -160,7 +160,7 @@ class HouseholdSwitch extends React.Component {
                 setDatabaseResult(res.data.data[0])
               }
 
-              setLoading(false)
+              setLoadingHousehold(false)
             }
 
             console.log(res.data.data[0])
@@ -172,11 +172,25 @@ class HouseholdSwitch extends React.Component {
     }
 
     inputHouseholdEMS = (event) => { 
-      const { setLoading, setOffgridEMS, setHouseholdEMS, householdEMS, offgridEMS} = this.context;
-      setOffgridEMS(event.target.checked);
-      setLoading(true)
 
-      this.getInitialResult();
+      const { setLoadingHousehold, kfwValue, ev, setHouseholdEMS, offgridEMS, scenarioInDatabase, tabEntries, setTabToSelect, pvOutputkWh, homeStorageSizekWh, homeStorage, setHomeStorage, setHomeStorageSize} = this.context;
+      setHouseholdEMS(event.target.checked);
+      setLoadingHousehold(true)
+
+      // if(event.target.checked) {
+      //   var emsValue = "Ja"
+      // } else {
+      //   var emsValue = "Nein"
+      // }
+
+      // let tabInTable = tabEntries.find(o => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === emsValue);
+      // setTabToSelect(tabInTable.Tab)
+
+      setTimeout(() => {
+        this.getResult(kfwValue+ev,scenarioInDatabase)
+      }, "500");
+
+      //this.getInitialResult();
   };
 
 
@@ -191,7 +205,7 @@ class HouseholdSwitch extends React.Component {
           <div>
 
             <Stack direction="row" spacing={1} alignItems="center">
-                <AntSwitch onChange={this.inputHouseholdEMS} checked={offgridEMS} inputProps={{ 'aria-label': 'ant design' }} />
+                <AntSwitch onChange={this.inputHouseholdEMS} checked={householdEMS} inputProps={{ 'aria-label': 'ant design' }} />
             </Stack>
 
 

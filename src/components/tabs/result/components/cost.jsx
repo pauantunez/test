@@ -52,6 +52,7 @@ export const options = {
       },
       y: {
         stacked: true,
+        // beginAtZero: true, 
       },
     },
   };
@@ -94,6 +95,7 @@ export const barOptions = {
       },
       y: {
         stacked: true,
+        // beginAtZero: true,
         ticks: {
             stepSize: 500,
               callback: function(value, index, ticks) {
@@ -196,6 +198,11 @@ class Cost extends React.Component {
 
     energyUseEuro =(divided,bar) => { 
         const { energyUsagekWh, electricityCost, costOverTime } = this.context;
+
+        console.log("energyUsagekWh" + energyUsagekWh)
+        console.log("electricityCost" + electricityCost)
+        console.log("costOverTime" + costOverTime)
+
         var timeToNum;
         if(this.state.displayed == undefined) {
            timeToNum = parseInt(costOverTime)
@@ -209,9 +216,11 @@ class Cost extends React.Component {
        
         if(!bar) {
           if(costOverTime === "1") {
-            return '- ' + Math.round(energyUsagekWh * (electricityCost / 100) / 5 * divided * timeToNum).toLocaleString() + ' €';
+            // return '- ' + Math.round(energyUsagekWh * (electricityCost / 100) / 5 * divided * timeToNum).toLocaleString() + ' €';
+            return Math.round(energyUsagekWh * (electricityCost / 100) / 5 * divided * timeToNum).toLocaleString() + ' €';
           } else {
-            return '- ' + parseInt(this.electricityCostNoPV20Years() / 5 * divided).toLocaleString() + ' €'
+            // return '- ' + parseInt(this.electricityCostNoPV20Years() / 5 * divided).toLocaleString() + ' €'
+            return parseInt(this.electricityCostNoPV20Years() / 5 * divided).toLocaleString() + ' €'
           }
         } else {
           return Math.round(energyUsagekWh * (electricityCost / 100) / 5 * divided * timeToNum)
@@ -281,8 +290,8 @@ class Cost extends React.Component {
 
       const result = Math.abs((energyUsagekWh * (parseFloat(electricityCost) / 100)) * (1-(0.02+1) ** 20) / 0.02)
 
-      console.log(energyUsagekWh * (parseFloat(electricityCost) / 100))
-      console.log(Math.abs((energyUsagekWh * (parseFloat(electricityCost) / 100)) * (1-(0.02+1) ** 20) / 0.02))
+      console.log("1 año " + energyUsagekWh * (parseFloat(electricityCost) / 100))
+      console.log("20 año " + Math.abs((energyUsagekWh * (parseFloat(electricityCost) / 100)) * (1-(0.02+1) ** 20) / 0.02))
 
       return result
       
@@ -305,7 +314,7 @@ class Cost extends React.Component {
       
       const result = Math.abs((1 - (electricityCostOffGridPercentage / 100)) * energyUsagekWh * ((parseFloat(electricityCost) /100) * (1 + 0.02)) * (1 - (0.02 + 1) ** 20) / 0.02)
 
-      console.log(result)
+      console.log("El resultado es: " + result)
       
       return this.electricityCostNoPV20Years()
     }
@@ -433,11 +442,81 @@ class Cost extends React.Component {
       }
     }
 
+    adjustBarHeight =(maxHeight, value1, value2, differenceValue2, value3, differenceValue3) => {
+
+      var scale1 = 0
+      var scale2 = 0
+      var scale3 = 0
+
+      if (value1 >= value2 && value1 >= value3) {
+        scale1 = maxHeight;
+        scale2 = (value2 / value1) * maxHeight;
+        scale3 = (value3 / value1) * maxHeight;
+      } else if (value2 >= value1 && value2 >= value3) {
+        scale1 = (value1 / value2) * maxHeight;
+        scale2 = maxHeight;
+        scale3 = (value3 / value2) * maxHeight;
+      } else {
+        scale1 = (value1 / value3) * maxHeight;
+        scale2 = (value2 / value3) * maxHeight;
+        scale3 = maxHeight;
+      }
+      
+      const height2 = maxHeight - scale2;
+      const height3 = maxHeight - scale3;
+      
+      return [scale1, height2, scale2, height3, scale3];
+      // return [110, 110, 110, 110];
+    }
+
+    getHighestValue =(value1, value2, differenceValue2, value3, differenceValue3) => {
+      var value2WithDifference = value2 + differenceValue2;
+      var value3WithDifference = value3 + differenceValue3;
+      // var value3WithDifference = value3 + (-differenceValue3);
+
+      if (value1 >= value2WithDifference && value1 >= value3WithDifference) {
+        return value1;
+      } else if (value2WithDifference >= value1 && value2WithDifference >= value3WithDifference) {
+        return value2WithDifference;
+      } else {
+        return value3WithDifference;
+      }
+    }
+
+    divideValuesForChart =(step, value) => {
+      return parseInt((value / 5) * step).toLocaleString("de-DE");
+    }
+
     render() {
 
       const { t } = this.props;
       const { overlayToggle } = this.state;
       const { electricityCostPVsavings, electricityCostPVEMSsavings, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
+      
+      // Ohne PV
+      var ohnePv1year = parseInt(this.energyUseEuro(5))
+      var ohnePv20years = parseInt(this.electricityCostNoPV20Years())
+      
+      // Mit PV
+      var mitPv1year = this.resultWithPV()
+      var mitPv20years = parseInt((parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVonly))
+
+      var differencePv1year = (parseInt(this.energyUseEuro(5)) - parseInt(this.resultWithPV()))
+      var differencePv20years = (parseInt(this.electricityCostNoPV20Years()) - parseInt((this.electricityCostPV20Years() + this.state.totalRunningCostPVonly)))
+
+      // Mit PV und EMS
+      var mitPvUndEms1year = this.resultWithPVandEMS()
+      var mitPvUndEms20years = parseInt((parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVems))
+
+      var differencePvUndEms1year = (parseInt(this.energyUseEuro(5)) - parseInt(this.resultWithPVandEMS()))
+      var differencePvUndEms20years = (parseInt(this.electricityCostNoPV20Years()) - parseInt((this.electricityCostPV20Years() + this.state.totalRunningCostPVems)))
+
+      var barHeights1year = this.adjustBarHeight(220, ohnePv1year, mitPv1year, differencePv1year, mitPvUndEms1year, differencePvUndEms1year);
+      var barHeights20years = this.adjustBarHeight(220, ohnePv20years, mitPv20years, differencePv20years, mitPvUndEms20years, differencePvUndEms20years);
+      var selectedBarHeights = costOverTime == "1" ? barHeights1year : barHeights20years;
+
+      var highestValue1year = this.getHighestValue(ohnePv1year, mitPv1year, differencePv1year, mitPvUndEms1year, differencePvUndEms1year);
+      var highestValue20years = this.getHighestValue(ohnePv20years, mitPv20years, differencePv20years, mitPvUndEms20years, differencePvUndEms20years); 
 
           return  ( 
           <div>
@@ -475,18 +554,19 @@ class Cost extends React.Component {
             </div>
 
             
-            <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
+            <div style={{display: 'flex', flexDirection: 'row', width: '100%', height: '220px'}}>
                 
                 <div style={{display: 'flex', flexDirection: 'row', width: '100%', marginLeft: '17%', zIndex: '99999'}}>
-                    <div style={{display: 'flex', width: '73px', height: '110px', background: '#007BC0', color: 'white'}}>
+                    
+                    {/* ohne PV */}
+                    <div style={{display: 'flex', width: '73px', height: `${selectedBarHeights[0]}px`, background: '#007BC0', color: 'white', marginTop: 'auto' }}>
                         <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%', fontSize: '12px', textAlign: 'center'}}>
-                            { costOverTime=="1" && this.energyUseEuro(5) }
-                            
-                            { costOverTime=="20" && 
-                              <span>-&nbsp;</span>
+                            { costOverTime=="1" && ohnePv1year.toLocaleString("de-DE") }
+                            { costOverTime=="1" && 
+                              <span>&nbsp;€</span>
                             }
                             { costOverTime=="20" && 
-                               parseInt(this.electricityCostNoPV20Years()).toLocaleString() 
+                               ohnePv20years.toLocaleString("de-DE")
                             }
                             { costOverTime=="20" && 
                               <span>&nbsp;€</span>
@@ -494,98 +574,176 @@ class Cost extends React.Component {
                         </div>
                         
                     </div>
-                    <div style={{display: 'flex', flexDirection: 'column', marginTop: '110px', width: '73px', height: '108px', color: 'white', marginLeft: '15%'}}>
 
-                      { isSafari &&
+                    {/* Mit PV Price */}
+                    {/* <div style={{display: 'flex', flexDirection: 'column', marginTop: '110px', width: '73px', height: '108px', color: 'white', marginLeft: '15%'}}> */}
+                    <div style={{ width: '73px', color: 'white', marginLeft: '15%', zIndex: '99999'}}>
+                      
+                      {/* Pattern bar */}
+                      <div style={{display: 'flex', width: '73px', height: `${selectedBarHeights[1]}px`, color: 'white' }}>
+                        { isSafari &&
                         <div style={{width: '100%', height: '100%', textAlign: 'center'}} class="pattern-safari">
-                            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#007BC0', fontSize: '12px', width: '100%', height: '100%'}}>
-                                <span style={{background: '#FFF', padding: '3px', fontFamily: 'Bosch-Bold'}}>
-                                { costOverTime=="1" && this.resultWithPV() }
-                                { costOverTime=="1" && <span>&nbsp;€</span> }
-                                { costOverTime=="20" && parseInt((parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVonly)).toLocaleString() }
-                                { costOverTime=="20" && 
-                                  <span>&nbsp;€</span>
-                                }
-                                </span>
-                            </div>
+                          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#007BC0', fontSize: '12px', width: '100%', height: '100%'}}>
+                            <span style={{background: '#FFF', padding: '3px', fontFamily: 'Bosch-Bold'}}>
+                            { costOverTime=="1" && differencePv1year.toLocaleString("de-DE") }
+                            { costOverTime=="1" && <span>&nbsp;€</span> }
+                            { costOverTime=="20" && differencePv20years.toLocaleString("de-DE") }
+                            { costOverTime=="20" && 
+                              <span>&nbsp;€</span>
+                            }
+                            </span>
+                          </div>
                         </div>
-                      }
-                      { !isSafari &&
+                        }
+                        { !isSafari &&
                         <div style={{width: '100%', height: '100%', top: '0%', textAlign: 'center'}} class="pattern">
-                            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#007BC0', fontSize: '12px', width: '100%', height: '100%'}}>
-                                <span style={{background: '#FFF', padding: '3px', fontFamily: 'Bosch-Bold'}}>
-                                { costOverTime=="1" && this.resultWithPV() }
-                                { costOverTime=="1" && <span>&nbsp;€</span> }
-                                { costOverTime=="20" && parseInt((parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVonly)).toLocaleString() }
-                                { costOverTime=="20" && 
-                                  <span>&nbsp;€</span>
-                                }
-                                  </span>
-                            </div>
+                          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#007BC0', fontSize: '12px', width: '100%', height: '100%'}}>
+                            <span style={{background: '#FFF', padding: '3px', fontFamily: 'Bosch-Bold'}}>
+                            { costOverTime=="1" && differencePv1year.toLocaleString("de-DE") }
+                            { costOverTime=="1" && <span>&nbsp;€</span> }
+                            { costOverTime=="20" && differencePv20years.toLocaleString("de-DE") }
+                            { costOverTime=="20" && 
+                              <span>&nbsp;€</span>
+                            }
+                            </span>
+                          </div>
                         </div>
-                      }
+                        }
+                      </div>
 
+                      {/* Blue bar */}
+                      <div style={{display: 'flex', width: '73px', height: `${selectedBarHeights[2]}px`, background: '#007BC0', color: 'white' }}>
+                        { isSafari &&
+                        <div style={{width: '100%', height: '100%', textAlign: 'center'}}>
+                          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#007BC0', color: 'white', fontSize: '12px', width: '100%', height: '100%'}}>
+                            <span style={{background: '#007BC0', padding: '3px', fontFamily: 'Bosch-Bold'}}>
+                            { costOverTime=="1" && mitPv1year.toLocaleString("de-DE") }
+                            { costOverTime=="1" && <span>&nbsp;€</span> }
+                            { costOverTime=="20" && mitPv20years.toLocaleString("de-DE") }
+                            { costOverTime=="20" && 
+                              <span>&nbsp;€</span>
+                            }
+                            </span>
+                          </div>
+                        </div>
+                        }
 
+                        { !isSafari &&
+                        <div style={{width: '100%', height: '100%', top: '0%', textAlign: 'center'}}>
+                          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#007BC0', color: 'white', fontSize: '12px', width: '100%', height: '100%'}}>
+                            <span style={{background: '#007BC0', padding: '3px', fontFamily: 'Bosch-Bold'}}>
+                            { costOverTime=="1" && mitPv1year.toLocaleString("de-DE") }
+                            { costOverTime=="1" && <span>&nbsp;€</span> }
+                            { costOverTime=="20" && mitPv20years.toLocaleString("de-DE") }
+                            { costOverTime=="20" && 
+                              <span>&nbsp;€</span>
+                            }
+                            </span>
+                          </div>
+                        </div>
+                        }
+                      </div>
                     </div>
-                    <div style={{display: 'flex', flexDirection: 'column', marginTop: '110px', width: '73px', height: '108px', color: 'white', marginLeft: '15%'}}>
 
-                      { isSafari &&
+                    {/* Mit PV und EMS */}
+                    {/* <div style={{display: 'flex', flexDirection: 'column', marginTop: '110px', width: '73px', height: '108px', color: 'white', marginLeft: '15%'}}> */}
+                    <div style={{ width: '73px', color: 'white', marginLeft: '15%', zIndex: '99999'}}>
+                      
+                      {/* Pattern bar */}
+                      <div style={{display: 'flex', width: '73px', height: `${selectedBarHeights[3]}px`, color: 'white' }}>
+                        { isSafari &&
                         <div style={{width: '100%', height: '100%', textAlign: 'center'}} class="pattern-safari">
-                            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#007BC0', fontSize: '12px', width: '100%', height: '100%'}}>
-                                <span style={{background: '#FFF', padding: '3px', fontFamily: 'Bosch-Bold'}}>
-                                { costOverTime=="1" && this.resultWithPVandEMS() }
-                                { costOverTime=="1" && <span>&nbsp;€</span> }
-                                { costOverTime=="20" && parseInt((parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVems)).toLocaleString() }
-                                { costOverTime=="20" && 
-                                  <span>&nbsp;€</span>
-                                }
-                                </span>
-                            </div>
+                          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#007BC0', fontSize: '12px', width: '100%', height: '100%'}}>
+                            <span style={{background: '#FFF', padding: '3px', fontFamily: 'Bosch-Bold'}}>
+                            { costOverTime=="1" && differencePvUndEms1year.toLocaleString("de-DE") }
+                            { costOverTime=="1" && <span>&nbsp;€</span> }
+                            { costOverTime=="20" && differencePvUndEms20years.toLocaleString("de-DE") }
+                            { costOverTime=="20" && 
+                              <span>&nbsp;€</span>
+                            }
+                            </span>
+                          </div>
                         </div>
-                      }
-                      { !isSafari &&
+                        }
+                        { !isSafari &&
                         <div style={{width: '100%', height: '100%', textAlign: 'center'}} class="pattern">
-                            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#007BC0', fontSize: '12px', width: '100%', height: '100%'}}>
-                                <span style={{background: '#FFF', padding: '3px', fontFamily: 'Bosch-Bold'}}>
-                                { costOverTime=="1" && this.resultWithPVandEMS() }
-                                { costOverTime=="1" && <span>&nbsp;€</span> }
-                                { costOverTime=="20" && parseInt((parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVems)).toLocaleString() }
-                                { costOverTime=="20" && 
-                                  <span>&nbsp;€</span>
-                                }
-                                </span>
-                            </div>
+                          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#007BC0', fontSize: '12px', width: '100%', height: '100%'}}>
+                            <span style={{background: '#FFF', padding: '3px', fontFamily: 'Bosch-Bold'}}>
+                            { costOverTime=="1" && differencePvUndEms1year.toLocaleString("de-DE") }
+                            { costOverTime=="1" && <span>&nbsp;€</span> }
+                            { costOverTime=="20" && differencePvUndEms20years.toLocaleString("de-DE") }
+                            { costOverTime=="20" && 
+                              <span>&nbsp;€</span>
+                            }
+                            </span>
+                          </div>
                         </div>
-                      }
+                        }
+                      </div>
+                      
+                      {/* Blue bar */}
+                      <div style={{display: 'flex', width: '73px', height: `${selectedBarHeights[4]}px`, color: 'white'}}>
+                        { isSafari &&
+                        <div style={{width: '100%', height: '100%', textAlign: 'center'}} class="pattern-safari">
+                          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#007BC0', color: 'white', fontSize: '12px', width: '100%', height: '100%'}}>
+                            <span style={{background: '#007BC0', padding: '3px', fontFamily: 'Bosch-Bold'}}>
+                            { costOverTime=="1" && mitPvUndEms1year.toLocaleString("de-DE") }
+                            { costOverTime=="1" && <span>&nbsp;€</span> }
+                            { costOverTime=="20" && mitPvUndEms20years.toLocaleString("de-DE") }
+                            { costOverTime=="20" && 
+                              <span>&nbsp;€</span>
+                            }
+                            </span>
+                          </div>
+                        </div>
+                        }
+                        { !isSafari &&
+                        <div style={{width: '100%', height: '100%', textAlign: 'center'}} class="pattern">
+                          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#007BC0', color: 'white', fontSize: '12px', width: '100%', height: '100%'}}>
+                            <span style={{background: '#007BC0', padding: '3px', fontFamily: 'Bosch-Bold'}}>
+                            { costOverTime=="1" && mitPvUndEms1year.toLocaleString("de-DE") }
+                            { costOverTime=="1" && <span>&nbsp;€</span> }
+                            { costOverTime=="20" && mitPvUndEms20years.toLocaleString("de-DE") }
+                            { costOverTime=="20" && 
+                              <span>&nbsp;€</span>
+                            }
+                            </span>
+                          </div>
+                        </div>
+                        }
+                      </div>
                     </div>
+
                 </div>
 
                 <div class="cost-chart-width" style={{position: 'absolute', zIndex: '99998'}}>
                     <div style={{display: 'flex', flexDirection: 'row'}}>
                         <div class="bar-chart-left-legend">
                             <div>
-                                { this.energyUseEuro(5) }
-                                
+                                { costOverTime == "1" && this.divideValuesForChart(5, highestValue1year) + " €"}
+                                { costOverTime == "20" && this.divideValuesForChart(5, highestValue20years) + " €"}
                             </div>
                             <div>
-                                { this.energyUseEuro(4) }
-                                
+                              { costOverTime == "1" && this.divideValuesForChart(4, highestValue1year) + " €" }
+                              { costOverTime == "20" && this.divideValuesForChart(4, highestValue20years) + " €"}
                             </div>
                             <div>
-                                { this.energyUseEuro(3) }
-                            
+                              { costOverTime == "1" && this.divideValuesForChart(3, highestValue1year) + " €" }
+                              { costOverTime == "20" && this.divideValuesForChart(3, highestValue20years) + " €"}
                             </div>
                             <div>
-                                { this.energyUseEuro(2) }
-                                
+                              { costOverTime == "1" && this.divideValuesForChart(2, highestValue1year) + " €" }
+                              { costOverTime == "20" && this.divideValuesForChart(2, highestValue20years) + " €"}
                             </div>
                             <div>
-                                { this.energyUseEuro(1) }
+                              { costOverTime == "1" && this.divideValuesForChart(1, highestValue1year) + " €" }
+                              { costOverTime == "20" && this.divideValuesForChart(1, highestValue20years) + " €"}
                             </div>
                             <div>
-                                { this.energyUseEuro(0) }
+                              { costOverTime == "1" && this.divideValuesForChart(0, highestValue1year) + " €" }
+                              { costOverTime == "20" && this.divideValuesForChart(0, highestValue20years) + " €"}
                             </div>
-                            <div>
+                            {/* <div>
                                 { this.energyUseEuroNegative(1,this.whichChartLegend()) }
                             </div>
                             <div>
@@ -599,7 +757,7 @@ class Cost extends React.Component {
                             </div>
                             <div>
                                 { this.energyUseEuroNegative(5,this.whichChartLegend()) }
-                            </div>
+                            </div> */}
                         </div>
                         <div data-html2canvas-ignore class="cost-chart-width" style={{display: 'flex', flexDirection: 'column', marginLeft: '3px'}}>
                             <div class="cost-chart-width" style={{marginTop: '7px', height: '1px', width: '480px', borderBottom: '1px solid #EFF1F2'}}></div>
@@ -607,7 +765,7 @@ class Cost extends React.Component {
                             <div class="cost-chart-width" style={{marginTop: '18px', height: '1px', width: '480px', borderBottom: '1px solid #EFF1F2'}}></div>
                             <div class="cost-chart-width" style={{marginTop: '18px', height: '1px', width: '480px', borderBottom: '1px solid #EFF1F2'}}></div>
                             <div class="cost-chart-width" style={{marginTop: '18px', height: '1px', width: '480px', borderBottom: '1px solid #EFF1F2'}}></div>
-                            <div class="cost-chart-width" style={{marginTop: '18px', height: '1px', width: '480px', borderBottom: '1px solid #000'}}></div>
+                            {/* <div class="cost-chart-width" style={{marginTop: '18px', height: '1px', width: '480px', borderBottom: '1px solid #000'}}></div> */}
                             <div class="cost-chart-width" style={{marginTop: '19px', height: '1px', width: '480px', borderBottom: '1px solid #EFF1F2'}}></div>
                             <div class="cost-chart-width" style={{marginTop: '19px', height: '1px', width: '480px', borderBottom: '1px solid #EFF1F2'}}></div>
                             <div class="cost-chart-width" style={{marginTop: '18px', height: '1px', width: '480px', borderBottom: '1px solid #EFF1F2'}}></div>
@@ -618,7 +776,7 @@ class Cost extends React.Component {
                 </div>
             </div>
 
-            <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
+            <div style={{display: 'flex', flexDirection: 'row', width: '100%' }}>
                 
                 <div style={{display: 'flex', flexDirection: 'row', width: '100%', marginTop: '5px', marginLeft: '17%', zIndex: '99999'}}>
                     <div style={{display: 'flex', width: '73px', height: '40px', color: '#000'}}>

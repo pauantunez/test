@@ -113,9 +113,9 @@ class ElectricityUse extends React.Component {
         console.log(window.innerWidth);
 
         if (window.innerWidth < 1300) {
-            setPieSize(290, 50, 37, 16, 16, 2, 65, 0, 0, 36, 40, 15, 55, 5, 10, 0)
+            setPieSize(290, 50, 37, 14, 16, 2, 65, 0, 0, 36, 40, 15, 55, 5, 10, 0)
         } else if(window.innerWidth > 1300) {
-            setPieSize(330, 75, 55, 20, 38, 28, 90, 0, 0, 34, 40, 15, 55, 5, 20, 0)
+            setPieSize(320, 70, 55, 18, 38, 25, 90, 0, 0, 34, 40, 15, 55, 5, 20, 0)
         }
 
       }
@@ -200,6 +200,18 @@ class ElectricityUse extends React.Component {
 
     }
 
+    adjustPercentage(value1, value2, value3 = 0) {
+      const total = value1 + value2 + value3;
+    
+      if (total > 100) {
+        return value1 - 1;
+      } else if (total < 100) {
+        return value1 + 1;
+      } else {
+        return value1;
+      }
+    }
+
 
     render() {
 
@@ -213,10 +225,15 @@ class ElectricityUse extends React.Component {
         { x: 1, y: parseInt(energyUsagekWh), name: "household", label: energyUsagekWh.toLocaleString() + " kWh", img: "/img/household_small.svg", color: "#9E2896" },
       ];
       
+      // Rounded values for VictoryPieData2
+      var roundedEnergyUsagePercentageHeatpump = Math.round(parseFloat(this.energyUsagePercentage("heatpump")));
+      var roundedEnergyUsagePercentageEv = Math.round(parseFloat(this.energyUsagePercentage("ev")));
+      var roundedHouseholdNoEMSpvPercentHousehold = Math.round(parseFloat(this.energyUsagePercentage("household")));
+      roundedEnergyUsagePercentageHeatpump = this.adjustPercentage(roundedEnergyUsagePercentageHeatpump, roundedEnergyUsagePercentageEv, roundedHouseholdNoEMSpvPercentHousehold)
       const VictoryPieData2 = [
-        { x: 3, y: this.heatpumpUsageKWH(), name: "heatpump", label: parseFloat(this.energyUsagePercentage("heatpump")) + "%", img: "/img/heatpump_small.svg", color: "#004975" },
-        ...(odometerIncreaseKWH !== 0 ? [{ x: 2, y: odometerIncreaseKWH, name: "ev", label: parseFloat(this.energyUsagePercentage("ev")) + "%", img: "/img/ev_small.svg", color: "#C535BC" }] : []),
-        { x: 1, y: parseInt(energyUsagekWh), name: "household", label: parseFloat(this.energyUsagePercentage("household")) + "%", img: "/img/household_small.svg", color: "#9E2896" },
+        { x: 3, y: this.heatpumpUsageKWH(), name: "heatpump", label: roundedEnergyUsagePercentageHeatpump + "%", img: "/img/heatpump_small.svg", color: "#004975" },
+        ...(odometerIncreaseKWH !== 0 ? [{ x: 2, y: odometerIncreaseKWH, name: "ev", label: roundedEnergyUsagePercentageEv + "%", img: "/img/ev_small.svg", color: "#C535BC" }] : []),
+        { x: 1, y: parseInt(energyUsagekWh), name: "household", label: roundedHouseholdNoEMSpvPercentHousehold + "%", img: "/img/household_small.svg", color: "#9E2896" },
       ];
       
       

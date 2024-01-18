@@ -13,6 +13,8 @@ class SimulatorProvider extends Component {
   state = {
     directLink: false,
     loading: false,
+    loadingOffGrid: false,
+    loadingHousehold: false,
     viewLocation: "outdoor",
     viewLocationPrevious: "outdoor",
     backgroundAudio: ["Hintergrund-Sound_TAG.mp3", "Hintergrund-Sound_TAG.mp3", "Hintergrund-Sound_NACHT.mp3", "Hintergrund-Sound_NACHT.mp3"],
@@ -1927,11 +1929,21 @@ class SimulatorProvider extends Component {
     this.setState((prevState) => ({ loading: status }));
   };
 
+  setLoadingOffGrid = (status) => {
+    this.setState((prevState) => ({ loadingOffGrid: status }));
+  };
+
+  setLoadingHousehold = (status) => {
+    this.setState((prevState) => ({ loadingHousehold: status }));
+  };
+
   setDirectLink = (value) => {
     this.setState((prevState) => ({ directLink: value }));
   };
 
   loading;
+  loadingOffGrid;
+  loadingHousehold;
 
   render() {
     const { children } = this.props;
@@ -2092,6 +2104,8 @@ class SimulatorProvider extends Component {
       heatpumpPVems,
       heatpumpPV,
       loading,
+      loadingOffGrid,
+      loadingHousehold,
       directLink,
     } = this.state;
     const {
@@ -2201,6 +2215,8 @@ class SimulatorProvider extends Component {
       addHeatpumpPVems,
       addHeatpumpPV,
       setLoading,
+      setLoadingOffGrid,
+      setLoadingHousehold,
       setDirectLink,
     } = this;
 
@@ -2363,6 +2379,8 @@ class SimulatorProvider extends Component {
           heatpumpPVems,
           heatpumpPV,
           loading,
+          loadingOffGrid,
+          loadingHousehold,
           directLink,
           setProduct,
           setEntryProduct,
@@ -2470,6 +2488,8 @@ class SimulatorProvider extends Component {
           addHeatpumpPVems,
           addHeatpumpPV,
           setLoading,
+          setLoadingOffGrid,
+          setLoadingHousehold,
           setDirectLink,
         }}
       >

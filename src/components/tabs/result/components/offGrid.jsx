@@ -148,9 +148,9 @@ class OffGrid extends React.Component {
 
       if (window.innerWidth < 1300) {
           //size, iconSize, innerRadius, fontSize, xHeatpumpLabel, xEVLabel, xHouseholdLabel, yHeatpumpLabel, yEVLabel, yHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin
-          setPieSize(290, 50, 37, 16, 16, 2, 65, 0, 0, 36, 40, 15, 45, -10, 10, 0)
+          setPieSize(290, 50, 37, 14, 16, 2, 65, 0, 0, 36, 40, 15, 45, -10, 10, 0)
       } else if(window.innerWidth > 1300) {
-          setPieSize(330, 75, 55, 20, 38, 28, 90, 0, 0, 34, 40, 15, 55, -20, 20, 0)
+          setPieSize(320, 70, 55, 18, 38, 25, 90, 0, 0, 34, 40, 15, 55, -20, 20, 0)
       }
 
     }
@@ -188,10 +188,23 @@ class OffGrid extends React.Component {
       return gridUsagePercent;
     }
 
+    adjustPercentage(value1, value2, value3 = 0) {
+      const total = value1 + value2 + value3;
+    
+      if (total > 100) {
+        return value1 - 1;
+      } else if (total < 100) {
+        return value1 + 1;
+      } else {
+        return value1;
+      }
+    }
+
     componentDidMount() {
-      const { loading, setOffGrid1SVG, offgrid1SVG, setOffGrid2SVG, setOffgrid1SVG_NoEMS_Hidden, setOffgrid2SVG_NoEMS_Hidden, setOffgrid1SVG_EMS_Hidden, setOffgrid2SVG_EMS_Hidden } = this.context;
+      const { loading, loadingOffGrid, setOffGrid1SVG, offgrid1SVG, setOffGrid2SVG, setOffgrid1SVG_NoEMS_Hidden, setOffgrid2SVG_NoEMS_Hidden, setOffgrid1SVG_EMS_Hidden, setOffgrid2SVG_EMS_Hidden } = this.context;
       window.addEventListener("resize", this.handleResize)
       
+    // if(!loadingOffGrid) {
     if(!loading) {
       const offgridChart1 = document.getElementById('offgrid-1');
       const offgrid1_svg = offgridChart1.getElementsByTagName('svg');
@@ -228,7 +241,7 @@ class OffGrid extends React.Component {
 
       const { t } = this.props;
       const { overlayToggle } = this.state;
-      const { loading, setInfoBoxOffGridGridUsage, noEMSPercentageOffGrid, pieChartSize, pieIconSize, innerRadiusMargin, pieLabelFontSize, xPositionHeatpumpLabel, xPositionEVLabel, xPositionHouseholdLabel, yPositionHeatpumpLabel, yPositionEVLabel, yPositionHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime, setOffgridEMS, offgridEMS } = this.context;
+      const { loading, loadingOffGrid, setInfoBoxOffGridGridUsage, noEMSPercentageOffGrid, pieChartSize, pieIconSize, innerRadiusMargin, pieLabelFontSize, xPositionHeatpumpLabel, xPositionEVLabel, xPositionHouseholdLabel, yPositionHeatpumpLabel, yPositionEVLabel, yPositionHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime, setOffgridEMS, offgridEMS } = this.context;
       var VictoryPieData = [];
       var VictoryPieDataTest = [];
       var pieColors = [];
@@ -248,11 +261,16 @@ class OffGrid extends React.Component {
             { x: 1, y: this.pvUsagePercentage(), name: "pv", label: "1.000 kWh", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#9E2896" },
         ]
     
+        // Rounded values for VictoryPieDataTest
+        var roundedGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentage()));
+        var roundedPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentage() - Math.round(noEMSPercentageOffGrid)));
+        var roundedNoEMSPercentageOffGrid = Math.round(parseFloat(noEMSPercentageOffGrid));
+        roundedNoEMSPercentageOffGrid = this.adjustPercentage(roundedNoEMSPercentageOffGrid, roundedGridUsagePercentage, roundedPvUsagePercentage)
         VictoryPieDataTest = 
         [
-            { x: 3, y: this.gridUsagePercentage(), name: "grid", label: Math.round(parseFloat(this.gridUsagePercentage())) + "%", img: "img/grid_in.svg", color: "#A4ABB3" },
-            { x: 2, y: this.pvUsagePercentage() - noEMSPercentageOffGrid, name: "plug", label: Math.round(parseFloat(this.pvUsagePercentage() - Math.round(noEMSPercentageOffGrid))) + "%", img: "img/plug.svg", color: "#00884A" },
-            { x: 1, y: this.pvUsagePercentage(), name: "pv", label: Math.round(parseFloat(noEMSPercentageOffGrid)) + "%", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
+            { x: 3, y: this.gridUsagePercentage(), name: "grid", label: roundedGridUsagePercentage + "%", img: "img/grid_in.svg", color: "#A4ABB3" },
+            { x: 2, y: this.pvUsagePercentage() - noEMSPercentageOffGrid, name: "plug", label: roundedPvUsagePercentage + "%", img: "img/plug.svg", color: "#00884A" },
+            { x: 1, y: this.pvUsagePercentage(), name: "pv", label: roundedNoEMSPercentageOffGrid + "%", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
         ]
 
         pieColors = ["#A4ABB3", "#00884A", "#18837E"];
@@ -264,10 +282,14 @@ class OffGrid extends React.Component {
             { x: 1, y: this.pvUsagePercentage(), name: "pv", label: "1.000 kWh", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
         ]
     
+        // Rounded values for VictoryPieDataTest
+        var roundedGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentage()));
+        var roundedPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentage()));
+        roundedGridUsagePercentage = this.adjustPercentage(roundedGridUsagePercentage, roundedPvUsagePercentage)
         VictoryPieDataTest = 
         [
-            { x: 3, y: this.gridUsagePercentage(), name: "grid", label: Math.round(parseFloat(this.gridUsagePercentage().toFixed(2))) + " %", img: "img/grid_in.svg", color: "#A4ABB3" },
-            { x: 1, y: this.pvUsagePercentage(), name: "pv", label: Math.round(parseFloat(this.pvUsagePercentage()).toFixed(2)) + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
+            { x: 3, y: this.gridUsagePercentage(), name: "grid", label: roundedGridUsagePercentage + " %", img: "img/grid_in.svg", color: "#A4ABB3" },
+            { x: 1, y: this.pvUsagePercentage(), name: "pv", label: roundedPvUsagePercentage + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
         ]
 
         pieColors = ["#A4ABB3", "#18837E"]
@@ -296,6 +318,7 @@ class OffGrid extends React.Component {
 
           return  ( 
           <div>
+            {/* {!loadingOffGrid && */}
             {!loading &&
             <div style={{display: 'flex', justifyContent: 'center'}}>
 
@@ -390,6 +413,7 @@ class OffGrid extends React.Component {
             </div>
             }
 
+            {/* {loadingOffGrid && */}
             {loading &&
              <div style={{display: 'flex', justifyContent: 'center'}}>
                 <div style={{position: 'relative', width: '100%', height: '300px', top: '0', left: '0'}}>
