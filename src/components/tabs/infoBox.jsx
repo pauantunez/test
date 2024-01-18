@@ -31,7 +31,7 @@ class InfoBox extends React.Component {
 
   static contextType = AppContext;
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   render() {
     const { t } = this.props;
@@ -103,11 +103,11 @@ class InfoBox extends React.Component {
               </div>
               <div class="infobox-row">
                 <div class="width-50 padding-left-10">3 - 4 Personen</div>
-                <div class="width-50">4.000 kWh</div>
+                <div class="width-50">{(4000).toLocaleString()} kWh</div>
               </div>
               <div class="infobox-row">
                 <div class="width-50 padding-left-10">5 - 6 Personen</div>
-                <div class="width-50">6.000 kWh</div>
+                <div class="width-50">{(6000).toLocaleString()} kWh</div>
               </div>
             </div>
           </div>
