@@ -53,7 +53,8 @@ class InfoButton extends React.Component {
       },
       [`& .${tooltipClasses.tooltip}`]: {
         backgroundColor: "#ffffff",
-        color: "#000000",
+        /*color: "#007BC0",*/
+        color: this.state.color,
         boxShadow: "0px 0px 6px 0px rgba(0,0,0,0.6)",
         borderRadius: "0px",
         fontSize: "12px",
