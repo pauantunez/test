@@ -340,11 +340,14 @@ class Main extends React.Component {
       borderRadius: "0px",
       fontFamily: "Bosch-Regular",
       backgroundColor: "#007BC0",
+      '&:hover': {
+        backgroundColor: "#00629A",
+      },
       // Agrega más estilos según sea necesario
     });
 
-    const { kfwValue, ev, scenarioInDatabase, menuBackdrop, setMenuBackdrop, steps, menuOpen, products, productSelected, navSteps, selectedTab, setSelectedTab, stepperNavActive, setActiveView, setActiveStep, setNavDirection, setStepperNav,setDirectLink, heatpumpAudio, activeView, activeStep, activeMilestone, disableSlider, BuildingSize, fwdBtn, backBtn, setFwdBtn, setActiveMilestone, setMilestoneHeadline, backdrop,directLink } = this.context;
-    
+    const { kfwValue, ev, scenarioInDatabase, menuBackdrop, setMenuBackdrop, steps, menuOpen, products, productSelected, navSteps, selectedTab, setSelectedTab, stepperNavActive, setActiveView, setActiveStep, setNavDirection, setStepperNav, setDirectLink, heatpumpAudio, activeView, activeStep, activeMilestone, disableSlider, BuildingSize, fwdBtn, backBtn, setFwdBtn, setActiveMilestone, setMilestoneHeadline, backdrop, directLink } = this.context;
+
     const { t } = this.props;
 
     const nextTab = (event, newValue) => {
@@ -829,13 +832,11 @@ class Main extends React.Component {
               style={{ textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}
               className={activeView != 13 ? styles.show : styles.hide}
               onClick={() => {
-                if(activeView==3 && directLink== true )
-                {
+                if (activeView == 3 && directLink == true) {
                   setDirectLink(false);
                   setActiveView(12);
-                }                 
-                else
-                {
+                }
+                else {
                   nextTab();
                 }
               }}
@@ -845,8 +846,8 @@ class Main extends React.Component {
               {activeView === 0 && <span>Weiter</span>}
               {activeView === 1 && <span>Weiter</span>}
               {activeView === 2 && <span>Weiter</span>}
-              {(activeView === 3 && directLink== false) && <span>Weiter</span>}
-              {(activeView === 3 && directLink== true) && <span>Zurück zum Ergebnis</span>}
+              {(activeView === 3 && directLink == false) && <span>Weiter</span>}
+              {(activeView === 3 && directLink == true) && <span>Zurück zum Ergebnis</span>}
               {activeView === 4 && <span>Weiter</span>}
               {activeView === 5 && <span>Weiter</span>}
               {activeView === 6 && <span>Weiter</span>}
@@ -856,7 +857,7 @@ class Main extends React.Component {
               {activeView === 12 && <span>Zusatz</span>}
             </CustomButton>
 
-            <Button
+            <CustomButton
               id="restartBtn"
               variant="contained"
               startIcon={<HouseSmallIcon />}
@@ -868,7 +869,7 @@ class Main extends React.Component {
               }}
             >
               <span>Zurück zum Start</span>
-            </Button>
+            </CustomButton>
           </div>
         </div>
       </div>
