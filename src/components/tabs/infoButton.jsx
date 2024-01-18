@@ -36,7 +36,7 @@ class InfoButton extends React.Component {
 
   static contextType = AppContext;
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   render() {
     const { t } = this.props;
@@ -53,7 +53,7 @@ class InfoButton extends React.Component {
       },
       [`& .${tooltipClasses.tooltip}`]: {
         backgroundColor: "#ffffff",
-        color: "#007BC0",
+        color: "#000000",
         boxShadow: "0px 0px 6px 0px rgba(0,0,0,0.6)",
         borderRadius: "0px",
         fontSize: "12px",
