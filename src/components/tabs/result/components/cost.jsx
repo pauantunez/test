@@ -454,9 +454,18 @@ class Cost extends React.Component {
       scale1 = maxHeight;
       scale2 = (value2 / value1) * maxHeight;
       scale3 = (value3 / value1) * maxHeight;
-      
+
       height2 = maxHeight - scale2;
       height3 = maxHeight - scale3;
+
+      if (height2 >= 212 || scale2 >= 212) {
+        height2 = 106;
+        scale2 = 106;
+      }
+      if (height3 >= 212 || scale3 >= 212) {
+        height3 = 106;
+        scale3 = 106;
+      }
 
       if (costOverTime == "1") {
         return [scale1, scale2, height2, scale3, height3];
@@ -487,8 +496,8 @@ class Cost extends React.Component {
       const { electricityCostPVsavings, electricityCostPVEMSsavings, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
 
       // Ohne PV - OK
-      var OHNE_PV_cost1year = parseInt(this.energyUseEuro(5))
-      //var OHNE_PV_cost1year = parseInt(this.energyUseEuro(5).replace('.', '').replace(',', ''));
+      // var OHNE_PV_cost1year = parseInt(this.energyUseEuro(5))
+      var OHNE_PV_cost1year = parseInt(this.energyUseEuro(5).replace('.', '').replace(',', ''));
       var OHNE_PV_cost20years = parseInt(this.electricityCostNoPV20Years())
       
       // Mit PV 
