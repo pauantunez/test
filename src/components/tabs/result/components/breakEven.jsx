@@ -247,7 +247,7 @@ class BreakEven extends React.Component {
 
     const closestIntersectionPosition = this.findIntersectionPosition(datapoints, datapoints2);
 
-    /* const datapoints3 = [0, null, null, null, null, null, null, null, null, null, null, 0]; */
+    const datapoints3 = [0, null, null, null, null, null, null, null, null, null, null, 0];
 
     const lineData = {
       labels: ["0", "2", "4", "6", "8", "10", "12", "14", "16", "18", "20", "22"],
