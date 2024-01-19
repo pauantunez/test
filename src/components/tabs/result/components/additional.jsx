@@ -300,12 +300,12 @@ class Additional extends React.Component {
               </div>
             </div>
             <div class="cardContent" style={{ borderTop: "1px solid #E0E2E5", marginBottom: "40px" }}>
-              <div class="flexContent" style={{ flexDirection: "column", justifyContent: "center", marginTop: "8px" }}>
+              <div class="flexContent" style={{ flexDirection: "column", justifyContent: "center", marginTop: "8px", width: "100%" }}>
                 <div style={{ paddingRight: "30px", paddingBottom: "10px" }}>
                   <h3>Wie komme ich zu einem energieeffizienten System?</h3>
                   <div style={{ fontFamily: "Bosch-Bold" }}>Informationen zu unseren Produkten</div>
                 </div>
-                <div class="additional-links-container" style={{ display: "flex", alignItems: "end" }}>
+                <div class="additional-links-container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", alignContent: "space-between" }}>
                   <div>
                     <label>
                       <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
