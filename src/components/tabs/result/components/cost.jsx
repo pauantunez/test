@@ -442,35 +442,27 @@ class Cost extends React.Component {
       }
     }
 
-    adjustBarHeight =(maxHeight, value1, value2, differenceValue2, value3, differenceValue3) => {
+    adjustBarHeight =(costOverTime, maxHeight, value1, value2, value3) => {
 
       var scale1 = 0
       var scale2 = 0
       var scale3 = 0
-      var differenceScale = 0
 
-      if (value1 >= value2 && value1 >= value3) {
-        scale1 = maxHeight;
-        scale2 = (value2 / value1) * maxHeight;
-        scale3 = (value3 / value1) * maxHeight;
-      } else if (value2 >= value1 && value2 >= value3) {
-        scale1 = (value1 / value2) * maxHeight;
-        scale2 = maxHeight;
-        scale3 = (value3 / value2) * maxHeight;
+      var height2 = 0
+      var height3 = 0
+
+      scale1 = maxHeight;
+      scale2 = (value2 / value1) * maxHeight;
+      scale3 = (value3 / value1) * maxHeight;
+      
+      height2 = maxHeight - scale2;
+      height3 = maxHeight - scale3;
+
+      if (costOverTime == "1") {
+        return [scale1, scale2, height2, scale3, height3];
       } else {
-        scale1 = (value1 / value3) * maxHeight;
-        scale2 = (value2 / value3) * maxHeight;
-        
-        // Modified
-        differenceScale = (differenceValue2 / value3) * maxHeight
-        scale3 = maxHeight - differenceScale;
+        return [scale1, scale2, height2, 190, 22];
       }
-      
-      const height2 = maxHeight - scale2;
-      const height3 = maxHeight - scale3;
-      
-      return [scale1, height2, scale2, height3, scale3];
-      // return [110, 110, 110, 110];
     }
 
     getHighestValue =(value1, value2, value3) => {
@@ -493,31 +485,26 @@ class Cost extends React.Component {
       const { t } = this.props;
       const { overlayToggle } = this.state;
       const { electricityCostPVsavings, electricityCostPVEMSsavings, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
-      
-      // Ohne PV
-      var ohnePv1year = parseInt(this.energyUseEuro(5))
-      var ohnePv20years = parseInt(this.electricityCostNoPV20Years())
-      
-      // Mit PV
-      var mitPv1year = this.resultWithPV()
-      var mitPv20years = parseInt((parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVonly))
 
-      var differencePv1year = (parseInt(this.energyUseEuro(5)) - parseInt(this.resultWithPV()))
-      var differencePv20years = (parseInt(this.electricityCostNoPV20Years()) - parseInt((this.electricityCostPV20Years() + this.state.totalRunningCostPVonly)))
+      // Ohne PV - OK
+      var OHNE_PV_cost1year = parseInt(this.energyUseEuro(5))
+      //var OHNE_PV_cost1year = parseInt(this.energyUseEuro(5).replace('.', '').replace(',', ''));
+      var OHNE_PV_cost20years = parseInt(this.electricityCostNoPV20Years())
+      
+      // Mit PV 
+      var MIT_PV_cost1year = (OHNE_PV_cost1year - parseInt(this.resultWithPV()))
+      var MIT_PV_cost20years = (OHNE_PV_cost20years - parseInt((this.electricityCostPV20Years() + this.state.totalRunningCostPVonly)))
 
       // Mit PV und EMS
-      var mitPvUndEms1year = this.resultWithPVandEMS()
-      var mitPvUndEms20years = parseInt((parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVems))
+      var MIT_PV_EMS_cost1year = (OHNE_PV_cost1year - parseInt(this.resultWithPVandEMS()))
+      var MIT_PV_EMS_cost20years = (OHNE_PV_cost20years - parseInt((this.electricityCostPV20Years() + this.state.totalRunningCostPVems)))
 
-      var differencePvUndEms1year = (parseInt(this.energyUseEuro(5)) - parseInt(this.resultWithPVandEMS()))
-      var differencePvUndEms20years = (parseInt(this.electricityCostNoPV20Years()) - parseInt((this.electricityCostPV20Years() + this.state.totalRunningCostPVems)))
-
-      var barHeights1year = this.adjustBarHeight(220, ohnePv1year, mitPv1year, differencePv1year, mitPvUndEms1year, differencePvUndEms1year);
-      var barHeights20years = this.adjustBarHeight(220, ohnePv20years, mitPv20years, differencePv20years, mitPvUndEms20years, differencePvUndEms20years);
+      // Bar heights
+      var barHeights1year = this.adjustBarHeight(costOverTime, 212, OHNE_PV_cost1year, electricityCostPVsavings, electricityCostPVEMSsavings);
+      var barHeights20years = this.adjustBarHeight(costOverTime, 212, OHNE_PV_cost20years, electricityCostPVsavings, electricityCostPVEMSsavings);
       var selectedBarHeights = costOverTime == "1" ? barHeights1year : barHeights20years;
 
-      var highestValue1year = this.getHighestValue(ohnePv1year, mitPv1year + differencePv1year, mitPvUndEms1year + differencePvUndEms1year);
-      var highestValue20years = this.getHighestValue(ohnePv20years, mitPv20years + differencePv20years, mitPvUndEms20years + differencePvUndEms20years); 
+      console.log("selectedBarHeights " + selectedBarHeights)
 
           return  ( 
           <div>
@@ -562,12 +549,12 @@ class Cost extends React.Component {
                     {/* ohne PV */}
                     <div style={{display: 'flex', width: '73px', height: `${selectedBarHeights[0]}px`, background: '#007BC0', color: 'white', marginTop: 'auto' }}>
                         <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%', fontSize: '12px', textAlign: 'center'}}>
-                            { costOverTime=="1" && ohnePv1year.toLocaleString() }
+                            { costOverTime=="1" && OHNE_PV_cost1year.toLocaleString() }
                             { costOverTime=="1" && 
                               <span>&nbsp;€</span>
                             }
                             { costOverTime=="20" && 
-                               ohnePv20years.toLocaleString()
+                               OHNE_PV_cost20years.toLocaleString()
                             }
                             { costOverTime=="20" && 
                               <span>&nbsp;€</span>
@@ -578,17 +565,17 @@ class Cost extends React.Component {
 
                     {/* Mit PV Price */}
                     {/* <div style={{display: 'flex', flexDirection: 'column', marginTop: '110px', width: '73px', height: '108px', color: 'white', marginLeft: '15%'}}> */}
-                    <div style={{ width: '73px', color: 'white', marginLeft: '15%', zIndex: '99999'}}>
+                    <div style={{ width: '73px', color: 'white', marginLeft: '15%', zIndex: '99999', marginTop: 'auto'}}>
                       
                       {/* Pattern bar */}
-                      <div style={{display: 'flex', width: '73px', height: `${selectedBarHeights[1]}px`, color: 'white' }}>
+                      <div style={{display: 'flex', width: '73px', height: `${selectedBarHeights[1]}px`, color: 'white'}}>
                         { isSafari &&
                         <div style={{width: '100%', height: '100%', textAlign: 'center'}} class="pattern-safari">
                           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#007BC0', fontSize: '12px', width: '100%', height: '100%'}}>
                             <span style={{background: '#FFF', padding: '3px', fontFamily: 'Bosch-Bold'}}>
-                            { costOverTime=="1" && differencePv1year.toLocaleString() }
+                            { costOverTime=="1" && electricityCostPVsavings.toLocaleString() }
                             { costOverTime=="1" && <span>&nbsp;€</span> }
-                            { costOverTime=="20" && differencePv20years.toLocaleString() }
+                            { costOverTime=="20" && electricityCostPVsavings.toLocaleString() }
                             { costOverTime=="20" && 
                               <span>&nbsp;€</span>
                             }
@@ -600,9 +587,9 @@ class Cost extends React.Component {
                         <div style={{width: '100%', height: '100%', top: '0%', textAlign: 'center'}} class="pattern">
                           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#007BC0', fontSize: '12px', width: '100%', height: '100%'}}>
                             <span style={{background: '#FFF', padding: '3px', fontFamily: 'Bosch-Bold'}}>
-                            { costOverTime=="1" && differencePv1year.toLocaleString() }
+                            { costOverTime=="1" && electricityCostPVsavings.toLocaleString() }
                             { costOverTime=="1" && <span>&nbsp;€</span> }
-                            { costOverTime=="20" && differencePv20years.toLocaleString() }
+                            { costOverTime=="20" && electricityCostPVsavings.toLocaleString() }
                             { costOverTime=="20" && 
                               <span>&nbsp;€</span>
                             }
@@ -618,9 +605,9 @@ class Cost extends React.Component {
                         <div style={{width: '100%', height: '100%', textAlign: 'center'}}>
                           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#007BC0', color: 'white', fontSize: '12px', width: '100%', height: '100%'}}>
                             <span style={{background: '#007BC0', padding: '3px', fontFamily: 'Bosch-Bold'}}>
-                            { costOverTime=="1" && mitPv1year.toLocaleString() }
+                            { costOverTime=="1" && MIT_PV_cost1year.toLocaleString() }
                             { costOverTime=="1" && <span>&nbsp;€</span> }
-                            { costOverTime=="20" && mitPv20years.toLocaleString() }
+                            { costOverTime=="20" && MIT_PV_cost20years.toLocaleString() }
                             { costOverTime=="20" && 
                               <span>&nbsp;€</span>
                             }
@@ -633,9 +620,9 @@ class Cost extends React.Component {
                         <div style={{width: '100%', height: '100%', top: '0%', textAlign: 'center'}}>
                           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#007BC0', color: 'white', fontSize: '12px', width: '100%', height: '100%'}}>
                             <span style={{background: '#007BC0', padding: '3px', fontFamily: 'Bosch-Bold'}}>
-                            { costOverTime=="1" && mitPv1year.toLocaleString() }
+                            { costOverTime=="1" && MIT_PV_cost1year.toLocaleString() }
                             { costOverTime=="1" && <span>&nbsp;€</span> }
-                            { costOverTime=="20" && mitPv20years.toLocaleString() }
+                            { costOverTime=="20" && MIT_PV_cost20years.toLocaleString() }
                             { costOverTime=="20" && 
                               <span>&nbsp;€</span>
                             }
@@ -648,7 +635,7 @@ class Cost extends React.Component {
 
                     {/* Mit PV und EMS */}
                     {/* <div style={{display: 'flex', flexDirection: 'column', marginTop: '110px', width: '73px', height: '108px', color: 'white', marginLeft: '15%'}}> */}
-                    <div style={{ width: '73px', color: 'white', marginLeft: '15%', zIndex: '99999'}}>
+                    <div style={{ width: '73px', color: 'white', marginLeft: '15%', zIndex: '99999', marginTop: 'auto'}}>
                       
                       {/* Pattern bar */}
                       <div style={{display: 'flex', width: '73px', height: `${selectedBarHeights[3]}px`, color: 'white' }}>
@@ -656,9 +643,9 @@ class Cost extends React.Component {
                         <div style={{width: '100%', height: '100%', textAlign: 'center'}} class="pattern-safari">
                           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#007BC0', fontSize: '12px', width: '100%', height: '100%'}}>
                             <span style={{background: '#FFF', padding: '3px', fontFamily: 'Bosch-Bold'}}>
-                            { costOverTime=="1" && differencePvUndEms1year.toLocaleString() }
+                            { costOverTime=="1" && electricityCostPVEMSsavings.toLocaleString() }
                             { costOverTime=="1" && <span>&nbsp;€</span> }
-                            { costOverTime=="20" && differencePvUndEms20years.toLocaleString() }
+                            { costOverTime=="20" && electricityCostPVEMSsavings.toLocaleString() }
                             { costOverTime=="20" && 
                               <span>&nbsp;€</span>
                             }
@@ -670,9 +657,9 @@ class Cost extends React.Component {
                         <div style={{width: '100%', height: '100%', textAlign: 'center'}} class="pattern">
                           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#007BC0', fontSize: '12px', width: '100%', height: '100%'}}>
                             <span style={{background: '#FFF', padding: '3px', fontFamily: 'Bosch-Bold'}}>
-                            { costOverTime=="1" && differencePvUndEms1year.toLocaleString() }
+                            { costOverTime=="1" && electricityCostPVEMSsavings.toLocaleString() }
                             { costOverTime=="1" && <span>&nbsp;€</span> }
-                            { costOverTime=="20" && differencePvUndEms20years.toLocaleString() }
+                            { costOverTime=="20" && electricityCostPVEMSsavings.toLocaleString() }
                             { costOverTime=="20" && 
                               <span>&nbsp;€</span>
                             }
@@ -688,9 +675,9 @@ class Cost extends React.Component {
                         <div style={{width: '100%', height: '100%', textAlign: 'center'}} class="pattern-safari">
                           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#007BC0', color: 'white', fontSize: '12px', width: '100%', height: '100%'}}>
                             <span style={{background: '#007BC0', padding: '3px', fontFamily: 'Bosch-Bold'}}>
-                            { costOverTime=="1" && mitPvUndEms1year.toLocaleString() }
+                            { costOverTime=="1" && MIT_PV_EMS_cost1year.toLocaleString() }
                             { costOverTime=="1" && <span>&nbsp;€</span> }
-                            { costOverTime=="20" && mitPvUndEms20years.toLocaleString() }
+                            { costOverTime=="20" && MIT_PV_EMS_cost20years.toLocaleString() }
                             { costOverTime=="20" && 
                               <span>&nbsp;€</span>
                             }
@@ -702,9 +689,9 @@ class Cost extends React.Component {
                         <div style={{width: '100%', height: '100%', textAlign: 'center'}} class="pattern">
                           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#007BC0', color: 'white', fontSize: '12px', width: '100%', height: '100%'}}>
                             <span style={{background: '#007BC0', padding: '3px', fontFamily: 'Bosch-Bold'}}>
-                            { costOverTime=="1" && mitPvUndEms1year.toLocaleString() }
+                            { costOverTime=="1" && MIT_PV_EMS_cost1year.toLocaleString() }
                             { costOverTime=="1" && <span>&nbsp;€</span> }
-                            { costOverTime=="20" && mitPvUndEms20years.toLocaleString() }
+                            { costOverTime=="20" && MIT_PV_EMS_cost20years.toLocaleString() }
                             { costOverTime=="20" && 
                               <span>&nbsp;€</span>
                             }
@@ -721,28 +708,28 @@ class Cost extends React.Component {
                     <div style={{display: 'flex', flexDirection: 'row'}}>
                         <div class="bar-chart-left-legend">
                             <div>
-                                { costOverTime == "1" && this.divideValuesForChart(5, highestValue1year) + " €"}
-                                { costOverTime == "20" && this.divideValuesForChart(5, highestValue20years) + " €"}
+                                { costOverTime == "1" && this.divideValuesForChart(5, OHNE_PV_cost1year) + " €"}
+                                { costOverTime == "20" && this.divideValuesForChart(5, OHNE_PV_cost20years) + " €"}
                             </div>
                             <div>
-                              { costOverTime == "1" && this.divideValuesForChart(4, highestValue1year) + " €" }
-                              { costOverTime == "20" && this.divideValuesForChart(4, highestValue20years) + " €"}
+                              { costOverTime == "1" && this.divideValuesForChart(4, OHNE_PV_cost1year) + " €" }
+                              { costOverTime == "20" && this.divideValuesForChart(4, OHNE_PV_cost20years) + " €"}
                             </div>
                             <div>
-                              { costOverTime == "1" && this.divideValuesForChart(3, highestValue1year) + " €" }
-                              { costOverTime == "20" && this.divideValuesForChart(3, highestValue20years) + " €"}
+                              { costOverTime == "1" && this.divideValuesForChart(3, OHNE_PV_cost1year) + " €" }
+                              { costOverTime == "20" && this.divideValuesForChart(3, OHNE_PV_cost20years) + " €"}
                             </div>
                             <div>
-                              { costOverTime == "1" && this.divideValuesForChart(2, highestValue1year) + " €" }
-                              { costOverTime == "20" && this.divideValuesForChart(2, highestValue20years) + " €"}
+                              { costOverTime == "1" && this.divideValuesForChart(2, OHNE_PV_cost1year) + " €" }
+                              { costOverTime == "20" && this.divideValuesForChart(2, OHNE_PV_cost20years) + " €"}
                             </div>
                             <div>
-                              { costOverTime == "1" && this.divideValuesForChart(1, highestValue1year) + " €" }
-                              { costOverTime == "20" && this.divideValuesForChart(1, highestValue20years) + " €"}
+                              { costOverTime == "1" && this.divideValuesForChart(1, OHNE_PV_cost1year) + " €" }
+                              { costOverTime == "20" && this.divideValuesForChart(1, OHNE_PV_cost20years) + " €"}
                             </div>
                             <div>
-                              { costOverTime == "1" && this.divideValuesForChart(0, highestValue1year) + " €" }
-                              { costOverTime == "20" && this.divideValuesForChart(0, highestValue20years) + " €"}
+                              { costOverTime == "1" && this.divideValuesForChart(0, OHNE_PV_cost1year) + " €" }
+                              { costOverTime == "20" && this.divideValuesForChart(0, OHNE_PV_cost20years) + " €"}
                             </div>
                             {/* <div>
                                 { this.energyUseEuroNegative(1,this.whichChartLegend()) }

@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.f0733638.css",
-    "main.js": "/static/js/main.25b8b6a5.js",
-    "static/js/703.bec625e0.chunk.js": "/static/js/703.bec625e0.chunk.js",
-    "static/js/907.e2f9b988.chunk.js": "/static/js/907.e2f9b988.chunk.js",
-    "static/js/787.b5dfa567.chunk.js": "/static/js/787.b5dfa567.chunk.js",
+    "main.css": "/static/css/main.a982d364.css",
+    "main.js": "/static/js/main.ebd4cfeb.js",
+    "static/js/703.6f191921.chunk.js": "/static/js/703.6f191921.chunk.js",
+    "static/js/287.05de1cae.chunk.js": "/static/js/287.05de1cae.chunk.js",
+    "static/js/787.c1c85d06.chunk.js": "/static/js/787.c1c85d06.chunk.js",
     "static/media/preview.png": "/static/media/preview.f102acc3b3fbf2a46f34.png",
     "static/media/BoschSans-Regular.otf": "/static/media/BoschSans-Regular.bf56745b8d99721a9a0b.otf",
     "static/media/BoschSans-Bold.otf": "/static/media/BoschSans-Bold.2448cf5f40532154265c.otf",
@@ -14,8 +14,6 @@
     "static/media/helveticaneueltw05-35thin-woff2-data.woff2": "/static/media/helveticaneueltw05-35thin-woff2-data.f136bae63bceb28b9879.woff2",
     "static/media/wrench_small.svg": "/static/media/wrench_small.7fd4b2ec31f9f4295d7ba91833bef5eb.svg",
     "static/media/air_water_heatpump.svg": "/static/media/air_water_heatpump.b726f07cb5201523a40ec31fd2a604d5.svg",
-    "static/media/hand-pointing-arrows-buderus.svg": "/static/media/hand-pointing-arrows-buderus.9dbd23afddf08cdacd9b.svg",
-    "static/media/hand-pointing-arrows-bosch.svg": "/static/media/hand-pointing-arrows-bosch.5929f1c04aba78d4a30e.svg",
     "static/media/coins.svg": "/static/media/coins.264ef3f5354d8d86c25451417c161ed9.svg",
     "static/media/household_small.svg": "/static/media/household_small.8b42ec609680492dfcfef4d36c548178.svg",
     "static/media/coins_small.svg": "/static/media/coins_small.4b0d3cacb022b0e132ff74b4096f42ba.svg",
@@ -56,8 +54,8 @@
     "static/media/clipboard.svg": "/static/media/clipboard.0546044483f8d06fafb4f04734e854b2.svg",
     "static/media/battery_large.svg": "/static/media/battery_large.b4ad2cc0e75dddd7aab78e658a564db7.svg",
     "static/media/info_large.svg": "/static/media/info_large.c6ebb2a3185a037b882eaeaea49cb11c.svg",
-    "index.html": "/index.html",
     "static/media/pattern_small_round.svg": "/static/media/pattern_small_round.ef38a9cbdaf9fe34a46d06a65abe7420.svg",
+    "index.html": "/index.html",
     "static/media/chart_up_large.svg": "/static/media/chart_up_large.12651248fe38f583e08cf04525f5fab1.svg",
     "static/media/info.svg": "/static/media/info.3c70d98a56f5fd5d82e58c692b469349.svg",
     "static/media/chart_up_small.svg": "/static/media/chart_up_small.5e82a0807f54b37fb0d1dadb63103fdd.svg",
@@ -71,20 +69,21 @@
     "static/media/lightning_chart.svg": "/static/media/lightning_chart.87bd2547e111e7b1e5c94f25b7727aa9.svg",
     "static/media/deny_large.svg": "/static/media/deny_large.ff1506b373257d6c2b4a56482f90e57f.svg",
     "static/media/lightning_small.svg": "/static/media/lightning_small.140836e6f9b547c377e430517bf34a06.svg",
+    "static/media/pencil-7.svg": "/static/media/pencil-7.b2fbfd27a41e5695a216c1024a80a05f.svg",
     "static/media/menu_close.svg": "/static/media/menu_close.e77c78d0f5f9801b9fac5b5f6f322451.svg",
     "static/media/fwd_btn.svg": "/static/media/fwd_btn.8c99d30c1ca415d76fbf85449efddf84.svg",
     "static/media/fwd_btn_inactive.svg": "/static/media/fwd_btn_inactive.d10006eedc974bc90f40b6448b5a6c5f.svg",
     "static/media/arrow_back_thin.svg": "/static/media/arrow_back_thin.1dbf543565262d5537e8432cdb445347.svg",
     "static/media/arrow_forward_thin.svg": "/static/media/arrow_forward_thin.c0dc328232ce571275d0ce4c200247a8.svg",
     "static/media/accept_large.svg": "/static/media/accept_large.7094e958d7468c301bc9559479db4c0f.svg",
-    "main.f0733638.css.map": "/static/css/main.f0733638.css.map",
-    "main.25b8b6a5.js.map": "/static/js/main.25b8b6a5.js.map",
-    "703.bec625e0.chunk.js.map": "/static/js/703.bec625e0.chunk.js.map",
-    "907.e2f9b988.chunk.js.map": "/static/js/907.e2f9b988.chunk.js.map",
-    "787.b5dfa567.chunk.js.map": "/static/js/787.b5dfa567.chunk.js.map"
+    "main.a982d364.css.map": "/static/css/main.a982d364.css.map",
+    "main.ebd4cfeb.js.map": "/static/js/main.ebd4cfeb.js.map",
+    "703.6f191921.chunk.js.map": "/static/js/703.6f191921.chunk.js.map",
+    "287.05de1cae.chunk.js.map": "/static/js/287.05de1cae.chunk.js.map",
+    "787.c1c85d06.chunk.js.map": "/static/js/787.c1c85d06.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f0733638.css",
-    "static/js/main.25b8b6a5.js"
+    "static/css/main.a982d364.css",
+    "static/js/main.ebd4cfeb.js"
   ]
 }
