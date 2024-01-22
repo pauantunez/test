@@ -103,11 +103,11 @@ class InfoBox extends React.Component {
               </div>
               <div class="infobox-row">
                 <div class="width-50 padding-left-10">3 - 4 Personen</div>
-                <div class="width-50">{(4000).toLocaleString()} kWh</div>
+                <div class="width-50">{(4000).toLocaleString("de-DE")} kWh</div>
               </div>
               <div class="infobox-row">
                 <div class="width-50 padding-left-10">5 - 6 Personen</div>
-                <div class="width-50">{(6000).toLocaleString()} kWh</div>
+                <div class="width-50">{(6000).toLocaleString("de-DE")} kWh</div>
               </div>
             </div>
           </div>

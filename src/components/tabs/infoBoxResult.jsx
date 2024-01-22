@@ -124,17 +124,17 @@ class InfoBoxResult extends React.Component {
             <div>
               <div class="infobox-row-container">
                 <div class="infobox-row" style={{ display: "block", lineHeight: "24px", borderBottom: "none" }}>
-                  Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{parseInt(electricityCostPVsavings).toLocaleString()} € Stromkosten</strong>
+                  Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{parseInt(electricityCostPVsavings).toLocaleString("de-DE")} € Stromkosten</strong>
                   {costOverTime == "1" && <span>&nbsp;pro Jahr sparen.</span>}
                   {costOverTime == "20" && <span>&nbsp;über 20 Jahre sparen.</span>}
                   <br />
                   <br />
-                  Mit einer <strong>PV-Anlage und einem Energiemanagementsystem</strong> lassen sich bis zu <strong>{parseInt(electricityCostPVEMSsavings).toLocaleString()} € Stromkosten</strong>
+                  Mit einer <strong>PV-Anlage und einem Energiemanagementsystem</strong> lassen sich bis zu <strong>{parseInt(electricityCostPVEMSsavings).toLocaleString("de-DE")} € Stromkosten</strong>
                   {costOverTime == "1" && <span>&nbsp;pro Jahr sparen.</span>}
                   {costOverTime == "20" && <span>&nbsp;über 20 Jahre sparen.</span>}
                   <br />
                   <br />
-                  Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis um bis zu <strong>{parseInt(electricityCostPVEMSsavings - electricityCostPVsavings).toLocaleString()} €</strong> {costOverTime == "1" && <span>&nbsp;pro Jahr.</span>}
+                  Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis um bis zu <strong>{parseInt(electricityCostPVEMSsavings - electricityCostPVsavings).toLocaleString("de-DE")} €</strong> {costOverTime == "1" && <span>&nbsp;pro Jahr.</span>}
                   {costOverTime == "20" && <span>&nbsp;über 20 Jahre.</span>}
                   {/* über 20 Jahre. */}
                   {/* {costOverTime == "20" && (
@@ -155,7 +155,7 @@ class InfoBoxResult extends React.Component {
                   Die Investition in eine <strong>PV-Anlage</strong> hat sich durch den Einsatz eines <strong>Energiemanagementsystems</strong> nach ca. <strong>{this.breakEvenPVems()} Jahren</strong> amortisiert.
                   <br />
                   <br />
-                  Die zusätzlichen Kosten für ein <strong>Energiemanagementsystem</strong> von <strong>{this.amortizationDifference().toLocaleString()} € *</strong> haben sich bereits nach ca. <strong>{this.breakEvenPoint()} Jahren</strong> bezahlt gemacht.
+                  Die zusätzlichen Kosten für ein <strong>Energiemanagementsystem</strong> von <strong>{this.amortizationDifference().toLocaleString("de-DE")} € *</strong> haben sich bereits nach ca. <strong>{this.breakEvenPoint()} Jahren</strong> bezahlt gemacht.
                   <br />
                   <br />
                   <small>* Bei Einsatz Fronius / Sungrow (ab Ende Q1/24) Wechselrichter</small>
@@ -169,7 +169,7 @@ class InfoBoxResult extends React.Component {
               <div class="infobox-row-container">
                 <div class="infobox-row" style={{ display: "block", lineHeight: "24px", fontSize: "14px", borderBottom: "none" }}>
                   <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>
-                    Stromverbrauch gesamt: {parseFloat(this.energyUsageCombined().toLocaleString())} kWh
+                    Stromverbrauch gesamt: {parseFloat(this.energyUsageCombined().toLocaleString("de-DE"))} kWh
                     <IconButton
                       id="editBtn"
                       aria-label="edit"

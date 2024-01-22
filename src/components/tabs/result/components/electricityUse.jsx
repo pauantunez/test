@@ -219,11 +219,7 @@ class ElectricityUse extends React.Component {
       const { overlayToggle } = this.state;
       const { odometerIncreaseKWH, pieChartSize, pieIconSize, innerRadiusMargin, pieLabelFontSize, xPositionHeatpumpLabel, xPositionEVLabel, xPositionHouseholdLabel, yPositionHeatpumpLabel, yPositionEVLabel, yPositionHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
 
-      const VictoryPieData = [
-        { x: 3, y: this.heatpumpUsageKWH(), name: "heatpump", label: parseInt(this.heatpumpUsageKWH()).toLocaleString() + " kWh", img: "/img/heatpump_small.svg", color: "#004975" },
-        ...(odometerIncreaseKWH !== 0 ? [{ x: 2, y: odometerIncreaseKWH, name: "ev", label: odometerIncreaseKWH.toLocaleString() + " kWh", img: "/img/ev_small.svg", color: "#C535BC" }] : []),
-        { x: 1, y: parseInt(energyUsagekWh), name: "household", label: energyUsagekWh.toLocaleString() + " kWh", img: "/img/household_small.svg", color: "#9E2896" },
-      ];
+      const VictoryPieData = [{ x: 3, y: this.heatpumpUsageKWH(), name: "heatpump", label: parseInt(this.heatpumpUsageKWH()).toLocaleString("de-DE") + " kWh", img: "/img/heatpump_small.svg", color: "#004975" }, ...(odometerIncreaseKWH !== 0 ? [{ x: 2, y: odometerIncreaseKWH, name: "ev", label: odometerIncreaseKWH.toLocaleString("de-DE") + " kWh", img: "/img/ev_small.svg", color: "#C535BC" }] : []), { x: 1, y: parseInt(energyUsagekWh), name: "household", label: energyUsagekWh.toLocaleString("de-DE") + " kWh", img: "/img/household_small.svg", color: "#9E2896" }];
       
       // Rounded values for VictoryPieData2
       var roundedEnergyUsagePercentageHeatpump = Math.round(parseFloat(this.energyUsagePercentage("heatpump")));
