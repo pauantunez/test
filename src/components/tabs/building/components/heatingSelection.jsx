@@ -44,7 +44,7 @@ class HeatingSelection extends React.Component {
 
   static contextType = AppContext;
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   componentWillMount() {
     const { BuildingEnegeryStandard, setFwdBtn, fwdBtn, steps, setSteps, activeView, kfwValue } = this.context;
@@ -364,7 +364,7 @@ class HeatingSelection extends React.Component {
                     <div class="cardIconInset">
                       <ChartUpLarge style={{ marginLeft: "10px", width: "55px" }} />
                     </div>
-                    <h3 class="cardHeadline">Heizungsbedarf</h3>
+                    <h3 class="cardHeadline">Heizenergiebedarf</h3>
                   </div>
                   <span class="cardDescription">Wählen Sie eine der drei Möglichkeiten zur Bestimmung Ihres Heizenergiebedarfs.</span>
                 </div>
@@ -415,7 +415,7 @@ class HeatingSelection extends React.Component {
                 {/* Gebäudeenergiestandard */}
                 {BuildingEnegeryStandard === "BuildingEnergyStandard" && (
                   <div style={{ marginTop: "30px", marginLeft: "10px", fontFamily: "Bosch-Regular" }}>
-                    Welchen Energiestandard besitzt Ihr Gebäude? <InfoButton tooltipId="1" text="Die auschlaggebenden Faktoren für die Gebäudedämmung sind das Dach, die Gebäudehülle und die Fenster. Bei einer vollständig, sehr guten Dämmung wurden alle Faktoren bereits auf den neusten Stand gebracht." color="#000" />
+                    Welchen Energiestandard besitzt Ihr Gebäude?
                     <div style={{ marginTop: "15px" }}>
                       <FormControl>
                         <RadioGroup name="kfw-value" id="kfw-value">
