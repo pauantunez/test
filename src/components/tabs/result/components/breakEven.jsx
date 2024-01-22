@@ -239,18 +239,18 @@ class BreakEven extends React.Component {
     const { overlayToggle } = this.state;
     const { heatpumpPV, heatpumpPVems, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
 
-    const datapoints = [heatpumpPVems[0].expenditure, heatpumpPVems[2].expenditure, heatpumpPVems[4].expenditure, heatpumpPVems[6].expenditure, heatpumpPVems[8].expenditure, heatpumpPVems[10].expenditure, heatpumpPVems[12].expenditure, heatpumpPVems[14].expenditure, heatpumpPVems[16].expenditure, heatpumpPVems[18].expenditure, heatpumpPVems[20].expenditure, heatpumpPVems[22].expenditure];
+    const datapoints = [heatpumpPVems[0].expenditure, heatpumpPVems[1].expenditure, heatpumpPVems[2].expenditure, heatpumpPVems[3].expenditure, heatpumpPVems[4].expenditure, heatpumpPVems[5].expenditure, heatpumpPVems[6].expenditure, heatpumpPVems[7].expenditure, heatpumpPVems[8].expenditure, heatpumpPVems[9].expenditure, heatpumpPVems[10].expenditure, heatpumpPVems[11].expenditure, heatpumpPVems[12].expenditure, heatpumpPVems[13].expenditure, heatpumpPVems[14].expenditure, heatpumpPVems[15].expenditure, heatpumpPVems[16].expenditure, heatpumpPVems[17].expenditure, heatpumpPVems[18].expenditure, heatpumpPVems[19].expenditure, heatpumpPVems[20].expenditure, heatpumpPVems[21].expenditure, heatpumpPVems[22].expenditure];
     const closestPosition01 = this.findClosestPositionTo0(datapoints);
 
-    const datapoints2 = [heatpumpPV[0].expenditure, heatpumpPV[2].expenditure, heatpumpPV[4].expenditure, heatpumpPV[6].expenditure, heatpumpPV[8].expenditure, heatpumpPV[10].expenditure, heatpumpPV[12].expenditure, heatpumpPV[14].expenditure, heatpumpPV[16].expenditure, heatpumpPV[18].expenditure, heatpumpPV[20].expenditure, heatpumpPV[22].expenditure];
+    const datapoints2 = [heatpumpPV[0].expenditure, heatpumpPV[1].expenditure, heatpumpPV[2].expenditure, heatpumpPV[3].expenditure, heatpumpPV[4].expenditure, heatpumpPV[5].expenditure, heatpumpPV[6].expenditure, heatpumpPV[7].expenditure, heatpumpPV[8].expenditure, heatpumpPV[9].expenditure, heatpumpPV[10].expenditure, heatpumpPV[11].expenditure, heatpumpPV[12].expenditure, heatpumpPV[13].expenditure, heatpumpPV[14].expenditure, heatpumpPV[15].expenditure, heatpumpPV[16].expenditure, heatpumpPV[17].expenditure, heatpumpPV[18].expenditure, heatpumpPV[19].expenditure, heatpumpPV[20].expenditure, heatpumpPV[21].expenditure, heatpumpPV[22].expenditure];
     const closestPosition02 = this.findClosestPositionTo0(datapoints2);
 
     const closestIntersectionPosition = this.findIntersectionPosition(datapoints, datapoints2);
 
-    const datapoints3 = [0, null, null, null, null, null, null, null, null, null, null, 0];
+    const datapoints3 = [0, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null, null, null, null, null, null, 0];
 
     const lineData = {
-      labels: ["0", "2", "4", "6", "8", "10", "12", "14", "16", "18", "20", "22"],
+      labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22"],
       datasets: [
         {
           label: false,
