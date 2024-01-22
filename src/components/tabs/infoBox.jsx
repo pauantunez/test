@@ -62,13 +62,13 @@ class InfoBox extends React.Component {
                 <div class="infobox-row" style={{ display: "block", lineHeight: "20px", borderBottom: "none" }}>
                   Um die Investitionssumme Ihrer Anlage ermitteln zu können, werden
                   <br />
-                  Marktübliche Richtpreise für die PV-Anlage und den Stromspeicher
+                  marktübliche Richtpreise für die PV-Anlage und den Batteriespeicher
                   <br />
                   genutzt. Beispiel:
                   <br />
                   <ul style={{ marginBlockStart: "0.2em", marginBlockEnd: "0.2em" }}>
                     <li>7 kWp PV-Anlage = ca. 15.000 €</li>
-                    <li>9 kWh Stromspeicher = ca. 7.000 €</li>
+                    <li>9 kWh Batteriespeicher = ca. 7.000 €</li>
                   </ul>
                   Die Preise variieren, je nach Anlagengröße und können regional
                   <br />
