@@ -383,7 +383,7 @@ class BreakEven extends React.Component {
       <div id="break-even">
         <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", marginBottom: "20px", fontSize: "16px" }}>
           <div>Investitionskosten PV-System:</div>
-          <div style={{ fontFamily: "Bosch-Bold" }}>{this.investmentCost().toLocaleString("de-DE")} €</div>
+          <div style={{ fontFamily: "Bosch-Bold" }}>{Math.abs(heatpumpPV[0].expenditure).toLocaleString("de-DE")} €</div>
         </div>
 
         <div style={{ maxWidth: "550px" }}>
