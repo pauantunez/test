@@ -234,42 +234,18 @@ class BreakEven extends React.Component {
     return closestPosition;
   }
 
-  breakEvenPV = () => {
-    const { heatpumpPV, heatpumpPVems } = this.context;
-    let yearBreakEven = heatpumpPV.findIndex((n) => n.expenditure > 0);
-
-    return yearBreakEven;
-  };
-
-  breakEvenPVems = () => {
-    const { heatpumpPV, heatpumpPVems } = this.context;
-    let yearBreakEven = heatpumpPVems.findIndex((n) => n.expenditure > 0);
-
-    return yearBreakEven;
-  };
-
-  breakEvenPoint = () => {
-    const { heatpumpPV, heatpumpPVems } = this.context;
-
-    for (let index = 0; index < heatpumpPV.length; index++) {
-      if (heatpumpPVems[index].expenditure > heatpumpPV[index].expenditure) {
-        return index;
-      }
-    }
-  };
-
   render() {
     const { t } = this.props;
     const { overlayToggle } = this.state;
     const { heatpumpPV, heatpumpPVems, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
 
     const datapoints = [heatpumpPVems[0].expenditure, heatpumpPVems[1].expenditure, heatpumpPVems[2].expenditure, heatpumpPVems[3].expenditure, heatpumpPVems[4].expenditure, heatpumpPVems[5].expenditure, heatpumpPVems[6].expenditure, heatpumpPVems[7].expenditure, heatpumpPVems[8].expenditure, heatpumpPVems[9].expenditure, heatpumpPVems[10].expenditure, heatpumpPVems[11].expenditure, heatpumpPVems[12].expenditure, heatpumpPVems[13].expenditure, heatpumpPVems[14].expenditure, heatpumpPVems[15].expenditure, heatpumpPVems[16].expenditure, heatpumpPVems[17].expenditure, heatpumpPVems[18].expenditure, heatpumpPVems[19].expenditure, heatpumpPVems[20].expenditure, heatpumpPVems[21].expenditure, heatpumpPVems[22].expenditure];
-    const closestPosition01 = this.breakEvenPVems();
+    const closestPosition01 = this.findClosestPositionTo0(datapoints);
 
     const datapoints2 = [heatpumpPV[0].expenditure, heatpumpPV[1].expenditure, heatpumpPV[2].expenditure, heatpumpPV[3].expenditure, heatpumpPV[4].expenditure, heatpumpPV[5].expenditure, heatpumpPV[6].expenditure, heatpumpPV[7].expenditure, heatpumpPV[8].expenditure, heatpumpPV[9].expenditure, heatpumpPV[10].expenditure, heatpumpPV[11].expenditure, heatpumpPV[12].expenditure, heatpumpPV[13].expenditure, heatpumpPV[14].expenditure, heatpumpPV[15].expenditure, heatpumpPV[16].expenditure, heatpumpPV[17].expenditure, heatpumpPV[18].expenditure, heatpumpPV[19].expenditure, heatpumpPV[20].expenditure, heatpumpPV[21].expenditure, heatpumpPV[22].expenditure];
-    const closestPosition02 = this.breakEvenPV();
+    const closestPosition02 = this.findClosestPositionTo0(datapoints2);
 
-    const closestIntersectionPosition = this.breakEvenPoint();
+    const closestIntersectionPosition = this.findIntersectionPosition(datapoints, datapoints2);
 
     const datapoints3 = [0, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null, null, null, null, null, null, 0];
 
@@ -288,11 +264,11 @@ class BreakEven extends React.Component {
           pointStyle: "circle",
           pointRadius: (context) => {
             // Set the radius of the point closest to 0 as 3, and the others as 0.
-            return context.dataIndex === closestPosition01 ? 3 : 0;
+            return context.dataIndex === closestPosition01 ? 5 : 0;
           },
           pointHoverRadius: (context) => {
             // Set the radius hover of the point closest to 0 as 5, and the others as 0.
-            return context.dataIndex === closestPosition01 ? 5 : 0;
+            return context.dataIndex === closestPosition01 ? 7 : 0;
           },
         },
         {
@@ -307,11 +283,11 @@ class BreakEven extends React.Component {
           pointStyle: "circle",
           pointRadius: (context) => {
             // Set the radius of the point closest to 0 as 3, and the others as 0.
-            return context.dataIndex === closestPosition02 ? 3 : context.dataIndex === closestIntersectionPosition ? 3 : 0;
+            return context.dataIndex === closestPosition02 ? 5 : context.dataIndex === closestIntersectionPosition ? 5 : 0;
           },
           pointHoverRadius: (context) => {
             // Set the radius hover of the point closest to 0 as 5, and the others as 0.
-            return context.dataIndex === closestPosition02 ? 5 : context.dataIndex === closestIntersectionPosition ? 5 : 0;
+            return context.dataIndex === closestPosition02 ? 7 : context.dataIndex === closestIntersectionPosition ? 7 : 0;
           },
         },
         {

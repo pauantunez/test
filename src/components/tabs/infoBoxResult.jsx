@@ -76,18 +76,56 @@ class InfoBoxResult extends React.Component {
     return gridUsagePercent;
   };
 
+  findClosestPositionTo0 = () => {
+    const { heatpumpPV, heatpumpPVems } = this.context;
+    let closestPosition = 0;
+    let closestValue = Math.abs(heatpumpPV[0].expenditure);
+    for (let i = 1; i < heatpumpPV.length; i++) {
+      const actualValue = Math.abs(heatpumpPV[i].expenditure);
+
+      if (actualValue < closestValue) {
+        closestValue = actualValue;
+        closestPosition = i;
+      }
+    }
+
+    return closestPosition;
+  };
+
   breakEvenPV = () => {
     const { heatpumpPV, heatpumpPVems } = this.context;
-    let yearBreakEven = heatpumpPV.findIndex((n) => n.expenditure > 0);
+    let closestPosition = 0;
+    let closestValue = Math.abs(heatpumpPV[0].expenditure);
+    for (let i = 1; i < heatpumpPV.length; i++) {
+      const actualValue = Math.abs(heatpumpPV[i].expenditure);
 
-    return yearBreakEven;
+      if (actualValue < closestValue) {
+        closestValue = actualValue;
+        closestPosition = i;
+      }
+    }
+
+    return closestPosition;
   };
 
   breakEvenPVems = () => {
-    const { heatpumpPV, heatpumpPVems } = this.context;
+    /* const { heatpumpPV, heatpumpPVems } = this.context;
     let yearBreakEven = heatpumpPVems.findIndex((n) => n.expenditure > 0);
 
-    return yearBreakEven;
+    return yearBreakEven; */
+    const { heatpumpPV, heatpumpPVems } = this.context;
+    let closestPosition = 0;
+    let closestValue = Math.abs(heatpumpPVems[0].expenditure);
+    for (let i = 1; i < heatpumpPVems.length; i++) {
+      const actualValue = Math.abs(heatpumpPVems[i].expenditure);
+
+      if (actualValue < closestValue) {
+        closestValue = actualValue;
+        closestPosition = i;
+      }
+    }
+
+    return closestPosition;
   };
 
   breakEvenPoint = () => {
@@ -195,8 +233,16 @@ class InfoBoxResult extends React.Component {
                   <p>
                     Das bedeutet: bis zu <strong>{Math.round(this.pvUsagePercentage().toFixed(2))}%</strong> Ihres Gesamtstrom-verbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
                   </p>
-                  {offgridEMS == true && <p><strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>{Math.round(parseFloat(noEMSPercentageOffGrid).toFixed(2))}%</strong>. </p> }
-                  {offgridEMS == false && <p><strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Autarkiegrad</strong> auf bis zu <strong>{Math.round(parseFloat(this.pvUsagePercentage()))}%</strong> erhöhen. </p> }
+                  {offgridEMS == true && (
+                    <p>
+                      <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>{Math.round(parseFloat(noEMSPercentageOffGrid).toFixed(2))}%</strong>.{" "}
+                    </p>
+                  )}
+                  {offgridEMS == false && (
+                    <p>
+                      <strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Autarkiegrad</strong> auf bis zu <strong>{Math.round(parseFloat(this.pvUsagePercentage()))}%</strong> erhöhen.{" "}
+                    </p>
+                  )}
                   <p>
                     Ca.&nbsp;
                     {offgridEMS == false && <strong>{Math.round(parseFloat(this.gridUsagePercentage()).toFixed(2))}%</strong>}
@@ -216,8 +262,16 @@ class InfoBoxResult extends React.Component {
                   <p>
                     Das bedeutet: bis zu <strong>{Math.round(parseFloat(infoBoxCombinedHouseholdUsage).toFixed(2))}%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
                   </p>
-                  {offgridEMS == true && <p><strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>{Math.round(parseFloat(householdNoEMSpvPercent).toFixed(2))}%</strong>. </p> }
-                  {offgridEMS == false && <p><strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Autarkiegrad</strong> auf bis zu <strong>{Math.round(this.pvUsagePercentage().toFixed(2))}%</strong> erhöhen. </p> }
+                  {offgridEMS == true && (
+                    <p>
+                      <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>{Math.round(parseFloat(householdNoEMSpvPercent).toFixed(2))}%</strong>.{" "}
+                    </p>
+                  )}
+                  {offgridEMS == false && (
+                    <p>
+                      <strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Autarkiegrad</strong> auf bis zu <strong>{Math.round(this.pvUsagePercentage().toFixed(2))}%</strong> erhöhen.{" "}
+                    </p>
+                  )}
                   <p>
                     Ca.&nbsp;
                     {offgridEMS == false && <strong>{Math.round(parseFloat(100 - parseFloat(householdNoEMSpvPercent)).toFixed(2))}%</strong>}
