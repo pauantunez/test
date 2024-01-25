@@ -127,7 +127,7 @@ class NavContent extends React.Component {
   };
 
   breakEven = (year) => {
-    const { electricityCost, gridRevenue, electricityCostHouseholdPercentage, pvOutputkWh, homeStorageSize, PVcostLookupTable, StorageCostLookupTable, addHeatpumpPVems } = this.context;
+    const { electricityCost, gridRevenue, electricityCostHouseholdPercentage, pvOutputkWh, homeStorageSize, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, addHeatpumpPVems } = this.context;
     var investmentCostResult;
     this.setState({ heatpumpPVems: [] });
 
@@ -137,6 +137,10 @@ class NavContent extends React.Component {
     } else {
       let StorageCostInTable = StorageCostLookupTable.find((o) => o.storage === homeStorageSize);
       investmentCostResult = -Math.abs(PVcostInTable.cost + StorageCostInTable.cost);
+    }
+
+    if (Number.isInteger(investmentCostEUR) && investmentCostEUR > 0) {
+      investmentCostResult = investmentCostEUR;
     }
 
     const betriebskosten = (1 / 100) * (investmentCostResult + -1000);
