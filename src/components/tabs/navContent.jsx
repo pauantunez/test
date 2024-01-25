@@ -139,8 +139,8 @@ class NavContent extends React.Component {
       investmentCostResult = -Math.abs(PVcostInTable.cost + StorageCostInTable.cost);
     }
 
-    if (Number.isInteger(investmentCostEUR) && investmentCostEUR > 0) {
-      investmentCostResult = investmentCostEUR;
+    if (investmentCostEUR > 0) {
+      investmentCostResult = parseInt(investmentCostEUR) * -1;
     }
 
     const betriebskosten = (1 / 100) * (investmentCostResult + -1000);
@@ -168,524 +168,523 @@ class NavContent extends React.Component {
       let StorageCostInTable = StorageCostLookupTable.find((o) => o.storage === homeStorageSize);
       investmentCostResult = -Math.abs(PVcostInTable.cost + StorageCostInTable.cost);
     }
-    if (investmentCostEUR > 0 && Number.isInteger(investmentCostEUR)) {
-      {
-        investmentCostResult = investmentCostEUR;
+    if (investmentCostEUR > 0) {
+      investmentCostResult = parseInt(investmentCostEUR) * -1;
+    }
+
+    this.setState({ heatpumpPV: [] });
+
+    const betriebskosten = (1 / 100) * investmentCostResult;
+    const einspeiseverguetung = pvOutputkWh * 1000 * (1 - electricityCostHouseholdPercentage / 100) * parseFloat(gridRevenue / 100);
+
+    for (let index = 0; index < 23; index++) {
+      const einsparungen = pvOutputkWh * 1000 * (electricityCostHouseholdPercentage / 100) * (parseFloat(electricityCost / 100) * (1 + 0.02) ** [index + 1] - parseFloat(gridRevenue / 100));
+
+      if (this.state.heatpumpPV.length == 0) {
+        this.state.heatpumpPV.push({ expenditure: investmentCostResult, runningCost: betriebskosten });
+      } else {
+        this.state.heatpumpPV.push({ expenditure: parseFloat(this.state.heatpumpPV[index - 1].expenditure) + betriebskosten + einspeiseverguetung + einsparungen });
       }
+    }
+    addHeatpumpPV(this.state.heatpumpPV);
+  };
 
-      this.setState({ heatpumpPV: [] });
-
-      const betriebskosten = (1 / 100) * investmentCostResult;
-      const einspeiseverguetung = pvOutputkWh * 1000 * (1 - electricityCostHouseholdPercentage / 100) * parseFloat(gridRevenue / 100);
-
-      for (let index = 0; index < 23; index++) {
-        const einsparungen = pvOutputkWh * 1000 * (electricityCostHouseholdPercentage / 100) * (parseFloat(electricityCost / 100) * (1 + 0.02) ** [index + 1] - parseFloat(gridRevenue / 100));
-
-        if (this.state.heatpumpPV.length == 0) {
-          this.state.heatpumpPV.push({ expenditure: investmentCostResult, runningCost: betriebskosten });
-        } else {
-          this.state.heatpumpPV.push({ expenditure: parseFloat(this.state.heatpumpPV[index - 1].expenditure) + betriebskosten + einspeiseverguetung + einsparungen });
-        }
-      }
-      addHeatpumpPV(this.state.heatpumpPV);
-    };
-
-    handleStep(step) {
-      const { kfwValue, ev, scenarioInDatabase, selectedTab, activeView, activeStep, setActiveView, setActiveStep, steps, setSteps, setFwdBtn, setMenu } = this.context;
-      if (activeView != step) {
-        if (step != 0) {
-          if (steps[step - 1] === false) {
-            setActiveView(step);
-            setActiveStep(selectedTab.toString() + "-" + step.toString());
-            setFwdBtn(true);
-            setMenu(false);
-          }
-        } else {
+  handleStep(step) {
+    const { kfwValue, ev, scenarioInDatabase, selectedTab, activeView, activeStep, setActiveView, setActiveStep, steps, setSteps, setFwdBtn, setMenu } = this.context;
+    if (activeView != step) {
+      if (step != 0) {
+        if (steps[step - 1] === false) {
           setActiveView(step);
           setActiveStep(selectedTab.toString() + "-" + step.toString());
           setFwdBtn(true);
           setMenu(false);
         }
-
-        if (step === 11) {
-          console.log(steps[11]);
-          this.getResult(kfwValue + ev, scenarioInDatabase);
-          this.breakEven();
-          this.breakEvenPVonly();
-        }
-      }
-    }
-
-    nextStep(step) {
-      this.setState({ activeStep: this.state.activeStep + 1 });
-    }
-
-    handleClick = (event) => {
-      const { anchorEl, setAnchorEl, menuOpen, setMenu, setBackdrop, backdrop, setMenuBackdrop, menuBackdrop } = this.context;
-      console.log(menuBackdrop);
-
-      if (menuBackdrop) {
-        //setMenu(false);
-        setMenuBackdrop(false);
       } else {
-        //setMenu(true);
-        setMenuBackdrop(true);
-      }
-    };
-
-    handleClose = () => {
-      const { setAnchorEl } = this.context;
-
-      setAnchorEl(null);
-    };
-
-    render() {
-      const { t } = this.props;
-      const { overlayToggle } = this.state;
-      const { windowWidth, windowHeight, heatpumpAudio, products, viewLocation, activeView, activeMilestone, milestoneHeadline, setHeatpumpVolume, setActiveView, setViewLocation, setViewLocationPrevious, anchorEl, setAnchorEl, menuOpen, steps, menuBackdrop } = this.context;
-
-      const open = Boolean(anchorEl);
-
-      const styles = {
-        main: {
-          backgroundColor: "#f1f1f1",
-          width: "100%",
-        },
-        activeCompleted: {
-          filter: "invert(42%) sepia(93%) saturate(1352%) hue-rotate(87deg) brightness(119%) contrast(119%)",
-        },
-        incomplete: {
-          filter: "invert(42%) sepia(93%) saturate(1352%) hue-rotate(87deg) brightness(119%) contrast(119%)",
-        },
-      };
-
-      function EmptyIcon(props) {
-        return (
-          <SvgIcon {...props}>
-            <path d="0" />
-          </SvgIcon>
-        );
+        setActiveView(step);
+        setActiveStep(selectedTab.toString() + "-" + step.toString());
+        setFwdBtn(true);
+        setMenu(false);
       }
 
-      const StyledMenu = styled((props) => (
-        <Menu
-          elevation={0}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "right",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          {...props}
-        />
-      ))(({ theme }) => ({
-        "& .MuiPaper-root": {
-          borderRadius: 6,
-          marginTop: theme.spacing(1),
-          minWidth: 180,
-          color: theme.palette.mode === "light" ? "rgb(55, 65, 81)" : theme.palette.grey[300],
-          boxShadow: "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
-          "& .MuiMenu-list": {
-            padding: "4px 0",
-          },
-          "& .MuiMenuItem-root": {
-            "& .MuiSvgIcon-root": {
-              fontSize: 18,
-              color: theme.palette.text.secondary,
-              marginRight: theme.spacing(1.5),
-            },
-            "&:active": {
-              backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity),
-            },
-          },
-        },
-      }));
+      if (step === 11) {
+        console.log(steps[11]);
+        this.getResult(kfwValue + ev, scenarioInDatabase);
+        this.breakEven();
+        this.breakEvenPVonly();
+      }
+    }
+  }
 
-      const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
-        [`&.${stepConnectorClasses.alternativeLabel}`]: {
-          top: 22,
-          paddingTop: "0px",
-          fontSize: "12px",
-          [`& .MuiStepLabel-label`]: {
-            marginTop: "0px",
-            fontSize: "14px",
+  nextStep(step) {
+    this.setState({ activeStep: this.state.activeStep + 1 });
+  }
+
+  handleClick = (event) => {
+    const { anchorEl, setAnchorEl, menuOpen, setMenu, setBackdrop, backdrop, setMenuBackdrop, menuBackdrop } = this.context;
+    console.log(menuBackdrop);
+
+    if (menuBackdrop) {
+      //setMenu(false);
+      setMenuBackdrop(false);
+    } else {
+      //setMenu(true);
+      setMenuBackdrop(true);
+    }
+  };
+
+  handleClose = () => {
+    const { setAnchorEl } = this.context;
+
+    setAnchorEl(null);
+  };
+
+  render() {
+    const { t } = this.props;
+    const { overlayToggle } = this.state;
+    const { windowWidth, windowHeight, heatpumpAudio, products, viewLocation, activeView, activeMilestone, milestoneHeadline, setHeatpumpVolume, setActiveView, setViewLocation, setViewLocationPrevious, anchorEl, setAnchorEl, menuOpen, steps, menuBackdrop } = this.context;
+
+    const open = Boolean(anchorEl);
+
+    const styles = {
+      main: {
+        backgroundColor: "#f1f1f1",
+        width: "100%",
+      },
+      activeCompleted: {
+        filter: "invert(42%) sepia(93%) saturate(1352%) hue-rotate(87deg) brightness(119%) contrast(119%)",
+      },
+      incomplete: {
+        filter: "invert(42%) sepia(93%) saturate(1352%) hue-rotate(87deg) brightness(119%) contrast(119%)",
+      },
+    };
+
+    function EmptyIcon(props) {
+      return (
+        <SvgIcon {...props}>
+          <path d="0" />
+        </SvgIcon>
+      );
+    }
+
+    const StyledMenu = styled((props) => (
+      <Menu
+        elevation={0}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        {...props}
+      />
+    ))(({ theme }) => ({
+      "& .MuiPaper-root": {
+        borderRadius: 6,
+        marginTop: theme.spacing(1),
+        minWidth: 180,
+        color: theme.palette.mode === "light" ? "rgb(55, 65, 81)" : theme.palette.grey[300],
+        boxShadow: "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+        "& .MuiMenu-list": {
+          padding: "4px 0",
+        },
+        "& .MuiMenuItem-root": {
+          "& .MuiSvgIcon-root": {
+            fontSize: 18,
+            color: theme.palette.text.secondary,
+            marginRight: theme.spacing(1.5),
+          },
+          "&:active": {
+            backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity),
           },
         },
-        [`&.${stepConnectorClasses.active}`]: {
-          [`& .${stepConnectorClasses.line}`]: {
-            background: "#007bc0",
-            marginLeft: "calc(0% - 13px)",
-            marginRight: "calc(0% - 13px)",
-          },
+      },
+    }));
+
+    const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
+      [`&.${stepConnectorClasses.alternativeLabel}`]: {
+        top: 22,
+        paddingTop: "0px",
+        fontSize: "12px",
+        [`& .MuiStepLabel-label`]: {
+          marginTop: "0px",
+          fontSize: "14px",
         },
-        [`&.${stepConnectorClasses.completed}`]: {
-          [`& .${stepConnectorClasses.line}`]: {
-            background: "#007bc0",
-            marginLeft: "calc(0% - 13px)",
-            marginRight: "calc(0% - 13px)",
-          },
-        },
+      },
+      [`&.${stepConnectorClasses.active}`]: {
         [`& .${stepConnectorClasses.line}`]: {
-          height: 3,
-          border: 0,
-          backgroundColor: theme.palette.mode === "dark" ? theme.palette.grey[800] : "#eaeaf0",
-          borderRadius: 1,
+          background: "#007bc0",
           marginLeft: "calc(0% - 13px)",
           marginRight: "calc(0% - 13px)",
         },
-      }));
-
-      const ColorlibConnectorMobile = styled(StepConnector)(({ theme }) => ({
-        [`&.${stepConnectorClasses.alternativeLabel}`]: {
-          top: 22,
-          paddingTop: "0px",
-          fontSize: "12px",
-          [`& .MuiStepLabel-label`]: {
-            marginTop: "0px",
-            fontSize: "14px",
-          },
-        },
-        [`&.${stepConnectorClasses.active}`]: {
-          [`& .${stepConnectorClasses.line}`]: {
-            background: "#007bc0",
-            marginLeft: "calc(0% - 26px)",
-            marginRight: "calc(0% - 26px)",
-          },
-        },
-        [`&.${stepConnectorClasses.completed}`]: {
-          [`& .${stepConnectorClasses.line}`]: {
-            background: "#007bc0",
-            marginLeft: "calc(0% - 26px)",
-            marginRight: "calc(0% - 26px)",
-          },
-        },
+      },
+      [`&.${stepConnectorClasses.completed}`]: {
         [`& .${stepConnectorClasses.line}`]: {
-          height: 3,
-          border: 0,
-          backgroundColor: theme.palette.mode === "dark" ? theme.palette.grey[800] : "#eaeaf0",
-          borderRadius: 1,
+          background: "#007bc0",
+          marginLeft: "calc(0% - 13px)",
+          marginRight: "calc(0% - 13px)",
+        },
+      },
+      [`& .${stepConnectorClasses.line}`]: {
+        height: 3,
+        border: 0,
+        backgroundColor: theme.palette.mode === "dark" ? theme.palette.grey[800] : "#eaeaf0",
+        borderRadius: 1,
+        marginLeft: "calc(0% - 13px)",
+        marginRight: "calc(0% - 13px)",
+      },
+    }));
+
+    const ColorlibConnectorMobile = styled(StepConnector)(({ theme }) => ({
+      [`&.${stepConnectorClasses.alternativeLabel}`]: {
+        top: 22,
+        paddingTop: "0px",
+        fontSize: "12px",
+        [`& .MuiStepLabel-label`]: {
+          marginTop: "0px",
+          fontSize: "14px",
+        },
+      },
+      [`&.${stepConnectorClasses.active}`]: {
+        [`& .${stepConnectorClasses.line}`]: {
+          background: "#007bc0",
           marginLeft: "calc(0% - 26px)",
           marginRight: "calc(0% - 26px)",
         },
-      }));
-
-      const ColorlibStepIconRoot = styled("div")(({ theme, ownerState }) => ({
-        backgroundColor: theme.palette.mode === "dark" ? theme.palette.grey[700] : "#ccc",
-        zIndex: 1,
-        color: "#fff",
-        width: 32,
-        height: 32,
-        display: "flex",
-        marginTop: "7px",
-        borderRadius: "50%",
-        justifyContent: "center",
-        cursor: "pointer",
-        alignItems: "center",
-        ...(ownerState.active && {
+      },
+      [`&.${stepConnectorClasses.completed}`]: {
+        [`& .${stepConnectorClasses.line}`]: {
           background: "#007bc0",
-          fontSize: "12px",
-        }),
-        ...(ownerState.completed && {
-          background: "#007bc0",
-          fontSize: "12px",
-        }),
-      }));
+          marginLeft: "calc(0% - 26px)",
+          marginRight: "calc(0% - 26px)",
+        },
+      },
+      [`& .${stepConnectorClasses.line}`]: {
+        height: 3,
+        border: 0,
+        backgroundColor: theme.palette.mode === "dark" ? theme.palette.grey[800] : "#eaeaf0",
+        borderRadius: 1,
+        marginLeft: "calc(0% - 26px)",
+        marginRight: "calc(0% - 26px)",
+      },
+    }));
 
-      const ColorlibStepIconRootSmall = styled("div")(({ theme, ownerState }) => ({
-        backgroundColor: theme.palette.mode === "dark" ? theme.palette.grey[700] : "#ccc",
-        zIndex: 1,
-        color: "#fff",
-        width: 16,
-        height: 16,
-        display: "flex",
-        marginTop: "15px",
-        borderRadius: "50%",
-        justifyContent: "center",
-        cursor: "pointer",
-        alignItems: "center",
-        ...(ownerState.active && {
-          background: "#007bc0",
-          backgroundPosition: "bottom center",
-        }),
-        ...(ownerState.completed && {
-          background: "#007bc0",
-        }),
-      }));
+    const ColorlibStepIconRoot = styled("div")(({ theme, ownerState }) => ({
+      backgroundColor: theme.palette.mode === "dark" ? theme.palette.grey[700] : "#ccc",
+      zIndex: 1,
+      color: "#fff",
+      width: 32,
+      height: 32,
+      display: "flex",
+      marginTop: "7px",
+      borderRadius: "50%",
+      justifyContent: "center",
+      cursor: "pointer",
+      alignItems: "center",
+      ...(ownerState.active && {
+        background: "#007bc0",
+        fontSize: "12px",
+      }),
+      ...(ownerState.completed && {
+        background: "#007bc0",
+        fontSize: "12px",
+      }),
+    }));
 
-      const ColorlibStepIconRootSmallMobile = styled("div")(({ theme, ownerState }) => ({
-        backgroundColor: theme.palette.mode === "dark" ? theme.palette.grey[700] : "#ccc",
-        zIndex: 1,
-        color: "#fff",
-        width: 16,
-        height: 16,
-        display: "flex",
-        marginTop: "15px",
-        borderRadius: "50%",
-        justifyContent: "center",
-        cursor: "pointer",
-        alignItems: "center",
-        ...(ownerState.active && {
-          background: "#007bc0",
-          backgroundPosition: "bottom center",
-        }),
-        ...(ownerState.completed && {
-          background: "#007bc0",
-        }),
-      }));
+    const ColorlibStepIconRootSmall = styled("div")(({ theme, ownerState }) => ({
+      backgroundColor: theme.palette.mode === "dark" ? theme.palette.grey[700] : "#ccc",
+      zIndex: 1,
+      color: "#fff",
+      width: 16,
+      height: 16,
+      display: "flex",
+      marginTop: "15px",
+      borderRadius: "50%",
+      justifyContent: "center",
+      cursor: "pointer",
+      alignItems: "center",
+      ...(ownerState.active && {
+        background: "#007bc0",
+        backgroundPosition: "bottom center",
+      }),
+      ...(ownerState.completed && {
+        background: "#007bc0",
+      }),
+    }));
 
-      function ColorlibStepIcon(props) {
-        const { active, completed, className } = props;
+    const ColorlibStepIconRootSmallMobile = styled("div")(({ theme, ownerState }) => ({
+      backgroundColor: theme.palette.mode === "dark" ? theme.palette.grey[700] : "#ccc",
+      zIndex: 1,
+      color: "#fff",
+      width: 16,
+      height: 16,
+      display: "flex",
+      marginTop: "15px",
+      borderRadius: "50%",
+      justifyContent: "center",
+      cursor: "pointer",
+      alignItems: "center",
+      ...(ownerState.active && {
+        background: "#007bc0",
+        backgroundPosition: "bottom center",
+      }),
+      ...(ownerState.completed && {
+        background: "#007bc0",
+      }),
+    }));
 
-        const icons = {
-          1: <HomeIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
-          2: <EmptyIcon />,
-          3: <EmptyIcon />,
-          4: <EmptyIcon />,
-          5: <PhotovoltaicIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
-          6: <EmptyIcon />,
-          7: <EmptyIcon />,
-          8: <EmptyIcon />,
-          9: <CashIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
-          10: <EmptyIcon />,
-          11: <EmptyIcon />,
-          12: <ClipboardIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
-        };
+    function ColorlibStepIcon(props) {
+      const { active, completed, className } = props;
 
-        return (
-          <ColorlibStepIconRoot ownerState={{ completed, active }} className={className}>
-            {icons[String(props.icon)]}
-          </ColorlibStepIconRoot>
-        );
-      }
-
-      function ColorlibStepIconMobile(props) {
-        const { active, completed, className } = props;
-
-        const icons = {
-          1: <HomeIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
-          2: <PhotovoltaicIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
-          3: <CashIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
-          4: <ClipboardIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
-        };
-
-        return (
-          <ColorlibStepIconRoot ownerState={{ completed, active }} className={className}>
-            {icons[String(props.icon)]}
-          </ColorlibStepIconRoot>
-        );
-      }
-
-      function ColorlibStepIconSmall(props) {
-        const { active, completed, className } = props;
-
-        const icons = {
-          1: <AccessAlarmIcon />,
-          2: <EmptyIcon />,
-          3: <EmptyIcon />,
-          4: <EmptyIcon />,
-          5: <PhotovoltaicIcon />,
-          6: <EmptyIcon />,
-          7: <EmptyIcon />,
-          8: <EmptyIcon />,
-          9: <CashIcon />,
-          10: <EmptyIcon />,
-          11: <EmptyIcon />,
-          12: <ClipboardIcon />,
-        };
-
-        return (
-          <ColorlibStepIconRootSmall ownerState={{ completed, active }} className={className}>
-            {icons[String(props.icon)]}
-          </ColorlibStepIconRootSmall>
-        );
-      }
-
-      ColorlibStepIcon.propTypes = {
-        /**
-         * Whether this step is active.
-         * @default false
-         */
-        active: PropTypes.bool,
-        className: PropTypes.string,
-        /**
-         * Mark the step as completed. Is passed to child components.
-         * @default false
-         */
-        completed: PropTypes.bool,
-        /**
-         * The label displayed in the step icon.
-         */
-        icon: PropTypes.node,
+      const icons = {
+        1: <HomeIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
+        2: <EmptyIcon />,
+        3: <EmptyIcon />,
+        4: <EmptyIcon />,
+        5: <PhotovoltaicIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
+        6: <EmptyIcon />,
+        7: <EmptyIcon />,
+        8: <EmptyIcon />,
+        9: <CashIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
+        10: <EmptyIcon />,
+        11: <EmptyIcon />,
+        12: <ClipboardIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
       };
 
       return (
-        <div style={{ height: "100%" }}>
-          <Stack sx={{ width: "100%" }} spacing={4}>
-            {windowWidth > 900 && (
-              <Stepper alternativeLabel activeStep={activeView} connector={<ColorlibConnector />}>
-                <Step key="0" style={{ alignItems: "flex-start" }}>
-                  <StepLabel
-                    StepIconComponent={ColorlibStepIcon}
-                    onClick={() => {
-                      this.handleStep(0);
-                    }}
-                  >
-                    <span style={{ display: "block", marginTop: "-8px", fontSize: "13px", fontFamily: "Bosch-Medium" }}>Gebäude</span>
-                  </StepLabel>
-                </Step>
-                <Step key="1">
-                  <StepLabel
-                    StepIconComponent={ColorlibStepIconSmall}
-                    onClick={() => {
-                      this.handleStep(1);
-                    }}
-                  ></StepLabel>
-                </Step>
-                <Step key="2">
-                  <StepLabel
-                    StepIconComponent={ColorlibStepIconSmall}
-                    onClick={() => {
-                      this.handleStep(2);
-                    }}
-                  ></StepLabel>
-                </Step>
-                <Step key="3">
-                  <StepLabel
-                    StepIconComponent={ColorlibStepIconSmall}
-                    onClick={() => {
-                      this.handleStep(3);
-                    }}
-                  ></StepLabel>
-                </Step>
-                <Step key="4">
-                  <StepLabel
-                    StepIconComponent={ColorlibStepIcon}
-                    onClick={() => {
-                      this.handleStep(4);
-                    }}
-                  >
-                    <span style={{ display: "block", marginTop: "-8px", fontSize: "13px", fontFamily: "Bosch-Medium" }}>Ausstattung</span>
-                  </StepLabel>
-                </Step>
-                <Step key="5">
-                  <StepLabel
-                    StepIconComponent={ColorlibStepIconSmall}
-                    onClick={() => {
-                      this.handleStep(5);
-                    }}
-                  ></StepLabel>
-                </Step>
-                <Step key="6">
-                  <StepLabel
-                    StepIconComponent={ColorlibStepIconSmall}
-                    onClick={() => {
-                      this.handleStep(6);
-                    }}
-                  ></StepLabel>
-                </Step>
-                <Step key="7">
-                  <StepLabel
-                    StepIconComponent={ColorlibStepIconSmall}
-                    onClick={() => {
-                      this.handleStep(7);
-                    }}
-                  ></StepLabel>
-                </Step>
-                <Step key="8">
-                  <StepLabel
-                    StepIconComponent={ColorlibStepIcon}
-                    onClick={() => {
-                      this.handleStep(8);
-                    }}
-                  >
-                    <span style={{ display: "block", marginTop: "-8px", fontSize: "13px", fontFamily: "Bosch-Medium" }}>Ökonomische Größen</span>
-                  </StepLabel>
-                </Step>
-                <Step key="9">
-                  <StepLabel
-                    StepIconComponent={ColorlibStepIconSmall}
-                    onClick={() => {
-                      this.handleStep(9);
-                    }}
-                  ></StepLabel>
-                </Step>
-                <Step key="10">
-                  <StepLabel
-                    StepIconComponent={ColorlibStepIconSmall}
-                    onClick={() => {
-                      this.handleStep(10);
-                    }}
-                  ></StepLabel>
-                </Step>
-                <Step key="11">
-                  <StepLabel
-                    StepIconComponent={ColorlibStepIcon}
-                    onClick={() => {
-                      this.handleStep(11);
-                    }}
-                  >
-                    <span style={{ display: "block", marginTop: "-8px", fontSize: "13px", fontFamily: "Bosch-Medium" }}>
-                      <span>
-                        Ergebnis&nbsp;
-                        {activeView == 11 && <span>(1/2)</span>}
-                        {activeView == 12 && <span>(2/2)</span>}
-                        {activeView == 13 && <span>(2/2)</span>}
-                      </span>
-                    </span>
-                  </StepLabel>
-                </Step>
-              </Stepper>
-            )}
-
-            {windowWidth < 900 && (
-              <Stepper activeStep={activeMilestone} connector={<ColorlibConnectorMobile />}>
-                <Step key="0" style={{ alignItems: "flex-start" }}>
-                  <StepLabel StepIconComponent={ColorlibStepIconMobile}></StepLabel>
-                </Step>
-                <Step key="4">
-                  <StepLabel StepIconComponent={ColorlibStepIconMobile}></StepLabel>
-                </Step>
-                <Step key="7">
-                  <StepLabel StepIconComponent={ColorlibStepIconMobile}></StepLabel>
-                </Step>
-                <Step key="10">
-                  <StepLabel StepIconComponent={ColorlibStepIconMobile}></StepLabel>
-                </Step>
-              </Stepper>
-            )}
-
-            {windowWidth < 900 && (
-              <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", marginTop: "16px", marginLeft: "10px", marginRight: "10px" }}>
-                <div style={{ fontFamily: "Bosch-Bold", fontSize: "20px" }}>{milestoneHeadline}</div>
-                <div onClick={this.handleClick}>
-                  {!menuBackdrop && <MenuIcon />}
-                  {menuBackdrop && <MenuCloseIcon />}
-                </div>
-              </div>
-            )}
-          </Stack>
-
-          <Box sx={{ width: "100%" }}>
-            {activeView == 0 && <Tab1Step1 />}
-            {activeView == 1 && <Tab1Step2 />}
-            {activeView == 2 && <Tab1Step3 />}
-            {activeView == 3 && <Tab1Step4 />}
-            {activeView == 4 && <FacilitiesStep1 />}
-            {activeView == 5 && <FacilitiesStep2 />}
-            {activeView == 6 && <FacilitiesStep3 />}
-            {activeView == 7 && <FacilitiesStep4 />}
-            {activeView == 8 && <CostStep1 />}
-            {activeView == 9 && <CostStep2 />}
-            {activeView == 10 && <CostStep3 />}
-            {activeView == 11 && <ResultStep1 />}
-            {activeView == 12 && <ResultStep2 />}
-            {activeView == 13 && <ResultStep3 />}
-          </Box>
-        </div>
+        <ColorlibStepIconRoot ownerState={{ completed, active }} className={className}>
+          {icons[String(props.icon)]}
+        </ColorlibStepIconRoot>
       );
     }
+
+    function ColorlibStepIconMobile(props) {
+      const { active, completed, className } = props;
+
+      const icons = {
+        1: <HomeIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
+        2: <PhotovoltaicIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
+        3: <CashIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
+        4: <ClipboardIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
+      };
+
+      return (
+        <ColorlibStepIconRoot ownerState={{ completed, active }} className={className}>
+          {icons[String(props.icon)]}
+        </ColorlibStepIconRoot>
+      );
+    }
+
+    function ColorlibStepIconSmall(props) {
+      const { active, completed, className } = props;
+
+      const icons = {
+        1: <AccessAlarmIcon />,
+        2: <EmptyIcon />,
+        3: <EmptyIcon />,
+        4: <EmptyIcon />,
+        5: <PhotovoltaicIcon />,
+        6: <EmptyIcon />,
+        7: <EmptyIcon />,
+        8: <EmptyIcon />,
+        9: <CashIcon />,
+        10: <EmptyIcon />,
+        11: <EmptyIcon />,
+        12: <ClipboardIcon />,
+      };
+
+      return (
+        <ColorlibStepIconRootSmall ownerState={{ completed, active }} className={className}>
+          {icons[String(props.icon)]}
+        </ColorlibStepIconRootSmall>
+      );
+    }
+
+    ColorlibStepIcon.propTypes = {
+      /**
+       * Whether this step is active.
+       * @default false
+       */
+      active: PropTypes.bool,
+      className: PropTypes.string,
+      /**
+       * Mark the step as completed. Is passed to child components.
+       * @default false
+       */
+      completed: PropTypes.bool,
+      /**
+       * The label displayed in the step icon.
+       */
+      icon: PropTypes.node,
+    };
+
+    return (
+      <div style={{ height: "100%" }}>
+        <Stack sx={{ width: "100%" }} spacing={4}>
+          {windowWidth > 900 && (
+            <Stepper alternativeLabel activeStep={activeView} connector={<ColorlibConnector />}>
+              <Step key="0" style={{ alignItems: "flex-start" }}>
+                <StepLabel
+                  StepIconComponent={ColorlibStepIcon}
+                  onClick={() => {
+                    this.handleStep(0);
+                  }}
+                >
+                  <span style={{ display: "block", marginTop: "-8px", fontSize: "13px", fontFamily: "Bosch-Medium" }}>Gebäude</span>
+                </StepLabel>
+              </Step>
+              <Step key="1">
+                <StepLabel
+                  StepIconComponent={ColorlibStepIconSmall}
+                  onClick={() => {
+                    this.handleStep(1);
+                  }}
+                ></StepLabel>
+              </Step>
+              <Step key="2">
+                <StepLabel
+                  StepIconComponent={ColorlibStepIconSmall}
+                  onClick={() => {
+                    this.handleStep(2);
+                  }}
+                ></StepLabel>
+              </Step>
+              <Step key="3">
+                <StepLabel
+                  StepIconComponent={ColorlibStepIconSmall}
+                  onClick={() => {
+                    this.handleStep(3);
+                  }}
+                ></StepLabel>
+              </Step>
+              <Step key="4">
+                <StepLabel
+                  StepIconComponent={ColorlibStepIcon}
+                  onClick={() => {
+                    this.handleStep(4);
+                  }}
+                >
+                  <span style={{ display: "block", marginTop: "-8px", fontSize: "13px", fontFamily: "Bosch-Medium" }}>Ausstattung</span>
+                </StepLabel>
+              </Step>
+              <Step key="5">
+                <StepLabel
+                  StepIconComponent={ColorlibStepIconSmall}
+                  onClick={() => {
+                    this.handleStep(5);
+                  }}
+                ></StepLabel>
+              </Step>
+              <Step key="6">
+                <StepLabel
+                  StepIconComponent={ColorlibStepIconSmall}
+                  onClick={() => {
+                    this.handleStep(6);
+                  }}
+                ></StepLabel>
+              </Step>
+              <Step key="7">
+                <StepLabel
+                  StepIconComponent={ColorlibStepIconSmall}
+                  onClick={() => {
+                    this.handleStep(7);
+                  }}
+                ></StepLabel>
+              </Step>
+              <Step key="8">
+                <StepLabel
+                  StepIconComponent={ColorlibStepIcon}
+                  onClick={() => {
+                    this.handleStep(8);
+                  }}
+                >
+                  <span style={{ display: "block", marginTop: "-8px", fontSize: "13px", fontFamily: "Bosch-Medium" }}>Ökonomische Größen</span>
+                </StepLabel>
+              </Step>
+              <Step key="9">
+                <StepLabel
+                  StepIconComponent={ColorlibStepIconSmall}
+                  onClick={() => {
+                    this.handleStep(9);
+                  }}
+                ></StepLabel>
+              </Step>
+              <Step key="10">
+                <StepLabel
+                  StepIconComponent={ColorlibStepIconSmall}
+                  onClick={() => {
+                    this.handleStep(10);
+                  }}
+                ></StepLabel>
+              </Step>
+              <Step key="11">
+                <StepLabel
+                  StepIconComponent={ColorlibStepIcon}
+                  onClick={() => {
+                    this.handleStep(11);
+                  }}
+                >
+                  <span style={{ display: "block", marginTop: "-8px", fontSize: "13px", fontFamily: "Bosch-Medium" }}>
+                    <span>
+                      Ergebnis&nbsp;
+                      {activeView == 11 && <span>(1/2)</span>}
+                      {activeView == 12 && <span>(2/2)</span>}
+                      {activeView == 13 && <span>(2/2)</span>}
+                    </span>
+                  </span>
+                </StepLabel>
+              </Step>
+            </Stepper>
+          )}
+
+          {windowWidth < 900 && (
+            <Stepper activeStep={activeMilestone} connector={<ColorlibConnectorMobile />}>
+              <Step key="0" style={{ alignItems: "flex-start" }}>
+                <StepLabel StepIconComponent={ColorlibStepIconMobile}></StepLabel>
+              </Step>
+              <Step key="4">
+                <StepLabel StepIconComponent={ColorlibStepIconMobile}></StepLabel>
+              </Step>
+              <Step key="7">
+                <StepLabel StepIconComponent={ColorlibStepIconMobile}></StepLabel>
+              </Step>
+              <Step key="10">
+                <StepLabel StepIconComponent={ColorlibStepIconMobile}></StepLabel>
+              </Step>
+            </Stepper>
+          )}
+
+          {windowWidth < 900 && (
+            <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", marginTop: "16px", marginLeft: "10px", marginRight: "10px" }}>
+              <div style={{ fontFamily: "Bosch-Bold", fontSize: "20px" }}>{milestoneHeadline}</div>
+              <div onClick={this.handleClick}>
+                {!menuBackdrop && <MenuIcon />}
+                {menuBackdrop && <MenuCloseIcon />}
+              </div>
+            </div>
+          )}
+        </Stack>
+
+        <Box sx={{ width: "100%" }}>
+          {activeView == 0 && <Tab1Step1 />}
+          {activeView == 1 && <Tab1Step2 />}
+          {activeView == 2 && <Tab1Step3 />}
+          {activeView == 3 && <Tab1Step4 />}
+          {activeView == 4 && <FacilitiesStep1 />}
+          {activeView == 5 && <FacilitiesStep2 />}
+          {activeView == 6 && <FacilitiesStep3 />}
+          {activeView == 7 && <FacilitiesStep4 />}
+          {activeView == 8 && <CostStep1 />}
+          {activeView == 9 && <CostStep2 />}
+          {activeView == 10 && <CostStep3 />}
+          {activeView == 11 && <ResultStep1 />}
+          {activeView == 12 && <ResultStep2 />}
+          {activeView == 13 && <ResultStep3 />}
+        </Box>
+      </div>
+    );
   }
+}
 
 export default withRouter(withTranslation()(NavContent));

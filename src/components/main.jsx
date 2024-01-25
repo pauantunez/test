@@ -279,7 +279,7 @@ class Main extends React.Component {
   };
 
   breakEven = (year) => {
-    const { electricityCost, gridRevenue, electricityCostHouseholdPercentage, pvOutputkWh, homeStorageSize, PVcostLookupTable, StorageCostLookupTable, addHeatpumpPVems } = this.context;
+    const { electricityCost, gridRevenue, electricityCostHouseholdPercentage, pvOutputkWh, homeStorageSize, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, addHeatpumpPVems } = this.context;
     var investmentCostResult;
     this.setState({ heatpumpPVems: [] });
 
@@ -289,6 +289,9 @@ class Main extends React.Component {
     } else {
       let StorageCostInTable = StorageCostLookupTable.find((o) => o.storage === homeStorageSize);
       investmentCostResult = -Math.abs(PVcostInTable.cost + StorageCostInTable.cost);
+    }
+    if (investmentCostEUR > 0) {
+      investmentCostResult = parseInt(investmentCostEUR) * -1;
     }
 
     const betriebskosten = (1 / 100) * (investmentCostResult + -1000);
@@ -316,10 +319,10 @@ class Main extends React.Component {
       let StorageCostInTable = StorageCostLookupTable.find((o) => o.storage === homeStorageSize);
       investmentCostResult = -Math.abs(PVcostInTable.cost + StorageCostInTable.cost);
     }
-    if (Number.isInteger(investmentCostEUR) && investmentCostEUR > 0) {
-      investmentCostResult = investmentCostEUR;
+    if (investmentCostEUR > 0) {
+      investmentCostResult = parseInt(investmentCostEUR) * -1;
     }
-
+    console.log("🚀 ~ Main ~ investmentCostResult:", investmentCostResult);
     this.setState({ heatpumpPV: [] });
 
     const betriebskosten = (1 / 100) * investmentCostResult;
@@ -343,7 +346,7 @@ class Main extends React.Component {
       borderRadius: "0px",
       fontFamily: "Bosch-Regular",
       backgroundColor: "#007BC0",
-      '&:hover': {
+      "&:hover": {
         backgroundColor: "#00629A",
       },
       // Agrega más estilos según sea necesario
@@ -838,8 +841,7 @@ class Main extends React.Component {
                 if (activeView == 3 && directLink == true) {
                   setDirectLink(false);
                   setActiveView(12);
-                }
-                else {
+                } else {
                   nextTab();
                 }
               }}
@@ -849,8 +851,8 @@ class Main extends React.Component {
               {activeView === 0 && <span>Weiter</span>}
               {activeView === 1 && <span>Weiter</span>}
               {activeView === 2 && <span>Weiter</span>}
-              {(activeView === 3 && directLink == false) && <span>Weiter</span>}
-              {(activeView === 3 && directLink == true) && <span>Zurück zum Ergebnis</span>}
+              {activeView === 3 && directLink == false && <span>Weiter</span>}
+              {activeView === 3 && directLink == true && <span>Zurück zum Ergebnis</span>}
               {activeView === 4 && <span>Weiter</span>}
               {activeView === 5 && <span>Weiter</span>}
               {activeView === 6 && <span>Weiter</span>}

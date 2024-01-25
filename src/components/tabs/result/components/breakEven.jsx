@@ -199,8 +199,8 @@ class BreakEven extends React.Component {
 
     const investmentCostResult = Math.abs(PVcostInTable.cost);
 
-    if (Number.isInteger(investmentCostEUR) && investmentCostEUR > 0) {
-      investmentCostResult = investmentCostEUR;
+    if (investmentCostEUR > 0) {
+      investmentCostResult = parseInt(investmentCostEUR) * -1;
     }
 
     return investmentCostResult;
