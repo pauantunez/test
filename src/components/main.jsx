@@ -292,10 +292,10 @@ class Main extends React.Component {
     }
 
     const betriebskosten = (1 / 100) * (investmentCostResult + -1000);
-    const einspeiseverguetung = pvOutputkWh * 1000 * (1 - (electricityCostHouseholdPercentage + 10) / 100) * parseFloat(gridRevenue / 100);
+    const einspeiseverguetung = pvOutputkWh * 1000 * (1 - (electricityCostHouseholdPercentage + 10) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100);
 
     for (let index = 0; index < 23; index++) {
-      const einsparungen = pvOutputkWh * 1000 * ((electricityCostHouseholdPercentage + 10) / 100) * (parseFloat(electricityCost / 100) * (1 + 0.02) ** [index + 1] - parseFloat(gridRevenue / 100));
+      const einsparungen = pvOutputkWh * 1000 * ((electricityCostHouseholdPercentage + 10) / 100) * (parseFloat(electricityCost / 100) * (1 + 0.02) ** [index + 1] - parseFloat(gridRevenue.replace(",", ".") / 100));
       if (this.state.heatpumpPVems.length == 0) {
         this.state.heatpumpPVems.push({ expenditure: investmentCostResult + -1000 });
       } else {
@@ -320,10 +320,10 @@ class Main extends React.Component {
     this.setState({ heatpumpPV: [] });
 
     const betriebskosten = (1 / 100) * investmentCostResult;
-    const einspeiseverguetung = pvOutputkWh * 1000 * (1 - electricityCostHouseholdPercentage / 100) * parseFloat(gridRevenue / 100);
+    const einspeiseverguetung = pvOutputkWh * 1000 * (1 - electricityCostHouseholdPercentage / 100) * parseFloat(gridRevenue.replace(",", ".") / 100);
 
     for (let index = 0; index < 23; index++) {
-      const einsparungen = pvOutputkWh * 1000 * (electricityCostHouseholdPercentage / 100) * (parseFloat(electricityCost / 100) * (1 + 0.02) ** [index + 1] - parseFloat(gridRevenue / 100));
+      const einsparungen = pvOutputkWh * 1000 * (electricityCostHouseholdPercentage / 100) * (parseFloat(electricityCost / 100) * (1 + 0.02) ** [index + 1] - parseFloat(gridRevenue.replace(",", ".") / 100));
 
       if (this.state.heatpumpPV.length == 0) {
         this.state.heatpumpPV.push({ expenditure: investmentCostResult, runningCost: betriebskosten });
@@ -340,7 +340,7 @@ class Main extends React.Component {
       borderRadius: "0px",
       fontFamily: "Bosch-Regular",
       backgroundColor: "#007BC0",
-      '&:hover': {
+      "&:hover": {
         backgroundColor: "#00629A",
       },
       // Agrega más estilos según sea necesario
@@ -835,8 +835,7 @@ class Main extends React.Component {
                 if (activeView == 3 && directLink == true) {
                   setDirectLink(false);
                   setActiveView(12);
-                }
-                else {
+                } else {
                   nextTab();
                 }
               }}
@@ -846,8 +845,8 @@ class Main extends React.Component {
               {activeView === 0 && <span>Weiter</span>}
               {activeView === 1 && <span>Weiter</span>}
               {activeView === 2 && <span>Weiter</span>}
-              {(activeView === 3 && directLink == false) && <span>Weiter</span>}
-              {(activeView === 3 && directLink == true) && <span>Zurück zum Ergebnis</span>}
+              {activeView === 3 && directLink == false && <span>Weiter</span>}
+              {activeView === 3 && directLink == true && <span>Zurück zum Ergebnis</span>}
               {activeView === 4 && <span>Weiter</span>}
               {activeView === 5 && <span>Weiter</span>}
               {activeView === 6 && <span>Weiter</span>}

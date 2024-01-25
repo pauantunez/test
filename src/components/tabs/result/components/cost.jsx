@@ -268,7 +268,7 @@ class Cost extends React.Component {
     console.log("ELECTRICITY EMS");
     console.log(1 - parseFloat(electricityCostHouseholdPercentage / 10000));
 
-    const result = ((parseInt(pvOutputKW) * 1000 * (1 - parseFloat(electricityCostOffGridPercentage / 10000) - parseFloat(gridRevenue) / 100) * parseFloat(electricityCost)) / 100).toFixed(0);
+    const result = ((parseInt(pvOutputKW) * 1000 * (1 - parseFloat(electricityCostOffGridPercentage / 10000) - parseFloat(gridRevenue.replace(",", ".")) / 100) * parseFloat(electricityCost)) / 100).toFixed(0);
 
     return result;
   };
