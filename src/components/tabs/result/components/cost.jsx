@@ -285,7 +285,7 @@ class Cost extends React.Component {
   };
 
   electricityCostPV20Years = () => {
-    const { PVcostLookupTable, StorageCostLookupTable, pvOutputkWh, homeStorageSize, energyUsagekWh, electricityCost, electricityCostOffGridPercentage } = this.context;
+    const { PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, pvOutputkWh, homeStorageSize, energyUsagekWh, electricityCost, electricityCostOffGridPercentage } = this.context;
     var investmentCostResult;
 
     let PVcostInTable = PVcostLookupTable.find((o) => o.pv === pvOutputkWh);
@@ -297,381 +297,387 @@ class Cost extends React.Component {
       investmentCostResult = PVcostInTable.cost + StorageCostInTable.cost;
     }
 
-    console.log(investmentCostResult);
+    if (investmentCostEUR > 0 && Number.isInteger(investmentCostEUR)) {
+      {
+        investmentCostResult = investmentCostEUR;
+      }
 
-    const result = Math.abs(((1 - electricityCostOffGridPercentage / 100) * energyUsagekWh * ((parseFloat(electricityCost) / 100) * (1 + 0.02)) * (1 - (0.02 + 1) ** 20)) / 0.02);
 
-    console.log("El resultado es: " + result);
+      console.log(investmentCostResult);
 
-    return this.electricityCostNoPV20Years();
-  };
+      const result = Math.abs(((1 - electricityCostOffGridPercentage / 100) * energyUsagekWh * ((parseFloat(electricityCost) / 100) * (1 + 0.02)) * (1 - (0.02 + 1) ** 20)) / 0.02);
 
-  runningCostPVonly = () => {
-    const { PVcostLookupTable, StorageCostLookupTable, pvOutputkWh, homeStorageSize, energyUsagekWh, electricityCost, electricityCostOffGridPercentage } = this.context;
-    var totalRunning = 0;
+      console.log("El resultado es: " + result);
 
-    if (!this.state.ranOnce) {
-      for (let index = 0; index < 20; index++) {
-        if (this.state.runningCostPVonly.length == 0) {
-          this.state.runningCostPVonly.push({ expenditure: -Math.abs((1 - electricityCostOffGridPercentage / 100) * 4000 * ((electricityCost / 100) * (1 + 0.02))) });
-          console.log(this.state.runningCostPVonly);
-        } else {
-          this.state.runningCostPVonly.push({ expenditure: parseFloat(this.state.runningCostPVonly[index - 1].expenditure) * (1 + 0.02) });
+      return this.electricityCostNoPV20Years();
+    };
+
+    runningCostPVonly = () => {
+      const { PVcostLookupTable, StorageCostLookupTable, pvOutputkWh, homeStorageSize, energyUsagekWh, electricityCost, electricityCostOffGridPercentage } = this.context;
+      var totalRunning = 0;
+
+      if (!this.state.ranOnce) {
+        for (let index = 0; index < 20; index++) {
+          if (this.state.runningCostPVonly.length == 0) {
+            this.state.runningCostPVonly.push({ expenditure: -Math.abs((1 - electricityCostOffGridPercentage / 100) * 4000 * ((electricityCost / 100) * (1 + 0.02))) });
+            console.log(this.state.runningCostPVonly);
+          } else {
+            this.state.runningCostPVonly.push({ expenditure: parseFloat(this.state.runningCostPVonly[index - 1].expenditure) * (1 + 0.02) });
+          }
         }
-      }
 
-      for (var i = 0; i < this.state.runningCostPVonly.length; i++) {
-        totalRunning += this.state.runningCostPVonly[i].expenditure;
-      }
-
-      console.log(this.state.runningCostPVonly);
-      console.log(totalRunning);
-
-      this.setState({ totalRunningCostPVonly: totalRunning });
-      this.setState({ ranOnce: true });
-
-      this.runningCostPVems();
-    }
-  };
-
-  runningCostPVems = () => {
-    const { heatpumpPV, PVcostLookupTable, StorageCostLookupTable, pvOutputkWh, homeStorageSize, energyUsagekWh, electricityCost, electricityCostOffGridPercentage } = this.context;
-    var totalRunning = 0;
-
-    if (!this.state.ranOnceEMS) {
-      for (let index = 0; index < 20; index++) {
-        if (this.state.runningCostPVems.length == 0) {
-          this.state.runningCostPVems.push({ expenditure: Math.abs(heatpumpPV[0].runningCost + (1 - (electricityCostOffGridPercentage + 10) / 100) * 4000 * ((electricityCost / 100) * (1 + 0.02))) });
-          console.log(this.state.runningCostPVems);
-        } else {
-          this.state.runningCostPVems.push({ expenditure: parseFloat(this.state.runningCostPVems[index - 1].expenditure) * (1 + 0.02) });
+        for (var i = 0; i < this.state.runningCostPVonly.length; i++) {
+          totalRunning += this.state.runningCostPVonly[i].expenditure;
         }
+
+        console.log(this.state.runningCostPVonly);
+        console.log(totalRunning);
+
+        this.setState({ totalRunningCostPVonly: totalRunning });
+        this.setState({ ranOnce: true });
+
+        this.runningCostPVems();
+      }
+    };
+
+    runningCostPVems = () => {
+      const { heatpumpPV, PVcostLookupTable, StorageCostLookupTable, pvOutputkWh, homeStorageSize, energyUsagekWh, electricityCost, electricityCostOffGridPercentage } = this.context;
+      var totalRunning = 0;
+
+      if (!this.state.ranOnceEMS) {
+        for (let index = 0; index < 20; index++) {
+          if (this.state.runningCostPVems.length == 0) {
+            this.state.runningCostPVems.push({ expenditure: Math.abs(heatpumpPV[0].runningCost + (1 - (electricityCostOffGridPercentage + 10) / 100) * 4000 * ((electricityCost / 100) * (1 + 0.02))) });
+            console.log(this.state.runningCostPVems);
+          } else {
+            this.state.runningCostPVems.push({ expenditure: parseFloat(this.state.runningCostPVems[index - 1].expenditure) * (1 + 0.02) });
+          }
+        }
+
+        for (var i = 0; i < this.state.runningCostPVems.length; i++) {
+          totalRunning += this.state.runningCostPVems[i].expenditure;
+        }
+
+        console.log(this.state.runningCostPVems);
+        console.log(totalRunning);
+
+        this.setState({ totalRunningCostPVems: totalRunning });
+        this.setState({ ranOnceEMS: true });
       }
 
-      for (var i = 0; i < this.state.runningCostPVems.length; i++) {
-        totalRunning += this.state.runningCostPVems[i].expenditure;
+      return -Math.abs((1 - electricityCostOffGridPercentage / 100) * 4000 * ((electricityCost / 100) * (1 + 0.02)));
+    };
+
+    runningCostPVemsDisplay = () => {
+      return 8888;
+    };
+
+    inputCostOverTime = (event) => {
+      const { costOverTime, setCostOverTime, setFwdBtn, steps, setSteps, activeView } = this.context;
+      setCostOverTime(event.target.value);
+    };
+
+    resultWithPV = () => {
+      const { costOverTime, setElectricityCostPVsavings, gridRevenue, electricityCostHouseholdPercentage, pvOutput, electricityCostOffGridPercentage, electricityCost } = this.context;
+      var result;
+
+      if (costOverTime === "1") {
+        result = this.electricityCostPV() - this.energyUseEuro(5, true);
+      } else {
+        result = parseInt(parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVonly);
       }
 
-      console.log(this.state.runningCostPVems);
-      console.log(totalRunning);
+      if (this.state.electricityCostPVsavings != result) {
+        this.setState({ electricityCostPVsavings: result });
+        setElectricityCostPVsavings(result);
+      }
 
-      this.setState({ totalRunningCostPVems: totalRunning });
-      this.setState({ ranOnceEMS: true });
-    }
+      return result;
+    };
 
-    return -Math.abs((1 - electricityCostOffGridPercentage / 100) * 4000 * ((electricityCost / 100) * (1 + 0.02)));
-  };
+    resultWithPVandEMS = () => {
+      const { costOverTime, setElectricityCostPVEMSsavings, gridRevenue, electricityCostHouseholdPercentage, pvOutput, electricityCostOffGridPercentage, electricityCost } = this.context;
+      var result;
 
-  runningCostPVemsDisplay = () => {
-    return 8888;
-  };
+      if (costOverTime === "1") {
+        result = this.electricityCostPVEMS() - this.energyUseEuro(5, true);
+      } else {
+        result = parseInt(parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVems);
+      }
 
-  inputCostOverTime = (event) => {
-    const { costOverTime, setCostOverTime, setFwdBtn, steps, setSteps, activeView } = this.context;
-    setCostOverTime(event.target.value);
-  };
+      if (this.state.electricityCostPVEMSsavings != result) {
+        this.setState({ electricityCostPVEMSsavings: result });
+        setElectricityCostPVEMSsavings(result);
+      }
 
-  resultWithPV = () => {
-    const { costOverTime, setElectricityCostPVsavings, gridRevenue, electricityCostHouseholdPercentage, pvOutput, electricityCostOffGridPercentage, electricityCost } = this.context;
-    var result;
+      return result;
+    };
 
-    if (costOverTime === "1") {
-      result = this.electricityCostPV() - this.energyUseEuro(5, true);
-    } else {
-      result = parseInt(parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVonly);
-    }
+    whichChartLegend = () => {
+      const { costOverTime, electricityCostPVsavings, electricityCostPVEMSsavings } = this.context;
 
-    if (this.state.electricityCostPVsavings != result) {
-      this.setState({ electricityCostPVsavings: result });
-      setElectricityCostPVsavings(result);
-    }
+      if (costOverTime === "1") {
+        return electricityCostPVsavings;
+      } else {
+        return electricityCostPVEMSsavings;
+      }
+    };
 
-    return result;
-  };
+    adjustBarHeight = (costOverTime, maxHeight, value1, value2, value3) => {
+      var scale1 = 0;
+      var scale2 = 0;
+      var scale3 = 0;
 
-  resultWithPVandEMS = () => {
-    const { costOverTime, setElectricityCostPVEMSsavings, gridRevenue, electricityCostHouseholdPercentage, pvOutput, electricityCostOffGridPercentage, electricityCost } = this.context;
-    var result;
+      var height2 = 0;
+      var height3 = 0;
 
-    if (costOverTime === "1") {
-      result = this.electricityCostPVEMS() - this.energyUseEuro(5, true);
-    } else {
-      result = parseInt(parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVems);
-    }
+      scale1 = maxHeight;
+      scale2 = (value2 / value1) * maxHeight;
+      scale3 = (value3 / value1) * maxHeight;
 
-    if (this.state.electricityCostPVEMSsavings != result) {
-      this.setState({ electricityCostPVEMSsavings: result });
-      setElectricityCostPVEMSsavings(result);
-    }
+      height2 = maxHeight - scale2;
+      height3 = maxHeight - scale3;
 
-    return result;
-  };
+      if (height2 >= 212 || scale2 >= 212) {
+        height2 = 106;
+        scale2 = 106;
+      }
+      if (height3 >= 212 || scale3 >= 212) {
+        height3 = 106;
+        scale3 = 106;
+      }
 
-  whichChartLegend = () => {
-    const { costOverTime, electricityCostPVsavings, electricityCostPVEMSsavings } = this.context;
+      if (costOverTime == "1") {
+        return [scale1, scale2, height2, scale3, height3];
+      } else {
+        return [scale1, scale2, height2, 190, 22];
+      }
+    };
 
-    if (costOverTime === "1") {
-      return electricityCostPVsavings;
-    } else {
-      return electricityCostPVEMSsavings;
-    }
-  };
+    getHighestValue = (value1, value2, value3) => {
+      if (value1 >= value2 && value1 >= value3) {
+        return value1;
+      } else if (value2 >= value1 && value2 >= value3) {
+        return value2;
+      } else {
+        return value3;
+      }
+    };
 
-  adjustBarHeight = (costOverTime, maxHeight, value1, value2, value3) => {
-    var scale1 = 0;
-    var scale2 = 0;
-    var scale3 = 0;
+    divideValuesForChart = (step, value) => {
+      return parseInt((value / 5) * step).toLocaleString("de-DE");
+    };
 
-    var height2 = 0;
-    var height3 = 0;
+    render() {
+      const { t } = this.props;
+      const { overlayToggle } = this.state;
+      const { electricityCostPVsavings, electricityCostPVEMSsavings, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
 
-    scale1 = maxHeight;
-    scale2 = (value2 / value1) * maxHeight;
-    scale3 = (value3 / value1) * maxHeight;
+      // Ohne PV - OK
+      // var OHNE_PV_cost1year = parseInt(this.energyUseEuro(5))
+      var OHNE_PV_cost1year = parseInt(this.energyUseEuro(5).replace(".", "").replace(",", ""));
+      var OHNE_PV_cost20years = parseInt(this.electricityCostNoPV20Years());
 
-    height2 = maxHeight - scale2;
-    height3 = maxHeight - scale3;
+      // Mit PV
+      var MIT_PV_cost1year = OHNE_PV_cost1year - parseInt(this.resultWithPV());
+      var MIT_PV_cost20years = OHNE_PV_cost20years - parseInt(this.electricityCostPV20Years() + this.state.totalRunningCostPVonly);
 
-    if (height2 >= 212 || scale2 >= 212) {
-      height2 = 106;
-      scale2 = 106;
-    }
-    if (height3 >= 212 || scale3 >= 212) {
-      height3 = 106;
-      scale3 = 106;
-    }
+      // Mit PV und EMS
+      var MIT_PV_EMS_cost1year = OHNE_PV_cost1year - parseInt(this.resultWithPVandEMS());
+      var MIT_PV_EMS_cost20years = OHNE_PV_cost20years - parseInt(this.electricityCostPV20Years() + this.state.totalRunningCostPVems);
 
-    if (costOverTime == "1") {
-      return [scale1, scale2, height2, scale3, height3];
-    } else {
-      return [scale1, scale2, height2, 190, 22];
-    }
-  };
+      // Bar heights
+      var barHeights1year = this.adjustBarHeight(costOverTime, 212, OHNE_PV_cost1year, electricityCostPVsavings, electricityCostPVEMSsavings);
+      var barHeights20years = this.adjustBarHeight(costOverTime, 212, OHNE_PV_cost20years, electricityCostPVsavings, electricityCostPVEMSsavings);
+      var selectedBarHeights = costOverTime == "1" ? barHeights1year : barHeights20years;
 
-  getHighestValue = (value1, value2, value3) => {
-    if (value1 >= value2 && value1 >= value3) {
-      return value1;
-    } else if (value2 >= value1 && value2 >= value3) {
-      return value2;
-    } else {
-      return value3;
-    }
-  };
+      console.log("selectedBarHeights " + selectedBarHeights);
 
-  divideValuesForChart = (step, value) => {
-    return parseInt((value / 5) * step).toLocaleString("de-DE");
-  };
-
-  render() {
-    const { t } = this.props;
-    const { overlayToggle } = this.state;
-    const { electricityCostPVsavings, electricityCostPVEMSsavings, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
-
-    // Ohne PV - OK
-    // var OHNE_PV_cost1year = parseInt(this.energyUseEuro(5))
-    var OHNE_PV_cost1year = parseInt(this.energyUseEuro(5).replace(".", "").replace(",", ""));
-    var OHNE_PV_cost20years = parseInt(this.electricityCostNoPV20Years());
-
-    // Mit PV
-    var MIT_PV_cost1year = OHNE_PV_cost1year - parseInt(this.resultWithPV());
-    var MIT_PV_cost20years = OHNE_PV_cost20years - parseInt(this.electricityCostPV20Years() + this.state.totalRunningCostPVonly);
-
-    // Mit PV und EMS
-    var MIT_PV_EMS_cost1year = OHNE_PV_cost1year - parseInt(this.resultWithPVandEMS());
-    var MIT_PV_EMS_cost20years = OHNE_PV_cost20years - parseInt(this.electricityCostPV20Years() + this.state.totalRunningCostPVems);
-
-    // Bar heights
-    var barHeights1year = this.adjustBarHeight(costOverTime, 212, OHNE_PV_cost1year, electricityCostPVsavings, electricityCostPVEMSsavings);
-    var barHeights20years = this.adjustBarHeight(costOverTime, 212, OHNE_PV_cost20years, electricityCostPVsavings, electricityCostPVEMSsavings);
-    var selectedBarHeights = costOverTime == "1" ? barHeights1year : barHeights20years;
-
-    console.log("selectedBarHeights " + selectedBarHeights);
-
-    return (
-      <div>
-        <div class="flexRow" style={{ marginBottom: "30px" }}>
-          <div>
-            <label>
-              {this.state.displayed === undefined && <input type="radio" name="heating" value="1" class="card-input-element" checked={costOverTime === "1"} onChange={this.inputCostOverTime} />}
-              {this.state.displayed === "single" && <input type="radio" name="single-year" id="single-year" value="1" class="card-input-element" checked="true" />}
-              <div class="panel panel-default card-input-wide background-light-grey" style={{ height: "40px", width: "100%", fontSize: "14px", margin: "0", border: "none" }}>
-                <div class="panel-body">Gesamtkosten pro Jahr</div>
-              </div>
-            </label>
-          </div>
-          <div>
-            <label>
-              {this.state.displayed === undefined && <input type="radio" name="heating" value="20" class="card-input-element" checked={costOverTime === "20"} onChange={this.inputCostOverTime} />}
-              {this.state.displayed === "multi" && <input type="radio" name="multi-year" id="multi-year" value="20" class="card-input-element" checked="true" />}
-              <div class="panel panel-default card-input-wide background-light-grey" style={{ height: "40px", width: "100%", fontSize: "14px", margin: "0", border: "none" }}>
-                <div class="panel-body">Gesamtkosten über 20 Jahre</div>
-              </div>
-            </label>
-          </div>
-        </div>
-
-        <div style={{ display: "flex", flexDirection: "row", width: "100%", height: "220px" }}>
-          <div style={{ display: "flex", flexDirection: "row", width: "100%", marginLeft: "17%", zIndex: "99999" }}>
-            {/* ohne PV */}
-            <div style={{ display: "flex", width: "73px", height: `${selectedBarHeights[0]}px`, background: "#007BC0", color: "white", marginTop: "auto" }}>
-              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
-                {costOverTime == "1" && OHNE_PV_cost1year.toLocaleString("de-DE")}
-                {costOverTime == "1" && <span>&nbsp;€</span>}
-                {costOverTime == "20" && OHNE_PV_cost20years.toLocaleString("de-DE")}
-                {costOverTime == "20" && <span>&nbsp;€</span>}
-              </div>
+      return (
+        <div>
+          <div class="flexRow" style={{ marginBottom: "30px" }}>
+            <div>
+              <label>
+                {this.state.displayed === undefined && <input type="radio" name="heating" value="1" class="card-input-element" checked={costOverTime === "1"} onChange={this.inputCostOverTime} />}
+                {this.state.displayed === "single" && <input type="radio" name="single-year" id="single-year" value="1" class="card-input-element" checked="true" />}
+                <div class="panel panel-default card-input-wide background-light-grey" style={{ height: "40px", width: "100%", fontSize: "14px", margin: "0", border: "none" }}>
+                  <div class="panel-body">Gesamtkosten pro Jahr</div>
+                </div>
+              </label>
             </div>
-
-            {/* Mit PV Price */}
-            {/* <div style={{display: 'flex', flexDirection: 'column', marginTop: '110px', width: '73px', height: '108px', color: 'white', marginLeft: '15%'}}> */}
-            <div style={{ width: "73px", color: "white", marginLeft: "15%", zIndex: "99999", marginTop: "auto" }}>
-              {/* Pattern bar */}
-              <div style={{ display: "flex", width: "73px", height: `${selectedBarHeights[1]}px`, color: "white" }}>
-                {isSafari && (
-                  <div style={{ width: "100%", height: "100%", textAlign: "center" }} class="pattern-safari">
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                        {costOverTime == "1" && electricityCostPVsavings.toLocaleString("de-DE")}
-                        {costOverTime == "1" && <span>&nbsp;€</span>}
-                        {costOverTime == "20" && electricityCostPVsavings.toLocaleString("de-DE")}
-                        {costOverTime == "20" && <span>&nbsp;€</span>}
-                      </span>
-                    </div>
-                  </div>
-                )}
-                {!isSafari && (
-                  <div style={{ width: "100%", height: "100%", top: "0%", textAlign: "center" }} class="pattern">
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                        {costOverTime == "1" && electricityCostPVsavings.toLocaleString("de-DE")}
-                        {costOverTime == "1" && <span>&nbsp;€</span>}
-                        {costOverTime == "20" && electricityCostPVsavings.toLocaleString("de-DE")}
-                        {costOverTime == "20" && <span>&nbsp;€</span>}
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Blue bar */}
-              <div style={{ display: "flex", width: "73px", height: `${selectedBarHeights[2]}px`, background: "#007BC0", color: "white" }}>
-                {isSafari && (
-                  <div style={{ width: "100%", height: "100%", textAlign: "center" }}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                        {costOverTime == "1" && MIT_PV_cost1year.toLocaleString("de-DE")}
-                        {costOverTime == "1" && <span>&nbsp;€</span>}
-                        {costOverTime == "20" && MIT_PV_cost20years.toLocaleString("de-DE")}
-                        {costOverTime == "20" && <span>&nbsp;€</span>}
-                      </span>
-                    </div>
-                  </div>
-                )}
-
-                {!isSafari && (
-                  <div style={{ width: "100%", height: "100%", top: "0%", textAlign: "center" }}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                        {costOverTime == "1" && MIT_PV_cost1year.toLocaleString("de-DE")}
-                        {costOverTime == "1" && <span>&nbsp;€</span>}
-                        {costOverTime == "20" && MIT_PV_cost20years.toLocaleString("de-DE")}
-                        {costOverTime == "20" && <span>&nbsp;€</span>}
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Mit PV und EMS */}
-            {/* <div style={{display: 'flex', flexDirection: 'column', marginTop: '110px', width: '73px', height: '108px', color: 'white', marginLeft: '15%'}}> */}
-            <div style={{ width: "73px", color: "white", marginLeft: "15%", zIndex: "99999", marginTop: "auto" }}>
-              {/* Pattern bar */}
-              <div style={{ display: "flex", width: "73px", height: `${selectedBarHeights[3]}px`, color: "white" }}>
-                {isSafari && (
-                  <div style={{ width: "100%", height: "100%", textAlign: "center" }} class="pattern-safari">
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                        {costOverTime == "1" && electricityCostPVEMSsavings.toLocaleString("de-DE")}
-                        {costOverTime == "1" && <span>&nbsp;€</span>}
-                        {costOverTime == "20" && electricityCostPVEMSsavings.toLocaleString("de-DE")}
-                        {costOverTime == "20" && <span>&nbsp;€</span>}
-                      </span>
-                    </div>
-                  </div>
-                )}
-                {!isSafari && (
-                  <div style={{ width: "100%", height: "100%", textAlign: "center" }} class="pattern">
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                        {costOverTime == "1" && electricityCostPVEMSsavings.toLocaleString("de-DE")}
-                        {costOverTime == "1" && <span>&nbsp;€</span>}
-                        {costOverTime == "20" && electricityCostPVEMSsavings.toLocaleString("de-DE")}
-                        {costOverTime == "20" && <span>&nbsp;€</span>}
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Blue bar */}
-              <div style={{ display: "flex", width: "73px", height: `${selectedBarHeights[4]}px`, color: "white" }}>
-                {isSafari && (
-                  <div style={{ width: "100%", height: "100%", textAlign: "center" }} class="pattern-safari">
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                        {costOverTime == "1" && MIT_PV_EMS_cost1year.toLocaleString("de-DE")}
-                        {costOverTime == "1" && <span>&nbsp;€</span>}
-                        {costOverTime == "20" && MIT_PV_EMS_cost20years.toLocaleString("de-DE")}
-                        {costOverTime == "20" && <span>&nbsp;€</span>}
-                      </span>
-                    </div>
-                  </div>
-                )}
-                {!isSafari && (
-                  <div style={{ width: "100%", height: "100%", textAlign: "center" }} class="pattern">
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                        {costOverTime == "1" && MIT_PV_EMS_cost1year.toLocaleString("de-DE")}
-                        {costOverTime == "1" && <span>&nbsp;€</span>}
-                        {costOverTime == "20" && MIT_PV_EMS_cost20years.toLocaleString("de-DE")}
-                        {costOverTime == "20" && <span>&nbsp;€</span>}
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </div>
+            <div>
+              <label>
+                {this.state.displayed === undefined && <input type="radio" name="heating" value="20" class="card-input-element" checked={costOverTime === "20"} onChange={this.inputCostOverTime} />}
+                {this.state.displayed === "multi" && <input type="radio" name="multi-year" id="multi-year" value="20" class="card-input-element" checked="true" />}
+                <div class="panel panel-default card-input-wide background-light-grey" style={{ height: "40px", width: "100%", fontSize: "14px", margin: "0", border: "none" }}>
+                  <div class="panel-body">Gesamtkosten über 20 Jahre</div>
+                </div>
+              </label>
             </div>
           </div>
 
-          <div class="cost-chart-width" style={{ position: "absolute", zIndex: "99998" }}>
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <div class="bar-chart-left-legend">
-                <div>
-                  {costOverTime == "1" && this.divideValuesForChart(5, OHNE_PV_cost1year) + " €"}
-                  {costOverTime == "20" && this.divideValuesForChart(5, OHNE_PV_cost20years) + " €"}
+          <div style={{ display: "flex", flexDirection: "row", width: "100%", height: "220px" }}>
+            <div style={{ display: "flex", flexDirection: "row", width: "100%", marginLeft: "17%", zIndex: "99999" }}>
+              {/* ohne PV */}
+              <div style={{ display: "flex", width: "73px", height: `${selectedBarHeights[0]}px`, background: "#007BC0", color: "white", marginTop: "auto" }}>
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
+                  {costOverTime == "1" && OHNE_PV_cost1year.toLocaleString("de-DE")}
+                  {costOverTime == "1" && <span>&nbsp;€</span>}
+                  {costOverTime == "20" && OHNE_PV_cost20years.toLocaleString("de-DE")}
+                  {costOverTime == "20" && <span>&nbsp;€</span>}
                 </div>
-                <div>
-                  {costOverTime == "1" && this.divideValuesForChart(4, OHNE_PV_cost1year) + " €"}
-                  {costOverTime == "20" && this.divideValuesForChart(4, OHNE_PV_cost20years) + " €"}
+              </div>
+
+              {/* Mit PV Price */}
+              {/* <div style={{display: 'flex', flexDirection: 'column', marginTop: '110px', width: '73px', height: '108px', color: 'white', marginLeft: '15%'}}> */}
+              <div style={{ width: "73px", color: "white", marginLeft: "15%", zIndex: "99999", marginTop: "auto" }}>
+                {/* Pattern bar */}
+                <div style={{ display: "flex", width: "73px", height: `${selectedBarHeights[1]}px`, color: "white" }}>
+                  {isSafari && (
+                    <div style={{ width: "100%", height: "100%", textAlign: "center" }} class="pattern-safari">
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
+                        <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                          {costOverTime == "1" && electricityCostPVsavings.toLocaleString("de-DE")}
+                          {costOverTime == "1" && <span>&nbsp;€</span>}
+                          {costOverTime == "20" && electricityCostPVsavings.toLocaleString("de-DE")}
+                          {costOverTime == "20" && <span>&nbsp;€</span>}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  {!isSafari && (
+                    <div style={{ width: "100%", height: "100%", top: "0%", textAlign: "center" }} class="pattern">
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
+                        <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                          {costOverTime == "1" && electricityCostPVsavings.toLocaleString("de-DE")}
+                          {costOverTime == "1" && <span>&nbsp;€</span>}
+                          {costOverTime == "20" && electricityCostPVsavings.toLocaleString("de-DE")}
+                          {costOverTime == "20" && <span>&nbsp;€</span>}
+                        </span>
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <div>
-                  {costOverTime == "1" && this.divideValuesForChart(3, OHNE_PV_cost1year) + " €"}
-                  {costOverTime == "20" && this.divideValuesForChart(3, OHNE_PV_cost20years) + " €"}
+
+                {/* Blue bar */}
+                <div style={{ display: "flex", width: "73px", height: `${selectedBarHeights[2]}px`, background: "#007BC0", color: "white" }}>
+                  {isSafari && (
+                    <div style={{ width: "100%", height: "100%", textAlign: "center" }}>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
+                        <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                          {costOverTime == "1" && MIT_PV_cost1year.toLocaleString("de-DE")}
+                          {costOverTime == "1" && <span>&nbsp;€</span>}
+                          {costOverTime == "20" && MIT_PV_cost20years.toLocaleString("de-DE")}
+                          {costOverTime == "20" && <span>&nbsp;€</span>}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
+                  {!isSafari && (
+                    <div style={{ width: "100%", height: "100%", top: "0%", textAlign: "center" }}>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
+                        <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                          {costOverTime == "1" && MIT_PV_cost1year.toLocaleString("de-DE")}
+                          {costOverTime == "1" && <span>&nbsp;€</span>}
+                          {costOverTime == "20" && MIT_PV_cost20years.toLocaleString("de-DE")}
+                          {costOverTime == "20" && <span>&nbsp;€</span>}
+                        </span>
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <div>
-                  {costOverTime == "1" && this.divideValuesForChart(2, OHNE_PV_cost1year) + " €"}
-                  {costOverTime == "20" && this.divideValuesForChart(2, OHNE_PV_cost20years) + " €"}
+              </div>
+
+              {/* Mit PV und EMS */}
+              {/* <div style={{display: 'flex', flexDirection: 'column', marginTop: '110px', width: '73px', height: '108px', color: 'white', marginLeft: '15%'}}> */}
+              <div style={{ width: "73px", color: "white", marginLeft: "15%", zIndex: "99999", marginTop: "auto" }}>
+                {/* Pattern bar */}
+                <div style={{ display: "flex", width: "73px", height: `${selectedBarHeights[3]}px`, color: "white" }}>
+                  {isSafari && (
+                    <div style={{ width: "100%", height: "100%", textAlign: "center" }} class="pattern-safari">
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
+                        <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                          {costOverTime == "1" && electricityCostPVEMSsavings.toLocaleString("de-DE")}
+                          {costOverTime == "1" && <span>&nbsp;€</span>}
+                          {costOverTime == "20" && electricityCostPVEMSsavings.toLocaleString("de-DE")}
+                          {costOverTime == "20" && <span>&nbsp;€</span>}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  {!isSafari && (
+                    <div style={{ width: "100%", height: "100%", textAlign: "center" }} class="pattern">
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
+                        <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                          {costOverTime == "1" && electricityCostPVEMSsavings.toLocaleString("de-DE")}
+                          {costOverTime == "1" && <span>&nbsp;€</span>}
+                          {costOverTime == "20" && electricityCostPVEMSsavings.toLocaleString("de-DE")}
+                          {costOverTime == "20" && <span>&nbsp;€</span>}
+                        </span>
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <div>
-                  {costOverTime == "1" && this.divideValuesForChart(1, OHNE_PV_cost1year) + " €"}
-                  {costOverTime == "20" && this.divideValuesForChart(1, OHNE_PV_cost20years) + " €"}
+
+                {/* Blue bar */}
+                <div style={{ display: "flex", width: "73px", height: `${selectedBarHeights[4]}px`, color: "white" }}>
+                  {isSafari && (
+                    <div style={{ width: "100%", height: "100%", textAlign: "center" }} class="pattern-safari">
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
+                        <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                          {costOverTime == "1" && MIT_PV_EMS_cost1year.toLocaleString("de-DE")}
+                          {costOverTime == "1" && <span>&nbsp;€</span>}
+                          {costOverTime == "20" && MIT_PV_EMS_cost20years.toLocaleString("de-DE")}
+                          {costOverTime == "20" && <span>&nbsp;€</span>}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  {!isSafari && (
+                    <div style={{ width: "100%", height: "100%", textAlign: "center" }} class="pattern">
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
+                        <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                          {costOverTime == "1" && MIT_PV_EMS_cost1year.toLocaleString("de-DE")}
+                          {costOverTime == "1" && <span>&nbsp;€</span>}
+                          {costOverTime == "20" && MIT_PV_EMS_cost20years.toLocaleString("de-DE")}
+                          {costOverTime == "20" && <span>&nbsp;€</span>}
+                        </span>
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <div>
-                  {costOverTime == "1" && this.divideValuesForChart(0, OHNE_PV_cost1year) + " €"}
-                  {costOverTime == "20" && this.divideValuesForChart(0, OHNE_PV_cost20years) + " €"}
-                </div>
-                {/* <div>
+              </div>
+            </div>
+
+            <div class="cost-chart-width" style={{ position: "absolute", zIndex: "99998" }}>
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <div class="bar-chart-left-legend">
+                  <div>
+                    {costOverTime == "1" && this.divideValuesForChart(5, OHNE_PV_cost1year) + " €"}
+                    {costOverTime == "20" && this.divideValuesForChart(5, OHNE_PV_cost20years) + " €"}
+                  </div>
+                  <div>
+                    {costOverTime == "1" && this.divideValuesForChart(4, OHNE_PV_cost1year) + " €"}
+                    {costOverTime == "20" && this.divideValuesForChart(4, OHNE_PV_cost20years) + " €"}
+                  </div>
+                  <div>
+                    {costOverTime == "1" && this.divideValuesForChart(3, OHNE_PV_cost1year) + " €"}
+                    {costOverTime == "20" && this.divideValuesForChart(3, OHNE_PV_cost20years) + " €"}
+                  </div>
+                  <div>
+                    {costOverTime == "1" && this.divideValuesForChart(2, OHNE_PV_cost1year) + " €"}
+                    {costOverTime == "20" && this.divideValuesForChart(2, OHNE_PV_cost20years) + " €"}
+                  </div>
+                  <div>
+                    {costOverTime == "1" && this.divideValuesForChart(1, OHNE_PV_cost1year) + " €"}
+                    {costOverTime == "20" && this.divideValuesForChart(1, OHNE_PV_cost20years) + " €"}
+                  </div>
+                  <div>
+                    {costOverTime == "1" && this.divideValuesForChart(0, OHNE_PV_cost1year) + " €"}
+                    {costOverTime == "20" && this.divideValuesForChart(0, OHNE_PV_cost20years) + " €"}
+                  </div>
+                  {/* <div>
                                 { this.energyUseEuroNegative(1,this.whichChartLegend()) }
                             </div>
                             <div>
@@ -686,68 +692,68 @@ class Cost extends React.Component {
                             <div>
                                 { this.energyUseEuroNegative(5,this.whichChartLegend()) }
                             </div> */}
-              </div>
-              <div data-html2canvas-ignore class="cost-chart-width" style={{ display: "flex", flexDirection: "column", marginLeft: "3px" }}>
-                <div class="cost-chart-width" style={{ marginTop: "7px", height: "1px", width: "480px", borderBottom: "1px solid #EFF1F2" }}></div>
-                <div class="cost-chart-width" style={{ marginTop: "19px", height: "1px", width: "480px", borderBottom: "1px solid #EFF1F2" }}></div>
-                <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "480px", borderBottom: "1px solid #EFF1F2" }}></div>
-                <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "480px", borderBottom: "1px solid #EFF1F2" }}></div>
-                <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "480px", borderBottom: "1px solid #EFF1F2" }}></div>
-                {/* <div class="cost-chart-width" style={{marginTop: '18px', height: '1px', width: '480px', borderBottom: '1px solid #000'}}></div> */}
-                <div class="cost-chart-width" style={{ marginTop: "19px", height: "1px", width: "480px", borderBottom: "1px solid #EFF1F2" }}></div>
-                <div class="cost-chart-width" style={{ marginTop: "19px", height: "1px", width: "480px", borderBottom: "1px solid #EFF1F2" }}></div>
-                <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "480px", borderBottom: "1px solid #EFF1F2" }}></div>
-                <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "480px", borderBottom: "1px solid #EFF1F2" }}></div>
-                <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "480px", borderBottom: "1px solid #EFF1F2" }}></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
-          <div style={{ display: "flex", flexDirection: "row", width: "100%", marginTop: "5px", marginLeft: "17%", zIndex: "99999" }}>
-            <div style={{ display: "flex", width: "73px", height: "40px", color: "#000" }}>
-              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
-                <LightningIcon />
-                ohne PV
-              </div>
-            </div>
-            <div style={{ display: "flex", width: "73px", height: "40px", color: "#000", marginLeft: "15%" }}>
-              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
-                <PVIcon />
-                mit PV
-              </div>
-            </div>
-            <div style={{ display: "flex", width: "73px", height: "40px", color: "#000", marginLeft: "15%" }}>
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
-                <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                  <PVIcon />
-                  <div style={{ display: "block", margin: "0 2px -2px 2px" }}>+</div>
-                  <ElectricityIcon />
                 </div>
-                mit PV und EMS
+                <div data-html2canvas-ignore class="cost-chart-width" style={{ display: "flex", flexDirection: "column", marginLeft: "3px" }}>
+                  <div class="cost-chart-width" style={{ marginTop: "7px", height: "1px", width: "480px", borderBottom: "1px solid #EFF1F2" }}></div>
+                  <div class="cost-chart-width" style={{ marginTop: "19px", height: "1px", width: "480px", borderBottom: "1px solid #EFF1F2" }}></div>
+                  <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "480px", borderBottom: "1px solid #EFF1F2" }}></div>
+                  <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "480px", borderBottom: "1px solid #EFF1F2" }}></div>
+                  <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "480px", borderBottom: "1px solid #EFF1F2" }}></div>
+                  {/* <div class="cost-chart-width" style={{marginTop: '18px', height: '1px', width: '480px', borderBottom: '1px solid #000'}}></div> */}
+                  <div class="cost-chart-width" style={{ marginTop: "19px", height: "1px", width: "480px", borderBottom: "1px solid #EFF1F2" }}></div>
+                  <div class="cost-chart-width" style={{ marginTop: "19px", height: "1px", width: "480px", borderBottom: "1px solid #EFF1F2" }}></div>
+                  <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "480px", borderBottom: "1px solid #EFF1F2" }}></div>
+                  <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "480px", borderBottom: "1px solid #EFF1F2" }}></div>
+                  <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "480px", borderBottom: "1px solid #EFF1F2" }}></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div style={{ display: "flex", flexDirection: "column", marginTop: "25px", fontFamily: "Bosch-Regular", fontSize: "12px" }}>
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            <div style={{ marginRight: "15px" }}>
-              <div style={{ marginTop: "2px", width: "12px", height: "12px", background: "#007BC0", borderRadius: "12px" }}></div>
+          <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
+            <div style={{ display: "flex", flexDirection: "row", width: "100%", marginTop: "5px", marginLeft: "17%", zIndex: "99999" }}>
+              <div style={{ display: "flex", width: "73px", height: "40px", color: "#000" }}>
+                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
+                  <LightningIcon />
+                  ohne PV
+                </div>
+              </div>
+              <div style={{ display: "flex", width: "73px", height: "40px", color: "#000", marginLeft: "15%" }}>
+                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
+                  <PVIcon />
+                  mit PV
+                </div>
+              </div>
+              <div style={{ display: "flex", width: "73px", height: "40px", color: "#000", marginLeft: "15%" }}>
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
+                  <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                    <PVIcon />
+                    <div style={{ display: "block", margin: "0 2px -2px 2px" }}>+</div>
+                    <ElectricityIcon />
+                  </div>
+                  mit PV und EMS
+                </div>
+              </div>
             </div>
-            <div>Laufende Stromkosten</div>
           </div>
-          <div style={{ display: "flex", flexDirection: "row", marginTop: "6px" }}>
-            <div style={{ marginRight: "15px" }}>
-              <div style={{ marginTop: "2px", width: "12px", height: "12px", borderRadius: "12px" }} class="pattern-round"></div>
+
+          <div style={{ display: "flex", flexDirection: "column", marginTop: "25px", fontFamily: "Bosch-Regular", fontSize: "12px" }}>
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <div style={{ marginRight: "15px" }}>
+                <div style={{ marginTop: "2px", width: "12px", height: "12px", background: "#007BC0", borderRadius: "12px" }}></div>
+              </div>
+              <div>Laufende Stromkosten</div>
             </div>
-            <div>Ersparnis</div>
+            <div style={{ display: "flex", flexDirection: "row", marginTop: "6px" }}>
+              <div style={{ marginRight: "15px" }}>
+                <div style={{ marginTop: "2px", width: "12px", height: "12px", borderRadius: "12px" }} class="pattern-round"></div>
+              </div>
+              <div>Ersparnis</div>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
-}
 
 export default withRouter(withTranslation()(Cost));

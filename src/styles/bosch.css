@@ -24,6 +24,11 @@ a {
   fill: #FFF;
 }
 
+
+a.card-input-narrow {
+  display: block;
+}
+
 .card-input-narrow {
   margin: 5px 20px 0 0;
   padding: 0px;

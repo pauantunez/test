@@ -293,7 +293,7 @@ class Additional extends React.Component {
                   <div>Finden Sie einen Experten in Ihrer Nähe, der Sie bei der Umsetzung unterstützt</div>
                 </div>
                 <div style={{ display: "flex", alignItems: "end" }}>
-                  <Button variant="outlined" startIcon={<MagnifyingGlassIcon />} disabled={this.state.restart} style={{ width: "225px", height: "70px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
+                  <Button variant="outlined" startIcon={<MagnifyingGlassIcon />} disabled={this.state.restart} style={{ width: "auto", height: "70px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
                     Jetzt Fachbetrieb finden
                   </Button>
                 </div>
@@ -309,40 +309,40 @@ class Additional extends React.Component {
                   <div>
                     <label>
                       <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
-                      <div class="panel panel-default card-input-narrow">
+                      <a href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/waermepumpen-854510-c/" target="_blank" class="panel panel-default card-input-narrow">
                         <div class="panel-heading-narrow">
                           <HeatpumpSmallIcon />
                         </div>
                         <div class="panel-body">Wärmepumpe</div>
-                      </div>
+                      </a>
                     </label>
                   </div>
                   <div>
                     <label>
                       <input type="radio" name="heating" value="OilLNG" class="card-input-element" />
-                      <div class="panel panel-default card-input-narrow">
+                      <a href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/solarthermieanlagen-854604-c/" target="_blank" class="panel panel-default card-input-narrow">
                         <div class="panel-heading-narrow">
                           <PhotovoltaicIcon />
                         </div>
                         <div class="panel-body">PV-Anlage</div>
-                      </div>
+                      </a>
                     </label>
                   </div>
                   <div>
                     <label>
                       <input type="radio" name="heating" value="BuildingInsulation" class="card-input-element" />
-                      <div class="panel panel-default card-input-narrow">
+                      <a href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/power-charge-7000i-19378337-p/" target="_blank" class="panel panel-default card-input-narrow">
                         <div class="panel-heading-narrow">
                           <WallboxIcon />
                         </div>
                         <div class="panel-body">Wallbox</div>
-                      </div>
+                      </a>
                     </label>
                   </div>
                   <div>
                     <label>
                       <input type="radio" name="heating" value="BuildingInsulation" class="card-input-element" />
-                      <div class="panel panel-default card-input-narrow">
+                      <a href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/energiemanagement-19317456-c/" target="_blank" class="panel panel-default card-input-narrow">
                         <div class="panel-heading-narrow">
                           <EnergyManagementIcon />
                         </div>
@@ -351,7 +351,7 @@ class Additional extends React.Component {
                           <br />
                           mentsystem
                         </div>
-                      </div>
+                      </a>
                     </label>
                   </div>
                 </div>
