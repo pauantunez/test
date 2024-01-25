@@ -134,11 +134,29 @@ class GridRevenue extends React.Component {
   };
 
   avoidPointAndCharacters = (event) => {
-
+    var inputValue =event.target.value;
     let ASCIICode = (event.which) ? event.which : event.keyCode;
-    if (!/[0-9,]/.test(event.key) && ASCIICode != 8) {
+    
+    if (ASCIICode === 44) {
+      // Verificar si ya hay una coma en el valor actual del campo de texto
+      if (inputValue.includes(',')) {
+        event.preventDefault(); // Evitar que se agregue otra coma
+        return false;
+      }
+    }
+
+    if (ASCIICode === 188) {
+      // Verificar si ya hay una coma en el valor actual del campo de texto
+      if (inputValue.includes(',')) {
+        event.preventDefault(); // Evitar que se agregue otra coma
+        return false;
+      }
+    }
+        
+    if (!/[0-9]/.test(event.key) && ASCIICode != 44 && ASCIICode != 188 && ASCIICode != 8) {
       event.preventDefault();
     }
+        
   };
 
   inputGridRevenue = (event) => {
@@ -291,7 +309,7 @@ class GridRevenue extends React.Component {
               </div>
               <div class="flexRow" style={{ flexDirection: 'column' }}>
                 <div class="input-margins">
-                  <TextField id="filled-basic" style={{ width: '100%' }} name="gridRevenue" placeholder="8,2" type="number" value={gridRevenue} label="Einspeisevergütung in Ct/kWh" variant="filled" InputLabelProps={{ shrink: true, }} onChange={this.inputGridRevenue} onKeyDown={this.avoidPointAndCharacters} />
+                  <TextField id="filled-basic" style={{ width: '100%' }} name="gridRevenue" placeholder="8,2" type="text" value={gridRevenue} label="Einspeisevergütung in Ct/kWh" variant="filled" InputLabelProps={{ shrink: true, }} onChange={this.inputGridRevenue} onKeyDown={this.avoidPointAndCharacters} />
                 </div>
                 <div style={{ marginTop: '70px' }}>
                   <InfoBox box="2-row-2-col-revenue" />
