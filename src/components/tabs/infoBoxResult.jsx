@@ -162,17 +162,17 @@ class InfoBoxResult extends React.Component {
             <div>
               <div class="infobox-row-container">
                 <div class="infobox-row" style={{ display: "block", lineHeight: "24px", borderBottom: "none" }}>
-                  Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{parseInt(electricityCostPVsavings).toLocaleString("de-DE")} € Stromkosten</strong>
+                  Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{parseInt(Math.abs(electricityCostPVsavings)).toLocaleString("de-DE")} € Stromkosten</strong>
                   {costOverTime == "1" && <span>&nbsp;pro Jahr sparen.</span>}
                   {costOverTime == "20" && <span>&nbsp;über 20 Jahre sparen.</span>}
                   <br />
                   <br />
-                  Mit einer <strong>PV-Anlage und einem Energiemanagementsystem</strong> lassen sich bis zu <strong>{parseInt(electricityCostPVEMSsavings).toLocaleString("de-DE")} € Stromkosten</strong>
+                  Mit einer <strong>PV-Anlage und einem Energiemanagementsystem</strong> lassen sich bis zu <strong>{parseInt(Math.abs(electricityCostPVEMSsavings)).toLocaleString("de-DE")} € Stromkosten</strong>
                   {costOverTime == "1" && <span>&nbsp;pro Jahr sparen.</span>}
                   {costOverTime == "20" && <span>&nbsp;über 20 Jahre sparen.</span>}
                   <br />
                   <br />
-                  Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis um bis zu <strong>{parseInt(electricityCostPVEMSsavings - electricityCostPVsavings).toLocaleString("de-DE")} €</strong> {costOverTime == "1" && <span>&nbsp;pro Jahr.</span>}
+                  Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis um bis zu <strong>{parseInt(Math.abs(electricityCostPVEMSsavings) - Math.abs(electricityCostPVsavings)).toLocaleString("de-DE")} €</strong> {costOverTime == "1" && <span>&nbsp;pro Jahr.</span>}
                   {costOverTime == "20" && <span>&nbsp;über 20 Jahre.</span>}
                   {/* über 20 Jahre. */}
                   {/* {costOverTime == "20" && (
@@ -229,26 +229,26 @@ class InfoBoxResult extends React.Component {
             <div>
               <div class="infobox-row-container">
                 <div class="infobox-row" style={{ display: "block", lineHeight: "24px", fontSize: "14px", borderBottom: "none" }}>
-                  <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Autarkiegrad: ca. {Math.round(this.pvUsagePercentage().toFixed(2))}%</h3>
+                <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Autarkiegrad: ca. {Math.round(this.pvUsagePercentage().toFixed(2))}%</h3>
+
+                <p>
+                  Das bedeutet: bis zu <strong>{Math.round(this.pvUsagePercentage().toFixed(2))}%</strong> Ihres Gesamtstrom-verbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
+                </p>
+
+                {offgridEMS == true ? (
                   <p>
-                    Das bedeutet: bis zu <strong>{Math.round(this.pvUsagePercentage().toFixed(2))}%</strong> Ihres Gesamtstrom-verbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
+                    <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>{Math.round(parseFloat(noEMSPercentageOffGrid).toFixed(2))}%</strong>.{" "}
                   </p>
-                  {offgridEMS == true && (
-                    <p>
-                      <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>{Math.round(parseFloat(noEMSPercentageOffGrid).toFixed(2))}%</strong>.{" "}
-                    </p>
-                  )}
-                  {offgridEMS == false && (
-                    <p>
-                      <strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Autarkiegrad</strong> auf bis zu <strong>{Math.round(parseFloat(this.pvUsagePercentage()))}%</strong> erhöhen.{" "}
-                    </p>
-                  )}
+                ) : (
                   <p>
-                    Ca.&nbsp;
-                    {offgridEMS == false && <strong>{Math.round(parseFloat(this.gridUsagePercentage()).toFixed(2))}%</strong>}
-                    {offgridEMS == true && <strong>{Math.round(parseFloat(this.gridUsagePercentage()).toFixed(2))}%</strong>}
-                    &nbsp;Ihres Gesamtstromverbrauchs beziehen Sie durch das <strong>öffentliche Stromnetz.</strong>
+                    <strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Autarkiegrad</strong> auf bis zu <strong>{Math.round(100 - infoBoxOffGridGridUsage)}%</strong> erhöhen.{" "}
                   </p>
+                )}
+
+                <p>
+                  Ca. <strong>{Math.round(parseFloat(this.gridUsagePercentage()).toFixed(2))}%</strong> Ihres Gesamtstromverbrauchs beziehen Sie durch das <strong>öffentliche Stromnetz.</strong>
+                </p>
+
                 </div>
               </div>
             </div>
@@ -258,26 +258,34 @@ class InfoBoxResult extends React.Component {
             <div>
               <div class="infobox-row-container">
                 <div class="infobox-row" style={{ display: "block", lineHeight: "24px", fontSize: "14px", borderBottom: "none" }}>
-                  <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Eigenverbrauchsanteil: ca. {Math.round(parseFloat(infoBoxCombinedHouseholdUsage).toFixed(2))}%</h3>
-                  <p>
-                    Das bedeutet: bis zu <strong>{Math.round(parseFloat(infoBoxCombinedHouseholdUsage).toFixed(2))}%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
-                  </p>
-                  {offgridEMS == true && (
-                    <p>
-                      <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>{Math.round(parseFloat(householdNoEMSpvPercent).toFixed(2))}%</strong>.{" "}
-                    </p>
+                  
+                  {offgridEMS == true ? (
+                    <div>
+                      <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Eigenverbrauchsanteil: ca. {Math.round(parseFloat(infoBoxCombinedHouseholdUsage).toFixed(2))}%</h3>
+                      <p>
+                        Das bedeutet: bis zu <strong>{Math.round(parseFloat(infoBoxCombinedHouseholdUsage).toFixed(2))}%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
+                      </p>
+                      <p>
+                        <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>{Math.round(parseFloat(householdNoEMSpvPercent).toFixed(2))}%</strong>.{" "}
+                      </p>
+                      <p>
+                        Ca. <strong>{Math.round(parseFloat(infoBoxHouseholdGridFeed).toFixed(2))}%</strong> Ihres eigens produzierten PV-Stroms speisen Sie in Sie ins <strong>öffentliche Stromnetz</strong> ein.
+                      </p>
+                    </div>
+                  ) : (
+                    <div>
+                      <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Eigenverbrauchsanteil: ca. {Math.round(parseFloat(householdNoEMSpvPercent).toFixed(2))}%</h3>
+                      <p>
+                        Das bedeutet: bis zu <strong>{Math.round(parseFloat(householdNoEMSpvPercent).toFixed(2))}%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
+                      </p>
+                      <p>
+                        <strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Autarkiegrad</strong> auf bis zu <strong>{Math.round(parseFloat(infoBoxCombinedHouseholdUsage).toFixed(2))}%</strong> erhöhen.{" "}
+                      </p>
+                      <p>
+                        Ca. <strong>{Math.round(parseFloat(100 - parseFloat(householdNoEMSpvPercent)).toFixed(2))}%</strong> Ihres eigens produzierten PV-Stroms speisen Sie in Sie ins <strong>öffentliche Stromnetz</strong> ein.
+                      </p>
+                    </div>
                   )}
-                  {offgridEMS == false && (
-                    <p>
-                      <strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Autarkiegrad</strong> auf bis zu <strong>{Math.round(this.pvUsagePercentage().toFixed(2))}%</strong> erhöhen.{" "}
-                    </p>
-                  )}
-                  <p>
-                    Ca.&nbsp;
-                    {offgridEMS == false && <strong>{Math.round(parseFloat(100 - parseFloat(householdNoEMSpvPercent)).toFixed(2))}%</strong>}
-                    {offgridEMS == true && <strong>{Math.round(parseFloat(infoBoxHouseholdGridFeed).toFixed(2))}%</strong>}
-                    &nbsp;Ihres eigens produzierten PV-Stroms speisen Sie in Sie ins <strong>öffentliche Stromnetz</strong> ein.
-                  </p>
                 </div>
               </div>
             </div>
