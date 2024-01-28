@@ -343,11 +343,11 @@ class BreakEven extends React.Component {
           pointStyle: "circle",
           pointRadius: (context) => {
             // Set the radius of the point closest to 0 as 3, and the others as 0.
-            return context.dataIndex === closestPosition01 ? 7 : 0;
+            return context.dataIndex === closestPosition01 ? 6 : 0;
           },
           pointHoverRadius: (context) => {
             // Set the radius hover of the point closest to 0 as 5, and the others as 0.
-            return context.dataIndex === closestPosition01 ? 8 : 0;
+            return context.dataIndex === closestPosition01 ? 7 : 0;
           },
         },
         {
@@ -362,11 +362,11 @@ class BreakEven extends React.Component {
           pointStyle: "circle",
           pointRadius: (context) => {
             // Set the radius of the point closest to 0 as 3, and the others as 0.
-            return context.dataIndex === closestPosition02 ? 7 : context.dataIndex === closestIntersectionPosition ? 7 : 0;
+            return context.dataIndex === closestPosition02 ? 6 : context.dataIndex === closestIntersectionPosition ? 6 : 0;
           },
           pointHoverRadius: (context) => {
             // Set the radius hover of the point closest to 0 as 5, and the others as 0.
-            return context.dataIndex === closestPosition02 ? 8 : context.dataIndex === closestIntersectionPosition ? 8 : 0;
+            return context.dataIndex === closestPosition02 ? 7 : context.dataIndex === closestIntersectionPosition ? 7 : 0;
           },
         },
         {
