@@ -472,13 +472,13 @@ class BreakEven extends React.Component {
         <div style={{ display: "flex", flexDirection: "column", marginTop: "25px", fontFamily: "Bosch-Regular", fontSize: "12px" }}>
           <div style={{ display: "flex", flexDirection: "row" }}>
             <div style={{ marginRight: "15px" }}>
-              <div style={{ marginTop: "2px", width: "12px", height: "12px", background: "#007BC0", borderRadius: "12px" }}></div>
+              <div style={{ marginTop: "2px", width: "14px", height: "14px", background: "#007BC0", borderRadius: "14px" }}></div>
             </div>
             <div>Kapitalentwicklung mit PV ohne Energiemanagementsystem *</div>
           </div>
           <div style={{ display: "flex", flexDirection: "row", marginTop: "6px" }}>
             <div style={{ marginRight: "15px" }}>
-              <div style={{ marginTop: "2px", width: "12px", height: "12px", background: "#18837E", borderRadius: "12px" }}></div>
+              <div style={{ marginTop: "2px", width: "14px", height: "14px", background: "#18837E", borderRadius: "14px" }}></div>
             </div>
             <div>Kapitalentwicklung mit PV mit Energiemanagementsystem</div>
           </div>
