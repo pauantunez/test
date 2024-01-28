@@ -297,7 +297,7 @@ class Main extends React.Component {
     const betriebskosten = (1 / 100) * (investmentCostResult + -1000);
     const einspeiseverguetung = pvOutputkWh * 1000 * (1 - (electricityCostHouseholdPercentage + 10) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100);
 
-    for (let index = 0; index < 23; index++) {
+    for (let index = 0; index < 50; index++) {
       const einsparungen = pvOutputkWh * 1000 * ((electricityCostHouseholdPercentage + 10) / 100) * (parseFloat(electricityCost / 100) * (1 + 0.02) ** [index + 1] - parseFloat(gridRevenue.replace(",", ".") / 100));
       if (this.state.heatpumpPVems.length == 0) {
         this.state.heatpumpPVems.push({ expenditure: investmentCostResult + -1000 });
@@ -328,7 +328,7 @@ class Main extends React.Component {
     const betriebskosten = (1 / 100) * investmentCostResult;
     const einspeiseverguetung = pvOutputkWh * 1000 * (1 - electricityCostHouseholdPercentage / 100) * parseFloat(gridRevenue.replace(",", ".") / 100);
 
-    for (let index = 0; index < 23; index++) {
+    for (let index = 0; index < 50; index++) {
       const einsparungen = pvOutputkWh * 1000 * (electricityCostHouseholdPercentage / 100) * (parseFloat(electricityCost / 100) * (1 + 0.02) ** [index + 1] - parseFloat(gridRevenue.replace(",", ".") / 100));
 
       if (this.state.heatpumpPV.length == 0) {

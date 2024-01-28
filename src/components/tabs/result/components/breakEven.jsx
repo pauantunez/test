@@ -238,23 +238,98 @@ class BreakEven extends React.Component {
     return closestPosition;
   }
 
+  breakEvenPV = () => {
+    const { heatpumpPV, heatpumpPVems } = this.context;
+    let closestPosition = 0;
+    let closestValue = Math.abs(heatpumpPV[0].expenditure);
+    for (let i = 1; i < heatpumpPV.length; i++) {
+      const actualValue = Math.abs(heatpumpPV[i].expenditure);
+
+      if (actualValue < closestValue) {
+        closestValue = actualValue;
+        closestPosition = i;
+      }
+    }
+    return closestPosition;
+  };
+
+  breakEvenPVems = () => {
+    /* const { heatpumpPV, heatpumpPVems } = this.context;
+    let yearBreakEven = heatpumpPVems.findIndex((n) => n.expenditure > 0);
+
+    return yearBreakEven; */
+    const { heatpumpPV, heatpumpPVems } = this.context;
+    let closestPosition = 0;
+    let closestValue = Math.abs(heatpumpPVems[0].expenditure);
+    for (let i = 1; i < heatpumpPVems.length; i++) {
+      const actualValue = Math.abs(heatpumpPVems[i].expenditure);
+
+      if (actualValue < closestValue) {
+        closestValue = actualValue;
+        closestPosition = i;
+      }
+    }
+
+    return closestPosition;
+  };
+
+
   render() {
     const { t } = this.props;
     const { overlayToggle } = this.state;
     const { heatpumpPV, heatpumpPVems, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
 
-    const datapoints = [heatpumpPVems[0].expenditure, heatpumpPVems[1].expenditure, heatpumpPVems[2].expenditure, heatpumpPVems[3].expenditure, heatpumpPVems[4].expenditure, heatpumpPVems[5].expenditure, heatpumpPVems[6].expenditure, heatpumpPVems[7].expenditure, heatpumpPVems[8].expenditure, heatpumpPVems[9].expenditure, heatpumpPVems[10].expenditure, heatpumpPVems[11].expenditure, heatpumpPVems[12].expenditure, heatpumpPVems[13].expenditure, heatpumpPVems[14].expenditure, heatpumpPVems[15].expenditure, heatpumpPVems[16].expenditure, heatpumpPVems[17].expenditure, heatpumpPVems[18].expenditure, heatpumpPVems[19].expenditure, heatpumpPVems[20].expenditure, heatpumpPVems[21].expenditure, heatpumpPVems[22].expenditure];
-    const closestPosition01 = this.findClosestPositionTo0(datapoints);
-
+    /*const datapoints = [heatpumpPVems[0].expenditure, heatpumpPVems[1].expenditure, heatpumpPVems[2].expenditure, heatpumpPVems[3].expenditure, heatpumpPVems[4].expenditure, heatpumpPVems[5].expenditure, heatpumpPVems[6].expenditure, heatpumpPVems[7].expenditure, heatpumpPVems[8].expenditure, heatpumpPVems[9].expenditure, heatpumpPVems[10].expenditure, heatpumpPVems[11].expenditure, heatpumpPVems[12].expenditure, heatpumpPVems[13].expenditure, heatpumpPVems[14].expenditure, heatpumpPVems[15].expenditure, heatpumpPVems[16].expenditure, heatpumpPVems[17].expenditure, heatpumpPVems[18].expenditure, heatpumpPVems[19].expenditure, heatpumpPVems[20].expenditure, heatpumpPVems[21].expenditure, heatpumpPVems[22].expenditure];
     const datapoints2 = [heatpumpPV[0].expenditure, heatpumpPV[1].expenditure, heatpumpPV[2].expenditure, heatpumpPV[3].expenditure, heatpumpPV[4].expenditure, heatpumpPV[5].expenditure, heatpumpPV[6].expenditure, heatpumpPV[7].expenditure, heatpumpPV[8].expenditure, heatpumpPV[9].expenditure, heatpumpPV[10].expenditure, heatpumpPV[11].expenditure, heatpumpPV[12].expenditure, heatpumpPV[13].expenditure, heatpumpPV[14].expenditure, heatpumpPV[15].expenditure, heatpumpPV[16].expenditure, heatpumpPV[17].expenditure, heatpumpPV[18].expenditure, heatpumpPV[19].expenditure, heatpumpPV[20].expenditure, heatpumpPV[21].expenditure, heatpumpPV[22].expenditure];
+    const closestPosition02 = this.findClosestPositionTo0(datapoints2);*/
+    // const datapoints3 = [0, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null, null, null, null, null, null, 0];
+
+    // Function to create datapoints array up to a certain position
+    function createDataPoints(dataArray, position) {
+      var points = [];
+      for (var i = 0; i <= position; i++) {
+        if (dataArray[i] !== undefined) {
+          points.push(dataArray[i].expenditure);
+        } else {
+          // Handle cases where dataArray[i] might be undefined
+          points.push(null); // or some other default value
+        }
+      }
+      return points;
+    }
+
+    // Create datapoints arrays
+    const numYears01 = this.breakEvenPV();
+    const numYears02 = this.breakEvenPVems();
+    const datapoints = createDataPoints(heatpumpPVems, numYears01 + 3);
+    const closestPosition01 = this.findClosestPositionTo0(datapoints);
+    const datapoints2 = createDataPoints(heatpumpPV, numYears01 + 3);
     const closestPosition02 = this.findClosestPositionTo0(datapoints2);
 
     const closestIntersectionPosition = this.findIntersectionPosition(datapoints, datapoints2);
 
-    const datapoints3 = [0, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null, null, null, null, null, null, 0];
+    function createDataPoints3(length) {
+      var points = new Array(length).fill(null);
+
+      // Set first and last positions to 0
+      points[0] = 0;
+      points[length - 1] = 0;
+
+      // Calculate middle index and set it to 0
+      var middleIndex = Math.floor(length / 2);
+      points[middleIndex] = 0;
+
+      return points;
+    }
+    const datapoints3 = createDataPoints3(numYears01 + 5 + 1); // Adding 1 because array is zero-indexed
+    var labels_values = [];
+    for (var i = 0; i <= numYears01 + 5; i++) {
+      labels_values.push(i.toString());
+    }
+    console.log("🚀 ~ BreakEven ~ render ~ labels_values:", labels_values)
 
     const lineData = {
-      labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22"],
+      labels: labels_values,
       datasets: [
         {
           label: false,
