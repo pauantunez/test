@@ -360,23 +360,16 @@ class Cost extends React.Component {
     const { costOverTime, setElectricityCostPVsavings, gridRevenue, electricityCostHouseholdPercentage, pvOutput, electricityCostOffGridPercentage, electricityCost } = this.context;
     var result;
 
-    // if (costOverTime === "1") {
-    //   result = this.electricityCostPV() - this.energyUseEuro(5, true);
-    // } else {
-    //   result = parseInt(parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVonly);
-    // }
-
     if (costOverTime === "1") {
-      // result = this.electricityCostPV20Years() - this.energyUseEuro(5, true);
-      result = Math.abs(this.electricityCostPV20Years() - this.energyUseEuro(5, true));
+      result = this.electricityCostPV() - this.energyUseEuro(5, true);
     } else {
-      result = Math.abs(this.energyUseEuro(5) - this.electricityCostPV20Years());
+      result = parseInt(parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVonly);
     }
 
-    // if (this.state.electricityCostPVsavings != result) {
-    //   this.setState({ electricityCostPVsavings: result });
-    //   setElectricityCostPVsavings(result);
-    // }
+    if (this.state.electricityCostPVsavings != result) {
+      this.setState({ electricityCostPVsavings: result });
+      setElectricityCostPVsavings(result);
+    }
 
     return result;
   };
@@ -386,8 +379,7 @@ class Cost extends React.Component {
     var result;
 
     if (costOverTime === "1") {
-      // result = this.electricityCostPVEMS() - this.energyUseEuro(5, true);
-      result = Math.abs((this.electricityCostPV20Years() * 0.95) - this.energyUseEuro(5, true));
+      result = this.electricityCostPVEMS() - this.energyUseEuro(5, true);
     } else {
       result = parseInt(parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVems);
     }
@@ -455,18 +447,33 @@ class Cost extends React.Component {
     var OHNE_PV_cost1year = Math.abs(parseInt(this.energyUseEuro(5).replace(".", "").replace(",", "")));
     var OHNE_PV_cost20years = Math.abs(parseInt(this.electricityCostNoPV20Years()));
 
+    sessionStorage.setItem("OHNE_PV_cost1year", OHNE_PV_cost1year)
+    sessionStorage.setItem("OHNE_PV_cost20years", OHNE_PV_cost20years)
+
     // Mit PV
     var costOnlyPV = parseInt(this.electricityCostPV20Years())
+    sessionStorage.setItem("costOnlyPV", costOnlyPV)
 
     var savingOnlyPV1year = OHNE_PV_cost1year - costOnlyPV
     var savingOnlyPV20years = OHNE_PV_cost20years - costOnlyPV
+
+    sessionStorage.setItem("savingOnlyPV1year", savingOnlyPV1year)
+    sessionStorage.setItem("savingOnlyPV20years", savingOnlyPV20years)
 
     // Mit PV und EMS
     var costPVandEMS1year =  parseInt(Math.abs(costOnlyPV * 0.95))
     var costPVandEMS20years = parseInt(Math.abs(costOnlyPV * 0.8))
 
+    sessionStorage.setItem("costPVandEMS1year", costPVandEMS1year)
+    sessionStorage.setItem("costPVandEMS20years", costPVandEMS20years)
+
     var savingPVandEMS1year = OHNE_PV_cost1year - costPVandEMS1year
     var savingPVandEMS20years = OHNE_PV_cost20years - costPVandEMS20years
+
+    sessionStorage.setItem("savingPVandEMS1year", savingPVandEMS1year)
+    sessionStorage.setItem("savingPVandEMS20years", savingPVandEMS20years)
+
+    console.log(sessionStorage)
 
     // Bar heights
     // var barHeights1year = this.adjustBarHeight(costOverTime, 212, OHNE_PV_cost1year, Math.abs(electricityCostPVsavings), Math.abs(electricityCostPVEMSsavings));
@@ -500,7 +507,7 @@ class Cost extends React.Component {
           <div style={{ display: "flex", flexDirection: "row", width: "100%", marginLeft: "17%", zIndex: "99999" }}>
             
             {/* ohne PV */}
-            <div style={{ display: "flex", width: "73px", height: `210px`, background: "#007BC0", color: "white", marginTop: "auto" }}>
+            <div style={{ display: "flex", width: "73px", height: `212px`, background: "#007BC0", color: "white", marginTop: "auto" }}>
               <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
                 {costOverTime == "1" && OHNE_PV_cost1year.toLocaleString("de-DE")}
                 {costOverTime == "1" && <span>&nbsp;€</span>}
@@ -514,7 +521,7 @@ class Cost extends React.Component {
               
               {/* Pattern bar 1 year */}
               { costOverTime == "1" && (
-                <div style={{ display: "flex", width: "73px", height: "105px", color: "white" }}>
+                <div style={{ display: "flex", width: "73px", height: "106px", color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
@@ -528,7 +535,7 @@ class Cost extends React.Component {
 
               {/* Pattern bar 20 years */}
               { costOverTime == "20" && (
-                <div style={{ display: "flex", width: "73px", height: "105px", color: "white" }}>
+                <div style={{ display: "flex", width: "73px", height: "106px", color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
@@ -542,7 +549,7 @@ class Cost extends React.Component {
 
               {/* Blue bar 1 year */}
 
-              <div style={{ display: "flex", width: "73px", height: "105px", color: "white" }}>
+              <div style={{ display: "flex", width: "73px", height: "106px", color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
@@ -560,7 +567,7 @@ class Cost extends React.Component {
             
               {/* Pattern bar 1 year */}
               { costOverTime == "1" && (
-                <div style={{ display: "flex", width: "73px", height: "105px", color: "white" }}>
+                <div style={{ display: "flex", width: "73px", height: "106px", color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
@@ -574,7 +581,7 @@ class Cost extends React.Component {
               
               {/* Pattern bar 20 years */}
               { costOverTime == "20" && (
-                <div style={{ display: "flex", width: "73px", height: "105px", color: "white" }}>
+                <div style={{ display: "flex", width: "73px", height: "106px", color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
@@ -588,7 +595,7 @@ class Cost extends React.Component {
 
               {/* Blue bar 1 year */}
               { costOverTime == "1" && (
-                <div style={{ display: "flex", width: "73px", height: `105px`, color: "white" }}>
+                <div style={{ display: "flex", width: "73px", height: `106px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
@@ -602,7 +609,7 @@ class Cost extends React.Component {
 
               {/* Blue bar 20 years */}
               { costOverTime == "20" && (
-                <div style={{ display: "flex", width: "73px", height: `105px`, color: "white" }}>
+                <div style={{ display: "flex", width: "73px", height: `106px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
