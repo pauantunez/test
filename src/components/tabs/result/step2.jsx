@@ -16,11 +16,13 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import InfoBoxResult from '../infoBoxResult';
 import InfoButton from '../infoButton';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale,
+import {
+  Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
-  Title, } from "chart.js";
+  Title,
+} from "chart.js";
 import { Doughnut, Line } from "react-chartjs-2";
 
 
@@ -38,120 +40,120 @@ var btnColor;
 const datapoints = [-27300, null, null, null, null, null, null, 0, null, null, null, 8000];
 
 class ResultStep2 extends React.Component {
-  
-    constructor(props) {
-        super(props)
-        
-        this.state = {
-            overlayToggle: false,
-            imprint: [],
-            theme: props.theme,
-            results: Array,
-            Eta_sh_gas_EDWW_MFH_Brine: String,
-        }
 
-        this.onInputchange = this.onInputchange.bind(this);
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      overlayToggle: false,
+      imprint: [],
+      theme: props.theme,
+      results: Array,
+      Eta_sh_gas_EDWW_MFH_Brine: String,
     }
 
-    static contextType = AppContext
+    this.onInputchange = this.onInputchange.bind(this);
+  }
 
-    componentWillMount() {
-      const { products, btnThemes, fonts, setFwdBtn } = this.context;
+  static contextType = AppContext
 
-      setFwdBtn(false);
+  componentWillMount() {
+    const { products, btnThemes, fonts, setFwdBtn } = this.context;
 
+    setFwdBtn(false);
+
+  }
+
+  componentDidMount() {
+    sessionStorage.clear()
+  }
+
+  inputPower_kW_PV_MFH = (event) => {
+    const { overlayToggle, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH } = this.context;
+
+    setPower_kW_PV_MFH(event.target.value)
+  };
+
+  inputTCO_thermal_EUR_a = (event) => {
+    const { overlayToggle, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a } = this.context;
+
+    setTCO_thermal_EUR_a(event.target.value)
+  };
+
+  onInputchange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+
+  async toggleModal() {
+
+    if (this.state.overlayToggle) {
+      this.setState({ overlayToggle: false })
+    } else {
+      this.setState({ overlayToggle: true })
     }
 
-    componentDidMount() {
-        
-    }
+  }
 
-    inputPower_kW_PV_MFH = (event) => { 
-      const { overlayToggle, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH } = this.context;
+  render() {
 
-      setPower_kW_PV_MFH(event.target.value) 
-    };
+    const { t } = this.props;
+    const { overlayToggle } = this.state;
+    const { Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption } = this.context;
 
-    inputTCO_thermal_EUR_a = (event) => { 
-      const { overlayToggle, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a } = this.context;
+    return (
+      <div style={{ marginLeft: '3%', marginRight: '3%' }}>
 
-      setTCO_thermal_EUR_a(event.target.value) 
-    };
+        <h3 style={{ display: 'flex', justifyContent: 'flex-start', textAlign: 'left', fontSize: '24px' }}>Ergebnis Teil 2: Stromverbrauch, Autarkie und Eigenverbrauch</h3>
 
-    onInputchange(event) {
-      this.setState({
-        [event.target.name]: event.target.value
-      });
-    }
-
-    async toggleModal() {
-
-      if(this.state.overlayToggle) {
-          this.setState({overlayToggle: false})
-      } else {
-          this.setState({overlayToggle: true})
-      }
-
-    }
-
-    render() {
-
-      const { t } = this.props;
-      const { overlayToggle } = this.state;
-      const { Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption } = this.context;
-
-          return  ( 
-          <div style={{marginLeft: '3%', marginRight: '3%'}}>
-            
-            <h3 style={{display: 'flex', justifyContent: 'flex-start', textAlign: 'left', fontSize: '24px'}}>Ergebnis Teil 2: Stromverbrauch, Autarkie und Eigenverbrauch</h3>
-
-            <div class="pie-flex" style={{display: 'flex', marginTop: '50px', height: '100%', width: '100%', flexWrap: 'nowrap', /*justifyContent: 'space-between',*/ /*alignContent: 'center'*/}}>
-              <div style={{alignItems: 'end'}}>
-                <div style={{fontFamily: 'Bosch-Bold', fontSize: '20px', textAlign: 'left'}}>Stromverbrauch</div>
-                <div style={{marginTop: '0px'}}>
-                    <ElectricityUse />
-                    <div style={{marginTop: '20px'}}>
-                      <InfoBoxResult box="electricity-use" />
-                    </div>
-                </div>
+        <div class="pie-flex" style={{ display: 'flex', marginTop: '50px', height: '100%', width: '100%', flexWrap: 'nowrap', /*justifyContent: 'space-between',*/ /*alignContent: 'center'*/ }}>
+          <div style={{ alignItems: 'end' }}>
+            <div style={{ fontFamily: 'Bosch-Bold', fontSize: '20px', textAlign: 'left' }}>Stromverbrauch</div>
+            <div style={{ marginTop: '0px' }}>
+              <ElectricityUse />
+              <div style={{ marginTop: '20px' }}>
+                <InfoBoxResult box="electricity-use" />
               </div>
-              <div class="flex-line" style={{width: '2px', height: 'initial', background: '#E0E2E5', marginLeft: '15px', marginRight: '15px'}}>
-
-              </div>
-              <div>
-                <div class="top-margins" style={{display: 'flex', flexDirection: 'row', fontFamily: 'Bosch-Bold', fontSize: '20px', textAlign: 'left'}}>
-                    <div style={{marginRight: '20px'}}>Autarkie</div> 
-                    <InfoButton color="#007BC0" size="14px" placement="right" text="Die Autarkie eines Energiesystems beschreibt, welcher Anteil des Stromverbrauchs durch die eigene PV-Anlage abgedeckt wird." />
-                </div>
-                <div style={{marginTop: '0px'}}>
-                    <OffGrid />
-                  <div style={{marginTop: '20px'}}>
-                      <InfoBoxResult box="off-grid" />
-                    </div>
-                </div>
-              </div>
-                <div class="flex-line" style={{width: '2px', height: 'initial', background: '#E0E2E5', marginLeft: '15px', marginRight: '15px'}}>
-
-              </div>
-              <div>
-              <div class="top-margins" style={{display: 'flex', flexDirection: 'row', fontFamily: 'Bosch-Bold', fontSize: '20px', textAlign: 'left'}}>
-                    <div style={{marginRight: '20px'}}>Eigenverbrauch</div> 
-                    <InfoButton color="#007BC0" size="14px" placement="right" text="Der Eigenverbrauch eines Energiesystems beschreibt, welcher Anteil des eigens produzierten PV-Stroms selbst verbraucht wird." />
-                </div>
-                <div style={{marginTop: '0px'}}>
-                    <HouseholdUse />
-                  <div style={{marginTop: '20px'}}>
-                      <InfoBoxResult box="household-use" />
-                    </div>
-                </div>
-              </div>
-
             </div>
-
-
+          </div>
+          <div class="flex-line" style={{ width: '2px', height: 'initial', background: '#E0E2E5', marginLeft: '15px', marginRight: '15px' }}>
 
           </div>
-          )
+          <div>
+            <div class="top-margins" style={{ display: 'flex', flexDirection: 'row', fontFamily: 'Bosch-Bold', fontSize: '20px', textAlign: 'left' }}>
+              <div style={{ marginRight: '20px' }}>Autarkie</div>
+              <InfoButton color="#007BC0" size="14px" placement="right" text="Die Autarkie eines Energiesystems beschreibt, welcher Anteil des Stromverbrauchs durch die eigene PV-Anlage abgedeckt wird." />
+            </div>
+            <div style={{ marginTop: '0px' }}>
+              <OffGrid />
+              <div style={{ marginTop: '20px' }}>
+                <InfoBoxResult box="off-grid" />
+              </div>
+            </div>
+          </div>
+          <div class="flex-line" style={{ width: '2px', height: 'initial', background: '#E0E2E5', marginLeft: '15px', marginRight: '15px' }}>
+
+          </div>
+          <div>
+            <div class="top-margins" style={{ display: 'flex', flexDirection: 'row', fontFamily: 'Bosch-Bold', fontSize: '20px', textAlign: 'left' }}>
+              <div style={{ marginRight: '20px' }}>Eigenverbrauch</div>
+              <InfoButton color="#007BC0" size="14px" placement="right" text="Der Eigenverbrauch eines Energiesystems beschreibt, welcher Anteil des eigens produzierten PV-Stroms selbst verbraucht wird." />
+            </div>
+            <div style={{ marginTop: '0px' }}>
+              <HouseholdUse />
+              <div style={{ marginTop: '20px' }}>
+                <InfoBoxResult box="household-use" />
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+
+      </div>
+    )
 
   }
 }

@@ -36,8 +36,7 @@ class InfoBoxResult extends React.Component {
   static contextType = AppContext;
 
   componentDidMount() {
-    this.breakEvenPoint();
-
+    this.breakEvenPoint()
     const MIT_GridUsagePercentage = sessionStorage.getItem("MIT_GridUsagePercentage")
     this.setState({ MIT_GridUsagePercentage })
   }
@@ -155,18 +154,7 @@ class InfoBoxResult extends React.Component {
     const { t } = this.props;
     const { costOverTime, electricityCostPVsavings, electricityCostPVEMSsavings, offgridEMS, noEMSPercentageOffGrid, householdNoEMSpvPercent, infoBoxOffGridGridUsage, infoBoxHouseholdGridFeed, infoBoxCombinedHouseholdUsage, BuildingEnegeryStandard, setBuildingEnegeryStandard, kfwValue, insulationValue, setInsulationValue, setKfwValue, OilLNGValue, setOilLNGValue, TCO_thermal_EUR_a, disabledOilUsage, OilUsageLiters, LNGUsage, disabledLNGUsage } = this.context;
 
-    //OffGrid
-    // Mit
-    var mitGridUsagePercentage = parseInt(sessionStorage.getItem("MIT_GridUsagePercentage"))
-    var mitNoEMSPercentage = parseInt(sessionStorage.getItem("MIT_NoEMSPercentageOffGrid"))
-    var mitPvUsagePercentage = parseInt(sessionStorage.getItem("MIT_PvUsagePercentage"))
-    var autarkiegradWithEMS = mitNoEMSPercentage + mitPvUsagePercentage
-
-    // Ohne
-    var ohneGridUsagePercentage = parseInt(sessionStorage.getItem("OHNE_GridUsagePercentage"))
-    var ohnePvUsagePercentage = parseInt(sessionStorage.getItem("OHNE_PvUsagePercentage"))
-
-    // Bar graph
+    // Electricity savings
     var OHNE_PV_cost1year = parseInt(sessionStorage.getItem("OHNE_PV_cost1year"))
     var OHNE_PV_cost20years = parseInt(sessionStorage.getItem("OHNE_PV_cost20years"))
 
@@ -184,15 +172,28 @@ class InfoBoxResult extends React.Component {
     var savingOnlyPv1yearMinusSavingEMS1year = savingPVandEMS1year - savingOnlyPV1year
     var savingOnlyPv20yearsMinusSavingEMS20years = savingPVandEMS20years - savingOnlyPV20years
 
+    //OffGrid
+    // Mit
+    var mitGridUsagePercentage = parseInt(sessionStorage.getItem("MIT_GridUsagePercentage"))
+    var mitNoEMSPercentage = parseInt(sessionStorage.getItem("MIT_NoEMSPercentageOffGrid"))
+    var mitPvUsagePercentage = parseInt(sessionStorage.getItem("MIT_PvUsagePercentage"))
+    var autarkiegradWithEMS = mitNoEMSPercentage + mitPvUsagePercentage
+
+    // Ohne
+    var ohneGridUsagePercentage = parseInt(sessionStorage.getItem("OHNE_GridUsagePercentage"))
+    var ohnePvUsagePercentage = parseInt(sessionStorage.getItem("OHNE_PvUsagePercentage"))
+
+
     //household-use
     // Mit
     var MIT_GridFeedPercentage = parseInt(sessionStorage.getItem("MIT_GridFeedPercentage"))
     var MIT_HouseholdUsagePercentage = parseInt(sessionStorage.getItem("MIT_HouseholdUsagePercentage"))
     var MIT_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("MIT_HouseholdNoEMSpvPercent"))
+    var eigenverbrauchsanteil = MIT_HouseholdUsagePercentage + MIT_HouseholdNoEMSpvPercent
     // Ohne 
     var Onhe_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent"))
     var Onhe_GridFeedPercentageNoEMS = parseInt(sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS"))
-
+    { console.log("🚀 ~ sessionStorage:", sessionStorage) }
     return (
       <Box component="span" class="infobox-container" style={{ fontSize: "16px", fontWeight: "400", boxShadow: "none", marginLeft: "0px", /*maxWidth: '500px',*/ padding: "16px" }}>
         <div>
@@ -317,24 +318,38 @@ class InfoBoxResult extends React.Component {
             <div>
               <div class="infobox-row-container">
                 <div class="infobox-row" style={{ display: "block", lineHeight: "24px", fontSize: "14px", borderBottom: "none" }}>
-                  <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Eigenverbrauchsanteil: ca. {Math.round(parseFloat(infoBoxCombinedHouseholdUsage).toFixed(2))}%</h3>
-                  <p>
-                    Das bedeutet: bis zu <strong>{Math.round(parseFloat(infoBoxCombinedHouseholdUsage).toFixed(2))}%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
-                  </p>
+
+                  {offgridEMS == true && (
+                    <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Eigenverbrauchsanteil: ca. {eigenverbrauchsanteil}%</h3>
+
+                  )}
+                  {offgridEMS == false && (
+                    <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Eigenverbrauchsanteil: ca. {Onhe_HouseholdNoEMSpvPercent}%</h3>
+                  )}
                   {offgridEMS == true && (
                     <p>
-                      <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>{Math.round(parseFloat(householdNoEMSpvPercent).toFixed(2))}%</strong>.{" "}
+                      Das bedeutet: bis zu <strong>{Math.round(parseFloat(eigenverbrauchsanteil).toFixed(2))}%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
                     </p>
                   )}
                   {offgridEMS == false && (
                     <p>
-                      <strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Autarkiegrad</strong> auf bis zu <strong>{Math.round(this.pvUsagePercentage().toFixed(2))}%</strong> erhöhen.{" "}
+                      Das bedeutet: bis zu <strong>{Math.round(parseFloat(Onhe_HouseholdNoEMSpvPercent).toFixed(2))}%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
+                    </p>)}
+
+                  {offgridEMS == true && (
+                    <p>
+                      <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>{Onhe_HouseholdNoEMSpvPercent}%</strong>.{" "}
+                    </p>
+                  )}
+                  {offgridEMS == false && (
+                    <p>
+                      <strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Autarkiegrad</strong> auf bis zu <strong>{eigenverbrauchsanteil}%</strong> erhöhen.{" "}
                     </p>
                   )}
                   <p>
                     Ca.&nbsp;
-                    {offgridEMS == false && <strong>{Math.round(parseFloat(100 - parseFloat(householdNoEMSpvPercent)).toFixed(2))}%</strong>}
-                    {offgridEMS == true && <strong>{Math.round(parseFloat(infoBoxHouseholdGridFeed).toFixed(2))}%</strong>}
+                    {offgridEMS == false && <strong>{Onhe_GridFeedPercentageNoEMS}%</strong>}
+                    {offgridEMS == true && <strong>{MIT_GridFeedPercentage}%</strong>}
                     &nbsp;Ihres eigens produzierten PV-Stroms speisen Sie ins <strong>öffentliche Stromnetz</strong>.
                   </p>
                 </div>
