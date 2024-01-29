@@ -285,7 +285,7 @@ class Cost extends React.Component {
   };
 
   electricityCostPV20Years = () => {
-    const { PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, pvOutputkWh, homeStorageSize, energyUsagekWh, electricityCost, electricityCostOffGridPercentage } = this.context;
+    const { costOverTime, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, pvOutputkWh, homeStorageSize, energyUsagekWh, electricityCost, electricityCostOffGridPercentage } = this.context;
     var investmentCostResult;
 
     let PVcostInTable = PVcostLookupTable.find((o) => o.pv === pvOutputkWh);
@@ -298,16 +298,24 @@ class Cost extends React.Component {
     }
 
     if (investmentCostEUR > 0) {
-      investmentCostResult = parseInt(investmentCostEUR) * -1;
+      investmentCostResult = Math.abs(parseInt(investmentCostEUR) * -1);
     }
 
-    console.log(investmentCostResult);
+    console.log("Pruebas: electricityCostOffGridPercentage -> ", electricityCostOffGridPercentage)
+    console.log("Pruebas: energyUsagekWh -> ", energyUsagekWh)
+    console.log("Pruebas: electricityCost -> ", electricityCost)
+    console.log("Pruebas: investmentCostResult -> ", investmentCostResult)
 
-    const result = Math.abs(((1 - electricityCostOffGridPercentage / 100) * energyUsagekWh * ((parseFloat(electricityCost) / 100) * (1 + 0.02)) * (1 - (0.02 + 1) ** 20)) / 0.02);
-
-    console.log("El resultado es: " + result);
-
-    return this.electricityCostNoPV20Years();
+    if (costOverTime == "1")
+    {
+      const result = Math.abs(((1 - electricityCostOffGridPercentage / 100) * energyUsagekWh * ((parseFloat(electricityCost) / 100))));
+      return Math.abs(result)
+    }
+    else 
+    {
+      const result = Math.abs(((1 - electricityCostOffGridPercentage / 100) * energyUsagekWh * ((parseFloat(electricityCost) / 100) * (1 + 0.02)) * (1 - (0.02 + 1) ** 20)) / 0.02);
+      return Math.abs(result + investmentCostResult);
+    }
   };
 
   runningCostPVonly = () => {
@@ -462,25 +470,30 @@ class Cost extends React.Component {
     const { overlayToggle } = this.state;
     const { electricityCostPVsavings, electricityCostPVEMSsavings, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
 
-    // Ohne PV - OK
-    // var OHNE_PV_cost1year = parseInt(this.energyUseEuro(5))
+    // Ohne PV
     var OHNE_PV_cost1year = Math.abs(parseInt(this.energyUseEuro(5).replace(".", "").replace(",", "")));
     var OHNE_PV_cost20years = Math.abs(parseInt(this.electricityCostNoPV20Years()));
 
     // Mit PV
-    var MIT_PV_cost1year = OHNE_PV_cost1year - Math.abs(electricityCostPVsavings);
-    var MIT_PV_cost20years = OHNE_PV_cost20years - Math.abs(electricityCostPVsavings);
-    // var MIT_PV_cost20years = OHNE_PV_cost20years - Math.abs(electricityCostPVsavings) + this.state.totalRunningCostPVonly;
+    var costOnlyPV = parseInt(this.electricityCostPV20Years())
+
+    var savingOnlyPV1year = OHNE_PV_cost1year - costOnlyPV
+    var savingOnlyPV20years = OHNE_PV_cost20years - costOnlyPV
 
     // Mit PV und EMS
-    var MIT_PV_EMS_cost1year = OHNE_PV_cost1year - Math.abs(electricityCostPVEMSsavings);
-    var MIT_PV_EMS_cost20years = OHNE_PV_cost20years - Math.abs(electricityCostPVEMSsavings);
-    // var MIT_PV_EMS_cost20years = OHNE_PV_cost20years - Math.abs(electricityCostPVEMSsavings) + this.state.totalRunningCostPVems;
+    var costPVandEMS1year =  parseInt(Math.abs(costOnlyPV * 0.95))
+    var costPVandEMS20years = parseInt(Math.abs(costOnlyPV * 0.8))
+
+    var savingPVandEMS1year = OHNE_PV_cost1year - costPVandEMS1year
+    var savingPVandEMS20years = OHNE_PV_cost20years - costPVandEMS20years
 
     // Bar heights
     var barHeights1year = this.adjustBarHeight(costOverTime, 212, OHNE_PV_cost1year, Math.abs(electricityCostPVsavings), Math.abs(electricityCostPVEMSsavings));
     var barHeights20years = this.adjustBarHeight(costOverTime, 212, OHNE_PV_cost20years, Math.abs(electricityCostPVsavings), Math.abs(electricityCostPVEMSsavings));
     var selectedBarHeights = costOverTime == "1" ? barHeights1year : barHeights20years;
+
+
+    console.log("electricityCostPVsavings ", electricityCostPVsavings)
 
     return (
       <div>
@@ -523,40 +536,26 @@ class Cost extends React.Component {
               
               {/* Pattern bar 1 year */}
               { costOverTime == "1" && (
-                <div style={{ display: "flex", width: "73px", height: `${MIT_PV_cost1year < 0 ? 210 : 105}px`, color: "white" }}>
+                <div style={{ display: "flex", width: "73px", height: "105px", color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
-
-                        {MIT_PV_cost1year > 0 && Math.abs(electricityCostPVsavings).toLocaleString("de-DE")}
-                        {MIT_PV_cost1year < 0 && (electricityCostPVsavings - Math.abs(MIT_PV_cost1year)).toLocaleString("de-DE")}
+                        {savingOnlyPV1year.toLocaleString("DE-de")}
                         <span>&nbsp;€</span>
-
-                        {MIT_PV_cost1year < 0 && (
-                          <p style={{ marginBottom: "0px", color: "green" }}><span>+</span>{Math.abs(MIT_PV_cost1year).toLocaleString("de-DE")} €</p>
-                        )}
-
                       </span>
                     </div>
                   </div>
                 </div>
               )}
-              
+
               {/* Pattern bar 20 years */}
               { costOverTime == "20" && (
-                <div style={{ display: "flex", width: "73px", height: `${MIT_PV_cost20years < 0 ? 210 : 105}px`, color: "white" }}>
+                <div style={{ display: "flex", width: "73px", height: "105px", color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
-
-                        {MIT_PV_cost20years > 0 && Math.abs(electricityCostPVsavings).toLocaleString("de-DE")}
-                        {MIT_PV_cost20years < 0 && (electricityCostPVsavings - Math.abs(MIT_PV_cost20years)).toLocaleString("de-DE")}
+                        {savingOnlyPV20years.toLocaleString("DE-de")}
                         <span>&nbsp;€</span>
-
-                        {MIT_PV_cost20years < 0 && (
-                          <p style={{ marginBottom: "0px", color: "green" }}><span>+</span>{Math.abs(MIT_PV_cost20years).toLocaleString("de-DE")} €</p>
-                        )}
-
                       </span>
                     </div>
                   </div>
@@ -564,32 +563,17 @@ class Cost extends React.Component {
               )}
 
               {/* Blue bar 1 year */}
-              { costOverTime == "1" && MIT_PV_cost1year > 0 && (
-                <div style={{ display: "flex", width: "73px", height: `105px`, color: "white" }}>
-                  <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                        {Math.abs(MIT_PV_cost1year).toLocaleString("de-DE")}
-                        <span>&nbsp;€</span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              )}
 
-              {/* Blue bar 20 years */}
-              { costOverTime == "20" && MIT_PV_cost20years > 0 && (
-                <div style={{ display: "flex", width: "73px", height: `105px`, color: "white" }}>
+              <div style={{ display: "flex", width: "73px", height: "105px", color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                        {Math.abs(MIT_PV_cost20years).toLocaleString("de-DE")}
+                        {costOnlyPV.toLocaleString("de-DE")}
                         <span>&nbsp;€</span>
                       </span>
                     </div>
                   </div>
                 </div>
-              )}
               
             </div>
 
@@ -598,40 +582,26 @@ class Cost extends React.Component {
             
               {/* Pattern bar 1 year */}
               { costOverTime == "1" && (
-                <div style={{ display: "flex", width: "73px", height: `${MIT_PV_EMS_cost1year < 0 ? 210 : 105}px`, color: "white" }}>
+                <div style={{ display: "flex", width: "73px", height: "105px", color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
-
-                        {MIT_PV_EMS_cost1year > 0 && Math.abs(electricityCostPVEMSsavings).toLocaleString("de-DE")}
-                        {MIT_PV_EMS_cost1year < 0 && (electricityCostPVEMSsavings - Math.abs(MIT_PV_EMS_cost1year)).toLocaleString("de-DE")}
+                        {savingPVandEMS1year.toLocaleString("DE-de")}
                         <span>&nbsp;€</span>
-
-                        {MIT_PV_EMS_cost1year < 0 && (
-                          <p style={{ marginBottom: "0px", color: "green" }}><span>+</span>{Math.abs(MIT_PV_EMS_cost1year).toLocaleString("de-DE")} €</p>
-                        )}
-
                       </span>
                     </div>
                   </div>
                 </div>
               )}
-
+              
               {/* Pattern bar 20 years */}
               { costOverTime == "20" && (
-                <div style={{ display: "flex", width: "73px", height: `${MIT_PV_EMS_cost20years < 0 ? 210 : 105}px`, color: "white" }}>
+                <div style={{ display: "flex", width: "73px", height: "105px", color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
-
-                        {MIT_PV_EMS_cost20years > 0 && electricityCostPVEMSsavings.toLocaleString("de-DE")}
-                        {MIT_PV_EMS_cost20years < 0 && (electricityCostPVEMSsavings - Math.abs(MIT_PV_EMS_cost20years)).toLocaleString("de-DE")}
+                        {savingPVandEMS20years.toLocaleString("DE-de")}
                         <span>&nbsp;€</span>
-
-                        {MIT_PV_EMS_cost20years < 0 && (
-                          <p style={{ marginBottom: "0px", color: "green" }}><span>+</span>{Math.abs(MIT_PV_EMS_cost20years).toLocaleString("de-DE")} €</p>
-                        )}
-
                       </span>
                     </div>
                   </div>
@@ -639,12 +609,12 @@ class Cost extends React.Component {
               )}
 
               {/* Blue bar 1 year */}
-              { costOverTime == "1" && MIT_PV_EMS_cost1year > 0 && (
+              { costOverTime == "1" && (
                 <div style={{ display: "flex", width: "73px", height: `105px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                        {Math.abs(MIT_PV_EMS_cost1year).toLocaleString("de-DE")}
+                        {costPVandEMS1year.toLocaleString("de-DE")}
                         <span>&nbsp;€</span>
                       </span>
                     </div>
@@ -653,12 +623,12 @@ class Cost extends React.Component {
               )}
 
               {/* Blue bar 20 years */}
-              { costOverTime == "20" && MIT_PV_EMS_cost20years > 0 && (
-                <div style={{ display: "flex", width: "73px", height: '105px', color: "white" }}>
+              { costOverTime == "20" && (
+                <div style={{ display: "flex", width: "73px", height: `105px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                        {Math.abs(MIT_PV_EMS_cost20years).toLocaleString("de-DE")}
+                        {costPVandEMS20years.toLocaleString("de-DE")}
                         <span>&nbsp;€</span>
                       </span>
                     </div>
