@@ -165,6 +165,24 @@ class InfoBoxResult extends React.Component {
     var ohneGridUsagePercentage = parseInt(sessionStorage.getItem("OHNE_GridUsagePercentage"))
     var ohnePvUsagePercentage = parseInt(sessionStorage.getItem("OHNE_PvUsagePercentage"))
 
+    // Bar graph
+    var OHNE_PV_cost1year = parseInt(sessionStorage.getItem("OHNE_PV_cost1year"))
+    var OHNE_PV_cost20years = parseInt(sessionStorage.getItem("OHNE_PV_cost20years"))
+
+    var costOnlyPV = parseInt(sessionStorage.getItem("costOnlyPV"))
+
+    var costPVandEMS1year = parseInt(sessionStorage.getItem("costPVandEMS1year"))
+    var costPVandEMS20years = parseInt(sessionStorage.getItem("costPVandEMS20years"))
+
+    var savingOnlyPV1year = parseInt(sessionStorage.getItem("savingOnlyPV1year"))
+    var savingOnlyPV20years = parseInt(sessionStorage.getItem("savingOnlyPV20years"))
+
+    var savingPVandEMS1year = parseInt(sessionStorage.getItem("savingPVandEMS1year"))
+    var savingPVandEMS20years = parseInt(sessionStorage.getItem("savingPVandEMS20years"))
+
+    var savingOnlyPv1yearMinusSavingEMS1year = savingPVandEMS1year - savingOnlyPV1year
+    var savingOnlyPv20yearsMinusSavingEMS20years = savingPVandEMS20years - savingOnlyPV20years
+
     return (
       <Box component="span" class="infobox-container" style={{ fontSize: "16px", fontWeight: "400", boxShadow: "none", marginLeft: "0px", /*maxWidth: '500px',*/ padding: "16px" }}>
         <div>
@@ -172,22 +190,26 @@ class InfoBoxResult extends React.Component {
             <div>
               <div class="infobox-row-container">
                 <div class="infobox-row" style={{ display: "block", lineHeight: "24px", borderBottom: "none" }}>
-                  Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{parseInt(electricityCostPVsavings).toLocaleString("de-DE")} € Stromkosten </strong>
-                  {costOverTime == "1" && <span>&nbsp;pro Jahr sparen.</span>}
-                  {costOverTime == "20" && <span>&nbsp;über 20 Jahre sparen.</span>}
-                  <br />
-                  <br />
-                  Mit einer <strong>PV-Anlage und einem Energiemanagementsystem</strong> lassen sich bis zu <strong>{parseInt(electricityCostPVEMSsavings).toLocaleString("de-DE")} € Stromkosten</strong>
-                  {costOverTime == "1" && <span>&nbsp;pro Jahr sparen.</span>}
-                  {costOverTime == "20" && <span>&nbsp;über 20 Jahre sparen.</span>}
-                  <br />
-                  <br />
-                  Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis um bis zu <strong>{parseInt(electricityCostPVEMSsavings - electricityCostPVsavings).toLocaleString("de-DE")} €</strong> {costOverTime == "1" && <span>&nbsp;pro Jahr.</span>}
-                  {costOverTime == "20" && <span>&nbsp;über 20 Jahre.</span>}
-                  {/* über 20 Jahre. */}
-                  {/* {costOverTime == "20" && (
-                    
-                  )} */}
+
+                  {costOverTime == "1" && (
+                    <p>Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{savingOnlyPV1year.toLocaleString("de-DE")} € Stromkosten </strong>pro Jahr sparen.</p>
+                  )}
+                  {costOverTime == "1" && (
+                    <p>Mit einer <strong>PV-Anlage und einem Energiemanagementsystem</strong> lassen sich bis zu <strong>{savingPVandEMS1year.toLocaleString("de-DE")} € Stromkosten</strong> pro Jahr sparen.</p>
+                  )}
+                  {costOverTime == "1" && (
+                    <p>Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis um bis zu <strong>{savingOnlyPv1yearMinusSavingEMS1year.toLocaleString("de-DE")} €</strong> pro Jahr.</p>
+                  )}
+
+                  {costOverTime == "20" && (
+                    <p>Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{savingOnlyPV20years.toLocaleString("de-DE")} € Stromkosten</strong> über 20 Jahre sparen.</p>
+                  )}
+                  {costOverTime == "20" && (
+                    <p>Mit einer <strong>PV-Anlage und einem Energiemanagementsystem</strong> lassen sich bis zu <strong>{savingPVandEMS20years.toLocaleString("de-DE")} € Stromkosten</strong> über 20 Jahre sparen</p>
+                  )}
+                  {costOverTime == "20" && (
+                    <p>Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis um bis zu <strong>{savingOnlyPv20yearsMinusSavingEMS20years.toLocaleString("de-DE")} €</strong> über 20 Jahre.</p>
+                  )}
                 </div>
               </div>
             </div>
