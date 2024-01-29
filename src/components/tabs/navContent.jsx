@@ -89,8 +89,6 @@ class NavContent extends React.Component {
     const { setWindowWidth, setWindowHeight, windowHeight, windowWidth } = this.context;
     setWindowWidth(window.innerWidth);
     setWindowHeight(window.innerHeight);
-
-    console.log(windowWidth);
   };
 
   componentDidMount() {
