@@ -227,7 +227,7 @@ class InfoBoxResult extends React.Component {
                 <div class="infobox-row" style={{ display: "block", lineHeight: "24px", fontSize: "14px", borderBottom: "none" }}>
                   <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Autarkiegrad: ca. {Math.round(this.pvUsagePercentage().toFixed(2))}%</h3>
                   <p>
-                    Das bedeutet: bis zu <strong>{Math.round(this.pvUsagePercentage().toFixed(2))}%</strong> Ihres Gesamtstrom-verbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
+                    Das bedeutet: bis zu <strong>{Math.round(this.pvUsagePercentage().toFixed(2))}%</strong> Ihres Gesamtstromverbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
                   </p>
                   {offgridEMS == true && (
                     <p>
@@ -272,7 +272,7 @@ class InfoBoxResult extends React.Component {
                     Ca.&nbsp;
                     {offgridEMS == false && <strong>{Math.round(parseFloat(100 - parseFloat(householdNoEMSpvPercent)).toFixed(2))}%</strong>}
                     {offgridEMS == true && <strong>{Math.round(parseFloat(infoBoxHouseholdGridFeed).toFixed(2))}%</strong>}
-                    &nbsp;Ihres eigens produzierten PV-Stroms speisen Sie in Sie ins <strong>öffentliche Stromnetz</strong> ein.
+                    &nbsp;Ihres eigens produzierten PV-Stroms speisen Sie ins <strong>öffentliche Stromnetz</strong>.
                   </p>
                 </div>
               </div>
