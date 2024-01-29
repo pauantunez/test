@@ -259,6 +259,17 @@ class HouseholdUse extends React.Component {
       var roundedHouseholdUsagePercentage = Math.round(parseFloat(this.householdUsagePercentage()) - householdNoEMSpvPercent);
       var roundedHouseholdNoEMSpvPercent = Math.round(parseFloat(householdNoEMSpvPercent));
       roundedGridFeedPercentage = this.adjustPercentage(roundedGridFeedPercentage, roundedHouseholdUsagePercentage, roundedHouseholdNoEMSpvPercent);
+
+      if (sessionStorage.getItem("MIT_GridFeedPercentage") != '') {
+        sessionStorage.setItem("MIT_GridFeedPercentage", roundedGridFeedPercentage)
+      }
+      if (sessionStorage.getItem("MIT_HouseholdUsagePercentage") != '') {
+        sessionStorage.setItem("MIT_HouseholdUsagePercentage", roundedHouseholdUsagePercentage)
+      }
+      if (sessionStorage.getItem("MIT_HouseholdNoEMSpvPercent") != '') {
+        sessionStorage.setItem("MIT_HouseholdNoEMSpvPercent", roundedHouseholdNoEMSpvPercent)
+      }
+
       VictoryPieData2 = [
         { x: 3, y: this.gridFeedPercentage(), name: "grid", label: roundedGridFeedPercentage + "%", img: "/img/grid_out.svg", color: "#A4ABB3" },
         { x: 2, y: this.householdUsagePercentage() - householdNoEMSpvPercent, name: "plug", label: roundedHouseholdUsagePercentage + "%", img: "/img/plug.svg", color: "#00884A" },
@@ -277,6 +288,13 @@ class HouseholdUse extends React.Component {
       var roundedGridFeedPercentageNoEMS = Math.round(parseFloat(this.gridFeedPercentageNoEMS()));
       var roundedHouseholdNoEMSpvPercent = Math.round(parseFloat(householdNoEMSpvPercent));
       roundedHouseholdNoEMSpvPercent = this.adjustPercentage(roundedHouseholdNoEMSpvPercent, roundedGridFeedPercentageNoEMS);
+
+      if (sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent") != '') {
+        sessionStorage.setItem("Onhe_HouseholdNoEMSpvPercent", roundedHouseholdNoEMSpvPercent)
+      }
+      if (sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS") != '') {
+        sessionStorage.setItem("Onhe_GridFeedPercentageNoEMS", roundedGridFeedPercentageNoEMS)
+      }
       VictoryPieData2 = [
         { x: 2, y: this.gridFeedPercentageNoEMS(), name: "grid", label: roundedGridFeedPercentageNoEMS + "%", img: "/img/grid_out.svg", color: "#A4ABB3" },
         { x: 1, y: householdNoEMSpvPercent, name: "pv", label: roundedHouseholdNoEMSpvPercent + "%", img: "/img/house_pv.svg", color: "#18837E" },
