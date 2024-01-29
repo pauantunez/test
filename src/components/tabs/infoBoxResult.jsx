@@ -29,6 +29,7 @@ class InfoBoxResult extends React.Component {
       theme: props.theme,
       text: props.text,
       boxType: props.box,
+      MIT_GridUsagePercentage: 0
     };
   }
 
@@ -36,6 +37,9 @@ class InfoBoxResult extends React.Component {
 
   componentDidMount() {
     this.breakEvenPoint();
+    
+    const MIT_GridUsagePercentage = sessionStorage.getItem("MIT_GridUsagePercentage")
+    this.setState({ MIT_GridUsagePercentage })
   }
 
   energyUsageCombined = () => {
@@ -154,6 +158,16 @@ class InfoBoxResult extends React.Component {
     const { t } = this.props;
     const { costOverTime, electricityCostPVsavings, electricityCostPVEMSsavings, offgridEMS, noEMSPercentageOffGrid, householdNoEMSpvPercent, infoBoxOffGridGridUsage, infoBoxHouseholdGridFeed, infoBoxCombinedHouseholdUsage, BuildingEnegeryStandard, setBuildingEnegeryStandard, kfwValue, insulationValue, setInsulationValue, setKfwValue, OilLNGValue, setOilLNGValue, TCO_thermal_EUR_a, disabledOilUsage, OilUsageLiters, LNGUsage, disabledLNGUsage } = this.context;
 
+    // Mit
+    var mitGridUsagePercentage = parseInt(sessionStorage.getItem("MIT_GridUsagePercentage"))
+    var mitNoEMSPercentage = parseInt(sessionStorage.getItem("MIT_NoEMSPercentageOffGrid"))
+    var mitPvUsagePercentage = parseInt(sessionStorage.getItem("MIT_PvUsagePercentage"))
+    var autarkiegradWithEMS = mitNoEMSPercentage + mitPvUsagePercentage
+
+    // Ohne
+    var ohneGridUsagePercentage = parseInt(sessionStorage.getItem("OHNE_GridUsagePercentage"))
+    var ohnePvUsagePercentage = parseInt(sessionStorage.getItem("OHNE_PvUsagePercentage"))
+
     return (
       <Box component="span" class="infobox-container" style={{ fontSize: "16px", fontWeight: "400", boxShadow: "none", marginLeft: "0px", /*maxWidth: '500px',*/ padding: "16px" }}>
         <div>
@@ -161,7 +175,7 @@ class InfoBoxResult extends React.Component {
             <div>
               <div class="infobox-row-container">
                 <div class="infobox-row" style={{ display: "block", lineHeight: "24px", borderBottom: "none" }}>
-                  Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{parseInt(electricityCostPVsavings).toLocaleString("de-DE")} € Stromkosten</strong>
+                  Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{parseInt(electricityCostPVsavings).toLocaleString("de-DE")} € Stromkosten </strong>
                   {costOverTime == "1" && <span>&nbsp;pro Jahr sparen.</span>}
                   {costOverTime == "20" && <span>&nbsp;über 20 Jahre sparen.</span>}
                   <br />
@@ -228,24 +242,40 @@ class InfoBoxResult extends React.Component {
             <div>
               <div class="infobox-row-container">
                 <div class="infobox-row" style={{ display: "block", lineHeight: "24px", fontSize: "14px", borderBottom: "none" }}>
-                  <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Autarkiegrad: ca. {Math.round(this.pvUsagePercentage().toFixed(2))}%</h3>
-                  <p>
-                    Das bedeutet: bis zu <strong>{Math.round(this.pvUsagePercentage().toFixed(2))}%</strong> Ihres Gesamtstrom-verbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
-                  </p>
+
+                  {offgridEMS == true && (
+                    <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Autarkiegrad: ca. {autarkiegradWithEMS}%</h3>
+                  )}
+                  {offgridEMS == false && (
+                    <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Autarkiegrad: ca. {ohnePvUsagePercentage}%</h3>
+                  )}
+
                   {offgridEMS == true && (
                     <p>
-                      <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>{Math.round(parseFloat(noEMSPercentageOffGrid).toFixed(2))}%</strong>.{" "}
+                      Das bedeutet: bis zu <strong>{autarkiegradWithEMS}%</strong> Ihres Gesamtstrom-verbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
                     </p>
                   )}
                   {offgridEMS == false && (
                     <p>
-                      <strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Autarkiegrad</strong> auf bis zu <strong>{Math.round(parseFloat(this.pvUsagePercentage()))}%</strong> erhöhen.{" "}
+                      Das bedeutet: bis zu <strong>{ohnePvUsagePercentage}%</strong> Ihres Gesamtstrom-verbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
                     </p>
                   )}
+                  
+                  {offgridEMS == true && (
+                    <p>
+                      <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>{mitNoEMSPercentage}%</strong>.{" "}
+                    </p>
+                  )}
+                  {offgridEMS == false && (
+                    <p>
+                      <strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Autarkiegrad</strong> auf bis zu <strong>{autarkiegradWithEMS}%</strong> erhöhen.{" "}
+                    </p>
+                  )}
+
                   <p>
                     Ca.&nbsp;
-                    {offgridEMS == false && <strong>{Math.round(parseFloat(this.gridUsagePercentage()).toFixed(2))}%</strong>}
-                    {offgridEMS == true && <strong>{Math.round(parseFloat(this.gridUsagePercentage()).toFixed(2))}%</strong>}
+                    {offgridEMS == false && <strong>{ohneGridUsagePercentage}%</strong>}
+                    {offgridEMS == true && <strong>{mitGridUsagePercentage}%</strong>}
                     &nbsp;Ihres Gesamtstromverbrauchs beziehen Sie durch das <strong>öffentliche Stromnetz.</strong>
                   </p>
                 </div>

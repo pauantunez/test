@@ -187,10 +187,6 @@ class Cost extends React.Component {
   energyUseEuro = (divided, bar) => {
     const { energyUsagekWh, electricityCost, costOverTime } = this.context;
 
-    console.log("energyUsagekWh" + energyUsagekWh);
-    console.log("electricityCost" + electricityCost);
-    console.log("costOverTime" + costOverTime);
-
     var timeToNum;
     if (this.state.displayed == undefined) {
       timeToNum = parseInt(costOverTime);
@@ -245,10 +241,6 @@ class Cost extends React.Component {
       var pvOutputKW = 14;
     }
 
-    console.log("ELECTRICITY");
-    console.log(parseFloat(electricityCostOffGridPercentage) / 10000);
-    console.log(electricityCostOffGridPercentage);
-
     return (parseInt(pvOutputKW) * 1000 * (1 - parseFloat(electricityCostOffGridPercentage) / 10000) * (parseFloat(electricityCost) / 100)).toFixed(0);
   };
 
@@ -265,9 +257,6 @@ class Cost extends React.Component {
       var pvOutputKW = 14;
     }
 
-    console.log("ELECTRICITY EMS");
-    console.log(1 - parseFloat(electricityCostHouseholdPercentage / 10000));
-
     const result = ((parseInt(pvOutputKW) * 1000 * (1 - parseFloat(electricityCostOffGridPercentage / 10000) - parseFloat(gridRevenue.replace(",", ".")) / 100) * parseFloat(electricityCost)) / 100).toFixed(0);
 
     return result;
@@ -277,9 +266,6 @@ class Cost extends React.Component {
     const { energyUsagekWh, electricityCost } = this.context;
 
     const result = Math.abs((energyUsagekWh * (parseFloat(electricityCost) / 100) * (1 - (0.02 + 1) ** 20)) / 0.02);
-
-    console.log("1 año " + energyUsagekWh * (parseFloat(electricityCost) / 100));
-    console.log("20 año " + Math.abs((energyUsagekWh * (parseFloat(electricityCost) / 100) * (1 - (0.02 + 1) ** 20)) / 0.02));
 
     return result;
   };
@@ -301,14 +287,9 @@ class Cost extends React.Component {
       investmentCostResult = Math.abs(parseInt(investmentCostEUR) * -1);
     }
 
-    console.log("Pruebas: electricityCostOffGridPercentage -> ", electricityCostOffGridPercentage)
-    console.log("Pruebas: energyUsagekWh -> ", energyUsagekWh)
-    console.log("Pruebas: electricityCost -> ", electricityCost)
-    console.log("Pruebas: investmentCostResult -> ", investmentCostResult)
-
     if (costOverTime == "1")
     {
-      const result = Math.abs(((1 - electricityCostOffGridPercentage / 100) * energyUsagekWh * ((parseFloat(electricityCost) / 100))));
+      const result = Math.abs(Math.round(((1 - electricityCostOffGridPercentage / 100) * energyUsagekWh * ((parseFloat(electricityCost) / 100)))));
       return Math.abs(result)
     }
     else 
@@ -326,7 +307,6 @@ class Cost extends React.Component {
       for (let index = 0; index < 20; index++) {
         if (this.state.runningCostPVonly.length == 0) {
           this.state.runningCostPVonly.push({ expenditure: -Math.abs((1 - electricityCostOffGridPercentage / 100) * 4000 * ((electricityCost / 100) * (1 + 0.02))) });
-          console.log(this.state.runningCostPVonly);
         } else {
           this.state.runningCostPVonly.push({ expenditure: parseFloat(this.state.runningCostPVonly[index - 1].expenditure) * (1 + 0.02) });
         }
@@ -335,9 +315,6 @@ class Cost extends React.Component {
       for (var i = 0; i < this.state.runningCostPVonly.length; i++) {
         totalRunning += this.state.runningCostPVonly[i].expenditure;
       }
-
-      console.log(this.state.runningCostPVonly);
-      console.log(totalRunning);
 
       this.setState({ totalRunningCostPVonly: totalRunning });
       this.setState({ ranOnce: true });
@@ -354,7 +331,6 @@ class Cost extends React.Component {
       for (let index = 0; index < 20; index++) {
         if (this.state.runningCostPVems.length == 0) {
           this.state.runningCostPVems.push({ expenditure: Math.abs(heatpumpPV[0].runningCost + (1 - (electricityCostOffGridPercentage + 10) / 100) * 4000 * ((electricityCost / 100) * (1 + 0.02))) });
-          console.log(this.state.runningCostPVems);
         } else {
           this.state.runningCostPVems.push({ expenditure: parseFloat(this.state.runningCostPVems[index - 1].expenditure) * (1 + 0.02) });
         }
@@ -363,9 +339,6 @@ class Cost extends React.Component {
       for (var i = 0; i < this.state.runningCostPVems.length; i++) {
         totalRunning += this.state.runningCostPVems[i].expenditure;
       }
-
-      console.log(this.state.runningCostPVems);
-      console.log(totalRunning);
 
       this.setState({ totalRunningCostPVems: totalRunning });
       this.setState({ ranOnceEMS: true });
@@ -387,16 +360,23 @@ class Cost extends React.Component {
     const { costOverTime, setElectricityCostPVsavings, gridRevenue, electricityCostHouseholdPercentage, pvOutput, electricityCostOffGridPercentage, electricityCost } = this.context;
     var result;
 
+    // if (costOverTime === "1") {
+    //   result = this.electricityCostPV() - this.energyUseEuro(5, true);
+    // } else {
+    //   result = parseInt(parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVonly);
+    // }
+
     if (costOverTime === "1") {
-      result = this.electricityCostPV() - this.energyUseEuro(5, true);
+      // result = this.electricityCostPV20Years() - this.energyUseEuro(5, true);
+      result = Math.abs(this.electricityCostPV20Years() - this.energyUseEuro(5, true));
     } else {
-      result = parseInt(parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVonly);
+      result = Math.abs(this.energyUseEuro(5) - this.electricityCostPV20Years());
     }
 
-    if (this.state.electricityCostPVsavings != result) {
-      this.setState({ electricityCostPVsavings: result });
-      setElectricityCostPVsavings(result);
-    }
+    // if (this.state.electricityCostPVsavings != result) {
+    //   this.setState({ electricityCostPVsavings: result });
+    //   setElectricityCostPVsavings(result);
+    // }
 
     return result;
   };
@@ -406,7 +386,8 @@ class Cost extends React.Component {
     var result;
 
     if (costOverTime === "1") {
-      result = this.electricityCostPVEMS() - this.energyUseEuro(5, true);
+      // result = this.electricityCostPVEMS() - this.energyUseEuro(5, true);
+      result = Math.abs((this.electricityCostPV20Years() * 0.95) - this.energyUseEuro(5, true));
     } else {
       result = parseInt(parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVems);
     }
@@ -488,12 +469,9 @@ class Cost extends React.Component {
     var savingPVandEMS20years = OHNE_PV_cost20years - costPVandEMS20years
 
     // Bar heights
-    var barHeights1year = this.adjustBarHeight(costOverTime, 212, OHNE_PV_cost1year, Math.abs(electricityCostPVsavings), Math.abs(electricityCostPVEMSsavings));
-    var barHeights20years = this.adjustBarHeight(costOverTime, 212, OHNE_PV_cost20years, Math.abs(electricityCostPVsavings), Math.abs(electricityCostPVEMSsavings));
-    var selectedBarHeights = costOverTime == "1" ? barHeights1year : barHeights20years;
-
-
-    console.log("electricityCostPVsavings ", electricityCostPVsavings)
+    // var barHeights1year = this.adjustBarHeight(costOverTime, 212, OHNE_PV_cost1year, Math.abs(electricityCostPVsavings), Math.abs(electricityCostPVEMSsavings));
+    // var barHeights20years = this.adjustBarHeight(costOverTime, 212, OHNE_PV_cost20years, Math.abs(electricityCostPVsavings), Math.abs(electricityCostPVEMSsavings));
+    // var selectedBarHeights = costOverTime == "1" ? barHeights1year : barHeights20years;
 
     return (
       <div>

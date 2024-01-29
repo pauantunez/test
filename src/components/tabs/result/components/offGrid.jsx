@@ -266,6 +266,17 @@ class OffGrid extends React.Component {
         var roundedPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentage() - Math.round(noEMSPercentageOffGrid)));
         var roundedNoEMSPercentageOffGrid = Math.round(parseFloat(noEMSPercentageOffGrid));
         roundedNoEMSPercentageOffGrid = this.adjustPercentage(roundedNoEMSPercentageOffGrid, roundedGridUsagePercentage, roundedPvUsagePercentage)
+
+        if (sessionStorage.getItem("MIT_GridUsagePercentage") != '') {
+          sessionStorage.setItem("MIT_GridUsagePercentage", roundedGridUsagePercentage)
+        }
+        if (sessionStorage.getItem("MIT_PvUsagePercentage") != '') {
+          sessionStorage.setItem("MIT_PvUsagePercentage", roundedPvUsagePercentage)
+        }
+        if (sessionStorage.getItem("MIT_NoEMSPercentageOffGrid") != '') {
+          sessionStorage.setItem("MIT_NoEMSPercentageOffGrid", roundedNoEMSPercentageOffGrid)
+        }
+
         VictoryPieDataTest = 
         [
             { x: 3, y: this.gridUsagePercentage(), name: "grid", label: roundedGridUsagePercentage + "%", img: "img/grid_in.svg", color: "#A4ABB3" },
@@ -286,6 +297,14 @@ class OffGrid extends React.Component {
         var roundedGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentage()));
         var roundedPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentage()));
         roundedGridUsagePercentage = this.adjustPercentage(roundedGridUsagePercentage, roundedPvUsagePercentage)
+
+        if (sessionStorage.getItem("OHNE_GridUsagePercentage") != '') {
+          sessionStorage.setItem("OHNE_GridUsagePercentage", roundedGridUsagePercentage)
+        }
+        if (sessionStorage.getItem("OHNE_PvUsagePercentage") != '') {
+          sessionStorage.setItem("OHNE_PvUsagePercentage", roundedPvUsagePercentage)
+        }
+
         VictoryPieDataTest = 
         [
             { x: 3, y: this.gridUsagePercentage(), name: "grid", label: roundedGridUsagePercentage + " %", img: "img/grid_in.svg", color: "#A4ABB3" },
