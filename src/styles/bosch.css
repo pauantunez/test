@@ -1312,6 +1312,8 @@ a.card-input-narrow {
   background-image: url("../assets/img/icons/pattern.svg");
   background-color: transparent;
   opacity: 1;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .pattern-safari {

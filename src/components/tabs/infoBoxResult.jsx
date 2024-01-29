@@ -338,19 +338,19 @@ class InfoBoxResult extends React.Component {
 
                   {offgridEMS == true && (
                     <p>
-                      <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>{Onhe_HouseholdNoEMSpvPercent}%</strong>.{" "}
+                      <strong>Ohne ein Energiemanagementsystem</strong> beträgt der <strong>Eigenverbrauchsanteil</strong> lediglich ca. <strong>{Onhe_HouseholdNoEMSpvPercent}%</strong>.{" "}
                     </p>
                   )}
                   {offgridEMS == false && (
                     <p>
-                      <strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Autarkiegrad</strong> auf bis zu <strong>{eigenverbrauchsanteil}%</strong> erhöhen.{" "}
+                      <strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Eigenverbrauchsanteil</strong> auf bis zu <strong>{eigenverbrauchsanteil}%</strong> erhöhen.{" "}
                     </p>
                   )}
                   <p>
                     Ca.&nbsp;
                     {offgridEMS == false && <strong>{Onhe_GridFeedPercentageNoEMS}%</strong>}
                     {offgridEMS == true && <strong>{MIT_GridFeedPercentage}%</strong>}
-                    &nbsp;Ihres eigens produzierten PV-Stroms speisen Sie ins <strong>öffentliche Stromnetz</strong>.
+                    &nbsp;Ihres eigens produzierten PV-Stroms speisen Sie ins <strong>öffentliche Stromnetz</strong> ein.
                   </p>
                 </div>
               </div>

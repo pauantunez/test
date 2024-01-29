@@ -356,6 +356,15 @@ class Cost extends React.Component {
     setCostOverTime(event.target.value);
   };
 
+  getBarHeights = (total, cost, savings) => {
+
+    var heights = [];
+    heights["cost"] = (cost * 212) / total
+    heights["savings"] = (savings * 212) / total
+
+    return heights
+  }
+
   resultWithPV = () => {
     const { costOverTime, setElectricityCostPVsavings, gridRevenue, electricityCostHouseholdPercentage, pvOutput, electricityCostOffGridPercentage, electricityCost } = this.context;
     var result;
@@ -399,28 +408,6 @@ class Cost extends React.Component {
       return electricityCostPVsavings;
     } else {
       return electricityCostPVEMSsavings;
-    }
-  };
-
-  adjustBarHeight = (costOverTime, maxHeight, value1, value2, value3) => {
-    var scale1 = 0;
-    var scale2 = 0;
-    var scale3 = 0;
-
-    var height2 = 0;
-    var height3 = 0;
-
-    scale1 = maxHeight;
-    scale2 = (value2 / value1) * maxHeight;
-    scale3 = (value3 / value1) * maxHeight;
-
-    height2 = maxHeight - scale2;
-    height3 = maxHeight - scale3;
-
-    if (costOverTime == "1") {
-      return [scale1, scale2, height2, scale3, height3];
-    } else {
-      return [scale1, scale2, height2, 190, 22];
     }
   };
 
@@ -473,7 +460,15 @@ class Cost extends React.Component {
     sessionStorage.setItem("savingPVandEMS1year", savingPVandEMS1year)
     sessionStorage.setItem("savingPVandEMS20years", savingPVandEMS20years)
 
-    console.log(sessionStorage)
+    // 1 year bar heights 
+    var oneYearHeightMitPv = this.getBarHeights(OHNE_PV_cost1year, costOnlyPV, savingOnlyPV1year)
+    var oneYearHeightMitPvAndEMS = this.getBarHeights(OHNE_PV_cost1year, costPVandEMS1year, savingPVandEMS1year)
+
+    // 20 years bar heights
+    var twentyYearsHeightMitPv =  this.getBarHeights(OHNE_PV_cost20years, costOnlyPV, savingOnlyPV20years)
+    var twentyYearsHeightMitPvAndEms =  this.getBarHeights(OHNE_PV_cost20years, costPVandEMS20years, savingPVandEMS20years)
+
+    console.log("twentyYearsHeightMitPvAndEms ", twentyYearsHeightMitPvAndEms)
 
     // Bar heights
     // var barHeights1year = this.adjustBarHeight(costOverTime, 212, OHNE_PV_cost1year, Math.abs(electricityCostPVsavings), Math.abs(electricityCostPVEMSsavings));
@@ -521,7 +516,7 @@ class Cost extends React.Component {
               
               {/* Pattern bar 1 year */}
               { costOverTime == "1" && (
-                <div style={{ display: "flex", width: "73px", height: "106px", color: "white" }}>
+                <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPv["savings"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
@@ -535,7 +530,7 @@ class Cost extends React.Component {
 
               {/* Pattern bar 20 years */}
               { costOverTime == "20" && (
-                <div style={{ display: "flex", width: "73px", height: "106px", color: "white" }}>
+                <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPv["savings"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
@@ -547,9 +542,10 @@ class Cost extends React.Component {
                 </div>
               )}
 
-              {/* Blue bar 1 year */}
 
-              <div style={{ display: "flex", width: "73px", height: "106px", color: "white" }}>
+              {/* Blue bar 1 year */}
+              { costOverTime == "1" && (
+                <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPv["cost"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
@@ -559,7 +555,22 @@ class Cost extends React.Component {
                     </div>
                   </div>
                 </div>
-              
+              ) }
+
+              { /* Blue bar 20 years */}
+              { costOverTime == "20" && (
+                <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPv["cost"]}px`, color: "white" }}>
+                  <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
+                      <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                        {costOnlyPV.toLocaleString("de-DE")}
+                        <span>&nbsp;€</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ) }
+
             </div>
 
             {/* Mit PV und EMS */}
@@ -567,7 +578,7 @@ class Cost extends React.Component {
             
               {/* Pattern bar 1 year */}
               { costOverTime == "1" && (
-                <div style={{ display: "flex", width: "73px", height: "106px", color: "white" }}>
+                <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPvAndEMS["savings"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
@@ -581,7 +592,7 @@ class Cost extends React.Component {
               
               {/* Pattern bar 20 years */}
               { costOverTime == "20" && (
-                <div style={{ display: "flex", width: "73px", height: "106px", color: "white" }}>
+                <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPvAndEms["savings"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
@@ -595,7 +606,7 @@ class Cost extends React.Component {
 
               {/* Blue bar 1 year */}
               { costOverTime == "1" && (
-                <div style={{ display: "flex", width: "73px", height: `106px`, color: "white" }}>
+                <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPvAndEMS["cost"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
@@ -609,7 +620,7 @@ class Cost extends React.Component {
 
               {/* Blue bar 20 years */}
               { costOverTime == "20" && (
-                <div style={{ display: "flex", width: "73px", height: `106px`, color: "white" }}>
+                <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPvAndEms["cost"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
