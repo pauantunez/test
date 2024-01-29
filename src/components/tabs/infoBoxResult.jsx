@@ -282,12 +282,12 @@ class InfoBoxResult extends React.Component {
 
                   {offgridEMS == true && (
                     <p>
-                      Das bedeutet: bis zu <strong>{autarkiegradWithEMS}%</strong> Ihres Gesamtstrom-verbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
+                      Das bedeutet: bis zu <strong>{autarkiegradWithEMS}%</strong> Ihres Gesamtstromverbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
                     </p>
                   )}
                   {offgridEMS == false && (
                     <p>
-                      Das bedeutet: bis zu <strong>{ohnePvUsagePercentage}%</strong> Ihres Gesamtstrom-verbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
+                      Das bedeutet: bis zu <strong>{ohnePvUsagePercentage}%</strong> Ihres Gesamtstromverbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
                     </p>
                   )}
 
