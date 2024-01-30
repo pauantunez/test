@@ -190,9 +190,11 @@ class InfoBoxResult extends React.Component {
     var MIT_HouseholdUsagePercentage = parseInt(sessionStorage.getItem("MIT_HouseholdUsagePercentage"))
     var MIT_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("MIT_HouseholdNoEMSpvPercent"))
     var eigenverbrauchsanteil = MIT_HouseholdUsagePercentage + MIT_HouseholdNoEMSpvPercent
+
     // Ohne 
     var Onhe_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent"))
     var Onhe_GridFeedPercentageNoEMS = parseInt(sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS"))
+
     { console.log("🚀 ~ sessionStorage:", sessionStorage) }
     return (
       <Box component="span" class="infobox-container" style={{ fontSize: "16px", fontWeight: "400", boxShadow: "none", marginLeft: "0px", /*maxWidth: '500px',*/ padding: "16px" }}>
@@ -338,7 +340,7 @@ class InfoBoxResult extends React.Component {
 
                   {offgridEMS == true && (
                     <p>
-                      <strong>Ohne ein Energiemanagementsystem</strong> beträgt der <strong>Eigenverbrauchsanteil</strong> lediglich ca. <strong>{Onhe_HouseholdNoEMSpvPercent}%</strong>.{" "}
+                      <strong>Ohne ein Energiemanagementsystem</strong> beträgt der <strong>Eigenverbrauchsanteil</strong> lediglich ca. <strong>{MIT_HouseholdNoEMSpvPercent}%</strong>.{" "}
                     </p>
                   )}
                   {offgridEMS == false && (
