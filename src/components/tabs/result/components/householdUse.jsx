@@ -246,35 +246,25 @@ class HouseholdUse extends React.Component {
     var VictoryPieData1NoEMS = [];
     var pieColors2NoEMS = [];
 
-    // Rounded values for VictoryPieData2
-    var roundedGridFeedPercentage = Math.round(parseFloat(this.gridFeedPercentage()));
-    var roundedHouseholdUsagePercentage = Math.round(parseFloat(this.householdUsagePercentage()) - householdNoEMSpvPercent);
-    var roundedHouseholdNoEMSpvPercent = Math.round(parseFloat(householdNoEMSpvPercent));
-    roundedGridFeedPercentage = this.adjustPercentage(roundedGridFeedPercentage, roundedHouseholdUsagePercentage, roundedHouseholdNoEMSpvPercent);
-
-    if (sessionStorage.getItem("MIT_GridFeedPercentage") != '') {
-      sessionStorage.setItem("MIT_GridFeedPercentage", roundedGridFeedPercentage)
-    }
-    if (sessionStorage.getItem("MIT_HouseholdUsagePercentage") != '') {
-      sessionStorage.setItem("MIT_HouseholdUsagePercentage", roundedHouseholdUsagePercentage)
-    }
-    if (sessionStorage.getItem("MIT_HouseholdNoEMSpvPercent") != '') {
-      sessionStorage.setItem("MIT_HouseholdNoEMSpvPercent", roundedHouseholdNoEMSpvPercent)
-    }
-    // Rounded values for VictoryPieData2.
-    var roundedGridFeedPercentageNoEMS = Math.round(parseFloat(this.gridFeedPercentageNoEMS()));
-    var roundedHouseholdNoEMSpvPercent = Math.round(parseFloat(householdNoEMSpvPercent));
-    roundedHouseholdNoEMSpvPercent = this.adjustPercentage(roundedHouseholdNoEMSpvPercent, roundedGridFeedPercentageNoEMS);
-
-    if (sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent") != '') {
-      sessionStorage.setItem("Onhe_HouseholdNoEMSpvPercent", roundedHouseholdNoEMSpvPercent)
-    }
-    if (sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS") != '') {
-      sessionStorage.setItem("Onhe_GridFeedPercentageNoEMS", roundedGridFeedPercentageNoEMS)
-    }
-
     // if(householdEMS === true) {
     if (offgridEMS === true) {
+
+      // Rounded values for VictoryPieData2
+      var roundedGridFeedPercentage = Math.round(parseFloat(this.gridFeedPercentage()));
+      var roundedHouseholdUsagePercentage = Math.round(parseFloat(this.householdUsagePercentage()) - householdNoEMSpvPercent);
+      var roundedHouseholdNoEMSpvPercent = Math.round(parseFloat(householdNoEMSpvPercent));
+      roundedGridFeedPercentage = this.adjustPercentage(roundedGridFeedPercentage, roundedHouseholdUsagePercentage, roundedHouseholdNoEMSpvPercent);
+
+      if (sessionStorage.getItem("MIT_GridFeedPercentage") != '') {
+        sessionStorage.setItem("MIT_GridFeedPercentage", roundedGridFeedPercentage)
+      }
+      if (sessionStorage.getItem("MIT_HouseholdUsagePercentage") != '') {
+        sessionStorage.setItem("MIT_HouseholdUsagePercentage", roundedHouseholdUsagePercentage)
+      }
+      if (sessionStorage.getItem("MIT_HouseholdNoEMSpvPercent") != '') {
+        sessionStorage.setItem("MIT_HouseholdNoEMSpvPercent", roundedHouseholdNoEMSpvPercent)
+      }
+
       VictoryPieData = [
         { x: 3, y: this.gridFeedPercentage(), name: "grid", label: "3.000 kWh", img: "/img/grid_out.svg", color: "#004975" },
         { x: 2, y: this.householdUsagePercentage() - householdNoEMSpvPercent, name: "plug", label: "1.400 kWh", img: "/img/plug.svg", color: "#C535BC" },
@@ -290,6 +280,19 @@ class HouseholdUse extends React.Component {
       pieColors = ["#A4ABB3", "#00884A", "#18837E"];
       // } else if(householdEMS === false) {
     } else if (offgridEMS === false) {
+
+      // Rounded values for VictoryPieData2.
+      var roundedGridFeedPercentageNoEMS = Math.round(parseFloat(this.gridFeedPercentageNoEMS()));
+      var roundedHouseholdNoEMSpvPercent = Math.round(parseFloat(householdNoEMSpvPercent));
+      roundedHouseholdNoEMSpvPercent = this.adjustPercentage(roundedHouseholdNoEMSpvPercent, roundedGridFeedPercentageNoEMS);
+
+      if (sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent") != '') {
+        sessionStorage.setItem("Onhe_HouseholdNoEMSpvPercent", roundedHouseholdNoEMSpvPercent)
+      }
+      if (sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS") != '') {
+        sessionStorage.setItem("Onhe_GridFeedPercentageNoEMS", roundedGridFeedPercentageNoEMS)
+      }
+
       VictoryPieData = [
         { x: 2, y: this.gridFeedPercentageNoEMS(), name: "grid", label: "3.000 kWh", img: "/img/grid_out.svg", color: "#A4ABB3" },
         { x: 1, y: householdNoEMSpvPercent, name: "pv", label: "1.000 kWh", img: "/img/house_pv.svg", color: "#18837E" },
