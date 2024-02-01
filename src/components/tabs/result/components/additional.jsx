@@ -15,6 +15,7 @@ import "../../../../assets/fonts/BoschSans-Regular-normal";
 import "../../../../assets/fonts/BoschSans-Medium-normal";
 
 import { ReactComponent as PDFIcon } from "../../../../assets/img/icons/pdf_small.svg";
+import { ReactComponent as ContractIcon } from "../../../../assets/img/icons/contract.svg";
 import { ReactComponent as HeatpumpSmallIcon } from "../../../../assets/img/icons/heatpump_small.svg";
 import { ReactComponent as PhotovoltaicIcon } from "../../../../assets/img/icons/photovoltaic_small.svg";
 import { ReactComponent as WallboxIcon } from "../../../../assets/img/icons/wallbox_small.svg";
@@ -274,28 +275,43 @@ class Additional extends React.Component {
         <div class="cardContainer" style={{ flexDirection: "column", justifyContent: "center", alignItems: "center", fontFamily: "Bosch-Regular" }}>
           <div>
             <div class="cardContent" style={{ marginBottom: "40px" }}>
-              <div class="flexContent additional-flex" style={{ justifyContent: "center" }}>
-                <div style={{ paddingRight: "30px", paddingBottom: "10px" }}>
+              <div class="flexContent additional-flex" style={{ width: "100%", justifyContent: "space-between" }}>
+                <div style={{ paddingRight: "45px", paddingBottom: "10px" }}>
                   <h3>Ergebnisse speichern</h3>
                   <div>Sichern Sie sich Ihre Ergebnisse, indem Sie diese als PDF jetzt herunterladen</div>
                 </div>
                 <div style={{ display: "flex", alignItems: "end" }}>
-                  <Button onClick={printPDF} variant="outlined" startIcon={<PDFIcon />} disabled={this.state.restart} style={{ height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
+                  <Button onClick={printPDF} variant="outlined" startIcon={<PDFIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
                     Ergebnisse herunterladen
                   </Button>
                 </div>
               </div>
             </div>
             <div class="cardContent" style={{ borderTop: "1px solid #E0E2E5", marginBottom: "40px" }}>
-              <div class="flexContent additional-flex" style={{ justifyContent: "center", marginTop: "8px" }}>
+              <div class="flexContent additional-flex" style={{ width: "100%", justifyContent: "space-between", marginTop: "8px" }}>
                 <div style={{ paddingRight: "30px", paddingBottom: "10px" }}>
                   <h3>Kontakt zum Fachbetrieb</h3>
                   <div>Finden Sie einen Experten in Ihrer Nähe, der Sie bei der Umsetzung unterstützt</div>
                 </div>
                 <div style={{ display: "flex", alignItems: "end" }}>
-                  <Button variant="outlined" startIcon={<MagnifyingGlassIcon />} disabled={this.state.restart} style={{ width: "auto", height: "70px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
+                  <Button variant="outlined" startIcon={<MagnifyingGlassIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
                     Jetzt Fachbetrieb finden
                   </Button>
+                </div>
+              </div>
+            </div>
+            <div class="cardContent" style={{ borderTop: "1px solid #E0E2E5", marginBottom: "40px" }}>
+              <div class="flexContent additional-flex" style={{ width: "100%", justifyContent: "space-between", marginTop: "8px" }}>
+                <div style={{ paddingRight: "30px", paddingBottom: "10px" }}>
+                  <h3>Angebot für ein energieeffizientes System</h3>
+                  <div>Erhalten Sie ein kostenloses, unverbindliches Angebot von einem Installateur in Ihrer</div>
+                </div>
+                <div style={{ display: "flex", alignItems: "end" }}>
+                  <a href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/beratung-und-kauf/angebot-anfordern/" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                    <Button variant="outlined" startIcon={<ContractIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
+                      Angebot anfordern
+                    </Button>
+                  </a>
                 </div>
               </div>
             </div>

@@ -157,7 +157,7 @@ class HouseholdSwitch extends React.Component {
                 this.energyUsageCombined(res.data.data[0])
                 
               } else {
-                setDatabaseResult(res.data.data[0])
+                //setDatabaseResult(res.data.data[0])
               }
 
               setLoadingHousehold(false)

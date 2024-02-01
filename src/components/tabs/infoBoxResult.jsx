@@ -152,7 +152,7 @@ class InfoBoxResult extends React.Component {
 
   render() {
     const { t } = this.props;
-    const { costOverTime, electricityCostPVsavings, electricityCostPVEMSsavings, offgridEMS, noEMSPercentageOffGrid, householdNoEMSpvPercent, infoBoxOffGridGridUsage, infoBoxHouseholdGridFeed, infoBoxCombinedHouseholdUsage, BuildingEnegeryStandard, setBuildingEnegeryStandard, kfwValue, insulationValue, setInsulationValue, setKfwValue, OilLNGValue, setOilLNGValue, TCO_thermal_EUR_a, disabledOilUsage, OilUsageLiters, LNGUsage, disabledLNGUsage } = this.context;
+    const { costOverTime, electricityCostPVsavings, electricityCostPVEMSsavings, offgridEMS, householdEMS, noEMSPercentageOffGrid, householdNoEMSpvPercent, infoBoxOffGridGridUsage, infoBoxHouseholdGridFeed, infoBoxCombinedHouseholdUsage, BuildingEnegeryStandard, setBuildingEnegeryStandard, kfwValue, insulationValue, setInsulationValue, setKfwValue, OilLNGValue, setOilLNGValue, TCO_thermal_EUR_a, disabledOilUsage, OilUsageLiters, LNGUsage, disabledLNGUsage } = this.context;
 
     // Electricity savings
     var OHNE_PV_cost1year = parseInt(sessionStorage.getItem("OHNE_PV_cost1year"))
@@ -321,37 +321,37 @@ class InfoBoxResult extends React.Component {
               <div class="infobox-row-container">
                 <div class="infobox-row" style={{ display: "block", lineHeight: "24px", fontSize: "14px", borderBottom: "none" }}>
 
-                  {offgridEMS == true && (
+                  {householdEMS == true && (
                     <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Eigenverbrauchsanteil: ca. {eigenverbrauchsanteil}%</h3>
 
                   )}
-                  {offgridEMS == false && (
+                  {householdEMS == false && (
                     <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Eigenverbrauchsanteil: ca. {Onhe_HouseholdNoEMSpvPercent}%</h3>
                   )}
-                  {offgridEMS == true && (
+                  {householdEMS == true && (
                     <p>
                       Das bedeutet: bis zu <strong>{Math.round(parseFloat(eigenverbrauchsanteil).toFixed(2))}%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
                     </p>
                   )}
-                  {offgridEMS == false && (
+                  {householdEMS == false && (
                     <p>
                       Das bedeutet: bis zu <strong>{Math.round(parseFloat(Onhe_HouseholdNoEMSpvPercent).toFixed(2))}%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
                     </p>)}
 
-                  {offgridEMS == true && (
+                  {householdEMS == true && (
                     <p>
                       <strong>Ohne ein Energiemanagementsystem</strong> beträgt der <strong>Eigenverbrauchsanteil</strong> lediglich ca. <strong>{MIT_HouseholdNoEMSpvPercent}%</strong>.{" "}
                     </p>
                   )}
-                  {offgridEMS == false && (
+                  {householdEMS == false && (
                     <p>
                       <strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Eigenverbrauchsanteil</strong> auf bis zu <strong>{eigenverbrauchsanteil}%</strong> erhöhen.{" "}
                     </p>
                   )}
                   <p>
                     Ca.&nbsp;
-                    {offgridEMS == false && <strong>{Onhe_GridFeedPercentageNoEMS}%</strong>}
-                    {offgridEMS == true && <strong>{MIT_GridFeedPercentage}%</strong>}
+                    {householdEMS == false && <strong>{Onhe_GridFeedPercentageNoEMS}%</strong>}
+                    {householdEMS == true && <strong>{MIT_GridFeedPercentage}%</strong>}
                     &nbsp;Ihres eigens produzierten PV-Stroms speisen Sie ins <strong>öffentliche Stromnetz</strong> ein.
                   </p>
                 </div>

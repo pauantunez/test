@@ -108,8 +108,7 @@ class CustomSwitch extends React.Component {
     const { setLoading, setLoadingOffGrid, heatpumpType, scenarioInDatabase, kfwValue, ev, homeStorageSizekWh, pvOutputkWh, tabEntries, products, btnThemes, fonts, setFwdBtn } = this.context;
 
     setFwdBtn(false);
-    setLoading(true)
-    //setLoadingOffGrid(true)
+    setLoadingOffGrid(true)
 
   }
 
@@ -164,8 +163,7 @@ class CustomSwitch extends React.Component {
 
     const { setLoading, setLoadingOffGrid, kfwValue, ev, setOffgridEMS, offgridEMS, scenarioInDatabase, tabEntries, setTabToSelect, pvOutputkWh, homeStorageSizekWh, homeStorage, setHomeStorage, setHomeStorageSize } = this.context;
     setOffgridEMS(event.target.checked)
-    setLoading(true)
-    //setLoadingOffGrid(true)
+    setLoadingOffGrid(true)
 
     if (event.target.checked) {
       var emsValue = "Ja"
@@ -209,8 +207,7 @@ class CustomSwitch extends React.Component {
             //setDatabaseResult(res.data.data[0])
           }
 
-          setLoading(false)
-          //setLoadingOffGrid(false)
+          setLoadingOffGrid(false)
         }
 
         console.log(res.data.data[0])

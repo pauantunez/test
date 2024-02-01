@@ -204,35 +204,34 @@ class OffGrid extends React.Component {
       const { loading, loadingOffGrid, setOffGrid1SVG, offgrid1SVG, setOffGrid2SVG, setOffgrid1SVG_NoEMS_Hidden, setOffgrid2SVG_NoEMS_Hidden, setOffgrid1SVG_EMS_Hidden, setOffgrid2SVG_EMS_Hidden } = this.context;
       window.addEventListener("resize", this.handleResize)
       
-    // if(!loadingOffGrid) {
-    if(!loading) {
-      const offgridChart1 = document.getElementById('offgrid-1');
-      const offgrid1_svg = offgridChart1.getElementsByTagName('svg');
+      if(!loadingOffGrid) {
+        const offgridChart1 = document.getElementById('offgrid-1');
+        const offgrid1_svg = offgridChart1.getElementsByTagName('svg');
 
-      const offgridChart2 = document.getElementById('offgrid-2');
-      const offgrid2_svg = offgridChart2.getElementsByTagName('svg');
+        const offgridChart2 = document.getElementById('offgrid-2');
+        const offgrid2_svg = offgridChart2.getElementsByTagName('svg');
 
-      const offgridChart1_NoEMS = document.getElementById('offgrid-1-hidden');
-      const offgridChart1_NoEMS_svg = offgridChart1_NoEMS.getElementsByTagName('svg');
+        const offgridChart1_NoEMS = document.getElementById('offgrid-1-hidden');
+        const offgridChart1_NoEMS_svg = offgridChart1_NoEMS.getElementsByTagName('svg');
 
-      const offgridChart2_NoEMS = document.getElementById('offgrid-2-hidden');
-      const offgridChart2_NoEMS_svg = offgridChart2_NoEMS.getElementsByTagName('svg');
+        const offgridChart2_NoEMS = document.getElementById('offgrid-2-hidden');
+        const offgridChart2_NoEMS_svg = offgridChart2_NoEMS.getElementsByTagName('svg');
 
-      const offgridChart1_EMS = document.getElementById('offgrid-1-ems-hidden');
-      const offgridChart1_EMS_svg = offgridChart1_EMS.getElementsByTagName('svg');
+        const offgridChart1_EMS = document.getElementById('offgrid-1-ems-hidden');
+        const offgridChart1_EMS_svg = offgridChart1_EMS.getElementsByTagName('svg');
 
-      const offgridChart2_EMS = document.getElementById('offgrid-2-ems-hidden');
-      const offgridChart2_EMS_svg = offgridChart2_EMS.getElementsByTagName('svg');
+        const offgridChart2_EMS = document.getElementById('offgrid-2-ems-hidden');
+        const offgridChart2_EMS_svg = offgridChart2_EMS.getElementsByTagName('svg');
 
-      setOffGrid1SVG(offgrid1_svg[0]);
-      setOffGrid2SVG(offgrid2_svg[0]);
-      setOffgrid1SVG_NoEMS_Hidden(offgridChart1_NoEMS_svg[0]);
-      setOffgrid2SVG_NoEMS_Hidden(offgridChart2_NoEMS_svg[0]);
-      setOffgrid1SVG_EMS_Hidden(offgridChart1_EMS_svg[0]);
-      setOffgrid2SVG_EMS_Hidden(offgridChart2_EMS_svg[0]);
+        setOffGrid1SVG(offgrid1_svg[0]);
+        setOffGrid2SVG(offgrid2_svg[0]);
+        setOffgrid1SVG_NoEMS_Hidden(offgridChart1_NoEMS_svg[0]);
+        setOffgrid2SVG_NoEMS_Hidden(offgridChart2_NoEMS_svg[0]);
+        setOffgrid1SVG_EMS_Hidden(offgridChart1_EMS_svg[0]);
+        setOffgrid2SVG_EMS_Hidden(offgridChart2_EMS_svg[0]);
 
-      console.log(offgridChart1_NoEMS_svg[0]);
-    }
+        // console.log(offgridChart1_NoEMS_svg[0]);
+      }
 
     }
 
@@ -254,12 +253,6 @@ class OffGrid extends React.Component {
       var pieColors2NoEMS = [];
 
       if(offgridEMS === true) {
-        VictoryPieData = 
-        [
-            { x: 3, y: this.gridUsagePercentage(), name: "grid", label: "3.000 kWh", img: "img/grid_in.svg", color: "#004975" },
-            { x: 2, y: this.pvUsagePercentage() - noEMSPercentageOffGrid, name: "plug", label: "1.400 kWh", img: "img/plug.svg", color: "#C535BC" },
-            { x: 1, y: this.pvUsagePercentage(), name: "pv", label: "1.000 kWh", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#9E2896" },
-        ]
     
         // Rounded values for VictoryPieDataTest
         var roundedGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentage()));
@@ -277,21 +270,23 @@ class OffGrid extends React.Component {
           sessionStorage.setItem("MIT_NoEMSPercentageOffGrid", roundedNoEMSPercentageOffGrid)
         }
 
-        VictoryPieDataTest = 
+        VictoryPieData = 
         [
-            { x: 3, y: this.gridUsagePercentage(), name: "grid", label: roundedGridUsagePercentage + "%", img: "img/grid_in.svg", color: "#A4ABB3" },
-            { x: 2, y: this.pvUsagePercentage() - noEMSPercentageOffGrid, name: "plug", label: roundedPvUsagePercentage + "%", img: "img/plug.svg", color: "#00884A" },
-            { x: 1, y: this.pvUsagePercentage(), name: "pv", label: roundedNoEMSPercentageOffGrid + "%", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
+            { x: 3, y: roundedGridUsagePercentage, name: "grid", label: "3.000 kWh", img: "img/grid_in.svg", color: "#004975" },
+            { x: 2, y: roundedPvUsagePercentage, name: "plug", label: "1.400 kWh", img: "img/plug.svg", color: "#C535BC" },
+            { x: 1, y: roundedNoEMSPercentageOffGrid, name: "pv", label: "1.000 kWh", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#9E2896" },
         ]
 
+        VictoryPieDataTest = 
+        [
+            { x: 3, y: roundedGridUsagePercentage, name: "grid", label: roundedGridUsagePercentage + "%", img: "img/grid_in.svg", color: "#A4ABB3" },
+            { x: 2, y: roundedPvUsagePercentage, name: "plug", label: roundedPvUsagePercentage + "%", img: "img/plug.svg", color: "#00884A" },
+            { x: 1, y: roundedNoEMSPercentageOffGrid, name: "pv", label: roundedNoEMSPercentageOffGrid + "%", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
+        ]
+        
         pieColors = ["#A4ABB3", "#00884A", "#18837E"];
 
       } else if(offgridEMS === false) {
-        VictoryPieData = 
-        [
-            { x: 3, y: this.gridUsagePercentage(), name: "grid", label: "3.000 kWh", img: "img/grid_in.svg", color: "#A4ABB3" },
-            { x: 1, y: this.pvUsagePercentage(), name: "pv", label: "1.000 kWh", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
-        ]
     
         // Rounded values for VictoryPieDataTest
         var roundedGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentage()));
@@ -305,92 +300,76 @@ class OffGrid extends React.Component {
           sessionStorage.setItem("OHNE_PvUsagePercentage", roundedPvUsagePercentage)
         }
 
+        VictoryPieData = 
+        [
+            { x: 3, y: roundedGridUsagePercentage, name: "grid", label: "3.000 kWh", img: "img/grid_in.svg", color: "#A4ABB3" },
+            { x: 1, y: roundedPvUsagePercentage, name: "pv", label: "1.000 kWh", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
+        ]
+
         VictoryPieDataTest = 
         [
-            { x: 3, y: this.gridUsagePercentage(), name: "grid", label: roundedGridUsagePercentage + " %", img: "img/grid_in.svg", color: "#A4ABB3" },
-            { x: 1, y: this.pvUsagePercentage(), name: "pv", label: roundedPvUsagePercentage + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
+            { x: 3, y: roundedGridUsagePercentage, name: "grid", label: roundedGridUsagePercentage + " %", img: "img/grid_in.svg", color: "#A4ABB3" },
+            { x: 1, y: roundedPvUsagePercentage, name: "pv", label: roundedPvUsagePercentage + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
         ]
 
         pieColors = ["#A4ABB3", "#18837E"]
       }
 
-
-      //Data for hidden Charts
-
-      //With EMS
-      VictoryPieData1EMS = 
-      [
-          { x: 3, y: 35, name: "grid", label: "35%", img: "img/grid_in.svg", color: "#004975" },
-          { x: 2, y: 20, name: "plug", label: "20%", img: "img/plug.svg", color: "#C535BC" },
-          { x: 1, y: 45, name: "pv", label: "45%", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#9E2896" },
-      ]
-      pieColors1EMS = ["#A4ABB3", "#00884A", "#18837E"];
-
-      //No EMS
-      VictoryPieData1NoEMS = 
-      [
-        { x: 3, y: 45, name: "grid", label: "45%", img: "img/grid_in.svg", color: "#004975" },
-        { x: 1, y: 55, name: "pv", label: "55%", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#9E2896" },
-      ]
-      pieColors2NoEMS = ["#A4ABB3", "#18837E"]
-
-
           return  ( 
           <div>
-            {/* {!loadingOffGrid && */}
-            {!loading &&
+            {!loadingOffGrid &&
             <div style={{display: 'flex', justifyContent: 'center'}}>
 
                 <div style={{position: 'relative', width: '100%', height: '300px', top: '0', left: '0', /*maxWidth: '450px'*/}}>
                     <div id="offgrid-1-ems-hidden" style={{position: 'absolute', width: '100%', height: '300px', display: 'none'}}>
                         <VictoryPie
-                        data={VictoryPieData1EMS}
+                        data={VictoryPieDataTest}
                         width={pieChartSize}
                         padding={{ top: 0 }}
-                        colorScale={pieColors1EMS}
+                        colorScale={pieColors}
                         labelRadius={({ innerRadius }) => innerRadius + innerRadiusMargin }
                         innerRadius={0}
                         style={{ data: {
                             fillOpacity: 1, stroke: "#fff", strokeWidth: 6
-                        }, labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: pieLabelFontSize } }}
+                        }, labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" } }}
                         />
                     </div>
                     <div id="offgrid-2-ems-hidden" style={{position: 'absolute', width: '100%', height: '300px', display: 'none'}}>
                         <VictoryPie
-                        data={VictoryPieData1EMS}
+                        data={VictoryPieDataTest}
                         width={pieChartSize}
                         padding={{ top: 0 }}
-                        colorScale={pieColors1EMS}
-                        labelComponent={<CustomLabelComponent iconSize={pieIconSize} fontSize={pieLabelFontSize} xPositionIconMargin={xPositionIconMargin} yPositionIconMargin={yPositionIconMargin} xPositionEVIconMargin={xPositionEVIconMargin} yPositionEVIconMargin={yPositionEVIconMargin} xPositionHouseholdIconMargin={xPositionHouseholdIconMargin} yPositionHouseholdIconMargin={yPositionHouseholdIconMargin} xPositionHeatpumpLabel={xPositionHeatpumpLabel} xPositionEVLabel={xPositionEVLabel} xPositionHouseholdLabel={xPositionHouseholdLabel} yPositionHeatpumpLabel={yPositionHeatpumpLabel} yPositionEVLabel={yPositionEVLabel} yPositionHouseholdLabel={yPositionHouseholdLabel} />}
+                        colorScale={pieColors}
+                        labelComponent={<CustomLabelComponent iconSize={pieIconSize} fontSize={"20px"} xPositionIconMargin={xPositionIconMargin} yPositionIconMargin={yPositionIconMargin} xPositionEVIconMargin={xPositionEVIconMargin} yPositionEVIconMargin={yPositionEVIconMargin} xPositionHouseholdIconMargin={xPositionHouseholdIconMargin} yPositionHouseholdIconMargin={yPositionHouseholdIconMargin} xPositionHeatpumpLabel={xPositionHeatpumpLabel} xPositionEVLabel={xPositionEVLabel} xPositionHouseholdLabel={xPositionHouseholdLabel} yPositionHeatpumpLabel={yPositionHeatpumpLabel} yPositionEVLabel={yPositionEVLabel} yPositionHouseholdLabel={yPositionHouseholdLabel} />}
                         style={{ data: {
                             fillOpacity: 0, stroke: "#fff", strokeWidth: 6
-                        }, labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: pieLabelFontSize } }}
+                        }, labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" } }}
                         />
                     </div>
 
                     <div id="offgrid-1-hidden" style={{position: 'absolute', width: '100%', height: '300px', display: 'none'}}>
                         <VictoryPie
-                        data={VictoryPieData1NoEMS}
+                        data={VictoryPieDataTest}
                         width={pieChartSize}
                         padding={{ top: 0 }}
-                        colorScale={pieColors2NoEMS}
+                        colorScale={pieColors}
                         labelRadius={({ innerRadius }) => innerRadius + innerRadiusMargin }
                         innerRadius={0}
                         style={{ data: {
                             fillOpacity: 1, stroke: "#fff", strokeWidth: 6
-                        }, labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: pieLabelFontSize } }}
+                        }, labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" } }}
                         />
                     </div>
                     <div id="offgrid-2-hidden" style={{position: 'absolute', width: '100%', height: '300px', display: 'none'}}>
                         <VictoryPie
-                        data={VictoryPieData1NoEMS}
+                        data={VictoryPieDataTest}
                         width={pieChartSize}
                         padding={{ top: 0 }}
-                        colorScale={pieColors2NoEMS}
-                        labelComponent={<CustomLabelComponent iconSize={pieIconSize} fontSize={pieLabelFontSize} xPositionIconMargin={xPositionIconMargin} yPositionIconMargin={yPositionIconMargin} xPositionEVIconMargin={xPositionEVIconMargin} yPositionEVIconMargin={yPositionEVIconMargin} xPositionHouseholdIconMargin={xPositionHouseholdIconMargin} yPositionHouseholdIconMargin={yPositionHouseholdIconMargin} xPositionHeatpumpLabel={xPositionHeatpumpLabel} xPositionEVLabel={xPositionEVLabel} xPositionHouseholdLabel={xPositionHouseholdLabel} yPositionHeatpumpLabel={yPositionHeatpumpLabel} yPositionEVLabel={yPositionEVLabel} yPositionHouseholdLabel={yPositionHouseholdLabel} />}
+                        colorScale={pieColors}
+                        labelComponent={<CustomLabelComponent iconSize={pieIconSize} fontSize={"20px"} xPositionIconMargin={xPositionIconMargin} yPositionIconMargin={yPositionIconMargin} xPositionEVIconMargin={xPositionEVIconMargin} yPositionEVIconMargin={yPositionEVIconMargin} xPositionHouseholdIconMargin={xPositionHouseholdIconMargin} yPositionHouseholdIconMargin={yPositionHouseholdIconMargin} xPositionHeatpumpLabel={xPositionHeatpumpLabel} xPositionEVLabel={xPositionEVLabel} xPositionHouseholdLabel={xPositionHouseholdLabel} yPositionHeatpumpLabel={yPositionHeatpumpLabel} yPositionEVLabel={yPositionEVLabel} yPositionHouseholdLabel={yPositionHouseholdLabel} />}
                         style={{ data: {
                             fillOpacity: 0, stroke: "#fff", strokeWidth: 6
-                        }, labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: pieLabelFontSize } }}
+                        }, labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" } }}
                         />
                     </div>
 
@@ -432,8 +411,7 @@ class OffGrid extends React.Component {
             </div>
             }
 
-            {/* {loadingOffGrid && */}
-            {loading &&
+            {loadingOffGrid &&
              <div style={{display: 'flex', justifyContent: 'center'}}>
                 <div style={{position: 'relative', width: '100%', height: '300px', top: '0', left: '0'}}>
                   <div style={{position: 'absolute', left: '50%', top: '100px'}}>

@@ -295,7 +295,8 @@ class Cost extends React.Component {
     else 
     {
       const result = Math.abs(((1 - electricityCostOffGridPercentage / 100) * energyUsagekWh * ((parseFloat(electricityCost) / 100) * (1 + 0.02)) * (1 - (0.02 + 1) ** 20)) / 0.02);
-      return Math.abs(result + investmentCostResult);
+      // return Math.abs(result + investmentCostResult);
+      return Math.abs(result);
     }
   };
 

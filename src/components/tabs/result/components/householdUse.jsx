@@ -139,8 +139,7 @@ class HouseholdUse extends React.Component {
 
     const { loading, loadingHousehold, setHouseholdUse1SVG, setHouseholdUse2SVG, setHousehold1SVG_EMS_Hidden, setHousehold2SVG_EMS_Hidden, setHousehold1SVG_NoEMS_Hidden, setHousehold2SVG_NoEMS_Hidden } = this.context;
 
-    // if(!loadingHousehold) {
-    if (!loading) {
+    if(!loadingHousehold) {
       const householdUseChart1 = document.getElementById("householdUse-1");
       const householdUseChart2 = document.getElementById("householdUse-2");
       const householdUseChart1_svg = householdUseChart1.getElementsByTagName("svg");
@@ -241,13 +240,7 @@ class HouseholdUse extends React.Component {
     var VictoryPieData2 = [];
     var pieColors = [];
 
-    var VictoryPieData1EMS = [];
-    var pieColors1EMS = [];
-    var VictoryPieData1NoEMS = [];
-    var pieColors2NoEMS = [];
-
-    // if(householdEMS === true) {
-    if (offgridEMS === true) {
+    if(householdEMS === true) {
 
       // Rounded values for VictoryPieData2
       var roundedGridFeedPercentage = Math.round(parseFloat(this.gridFeedPercentage()));
@@ -266,20 +259,18 @@ class HouseholdUse extends React.Component {
       }
 
       VictoryPieData = [
-        { x: 3, y: this.gridFeedPercentage(), name: "grid", label: "3.000 kWh", img: "/img/grid_out.svg", color: "#004975" },
-        { x: 2, y: this.householdUsagePercentage() - householdNoEMSpvPercent, name: "plug", label: "1.400 kWh", img: "/img/plug.svg", color: "#C535BC" },
-        { x: 1, y: this.householdUsagePercentage(), name: "pv", label: "1.000 kWh", img: "/img/house_pv.svg", color: "#9E2896" },
+        { x: 3, y: roundedGridFeedPercentage, name: "grid", label: "3.000 kWh", img: "/img/grid_out.svg", color: "#004975" },
+        { x: 2, y: roundedHouseholdUsagePercentage, name: "plug", label: "1.400 kWh", img: "/img/plug.svg", color: "#C535BC" },
+        { x: 1, y: roundedHouseholdNoEMSpvPercent, name: "pv", label: "1.000 kWh", img: "/img/house_pv.svg", color: "#9E2896" },
       ];
-
       VictoryPieData2 = [
-        { x: 3, y: this.gridFeedPercentage(), name: "grid", label: roundedGridFeedPercentage + "%", img: "/img/grid_out.svg", color: "#A4ABB3" },
-        { x: 2, y: this.householdUsagePercentage() - householdNoEMSpvPercent, name: "plug", label: roundedHouseholdUsagePercentage + "%", img: "/img/plug.svg", color: "#00884A" },
-        { x: 1, y: this.householdUsagePercentage(), name: "pv", label: roundedHouseholdNoEMSpvPercent + "%", img: "/img/house_pv.svg", color: "#18837E" },
+        { x: 3, y: roundedGridFeedPercentage, name: "grid", label: roundedGridFeedPercentage + "%", img: "/img/grid_out.svg", color: "#A4ABB3" },
+        { x: 2, y: roundedHouseholdUsagePercentage, name: "plug", label: roundedHouseholdUsagePercentage + "%", img: "/img/plug.svg", color: "#00884A" },
+        { x: 1, y: roundedHouseholdNoEMSpvPercent, name: "pv", label: roundedHouseholdNoEMSpvPercent + "%", img: "/img/house_pv.svg", color: "#18837E" },
       ];
-
       pieColors = ["#A4ABB3", "#00884A", "#18837E"];
-      // } else if(householdEMS === false) {
-    } else if (offgridEMS === false) {
+
+    } else if(householdEMS === false) {
 
       // Rounded values for VictoryPieData2.
       var roundedGridFeedPercentageNoEMS = Math.round(parseFloat(this.gridFeedPercentageNoEMS()));
@@ -294,47 +285,27 @@ class HouseholdUse extends React.Component {
       }
 
       VictoryPieData = [
-        { x: 2, y: this.gridFeedPercentageNoEMS(), name: "grid", label: "3.000 kWh", img: "/img/grid_out.svg", color: "#A4ABB3" },
-        { x: 1, y: householdNoEMSpvPercent, name: "pv", label: "1.000 kWh", img: "/img/house_pv.svg", color: "#18837E" },
+        { x: 2, y: roundedGridFeedPercentageNoEMS, name: "grid", label: "3.000 kWh", img: "/img/grid_out.svg", color: "#A4ABB3" },
+        { x: 1, y: roundedHouseholdNoEMSpvPercent, name: "pv", label: "1.000 kWh", img: "/img/house_pv.svg", color: "#18837E" },
       ];
-
       VictoryPieData2 = [
-        { x: 2, y: this.gridFeedPercentageNoEMS(), name: "grid", label: roundedGridFeedPercentageNoEMS + "%", img: "/img/grid_out.svg", color: "#A4ABB3" },
-        { x: 1, y: householdNoEMSpvPercent, name: "pv", label: roundedHouseholdNoEMSpvPercent + "%", img: "/img/house_pv.svg", color: "#18837E" },
+        { x: 2, y: roundedGridFeedPercentageNoEMS, name: "grid", label: roundedGridFeedPercentageNoEMS + "%", img: "/img/grid_out.svg", color: "#A4ABB3" },
+        { x: 1, y: roundedHouseholdNoEMSpvPercent, name: "pv", label: roundedHouseholdNoEMSpvPercent + "%", img: "/img/house_pv.svg", color: "#18837E" },
       ];
-
       pieColors = ["#A4ABB3", "#18837E"];
     }
 
-    //Data for hidden Charts
-
-    //With EMS
-    VictoryPieData1EMS = [
-      { x: 3, y: 45, name: "grid", label: "35%", img: "img/grid_in.svg", color: "#004975" },
-      { x: 2, y: 20, name: "plug", label: "20%", img: "img/plug.svg", color: "#C535BC" },
-      { x: 1, y: 35, name: "pv", label: "45%", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#9E2896" },
-    ];
-    pieColors1EMS = ["#A4ABB3", "#00884A", "#18837E"];
-
-    //No EMS
-    VictoryPieData1NoEMS = [
-      { x: 3, y: 60, name: "grid", label: "60%", img: "img/grid_in.svg", color: "#004975" },
-      { x: 1, y: 40, name: "pv", label: "40%", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#9E2896" },
-    ];
-    pieColors2NoEMS = ["#A4ABB3", "#18837E"];
-
     return (
       <div>
-        {/* {!loadingHousehold && */}
-        {!loading && (
+        {!loadingHousehold && (
           <div style={{ display: "flex", justifyContent: "center" }}>
             <div style={{ position: "relative", width: "100%", height: "300px", top: "0", left: "0" /*maxWidth: '450px'*/ }}>
               <div id="householdUse-1-hidden" style={{ position: "absolute", width: "100%", height: "300px", display: "none" }}>
                 <VictoryPie
-                  data={VictoryPieData1EMS}
+                  data={VictoryPieData2}
                   width={pieChartSize}
                   padding={{ top: 0 }}
-                  colorScale={pieColors1EMS}
+                  colorScale={pieColors}
                   labelRadius={({ innerRadius }) => innerRadius + innerRadiusMargin}
                   innerRadius={0}
                   style={{
@@ -343,35 +314,35 @@ class HouseholdUse extends React.Component {
                       stroke: "#fff",
                       strokeWidth: 6,
                     },
-                    labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: pieLabelFontSize },
+                    labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" },
                   }}
                 />
               </div>
 
               <div id="householdUse-2-hidden" style={{ position: "absolute", width: "100%", height: "300px", display: "none" }}>
                 <VictoryPie
-                  data={VictoryPieData1EMS}
+                  data={VictoryPieData}
                   width={pieChartSize}
                   padding={{ top: 0 }}
-                  colorScale={pieColors1EMS}
-                  labelComponent={<CustomLabelComponent iconSize={pieIconSize} fontSize={pieLabelFontSize} xPositionIconMargin={xPositionIconMargin} yPositionIconMargin={yPositionIconMargin} xPositionEVIconMargin={xPositionEVIconMargin} yPositionEVIconMargin={yPositionEVIconMargin} xPositionHouseholdIconMargin={xPositionHouseholdIconMargin} yPositionHouseholdIconMargin={yPositionHouseholdIconMargin} xPositionHeatpumpLabel={xPositionHeatpumpLabel} xPositionEVLabel={xPositionEVLabel} xPositionHouseholdLabel={xPositionHouseholdLabel} yPositionHeatpumpLabel={yPositionHeatpumpLabel} yPositionEVLabel={yPositionEVLabel} yPositionHouseholdLabel={yPositionHouseholdLabel} />}
+                  colorScale={pieColors}
+                  labelComponent={<CustomLabelComponent iconSize={pieIconSize} fontSize={"20px"} xPositionIconMargin={xPositionIconMargin} yPositionIconMargin={yPositionIconMargin} xPositionEVIconMargin={xPositionEVIconMargin} yPositionEVIconMargin={yPositionEVIconMargin} xPositionHouseholdIconMargin={xPositionHouseholdIconMargin} yPositionHouseholdIconMargin={yPositionHouseholdIconMargin} xPositionHeatpumpLabel={xPositionHeatpumpLabel} xPositionEVLabel={xPositionEVLabel} xPositionHouseholdLabel={xPositionHouseholdLabel} yPositionHeatpumpLabel={yPositionHeatpumpLabel} yPositionEVLabel={yPositionEVLabel} yPositionHouseholdLabel={yPositionHouseholdLabel} />}
                   style={{
                     data: {
                       fillOpacity: 0,
                       stroke: "#fff",
                       strokeWidth: 6,
                     },
-                    labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: pieLabelFontSize },
+                    labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" },
                   }}
                 />
               </div>
 
               <div id="householdUse-1-noEMS-hidden" style={{ position: "absolute", width: "100%", height: "300px", display: "none" }}>
                 <VictoryPie
-                  data={VictoryPieData1NoEMS}
+                  data={VictoryPieData2}
                   width={pieChartSize}
                   padding={{ top: 0 }}
-                  colorScale={pieColors2NoEMS}
+                  colorScale={pieColors}
                   labelRadius={({ innerRadius }) => innerRadius + innerRadiusMargin}
                   innerRadius={0}
                   style={{
@@ -380,25 +351,25 @@ class HouseholdUse extends React.Component {
                       stroke: "#fff",
                       strokeWidth: 6,
                     },
-                    labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: pieLabelFontSize },
+                    labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" },
                   }}
                 />
               </div>
 
               <div id="householdUse-2-noEMS-hidden" style={{ position: "absolute", width: "100%", height: "300px", display: "none" }}>
                 <VictoryPie
-                  data={VictoryPieData1NoEMS}
+                  data={VictoryPieData}
                   width={pieChartSize}
                   padding={{ top: 0 }}
-                  colorScale={pieColors2NoEMS}
-                  labelComponent={<CustomLabelComponent iconSize={pieIconSize} fontSize={pieLabelFontSize} xPositionIconMargin={xPositionIconMargin} yPositionIconMargin={yPositionIconMargin} xPositionEVIconMargin={xPositionEVIconMargin} yPositionEVIconMargin={yPositionEVIconMargin} xPositionHouseholdIconMargin={xPositionHouseholdIconMargin} yPositionHouseholdIconMargin={yPositionHouseholdIconMargin} xPositionHeatpumpLabel={xPositionHeatpumpLabel} xPositionEVLabel={xPositionEVLabel} xPositionHouseholdLabel={xPositionHouseholdLabel} yPositionHeatpumpLabel={yPositionHeatpumpLabel} yPositionEVLabel={yPositionEVLabel} yPositionHouseholdLabel={yPositionHouseholdLabel} />}
+                  colorScale={pieColors}
+                  labelComponent={<CustomLabelComponent iconSize={pieIconSize} fontSize={"20px"} xPositionIconMargin={xPositionIconMargin} yPositionIconMargin={yPositionIconMargin} xPositionEVIconMargin={xPositionEVIconMargin} yPositionEVIconMargin={yPositionEVIconMargin} xPositionHouseholdIconMargin={xPositionHouseholdIconMargin} yPositionHouseholdIconMargin={yPositionHouseholdIconMargin} xPositionHeatpumpLabel={xPositionHeatpumpLabel} xPositionEVLabel={xPositionEVLabel} xPositionHouseholdLabel={xPositionHouseholdLabel} yPositionHeatpumpLabel={yPositionHeatpumpLabel} yPositionEVLabel={yPositionEVLabel} yPositionHouseholdLabel={yPositionHouseholdLabel} />}
                   style={{
                     data: {
                       fillOpacity: 0,
                       stroke: "#fff",
                       strokeWidth: 6,
                     },
-                    labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: pieLabelFontSize },
+                    labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" },
                   }}
                 />
               </div>
@@ -444,8 +415,7 @@ class HouseholdUse extends React.Component {
           </div>
         )}
 
-        {/* {loadingHousehold && */}
-        {loading && (
+        {loadingHousehold && (
           <div style={{ display: "flex", justifyContent: "center" }}>
             <div style={{ position: "relative", width: "100%", height: "300px", top: "0", left: "0" }}>
               <div style={{ position: "absolute", left: "50%", top: "100px" }}>Lädt...</div>
@@ -454,8 +424,7 @@ class HouseholdUse extends React.Component {
         )}
 
         <div data-html2canvas-ignore style={{ display: "flex", marginTop: "30px", justifyContent: "flex-start", flexDirection: "row" }}>
-          {/* <HouseholdSwitch /> */}
-          <CustomSwitch />
+          <HouseholdSwitch />
           <div style={{ marginLeft: "12px", marginRight: "12px", paddingTop: "2px", fontFamily: "Bosch-Regular", fontSize: "16px" }}>Mit Energiemanagementsystem</div>
           <div>
             <InfoButton color="#007BC0" size="14px" placement="right" text="Unter Energiemanagement wird die Kombination verschiedener Maßnahmen und Strategien verstanden, um Energie zu beschaffen, zu verteilen und optimal zu nutzen. Ziel ist es, Energieverbräuche zu senken und die Energieeffizienz im Haushalt zu optimieren, um wirtschaftliche und ökologische Ziele zu erreichen." />
