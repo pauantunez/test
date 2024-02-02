@@ -413,7 +413,7 @@ class Additional extends React.Component {
             <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", width: "815px" }}>
               <div style={{ width: "60%" }}>
                 <span style={{ display: "block", marginBottom: "15px" }}>
-                  Investitionskosten PV-System: <strong>27.500€</strong>
+                  Investitionskosten PV-System: <strong>{sessionStorage.getItem("InvestmentCostEUR").toLocaleString("DE-de")} €</strong>
                 </span>
                 <img src={breakEvenBase64} style={{ width: "440px" }} />
               </div>

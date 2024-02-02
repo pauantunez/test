@@ -106,7 +106,7 @@ class HouseholdSwitch extends React.Component {
       const { setLoadingHousehold, products, btnThemes, fonts, setFwdBtn } = this.context;
 
       setFwdBtn(false);
-      setLoadingHousehold(true)
+      //setLoadingHousehold(true)
     
     }
 
@@ -160,7 +160,7 @@ class HouseholdSwitch extends React.Component {
                 //setDatabaseResult(res.data.data[0])
               }
 
-              setLoadingHousehold(false)
+              //setLoadingHousehold(false)
             }
 
             console.log(res.data.data[0])
@@ -175,7 +175,7 @@ class HouseholdSwitch extends React.Component {
 
       const { setLoadingHousehold, kfwValue, ev, setHouseholdEMS, offgridEMS, scenarioInDatabase, tabEntries, setTabToSelect, pvOutputkWh, homeStorageSizekWh, homeStorage, setHomeStorage, setHomeStorageSize} = this.context;
       setHouseholdEMS(event.target.checked);
-      setLoadingHousehold(true)
+      //setLoadingHousehold(true)
 
       // if(event.target.checked) {
       //   var emsValue = "Ja"

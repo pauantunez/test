@@ -197,7 +197,7 @@ class BreakEven extends React.Component {
     let PVcostInTable = PVcostLookupTable.find((o) => o.pv === pvOutputkWh);
     let StorageCostInTable = StorageCostLookupTable.find((o) => o.storage === homeStorageSize);
 
-    const investmentCostResult = Math.abs(PVcostInTable.cost);
+    let investmentCostResult = Math.abs(PVcostInTable.cost);
 
     if (investmentCostEUR > 0) {
       investmentCostResult = parseInt(investmentCostEUR) * -1;

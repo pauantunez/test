@@ -65,7 +65,28 @@ class ResultStep2 extends React.Component {
   }
 
   componentDidMount() {
+    const { setLoadingOffGrid, setLoadingHousehold } = this.context;
+    const switchButtons = document.getElementsByClassName('MuiSwitch-input');
+
     sessionStorage.clear()
+
+    // Switch click automatically to get values for the PDF
+    setLoadingOffGrid(true)
+    setLoadingHousehold(true)
+
+    for (let i = 0; i < switchButtons.length; i++) {
+      switchButtons[i].click();
+    }
+    setTimeout(() => {
+      for (let i = 0; i < switchButtons.length; i++) {
+        switchButtons[i].click();
+      }
+
+      setLoadingOffGrid(false)
+      setLoadingHousehold(false)
+    }, 1000);
+
+
   }
 
   inputPower_kW_PV_MFH = (event) => {

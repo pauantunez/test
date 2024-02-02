@@ -88,6 +88,21 @@ class ResultStep3 extends React.Component {
       setGasOilSwitch(event.target.checked) 
     };
 
+    investmentCost = () => {
+      const { pvOutputkWh, homeStorageSize, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, addHeatpumpPVems } = this.context;
+
+      let PVcostInTable = PVcostLookupTable.find((o) => o.pv === pvOutputkWh);
+      let StorageCostInTable = StorageCostLookupTable.find((o) => o.storage === homeStorageSize);
+  
+      let investmentCostResult = Math.abs(PVcostInTable.cost);
+  
+      if (investmentCostEUR > 0) {
+        investmentCostResult = parseInt(investmentCostEUR) * -1;
+      }
+  
+      return Math.abs(investmentCostResult);
+    };
+
     async toggleModal() {
 
       if(this.state.overlayToggle) {
@@ -109,6 +124,8 @@ class ResultStep3 extends React.Component {
 
       const { t } = this.props;
       const { overlayToggle, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, BuildingEnegeryStandard, SetBuildingEnegeryStandard, EnergyUse, setEnergyUse, BuildingSize, GasOilSwitch } = this.context;
+
+      sessionStorage.setItem("InvestmentCostEUR", this.investmentCost().toLocaleString("DE-de"))
 
           return  ( 
           <div style={{marginLeft: '3%', marginRight: '3%'}}>

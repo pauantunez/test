@@ -202,9 +202,17 @@ class OffGrid extends React.Component {
 
     componentDidMount() {
       const { loading, loadingOffGrid, setOffGrid1SVG, offgrid1SVG, setOffGrid2SVG, setOffgrid1SVG_NoEMS_Hidden, setOffgrid2SVG_NoEMS_Hidden, setOffgrid1SVG_EMS_Hidden, setOffgrid2SVG_EMS_Hidden } = this.context;
-      window.addEventListener("resize", this.handleResize)
-      
+      window.addEventListener("resize", this.handleResize) 
+
       if(!loadingOffGrid) {
+
+        // const switchButtons = document.querySelectorAll('.MuiSwitch-root');
+
+        // if (switchButtons.length > 0) {
+        //   switchButtons.forEach(button => button.click());
+        //   //alert("estaaaa entrando")
+        // }
+
         const offgridChart1 = document.getElementById('offgrid-1');
         const offgrid1_svg = offgridChart1.getElementsByTagName('svg');
 
@@ -243,7 +251,11 @@ class OffGrid extends React.Component {
       const { loading, loadingOffGrid, setInfoBoxOffGridGridUsage, noEMSPercentageOffGrid, pieChartSize, pieIconSize, innerRadiusMargin, pieLabelFontSize, xPositionHeatpumpLabel, xPositionEVLabel, xPositionHouseholdLabel, yPositionHeatpumpLabel, yPositionEVLabel, yPositionHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime, setOffgridEMS, offgridEMS } = this.context;
       var VictoryPieData = [];
       var VictoryPieDataTest = [];
+      var VictoryPieDataPDFWithEMS = [];
+      var VictoryPieDataPDFWithoutEMS = [];
       var pieColors = [];
+      var pieColorsPDFWithEMS = [];
+      var pieColorsPDFWithoutEMS = [];
 
       var VictoryPieData1EMS = [];
       var VictoryPieData2EMS = [];
@@ -283,7 +295,7 @@ class OffGrid extends React.Component {
             { x: 2, y: roundedPvUsagePercentage, name: "plug", label: roundedPvUsagePercentage + "%", img: "img/plug.svg", color: "#00884A" },
             { x: 1, y: roundedNoEMSPercentageOffGrid, name: "pv", label: roundedNoEMSPercentageOffGrid + "%", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
         ]
-        
+
         pieColors = ["#A4ABB3", "#00884A", "#18837E"];
 
       } else if(offgridEMS === false) {
@@ -315,6 +327,22 @@ class OffGrid extends React.Component {
         pieColors = ["#A4ABB3", "#18837E"]
       }
 
+      // Data for PDF victory pie 
+      VictoryPieDataPDFWithEMS = 
+      [
+          { x: 3, y: parseInt(sessionStorage.getItem("MIT_GridUsagePercentage")), name: "grid", label: sessionStorage.getItem("MIT_GridUsagePercentage") + "%", img: "img/grid_in.svg", color: "#A4ABB3" },
+          { x: 2, y: parseInt(sessionStorage.getItem("MIT_PvUsagePercentage")), name: "plug", label: sessionStorage.getItem("MIT_PvUsagePercentage") + " %", img: "img/plug.svg", color: "#00884A" },
+          { x: 1, y: parseInt(sessionStorage.getItem("MIT_NoEMSPercentageOffGrid")), name: "pv", label: sessionStorage.getItem("MIT_NoEMSPercentageOffGrid") + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },        
+      ]
+      pieColorsPDFWithEMS = ["#A4ABB3", "#00884A", "#18837E"];
+
+      VictoryPieDataPDFWithoutEMS = 
+      [
+        { x: 3, y: parseInt(sessionStorage.getItem("OHNE_GridUsagePercentage")), name: "grid", label: sessionStorage.getItem("OHNE_GridUsagePercentage") + " %", img: "img/grid_in.svg", color: "#A4ABB3" },
+        { x: 1, y: parseInt(sessionStorage.getItem("OHNE_PvUsagePercentage")), name: "pv", label: sessionStorage.getItem("OHNE_PvUsagePercentage") + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E"},
+      ]
+      pieColorsPDFWithoutEMS = ["#A4ABB3", "#18837E", ]
+
           return  ( 
           <div>
             {!loadingOffGrid &&
@@ -323,10 +351,10 @@ class OffGrid extends React.Component {
                 <div style={{position: 'relative', width: '100%', height: '300px', top: '0', left: '0', /*maxWidth: '450px'*/}}>
                     <div id="offgrid-1-ems-hidden" style={{position: 'absolute', width: '100%', height: '300px', display: 'none'}}>
                         <VictoryPie
-                        data={VictoryPieDataTest}
+                        data={VictoryPieDataPDFWithEMS}
                         width={pieChartSize}
                         padding={{ top: 0 }}
-                        colorScale={pieColors}
+                        colorScale={pieColorsPDFWithEMS}
                         labelRadius={({ innerRadius }) => innerRadius + innerRadiusMargin }
                         innerRadius={0}
                         style={{ data: {
@@ -336,10 +364,10 @@ class OffGrid extends React.Component {
                     </div>
                     <div id="offgrid-2-ems-hidden" style={{position: 'absolute', width: '100%', height: '300px', display: 'none'}}>
                         <VictoryPie
-                        data={VictoryPieDataTest}
+                        data={VictoryPieDataPDFWithEMS}
                         width={pieChartSize}
                         padding={{ top: 0 }}
-                        colorScale={pieColors}
+                        colorScale={pieColorsPDFWithEMS}
                         labelComponent={<CustomLabelComponent iconSize={pieIconSize} fontSize={"20px"} xPositionIconMargin={xPositionIconMargin} yPositionIconMargin={yPositionIconMargin} xPositionEVIconMargin={xPositionEVIconMargin} yPositionEVIconMargin={yPositionEVIconMargin} xPositionHouseholdIconMargin={xPositionHouseholdIconMargin} yPositionHouseholdIconMargin={yPositionHouseholdIconMargin} xPositionHeatpumpLabel={xPositionHeatpumpLabel} xPositionEVLabel={xPositionEVLabel} xPositionHouseholdLabel={xPositionHouseholdLabel} yPositionHeatpumpLabel={yPositionHeatpumpLabel} yPositionEVLabel={yPositionEVLabel} yPositionHouseholdLabel={yPositionHouseholdLabel} />}
                         style={{ data: {
                             fillOpacity: 0, stroke: "#fff", strokeWidth: 6
@@ -349,10 +377,10 @@ class OffGrid extends React.Component {
 
                     <div id="offgrid-1-hidden" style={{position: 'absolute', width: '100%', height: '300px', display: 'none'}}>
                         <VictoryPie
-                        data={VictoryPieDataTest}
+                        data={VictoryPieDataPDFWithoutEMS}
                         width={pieChartSize}
                         padding={{ top: 0 }}
-                        colorScale={pieColors}
+                        colorScale={pieColorsPDFWithoutEMS}
                         labelRadius={({ innerRadius }) => innerRadius + innerRadiusMargin }
                         innerRadius={0}
                         style={{ data: {
@@ -362,10 +390,10 @@ class OffGrid extends React.Component {
                     </div>
                     <div id="offgrid-2-hidden" style={{position: 'absolute', width: '100%', height: '300px', display: 'none'}}>
                         <VictoryPie
-                        data={VictoryPieDataTest}
+                        data={VictoryPieDataPDFWithoutEMS}
                         width={pieChartSize}
                         padding={{ top: 0 }}
-                        colorScale={pieColors}
+                        colorScale={pieColorsPDFWithoutEMS}
                         labelComponent={<CustomLabelComponent iconSize={pieIconSize} fontSize={"20px"} xPositionIconMargin={xPositionIconMargin} yPositionIconMargin={yPositionIconMargin} xPositionEVIconMargin={xPositionEVIconMargin} yPositionEVIconMargin={yPositionEVIconMargin} xPositionHouseholdIconMargin={xPositionHouseholdIconMargin} yPositionHouseholdIconMargin={yPositionHouseholdIconMargin} xPositionHeatpumpLabel={xPositionHeatpumpLabel} xPositionEVLabel={xPositionEVLabel} xPositionHouseholdLabel={xPositionHouseholdLabel} yPositionHeatpumpLabel={yPositionHeatpumpLabel} yPositionEVLabel={yPositionEVLabel} yPositionHouseholdLabel={yPositionHouseholdLabel} />}
                         style={{ data: {
                             fillOpacity: 0, stroke: "#fff", strokeWidth: 6
