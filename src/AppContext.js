@@ -1941,6 +1941,11 @@ class SimulatorProvider extends Component {
     this.setState((prevState) => ({ directLink: value }));
   };
 
+  goToView = (newValue) => {
+    this.setDirectLink(true);
+    this.setActiveView(newValue);
+  };
+
   loading;
   loadingOffGrid;
   loadingHousehold;
@@ -2115,6 +2120,7 @@ class SimulatorProvider extends Component {
       setHeatpumpAudio,
       setHeatpumpVolume,
       setActiveView,
+      goToView,
       setActiveStep,
       setActiveMilestone,
       setMilestoneHeadline,
@@ -2388,6 +2394,7 @@ class SimulatorProvider extends Component {
           setHeatpumpAudio,
           setHeatpumpVolume,
           setActiveView,
+          goToView,
           setActiveStep,
           setActiveMilestone,
           setMilestoneHeadline,

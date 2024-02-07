@@ -63,6 +63,7 @@ class PVOutput extends React.Component {
     const { setTabToSelect, tabEntries, pvOutputkWh, homeStorageSizekWh, pvOutput, setPVOutput } = this.context;
     setPVOutput(parseInt(value));
     this.setState({ pvOutputkW: parseInt(value) });
+    this.context.goToView(7);
   };
 
   render() {
