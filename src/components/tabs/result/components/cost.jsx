@@ -664,25 +664,6 @@ class Cost extends React.Component {
                   {costOverTime == "1" && this.divideValuesForChart(0, OHNE_PV_cost1year) + " €"}
                   {costOverTime == "20" && this.divideValuesForChart(0, OHNE_PV_cost20years) + " €"}
                 </div>
-                {/* <div>
-                  {costOverTime == "1" && this.divideValuesForChart(-1, OHNE_PV_cost1year) + " €"}
-                  {costOverTime == "20" && this.divideValuesForChart(-1, OHNE_PV_cost20years) + " €"}
-                </div> */}
-                {/* <div>
-                                { this.energyUseEuroNegative(1,this.whichChartLegend()) }
-                            </div>
-                            <div>
-                                { this.energyUseEuroNegative(2,this.whichChartLegend()) }
-                            </div>
-                            <div>
-                                { this.energyUseEuroNegative(3,this.whichChartLegend()) }
-                            </div>
-                            <div>
-                                { this.energyUseEuroNegative(4,this.whichChartLegend()) }
-                            </div>
-                            <div>
-                                { this.energyUseEuroNegative(5,this.whichChartLegend()) }
-                            </div> */}
               </div>
               <div data-html2canvas-ignore class="cost-chart-width" style={{ display: "flex", flexDirection: "column", marginLeft: "3px" }}>
                 <div class="cost-chart-width" style={{ marginTop: "7px", height: "1px", width: "450px", borderBottom: "1px solid #EFF1F2" }}></div>

@@ -1946,6 +1946,23 @@ class SimulatorProvider extends Component {
     this.setActiveView(newValue);
   };
 
+  sendGAEvent = (eventName, eventCategory, eventAction, event) => {
+    // Verifica si el evento proviene de un elemento con la clase "trackeable-event"
+    if (event.target.classList.contains('trackeable-event')) {
+      //alert()
+      console.log(event)
+      if (window.parent) {
+        window.parent.postMessage({
+          event: eventName,
+          eventCategory: eventCategory,
+          eventAction: eventAction
+        }, "*");
+      } else {
+        console.error("Error al enviar");
+      }
+    }
+  };
+
   loading;
   loadingOffGrid;
   loadingHousehold;
@@ -2224,6 +2241,7 @@ class SimulatorProvider extends Component {
       setLoadingOffGrid,
       setLoadingHousehold,
       setDirectLink,
+      sendGAEvent,
     } = this;
 
     return (
@@ -2498,6 +2516,7 @@ class SimulatorProvider extends Component {
           setLoadingOffGrid,
           setLoadingHousehold,
           setDirectLink,
+          sendGAEvent,
         }}
       >
         {children}

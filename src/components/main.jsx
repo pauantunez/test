@@ -89,7 +89,7 @@ class Main extends React.Component {
   static contextType = AppContext;
 
   componentWillMount() {
-    const { products, btnThemes, fonts } = this.context;
+    const { products, btnThemes, fonts, sendGAEvent } = this.context;
     const productsProps = Object.getOwnPropertyNames(products);
     var foundTheme = 0;
 
@@ -129,6 +129,10 @@ class Main extends React.Component {
       themeFont = fonts.bosch[0];
       labelFont = fonts.bosch[1];
     }
+
+    document.body.addEventListener('click', (event) => {
+      sendGAEvent('Click', 'Elemento Trackeable', event.target.textContent || 'Texto del elemento', event);
+    });
   }
 
   componentWillReceiveProps = (nextProps, nextContext) => {

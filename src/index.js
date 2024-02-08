@@ -14,6 +14,8 @@ const tagManagerArgs = {
   gtmId: "GTM-TFQTQZ3",
 };
 
+TagManager.initialize(tagManagerArgs);
+
 ReactDOM.render(
   <I18nextProvider i18n={i18next}>
     <React.Fragment>

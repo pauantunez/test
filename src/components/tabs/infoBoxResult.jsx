@@ -158,7 +158,8 @@ class InfoBoxResult extends React.Component {
     var OHNE_PV_cost1year = parseInt(sessionStorage.getItem("OHNE_PV_cost1year"))
     var OHNE_PV_cost20years = parseInt(sessionStorage.getItem("OHNE_PV_cost20years"))
 
-    var costOnlyPV = parseInt(sessionStorage.getItem("costOnlyPV"))
+    var costOnlyPV1year = parseInt(sessionStorage.getItem("costOnlyPV1year"))
+    var costOnlyPV20years = parseInt(sessionStorage.getItem("costOnlyPV20years"))
 
     var costPVandEMS1year = parseInt(sessionStorage.getItem("costPVandEMS1year"))
     var costPVandEMS20years = parseInt(sessionStorage.getItem("costPVandEMS20years"))

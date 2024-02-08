@@ -28,6 +28,8 @@ import Radio from "@mui/material/Radio";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+
 
 import { Canvg } from "canvg";
 
@@ -132,6 +134,30 @@ class Additional extends React.Component {
   render() {
     const { t } = this.props;
     const { breakEvenBase64, setBreakEvenBase64, BuildingEnegeryStandard, setBuildingEnegeryStandard, kfwValue, insulationValue, setInsulationValue, setKfwValue, OilLNGValue, setOilLNGValue, TCO_thermal_EUR_a, disabledOilUsage, OilUsageLiters, LNGUsage, disabledLNGUsage, heatDistributionValue, energyUsagekWh, pvOutput, setBackdrop, backdrop } = this.context;
+
+    //OffGrid
+    // Mit
+    var mitGridUsagePercentage = parseInt(sessionStorage.getItem("MIT_GridUsagePercentage"))
+    var mitNoEMSPercentage = parseInt(sessionStorage.getItem("MIT_NoEMSPercentageOffGrid"))
+    var mitPvUsagePercentage = parseInt(sessionStorage.getItem("MIT_PvUsagePercentage"))
+    var autarkiegradWithEMS = mitNoEMSPercentage + mitPvUsagePercentage
+
+    // Ohne
+    var ohneGridUsagePercentage = parseInt(sessionStorage.getItem("OHNE_GridUsagePercentage"))
+    var ohnePvUsagePercentage = parseInt(sessionStorage.getItem("OHNE_PvUsagePercentage"))
+
+
+    //household-use
+    // Mit
+    var MIT_GridFeedPercentage = parseInt(sessionStorage.getItem("MIT_GridFeedPercentage"))
+    var MIT_HouseholdUsagePercentage = parseInt(sessionStorage.getItem("MIT_HouseholdUsagePercentage"))
+    var MIT_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("MIT_HouseholdNoEMSpvPercent"))
+    var eigenverbrauchsanteil = MIT_HouseholdUsagePercentage + MIT_HouseholdNoEMSpvPercent
+
+    // Ohne 
+    var Onhe_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent"))
+    var Onhe_GridFeedPercentageNoEMS = parseInt(sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS"))
+
 
     const addFooters = (doc) => {
       const pageCount = doc.internal.getNumberOfPages();
@@ -392,13 +418,16 @@ class Additional extends React.Component {
           <div style={{ position: "absolute", left: "60px", top: "207px" }}>
             <h3>Ergebnis Teil 1: Stromkosten und Amortisationszeit Ihrer PV-Anlage</h3>
           </div>
+
           <div style={{ position: "absolute", left: "60px", top: "270px" }}>
             <div style={{ position: "absolute", left: "0px", width: "405px", transform: "scale(0.75)", transformOrigin: "top left" }}>
               <h3 style={{ marginBlockStart: "4px", marginBlockEnd: "8px", fontSize: "14px" }}>Gesamtkosten Strom</h3>
+              {/* Gráfico barras 1 año */}
               <Cost displayed="single" />
             </div>
             <div style={{ position: "absolute", left: "365px", width: "405px", transform: "scale(0.75)", transformOrigin: "top left" }}>
               <h3 style={{ marginTop: "0px", marginBlockStart: "4px", marginBlockEnd: "8px", height: "18px" }}></h3>
+              {/* Gráfico barras 20 años */}
               <Cost displayed="multi" />
             </div>
           </div>
@@ -471,8 +500,28 @@ class Additional extends React.Component {
               <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
                 <canvas id="pie2" width="375" height="273" />
               </div>
-              <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
+              {/* <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
                 <InfoBoxResult box="off-grid" />
+              </div> */}
+              <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
+                <Box>
+                  <div class="infobox-container">
+                    <div class="infobox-row" style={{ display: "block", lineHeight: "22px", fontSize: "13px", borderBottom: "none" }}>
+                      <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Autarkiegrad: ca. {autarkiegradWithEMS}%</h3>
+                      <p>
+                        Das bedeutet: bis zu <strong>{autarkiegradWithEMS}%</strong> Ihres Gesamtstromverbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
+                      </p>
+                      <p>
+                        <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>{mitNoEMSPercentage}%</strong>.{" "}
+                      </p>
+                      <p>
+                      Ca.&nbsp;
+                      <strong>{mitGridUsagePercentage}%</strong>
+                      &nbsp;Ihres Gesamtstromverbrauchs beziehen Sie durch das <strong>öffentliche Stromnetz.</strong>
+                      </p>
+                    </div>
+                  </div>
+                </Box>
               </div>
             </div>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "0px", paddingLeft: "0px", maxWidth: "815px" }}>
@@ -485,8 +534,28 @@ class Additional extends React.Component {
               <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
                 <canvas id="pie2_NoEMS" width="375" height="273" />
               </div>
-              <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
+              {/* <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
                 <InfoBoxResult box="off-grid" />
+              </div> */}
+              <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
+              <Box>
+                <div class="infobox-container">
+                  <div class="infobox-row" style={{ display: "block", lineHeight: "22px", fontSize: "13px", borderBottom: "none" }}>
+                    <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Autarkiegrad: ca. {ohnePvUsagePercentage}%</h3>
+                    <p>
+                      Das bedeutet: bis zu <strong>{ohnePvUsagePercentage}%</strong> Ihres Gesamtstromverbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
+                    </p>
+                    <p>
+                      <strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Autarkiegrad</strong> auf bis zu <strong>{autarkiegradWithEMS}%</strong> erhöhen.{" "}
+                    </p>
+                    <p>
+                      Ca.&nbsp;
+                      <strong>{ohneGridUsagePercentage}%</strong>
+                      &nbsp;Ihres Gesamtstromverbrauchs beziehen Sie durch das <strong>öffentliche Stromnetz.</strong>
+                    </p>
+                  </div>
+                </div>
+              </Box>
               </div>
             </div>
           </div>
@@ -522,8 +591,28 @@ class Additional extends React.Component {
               <div style={{ position: "absolute", top: "0", left: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
                 <canvas id="pie6" width="375" height="273" />
               </div>
-              <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
+              {/* <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
                 <InfoBoxResult box="household-use" />
+              </div> */}
+              <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
+                <Box>
+                  <div class="infobox-container">
+                    <div class="infobox-row" style={{ display: "block", lineHeight: "22px", fontSize: "13px", borderBottom: "none" }}>
+                      <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Eigenverbrauchsanteil: ca. {eigenverbrauchsanteil}%</h3>
+                      <p>
+                        Das bedeutet: bis zu <strong>{Math.round(parseFloat(eigenverbrauchsanteil).toFixed(2))}%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
+                      </p>
+                      <p>
+                        <strong>Ohne ein Energiemanagementsystem</strong> beträgt der <strong>Eigenverbrauchsanteil</strong> lediglich ca. <strong>{MIT_HouseholdNoEMSpvPercent}%</strong>.{" "}
+                      </p>
+                      <p>
+                        Ca.&nbsp;
+                        <strong>{MIT_GridFeedPercentage}%</strong>
+                        &nbsp;Ihres eigens produzierten PV-Stroms speisen Sie ins <strong>öffentliche Stromnetz</strong> ein.
+                      </p>
+                    </div>
+                  </div>
+                </Box>
               </div>
             </div>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "0px", paddingLeft: "0px", maxWidth: "815px" }}>
@@ -536,8 +625,28 @@ class Additional extends React.Component {
               <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
                 <canvas id="pie8" width="375" height="273" />
               </div>
-              <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
+              {/* <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
                 <InfoBoxResult box="household-use" />
+              </div> */}
+              <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
+                <Box>
+                  <div class="infobox-container">
+                    <div class="infobox-row" style={{ display: "block", lineHeight: "22px", fontSize: "13px", borderBottom: "none" }}>
+                      <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Eigenverbrauchsanteil: ca. {Onhe_HouseholdNoEMSpvPercent}%</h3>
+                      <p>
+                        Das bedeutet: bis zu <strong>{Math.round(parseFloat(Onhe_HouseholdNoEMSpvPercent).toFixed(2))}%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
+                      </p>
+                      <p>
+                        <strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Eigenverbrauchsanteil</strong> auf bis zu <strong>{eigenverbrauchsanteil}%</strong> erhöhen.{" "}
+                      </p>
+                      <p>
+                        Ca.&nbsp;
+                        <strong>{Onhe_GridFeedPercentageNoEMS}%</strong>
+                        &nbsp;Ihres eigens produzierten PV-Stroms speisen Sie ins <strong>öffentliche Stromnetz</strong> ein.
+                      </p>
+                    </div>
+                    </div>
+                </Box>
               </div>
             </div>
             <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", maxWidth: "700px" }}>
