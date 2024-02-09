@@ -29,16 +29,16 @@ class InfoBoxResult extends React.Component {
       theme: props.theme,
       text: props.text,
       boxType: props.box,
-      MIT_GridUsagePercentage: 0
+      MIT_GridUsagePercentage: 0,
     };
   }
 
   static contextType = AppContext;
 
   componentDidMount() {
-    this.breakEvenPoint()
-    const MIT_GridUsagePercentage = sessionStorage.getItem("MIT_GridUsagePercentage")
-    this.setState({ MIT_GridUsagePercentage })
+    this.breakEvenPoint();
+    const MIT_GridUsagePercentage = sessionStorage.getItem("MIT_GridUsagePercentage");
+    this.setState({ MIT_GridUsagePercentage });
   }
 
   energyUsageCombined = () => {
@@ -155,47 +155,48 @@ class InfoBoxResult extends React.Component {
     const { costOverTime, electricityCostPVsavings, electricityCostPVEMSsavings, offgridEMS, householdEMS, noEMSPercentageOffGrid, householdNoEMSpvPercent, infoBoxOffGridGridUsage, infoBoxHouseholdGridFeed, infoBoxCombinedHouseholdUsage, BuildingEnegeryStandard, setBuildingEnegeryStandard, kfwValue, insulationValue, setInsulationValue, setKfwValue, OilLNGValue, setOilLNGValue, TCO_thermal_EUR_a, disabledOilUsage, OilUsageLiters, LNGUsage, disabledLNGUsage } = this.context;
 
     // Electricity savings
-    var OHNE_PV_cost1year = parseInt(sessionStorage.getItem("OHNE_PV_cost1year"))
-    var OHNE_PV_cost20years = parseInt(sessionStorage.getItem("OHNE_PV_cost20years"))
+    var OHNE_PV_cost1year = parseInt(sessionStorage.getItem("OHNE_PV_cost1year"));
+    var OHNE_PV_cost20years = parseInt(sessionStorage.getItem("OHNE_PV_cost20years"));
 
-    var costOnlyPV = parseInt(sessionStorage.getItem("costOnlyPV"))
+    var costOnlyPV = parseInt(sessionStorage.getItem("costOnlyPV"));
 
-    var costPVandEMS1year = parseInt(sessionStorage.getItem("costPVandEMS1year"))
-    var costPVandEMS20years = parseInt(sessionStorage.getItem("costPVandEMS20years"))
+    var costPVandEMS1year = parseInt(sessionStorage.getItem("costPVandEMS1year"));
+    var costPVandEMS20years = parseInt(sessionStorage.getItem("costPVandEMS20years"));
 
-    var savingOnlyPV1year = parseInt(sessionStorage.getItem("savingOnlyPV1year"))
-    var savingOnlyPV20years = parseInt(sessionStorage.getItem("savingOnlyPV20years"))
+    var savingOnlyPV1year = parseInt(sessionStorage.getItem("savingOnlyPV1year"));
+    var savingOnlyPV20years = parseInt(sessionStorage.getItem("savingOnlyPV20years"));
 
-    var savingPVandEMS1year = parseInt(sessionStorage.getItem("savingPVandEMS1year"))
-    var savingPVandEMS20years = parseInt(sessionStorage.getItem("savingPVandEMS20years"))
+    var savingPVandEMS1year = parseInt(sessionStorage.getItem("savingPVandEMS1year"));
+    var savingPVandEMS20years = parseInt(sessionStorage.getItem("savingPVandEMS20years"));
 
-    var savingOnlyPv1yearMinusSavingEMS1year = savingPVandEMS1year - savingOnlyPV1year
-    var savingOnlyPv20yearsMinusSavingEMS20years = savingPVandEMS20years - savingOnlyPV20years
+    var savingOnlyPv1yearMinusSavingEMS1year = savingPVandEMS1year - savingOnlyPV1year;
+    var savingOnlyPv20yearsMinusSavingEMS20years = savingPVandEMS20years - savingOnlyPV20years;
 
     //OffGrid
     // Mit
-    var mitGridUsagePercentage = parseInt(sessionStorage.getItem("MIT_GridUsagePercentage"))
-    var mitNoEMSPercentage = parseInt(sessionStorage.getItem("MIT_NoEMSPercentageOffGrid"))
-    var mitPvUsagePercentage = parseInt(sessionStorage.getItem("MIT_PvUsagePercentage"))
-    var autarkiegradWithEMS = mitNoEMSPercentage + mitPvUsagePercentage
+    var mitGridUsagePercentage = parseInt(sessionStorage.getItem("MIT_GridUsagePercentage"));
+    var mitNoEMSPercentage = parseInt(sessionStorage.getItem("MIT_NoEMSPercentageOffGrid"));
+    var mitPvUsagePercentage = parseInt(sessionStorage.getItem("MIT_PvUsagePercentage"));
+    var autarkiegradWithEMS = mitNoEMSPercentage + mitPvUsagePercentage;
 
     // Ohne
-    var ohneGridUsagePercentage = parseInt(sessionStorage.getItem("OHNE_GridUsagePercentage"))
-    var ohnePvUsagePercentage = parseInt(sessionStorage.getItem("OHNE_PvUsagePercentage"))
-
+    var ohneGridUsagePercentage = parseInt(sessionStorage.getItem("OHNE_GridUsagePercentage"));
+    var ohnePvUsagePercentage = parseInt(sessionStorage.getItem("OHNE_PvUsagePercentage"));
 
     //household-use
     // Mit
-    var MIT_GridFeedPercentage = parseInt(sessionStorage.getItem("MIT_GridFeedPercentage"))
-    var MIT_HouseholdUsagePercentage = parseInt(sessionStorage.getItem("MIT_HouseholdUsagePercentage"))
-    var MIT_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("MIT_HouseholdNoEMSpvPercent"))
-    var eigenverbrauchsanteil = MIT_HouseholdUsagePercentage + MIT_HouseholdNoEMSpvPercent
+    var MIT_GridFeedPercentage = parseInt(sessionStorage.getItem("MIT_GridFeedPercentage"));
+    var MIT_HouseholdUsagePercentage = parseInt(sessionStorage.getItem("MIT_HouseholdUsagePercentage"));
+    var MIT_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("MIT_HouseholdNoEMSpvPercent"));
+    var eigenverbrauchsanteil = MIT_HouseholdUsagePercentage + MIT_HouseholdNoEMSpvPercent;
 
-    // Ohne 
-    var Onhe_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent"))
-    var Onhe_GridFeedPercentageNoEMS = parseInt(sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS"))
+    // Ohne
+    var Onhe_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent"));
+    var Onhe_GridFeedPercentageNoEMS = parseInt(sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS"));
 
-    { console.log("🚀 ~ sessionStorage:", sessionStorage) }
+    {
+      console.log("🚀 ~ sessionStorage:", sessionStorage);
+    }
     return (
       <Box component="span" class="infobox-container" style={{ fontSize: "16px", fontWeight: "400", boxShadow: "none", marginLeft: "0px", /*maxWidth: '500px',*/ padding: "16px" }}>
         <div>
@@ -203,25 +204,36 @@ class InfoBoxResult extends React.Component {
             <div>
               <div class="infobox-row-container">
                 <div class="infobox-row" style={{ display: "block", lineHeight: "24px", borderBottom: "none" }}>
+                  {costOverTime == "1" && (
+                    <p>
+                      Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{savingOnlyPV1year.toLocaleString("de-DE")} € Stromkosten </strong>pro Jahr sparen.
+                    </p>
+                  )}
+                  {costOverTime == "1" && (
+                    <p>
+                      Mit einer <strong>PV-Anlage und einem Energiemanagementsystem</strong> lassen sich bis zu <strong>{savingPVandEMS1year.toLocaleString("de-DE")} € Stromkosten</strong> pro Jahr sparen.
+                    </p>
+                  )}
+                  {costOverTime == "1" && (
+                    <p>
+                      Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis um bis zu <strong>{savingOnlyPv1yearMinusSavingEMS1year.toLocaleString("de-DE")} €</strong> pro Jahr.
+                    </p>
+                  )}
 
-                  {costOverTime == "1" && (
-                    <p>Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{savingOnlyPV1year.toLocaleString("de-DE")} € Stromkosten </strong>pro Jahr sparen.</p>
-                  )}
-                  {costOverTime == "1" && (
-                    <p>Mit einer <strong>PV-Anlage und einem Energiemanagementsystem</strong> lassen sich bis zu <strong>{savingPVandEMS1year.toLocaleString("de-DE")} € Stromkosten</strong> pro Jahr sparen.</p>
-                  )}
-                  {costOverTime == "1" && (
-                    <p>Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis um bis zu <strong>{savingOnlyPv1yearMinusSavingEMS1year.toLocaleString("de-DE")} €</strong> pro Jahr.</p>
-                  )}
-
                   {costOverTime == "20" && (
-                    <p>Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{savingOnlyPV20years.toLocaleString("de-DE")} € Stromkosten</strong> über 20 Jahre sparen.</p>
+                    <p>
+                      Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{savingOnlyPV20years.toLocaleString("de-DE")} € Stromkosten</strong> über 20 Jahre sparen.
+                    </p>
                   )}
                   {costOverTime == "20" && (
-                    <p>Mit einer <strong>PV-Anlage und einem Energiemanagementsystem</strong> lassen sich bis zu <strong>{savingPVandEMS20years.toLocaleString("de-DE")} € Stromkosten</strong> über 20 Jahre sparen.</p>
+                    <p>
+                      Mit einer <strong>PV-Anlage und einem Energiemanagementsystem</strong> lassen sich bis zu <strong>{savingPVandEMS20years.toLocaleString("de-DE")} € Stromkosten</strong> über 20 Jahre sparen.
+                    </p>
                   )}
                   {costOverTime == "20" && (
-                    <p>Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis um bis zu <strong>{savingOnlyPv20yearsMinusSavingEMS20years.toLocaleString("de-DE")} €</strong> über 20 Jahre.</p>
+                    <p>
+                      Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis um bis zu <strong>{savingOnlyPv20yearsMinusSavingEMS20years.toLocaleString("de-DE")} €</strong> über 20 Jahre.
+                    </p>
                   )}
                 </div>
               </div>
@@ -258,7 +270,7 @@ class InfoBoxResult extends React.Component {
                       aria-label="edit"
                       size="small"
                       onClick={() => {
-                        this.goToView(3);
+                        this.goToView(3, true);
                       }}
                     >
                       <EditIcon />
@@ -274,13 +286,8 @@ class InfoBoxResult extends React.Component {
             <div>
               <div class="infobox-row-container">
                 <div class="infobox-row" style={{ display: "block", lineHeight: "24px", fontSize: "14px", borderBottom: "none" }}>
-
-                  {offgridEMS == true && (
-                    <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Autarkiegrad: ca. {autarkiegradWithEMS}%</h3>
-                  )}
-                  {offgridEMS == false && (
-                    <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Autarkiegrad: ca. {ohnePvUsagePercentage}%</h3>
-                  )}
+                  {offgridEMS == true && <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Autarkiegrad: ca. {autarkiegradWithEMS}%</h3>}
+                  {offgridEMS == false && <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Autarkiegrad: ca. {ohnePvUsagePercentage}%</h3>}
 
                   {offgridEMS == true && (
                     <p>
@@ -316,18 +323,11 @@ class InfoBoxResult extends React.Component {
           )}
 
           {this.state.boxType === "household-use" && (
-
             <div>
               <div class="infobox-row-container">
                 <div class="infobox-row" style={{ display: "block", lineHeight: "24px", fontSize: "14px", borderBottom: "none" }}>
-
-                  {householdEMS == true && (
-                    <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Eigenverbrauchsanteil: ca. {eigenverbrauchsanteil}%</h3>
-
-                  )}
-                  {householdEMS == false && (
-                    <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Eigenverbrauchsanteil: ca. {Onhe_HouseholdNoEMSpvPercent}%</h3>
-                  )}
+                  {householdEMS == true && <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Eigenverbrauchsanteil: ca. {eigenverbrauchsanteil}%</h3>}
+                  {householdEMS == false && <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Eigenverbrauchsanteil: ca. {Onhe_HouseholdNoEMSpvPercent}%</h3>}
                   {householdEMS == true && (
                     <p>
                       Das bedeutet: bis zu <strong>{Math.round(parseFloat(eigenverbrauchsanteil).toFixed(2))}%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
@@ -336,7 +336,8 @@ class InfoBoxResult extends React.Component {
                   {householdEMS == false && (
                     <p>
                       Das bedeutet: bis zu <strong>{Math.round(parseFloat(Onhe_HouseholdNoEMSpvPercent).toFixed(2))}%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
-                    </p>)}
+                    </p>
+                  )}
 
                   {householdEMS == true && (
                     <p>
