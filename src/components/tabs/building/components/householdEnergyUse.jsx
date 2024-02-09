@@ -12,6 +12,9 @@ import { ReactComponent as UnderfloorRadiatorIcon } from "../../../../assets/img
 import { ReactComponent as HeatLarge } from "../../../../assets/img/icons/heat_large.svg";
 import { ReactComponent as InfoIcon } from "../../../../assets/img/icons/info.svg";
 import { ReactComponent as HouseholdEnergyUseIcon } from "../../../../assets/img/icons/household_energy_use_icon.svg";
+
+import { ReactComponent as BuderusHouseholdEnergyUseIcon } from "../../../../assets/img/icons/buderus/household_energy_use_icon.svg";
+
 import { styled } from "@mui/material/styles";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -264,16 +267,12 @@ class HouseholdEnergyUse extends React.Component {
     return (
       <div>
         <div class="cardContainer">
-          <div class="cardLargeIcon">
-            <HouseholdEnergyUseIcon />
-          </div>
+          <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusHouseholdEnergyUseIcon /> : <HouseholdEnergyUseIcon />}</div>
           <div class="cardContent">
             <div class="flexContent">
               <div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <div class="cardIconInset">
-                    <HouseholdEnergyUseIcon style={{ marginLeft: "10px", width: "55px" }} />
-                  </div>
+                  <div class="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusHouseholdEnergyUseIcon style={{ marginLeft: "10px", width: "55px" }} /> : <HouseholdEnergyUseIcon style={{ marginLeft: "10px", width: "55px" }} />}</div>
                   <h3 class="cardHeadline">Haushaltsstromverbrauch</h3>
                 </div>
                 <span class="cardDescription">
@@ -291,13 +290,14 @@ class HouseholdEnergyUse extends React.Component {
                     trackStyle={{ backgroundColor: "transparent", height: 2 }}
                     railStyle={{ backgroundColor: "#8A9097", width: "calc(100% + 15px)", height: 2, marginLeft: "-7px", cursor: "pointer" }}
                     handleStyle={{
-                      borderColor: "#008ECF",
+                      borderColor: this.context.selectedTheme === "buderus" ? "#000000" : "#008ECF",
                       height: 18,
                       width: 18,
+                      borderRadius: this.context.selectedTheme === "buderus" ? "0" : "",
                       marginLeft: 0,
                       marginRight: 0,
                       marginTop: -7,
-                      backgroundColor: "#008ECF",
+                      backgroundColor: this.context.selectedTheme === "buderus" ? "#FFFFFF" : "#008ECF",
                       opacity: 1,
                     }}
                     onChange={this.inputEnergyUsageKWH}
