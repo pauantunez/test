@@ -818,10 +818,10 @@ class Main extends React.Component {
                 textTransform: "none",
                 borderRadius: "0px",
                 fontFamily: "Bosch-Regular",
-                "&:disabled": {
-                  backgroundColor: this.context.selectedTheme === "buderus" ? "#ffffff" : "",
-                  color: this.context.selectedTheme === "buderus" ? "#000000" : "",
-                  border: this.context.selectedTheme === "buderus" ? "1px solid black" : "",
+                color: this.context.selectedTheme === "buderus" ? "#000000" : "",
+                border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "",
+                "&:hover": {
+                  border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "",
                 },
               }}
               onClick={() => {

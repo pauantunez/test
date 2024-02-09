@@ -48,6 +48,11 @@ import { ReactComponent as MenuCloseIcon } from "../../assets/img/icons/menu_clo
 import { ReactComponent as FwdBtnIcon } from "../../assets/img/icons/fwd_btn.svg";
 import { ReactComponent as FwdBtnInactiveIcon } from "../../assets/img/icons/fwd_btn_inactive.svg";
 
+import { ReactComponent as BuderusHomeIcon } from "../../assets/img/icons/buderus/home.svg";
+import { ReactComponent as BuderusPhotovoltaicIcon } from "../../assets/img/icons/buderus/photovoltaic.svg";
+import { ReactComponent as BuderusCashIcon } from "../../assets/img/icons/buderus/cash.svg";
+import { ReactComponent as BuderusClipboardIcon } from "../../assets/img/icons/buderus/clipboard.svg";
+
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 
 import Button from "@mui/material/Button";
@@ -433,20 +438,20 @@ class NavContent extends React.Component {
 
     function ColorlibStepIcon(props) {
       const { active, completed, className } = props;
-
+      const { selectedTheme } = React.useContext(AppContext);
       const icons = {
-        1: <HomeIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
+        1: selectedTheme === "buderus" ? <BuderusHomeIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} /> : <HomeIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
         2: <EmptyIcon />,
         3: <EmptyIcon />,
         4: <EmptyIcon />,
-        5: <PhotovoltaicIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
+        5: selectedTheme === "buderus" ? <BuderusPhotovoltaicIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} /> : <PhotovoltaicIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
         6: <EmptyIcon />,
         7: <EmptyIcon />,
         8: <EmptyIcon />,
-        9: <CashIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
+        9: selectedTheme === "buderus" ? <BuderusCashIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} /> : <CashIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
         10: <EmptyIcon />,
         11: <EmptyIcon />,
-        12: <ClipboardIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
+        12: selectedTheme === "buderus" ? <BuderusClipboardIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} /> : <ClipboardIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
       };
 
       return (
@@ -458,12 +463,12 @@ class NavContent extends React.Component {
 
     function ColorlibStepIconMobile(props) {
       const { active, completed, className } = props;
-
+      const { selectedTheme } = React.useContext(AppContext);
       const icons = {
-        1: <HomeIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
-        2: <PhotovoltaicIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
-        3: <CashIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
-        4: <ClipboardIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
+        1: selectedTheme === "buderus" ? <BuderusHomeIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} /> : <HomeIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
+        2: selectedTheme === "buderus" ? <BuderusPhotovoltaicIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} /> : <PhotovoltaicIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
+        3: selectedTheme === "buderus" ? <BuderusCashIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} /> : <CashIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
+        4: selectedTheme === "buderus" ? <BuderusClipboardIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} /> : <ClipboardIcon className={completed || active ? "iconColorCompleted" : "iconColorStandard"} />,
       };
 
       return (
@@ -475,20 +480,20 @@ class NavContent extends React.Component {
 
     function ColorlibStepIconSmall(props) {
       const { active, completed, className } = props;
-
+      const { selectedTheme } = React.useContext(AppContext);
       const icons = {
-        1: <AccessAlarmIcon />,
+        1: selectedTheme === "buderus" ? <BuderusHomeIcon /> : <AccessAlarmIcon />,
         2: <EmptyIcon />,
         3: <EmptyIcon />,
         4: <EmptyIcon />,
-        5: <PhotovoltaicIcon />,
+        5: selectedTheme === "buderus" ? <BuderusPhotovoltaicIcon /> : <PhotovoltaicIcon />,
         6: <EmptyIcon />,
         7: <EmptyIcon />,
         8: <EmptyIcon />,
-        9: <CashIcon />,
+        9: selectedTheme === "buderus" ? <BuderusCashIcon /> : <CashIcon />,
         10: <EmptyIcon />,
         11: <EmptyIcon />,
-        12: <ClipboardIcon />,
+        12: selectedTheme === "buderus" ? <BuderusClipboardIcon /> : <ClipboardIcon />,
       };
 
       return (
