@@ -79,8 +79,8 @@ a.card-input-narrow {
 }
 
 .card-input-element:checked+.card-input-wide {
-  background: #EDEDED;
-  color: #000000;
+  background: #002D59;
+  color: #FFFFFF;
 }
 
 .card-input-element:checked+.card-input-wide svg {
@@ -1310,7 +1310,7 @@ a.card-input-narrow {
 }
 
 .pattern {
-  background-image: url("../assets/img/icons/pattern.svg");
+  background-image: url("../assets/img/icons/buderus/pattern.svg");
   background-color: transparent;
   opacity: 1;
   background-repeat: no-repeat;
@@ -1326,7 +1326,7 @@ a.card-input-narrow {
   /*background-image: url("../assets/img/icons/pattern_small_round.svg");*/
   background-color: transparent;
   opacity: 1;
-  background: repeating-linear-gradient(-45deg, #18837E, #18837E 2px, transparent 2px, transparent 3px);
+  background: repeating-linear-gradient(-45deg, #B2B2B2, #B2B2B2 2px, transparent 2px, transparent 3px);
 }
 
 @media print {}

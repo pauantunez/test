@@ -273,7 +273,6 @@ class BreakEven extends React.Component {
     return closestPosition;
   };
 
-
   render() {
     const { t } = this.props;
     const { overlayToggle } = this.state;
@@ -326,7 +325,7 @@ class BreakEven extends React.Component {
     for (var i = 0; i <= numYears01 + 5; i++) {
       labels_values.push(i.toString());
     }
-    console.log("🚀 ~ BreakEven ~ render ~ labels_values:", labels_values)
+    console.log("🚀 ~ BreakEven ~ render ~ labels_values:", labels_values);
 
     const lineData = {
       labels: labels_values,
@@ -334,8 +333,8 @@ class BreakEven extends React.Component {
         {
           label: false,
           data: datapoints,
-          borderColor: "#18837E",
-          backgroundColor: "#18837E",
+          borderColor: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#18837E",
+          backgroundColor: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#18837E",
           fill: false,
           cubicInterpolationMode: "monotone",
           tension: 0.8,
@@ -353,8 +352,8 @@ class BreakEven extends React.Component {
         {
           label: false,
           data: datapoints2,
-          borderColor: "#007BC0",
-          backgroundColor: "#007BC0",
+          borderColor: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0",
+          backgroundColor: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0",
           fill: false,
           cubicInterpolationMode: "monotone",
           tension: 0.8,
@@ -461,7 +460,9 @@ class BreakEven extends React.Component {
     return (
       <div id="break-even">
         <div style={{ display: "flex", marginBottom: "20px", fontSize: "16px" }}>
-          <div>Investitionskosten PV-System: <span style={{ fontFamily: "Bosch-Bold" }}> {Math.abs(heatpumpPV[0].expenditure).toLocaleString("de-DE")} €</span></div>
+          <div>
+            Investitionskosten PV-System: <span style={{ fontFamily: "Bosch-Bold" }}> {Math.abs(heatpumpPV[0].expenditure).toLocaleString("de-DE")} €</span>
+          </div>
         </div>
 
         <div style={{ maxWidth: "550px" }}>
@@ -471,13 +472,13 @@ class BreakEven extends React.Component {
         <div style={{ display: "flex", flexDirection: "column", marginTop: "25px", fontFamily: "Bosch-Regular", fontSize: "12px" }}>
           <div style={{ display: "flex", flexDirection: "row" }}>
             <div style={{ marginRight: "15px" }}>
-              <div style={{ marginTop: "2px", width: "14px", height: "14px", background: "#007BC0", borderRadius: "14px" }}></div>
+              <div style={{ marginTop: "2px", width: "14px", height: "14px", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", borderRadius: "14px" }}></div>
             </div>
             <div>Kapitalentwicklung mit PV ohne Energiemanagementsystem *</div>
           </div>
           <div style={{ display: "flex", flexDirection: "row", marginTop: "6px" }}>
             <div style={{ marginRight: "15px" }}>
-              <div style={{ marginTop: "2px", width: "14px", height: "14px", background: "#18837E", borderRadius: "14px" }}></div>
+              <div style={{ marginTop: "2px", width: "14px", height: "14px", background: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#18837E", borderRadius: "14px" }}></div>
             </div>
             <div>Kapitalentwicklung mit PV mit Energiemanagementsystem</div>
           </div>
