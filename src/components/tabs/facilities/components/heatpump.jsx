@@ -8,9 +8,12 @@ import { ReactComponent as HouseSunLargeIcon } from "../../../../assets/img/icon
 import { ReactComponent as HouseSunLargeWhiteIcon } from "../../../../assets/img/icons/house_sun_large_white.svg";
 import { ReactComponent as GeothermalHeatpumpIcon } from "../../../../assets/img/icons/geothermal_heatpump.svg";
 import { ReactComponent as AirWaterHeatpumpIcon } from "../../../../assets/img/icons/air_water_heatpump.svg";
-import { ReactComponent as UnderfloorRadiatorIcon } from "../../../../assets/img/icons/underfloor_radiator.svg";
 import { ReactComponent as HeatpumpLarge } from "../../../../assets/img/icons/heatpump_large.svg";
-import { ReactComponent as InfoIcon } from "../../../../assets/img/icons/info.svg";
+
+import { ReactComponent as BuderusHeatpumpLarge } from "../../../../assets/img/icons/buderus/heatpump_large.svg";
+import { ReactComponent as BuderusGeothermalHeatpumpIcon } from "../../../../assets/img/icons/buderus/geothermal_heatpump.svg";
+import { ReactComponent as BuderusAirWaterHeatpumpIcon } from "../../../../assets/img/icons/buderus/air_water_heatpump.svg";
+
 import { styled } from "@mui/material/styles";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -188,16 +191,12 @@ class Heatpump extends React.Component {
     return (
       <div>
         <div class="cardContainer">
-          <div class="cardLargeIcon">
-            <HeatpumpLarge />
-          </div>
+          <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusHeatpumpLarge /> : <HeatpumpLarge />}</div>
           <div class="cardContent">
             <div class="flexContent">
               <div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <div class="cardIconInset">
-                    <HeatpumpLarge style={{ marginLeft: "10px", width: "55px" }} />
-                  </div>
+                  <div class="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusHeatpumpLarge style={{ marginLeft: "10px", width: "55px" }} /> : <HeatpumpLarge style={{ marginLeft: "10px", width: "55px" }} />}</div>
                   <h3 class="cardHeadline">Wärmepumpe</h3>
                 </div>
                 <span class="cardDescription">Welche Art Wärmepumpe ist verbaut oder geplant?</span>
@@ -207,9 +206,7 @@ class Heatpump extends React.Component {
                   <label>
                     <input type="radio" name="heating" value="2" class="card-input-element" checked={heatpumpType === "2"} onChange={this.inputHeatpumpType} />
                     <div class="panel panel-default card-input-wide">
-                      <div class="panel-heading">
-                        <GeothermalHeatpumpIcon />
-                      </div>
+                      <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusGeothermalHeatpumpIcon /> : <GeothermalHeatpumpIcon />}</div>
                       <div class="panel-body">Erdwärmepumpe</div>
                     </div>
                   </label>
@@ -218,9 +215,7 @@ class Heatpump extends React.Component {
                   <label>
                     <input type="radio" name="heating" value="1" class="card-input-element" checked={heatpumpType === "1"} onChange={this.inputHeatpumpType} />
                     <div class="panel panel-default card-input-wide">
-                      <div class="panel-heading">
-                        <AirWaterHeatpumpIcon />
-                      </div>
+                      <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusAirWaterHeatpumpIcon /> : <AirWaterHeatpumpIcon />}</div>
                       <div class="panel-body">Luft-Wasser-Wärmepumpe</div>
                     </div>
                   </label>
