@@ -3,14 +3,14 @@ import { withRouter } from "react-router-dom";
 import AppContext from "../../../../AppContext";
 import InfoButton from "../../infoButton";
 import InfoBox from "../../infoBox";
-import { ReactComponent as HouseSunSmallIcon } from "../../../../assets/img/icons/house_sun_small.svg";
-import { ReactComponent as HouseSunLargeIcon } from "../../../../assets/img/icons/house_sun_large.svg";
-import { ReactComponent as HouseSunLargeWhiteIcon } from "../../../../assets/img/icons/house_sun_large_white.svg";
 import { ReactComponent as AcceptIcon } from "../../../../assets/img/icons/accept_large.svg";
 import { ReactComponent as DenyIcon } from "../../../../assets/img/icons/deny_large.svg";
-import { ReactComponent as UnderfloorRadiatorIcon } from "../../../../assets/img/icons/underfloor_radiator.svg";
 import { ReactComponent as EVLargeIcon } from "../../../../assets/img/icons/ev_large.svg";
-import { ReactComponent as InfoIcon } from "../../../../assets/img/icons/info.svg";
+
+import { ReactComponent as BuderusEVLargeIcon } from "../../../../assets/img/icons/buderus/ev_large.svg";
+import { ReactComponent as BuderusAcceptIcon } from "../../../../assets/img/icons/buderus/accept_large.svg";
+import { ReactComponent as BuderusDenyIcon } from "../../../../assets/img/icons/buderus/deny_large.svg";
+
 import { styled } from "@mui/material/styles";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -288,7 +288,7 @@ class EV extends React.Component {
     }
 
     const RadioIcon = styled("span")(({ theme }) => ({
-      borderRadius: "50%",
+      borderRadius: this.context.selectedTheme === "buderus" ? "0px" : "50%",
       width: 24,
       height: 24,
       backgroundColor: "#8A9097",
@@ -298,7 +298,7 @@ class EV extends React.Component {
         outlineOffset: 2,
       },
       "input:hover ~ &": {
-        backgroundColor: "#8A9097",
+        backgroundColor: this.context.selectedTheme === "buderus" ? "#000000" : "#106ba3",
       },
       "input:disabled ~ &": {
         boxShadow: "none",
@@ -307,17 +307,18 @@ class EV extends React.Component {
     }));
 
     const CheckedIcon = styled(RadioIcon)({
-      backgroundColor: "#137cbd",
-      backgroundImage: "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
+      backgroundColor: this.context.selectedTheme === "buderus" ? "#000000" : "#137cbd",
+      backgroundImage: this.context.selectedTheme === "buderus" ? "" : "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
       "&:before": {
-        display: "block",
-        width: 24,
-        height: 24,
-        backgroundImage: "radial-gradient(#fff,#fff 28%,transparent 32%)",
         content: '""',
-      },
-      "input:hover ~ &": {
-        backgroundColor: "#106ba3",
+        display: "block",
+        width: this.context.selectedTheme === "buderus" ? 12 : 24,
+        height: this.context.selectedTheme === "buderus" ? 12 : 24,
+        backgroundColor: this.context.selectedTheme === "buderus" ? "#fff" : "",
+        borderRadius: 2,
+        margin: "50%",
+        transform: "translate(-50%, -50%)",
+        backgroundImage: this.context.selectedTheme === "buderus" ? "" : "radial-gradient(#fff,#fff 28%,transparent 32%)",
       },
     });
 
@@ -342,16 +343,12 @@ class EV extends React.Component {
     return (
       <div>
         <div class="cardContainer">
-          <div class="cardLargeIcon">
-            <EVLargeIcon />
-          </div>
+          <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusEVLargeIcon /> : <EVLargeIcon />}</div>
           <div class="cardContent">
             <div class="flexContent">
               <div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <div class="cardIconInset">
-                    <EVLargeIcon style={{ marginLeft: "10px", width: "55px" }} />
-                  </div>
+                  <div class="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusEVLargeIcon style={{ marginLeft: "10px", width: "55px" }} /> : <EVLargeIcon style={{ marginLeft: "10px", width: "55px" }} />}</div>
                   <h3 class="cardHeadline">Elektroauto</h3>
                 </div>
                 <span class="cardDescription">Ist ein Elektroauto vorhanden oder geplant?</span>
@@ -361,9 +358,7 @@ class EV extends React.Component {
                   <label>
                     <input type="radio" name="heating" value="EV" class="card-input-element" checked={ev === "EV"} onChange={this.inputEV} />
                     <div class="panel panel-default card-input">
-                      <div class="panel-heading">
-                        <AcceptIcon />
-                      </div>
+                      <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusAcceptIcon /> : <AcceptIcon />}</div>
                       <div class="panel-body">Ja</div>
                     </div>
                   </label>
@@ -372,9 +367,7 @@ class EV extends React.Component {
                   <label>
                     <input type="radio" name="heating" value="noEV" class="card-input-element" checked={ev === "noEV"} onChange={this.inputEV} />
                     <div class="panel panel-default card-input">
-                      <div class="panel-heading">
-                        <DenyIcon />
-                      </div>
+                      <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusDenyIcon /> : <DenyIcon />}</div>
                       <div class="panel-body">Nein</div>
                     </div>
                   </label>
