@@ -6,6 +6,11 @@ import { ReactComponent as HouseSunSmallIcon } from "../../../../assets/img/icon
 import { ReactComponent as HouseSunLargeIcon } from "../../../../assets/img/icons/house_sun_large.svg";
 import { ReactComponent as HouseSunLargeWhiteIcon } from "../../../../assets/img/icons/house_sun_large_white.svg";
 import { ReactComponent as HouseCircleIcon } from "../../../../assets/img/icons/house_circle.svg";
+/* Buderus Icons */
+import { ReactComponent as BuderusHouseIcon } from "../../../../assets/img/icons/buderus/house_icon.svg";
+import { ReactComponent as BuderusHouseSmallIcon } from "../../../../assets/img/icons/buderus/house_small_icon.svg";
+import { ReactComponent as BuderusHouseLargeIcon } from "../../../../assets/img/icons/buderus/house_large_icon.svg";
+
 import { Button } from "reactstrap";
 import axios from "axios";
 
@@ -76,16 +81,12 @@ class BuildingSize extends React.Component {
     return (
       <div>
         <div class="cardContainer">
-          <div class="cardLargeIcon">
-            <HouseCircleIcon />
-          </div>
+          <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusHouseIcon /> : <HouseCircleIcon />}</div>
           <div class="cardContent">
             <div class="flexContent">
               <div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <div class="cardIconInset">
-                    <HouseCircleIcon style={{ marginLeft: "10px", width: "55px" }} />
-                  </div>
+                  <div class="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusHouseIcon style={{ marginLeft: "10px", width: "55px" }} /> : <HouseCircleIcon style={{ marginLeft: "10px", width: "55px" }} />}</div>
                   <h3 class="cardHeadline">Gebäudegröße</h3>
                 </div>
                 <span class="cardDescription">Wie viel m&#178; Wohnfläche besitzt Ihr Gebäude?</span>
@@ -95,9 +96,7 @@ class BuildingSize extends React.Component {
                   <label>
                     <input type="radio" name="product" value="150" class="card-input-element" checked={BuildingSize === "150"} onChange={this.inputBuildingSize} />
                     <div class="panel panel-default card-input">
-                      <div class="panel-heading">
-                        <HouseSunSmallIcon />
-                      </div>
+                      <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusHouseSmallIcon /> : <HouseSunSmallIcon />}</div>
                       <div class="panel-body">125 - 175 m&#178;</div>
                     </div>
                   </label>
@@ -106,9 +105,7 @@ class BuildingSize extends React.Component {
                   <label>
                     <input type="radio" name="product" value="200" class="card-input-element" checked={BuildingSize === "200"} onChange={this.inputBuildingSize} />
                     <div class="panel panel-default card-input">
-                      <div class="panel-heading">
-                        <HouseSunLargeIcon />
-                      </div>
+                      <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusHouseLargeIcon /> : <HouseSunLargeIcon />}</div>
                       <div class="panel-body">175 - 225 m&#178;</div>
                     </div>
                   </label>

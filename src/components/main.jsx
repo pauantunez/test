@@ -89,6 +89,7 @@ class Main extends React.Component {
   static contextType = AppContext;
 
   componentWillMount() {
+    this.context.getTheme();
     const { products, btnThemes, fonts } = this.context;
     const productsProps = Object.getOwnPropertyNames(products);
     var foundTheme = 0;

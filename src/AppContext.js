@@ -11,6 +11,7 @@ var productEntry = 0;
 
 class SimulatorProvider extends Component {
   state = {
+    selectedTheme: "",
     directLink: false,
     loading: false,
     loadingOffGrid: false,
@@ -1941,11 +1942,23 @@ class SimulatorProvider extends Component {
     this.setState((prevState) => ({ directLink: value }));
   };
 
+  setSelectedTheme = (value) => {
+    this.setState((prevState) => ({ selectedTheme: value }));
+  };
+
   goToView = (newValue, directLink) => {
     if (directLink == true) {
       this.setDirectLink(true);
     }
     this.setActiveView(newValue);
+  };
+
+  getTheme = () => {
+    const urlParams = new URLSearchParams(queryString);
+    if (urlParams.get("theme")) {
+      var entryParam = urlParams.get("theme");
+    }
+    this.setSelectedTheme(entryParam);
   };
 
   loading;
@@ -2114,6 +2127,7 @@ class SimulatorProvider extends Component {
       loadingOffGrid,
       loadingHousehold,
       directLink,
+      selectedTheme,
     } = this.state;
     const {
       setProduct,
@@ -2123,6 +2137,7 @@ class SimulatorProvider extends Component {
       setHeatpumpVolume,
       setActiveView,
       goToView,
+      getTheme,
       setActiveStep,
       setActiveMilestone,
       setMilestoneHeadline,
@@ -2226,6 +2241,7 @@ class SimulatorProvider extends Component {
       setLoadingOffGrid,
       setLoadingHousehold,
       setDirectLink,
+      setSelectedTheme,
     } = this;
 
     return (
@@ -2390,6 +2406,7 @@ class SimulatorProvider extends Component {
           loadingOffGrid,
           loadingHousehold,
           directLink,
+          selectedTheme,
           setProduct,
           setEntryProduct,
           setProducts,
@@ -2397,6 +2414,7 @@ class SimulatorProvider extends Component {
           setHeatpumpVolume,
           setActiveView,
           goToView,
+          getTheme,
           setActiveStep,
           setActiveMilestone,
           setMilestoneHeadline,
@@ -2500,6 +2518,7 @@ class SimulatorProvider extends Component {
           setLoadingOffGrid,
           setLoadingHousehold,
           setDirectLink,
+          setSelectedTheme,
         }}
       >
         {children}

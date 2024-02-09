@@ -93,7 +93,6 @@ class NavContent extends React.Component {
 
   componentDidMount() {
     this.handleResize();
-
     window.addEventListener("resize", this.handleResize);
   }
 
@@ -312,14 +311,14 @@ class NavContent extends React.Component {
       },
       [`&.${stepConnectorClasses.active}`]: {
         [`& .${stepConnectorClasses.line}`]: {
-          background: this.state.theme === "buderus" ? "#000000" : "#007bc0",
+          background: this.context.selectedTheme === "buderus" ? "#000000" : "#007bc0",
           marginLeft: "calc(0% - 13px)",
           marginRight: "calc(0% - 13px)",
         },
       },
       [`&.${stepConnectorClasses.completed}`]: {
         [`& .${stepConnectorClasses.line}`]: {
-          background: this.state.theme === "buderus" ? "#000000" : "#007bc0",
+          background: this.context.selectedTheme === "buderus" ? "#000000" : "#007bc0",
           marginLeft: "calc(0% - 13px)",
           marginRight: "calc(0% - 13px)",
         },
@@ -346,14 +345,14 @@ class NavContent extends React.Component {
       },
       [`&.${stepConnectorClasses.active}`]: {
         [`& .${stepConnectorClasses.line}`]: {
-          background: this.state.theme === "buderus" ? "#000000" : "#007bc0",
+          background: this.context.selectedTheme === "buderus" ? "#000000" : "#007bc0",
           marginLeft: "calc(0% - 26px)",
           marginRight: "calc(0% - 26px)",
         },
       },
       [`&.${stepConnectorClasses.completed}`]: {
         [`& .${stepConnectorClasses.line}`]: {
-          background: this.state.theme === "buderus" ? "#000000" : "#007bc0",
+          background: this.context.selectedTheme === "buderus" ? "#000000" : "#007bc0",
           marginLeft: "calc(0% - 26px)",
           marginRight: "calc(0% - 26px)",
         },
@@ -381,11 +380,11 @@ class NavContent extends React.Component {
       cursor: "pointer",
       alignItems: "center",
       ...(ownerState.active && {
-        background: this.state.theme === "buderus" ? "#000000" : "#007bc0",
+        background: this.context.selectedTheme === "buderus" ? "#000000" : "#007bc0",
         fontSize: "12px",
       }),
       ...(ownerState.completed && {
-        background: this.state.theme === "buderus" ? "#000000" : "#007bc0",
+        background: this.context.selectedTheme === "buderus" ? "#000000" : "#007bc0",
         fontSize: "12px",
       }),
     }));
@@ -403,11 +402,11 @@ class NavContent extends React.Component {
       cursor: "pointer",
       alignItems: "center",
       ...(ownerState.active && {
-        background: this.state.theme === "buderus" ? "#000000" : "#007bc0",
+        background: this.context.selectedTheme === "buderus" ? "#000000" : "#007bc0",
         backgroundPosition: "bottom center",
       }),
       ...(ownerState.completed && {
-        background: this.state.theme === "buderus" ? "#000000" : "#007bc0",
+        background: this.context.selectedTheme === "buderus" ? "#000000" : "#007bc0",
       }),
     }));
 
