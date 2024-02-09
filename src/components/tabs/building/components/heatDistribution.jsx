@@ -9,7 +9,12 @@ import { ReactComponent as RadiatorIcon } from "../../../../assets/img/icons/rad
 import { ReactComponent as UnderfloorHeatingIcon } from "../../../../assets/img/icons/underfloor_heating.svg";
 import { ReactComponent as UnderfloorRadiatorIcon } from "../../../../assets/img/icons/underfloor_radiator.svg";
 import { ReactComponent as HeatLarge } from "../../../../assets/img/icons/heat_large.svg";
-import { ReactComponent as InfoIcon } from "../../../../assets/img/icons/info.svg";
+
+import { ReactComponent as BuderusHeatLarge } from "../../../../assets/img/icons/buderus/heat_large.svg";
+import { ReactComponent as BuderusRadiatorIcon } from "../../../../assets/img/icons/buderus/radiator.svg";
+import { ReactComponent as BuderusUnderfloorHeatingIcon } from "../../../../assets/img/icons/buderus/underfloor_heating.svg";
+import { ReactComponent as BuderusUnderfloorRadiatorIcon } from "../../../../assets/img/icons/buderus/underfloor_radiator.svg";
+
 import { styled } from "@mui/material/styles";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -246,16 +251,12 @@ class HeatDistribution extends React.Component {
     return (
       <div>
         <div class="cardContainer">
-          <div class="cardLargeIcon">
-            <HeatLarge />
-          </div>
+          <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusHeatLarge /> : <HeatLarge />}</div>
           <div class="cardContent">
             <div class="flexContent">
               <div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <div class="cardIconInset">
-                    <HeatLarge style={{ marginLeft: "10px", width: "55px" }} />
-                  </div>
+                  <div class="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusHeatLarge style={{ marginLeft: "10px", width: "55px" }} /> : <HeatLarge style={{ marginLeft: "10px", width: "55px" }} />}</div>
                   <h3 class="cardHeadline">Wärmeverteilsystem</h3>
                 </div>
                 <span class="cardDescription">Wie werden Ihre Räume beheizt?</span>
@@ -265,9 +266,7 @@ class HeatDistribution extends React.Component {
                   <label>
                     <input type="radio" name="heating" value="Radiator" class="card-input-element" checked={heatDistributionValue === "Radiator"} onChange={this.inputHeatingDistribution} />
                     <div class="panel panel-default card-input-wide">
-                      <div class="panel-heading">
-                        <RadiatorIcon />
-                      </div>
+                      <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusRadiatorIcon /> : <RadiatorIcon />}</div>
                       <div class="panel-body">Heizkörper</div>
                     </div>
                   </label>
@@ -276,9 +275,7 @@ class HeatDistribution extends React.Component {
                   <label>
                     <input type="radio" name="heating" value="Underfloor" class="card-input-element" checked={heatDistributionValue === "Underfloor"} onChange={this.inputHeatingDistribution} />
                     <div class="panel panel-default card-input-wide">
-                      <div class="panel-heading">
-                        <UnderfloorHeatingIcon />
-                      </div>
+                      <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusUnderfloorHeatingIcon /> : <UnderfloorHeatingIcon />}</div>
                       <div class="panel-body">Fußbodenheizung</div>
                     </div>
                   </label>
@@ -287,9 +284,7 @@ class HeatDistribution extends React.Component {
                   <label>
                     <input type="radio" name="heating" value="UnderfloorRadiator" class="card-input-element" checked={heatDistributionValue === "UnderfloorRadiator"} onChange={this.inputHeatingDistribution} />
                     <div class="panel panel-default card-input-wide">
-                      <div class="panel-heading">
-                        <UnderfloorRadiatorIcon />
-                      </div>
+                      <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusUnderfloorRadiatorIcon /> : <UnderfloorRadiatorIcon />}</div>
                       <div class="panel-body">Fußbodenheizung und Heizkörper</div>
                     </div>
                   </label>
