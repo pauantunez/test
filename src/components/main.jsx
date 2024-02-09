@@ -325,7 +325,7 @@ class Main extends React.Component {
     if (investmentCostEUR > 0) {
       investmentCostResult = parseInt(investmentCostEUR) * -1;
     }
-    console.log("🚀 ~ Main ~ investmentCostResult:", investmentCostResult);
+
     this.setState({ heatpumpPV: [] });
 
     const betriebskosten = (1 / 100) * investmentCostResult;

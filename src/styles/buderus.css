@@ -79,8 +79,17 @@ a.card-input-narrow {
 }
 
 .card-input-element:checked+.card-input-wide {
+  background: #EDEDED;
+  color: #000000;
+}
+
+.card-input-element-result:checked+.card-input-wide {
   background: #002D59;
   color: #FFFFFF;
+}
+
+.card-input-element-result {
+  display: none;
 }
 
 .card-input-element:checked+.card-input-wide svg {

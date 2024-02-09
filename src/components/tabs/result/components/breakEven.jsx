@@ -325,7 +325,6 @@ class BreakEven extends React.Component {
     for (var i = 0; i <= numYears01 + 5; i++) {
       labels_values.push(i.toString());
     }
-    console.log("🚀 ~ BreakEven ~ render ~ labels_values:", labels_values);
 
     const lineData = {
       labels: labels_values,
