@@ -16,8 +16,8 @@ a {
 
 .card-input:hover {
   cursor: pointer;
-  background: #007BC0;
-  color: #FFF;
+  background: #EDEDED;
+  color: #000000;
 }
 
 .card-input:hover svg {
@@ -88,8 +88,8 @@ a.card-input-narrow {
 }
 
 .card-input-element:checked+.card-input {
-  background: #000000;
-  color: #FFF;
+  background: #EDEDED;
+  color: #000000;
 }
 
 .card-input-element:checked+.card-input svg {

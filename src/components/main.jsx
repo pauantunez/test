@@ -27,6 +27,8 @@ import { ReactComponent as FwdBtnIcon } from "../assets/img/icons/fwd_btn.svg";
 import { ReactComponent as FwdBtnInactiveIcon } from "../assets/img/icons/fwd_btn_inactive.svg";
 import { ReactComponent as MenuCloseIcon } from "../assets/img/icons/menu_close.svg";
 
+import { ReactComponent as BuderusBackThinIcon } from "../assets/img/icons/buderus/arrow_back_thin.svg";
+
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -346,9 +348,9 @@ class Main extends React.Component {
       textTransform: "none",
       borderRadius: "0px",
       fontFamily: "Bosch-Regular",
-      backgroundColor: "#007BC0",
+      backgroundColor: this.context.selectedTheme === "buderus" ? "#002d59" : "#007BC0",
       "&:hover": {
-        backgroundColor: "#00629A",
+        backgroundColor: this.context.selectedTheme === "buderus" ? "#001d39" : "#00629A",
       },
       // Agrega más estilos según sea necesario
     });
@@ -809,9 +811,19 @@ class Main extends React.Component {
             <Button
               id="previousTabBtn"
               variant="outlined"
-              startIcon={<BackThinIcon />}
+              startIcon={this.context.selectedTheme === "buderus" ? <BuderusBackThinIcon /> : <BackThinIcon />}
               disabled={this.state.backBtn}
-              style={{ background: "#FFF", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}
+              sx={{
+                background: "#FFF",
+                textTransform: "none",
+                borderRadius: "0px",
+                fontFamily: "Bosch-Regular",
+                "&:disabled": {
+                  backgroundColor: this.context.selectedTheme === "buderus" ? "#ffffff" : "",
+                  color: this.context.selectedTheme === "buderus" ? "#000000" : "",
+                  border: this.context.selectedTheme === "buderus" ? "1px solid black" : "",
+                },
+              }}
               onClick={() => {
                 previousTab();
               }}
