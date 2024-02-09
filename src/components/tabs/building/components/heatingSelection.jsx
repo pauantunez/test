@@ -10,6 +10,13 @@ import { ReactComponent as ChartUpSmall } from "../../../../assets/img/icons/cha
 import { ReactComponent as ChartOil } from "../../../../assets/img/icons/chart_oil.svg";
 import { ReactComponent as BuildingInsulationIcon } from "../../../../assets/img/icons/building_insulation.svg";
 import { ReactComponent as InfoIcon } from "../../../../assets/img/icons/info.svg";
+
+/* Buderus Icons */
+import { ReactComponent as BuderusHouseIcon } from "../../../../assets/img/icons/buderus/house_icon.svg";
+import { ReactComponent as BuderusEfficienteIcon } from "../../../../assets/img/icons/buderus/efficiente.svg";
+import { ReactComponent as BuderusHomeIsolierungIcon } from "../../../../assets/img/icons/buderus/home_Isolierung.svg";
+import { ReactComponent as BuderusOilIcon } from "../../../../assets/img/icons/buderus/oil.svg";
+
 import { styled } from "@mui/material/styles";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -98,7 +105,6 @@ class HeatingSelection extends React.Component {
     steps[activeView] = false;
     setSteps({ ...steps });
     this.context.goToView(2);
-    setFwdBtn(true);
   };
 
   inputInsulationValue = (event) => {
@@ -111,7 +117,6 @@ class HeatingSelection extends React.Component {
     steps[activeView] = false;
     setSteps({ ...steps });
     this.context.goToView(2);
-    setFwdBtn(true);
   };
 
   inputOilLNGValue = (event) => {
@@ -266,7 +271,7 @@ class HeatingSelection extends React.Component {
     }));
 
     const BpCheckedIcon = styled(BpIcon)({
-      backgroundColor: "#137cbd",
+      backgroundColor: this.context.selectedTheme === "buderus" ? "#000000" : "#137cbd",
       backgroundImage: "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
       "&:before": {
         display: "block",
@@ -303,7 +308,7 @@ class HeatingSelection extends React.Component {
     }
 
     const OilLNGIcon = styled("span")(({ theme }) => ({
-      borderRadius: "50%",
+      borderRadius: this.context.selectedTheme === "buderus" ? "0px" : "50%",
       width: 24,
       height: 24,
       backgroundColor: "#8A9097",
@@ -313,7 +318,7 @@ class HeatingSelection extends React.Component {
         outlineOffset: 2,
       },
       "input:hover ~ &": {
-        backgroundColor: "#8A9097",
+        backgroundColor: this.context.selectedTheme === "buderus" ? "#000000" : "#106ba3",
       },
       "input:disabled ~ &": {
         boxShadow: "none",
@@ -322,17 +327,18 @@ class HeatingSelection extends React.Component {
     }));
 
     const OilLNGCheckedIcon = styled(OilLNGIcon)({
-      backgroundColor: "#137cbd",
-      backgroundImage: "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
+      backgroundColor: this.context.selectedTheme === "buderus" ? "#000000" : "#137cbd",
+      backgroundImage: this.context.selectedTheme === "buderus" ? "" : "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
       "&:before": {
-        display: "block",
-        width: 24,
-        height: 24,
-        backgroundImage: "radial-gradient(#fff,#fff 28%,transparent 32%)",
         content: '""',
-      },
-      "input:hover ~ &": {
-        backgroundColor: "#106ba3",
+        display: "block",
+        width: this.context.selectedTheme === "buderus" ? 12 : 24,
+        height: this.context.selectedTheme === "buderus" ? 12 : 24,
+        backgroundColor: this.context.selectedTheme === "buderus" ? "#fff" : "",
+        borderRadius: 2,
+        margin: "50%",
+        transform: "translate(-50%, -50%)",
+        backgroundImage: this.context.selectedTheme === "buderus" ? "" : "radial-gradient(#fff,#fff 28%,transparent 32%)",
       },
     });
 
@@ -357,17 +363,13 @@ class HeatingSelection extends React.Component {
     return (
       <div>
         <div class="cardContainer">
-          <div class="cardLargeIcon">
-            <ChartUpLarge />
-          </div>
+          <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusHouseIcon /> : <ChartUpLarge />}</div>
           <div class="cardContent">
             <div class="flexContent">
               <form id="async_form">
                 <div>
                   <div style={{ display: "flex", flexDirection: "row" }}>
-                    <div class="cardIconInset">
-                      <ChartUpLarge style={{ marginLeft: "10px", width: "55px" }} />
-                    </div>
+                    <div class="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusHouseIcon style={{ marginLeft: "10px", width: "55px" }} /> : <ChartUpLarge style={{ marginLeft: "10px", width: "55px" }} />}</div>
                     <h3 class="cardHeadline">Heizenergiebedarf</h3>
                   </div>
                   <span class="cardDescription">Wählen Sie eine der drei Möglichkeiten zur Bestimmung Ihres Heizenergiebedarfs.</span>
@@ -377,9 +379,7 @@ class HeatingSelection extends React.Component {
                     <label>
                       <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" checked={BuildingEnegeryStandard === "BuildingEnergyStandard"} onChange={this.inputHeatingSelection} />
                       <div class="panel panel-default card-input-wide">
-                        <div class="panel-heading">
-                          <ChartUpSmall />
-                        </div>
+                        <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusEfficienteIcon /> : <ChartUpSmall />}</div>
                         <div class="panel-body">
                           Gebäude-
                           <br />
@@ -392,9 +392,7 @@ class HeatingSelection extends React.Component {
                     <label>
                       <input type="radio" name="heating" value="OilLNG" class="card-input-element" checked={BuildingEnegeryStandard === "OilLNG"} onChange={this.inputHeatingSelection} />
                       <div class="panel panel-default card-input-wide">
-                        <div class="panel-heading">
-                          <ChartOil />
-                        </div>
+                        <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusOilIcon /> : <ChartOil />}</div>
                         <div class="panel-body">
                           Öl- oder
                           <br />
@@ -407,9 +405,7 @@ class HeatingSelection extends React.Component {
                     <label>
                       <input type="radio" name="heating" value="BuildingInsulation" class="card-input-element" checked={BuildingEnegeryStandard === "BuildingInsulation"} onChange={this.inputHeatingSelection} />
                       <div class="panel panel-default card-input-wide">
-                        <div class="panel-heading">
-                          <BuildingInsulationIcon />
-                        </div>
+                        <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusHomeIsolierungIcon /> : <BuildingInsulationIcon />}</div>
                         <div class="panel-body">Gebäudeisolierung</div>
                       </div>
                     </label>

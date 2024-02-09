@@ -2,6 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import AppContext from "../../AppContext";
 import { ReactComponent as InfoIcon } from "../../assets/img/icons/info.svg";
+import { ReactComponent as BuderusInfoIcon } from "../../assets/img/icons/buderus/info.svg";
 import { styled } from "@mui/material/styles";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -36,7 +37,7 @@ class InfoButton extends React.Component {
 
   static contextType = AppContext;
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   render() {
     const { t } = this.props;
@@ -66,9 +67,7 @@ class InfoButton extends React.Component {
 
     return (
       <LightTooltip enterTouchDelay={0} leaveTouchDelay={5000} arrow tooltipId={this.state.tooltipId} title={this.state.text} placement={this.state.placement}>
-        <Button style={{ minWidth: "unset", padding: 0 }}>
-          <InfoIcon />
-        </Button>
+        <Button style={{ minWidth: "unset", padding: 0 }}>{this.context.selectedTheme === "buderus" ? <BuderusInfoIcon /> : <InfoIcon />}</Button>
       </LightTooltip>
     );
   }
