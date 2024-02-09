@@ -3,15 +3,8 @@ import { withRouter } from "react-router-dom";
 import AppContext from "../../../../AppContext";
 import InfoButton from "../../infoButton";
 import InfoBox from "../../infoBox";
-import { ReactComponent as HouseSunSmallIcon } from "../../../../assets/img/icons/house_sun_small.svg";
-import { ReactComponent as HouseSunLargeIcon } from "../../../../assets/img/icons/house_sun_large.svg";
-import { ReactComponent as HouseSunLargeWhiteIcon } from "../../../../assets/img/icons/house_sun_large_white.svg";
-import { ReactComponent as RadiatorIcon } from "../../../../assets/img/icons/radiator.svg";
-import { ReactComponent as UnderfloorHeatingIcon } from "../../../../assets/img/icons/underfloor_heating.svg";
-import { ReactComponent as UnderfloorRadiatorIcon } from "../../../../assets/img/icons/underfloor_radiator.svg";
-import { ReactComponent as HeatLarge } from "../../../../assets/img/icons/heat_large.svg";
-import { ReactComponent as InfoIcon } from "../../../../assets/img/icons/info.svg";
 import { ReactComponent as Coins } from "../../../../assets/img/icons/coins.svg";
+import { ReactComponent as BuderusCoins } from "../../../../assets/img/icons/buderus/coins.svg";
 import { styled } from "@mui/material/styles";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -223,7 +216,7 @@ class Investment extends React.Component {
     }
 
     const OilLNGIcon = styled("span")(({ theme }) => ({
-      borderRadius: "50%",
+      borderRadius: this.context.selectedTheme === "buderus" ? "0px" : "50%",
       width: 24,
       height: 24,
       backgroundColor: "#8A9097",
@@ -233,7 +226,7 @@ class Investment extends React.Component {
         outlineOffset: 2,
       },
       "input:hover ~ &": {
-        backgroundColor: "#8A9097",
+        backgroundColor: this.context.selectedTheme === "buderus" ? "#000000" : "#106ba3",
       },
       "input:disabled ~ &": {
         boxShadow: "none",
@@ -242,17 +235,18 @@ class Investment extends React.Component {
     }));
 
     const OilLNGCheckedIcon = styled(OilLNGIcon)({
-      backgroundColor: "#137cbd",
-      backgroundImage: "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
+      backgroundColor: this.context.selectedTheme === "buderus" ? "#000000" : "#137cbd",
+      backgroundImage: this.context.selectedTheme === "buderus" ? "" : "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
       "&:before": {
-        display: "block",
-        width: 24,
-        height: 24,
-        backgroundImage: "radial-gradient(#fff,#fff 28%,transparent 32%)",
         content: '""',
-      },
-      "input:hover ~ &": {
-        backgroundColor: "#106ba3",
+        display: "block",
+        width: this.context.selectedTheme === "buderus" ? 12 : 24,
+        height: this.context.selectedTheme === "buderus" ? 12 : 24,
+        backgroundColor: this.context.selectedTheme === "buderus" ? "#fff" : "",
+        borderRadius: 2,
+        margin: "50%",
+        transform: "translate(-50%, -50%)",
+        backgroundImage: this.context.selectedTheme === "buderus" ? "" : "radial-gradient(#fff,#fff 28%,transparent 32%)",
       },
     });
 
@@ -277,16 +271,12 @@ class Investment extends React.Component {
     return (
       <div>
         <div class="cardContainer">
-          <div class="cardLargeIcon">
-            <Coins />
-          </div>
+          <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusCoins /> : <Coins />}</div>
           <div class="cardContent">
             <div class="flexContent">
               <div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <div class="cardIconInset">
-                    <Coins style={{ marginLeft: "10px", width: "55px" }} />
-                  </div>
+                  <div class="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusCoins style={{ marginLeft: "10px", width: "55px" }} /> : <Coins style={{ marginLeft: "10px", width: "55px" }} />}</div>
                   <h3 class="cardHeadline">Investitionskosten</h3>
                 </div>
                 <span class="cardDescription">

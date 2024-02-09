@@ -67,7 +67,7 @@ class InfoBox extends React.Component {
                   genutzt. Beispiel:
                   <br />
                   <ul style={{ marginBlockStart: "0.2em", marginBlockEnd: "0.2em" }}>
-                    <li>7 kWp PV-Anlage = ca. 15.000 €</li>
+                    <li>7 kWp PV-Anlage = ca. {this.context.selectedTheme === "buderus" ? (10000).toLocaleString("de-DE") : (15000).toLocaleString("de-DE")} €</li>
                     <li>9 kWh Batteriespeicher = ca. 7.000 €</li>
                   </ul>
                   Die Preise variieren, je nach Anlagengröße und können regional
