@@ -3,14 +3,14 @@ import { withRouter } from "react-router-dom";
 import AppContext from "../../../../AppContext";
 import InfoButton from "../../infoButton";
 import InfoBox from "../../infoBox";
-import { ReactComponent as HouseSunSmallIcon } from "../../../../assets/img/icons/house_sun_small.svg";
-import { ReactComponent as HouseSunLargeIcon } from "../../../../assets/img/icons/house_sun_large.svg";
-import { ReactComponent as HouseSunLargeWhiteIcon } from "../../../../assets/img/icons/house_sun_large_white.svg";
 import { ReactComponent as AcceptIcon } from "../../../../assets/img/icons/accept_large.svg";
 import { ReactComponent as DenyIcon } from "../../../../assets/img/icons/deny_large.svg";
-import { ReactComponent as UnderfloorRadiatorIcon } from "../../../../assets/img/icons/underfloor_radiator.svg";
 import { ReactComponent as BatteryIcon } from "../../../../assets/img/icons/battery_large.svg";
-import { ReactComponent as InfoIcon } from "../../../../assets/img/icons/info.svg";
+
+import { ReactComponent as BuderusAcceptIcon } from "../../../../assets/img/icons/buderus/accept_large.svg";
+import { ReactComponent as BuderusDenyIcon } from "../../../../assets/img/icons/buderus/deny_large.svg";
+import { ReactComponent as BuderusBatteryIcon } from "../../../../assets/img/icons/buderus/battery_large.svg";
+
 import { styled } from "@mui/material/styles";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -274,16 +274,12 @@ class HomeStorage extends React.Component {
     return (
       <div>
         <div class="cardContainer">
-          <div class="cardLargeIcon">
-            <BatteryIcon />
-          </div>
+          <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusBatteryIcon /> : <BatteryIcon />}</div>
           <div class="cardContent">
             <div class="flexContent">
               <div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <div class="cardIconInset">
-                    <BatteryIcon style={{ marginLeft: "10px", width: "55px" }} />
-                  </div>
+                  <div class="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusBatteryIcon style={{ marginLeft: "10px", width: "55px" }} /> : <BatteryIcon style={{ marginLeft: "10px", width: "55px" }} />}</div>
                   <h3 class="cardHeadline">Batteriespeicher</h3>
                 </div>
                 <span class="cardDescription">Ist ein Batteriespeicher installiert oder geplant?</span>
@@ -293,9 +289,7 @@ class HomeStorage extends React.Component {
                   <label>
                     <input type="radio" name="heating" value="true" class="card-input-element" checked={homeStorage === "true"} onChange={this.inputHomeStorage} />
                     <div class="panel panel-default card-input">
-                      <div class="panel-heading">
-                        <AcceptIcon />
-                      </div>
+                      <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusAcceptIcon /> : <AcceptIcon />}</div>
                       <div class="panel-body">Ja</div>
                     </div>
                   </label>
@@ -304,9 +298,7 @@ class HomeStorage extends React.Component {
                   <label>
                     <input type="radio" name="heating" value="false" class="card-input-element" checked={homeStorage === "false"} onChange={this.inputHomeStorage} />
                     <div class="panel panel-default card-input">
-                      <div class="panel-heading">
-                        <DenyIcon />
-                      </div>
+                      <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusDenyIcon /> : <DenyIcon />}</div>
                       <div class="panel-body">Nein</div>
                     </div>
                   </label>
@@ -325,13 +317,14 @@ class HomeStorage extends React.Component {
                       trackStyle={{ backgroundColor: "transparent", height: 2 }}
                       railStyle={{ backgroundColor: "#8A9097", width: "calc(100% + 15px)", height: 2, marginLeft: "-7px", cursor: "pointer" }}
                       handleStyle={{
-                        borderColor: "#008ECF",
+                        borderColor: this.context.selectedTheme === "buderus" ? "#000000" : "#008ECF",
                         height: 18,
                         width: 18,
+                        borderRadius: this.context.selectedTheme === "buderus" ? "0" : "",
                         marginLeft: 0,
                         marginRight: 0,
                         marginTop: -7,
-                        backgroundColor: "#008ECF",
+                        backgroundColor: this.context.selectedTheme === "buderus" ? "#FFFFFF" : "#008ECF",
                         opacity: 1,
                       }}
                       onChange={this.inputStorageSize}
