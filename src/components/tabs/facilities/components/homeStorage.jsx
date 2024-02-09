@@ -98,6 +98,7 @@ class HomeStorage extends React.Component {
       setTabToSelect(tabInTable.Tab);
       console.log(tabInTable);
       this.context.goToView(8);
+      setFwdBtn(true);
     } else {
       setHomeStorageSize(0);
       this.setState({ homeStorageSizekW: 0 });

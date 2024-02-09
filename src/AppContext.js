@@ -1941,8 +1941,10 @@ class SimulatorProvider extends Component {
     this.setState((prevState) => ({ directLink: value }));
   };
 
-  goToView = (newValue) => {
-    this.setDirectLink(true);
+  goToView = (newValue, directLink) => {
+    if (directLink == true) {
+      this.setDirectLink(true);
+    }
     this.setActiveView(newValue);
   };
 

@@ -70,6 +70,7 @@ class Heatpump extends React.Component {
     steps[activeView] = false;
     setSteps({ ...steps });
     this.context.goToView(5);
+    setFwdBtn(true);
   };
 
   render() {
