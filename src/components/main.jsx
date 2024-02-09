@@ -798,7 +798,7 @@ class Main extends React.Component {
         <div className={styles.setupContainer}>
           <div className={styles.toolMargin}>
             <Box sx={{ width: "100%" }}>
-              <NavContent />
+              <NavContent theme={selectedTheme} />
             </Box>
           </div>
         </div>
