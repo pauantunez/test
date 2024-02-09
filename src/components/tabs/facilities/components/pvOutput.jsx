@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import AppContext from "../../../../AppContext";
 import InfoBox from "../../infoBox";
 import { ReactComponent as HouseholdEnergyUseIcon } from "../../../../assets/img/icons/household_energy_use_icon.svg";
+import { ReactComponent as BuderusPvLeistung } from "../../../../assets/img/icons/buderus/pv_leistung.svg";
 import { styled } from "@mui/material/styles";
 import Radio from "@mui/material/Radio";
 import Slider from "rc-slider";
@@ -74,16 +75,12 @@ class PVOutput extends React.Component {
     return (
       <div>
         <div class="cardContainer">
-          <div class="cardLargeIcon">
-            <HouseholdEnergyUseIcon />
-          </div>
+          <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusPvLeistung /> : <HouseholdEnergyUseIcon />}</div>
           <div class="cardContent">
             <div class="flexContent">
               <div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <div class="cardIconInset">
-                    <HouseholdEnergyUseIcon style={{ marginLeft: "10px", width: "55px" }} />
-                  </div>
+                  <div class="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusPvLeistung style={{ marginLeft: "10px", width: "55px" }} /> : <HouseholdEnergyUseIcon style={{ marginLeft: "10px", width: "55px" }} />}</div>
                   <h3 class="cardHeadline">PV-Leistung</h3>
                 </div>
                 <span class="cardDescription">Welche Leistung hat die installierte oder geplante PV-Anlage?</span>
@@ -97,13 +94,14 @@ class PVOutput extends React.Component {
                     trackStyle={{ backgroundColor: "transparent", height: 2 }}
                     railStyle={{ backgroundColor: "#8A9097", width: "calc(100% + 15px)", height: 2, marginLeft: "-7px", cursor: "pointer" }}
                     handleStyle={{
-                      borderColor: "#008ECF",
+                      borderColor: this.context.selectedTheme === "buderus" ? "#000000" : "#008ECF",
                       height: 18,
                       width: 18,
+                      borderRadius: this.context.selectedTheme === "buderus" ? "0" : "",
                       marginLeft: 0,
                       marginRight: 0,
                       marginTop: -7,
-                      backgroundColor: "#008ECF",
+                      backgroundColor: this.context.selectedTheme === "buderus" ? "#FFFFFF" : "#008ECF",
                       opacity: 1,
                     }}
                     onChange={this.inputPVOutput}
