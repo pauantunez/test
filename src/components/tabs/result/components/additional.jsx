@@ -306,7 +306,7 @@ class Additional extends React.Component {
                   <h3>Ergebnisse speichern</h3>
                   <div>Sichern Sie sich Ihre Ergebnisse, indem Sie diese als PDF jetzt herunterladen</div>
                 </div>
-                <div style={{ display: "flex", alignItems: "end" }}>
+                <div class="trackeable" data-event="result-part3-save-pdf" style={{ display: "flex", alignItems: "end" }}>
                   <Button onClick={printPDF} variant="outlined" startIcon={<PDFIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
                     Ergebnisse herunterladen
                   </Button>
@@ -319,7 +319,7 @@ class Additional extends React.Component {
                   <h3>Kontakt zum Fachbetrieb</h3>
                   <div>Finden Sie einen Experten in Ihrer Nähe, der Sie bei der Umsetzung unterstützt</div>
                 </div>
-                <div style={{ display: "flex", alignItems: "end" }}>
+                <div class="trackeable" data-event="result-part3-contact" style={{ display: "flex", alignItems: "end" }}>
                   <Button variant="outlined" startIcon={<MagnifyingGlassIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
                     Jetzt Fachbetrieb finden
                   </Button>
@@ -355,7 +355,7 @@ class Additional extends React.Component {
                         <div class="panel-heading-narrow">
                           <HeatpumpSmallIcon />
                         </div>
-                        <div class="panel-body">Wärmepumpe</div>
+                        <div class="panel-body trackeable" data-event="result-part3-heatpump">Wärmepumpe</div>
                       </a>
                     </label>
                   </div>
@@ -366,7 +366,7 @@ class Additional extends React.Component {
                         <div class="panel-heading-narrow">
                           <PhotovoltaicIcon />
                         </div>
-                        <div class="panel-body">PV-Anlage</div>
+                        <div class="panel-body trackeable" data-event="result-part3-pv">PV-Anlage</div>
                       </a>
                     </label>
                   </div>
@@ -377,7 +377,7 @@ class Additional extends React.Component {
                         <div class="panel-heading-narrow">
                           <WallboxIcon />
                         </div>
-                        <div class="panel-body">Wallbox</div>
+                        <div class="panel-body trackeable" data-event="result-part3-wallbox">Wallbox</div>
                       </a>
                     </label>
                   </div>
@@ -388,7 +388,7 @@ class Additional extends React.Component {
                         <div class="panel-heading-narrow">
                           <EnergyManagementIcon />
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body trackeable" data-event="result-part3-energie-management">
                           Energiemanage-
                           <br />
                           mentsystem

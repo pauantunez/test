@@ -493,7 +493,7 @@ class Cost extends React.Component {
               {this.state.displayed === undefined && <input type="radio" name="heating" value="20" class="card-input-element" checked={costOverTime === "20"} onChange={this.inputCostOverTime} />}
               {this.state.displayed === "multi" && <input type="radio" name="multi-year" id="multi-year" value="20" class="card-input-element" checked="true" />}
               <div class="panel panel-default card-input-wide background-light-grey" style={{ height: "40px", width: "100%", fontSize: "14px", margin: "0", border: "none" }}>
-                <div class="panel-body">Gesamtkosten über 20 Jahre</div>
+                <div class="panel-body trackeable" data-event="gesamtkosten-strom-20-years">Gesamtkosten über 20 Jahre</div>
               </div>
             </label>
           </div>

@@ -262,7 +262,9 @@ class InfoBoxResult extends React.Component {
                         this.goToView(3);
                       }}
                     >
-                      <EditIcon />
+                      <div class="trackeable" data-event="result-part2-change-electricity">
+                        <EditIcon />
+                      </div>
                     </IconButton>
                   </h3>
                   Der errechnete Stromverbrauch aufgeteilt auf die großen Verbraucher, Wärmepumpe, E-Auto und Haushalt.

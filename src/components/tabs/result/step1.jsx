@@ -71,6 +71,7 @@ class ResultStep1 extends React.Component {
 
     setPower_kW_PV_MFH(event.target.value)
   };
+  
 
   inputTCO_thermal_EUR_a = (event) => {
     const { overlayToggle, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a } = this.context;
@@ -130,7 +131,11 @@ class ResultStep1 extends React.Component {
 
         </div>
 
-
+        {/* <div class="welcomeBtns" style={{display: 'flex', margin: '3% 5% 0 5%'}}>
+          <div class="explanationBtn">
+            <div class="calculationBase trackeable" onClick={handleOpen} style={{fontSize: '12px', fontFamily: 'Bosch-Regular', color: '#007BC0', cursor: 'pointer'}} data-event="berechnungsgrundlage">Berechnugsgrundlage</div>
+          </div>
+        </div> */}
 
       </div>
     )

@@ -61,8 +61,11 @@ class CalculationModal extends React.Component {
 
       const { t } = this.props;
       const { setActiveCalculationView, activeCalculationView, setCalculationModal, calculationModal, BuildingEnegeryStandard, setBuildingEnegeryStandard, kfwValue, insulationValue, setInsulationValue, setKfwValue, OilLNGValue, setOilLNGValue, TCO_thermal_EUR_a, disabledOilUsage, OilUsageLiters, LNGUsage, disabledLNGUsage } = this.context;
-      const handleClose = () => setCalculationModal(false);
-
+      const handleClose = () => {
+        var container = document.getElementsByClassName("home_homeContainer__CHK-E")[0]
+        container.style.display = "block";
+        setCalculationModal(false);
+      };
 
       const style = {
         position: 'absolute',
@@ -75,7 +78,7 @@ class CalculationModal extends React.Component {
         border: 'none',
         boxShadow: 24,
         p: 0,
-        overflow: 'scroll'
+        overflow: 'scroll',
       };
         
           return  ( 
