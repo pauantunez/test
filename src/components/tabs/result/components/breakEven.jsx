@@ -302,8 +302,10 @@ class BreakEven extends React.Component {
     const numYears01 = this.breakEvenPV();
     const numYears02 = this.breakEvenPVems();
     const datapoints = createDataPoints(heatpumpPVems, numYears01 + 3);
+    console.log("🚀 ~ BreakEven ~ render ~ heatpumpPVems:", heatpumpPVems)
     const closestPosition01 = this.findClosestPositionTo0(datapoints);
     const datapoints2 = createDataPoints(heatpumpPV, numYears01 + 3);
+    console.log("🚀 ~ BreakEven ~ render ~ heatpumpPV:", heatpumpPV)
     const closestPosition02 = this.findClosestPositionTo0(datapoints2);
 
     const closestIntersectionPosition = this.findIntersectionPosition(datapoints, datapoints2);
@@ -437,13 +439,13 @@ class BreakEven extends React.Component {
           },
         },
         y: {
-          suggestedMin: -34000,
-          suggestedMax: 20000,
+          suggestedMin: 0,
+          suggestedMax: 'auto',
           border: {
             display: false,
           },
           ticks: {
-            suggestedStepSize: 10000,
+            suggestedStepSize: 500,
             color: "#000",
             font: {
               size: 12,
