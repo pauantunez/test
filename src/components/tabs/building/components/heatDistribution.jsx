@@ -95,6 +95,7 @@ class HeatDistribution extends React.Component {
     steps[activeView] = false;
     setSteps({ ...steps });
     this.context.goToView(3);
+    setFwdBtn(true);
   };
 
   inputKfwValue = (event) => {

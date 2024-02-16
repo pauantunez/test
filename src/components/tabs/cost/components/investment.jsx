@@ -149,6 +149,7 @@ class Investment extends React.Component {
       setFwdBtn(false);
       steps[activeView] = false;
       this.context.goToView(9);
+      setFwdBtn(true);
     }
 
     setSteps({ ...steps });

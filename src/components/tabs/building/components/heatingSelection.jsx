@@ -98,6 +98,7 @@ class HeatingSelection extends React.Component {
     steps[activeView] = false;
     setSteps({ ...steps });
     this.context.goToView(2);
+    setFwdBtn(true);
   };
 
   inputInsulationValue = (event) => {
@@ -110,6 +111,7 @@ class HeatingSelection extends React.Component {
     steps[activeView] = false;
     setSteps({ ...steps });
     this.context.goToView(2);
+    setFwdBtn(true);
   };
 
   inputOilLNGValue = (event) => {

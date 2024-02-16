@@ -137,6 +137,7 @@ class EV extends React.Component {
       let scenarioInDatabase;
       console.log(validateOptions);
       this.context.goToView(6);
+      setFwdBtn(true);
       if (validateOptions.option2 === "-") {
         //if one, use singlePreHeatOptionNoEVLookupTable as lookup table
         scenarioInDatabase = singlePreHeatOptionNoEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString());
