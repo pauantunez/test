@@ -141,13 +141,13 @@ class NavContent extends React.Component {
       investmentCostResult = parseInt(investmentCostEUR) * -1;
     }
 
-    const betriebskosten = (1 / 100) * (investmentCostResult + -1000);
+    const betriebskosten = (1 / 100) * (investmentCostResult + -400);
     const einspeiseverguetung = pvOutputkWh * 1000 * (1 - (electricityCostHouseholdPercentage + 10) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100);
 
     for (let index = 0; index < 50; index++) {
       const einsparungen = pvOutputkWh * 1000 * ((electricityCostHouseholdPercentage + 10) / 100) * (parseFloat(electricityCost / 100) * (1 + 0.02) ** [index + 1] - parseFloat(gridRevenue.replace(",", ".") / 100));
       if (this.state.heatpumpPVems.length == 0) {
-        this.state.heatpumpPVems.push({ expenditure: investmentCostResult + -1000 });
+        this.state.heatpumpPVems.push({ expenditure: investmentCostResult + -400 });
       } else {
         this.state.heatpumpPVems.push({ expenditure: parseFloat(this.state.heatpumpPVems[index - 1].expenditure) + betriebskosten + einspeiseverguetung + einsparungen });
       }
