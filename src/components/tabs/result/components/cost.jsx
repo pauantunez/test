@@ -287,13 +287,11 @@ class Cost extends React.Component {
       investmentCostResult = Math.abs(parseInt(investmentCostEUR) * -1);
     }
 
-    if (costOverTime == "1")
-    {
+    if (costOverTime == "1") {
       const result = Math.abs(Math.round(((1 - electricityCostOffGridPercentage / 100) * energyUsagekWh * ((parseFloat(electricityCost) / 100)))));
       return Math.abs(result)
     }
-    else 
-    {
+    else {
       const result = Math.abs(((1 - electricityCostOffGridPercentage / 100) * energyUsagekWh * ((parseFloat(electricityCost) / 100) * (1 + 0.02)) * (1 - (0.02 + 1) ** 20)) / 0.02);
       // return Math.abs(result + investmentCostResult);
       return Math.abs(result);
@@ -432,42 +430,65 @@ class Cost extends React.Component {
     const { electricityCostPVsavings, electricityCostPVEMSsavings, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
 
     // Ohne PV
-    var OHNE_PV_cost1year = Math.abs(parseInt(this.energyUseEuro(5).replace(".", "").replace(",", "")));
-    var OHNE_PV_cost20years = Math.abs(parseInt(this.electricityCostNoPV20Years()));
+    if (costOverTime === "1") {
+      var OHNE_PV_cost1year = Math.abs(parseInt(this.energyUseEuro(5).replace(".", "").replace(",", "")));
+    } else if (costOverTime === "20") {
+      var OHNE_PV_cost20years = Math.abs(parseInt(this.electricityCostNoPV20Years()));
+    }
+    if (sessionStorage.getItem("OHNE_PV_cost1year") == undefined) {
+      sessionStorage.setItem("OHNE_PV_cost1year", OHNE_PV_cost1year)
+    }
+    if (sessionStorage.getItem("OHNE_PV_cost20years") == undefined) {
+      sessionStorage.setItem("OHNE_PV_cost20years", OHNE_PV_cost20years)
+    }
 
-    sessionStorage.setItem("OHNE_PV_cost1year", OHNE_PV_cost1year)
-    sessionStorage.setItem("OHNE_PV_cost20years", OHNE_PV_cost20years)
+    if (costOverTime === "1") {
+      var costOnlyPV1year = parseInt(this.electricityCostPV20Years())
+    } else if (costOverTime === "20") {
+      var costOnlyPV20years = parseInt(this.electricityCostPV20Years())
+    }
+    if (sessionStorage.getItem("costOnlyPV1year") == undefined) {
+      sessionStorage.setItem("costOnlyPV1year", costOnlyPV1year)
+    }
+    if (sessionStorage.getItem("costOnlyPV20years") == undefined) {
+      sessionStorage.setItem("costOnlyPV20years", costOnlyPV20years)
+    }
 
-    // Mit PV
-    var costOnlyPV = parseInt(this.electricityCostPV20Years())
-    sessionStorage.setItem("costOnlyPV", costOnlyPV)
-
-    var savingOnlyPV1year = OHNE_PV_cost1year - costOnlyPV
-    var savingOnlyPV20years = OHNE_PV_cost20years - costOnlyPV
-
-    sessionStorage.setItem("savingOnlyPV1year", savingOnlyPV1year)
-    sessionStorage.setItem("savingOnlyPV20years", savingOnlyPV20years)
+    var savingOnlyPV1year = OHNE_PV_cost1year - costOnlyPV1year
+    var savingOnlyPV20years = OHNE_PV_cost20years - costOnlyPV20years
+    if (sessionStorage.getItem("savingOnlyPV1year") == undefined) {
+      sessionStorage.setItem("savingOnlyPV1year", savingOnlyPV1year)
+    }
+    if (sessionStorage.getItem("savingOnlyPV20years") == undefined) {
+      sessionStorage.setItem("savingOnlyPV20years", savingOnlyPV20years)
+    }
 
     // Mit PV und EMS
-    var costPVandEMS1year =  parseInt(Math.abs(costOnlyPV * 0.95))
-    var costPVandEMS20years = parseInt(Math.abs(costOnlyPV * 0.8))
-
-    sessionStorage.setItem("costPVandEMS1year", costPVandEMS1year)
-    sessionStorage.setItem("costPVandEMS20years", costPVandEMS20years)
+    var costPVandEMS1year = parseInt(Math.abs(costOnlyPV1year * 0.95))
+    var costPVandEMS20years = parseInt(Math.abs(costOnlyPV20years * 0.8))
+    if (sessionStorage.getItem("costPVandEMS1year") == null) {
+      sessionStorage.setItem("costPVandEMS1year", costPVandEMS1year)
+    }
+    if (sessionStorage.getItem("costPVandEMS20years") == null) {
+      sessionStorage.setItem("costPVandEMS20years", costPVandEMS20years)
+    }
 
     var savingPVandEMS1year = OHNE_PV_cost1year - costPVandEMS1year
     var savingPVandEMS20years = OHNE_PV_cost20years - costPVandEMS20years
-
-    sessionStorage.setItem("savingPVandEMS1year", savingPVandEMS1year)
-    sessionStorage.setItem("savingPVandEMS20years", savingPVandEMS20years)
+    if (sessionStorage.getItem("savingPVandEMS1year") == null) {
+      sessionStorage.setItem("savingPVandEMS1year", savingPVandEMS1year)
+    }
+    if (sessionStorage.getItem("savingPVandEMS20years") == null) {
+      sessionStorage.setItem("savingPVandEMS20years", savingPVandEMS20years)
+    }
 
     // 1 year bar heights 
-    var oneYearHeightMitPv = this.getBarHeights(OHNE_PV_cost1year, costOnlyPV, savingOnlyPV1year)
+    var oneYearHeightMitPv = this.getBarHeights(OHNE_PV_cost1year, costOnlyPV1year, savingOnlyPV1year)
     var oneYearHeightMitPvAndEMS = this.getBarHeights(OHNE_PV_cost1year, costPVandEMS1year, savingPVandEMS1year)
 
     // 20 years bar heights
-    var twentyYearsHeightMitPv =  this.getBarHeights(OHNE_PV_cost20years, costOnlyPV, savingOnlyPV20years)
-    var twentyYearsHeightMitPvAndEms =  this.getBarHeights(OHNE_PV_cost20years, costPVandEMS20years, savingPVandEMS20years)
+    var twentyYearsHeightMitPv = this.getBarHeights(OHNE_PV_cost20years, costOnlyPV20years, savingOnlyPV20years)
+    var twentyYearsHeightMitPvAndEms = this.getBarHeights(OHNE_PV_cost20years, costPVandEMS20years, savingPVandEMS20years)
 
     console.log("twentyYearsHeightMitPvAndEms ", twentyYearsHeightMitPvAndEms)
 
@@ -501,7 +522,7 @@ class Cost extends React.Component {
 
         <div style={{ display: "flex", flexDirection: "row", width: "100%", height: "220px" }}>
           <div style={{ display: "flex", flexDirection: "row", width: "100%", marginLeft: "17%", zIndex: "99999" }}>
-            
+
             {/* ohne PV */}
             <div style={{ display: "flex", width: "73px", height: `212px`, background: "#007BC0", color: "white", marginTop: "auto" }}>
               <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
@@ -514,9 +535,9 @@ class Cost extends React.Component {
 
             {/* Mit PV Price */}
             <div style={{ width: "73px", color: "white", marginLeft: "10%", zIndex: "99999", marginTop: "auto" }}>
-              
+
               {/* Pattern bar 1 year */}
-              { costOverTime == "1" && (
+              {costOverTime == "1" && (
                 <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPv["savings"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
@@ -530,7 +551,7 @@ class Cost extends React.Component {
               )}
 
               {/* Pattern bar 20 years */}
-              { costOverTime == "20" && (
+              {costOverTime == "20" && (
                 <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPv["savings"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
@@ -545,40 +566,40 @@ class Cost extends React.Component {
 
 
               {/* Blue bar 1 year */}
-              { costOverTime == "1" && (
+              {costOverTime == "1" && (
                 <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPv["cost"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                        {costOnlyPV.toLocaleString("de-DE")}
+                        {costOnlyPV1year.toLocaleString("de-DE")}
                         <span>&nbsp;€</span>
                       </span>
                     </div>
                   </div>
                 </div>
-              ) }
+              )}
 
               { /* Blue bar 20 years */}
-              { costOverTime == "20" && (
+              {costOverTime == "20" && (
                 <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPv["cost"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                        {costOnlyPV.toLocaleString("de-DE")}
+                        {costOnlyPV20years.toLocaleString("de-DE")}
                         <span>&nbsp;€</span>
                       </span>
                     </div>
                   </div>
                 </div>
-              ) }
+              )}
 
             </div>
 
             {/* Mit PV und EMS */}
             <div style={{ width: "73px", color: "white", marginLeft: "10%", zIndex: "99999", marginTop: "auto" }}>
-            
+
               {/* Pattern bar 1 year */}
-              { costOverTime == "1" && (
+              {costOverTime == "1" && (
                 <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPvAndEMS["savings"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
@@ -590,9 +611,9 @@ class Cost extends React.Component {
                   </div>
                 </div>
               )}
-              
+
               {/* Pattern bar 20 years */}
-              { costOverTime == "20" && (
+              {costOverTime == "20" && (
                 <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPvAndEms["savings"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
@@ -606,7 +627,7 @@ class Cost extends React.Component {
               )}
 
               {/* Blue bar 1 year */}
-              { costOverTime == "1" && (
+              {costOverTime == "1" && (
                 <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPvAndEMS["cost"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
@@ -620,7 +641,7 @@ class Cost extends React.Component {
               )}
 
               {/* Blue bar 20 years */}
-              { costOverTime == "20" && (
+              {costOverTime == "20" && (
                 <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPvAndEms["cost"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>

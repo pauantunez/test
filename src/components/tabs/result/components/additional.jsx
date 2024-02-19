@@ -4,6 +4,7 @@ import AppContext from "../../../../AppContext";
 import InfoBox from "../../infoBox";
 import BreakEven from "./breakEven";
 import Cost from "./cost";
+import CostPdf from "./costPdf";
 import OffGrid from "./offGrid";
 import ElectricityUse from "./electricityUse";
 import HouseholdUse from "./householdUse";
@@ -423,12 +424,12 @@ class Additional extends React.Component {
             <div style={{ position: "absolute", left: "0px", width: "405px", transform: "scale(0.75)", transformOrigin: "top left" }}>
               <h3 style={{ marginBlockStart: "4px", marginBlockEnd: "8px", fontSize: "14px" }}>Gesamtkosten Strom</h3>
               {/* Gráfico barras 1 año */}
-              <Cost displayed="single" />
+              <CostPdf displayed="one-year" />
             </div>
             <div style={{ position: "absolute", left: "365px", width: "405px", transform: "scale(0.75)", transformOrigin: "top left" }}>
               <h3 style={{ marginTop: "0px", marginBlockStart: "4px", marginBlockEnd: "8px", height: "18px" }}></h3>
               {/* Gráfico barras 20 años */}
-              <Cost displayed="multi" />
+              <CostPdf displayed="twenty-years" />
             </div>
           </div>
           <div style={{ position: "absolute", left: "60px", top: "605px", width: "865px", transform: "scale(0.80)", transformOrigin: "top left" }}>
@@ -515,9 +516,9 @@ class Additional extends React.Component {
                         <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>{mitNoEMSPercentage}%</strong>.{" "}
                       </p>
                       <p>
-                      Ca.&nbsp;
-                      <strong>{mitGridUsagePercentage}%</strong>
-                      &nbsp;Ihres Gesamtstromverbrauchs beziehen Sie durch das <strong>öffentliche Stromnetz.</strong>
+                        Ca.&nbsp;
+                        <strong>{mitGridUsagePercentage}%</strong>
+                        &nbsp;Ihres Gesamtstromverbrauchs beziehen Sie durch das <strong>öffentliche Stromnetz.</strong>
                       </p>
                     </div>
                   </div>
@@ -538,24 +539,24 @@ class Additional extends React.Component {
                 <InfoBoxResult box="off-grid" />
               </div> */}
               <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
-              <Box>
-                <div class="infobox-container">
-                  <div class="infobox-row" style={{ display: "block", lineHeight: "22px", fontSize: "13px", borderBottom: "none" }}>
-                    <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Autarkiegrad: ca. {ohnePvUsagePercentage}%</h3>
-                    <p>
-                      Das bedeutet: bis zu <strong>{ohnePvUsagePercentage}%</strong> Ihres Gesamtstromverbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
-                    </p>
-                    <p>
-                      <strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Autarkiegrad</strong> auf bis zu <strong>{autarkiegradWithEMS}%</strong> erhöhen.{" "}
-                    </p>
-                    <p>
-                      Ca.&nbsp;
-                      <strong>{ohneGridUsagePercentage}%</strong>
-                      &nbsp;Ihres Gesamtstromverbrauchs beziehen Sie durch das <strong>öffentliche Stromnetz.</strong>
-                    </p>
+                <Box>
+                  <div class="infobox-container">
+                    <div class="infobox-row" style={{ display: "block", lineHeight: "22px", fontSize: "13px", borderBottom: "none" }}>
+                      <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Autarkiegrad: ca. {ohnePvUsagePercentage}%</h3>
+                      <p>
+                        Das bedeutet: bis zu <strong>{ohnePvUsagePercentage}%</strong> Ihres Gesamtstromverbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
+                      </p>
+                      <p>
+                        <strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Autarkiegrad</strong> auf bis zu <strong>{autarkiegradWithEMS}%</strong> erhöhen.{" "}
+                      </p>
+                      <p>
+                        Ca.&nbsp;
+                        <strong>{ohneGridUsagePercentage}%</strong>
+                        &nbsp;Ihres Gesamtstromverbrauchs beziehen Sie durch das <strong>öffentliche Stromnetz.</strong>
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </Box>
+                </Box>
               </div>
             </div>
           </div>
@@ -645,7 +646,7 @@ class Additional extends React.Component {
                         &nbsp;Ihres eigens produzierten PV-Stroms speisen Sie ins <strong>öffentliche Stromnetz</strong> ein.
                       </p>
                     </div>
-                    </div>
+                  </div>
                 </Box>
               </div>
             </div>

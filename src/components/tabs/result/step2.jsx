@@ -68,7 +68,7 @@ class ResultStep2 extends React.Component {
     const { setLoadingOffGrid, setLoadingHousehold } = this.context;
     const switchButtons = document.getElementsByClassName('MuiSwitch-input');
 
-    sessionStorage.clear()
+    //sessionStorage.clear()
 
     // Switch click automatically to get values for the PDF
     // setLoadingOffGrid(true)

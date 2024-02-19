@@ -54,6 +54,7 @@ export const data = {
       label: "Dataset 1",
       data: [100, 200, 70, 180, 200, 144],
       backgroundColor: "rgb(255, 99, 132)",
+      // tension: 1
     },
   ],
 };
@@ -445,7 +446,8 @@ class BreakEven extends React.Component {
             display: false,
           },
           ticks: {
-            suggestedStepSize: 500,
+            // suggestedStepSize: 100,
+            stepSize: 1000,
             color: "#000",
             font: {
               size: 12,
