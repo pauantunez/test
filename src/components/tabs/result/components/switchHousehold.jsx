@@ -58,7 +58,7 @@ const AntSwitch = styled(Switch)(({ theme }) => {
         color: "#fff",
         "& + .MuiSwitch-track": {
           opacity: 1,
-          backgroundColor: selectedTheme === "buderus" ? "#002D59" : "rgba(0,0,0,.25)",
+          backgroundColor: selectedTheme === "buderus" ? "#002D59" : "007BC0",
         },
       },
     },
