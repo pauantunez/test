@@ -1953,6 +1953,486 @@ class SimulatorProvider extends Component {
     this.setActiveView(newValue);
   };
 
+  // Tracking GA4 - Window parent post message
+  sendGAEvent = (event, value = null, location) => {
+    const eventName = "eventName",
+      eventParameterName1 = "eventParameterName1",
+      parameterValue1 = "parameterValue1",
+      eventParameterName2 = "eventParameterName2",
+      parameterValue2 = "parameterValue2",
+      eventParameterName3 = "eventParameterName3",
+      parameterValue3 = "parameterValue3";
+
+    var eventArray = [];
+
+    if (window.parent) {
+      switch (event) {
+        // welcome.jsx - excel 1
+        case "jetzt-solarstromrechner-starten":
+          eventArray[eventName] = "sc_toolstart";
+          break;
+
+        case "berechnungsgrundlage":
+          eventArray[eventName] = "sc_calculation_basis";
+          break;
+
+        // buildingSize.jsx - excel 2
+        case "gebaudegrobe-125-175":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Building size";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "125-175 qm";
+          break;
+
+        case "gebaudegrobe-175-225":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Building size";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "175-225 qm";
+          break;
+
+        // heatingSelection.jsx - excel 3
+        // geabude-energiestandard
+        case "heizenergiebefard-gebaude-40":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Heating energy requirements";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "Energy building standard";
+          eventArray[eventParameterName3] = "sc_given_answer2";
+          eventArray[parameterValue3] = "KfW 40";
+          break;
+
+        case "heizenergiebefard-gebaude-55":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Heating energy requirements";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "Energy building standard";
+          eventArray[eventParameterName3] = "sc_given_answer2";
+          eventArray[parameterValue3] = "KfW 55";
+          break;
+
+        case "heizenergiebefard-gebaude-70":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Heating energy requirements";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "Energy building standard";
+          eventArray[eventParameterName3] = "sc_given_answer2";
+          eventArray[parameterValue3] = "KfW 70";
+          break;
+
+        case "heizenergiebefard-gebaude-85":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Heating energy requirements";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "Energy building standard";
+          eventArray[eventParameterName3] = "sc_given_answer2";
+          eventArray[parameterValue3] = "KfW 85";
+          break;
+
+        case "heizenergiebefard-gebaude-100":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Heating energy requirements";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "Energy building standard";
+          eventArray[eventParameterName3] = "sc_given_answer2";
+          eventArray[parameterValue3] = "KfW 100";
+          break;
+
+        // ol-oder gasverbrauch
+        case "heizenergiebedard-olverbrauch":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Heating energy requirements";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "Oil or gas consumption";
+          eventArray[eventParameterName3] = "sc_given_answer2";
+          eventArray[parameterValue3] = "Oil consumption " + value;
+          break;
+
+        case "heizenergiebedard-gasverbrauch":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Heating energy requirements";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "Oil or gas consumption";
+          eventArray[eventParameterName3] = "sc_given_answer2";
+          eventArray[parameterValue3] = "Gas consumption " + value;
+          break;
+
+        // gebaudeisolierung
+        case "heizenergiebedard-vollstandig":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Heating energy requirements";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "Building insulation";
+          eventArray[eventParameterName3] = "sc_given_answer2";
+          eventArray[parameterValue3] = "very good";
+          break;
+
+        case "heizenergiebedard-grobtenteils":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Heating energy requirements";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "Building insulation";
+          eventArray[eventParameterName3] = "sc_given_answer2";
+          eventArray[parameterValue3] = "good";
+          break;
+
+        case "heizenergiebedard-teilweise":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Heating energy requirements";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "Building insulation";
+          eventArray[eventParameterName3] = "sc_given_answer2";
+          eventArray[parameterValue3] = "partly";
+          break;
+
+        case "heizenergiebedard-schlecht":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Heating energy requirements";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "Building insulation";
+          eventArray[eventParameterName3] = "sc_given_answer2";
+          eventArray[parameterValue3] = "none";
+          break;
+
+        // heatdistribution.jsx - excel 4
+        case "warmeverteilsystem-heizkorper":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Heat distribution system";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "Radiator";
+          break;
+
+        case "warmeverteilsystem-fubodenheizung":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Heat distribution system";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "Underfloor heating";
+          break;
+
+        case "warmeverteilsystem-fubodenheizung-und-heizkorper":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Heat distribution system";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "Radiator and underfloor heating";
+          break;
+
+        // householdEnergyuse - excel 5
+        case "haushaltsstromverbrauch-kwh":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Household electricity consumption";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = value;
+          break;
+
+        case "haushaltsstromverbrauch-back-to-result":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Household electricity consumption";
+          eventArray[eventParameterName2] = "sc_clicked_element";
+          eventArray[parameterValue2] = "Back to result page";
+          break;
+
+        // heatpump.jsx - excel 6
+        case "warmepumpe-erdwarmepumpe":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Heat pump";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "Geothermal heat pump";
+          break;
+
+        case "warmepumpe-luftwasserwarmepumper":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Heat pump";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "Air source heat pump";
+          break;
+
+        // ev.jsx - excel 7
+        case "elektroauto-das-eauto-kann":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "E-car";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "Yes";
+          eventArray[eventParameterName3] = "sc_given_answer2";
+          eventArray[parameterValue3] = "Car only rarely charged during the day";
+          break;
+
+        case "elektroauto-das-eauto-wird":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "E-car";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "Yes";
+          eventArray[eventParameterName3] = "sc_given_answer2";
+          eventArray[parameterValue3] = "Car mainly charged during the day";
+          break;
+
+        case "elektroauto-10000":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "E-car";
+          eventArray[eventParameterName3] = "sc_given_answer1";
+          eventArray[parameterValue2] = "Yes";
+          eventArray[eventParameterName3] = "sc_given_answer2";
+          eventArray[parameterValue2] = "Annual output 10000";
+          break;
+
+        case "elektroauto-20000":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "E-car";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "Yes";
+          eventArray[eventParameterName3] = "sc_given_answer2";
+          eventArray[parameterValue3] = "Annual output 20000";
+          break;
+
+        case "elektroauto-nein":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "E-car";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "No";
+          break;
+
+        // pvOutput.jsx - excel 8
+        case "pv-leistung-kwp":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "PV power";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = value + " kwp";
+          break;
+
+        // homestorage.jsx - excel 9
+        case "batteriespeicher-kwh":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Battery storage";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "Yes";
+          eventArray[eventParameterName3] = "sc_given_answer2";
+          eventArray[parameterValue3] = value + " kwh";
+          break;
+
+        case "batteriespeicher-nein":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Battery storage";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "No";
+          break;
+
+        // investment.jsx - excel 10
+        case "investitionskosten-nein":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Investment costs";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "Don't know investment costs";
+          break;
+
+        case "investitionskosten-amount":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Investment costs";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = value;
+          break;
+
+        // electricityCost.jsx - excel 11
+        case "stromkosten-amount":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Electricity costs";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = value;
+          break;
+
+        // electricityCost.jsx - excel 12
+        case "einspeisevergütung-amount":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "Feed-in tariff";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = value;
+          break;
+
+        // result part 1 - excel 13
+        case "gesamtkosten-strom-20-years":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_result";
+          eventArray[parameterValue1] = "Result part 1";
+          eventArray[eventParameterName2] = "sc_clicked_element";
+          eventArray[parameterValue2] = "Total cost electricity";
+          break;
+
+        case "result-part1-berechnungsgrundlage":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_result";
+          eventArray[parameterValue1] = "Result part 1";
+          eventArray[eventParameterName2] = "sc_clicked_element";
+          eventArray[parameterValue2] = "Calculation basis";
+          break;
+
+        case "result-part1-next":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_result";
+          eventArray[parameterValue1] = "Result part 1";
+          eventArray[eventParameterName2] = "sc_clicked_element";
+          eventArray[parameterValue2] = "Next";
+          break;
+
+        // result part 2 - excel 14
+        case "result-part2-infoicons":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_result";
+          eventArray[parameterValue1] = "Result part 2";
+          eventArray[eventParameterName2] = "sc_clicked_element";
+          eventArray[parameterValue2] = "Info icons";
+          break;
+
+        case "result-part2-switch-energiemanagement":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_result";
+          eventArray[parameterValue1] = "Result part 2";
+          eventArray[eventParameterName2] = "sc_clicked_element";
+          eventArray[parameterValue2] = "With Energy management";
+          break;
+
+        case "result-part2-berechnungsgrundlage":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_result";
+          eventArray[parameterValue1] = "Result part 2";
+          eventArray[eventParameterName2] = "sc_clicked_element";
+          eventArray[parameterValue2] = "Calculation basis";
+          break;
+
+        case "result-part2-change-electricity":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_result";
+          eventArray[parameterValue1] = "Result part 2";
+          eventArray[eventParameterName2] = "sc_clicked_element";
+          eventArray[parameterValue2] = "Change electricity consumption";
+          break;
+
+        case "result-part2-next":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_result";
+          eventArray[parameterValue1] = "Result part 2";
+          eventArray[eventParameterName2] = "sc_clicked_element";
+          eventArray[parameterValue2] = "Next";
+          break;
+
+        // result part 3 - excel 15
+        case "result-part3-save-pdf":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_result";
+          eventArray[parameterValue1] = "Next steps";
+          eventArray[eventParameterName2] = "sc_clicked_element";
+          eventArray[parameterValue2] = "Save";
+          break;
+
+        case "result-part3-contact":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_result";
+          eventArray[parameterValue1] = "Next steps";
+          eventArray[eventParameterName2] = "sc_clicked_element";
+          eventArray[parameterValue2] = "Contact";
+          break;
+
+        case "result-part3-heatpump":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_result";
+          eventArray[parameterValue1] = "Next steps";
+          eventArray[eventParameterName2] = "sc_clicked_element";
+          eventArray[parameterValue2] = "Product";
+          eventArray[eventParameterName3] = "sc_clicked_element2";
+          eventArray[parameterValue3] = "Heat pump";
+          break;
+
+        case "result-part3-pv":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_result";
+          eventArray[parameterValue1] = "Next steps";
+          eventArray[eventParameterName2] = "sc_clicked_element";
+          eventArray[parameterValue2] = "Product";
+          eventArray[eventParameterName3] = "sc_clicked_element2";
+          eventArray[parameterValue3] = "PV";
+          break;
+
+        case "result-part3-wallbox":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_result";
+          eventArray[parameterValue1] = "Next steps";
+          eventArray[eventParameterName2] = "sc_clicked_element";
+          eventArray[parameterValue2] = "Product";
+          eventArray[eventParameterName3] = "sc_clicked_element2";
+          eventArray[parameterValue3] = "Wallbox";
+          break;
+
+        case "result-part3-energie-management":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_result";
+          eventArray[parameterValue1] = "Next steps";
+          eventArray[eventParameterName2] = "sc_clicked_element";
+          eventArray[parameterValue2] = "Product";
+          eventArray[eventParameterName3] = "sc_clicked_element2";
+          eventArray[parameterValue3] = "Energy management";
+          break;
+
+        case "result-part3-berechnungsgrundlage":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_result";
+          eventArray[parameterValue1] = "Next steps";
+          eventArray[eventParameterName2] = "sc_clicked_element";
+          eventArray[parameterValue2] = "Calculation basis";
+          break;
+
+        case "result-part3-back-to-startpage":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_result";
+          eventArray[parameterValue1] = "Next steps";
+          eventArray[eventParameterName2] = "sc_clicked_element";
+          eventArray[parameterValue2] = "Back to startpage";
+          break;
+      }
+
+      console.log("Evento lanzado: ", eventArray);
+
+      window.parent.postMessage(
+        {
+          event: eventArray[eventName],
+          [eventArray[eventParameterName1]]: eventArray[parameterValue1],
+          [eventArray[eventParameterName2]]: eventArray[parameterValue2],
+          [eventArray[eventParameterName3]]: eventArray[parameterValue3],
+          eventAction: location,
+        },
+        "*"
+      );
+    }
+  };
+
   getTheme = () => {
     const urlParams = new URLSearchParams(queryString);
     if (urlParams.get("theme")) {
@@ -2242,6 +2722,7 @@ class SimulatorProvider extends Component {
       setLoadingHousehold,
       setDirectLink,
       setSelectedTheme,
+      sendGAEvent,
     } = this;
 
     return (
@@ -2519,6 +3000,7 @@ class SimulatorProvider extends Component {
           setLoadingHousehold,
           setDirectLink,
           setSelectedTheme,
+          sendGAEvent,
         }}
       >
         {children}

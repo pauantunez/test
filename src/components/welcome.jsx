@@ -99,7 +99,7 @@ class Welcome extends React.Component {
 
   componentWillMount() {
 
-    const { products, btnThemes, fonts } = this.context;
+    const { products, btnThemes, fonts, sendGAEvent } = this.context;
     const productsProps = Object.getOwnPropertyNames(products);
     var foundTheme = 0;
 
@@ -143,6 +143,14 @@ class Welcome extends React.Component {
       themeFont = fonts.bosch[0];
       labelFont = fonts.bosch[1];
     }
+
+    document.body.addEventListener('click', (event) => {
+      var trackeableElement = event.target.closest('.trackeable');
+      if (trackeableElement) {
+        var eventName = trackeableElement.dataset.event;
+        sendGAEvent(eventName, null, window.location.href);
+      }
+    });
   }
 
   componentWillReceiveProps = (nextProps, nextContext) => {
@@ -346,14 +354,11 @@ isEnd =() => {
             </div>
             <div class="welcomeBtns" style={{display: 'flex', margin: '3% 5% 0 5%'}}>
               <div class="startBtn">
-                
-                  <Link style={{display: 'inline-block', textAlign: 'center', backgroundColor: '#006a9b', color: '#FFF', textDecoration: 'none', margin: '5px 10px 0 0', padding: '10px 20px 10px 20px', fontSize: '14px', fontFamily: 'Bosch-Regular'}} to='./main'>Jetzt Solarstromrechner starten</Link>
-                
+                  <span class="trackeable" data-event="jetzt-solarstromrechner-starten"><Link style={{display: 'inline-block', textAlign: 'center', backgroundColor: '#006a9b', color: '#FFF', textDecoration: 'none', margin: '5px 10px 0 0', padding: '10px 20px 10px 20px', fontSize: '14px', fontFamily: 'Bosch-Regular'}} to='./main'>Jetzt Solarstromrechner starten</Link></span>
               </div>
               <div class="explanationBtn">
-                <div class="calculationBase" onClick={handleOpen} style={{fontSize: '12px', fontFamily: 'Bosch-Regular', color: '#007BC0', cursor: 'pointer'}}>Berechnugsgrundlage</div>
+                <div class="calculationBase trackeable" onClick={handleOpen} style={{fontSize: '12px', fontFamily: 'Bosch-Regular', color: '#007BC0', cursor: 'pointer'}} data-event="berechnungsgrundlage">Berechnugsgrundlage</div>
               </div>
-
             </div>
             
             </div>

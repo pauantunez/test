@@ -156,7 +156,7 @@ class HomeStorage extends React.Component {
     const { kfwValue, ev, scenarioInDatabase, homeStorageSize, setHomeStorageSize } = this.context;
     setHomeStorageSize(parseInt(value));
     this.setState({ homeStorageSizekW: parseInt(value) });
-    this.context.goToView(8);
+    //this.context.goToView(8);
   };
 
   render() {
@@ -296,7 +296,7 @@ class HomeStorage extends React.Component {
                 </div>
                 <div>
                   <label>
-                    <input type="radio" name="heating" value="false" class="card-input-element" checked={homeStorage === "false"} onChange={this.inputHomeStorage} />
+                    <input type="radio" name="heating" value="false" class="card-input-element trackeable" checked={homeStorage === "false"} onChange={this.inputHomeStorage} data-event="batteriespeicher-nein" />
                     <div class="panel panel-default card-input">
                       <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusDenyIcon /> : <DenyIcon />}</div>
                       <div class="panel-body">Nein</div>

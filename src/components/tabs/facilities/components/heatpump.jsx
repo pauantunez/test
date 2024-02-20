@@ -204,7 +204,7 @@ class Heatpump extends React.Component {
               <div class="flexRow">
                 <div>
                   <label>
-                    <input type="radio" name="heating" value="2" class="card-input-element" checked={heatpumpType === "2"} onChange={this.inputHeatpumpType} />
+                    <input type="radio" name="heating" value="2" class="card-input-element trackeable" checked={heatpumpType === "2"} onChange={this.inputHeatpumpType} data-event="warmepumpe-erdwarmepumpe" />
                     <div class="panel panel-default card-input-wide">
                       <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusGeothermalHeatpumpIcon /> : <GeothermalHeatpumpIcon />}</div>
                       <div class="panel-body">Erdwärmepumpe</div>
@@ -213,7 +213,7 @@ class Heatpump extends React.Component {
                 </div>
                 <div>
                   <label>
-                    <input type="radio" name="heating" value="1" class="card-input-element" checked={heatpumpType === "1"} onChange={this.inputHeatpumpType} />
+                    <input type="radio" name="heating" value="1" class="card-input-element trackeable" checked={heatpumpType === "1"} onChange={this.inputHeatpumpType} data-event="warmepumpe-luftwasserwarmepumper" />
                     <div class="panel panel-default card-input-wide">
                       <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusAirWaterHeatpumpIcon /> : <AirWaterHeatpumpIcon />}</div>
                       <div class="panel-body">Luft-Wasser-Wärmepumpe</div>

@@ -99,7 +99,7 @@ class HouseholdSwitch extends React.Component {
     const { setLoadingHousehold, products, btnThemes, fonts, setFwdBtn } = this.context;
 
     setFwdBtn(false);
-    //setLoadingHousehold(true)
+    setLoadingHousehold(true);
   }
 
   componentDidMount() {
@@ -146,7 +146,7 @@ class HouseholdSwitch extends React.Component {
             //setDatabaseResult(res.data.data[0])
           }
 
-          //setLoadingHousehold(false)
+          setLoadingHousehold(false);
         }
 
         console.log(res.data.data[0]);
@@ -159,22 +159,22 @@ class HouseholdSwitch extends React.Component {
   inputHouseholdEMS = (event) => {
     const { setLoadingHousehold, kfwValue, ev, setHouseholdEMS, offgridEMS, scenarioInDatabase, tabEntries, setTabToSelect, pvOutputkWh, homeStorageSizekWh, homeStorage, setHomeStorage, setHomeStorageSize } = this.context;
     setHouseholdEMS(event.target.checked);
-    //setLoadingHousehold(true)
+    setLoadingHousehold(true);
 
-    // if(event.target.checked) {
-    //   var emsValue = "Ja"
-    // } else {
-    //   var emsValue = "Nein"
-    // }
+    if (event.target.checked) {
+      var emsValue = "Ja";
+    } else {
+      var emsValue = "Nein";
+    }
 
-    // let tabInTable = tabEntries.find(o => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === emsValue);
-    // setTabToSelect(tabInTable.Tab)
+    let tabInTable = tabEntries.find((o) => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === emsValue);
+    setTabToSelect(tabInTable.Tab);
 
     setTimeout(() => {
       this.getResult(kfwValue + ev, scenarioInDatabase);
-    }, "500");
+    }, "2000");
 
-    //this.getInitialResult();
+    this.getInitialResult();
   };
 
   render() {

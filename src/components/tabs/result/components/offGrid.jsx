@@ -206,13 +206,6 @@ class OffGrid extends React.Component {
 
       if(!loadingOffGrid) {
 
-        // const switchButtons = document.querySelectorAll('.MuiSwitch-root');
-
-        // if (switchButtons.length > 0) {
-        //   switchButtons.forEach(button => button.click());
-        //   //alert("estaaaa entrando")
-        // }
-
         const offgridChart1 = document.getElementById('offgrid-1');
         const offgrid1_svg = offgridChart1.getElementsByTagName('svg');
 
@@ -450,7 +443,9 @@ class OffGrid extends React.Component {
             }
 
             <div data-html2canvas-ignore style={{display: 'flex', marginTop: '30px', justifyContent: 'flex-start', flexDirection: 'row'}}>
-                <CustomSwitch />
+                <div class="trackeable" data-event="result-part2-switch-energiemanagement">
+                  <CustomSwitch />
+                </div>
                 <div style={{marginLeft: '12px', marginRight: '12px', paddingTop: '2px', fontFamily: 'Bosch-Regular', fontSize: '16px'}}>
                     Mit Energiemanagementsystem
                 </div>

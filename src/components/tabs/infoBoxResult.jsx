@@ -158,7 +158,8 @@ class InfoBoxResult extends React.Component {
     var OHNE_PV_cost1year = parseInt(sessionStorage.getItem("OHNE_PV_cost1year"));
     var OHNE_PV_cost20years = parseInt(sessionStorage.getItem("OHNE_PV_cost20years"));
 
-    var costOnlyPV = parseInt(sessionStorage.getItem("costOnlyPV"));
+    var costOnlyPV1year = parseInt(sessionStorage.getItem("costOnlyPV1year"))
+    var costOnlyPV20years = parseInt(sessionStorage.getItem("costOnlyPV20years"))
 
     var costPVandEMS1year = parseInt(sessionStorage.getItem("costPVandEMS1year"));
     var costPVandEMS20years = parseInt(sessionStorage.getItem("costPVandEMS20years"));
@@ -270,7 +271,9 @@ class InfoBoxResult extends React.Component {
                         this.goToView(3, true);
                       }}
                     >
-                      <EditIcon />
+                      <div class="trackeable" data-event="result-part2-change-electricity">
+                        <EditIcon />
+                      </div>
                     </IconButton>
                   </h3>
                   Der errechnete Stromverbrauch aufgeteilt auf die großen Verbraucher, Wärmepumpe, E-Auto und Haushalt.

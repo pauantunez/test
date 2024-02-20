@@ -94,7 +94,7 @@ class BuildingSize extends React.Component {
               <div class="flexRow">
                 <div>
                   <label>
-                    <input type="radio" name="product" value="150" class="card-input-element" checked={BuildingSize === "150"} onChange={this.inputBuildingSize} />
+                    <input type="radio" name="product" value="150" class="card-input-element trackeable" checked={BuildingSize === "150"} onChange={this.inputBuildingSize} data-event="gebaudegrobe-125-175" />
                     <div class="panel panel-default card-input">
                       <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusHouseSmallIcon /> : <HouseSunSmallIcon />}</div>
                       <div class="panel-body">125 - 175 m&#178;</div>
@@ -103,7 +103,7 @@ class BuildingSize extends React.Component {
                 </div>
                 <div>
                   <label>
-                    <input type="radio" name="product" value="200" class="card-input-element" checked={BuildingSize === "200"} onChange={this.inputBuildingSize} />
+                    <input type="radio" name="product" value="200" class="card-input-element trackeable" checked={BuildingSize === "200"} onChange={this.inputBuildingSize} data-event="gebaudegrobe-175-225" />
                     <div class="panel panel-default card-input">
                       <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusHouseLargeIcon /> : <HouseSunLargeIcon />}</div>
                       <div class="panel-body">175 - 225 m&#178;</div>

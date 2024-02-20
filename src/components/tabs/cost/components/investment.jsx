@@ -290,7 +290,7 @@ class Investment extends React.Component {
                   <FormControl>
                     <RadioGroup sx={{ flexWrap: "inherit", flexDirection: "row" }} name="oil-lng-value" row>
                       <div style={{ display: "flex", flexDirection: "column" }}>
-                        <FormControlLabel value="false" control={<OilLNGRadio />} style={{ marginRight: "0px" }} label="Ich kenne die Investitionskosten nicht." checked={investmentCost === "false"} onChange={this.inputInvestmentCost} />
+                        <span class="trackeable" data-event="investitionskosten-nein"><FormControlLabel value="false" control={<OilLNGRadio />} style={{ marginRight: "0px" }} label="Ich kenne die Investitionskosten nicht." checked={investmentCost === "false"} onChange={this.inputInvestmentCost} /></span>
                         <FormControlLabel value="true" control={<OilLNGRadio />} style={{ marginRight: "0px" }} label="Der Gesamtbetrag beläuft sich auf folgende Summe" checked={investmentCost === "true"} onChange={this.inputInvestmentCost} />
                         <TextField disabled={disabledInvestmentCost} id="filled-basic" type="number" style={{ marginTop: "12px" }} name="Investment" value={investmentCostEUR} label="Gesamtinvestitionskosten inkl. Montage in EUR (ohne MwSt.)" variant="filled" InputLabelProps={{ shrink: true }} onChange={this.inputInvestmentCostEUR} onKeyDown={this.avoidPointAndCharacters} />
                       </div>

@@ -148,8 +148,7 @@ class HouseholdEnergyUse extends React.Component {
     }
 
     setSteps({ ...steps });
-    this.context.goToView(4);
-    setFwdBtn(true);
+    //this.context.goToView(4);
   };
 
   render() {

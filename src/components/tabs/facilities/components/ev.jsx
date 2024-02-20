@@ -99,7 +99,7 @@ class EV extends React.Component {
       scenarioInDatabase = singlePreHeatOptionEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString() && o.evProfile === evProfile);
       console.log("HAS FIRST OPTION, NO SECOND OPTION");
       console.log(scenarioInDatabase);
-      this.context.goToView(6);
+      //this.context.goToView(6);
     } else {
       if (preHeatTempOption == 1) {
         scenarioInDatabase = dualPreHeatOptionEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString() && o.evProfile === evProfile);
@@ -365,7 +365,7 @@ class EV extends React.Component {
                 </div>
                 <div>
                   <label>
-                    <input type="radio" name="heating" value="noEV" class="card-input-element" checked={ev === "noEV"} onChange={this.inputEV} />
+                    <input type="radio" name="heating" value="noEV" class="card-input-element trackeable" checked={ev === "noEV"} onChange={this.inputEV} data-event="elektroauto-nein" />
                     <div class="panel panel-default card-input">
                       <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusDenyIcon /> : <DenyIcon />}</div>
                       <div class="panel-body">Nein</div>

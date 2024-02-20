@@ -433,41 +433,64 @@ class Cost extends React.Component {
     const { electricityCostPVsavings, electricityCostPVEMSsavings, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
 
     // Ohne PV
-    var OHNE_PV_cost1year = Math.abs(parseInt(this.energyUseEuro(5).replace(".", "").replace(",", "")));
-    var OHNE_PV_cost20years = Math.abs(parseInt(this.electricityCostNoPV20Years()));
+    if (costOverTime === "1") {
+      var OHNE_PV_cost1year = Math.abs(parseInt(this.energyUseEuro(5).replace(".", "").replace(",", "")));
+    } else if (costOverTime === "20") {
+      var OHNE_PV_cost20years = Math.abs(parseInt(this.electricityCostNoPV20Years()));
+    }
+    if (sessionStorage.getItem("OHNE_PV_cost1year") == undefined) {
+      sessionStorage.setItem("OHNE_PV_cost1year", OHNE_PV_cost1year);
+    }
+    if (sessionStorage.getItem("OHNE_PV_cost20years") == undefined) {
+      sessionStorage.setItem("OHNE_PV_cost20years", OHNE_PV_cost20years);
+    }
 
-    sessionStorage.setItem("OHNE_PV_cost1year", OHNE_PV_cost1year);
-    sessionStorage.setItem("OHNE_PV_cost20years", OHNE_PV_cost20years);
+    if (costOverTime === "1") {
+      var costOnlyPV1year = parseInt(this.electricityCostPV20Years());
+    } else if (costOverTime === "20") {
+      var costOnlyPV20years = parseInt(this.electricityCostPV20Years());
+    }
+    if (sessionStorage.getItem("costOnlyPV1year") == undefined) {
+      sessionStorage.setItem("costOnlyPV1year", costOnlyPV1year);
+    }
+    if (sessionStorage.getItem("costOnlyPV20years") == undefined) {
+      sessionStorage.setItem("costOnlyPV20years", costOnlyPV20years);
+    }
 
-    // Mit PV
-    var costOnlyPV = parseInt(this.electricityCostPV20Years());
-    sessionStorage.setItem("costOnlyPV", costOnlyPV);
-
-    var savingOnlyPV1year = OHNE_PV_cost1year - costOnlyPV;
-    var savingOnlyPV20years = OHNE_PV_cost20years - costOnlyPV;
-
-    sessionStorage.setItem("savingOnlyPV1year", savingOnlyPV1year);
-    sessionStorage.setItem("savingOnlyPV20years", savingOnlyPV20years);
+    var savingOnlyPV1year = OHNE_PV_cost1year - costOnlyPV1year;
+    var savingOnlyPV20years = OHNE_PV_cost20years - costOnlyPV20years;
+    if (sessionStorage.getItem("savingOnlyPV1year") == undefined) {
+      sessionStorage.setItem("savingOnlyPV1year", savingOnlyPV1year);
+    }
+    if (sessionStorage.getItem("savingOnlyPV20years") == undefined) {
+      sessionStorage.setItem("savingOnlyPV20years", savingOnlyPV20years);
+    }
 
     // Mit PV und EMS
-    var costPVandEMS1year = parseInt(Math.abs(costOnlyPV * 0.95));
-    var costPVandEMS20years = parseInt(Math.abs(costOnlyPV * 0.8));
-
-    sessionStorage.setItem("costPVandEMS1year", costPVandEMS1year);
-    sessionStorage.setItem("costPVandEMS20years", costPVandEMS20years);
+    var costPVandEMS1year = parseInt(Math.abs(costOnlyPV1year * 0.95));
+    var costPVandEMS20years = parseInt(Math.abs(costOnlyPV20years * 0.8));
+    if (sessionStorage.getItem("costPVandEMS1year") == null) {
+      sessionStorage.setItem("costPVandEMS1year", costPVandEMS1year);
+    }
+    if (sessionStorage.getItem("costPVandEMS20years") == null) {
+      sessionStorage.setItem("costPVandEMS20years", costPVandEMS20years);
+    }
 
     var savingPVandEMS1year = OHNE_PV_cost1year - costPVandEMS1year;
     var savingPVandEMS20years = OHNE_PV_cost20years - costPVandEMS20years;
-
-    sessionStorage.setItem("savingPVandEMS1year", savingPVandEMS1year);
-    sessionStorage.setItem("savingPVandEMS20years", savingPVandEMS20years);
+    if (sessionStorage.getItem("savingPVandEMS1year") == null) {
+      sessionStorage.setItem("savingPVandEMS1year", savingPVandEMS1year);
+    }
+    if (sessionStorage.getItem("savingPVandEMS20years") == null) {
+      sessionStorage.setItem("savingPVandEMS20years", savingPVandEMS20years);
+    }
 
     // 1 year bar heights
-    var oneYearHeightMitPv = this.getBarHeights(OHNE_PV_cost1year, costOnlyPV, savingOnlyPV1year);
+    var oneYearHeightMitPv = this.getBarHeights(OHNE_PV_cost1year, costOnlyPV1year, savingOnlyPV1year);
     var oneYearHeightMitPvAndEMS = this.getBarHeights(OHNE_PV_cost1year, costPVandEMS1year, savingPVandEMS1year);
 
     // 20 years bar heights
-    var twentyYearsHeightMitPv = this.getBarHeights(OHNE_PV_cost20years, costOnlyPV, savingOnlyPV20years);
+    var twentyYearsHeightMitPv = this.getBarHeights(OHNE_PV_cost20years, costOnlyPV20years, savingOnlyPV20years);
     var twentyYearsHeightMitPvAndEms = this.getBarHeights(OHNE_PV_cost20years, costPVandEMS20years, savingPVandEMS20years);
 
     console.log("twentyYearsHeightMitPvAndEms ", twentyYearsHeightMitPvAndEms);
@@ -494,7 +517,9 @@ class Cost extends React.Component {
               {this.state.displayed === undefined && <input type="radio" name="heating" value="20" class={this.context.selectedTheme === "buderus" ? "card-input-element-result" : "card-input-element"} checked={costOverTime === "20"} onChange={this.inputCostOverTime} />}
               {this.state.displayed === "multi" && <input type="radio" name="multi-year" id="multi-year" value="20" class={this.context.selectedTheme === "buderus" ? "card-input-element-result" : "card-input-element"} checked="true" />}
               <div class="panel panel-default card-input-wide background-light-grey" style={{ height: "40px", width: "100%", fontSize: "14px", margin: "0", border: "none" }}>
-                <div class="panel-body">Gesamtkosten über 20 Jahre</div>
+                <div class="panel-body trackeable" data-event="gesamtkosten-strom-20-years">
+                  Gesamtkosten über 20 Jahre
+                </div>
               </div>
             </label>
           </div>
@@ -548,7 +573,7 @@ class Cost extends React.Component {
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                        {costOnlyPV.toLocaleString("de-DE")}
+                        {costOnlyPV1year.toLocaleString("de-DE")}
                         <span>&nbsp;€</span>
                       </span>
                     </div>
@@ -562,7 +587,7 @@ class Cost extends React.Component {
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                        {costOnlyPV.toLocaleString("de-DE")}
+                        {costOnlyPV20years.toLocaleString("de-DE")}
                         <span>&nbsp;€</span>
                       </span>
                     </div>
@@ -658,25 +683,6 @@ class Cost extends React.Component {
                   {costOverTime == "1" && this.divideValuesForChart(0, OHNE_PV_cost1year) + " €"}
                   {costOverTime == "20" && this.divideValuesForChart(0, OHNE_PV_cost20years) + " €"}
                 </div>
-                {/* <div>
-                  {costOverTime == "1" && this.divideValuesForChart(-1, OHNE_PV_cost1year) + " €"}
-                  {costOverTime == "20" && this.divideValuesForChart(-1, OHNE_PV_cost20years) + " €"}
-                </div> */}
-                {/* <div>
-                                { this.energyUseEuroNegative(1,this.whichChartLegend()) }
-                            </div>
-                            <div>
-                                { this.energyUseEuroNegative(2,this.whichChartLegend()) }
-                            </div>
-                            <div>
-                                { this.energyUseEuroNegative(3,this.whichChartLegend()) }
-                            </div>
-                            <div>
-                                { this.energyUseEuroNegative(4,this.whichChartLegend()) }
-                            </div>
-                            <div>
-                                { this.energyUseEuroNegative(5,this.whichChartLegend()) }
-                            </div> */}
               </div>
               <div data-html2canvas-ignore class="cost-chart-width" style={{ display: "flex", flexDirection: "column", marginLeft: "3px" }}>
                 <div class="cost-chart-width" style={{ marginTop: "7px", height: "1px", width: "450px", borderBottom: "1px solid #EFF1F2" }}></div>

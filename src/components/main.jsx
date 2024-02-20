@@ -27,6 +27,8 @@ import { ReactComponent as FwdBtnIcon } from "../assets/img/icons/fwd_btn.svg";
 import { ReactComponent as FwdBtnInactiveIcon } from "../assets/img/icons/fwd_btn_inactive.svg";
 import { ReactComponent as MenuCloseIcon } from "../assets/img/icons/menu_close.svg";
 
+import { BrowserView, MobileView, isBrowser, isMobile } from "react-device-detect";
+
 import { ReactComponent as BuderusBackThinIcon } from "../assets/img/icons/buderus/arrow_back_thin.svg";
 
 import Backdrop from "@mui/material/Backdrop";
@@ -34,6 +36,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import Link from "@mui/material/Link";
 import electricityCost from "./tabs/cost/components/electricityCost";
+
+import CalculationModal from "./tabs/modal";
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -92,7 +96,7 @@ class Main extends React.Component {
 
   componentWillMount() {
     this.context.getTheme();
-    const { products, btnThemes, fonts } = this.context;
+    const { products, btnThemes, fonts, sendGAEvent } = this.context;
     const productsProps = Object.getOwnPropertyNames(products);
     var foundTheme = 0;
 
@@ -132,6 +136,15 @@ class Main extends React.Component {
       themeFont = fonts.bosch[0];
       labelFont = fonts.bosch[1];
     }
+
+    // Tracking GA4 - Event listener
+    document.body.addEventListener("click", (event) => {
+      var trackeableElement = event.target.closest(".trackeable");
+      if (trackeableElement) {
+        var eventName = trackeableElement.dataset.event;
+        sendGAEvent(eventName, null, window.location.href);
+      }
+    });
   }
 
   componentWillReceiveProps = (nextProps, nextContext) => {
@@ -355,9 +368,11 @@ class Main extends React.Component {
       // Agrega más estilos según sea necesario
     });
 
-    const { kfwValue, ev, scenarioInDatabase, menuBackdrop, setMenuBackdrop, steps, menuOpen, products, productSelected, navSteps, selectedTab, setSelectedTab, stepperNavActive, setActiveView, setActiveStep, setNavDirection, setStepperNav, setDirectLink, heatpumpAudio, activeView, activeStep, activeMilestone, disableSlider, BuildingSize, fwdBtn, backBtn, setFwdBtn, setActiveMilestone, setMilestoneHeadline, backdrop, directLink } = this.context;
+    const { kfwValue, ev, scenarioInDatabase, menuBackdrop, setMenuBackdrop, steps, menuOpen, products, productSelected, navSteps, selectedTab, setSelectedTab, stepperNavActive, setActiveView, setActiveStep, setNavDirection, setStepperNav, setDirectLink, heatpumpAudio, activeView, activeStep, activeMilestone, disableSlider, BuildingSize, fwdBtn, backBtn, setFwdBtn, setActiveMilestone, setMilestoneHeadline, backdrop, directLink, sendGAEvent, BuildingEnegeryStandard, OilUsageLiters, OilLNGValue, LNGUsage, homeCharging, odometerIncrease, homeStorageSize, pvOutput, energyUsagekWh, disabledInvestmentCost, investmentCostEUR, electricityCost, gridRevenue, setCalculationModal, calculationModal } = this.context;
 
     const { t } = this.props;
+
+    const handleOpen = () => setCalculationModal(true);
 
     const nextTab = (event, newValue) => {
       console.log(navSteps[0]);
@@ -610,11 +625,9 @@ class Main extends React.Component {
             </div>
           </div>
         )}
-
         <Backdrop sx={{ color: "#fff", zIndex: "9999999" }} open={backdrop}>
           <CircularProgress color="inherit" />
         </Backdrop>
-
         <Backdrop sx={{ color: "#fff", zIndex: "9999999" }} open={menuBackdrop}>
           <div
             style={{ position: "absolute", right: "8px", top: "13px" }}
@@ -797,7 +810,6 @@ class Main extends React.Component {
             </div>
           </div>
         </Backdrop>
-
         <div className={styles.setupContainer}>
           <div className={styles.toolMargin}>
             <Box sx={{ width: "100%" }}>
@@ -805,8 +817,8 @@ class Main extends React.Component {
             </Box>
           </div>
         </div>
-
-        <div style={{ position: "fixed", width: "100%", bottom: "3%", zIndex: "999999" }}>
+        .
+        <div style={{ position: isMobile ? "absolute" : "fixed", width: "100%", bottom: "3%", zIndex: "999999" }}>
           <div style={{ display: "flex", justifyContent: "space-between", marginLeft: "3%", marginRight: "3%" }}>
             <Button
               id="previousTabBtn"
@@ -843,6 +855,21 @@ class Main extends React.Component {
               {activeView === 10 && <span>Zurück</span>}
               {activeView === 13 && <span>Ergebnis Teil 2</span>}
             </Button>
+
+            <CustomButton
+              style={{ background: "#FFF", border: "1px solid #007BC0", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}
+              className={activeView === 11 || activeView === 12 || activeView === 13 ? styles.show : styles.hide}
+              onClick={() => {
+                var container = document.getElementsByClassName("home_homeContainer__CHK-E")[0];
+                container.style.display = "none";
+                handleOpen();
+              }}
+            >
+              <span className="trackeable" style={{ fontSize: "12px", fontFamily: "Bosch-Regular", color: "#007BC0", cursor: "pointer" }} data-event={activeView === 11 ? "result-part1-berechnungsgrundlage" : activeView === 12 ? "result-part2-berechnungsgrundlage" : activeView === 13 ? "result-part3-berechnungsgrundlage" : ""}>
+                Berechnugsgrundlage
+              </span>
+            </CustomButton>
+
             <CustomButton
               id="nextTabBtn"
               variant="contained"
@@ -851,28 +878,99 @@ class Main extends React.Component {
               style={{ textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}
               className={activeView != 13 ? styles.show : styles.hide}
               onClick={() => {
-                if (activeView == 3 && directLink == true) {
+                if (activeView === 3 && directLink === true) {
                   setDirectLink(false);
                   setActiveView(12);
+                } else if (activeView === 1 && BuildingEnegeryStandard === "OilLNG") {
+                  if (OilLNGValue === "oil-usage") {
+                    sendGAEvent("heizenergiebedard-olverbrauch", OilUsageLiters, window.location.href);
+                    nextTab();
+                  } else {
+                    sendGAEvent("heizenergiebedard-gasverbrauch", LNGUsage, window.location.href);
+                    nextTab();
+                  }
+                } else if (activeView === 3) {
+                  var value;
+                  if (energyUsagekWh == 0) value = 4000;
+                  else if (energyUsagekWh == 1) value = 6000;
+                  else value = 8000;
+
+                  sendGAEvent("haushaltsstromverbrauch-kwh", value, window.location.href);
+                  nextTab();
+                } else if (activeView === 5) {
+                  if (homeCharging === "Commuter_") {
+                    sendGAEvent("elektroauto-das-eauto-kann", null, window.location.href);
+                    nextTab();
+                  } else {
+                    sendGAEvent("elektroauto-das-eauto-wird", null, window.location.href);
+                    nextTab();
+                  }
+
+                  if (odometerIncrease === "10k") {
+                    sendGAEvent("elektroauto-10000", 10000, window.location.href);
+                    nextTab();
+                  } else {
+                    sendGAEvent("elektroauto-20000", 20000, window.location.href);
+                    nextTab();
+                  }
+                } else if (activeView === 6) {
+                  var value;
+                  if (pvOutput == 0) value = 4;
+                  else if (pvOutput == 1) value = 7;
+                  else if (pvOutput == 2) value = 10;
+                  else value = 14;
+
+                  sendGAEvent("pv-leistung-kwp", value, window.location.href);
+                  nextTab();
+                } else if (activeView === 7) {
+                  var value;
+                  if (homeStorageSize == 0) value = 6;
+                  else if (homeStorageSize == 1) value = 9;
+                  else if (homeStorageSize == 2) value = 12;
+                  else value = 15;
+
+                  sendGAEvent("batteriespeicher-kwh", value, window.location.href);
+                  nextTab();
+                } else if (activeView === 8 && !disabledInvestmentCost) {
+                  sendGAEvent("investitionskosten-amount", investmentCostEUR, window.location.href);
+                  nextTab();
+                } else if (activeView === 9) {
+                  sendGAEvent("stromkosten-amount", electricityCost, window.location.href);
+                  nextTab();
+                } else if (activeView === 10) {
+                  sendGAEvent("einspeisevergütung-amount", gridRevenue, window.location.href);
+                  nextTab();
                 } else {
                   nextTab();
                 }
               }}
             >
               {activeView === 10 && <span>Ergebnis Teil 1</span>}
-              {activeView === 11 && <span>Ergebnis Teil 2</span>}
+              {activeView === 11 && (
+                <span class="trackeable" data-event="result-part1-next">
+                  Ergebnis Teil 2
+                </span>
+              )}
               {activeView === 0 && <span>Weiter</span>}
               {activeView === 1 && <span>Weiter</span>}
               {activeView === 2 && <span>Weiter</span>}
               {activeView === 3 && directLink == false && <span>Weiter</span>}
-              {activeView === 3 && directLink == true && <span>Zurück zum Ergebnis</span>}
+              {activeView === 3 && directLink == true && (
+                <span class="trackeable" data-event="haushaltsstromverbrauch-back-to-result">
+                  Zurück zum Ergebnis
+                </span>
+              )}
               {activeView === 4 && <span>Weiter</span>}
               {activeView === 5 && <span>Weiter</span>}
               {activeView === 6 && <span>Weiter</span>}
               {activeView === 7 && <span>Weiter</span>}
               {activeView === 8 && <span>Weiter</span>}
               {activeView === 9 && <span>Weiter</span>}
-              {activeView === 12 && <span>Zusatz</span>}
+              {activeView === 12 && (
+                <span class="trackeable" data-event="result-part2-next">
+                  Zusatz
+                </span>
+              )}
             </CustomButton>
 
             <CustomButton
@@ -886,10 +984,13 @@ class Main extends React.Component {
                 setActiveView(0);
               }}
             >
-              <span>Zurück zum Start</span>
+              <span class="trackeable" data-event="result-part3-back-to-startpage">
+                Zurück zum Start
+              </span>
             </CustomButton>
           </div>
         </div>
+        <CalculationModal />
       </div>
     );
   }
