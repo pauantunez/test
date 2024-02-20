@@ -97,14 +97,14 @@ class HomeStorage extends React.Component {
       let tabInTable = tabEntries.find((o) => o.PV_size === pvOutputkWh.toString() && o.Storage_size === "0" && o.EMS === "Ja");
       setTabToSelect(tabInTable.Tab);
       console.log(tabInTable);
-      this.context.goToView(8);
       setFwdBtn(true);
+      this.context.goToView(8);
     } else {
       setHomeStorageSize(0);
       this.setState({ homeStorageSizekW: 0 });
     }
 
-    setFwdBtn(false);
+    /* setFwdBtn(false); */
     steps[activeView] = false;
     setSteps({ ...steps });
   };

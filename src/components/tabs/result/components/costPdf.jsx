@@ -129,22 +129,17 @@ class CostPdf extends React.Component {
     setFwdBtn(false);
   }
 
-  componentDidMount() {
+  componentDidMount() {}
 
-  }
-
-  componentDidUpdate() {
-
-  }
+  componentDidUpdate() {}
 
   getBarHeights = (total, cost, savings) => {
-
     var heights = [];
-    heights["cost"] = (cost * 212) / total
-    heights["savings"] = (savings * 212) / total
+    heights["cost"] = (cost * 212) / total;
+    heights["savings"] = (savings * 212) / total;
 
-    return heights
-  }
+    return heights;
+  };
 
   divideValuesForChart = (step, value) => {
     return parseInt((value / 5) * step).toLocaleString("de-DE");
@@ -170,13 +165,13 @@ class CostPdf extends React.Component {
     var savingPVandEMS1year = sessionStorage.getItem("savingPVandEMS1year");
     var savingPVandEMS20years = sessionStorage.getItem("savingPVandEMS20years");
 
-    // 1 year bar heights 
-    var oneYearHeightMitPv = this.getBarHeights(OHNE_PV_cost1year, costOnlyPV1year, savingOnlyPV1year)
-    var oneYearHeightMitPvAndEMS = this.getBarHeights(OHNE_PV_cost1year, costPVandEMS1year, savingPVandEMS1year)
+    // 1 year bar heights
+    var oneYearHeightMitPv = this.getBarHeights(OHNE_PV_cost1year, costOnlyPV1year, savingOnlyPV1year);
+    var oneYearHeightMitPvAndEMS = this.getBarHeights(OHNE_PV_cost1year, costPVandEMS1year, savingPVandEMS1year);
 
     // 20 years bar heights
-    var twentyYearsHeightMitPv = this.getBarHeights(OHNE_PV_cost20years, costOnlyPV20years, savingOnlyPV20years)
-    var twentyYearsHeightMitPvAndEms = this.getBarHeights(OHNE_PV_cost20years, costPVandEMS20years, savingPVandEMS20years)
+    var twentyYearsHeightMitPv = this.getBarHeights(OHNE_PV_cost20years, costOnlyPV20years, savingOnlyPV20years);
+    var twentyYearsHeightMitPvAndEms = this.getBarHeights(OHNE_PV_cost20years, costPVandEMS20years, savingPVandEMS20years);
 
     return (
       <div>
@@ -195,27 +190,27 @@ class CostPdf extends React.Component {
               {this.state.displayed === undefined && <input type="radio" name="heating" value="20" class="card-input-element" checked={this.state.displayed === "twenty-years"} />}
               {this.state.displayed === "twenty-years" && <input type="radio" name="multi-year" id="multi-year" value="20" class="card-input-element" checked="true" />}
               <div class="panel panel-default card-input-wide background-light-grey" style={{ height: "40px", width: "100%", fontSize: "14px", margin: "0", border: "none" }}>
-                <div class="panel-body trackeable" data-event="gesamtkosten-strom-20-years">Gesamtkosten über 20 Jahre</div>
+                <div class="panel-body trackeable" data-event="gesamtkosten-strom-20-years">
+                  Gesamtkosten über 20 Jahre
+                </div>
               </div>
             </label>
           </div>
         </div>
         <div style={{ display: "flex", flexDirection: "row", width: "100%", height: "220px" }}>
           <div style={{ display: "flex", flexDirection: "row", width: "100%", marginLeft: "17%", zIndex: "99999" }}>
-
             {/* ohne PV */}
             <div style={{ display: "flex", width: "73px", height: `212px`, background: "#007BC0", color: "white", marginTop: "auto" }}>
               <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
                 {this.state.displayed == "one-year" && OHNE_PV_cost1year.toLocaleString("de-DE")}
                 {this.state.displayed == "one-year" && <span>&nbsp;€</span>}
-                {this.state.displayed == "twenty-years" == "20" && OHNE_PV_cost20years.toLocaleString("de-DE")}
-                {this.state.displayed == "twenty-years" == "20" && <span>&nbsp;€</span>}
+                {(this.state.displayed == "twenty-years") == "20" && OHNE_PV_cost20years.toLocaleString("de-DE")}
+                {(this.state.displayed == "twenty-years") == "20" && <span>&nbsp;€</span>}
               </div>
             </div>
 
             {/* Mit PV Price */}
             <div style={{ width: "73px", color: "white", marginLeft: "10%", zIndex: "99999", marginTop: "auto" }}>
-
               {/* Pattern bar 1 year */}
               {this.state.displayed == "one-year" && (
                 <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPv["savings"]}px`, color: "white" }}>
@@ -244,7 +239,6 @@ class CostPdf extends React.Component {
                 </div>
               )}
 
-
               {/* Blue bar 1 year */}
               {this.state.displayed == "one-year" && (
                 <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPv["cost"]}px`, color: "white" }}>
@@ -259,7 +253,7 @@ class CostPdf extends React.Component {
                 </div>
               )}
 
-              { /* Blue bar 20 years */}
+              {/* Blue bar 20 years */}
               {this.state.displayed == "twenty-years" && (
                 <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPv["cost"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
@@ -272,12 +266,10 @@ class CostPdf extends React.Component {
                   </div>
                 </div>
               )}
-
             </div>
 
             {/* Mit PV und EMS */}
             <div style={{ width: "73px", color: "white", marginLeft: "10%", zIndex: "99999", marginTop: "auto" }}>
-
               {/* Pattern bar 1 year */}
               {this.state.displayed == "one-year" && (
                 <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPvAndEMS["savings"]}px`, color: "white" }}>
@@ -333,9 +325,7 @@ class CostPdf extends React.Component {
                   </div>
                 </div>
               )}
-
             </div>
-
           </div>
 
           <div class="cost-chart-width" style={{ position: "absolute", zIndex: "99998" }}>
