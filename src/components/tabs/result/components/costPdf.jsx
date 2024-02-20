@@ -204,8 +204,8 @@ class CostPdf extends React.Component {
               <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
                 {this.state.displayed == "one-year" && OHNE_PV_cost1year.toLocaleString("de-DE")}
                 {this.state.displayed == "one-year" && <span>&nbsp;€</span>}
-                {(this.state.displayed == "twenty-years") == "20" && OHNE_PV_cost20years.toLocaleString("de-DE")}
-                {(this.state.displayed == "twenty-years") == "20" && <span>&nbsp;€</span>}
+                {this.state.displayed == "twenty-years" && OHNE_PV_cost20years.toLocaleString("de-DE")}
+                {this.state.displayed == "twenty-years" && <span>&nbsp;€</span>}
               </div>
             </div>
 

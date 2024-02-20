@@ -9,6 +9,7 @@ import OffGrid from "./offGrid";
 import ElectricityUse from "./electricityUse";
 import HouseholdUse from "./householdUse";
 import InfoBoxResult from "../../infoBoxResult";
+import InfoBoxResultPdf from "../../infoBoxResultPdf";
 import InfoBoxCalculation from "../../infoBoxCalculation";
 
 import "../../../../assets/fonts/BoschSans-Bold-normal";
@@ -30,7 +31,6 @@ import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-
 
 import { Canvg } from "canvg";
 
@@ -55,7 +55,7 @@ class Additional extends React.Component {
 
   static contextType = AppContext;
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   inputPVOutput = (value) => {
     const { pvOutput, setPVOutput } = this.context;
@@ -138,27 +138,25 @@ class Additional extends React.Component {
 
     //OffGrid
     // Mit
-    var mitGridUsagePercentage = parseInt(sessionStorage.getItem("MIT_GridUsagePercentage"))
-    var mitNoEMSPercentage = parseInt(sessionStorage.getItem("MIT_NoEMSPercentageOffGrid"))
-    var mitPvUsagePercentage = parseInt(sessionStorage.getItem("MIT_PvUsagePercentage"))
-    var autarkiegradWithEMS = mitNoEMSPercentage + mitPvUsagePercentage
+    var mitGridUsagePercentage = parseInt(sessionStorage.getItem("MIT_GridUsagePercentage"));
+    var mitNoEMSPercentage = parseInt(sessionStorage.getItem("MIT_NoEMSPercentageOffGrid"));
+    var mitPvUsagePercentage = parseInt(sessionStorage.getItem("MIT_PvUsagePercentage"));
+    var autarkiegradWithEMS = mitNoEMSPercentage + mitPvUsagePercentage;
 
     // Ohne
-    var ohneGridUsagePercentage = parseInt(sessionStorage.getItem("OHNE_GridUsagePercentage"))
-    var ohnePvUsagePercentage = parseInt(sessionStorage.getItem("OHNE_PvUsagePercentage"))
-
+    var ohneGridUsagePercentage = parseInt(sessionStorage.getItem("OHNE_GridUsagePercentage"));
+    var ohnePvUsagePercentage = parseInt(sessionStorage.getItem("OHNE_PvUsagePercentage"));
 
     //household-use
     // Mit
-    var MIT_GridFeedPercentage = parseInt(sessionStorage.getItem("MIT_GridFeedPercentage"))
-    var MIT_HouseholdUsagePercentage = parseInt(sessionStorage.getItem("MIT_HouseholdUsagePercentage"))
-    var MIT_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("MIT_HouseholdNoEMSpvPercent"))
-    var eigenverbrauchsanteil = MIT_HouseholdUsagePercentage + MIT_HouseholdNoEMSpvPercent
+    var MIT_GridFeedPercentage = parseInt(sessionStorage.getItem("MIT_GridFeedPercentage"));
+    var MIT_HouseholdUsagePercentage = parseInt(sessionStorage.getItem("MIT_HouseholdUsagePercentage"));
+    var MIT_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("MIT_HouseholdNoEMSpvPercent"));
+    var eigenverbrauchsanteil = MIT_HouseholdUsagePercentage + MIT_HouseholdNoEMSpvPercent;
 
-    // Ohne 
-    var Onhe_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent"))
-    var Onhe_GridFeedPercentageNoEMS = parseInt(sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS"))
-
+    // Ohne
+    var Onhe_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent"));
+    var Onhe_GridFeedPercentageNoEMS = parseInt(sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS"));
 
     const addFooters = (doc) => {
       const pageCount = doc.internal.getNumberOfPages();
@@ -356,7 +354,9 @@ class Additional extends React.Component {
                         <div class="panel-heading-narrow">
                           <HeatpumpSmallIcon />
                         </div>
-                        <div class="panel-body trackeable" data-event="result-part3-heatpump">Wärmepumpe</div>
+                        <div class="panel-body trackeable" data-event="result-part3-heatpump">
+                          Wärmepumpe
+                        </div>
                       </a>
                     </label>
                   </div>
@@ -367,7 +367,9 @@ class Additional extends React.Component {
                         <div class="panel-heading-narrow">
                           <PhotovoltaicIcon />
                         </div>
-                        <div class="panel-body trackeable" data-event="result-part3-pv">PV-Anlage</div>
+                        <div class="panel-body trackeable" data-event="result-part3-pv">
+                          PV-Anlage
+                        </div>
                       </a>
                     </label>
                   </div>
@@ -378,7 +380,9 @@ class Additional extends React.Component {
                         <div class="panel-heading-narrow">
                           <WallboxIcon />
                         </div>
-                        <div class="panel-body trackeable" data-event="result-part3-wallbox">Wallbox</div>
+                        <div class="panel-body trackeable" data-event="result-part3-wallbox">
+                          Wallbox
+                        </div>
                       </a>
                     </label>
                   </div>
@@ -402,25 +406,25 @@ class Additional extends React.Component {
             </div>
           </div>
         </div>
-        <div id="printPdf" style={{ position: "absolute", left: "0px", width: "795px", height: "1150px", display: "none" }}>
+        <div id="printPdf" style={{ position: "absolute", left: "0px", width: "795px", height: "1150px", display: "true" }}>
           <div style={{ position: "absolute", left: "0px", top: "0px" }}>
             <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
           </div>
           <div style={{ position: "absolute", left: "60px", top: "10px" }}>
             <BoschLogo style={{ maxWidth: "200px" }} />
           </div>
-          <div style={{ position: "absolute", left: "60px", top: "110px" }}>
-            <hr style={{ width: "690px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
+          <div style={{ position: "absolute", left: "60px", top: "90px" }}>
+            <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
           </div>
-          <div style={{ position: "absolute", left: "60px", top: "133px" }}>
+          <div style={{ position: "absolute", left: "60px", top: "103px" }}>
             <h1 style={{ marginBlockStart: "4px", marginBlockEnd: "5px" }}>Sparen Sie Stromkosten</h1>
             <div style={{ fontSize: "14px" }}>mit der smarten Kombination aus Photovoltaik, Wärmepumpe, Wallbox und einem intelligenten Energiemanagementsystem.</div>
           </div>
-          <div style={{ position: "absolute", left: "60px", top: "207px" }}>
+          <div style={{ position: "absolute", left: "60px", top: "177px" }}>
             <h3>Ergebnis Teil 1: Stromkosten und Amortisationszeit Ihrer PV-Anlage</h3>
           </div>
 
-          <div style={{ position: "absolute", left: "60px", top: "270px" }}>
+          <div style={{ position: "absolute", left: "60px", top: "240px" }}>
             <div style={{ position: "absolute", left: "0px", width: "405px", transform: "scale(0.75)", transformOrigin: "top left" }}>
               <h3 style={{ marginBlockStart: "4px", marginBlockEnd: "8px", fontSize: "14px" }}>Gesamtkosten Strom</h3>
               {/* Gráfico barras 1 año */}
@@ -432,32 +436,41 @@ class Additional extends React.Component {
               <CostPdf displayed="twenty-years" />
             </div>
           </div>
-          <div style={{ position: "absolute", left: "60px", top: "605px", width: "865px", transform: "scale(0.80)", transformOrigin: "top left" }}>
-            <InfoBoxResult box="left" />
+          <div style={{ position: "absolute", left: "60px", top: "535px" }}>
+            <div style={{ position: "absolute", left: "0px", width: "413px", transform: "scale(0.75)", transformOrigin: "top left" }}>
+              <InfoBoxResultPdf box="left" displayed="one-year" />
+            </div>
+            <div style={{ position: "absolute", left: "365px", width: "413px", transform: "scale(0.75)", transformOrigin: "top left" }}>
+              <InfoBoxResultPdf box="left" displayed="twenty-years" />
+            </div>
           </div>
-          <div style={{ position: "absolute", left: "60px", top: "765px" }}>
-            <hr style={{ width: "690px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
+          {/* <div style={{ position: "absolute", left: "60px", top: "605px", width: "865px", transform: "scale(0.80)", transformOrigin: "top left" }}>
+            <InfoBoxResultPdf box="left" displayed="one-year" />
+            <InfoBoxResultPdf box="left" displayed="twenty-years" />
+          </div> */}
+          <div style={{ position: "absolute", left: "60px", top: "745px" }}>
+            <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
           </div>
-          <div style={{ position: "absolute", left: "60px", top: "795px", transform: "scale(0.85)", transformOrigin: "top left" }}>
-            <h3 style={{ marginTop: "0px", marginBlockStart: "0" }}>Amortisationszeit</h3>
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", width: "815px" }}>
-              <div style={{ width: "60%" }}>
+          <div style={{ position: "absolute", left: "60px", top: "765px", transform: "scale(0.85)", transformOrigin: "top left" }}>
+            <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", width: "793px" }}>
+              <div style={{ width: "55%" }}>
+                <h3 style={{ marginTop: "0px", marginBlockStart: "0" }}>Amortisationszeit</h3>
                 <span style={{ display: "block", marginBottom: "15px" }}>
                   Investitionskosten PV-System: <strong>{sessionStorage.getItem("InvestmentCostEUR").toLocaleString("DE-de")} €</strong>
                 </span>
                 <img src={breakEvenBase64} style={{ width: "440px" }} />
               </div>
-              <div style={{ width: "40%" }}>
+              <div style={{ width: "42%" }}>
                 <InfoBoxResult box="right" />
               </div>
             </div>
           </div>
           <div style={{ position: "absolute", left: "60px", top: "1094px" }}>
-            <hr style={{ width: "690px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
+            <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
           </div>
         </div>
 
-        <div id="printPdf2" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
+        <div id="printPdf2" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "true" }}>
           <div style={{ postion: "relative", height: "10px" }}>
             <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
           </div>
