@@ -139,7 +139,7 @@ class HouseholdUse extends React.Component {
 
     const { loading, loadingHousehold, setHouseholdUse1SVG, setHouseholdUse2SVG, setHousehold1SVG_EMS_Hidden, setHousehold2SVG_EMS_Hidden, setHousehold1SVG_NoEMS_Hidden, setHousehold2SVG_NoEMS_Hidden } = this.context;
 
-    if(!loadingHousehold) {
+    if (!loadingHousehold) {
       const householdUseChart1 = document.getElementById("householdUse-1");
       const householdUseChart2 = document.getElementById("householdUse-2");
       const householdUseChart1_svg = householdUseChart1.getElementsByTagName("svg");
@@ -244,48 +244,45 @@ class HouseholdUse extends React.Component {
     var pieColorsPDFWithEMS = [];
     var pieColorsPDFWithoutEMS = [];
 
-    if(householdEMS === true) {
-
+    if (householdEMS === true) {
       // Rounded values for VictoryPieData2
       var roundedGridFeedPercentage = Math.round(parseFloat(this.gridFeedPercentage()));
       var roundedHouseholdUsagePercentage = Math.round(parseFloat(this.householdUsagePercentage()) - householdNoEMSpvPercent);
-      var roundedHouseholdNoEMSpvPercent = Math.round(parseFloat(householdNoEMSpvPercent));
-      roundedGridFeedPercentage = this.adjustPercentage(roundedGridFeedPercentage, roundedHouseholdUsagePercentage, roundedHouseholdNoEMSpvPercent);
+      var roundedHouseholdpvPercent = Math.round(parseFloat(householdNoEMSpvPercent));
+      roundedGridFeedPercentage = this.adjustPercentage(roundedGridFeedPercentage, roundedHouseholdUsagePercentage, roundedHouseholdpvPercent);
 
-      if (sessionStorage.getItem("MIT_GridFeedPercentage") != '') {
-        sessionStorage.setItem("MIT_GridFeedPercentage", roundedGridFeedPercentage)
+      if (sessionStorage.getItem("MIT_GridFeedPercentage") != "") {
+        sessionStorage.setItem("MIT_GridFeedPercentage", roundedGridFeedPercentage);
       }
-      if (sessionStorage.getItem("MIT_HouseholdUsagePercentage") != '') {
-        sessionStorage.setItem("MIT_HouseholdUsagePercentage", roundedHouseholdUsagePercentage)
+      if (sessionStorage.getItem("MIT_HouseholdUsagePercentage") != "") {
+        sessionStorage.setItem("MIT_HouseholdUsagePercentage", roundedHouseholdUsagePercentage);
       }
-      if (sessionStorage.getItem("MIT_HouseholdNoEMSpvPercent") != '') {
-        sessionStorage.setItem("MIT_HouseholdNoEMSpvPercent", roundedHouseholdNoEMSpvPercent)
+      if (sessionStorage.getItem("MIT_HouseholdNoEMSpvPercent") != "") {
+        sessionStorage.setItem("MIT_HouseholdNoEMSpvPercent", roundedHouseholdpvPercent);
       }
 
       VictoryPieData = [
         { x: 3, y: roundedGridFeedPercentage, name: "grid", label: "3.000 kWh", img: "/img/grid_out.svg", color: "#004975" },
         { x: 2, y: roundedHouseholdUsagePercentage, name: "plug", label: "1.400 kWh", img: "/img/plug.svg", color: "#C535BC" },
-        { x: 1, y: roundedHouseholdNoEMSpvPercent, name: "pv", label: "1.000 kWh", img: "/img/house_pv.svg", color: "#9E2896" },
+        { x: 1, y: roundedHouseholdpvPercent, name: "pv", label: "1.000 kWh", img: "/img/house_pv.svg", color: "#9E2896" },
       ];
       VictoryPieData2 = [
         { x: 3, y: roundedGridFeedPercentage, name: "grid", label: roundedGridFeedPercentage + "%", img: "/img/grid_out.svg", color: "#A4ABB3" },
         { x: 2, y: roundedHouseholdUsagePercentage, name: "plug", label: roundedHouseholdUsagePercentage + "%", img: "/img/plug.svg", color: "#00884A" },
-        { x: 1, y: roundedHouseholdNoEMSpvPercent, name: "pv", label: roundedHouseholdNoEMSpvPercent + "%", img: "/img/house_pv.svg", color: "#18837E" },
+        { x: 1, y: roundedHouseholdpvPercent, name: "pv", label: roundedHouseholdpvPercent + "%", img: "/img/house_pv.svg", color: "#18837E" },
       ];
       pieColors = ["#A4ABB3", "#00884A", "#18837E"];
-
-    } else if(householdEMS === false) {
-
+    } else if (householdEMS === false) {
       // Rounded values for VictoryPieData2.
       var roundedGridFeedPercentageNoEMS = Math.round(parseFloat(this.gridFeedPercentageNoEMS()));
       var roundedHouseholdNoEMSpvPercent = Math.round(parseFloat(householdNoEMSpvPercent));
       roundedHouseholdNoEMSpvPercent = this.adjustPercentage(roundedHouseholdNoEMSpvPercent, roundedGridFeedPercentageNoEMS);
 
-      if (sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent") != '') {
-        sessionStorage.setItem("Onhe_HouseholdNoEMSpvPercent", roundedHouseholdNoEMSpvPercent)
+      if (sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent") != "") {
+        sessionStorage.setItem("Onhe_HouseholdNoEMSpvPercent", roundedHouseholdNoEMSpvPercent);
       }
-      if (sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS") != '') {
-        sessionStorage.setItem("Onhe_GridFeedPercentageNoEMS", roundedGridFeedPercentageNoEMS)
+      if (sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS") != "") {
+        sessionStorage.setItem("Onhe_GridFeedPercentageNoEMS", roundedGridFeedPercentageNoEMS);
       }
 
       VictoryPieData = [
@@ -299,21 +296,19 @@ class HouseholdUse extends React.Component {
       pieColors = ["#A4ABB3", "#18837E"];
     }
 
-    // Data for PDF victory pie 
-    VictoryPieDataPDFWithEMS = 
-    [
-        { x: 3, y: parseInt(sessionStorage.getItem("MIT_GridFeedPercentage")), name: "grid", label: sessionStorage.getItem("MIT_GridFeedPercentage") + "%", img: "img/grid_in.svg", color: "#A4ABB3" },
-        { x: 2, y: parseInt(sessionStorage.getItem("MIT_HouseholdUsagePercentage")), name: "plug", label: sessionStorage.getItem("MIT_HouseholdUsagePercentage") + " %", img: "img/plug.svg", color: "#00884A" },
-        { x: 1, y: parseInt(sessionStorage.getItem("MIT_HouseholdNoEMSpvPercent")), name: "pv", label: sessionStorage.getItem("MIT_HouseholdNoEMSpvPercent") + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },        
-    ]
+    // Data for PDF victory pie
+    VictoryPieDataPDFWithEMS = [
+      { x: 3, y: parseInt(sessionStorage.getItem("MIT_GridFeedPercentage")), name: "grid", label: sessionStorage.getItem("MIT_GridFeedPercentage") + "%", img: "img/grid_in.svg", color: "#A4ABB3" },
+      { x: 2, y: parseInt(sessionStorage.getItem("MIT_HouseholdUsagePercentage")), name: "plug", label: sessionStorage.getItem("MIT_HouseholdUsagePercentage") + " %", img: "img/plug.svg", color: "#00884A" },
+      { x: 1, y: parseInt(sessionStorage.getItem("MIT_HouseholdNoEMSpvPercent")), name: "pv", label: sessionStorage.getItem("MIT_HouseholdNoEMSpvPercent") + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
+    ];
     pieColorsPDFWithEMS = ["#A4ABB3", "#00884A", "#18837E"];
 
-    VictoryPieDataPDFWithoutEMS = 
-    [
+    VictoryPieDataPDFWithoutEMS = [
       { x: 3, y: parseInt(sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS")), name: "grid", label: sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS") + " %", img: "img/grid_in.svg", color: "#A4ABB3" },
-      { x: 1, y: parseInt(sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent")), name: "pv", label: sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent") + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E"},
-    ]
-    pieColorsPDFWithoutEMS = ["#A4ABB3", "#18837E", ]
+      { x: 1, y: parseInt(sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent")), name: "pv", label: sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent") + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
+    ];
+    pieColorsPDFWithoutEMS = ["#A4ABB3", "#18837E"];
 
     return (
       <div>
