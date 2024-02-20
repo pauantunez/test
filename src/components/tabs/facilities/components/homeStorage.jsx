@@ -102,9 +102,9 @@ class HomeStorage extends React.Component {
     } else {
       setHomeStorageSize(0);
       this.setState({ homeStorageSizekW: 0 });
+      setFwdBtn(false);
     }
 
-    /* setFwdBtn(false); */
     steps[activeView] = false;
     setSteps({ ...steps });
   };
