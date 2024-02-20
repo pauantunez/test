@@ -138,8 +138,6 @@ class BreakEven extends React.Component {
   componentDidMount() {
     const { heatpumpPVems, breakEvenBase64, setBreakEvenBase64 } = this.context;
 
-    console.log(heatpumpPVems);
-
     setTimeout(() => {
       const breakEvenCanvas = document.getElementById("breakEvenChart");
 
@@ -147,8 +145,6 @@ class BreakEven extends React.Component {
         const url = URL.createObjectURL(blob);
 
         setBreakEvenBase64(url);
-
-        console.log(url);
       });
     }, 200);
   }
@@ -182,7 +178,6 @@ class BreakEven extends React.Component {
   energyUseEuro = (divided) => {
     const { energyUsagekWh, electricityCost, costOverTime } = this.context;
     const timeToNum = parseInt(costOverTime);
-    console.log(Math.round(((energyUsagekWh * (electricityCost / 100)) / 6) * divided * timeToNum).toLocaleString("de-DE"));
 
     return Math.round(((energyUsagekWh * (electricityCost / 100)) / 6) * divided * timeToNum).toLocaleString("de-DE") + " €";
   };
@@ -302,10 +297,8 @@ class BreakEven extends React.Component {
     const numYears01 = this.breakEvenPV();
     const numYears02 = this.breakEvenPVems();
     const datapoints = createDataPoints(heatpumpPVems, numYears01 + 3);
-    console.log("🚀 ~ BreakEven ~ render ~ heatpumpPVems:", heatpumpPVems)
     const closestPosition01 = this.findClosestPositionTo0(datapoints);
     const datapoints2 = createDataPoints(heatpumpPV, numYears01 + 3);
-    console.log("🚀 ~ BreakEven ~ render ~ heatpumpPV:", heatpumpPV)
     const closestPosition02 = this.findClosestPositionTo0(datapoints2);
 
     const closestIntersectionPosition = this.findIntersectionPosition(datapoints, datapoints2);
@@ -439,7 +432,7 @@ class BreakEven extends React.Component {
         },
         y: {
           suggestedMin: 0,
-          suggestedMax: 'auto',
+          suggestedMax: "auto",
           border: {
             display: false,
           },
