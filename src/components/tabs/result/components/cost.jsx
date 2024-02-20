@@ -431,13 +431,11 @@ class Cost extends React.Component {
     const { t } = this.props;
     const { overlayToggle } = this.state;
     const { electricityCostPVsavings, electricityCostPVEMSsavings, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
-
     // Ohne PV
-    if (costOverTime === "1") {
-      var OHNE_PV_cost1year = Math.abs(parseInt(this.energyUseEuro(5).replace(".", "").replace(",", "")));
-    } else if (costOverTime === "20") {
-      var OHNE_PV_cost20years = Math.abs(parseInt(this.electricityCostNoPV20Years()));
-    }
+    var OHNE_PV_cost1year = Math.abs(parseInt(this.energyUseEuro(5).replace(".", "").replace(",", "")));
+    console.log("🚀 ~ Cost ~ render ~ OHNE_PV_cost1year:", OHNE_PV_cost1year);
+    var OHNE_PV_cost20years = Math.abs(parseInt(this.electricityCostNoPV20Years()));
+
     if (sessionStorage.getItem("OHNE_PV_cost1year") == undefined) {
       sessionStorage.setItem("OHNE_PV_cost1year", OHNE_PV_cost1year);
     }
@@ -445,11 +443,9 @@ class Cost extends React.Component {
       sessionStorage.setItem("OHNE_PV_cost20years", OHNE_PV_cost20years);
     }
 
-    if (costOverTime === "1") {
-      var costOnlyPV1year = parseInt(this.electricityCostPV20Years());
-    } else if (costOverTime === "20") {
-      var costOnlyPV20years = parseInt(this.electricityCostPV20Years());
-    }
+    var costOnlyPV1year = parseInt(this.electricityCostPV20Years());
+    var costOnlyPV20years = parseInt(this.electricityCostPV20Years());
+
     if (sessionStorage.getItem("costOnlyPV1year") == undefined) {
       sessionStorage.setItem("costOnlyPV1year", costOnlyPV1year);
     }
