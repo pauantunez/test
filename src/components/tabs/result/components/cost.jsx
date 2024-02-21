@@ -189,12 +189,12 @@ class Cost extends React.Component {
     }
   }
 
-  energyUseEuro = (divided, bar) => {
+  energyUseEuro = (divided, years, bar) => {
     const { energyUsagekWh, electricityCost, costOverTime } = this.context;
 
     var timeToNum;
     if (this.state.displayed == undefined) {
-      timeToNum = parseInt(costOverTime);
+      timeToNum = parseInt(years);
     } else {
       if (this.state.displayed == "single") {
         timeToNum = 1;
@@ -202,9 +202,8 @@ class Cost extends React.Component {
         timeToNum = 20;
       }
     }
-
     if (!bar) {
-      if (costOverTime === "1") {
+      if (years === 1) {
         // return '- ' + Math.round(energyUsagekWh * (electricityCost / 100) / 5 * divided * timeToNum).toLocaleString("de-DE") + ' €';
         return Math.round(((energyUsagekWh * (electricityCost / 100)) / 5) * divided * timeToNum).toLocaleString("de-DE") + " €";
       } else {
@@ -388,7 +387,7 @@ class Cost extends React.Component {
     var result;
 
     if (costOverTime === "1") {
-      result = this.electricityCostPV() - this.energyUseEuro(5, true);
+      result = this.electricityCostPV() - this.energyUseEuro(5, 1, true);
     } else {
       result = parseInt(parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVonly);
     }
@@ -406,7 +405,7 @@ class Cost extends React.Component {
     var result;
 
     if (costOverTime === "1") {
-      result = this.electricityCostPVEMS() - this.energyUseEuro(5, true);
+      result = this.electricityCostPVEMS() - this.energyUseEuro(5, 1, true);
     } else {
       result = parseInt(parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVems);
     }
@@ -448,7 +447,8 @@ class Cost extends React.Component {
     const { overlayToggle } = this.state;
     const { electricityCostPVsavings, electricityCostPVEMSsavings, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
     // Ohne PV
-    var OHNE_PV_cost1year = Math.abs(parseInt(this.energyUseEuro(5).replace(".", "").replace(",", "")));
+    var OHNE_PV_cost1year = Math.abs(parseInt(this.energyUseEuro(5, 1).replace(".", "").replace(",", "")));
+    console.log("🚀 ~ Cost ~ render ~ OHNE_PV_cost1year:", OHNE_PV_cost1year);
     var OHNE_PV_cost20years = Math.abs(parseInt(this.electricityCostNoPV20Years()));
 
     if (sessionStorage.getItem("OHNE_PV_cost1year") == undefined) {
