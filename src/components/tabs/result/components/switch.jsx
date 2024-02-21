@@ -187,7 +187,7 @@ class CustomSwitch extends React.Component {
           if (noEMSTab) {
             this.energyUsageCombined(res.data.data[0]);
           } else {
-            //setDatabaseResult(res.data.data[0])
+            setDatabaseResult(res.data.data[0]);
           }
 
           setLoadingOffGrid(false);
