@@ -292,14 +292,30 @@ class Cost extends React.Component {
       investmentCostResult = Math.abs(parseInt(investmentCostEUR) * -1);
     }
 
-    if (costOverTime == "1") {
-      const result = Math.abs(Math.round((1 - electricityCostOffGridPercentage / 100) * energyUsagekWh * (parseFloat(electricityCost) / 100)));
-      return Math.abs(result);
+    const result = Math.abs(((1 - electricityCostOffGridPercentage / 100) * energyUsagekWh * ((parseFloat(electricityCost) / 100) * (1 + 0.02)) * (1 - (0.02 + 1) ** 20)) / 0.02);
+    // return Math.abs(result + investmentCostResult);
+    return Math.abs(result);
+  };
+
+  electricityCostPV1Years = () => {
+    const { costOverTime, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, pvOutputkWh, homeStorageSize, energyUsagekWh, electricityCost, electricityCostOffGridPercentage } = this.context;
+    var investmentCostResult;
+
+    let PVcostInTable = PVcostLookupTable.find((o) => o.pv === pvOutputkWh);
+    let StorageCostInTable = StorageCostLookupTable.find((o) => o.storage === homeStorageSize);
+
+    if (homeStorageSize === "none") {
+      investmentCostResult = PVcostInTable.cost;
     } else {
-      const result = Math.abs(((1 - electricityCostOffGridPercentage / 100) * energyUsagekWh * ((parseFloat(electricityCost) / 100) * (1 + 0.02)) * (1 - (0.02 + 1) ** 20)) / 0.02);
-      // return Math.abs(result + investmentCostResult);
-      return Math.abs(result);
+      investmentCostResult = PVcostInTable.cost + StorageCostInTable.cost;
     }
+
+    if (investmentCostEUR > 0) {
+      investmentCostResult = Math.abs(parseInt(investmentCostEUR) * -1);
+    }
+
+    const result = Math.abs(Math.round((1 - electricityCostOffGridPercentage / 100) * energyUsagekWh * (parseFloat(electricityCost) / 100)));
+    return Math.abs(result);
   };
 
   runningCostPVonly = () => {
@@ -442,7 +458,7 @@ class Cost extends React.Component {
       sessionStorage.setItem("OHNE_PV_cost20years", OHNE_PV_cost20years);
     }
 
-    var costOnlyPV1year = parseInt(this.electricityCostPV20Years());
+    var costOnlyPV1year = parseInt(this.electricityCostPV1Years());
     var costOnlyPV20years = parseInt(this.electricityCostPV20Years());
 
     if (sessionStorage.getItem("costOnlyPV1year") == undefined) {
