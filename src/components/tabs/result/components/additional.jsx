@@ -55,7 +55,9 @@ class Additional extends React.Component {
 
   static contextType = AppContext;
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.convertPies();
+  }
 
   inputPVOutput = (value) => {
     const { pvOutput, setPVOutput } = this.context;
@@ -406,7 +408,7 @@ class Additional extends React.Component {
             </div>
           </div>
         </div>
-        <div id="printPdf" style={{ position: "absolute", left: "0px", width: "795px", height: "1150px", display: "none" }}>
+        <div id="printPdf" style={{ position: "absolute", left: "0px", width: "795px", height: "1150px", display: "true" }}>
           <div style={{ position: "absolute", left: "0px", top: "0px" }}>
             <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
           </div>
@@ -470,7 +472,7 @@ class Additional extends React.Component {
           </div>
         </div>
 
-        <div id="printPdf2" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
+        <div id="printPdf2" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "true" }}>
           <div style={{ postion: "relative", height: "10px" }}>
             <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
           </div>
@@ -491,10 +493,10 @@ class Additional extends React.Component {
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginLeft: "60px", maxWidth: "1000px" }}>
             <div style={{ position: "relative", width: "730px", height: "253px" }}>
               <div style={{ position: "absolute", top: "0", left: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <canvas id="pie3" width="375" height="273" />
+                <canvas id="pie3" width="440" height="273" />
               </div>
               <div style={{ position: "absolute", top: "0", left: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <canvas id="pie4" width="375" height="273" />
+                <canvas id="pie4" width="440" height="273" />
               </div>
               <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
                 <InfoBoxResult box="electricity-use" />
@@ -509,10 +511,10 @@ class Additional extends React.Component {
             </div>
             <div style={{ position: "relative", width: "730px", height: "283px" }}>
               <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <canvas id="pie1" width="375" height="273" />
+                <canvas id="pie1" width="440" height="273" />
               </div>
               <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <canvas id="pie2" width="375" height="273" />
+                <canvas id="pie2" width="440" height="273" />
               </div>
               {/* <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
                 <InfoBoxResult box="off-grid" />
@@ -543,10 +545,10 @@ class Additional extends React.Component {
             </div>
             <div style={{ position: "relative", width: "730px", height: "283px" }}>
               <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <canvas id="pie1_NoEMS" width="375" height="273" />
+                <canvas id="pie1_NoEMS" width="440" height="273" />
               </div>
               <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <canvas id="pie2_NoEMS" width="375" height="273" />
+                <canvas id="pie2_NoEMS" width="440" height="273" />
               </div>
               {/* <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
                 <InfoBoxResult box="off-grid" />
