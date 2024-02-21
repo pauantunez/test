@@ -139,7 +139,6 @@ class OffGrid extends React.Component {
 
     var pvUsagePercent = ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(heatpumpCombinedUsage)) * 100;
     console.log("PV USAGE: " + pvUsagePercent);
-
     return pvUsagePercent;
   };
 
@@ -148,7 +147,6 @@ class OffGrid extends React.Component {
 
     var pvUsagePercentEMS = ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(heatpumpCombinedUsage)) * 100;
     console.log("PV USAGE: " + pvUsagePercentEMS);
-
     return pvUsagePercentEMS;
   };
 
@@ -232,34 +230,20 @@ class OffGrid extends React.Component {
     var VictoryPieData2NoEMS = [];
     var pieColors2NoEMS = [];
 
-    var roundedNoEMSGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentage()));
-    var roundedNoEMSPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentage() - Math.round(noEMSPercentageOffGrid)));
-    var roundedNoEMSPercentageOffGrid = Math.round(parseFloat(noEMSPercentageOffGrid));
-    roundedNoEMSPercentageOffGrid = this.adjustPercentage(roundedNoEMSPercentageOffGrid, roundedNoEMSGridUsagePercentage, roundedNoEMSPvUsagePercentage);
-    // Rounded values for VictoryPieDataTest
-    if (sessionStorage.getItem("MIT_GridUsagePercentage") != "") {
-      sessionStorage.setItem("MIT_GridUsagePercentage", roundedNoEMSGridUsagePercentage);
-    }
-    if (sessionStorage.getItem("MIT_PvUsagePercentage") != "") {
-      sessionStorage.setItem("MIT_PvUsagePercentage", roundedNoEMSPvUsagePercentage);
-    }
-    if (sessionStorage.getItem("MIT_NoEMSPercentageOffGrid") != "") {
-      sessionStorage.setItem("MIT_NoEMSPercentageOffGrid", roundedNoEMSPercentageOffGrid);
-    }
-
-    // Rounded values for VictoryPieDataTest
-    var roundedGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentage()));
-    var roundedPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentage()));
-    roundedGridUsagePercentage = this.adjustPercentage(roundedGridUsagePercentage, roundedPvUsagePercentage);
-
-    if (sessionStorage.getItem("OHNE_GridUsagePercentage") != "") {
-      sessionStorage.setItem("OHNE_GridUsagePercentage", roundedGridUsagePercentage);
-    }
-    if (sessionStorage.getItem("OHNE_PvUsagePercentage") != "") {
-      sessionStorage.setItem("OHNE_PvUsagePercentage", roundedPvUsagePercentage);
-    }
-
     if (offgridEMS === true) {
+      var roundedNoEMSGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentage()));
+      var roundedNoEMSPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentage() - Math.round(noEMSPercentageOffGrid)));
+      var roundedNoEMSPercentageOffGrid = Math.round(parseFloat(noEMSPercentageOffGrid));
+      roundedNoEMSPercentageOffGrid = this.adjustPercentage(roundedNoEMSPercentageOffGrid, roundedNoEMSGridUsagePercentage, roundedNoEMSPvUsagePercentage); // Rounded values for VictoryPieDataTest
+      if (sessionStorage.getItem("MIT_GridUsagePercentage") != "") {
+        sessionStorage.setItem("MIT_GridUsagePercentage", roundedNoEMSGridUsagePercentage);
+      }
+      if (sessionStorage.getItem("MIT_PvUsagePercentage") != "") {
+        sessionStorage.setItem("MIT_PvUsagePercentage", roundedNoEMSPvUsagePercentage);
+      }
+      if (sessionStorage.getItem("MIT_NoEMSPercentageOffGrid") != "") {
+        sessionStorage.setItem("MIT_NoEMSPercentageOffGrid", roundedNoEMSPercentageOffGrid);
+      }
       VictoryPieData = [
         { x: 3, y: roundedNoEMSGridUsagePercentage, name: "grid", label: "3.000 kWh", img: "img/grid_in.svg", color: "#004975" },
         { x: 2, y: roundedNoEMSPvUsagePercentage, name: "plug", label: "1.400 kWh", img: "img/plug.svg", color: "#C535BC" },
@@ -274,6 +258,17 @@ class OffGrid extends React.Component {
 
       pieColors = ["#A4ABB3", "#00884A", "#18837E"];
     } else if (offgridEMS === false) {
+      // Rounded values for VictoryPieDataTest
+      var roundedGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentage()));
+      var roundedPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentage()));
+      roundedGridUsagePercentage = this.adjustPercentage(roundedGridUsagePercentage, roundedPvUsagePercentage);
+
+      if (sessionStorage.getItem("OHNE_GridUsagePercentage") != "") {
+        sessionStorage.setItem("OHNE_GridUsagePercentage", roundedGridUsagePercentage);
+      }
+      if (sessionStorage.getItem("OHNE_PvUsagePercentage") != "") {
+        sessionStorage.setItem("OHNE_PvUsagePercentage", roundedPvUsagePercentage);
+      }
       VictoryPieData = [
         { x: 3, y: roundedGridUsagePercentage, name: "grid", label: "3.000 kWh", img: "img/grid_in.svg", color: "#A4ABB3" },
         { x: 1, y: roundedPvUsagePercentage, name: "pv", label: "1.000 kWh", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },

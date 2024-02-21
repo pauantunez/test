@@ -184,7 +184,7 @@ class HouseholdUse extends React.Component {
 
   householdUsagePercentage = (type) => {
     const { setInfoBoxCombinedHouseholdUsage, noEMSPercentageOffGrid, heatpumpCombinedUsage, HH_energy_to_grid_kWh_PV_MFH, HH_EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, HH_EGen_hw_kWh_EDWW_MFH_Brine, HH_EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, HH_EGen_sh_kWh_EDWW_MFH, HH_Avg_Eff_JAZ_HP_B_W_MFH, HH_Avg_Eff_JAZ_HP_A_W_MFH, HH_EGen_sh_kWh_HP_A_W_MFH, HH_EGen_sh_kWh_HP_B_W_MFH, HH_EGen_hw_kWh_HP_A_W_MFH, HH_EGen_hw_kWh_HP_B_W_MFH } = this.context;
-    
+
     var pvUsagePercent = ((parseFloat(HH_EGen_elc_kWh_PV_MFH) - parseFloat(HH_energy_to_grid_kWh_PV_MFH)) / parseFloat(HH_EGen_elc_kWh_PV_MFH)) * 100;
     console.log("HOUSEHOLD USAGE: " + pvUsagePercent);
 
