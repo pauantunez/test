@@ -126,12 +126,12 @@ class HouseholdSwitch extends React.Component {
   };
 
   getResult = (kfw, scenario, noEMSTab) => {
-    const { setLoadingHousehold, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, heatpumpCombinedUsage, setOffgridPVPercentageNoEMS, offgridPVPercentageNoEMS, setDatabaseResult, heatpumpType, setTabToSelect, tabToSelect, ev, kfwValue, homeStorageSizekWh, pvOutputkWh, pvOutput, tabEntries, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
-
+    const { setLoadingHousehold, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, heatpumpCombinedUsage, setOffgridPVPercentageNoEMS, offgridPVPercentageNoEMS, setDatabaseResult, heatpumpType, setTabToSelectEigenverbrauch, tabToSelectEigenverbrauch, ev, kfwValue, homeStorageSizekWh, pvOutputkWh, pvOutput, tabEntries, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
+    console.log("🚀 ~ HouseholdSwitch ~ aaa:", "aaa");
     if (noEMSTab) {
       var tab = noEMSTab;
     } else {
-      var tab = tabToSelect.toString();
+      var tab = tabToSelectEigenverbrauch.toString();
     }
 
     axios
@@ -149,15 +149,12 @@ class HouseholdSwitch extends React.Component {
           setLoadingHousehold(false);
         }
 
-        console.log(res.data.data[0]);
-        console.log(res);
-        console.log(res.data);
-        console.log(res.data.data.length);
+        sessionStorage.setItem("Eigenverbrauch_energy_to_grid_kWh_PV_MFH", res.data.data[0].energy_to_grid_kWh_PV_MFH);
       });
   };
 
   inputHouseholdEMS = (event) => {
-    const { setLoadingHousehold, kfwValue, ev, setHouseholdEMS, offgridEMS, scenarioInDatabase, tabEntries, setTabToSelect, pvOutputkWh, homeStorageSizekWh, homeStorage, setHomeStorage, setHomeStorageSize } = this.context;
+    const { setLoadingHousehold, kfwValue, ev, setHouseholdEMS, offgridEMS, scenarioInDatabase, tabEntries, setTabToSelectEigenverbrauch, pvOutputkWh, homeStorageSizekWh, homeStorage, setHomeStorage, setHomeStorageSize } = this.context;
     setHouseholdEMS(event.target.checked);
     setLoadingHousehold(true);
 
@@ -168,7 +165,7 @@ class HouseholdSwitch extends React.Component {
     }
 
     let tabInTable = tabEntries.find((o) => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === emsValue);
-    setTabToSelect(tabInTable.Tab);
+    setTabToSelectEigenverbrauch(tabInTable.Tab);
 
     setTimeout(() => {
       this.getResult(kfwValue + ev, scenarioInDatabase);

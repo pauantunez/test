@@ -158,6 +158,7 @@ class SimulatorProvider extends Component {
       tab3: 0,
     },
     tabToSelect: "0",
+    tabToSelectEigenverbrauch: "0",
     scenarioInDatabase: "",
     steps: {
       0: false,
@@ -1851,6 +1852,10 @@ class SimulatorProvider extends Component {
     this.setState((prevState) => ({ tabToSelect: tab }));
   };
 
+  setTabToSelectEigenverbrauch = (tab) => {
+    this.setState((prevState) => ({ tabToSelectEigenverbrauch: tab }));
+  };
+
   setPreHeatTempOption = (option) => {
     this.setState((prevState) => ({ preHeatTempOption: option }));
   };
@@ -2566,6 +2571,7 @@ class SimulatorProvider extends Component {
       pvOutputkWh,
       homeStorageSizekWh,
       tabToSelect,
+      tabToSelectEigenverbrauch,
       kfwLookupTable,
       buildingTypePreHeatOption,
       preHeatTempOption,
@@ -2701,6 +2707,7 @@ class SimulatorProvider extends Component {
       setWindowWidth,
       setWindowHeight,
       setTabToSelect,
+      setTabToSelectEigenverbrauch,
       setPreHeatTempOption,
       setScenarioInDatabase,
       setDatabaseResult,
@@ -2846,6 +2853,7 @@ class SimulatorProvider extends Component {
           pvMarks,
           pvOutputkWh,
           tabToSelect,
+          tabToSelectEigenverbrauch,
           kfwLookupTable,
           buildingTypePreHeatOption,
           preHeatTempOption,
@@ -2979,6 +2987,7 @@ class SimulatorProvider extends Component {
           setWindowWidth,
           setWindowHeight,
           setTabToSelect,
+          setTabToSelectEigenverbrauch,
           setPreHeatTempOption,
           setScenarioInDatabase,
           setDatabaseResult,

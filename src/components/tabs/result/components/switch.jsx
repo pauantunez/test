@@ -172,7 +172,6 @@ class CustomSwitch extends React.Component {
     } else {
       var tab = tabToSelect.toString();
     }
-
     axios
       .get(`https://bosch-endkundentool-api.azurewebsites.net/results`, {
         params: {
@@ -189,14 +188,9 @@ class CustomSwitch extends React.Component {
           } else {
             setDatabaseResult(res.data.data[0]);
           }
-
           setLoadingOffGrid(false);
         }
-
-        console.log(res.data.data[0]);
-        console.log(res);
-        console.log(res.data);
-        console.log(res.data.data.length);
+        sessionStorage.setItem("Autarkie_energy_to_grid_kWh_PV_MFH", res.data.data[0].energy_to_grid_kWh_PV_MFH);
       });
   };
 
