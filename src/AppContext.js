@@ -1459,17 +1459,28 @@ class SimulatorProvider extends Component {
       },
     ],
     EGen_elc_kWh_PV_MFH: 0,
+    HH_EGen_elc_kWh_PV_MFH: 0,
     energy_to_grid_kWh_PV_MFH: 0,
+    HH_energy_to_grid_kWh_PV_MFH: 0,
     EGen_sh_kWh_HP_A_W_MFH: 0,
+    HH_EGen_sh_kWh_HP_A_W_MFH: 0,
     EGen_sh_kWh_HP_B_W_MFH: 0,
+    HH_EGen_sh_kWh_HP_B_W_MFH: 0,
     EGen_hw_kWh_HP_A_W_MFH: 0,
+    HH_EGen_hw_kWh_HP_A_W_MFH: 0,
     EGen_hw_kWh_HP_B_W_MFH: 0,
+    HH_EGen_hw_kWh_HP_B_W_MFH: 0,
     Avg_Eff_JAZ_HP_A_W_MFH: 0,
+    HH_Avg_Eff_JAZ_HP_A_W_MFH: 0,
     Avg_Eff_JAZ_HP_B_W_MFH: 0,
+    HH_Avg_Eff_JAZ_HP_B_W_MFH: 0,
     EGen_sh_kWh_EDWW_MFH: 0,
+    HH_EGen_sh_kWh_EDWW_MFH: 0,
     EGen_sh_kWh_EDWW_MFH_Brine: 0,
     EGen_hw_kWh_EDWW_MFH: 0,
+    HH_EGen_hw_kWh_EDWW_MFH: 0,
     EGen_hw_kWh_EDWW_MFH_Brine: 0,
+    HH_EGen_hw_kWh_EDWW_MFH_Brine: 0,
   };
 
   setProduct = (product) => {
@@ -1876,6 +1887,20 @@ class SimulatorProvider extends Component {
     this.setState((prevState) => ({ EGen_sh_kWh_EDWW_MFH: result.EGen_sh_kWh_EDWW_MFH }));
     this.setState((prevState) => ({ EGen_hw_kWh_EDWW_MFH: result.EGen_hw_kWh_EDWW_MFH }));
     this.setState((prevState) => ({ EGen_hw_kWh_EDWW_MFH_Brine: result.EGen_hw_kWh_EDWW_MFH_Brine }));
+  };
+
+  setDatabaseResultHouseHold = (result) => {
+    this.setState((prevState) => ({ HH_EGen_elc_kWh_PV_MFH: result.EGen_elc_kWh_PV_MFH }));
+    this.setState((prevState) => ({ HH_energy_to_grid_kWh_PV_MFH: result.energy_to_grid_kWh_PV_MFH }));
+    this.setState((prevState) => ({ HH_EGen_sh_kWh_HP_A_W_MFH: result.EGen_sh_kWh_HP_A_W_MFH }));
+    this.setState((prevState) => ({ HH_EGen_sh_kWh_HP_B_W_MFH: result.EGen_sh_kWh_HP_B_W_MFH }));
+    this.setState((prevState) => ({ HH_EGen_hw_kWh_HP_A_W_MFH: result.EGen_hw_kWh_HP_A_W_MFH }));
+    this.setState((prevState) => ({ HH_EGen_hw_kWh_HP_B_W_MFH: result.EGen_hw_kWh_HP_B_W_MFH }));
+    this.setState((prevState) => ({ HH_Avg_Eff_JAZ_HP_A_W_MFH: result.Avg_Eff_JAZ_HP_A_W_MFH }));
+    this.setState((prevState) => ({ HH_Avg_Eff_JAZ_HP_B_W_MFH: result.Avg_Eff_JAZ_HP_B_W_MFH }));
+    this.setState((prevState) => ({ HH_EGen_sh_kWh_EDWW_MFH: result.EGen_sh_kWh_EDWW_MFH }));
+    this.setState((prevState) => ({ HH_EGen_hw_kWh_EDWW_MFH: result.EGen_hw_kWh_EDWW_MFH }));
+    this.setState((prevState) => ({ HH_EGen_hw_kWh_EDWW_MFH_Brine: result.EGen_hw_kWh_EDWW_MFH_Brine }));
   };
 
   setHeatpumpCombinedUsage = (result) => {
@@ -2581,17 +2606,28 @@ class SimulatorProvider extends Component {
       dualPreHeatOptionEVLookupTable,
       scenarioInDatabase,
       EGen_elc_kWh_PV_MFH,
+      HH_EGen_elc_kWh_PV_MFH,
       energy_to_grid_kWh_PV_MFH,
+      HH_energy_to_grid_kWh_PV_MFH,
       EGen_sh_kWh_HP_A_W_MFH,
+      HH_EGen_sh_kWh_HP_A_W_MFH,
       EGen_sh_kWh_HP_B_W_MFH,
+      HH_EGen_sh_kWh_HP_B_W_MFH,
       EGen_hw_kWh_HP_A_W_MFH,
+      HH_EGen_hw_kWh_HP_A_W_MFH,
       EGen_hw_kWh_HP_B_W_MFH,
+      HH_EGen_hw_kWh_HP_B_W_MFH,
       Avg_Eff_JAZ_HP_A_W_MFH,
+      HH_Avg_Eff_JAZ_HP_A_W_MFH,
       Avg_Eff_JAZ_HP_B_W_MFH,
+      HH_Avg_Eff_JAZ_HP_B_W_MFH,
       EGen_sh_kWh_EDWW_MFH,
+      HH_EGen_sh_kWh_EDWW_MFH,
       EGen_sh_kWh_EDWW_MFH_Brine,
       EGen_hw_kWh_EDWW_MFH,
+      HH_EGen_hw_kWh_EDWW_MFH,
       EGen_hw_kWh_EDWW_MFH_Brine,
+      HH_EGen_hw_kWh_EDWW_MFH_Brine,
       heatpumpCombinedUsage,
       offgridPVPercentageNoEMS,
       NoEMScombinedEnergyUseKWH,
@@ -2711,6 +2747,7 @@ class SimulatorProvider extends Component {
       setPreHeatTempOption,
       setScenarioInDatabase,
       setDatabaseResult,
+      setDatabaseResultHouseHold,
       setHeatpumpCombinedUsage,
       setOffgridPVPercentageNoEMS,
       setNoEMScombinedEnergyUseKWH,
@@ -2863,17 +2900,28 @@ class SimulatorProvider extends Component {
           dualPreHeatOptionEVLookupTable,
           scenarioInDatabase,
           EGen_elc_kWh_PV_MFH,
+          HH_EGen_elc_kWh_PV_MFH,
           energy_to_grid_kWh_PV_MFH,
+          HH_energy_to_grid_kWh_PV_MFH,
           EGen_sh_kWh_HP_A_W_MFH,
+          HH_EGen_sh_kWh_HP_A_W_MFH,
           EGen_sh_kWh_HP_B_W_MFH,
+          HH_EGen_sh_kWh_HP_B_W_MFH,
           EGen_hw_kWh_HP_A_W_MFH,
+          HH_EGen_hw_kWh_HP_A_W_MFH,
           EGen_hw_kWh_HP_B_W_MFH,
+          HH_EGen_hw_kWh_HP_B_W_MFH,
           Avg_Eff_JAZ_HP_A_W_MFH,
+          HH_Avg_Eff_JAZ_HP_A_W_MFH,
           Avg_Eff_JAZ_HP_B_W_MFH,
+          HH_Avg_Eff_JAZ_HP_B_W_MFH,
           EGen_sh_kWh_EDWW_MFH,
+          HH_EGen_sh_kWh_EDWW_MFH,
           EGen_sh_kWh_EDWW_MFH_Brine,
           EGen_hw_kWh_EDWW_MFH,
+          HH_EGen_hw_kWh_EDWW_MFH,
           EGen_hw_kWh_EDWW_MFH_Brine,
+          HH_EGen_hw_kWh_EDWW_MFH_Brine,
           heatpumpCombinedUsage,
           offgridPVPercentageNoEMS,
           NoEMScombinedEnergyUseKWH,
@@ -2991,6 +3039,7 @@ class SimulatorProvider extends Component {
           setPreHeatTempOption,
           setScenarioInDatabase,
           setDatabaseResult,
+          setDatabaseResultHouseHold,
           setHeatpumpCombinedUsage,
           setOffgridPVPercentageNoEMS,
           setNoEMScombinedEnergyUseKWH,

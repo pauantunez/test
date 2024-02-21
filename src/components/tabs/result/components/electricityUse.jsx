@@ -23,7 +23,6 @@ var entryParam;
 
 function CustomLabelComponent(props) {
   const { x, y, datum, label } = props;
-  console.log("🚀 ~ CustomLabelComponent ~ datum:", datum);
   const imgHeight = props.iconSize;
   const imgWidth = props.iconSize;
   const fontSize = props.fontSize;

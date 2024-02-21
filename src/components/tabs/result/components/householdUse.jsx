@@ -176,16 +176,16 @@ class HouseholdUse extends React.Component {
   }
 
   changeInfoBoxValue = (type, value) => {
-    const { infoBoxCombinedHouseholdUsage, setInfoBoxCombinedHouseholdUsage, noEMSPercentageOffGrid, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { infoBoxCombinedHouseholdUsage, setInfoBoxCombinedHouseholdUsage, noEMSPercentageOffGrid, heatpumpCombinedUsage, HH_energy_to_grid_kWh_PV_MFH, HH_EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, HH_EGen_hw_kWh_EDWW_MFH_Brine, HH_EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, HH_EGen_sh_kWh_EDWW_MFH, HH_Avg_Eff_JAZ_HP_B_W_MFH, HH_Avg_Eff_JAZ_HP_A_W_MFH, HH_EGen_sh_kWh_HP_A_W_MFH, HH_EGen_sh_kWh_HP_B_W_MFH, HH_EGen_hw_kWh_HP_A_W_MFH, HH_EGen_hw_kWh_HP_B_W_MFH } = this.context;
     console.log("INFO BOX: " + value);
 
     this.setState({ infoBoxCombinedHouseholdUsage: value });
   };
 
   householdUsagePercentage = (type) => {
-    const { setInfoBoxCombinedHouseholdUsage, noEMSPercentageOffGrid, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { setInfoBoxCombinedHouseholdUsage, noEMSPercentageOffGrid, heatpumpCombinedUsage, HH_energy_to_grid_kWh_PV_MFH, HH_EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, HH_EGen_hw_kWh_EDWW_MFH_Brine, HH_EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, HH_EGen_sh_kWh_EDWW_MFH, HH_Avg_Eff_JAZ_HP_B_W_MFH, HH_Avg_Eff_JAZ_HP_A_W_MFH, HH_EGen_sh_kWh_HP_A_W_MFH, HH_EGen_sh_kWh_HP_B_W_MFH, HH_EGen_hw_kWh_HP_A_W_MFH, HH_EGen_hw_kWh_HP_B_W_MFH } = this.context;
 
-    var pvUsagePercent = ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(EGen_elc_kWh_PV_MFH)) * 100;
+    var pvUsagePercent = ((parseFloat(HH_EGen_elc_kWh_PV_MFH) - parseFloat(HH_energy_to_grid_kWh_PV_MFH)) / parseFloat(HH_EGen_elc_kWh_PV_MFH)) * 100;
     console.log("HOUSEHOLD USAGE: " + pvUsagePercent);
 
     if (!this.state.infoBoxCombinedHouseholdUsage) {
@@ -198,9 +198,9 @@ class HouseholdUse extends React.Component {
   };
 
   gridFeedPercentage = (type) => {
-    const { setInfoBoxHouseholdGridFeed, infoBoxHouseholdGridFeed, noEMSPercentageOffGrid, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { setInfoBoxHouseholdGridFeed, infoBoxHouseholdGridFeed, noEMSPercentageOffGrid, heatpumpCombinedUsage, HH_energy_to_grid_kWh_PV_MFH, HH_EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, HH_EGen_hw_kWh_EDWW_MFH_Brine, HH_EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, HH_EGen_sh_kWh_EDWW_MFH, HH_Avg_Eff_JAZ_HP_B_W_MFH, HH_Avg_Eff_JAZ_HP_A_W_MFH, HH_EGen_sh_kWh_HP_A_W_MFH, HH_EGen_sh_kWh_HP_B_W_MFH, HH_EGen_hw_kWh_HP_A_W_MFH, HH_EGen_hw_kWh_HP_B_W_MFH } = this.context;
 
-    var gridFeedPercent = 100 - ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(EGen_elc_kWh_PV_MFH)) * 100;
+    var gridFeedPercent = 100 - ((parseFloat(HH_EGen_elc_kWh_PV_MFH) - parseFloat(HH_energy_to_grid_kWh_PV_MFH)) / parseFloat(HH_EGen_elc_kWh_PV_MFH)) * 100;
     console.log("GRID FEED USAGE: " + gridFeedPercent);
 
     if (!this.state.infoBoxHouseholdGridFeed) {
@@ -213,7 +213,7 @@ class HouseholdUse extends React.Component {
   };
 
   gridFeedPercentageNoEMS = (type) => {
-    const { householdNoEMSpvPercent, noEMSPercentageOffGrid, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { householdNoEMSpvPercent, noEMSPercentageOffGrid, heatpumpCombinedUsage, HH_energy_to_grid_kWh_PV_MFH, HH_EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, HH_EGen_hw_kWh_EDWW_MFH_Brine, HH_EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, HH_EGen_sh_kWh_EDWW_MFH, HH_Avg_Eff_JAZ_HP_B_W_MFH, HH_Avg_Eff_JAZ_HP_A_W_MFH, HH_EGen_sh_kWh_HP_A_W_MFH, HH_EGen_sh_kWh_HP_B_W_MFH, HH_EGen_hw_kWh_HP_A_W_MFH, HH_EGen_hw_kWh_HP_B_W_MFH } = this.context;
 
     var gridFeedPercentNoEMS = 100 - parseFloat(householdNoEMSpvPercent);
 

@@ -126,8 +126,7 @@ class HouseholdSwitch extends React.Component {
   };
 
   getResult = (kfw, scenario, noEMSTab) => {
-    const { setLoadingHousehold, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, heatpumpCombinedUsage, setOffgridPVPercentageNoEMS, offgridPVPercentageNoEMS, setDatabaseResult, heatpumpType, setTabToSelectEigenverbrauch, tabToSelectEigenverbrauch, ev, kfwValue, homeStorageSizekWh, pvOutputkWh, pvOutput, tabEntries, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
-    console.log("🚀 ~ HouseholdSwitch ~ aaa:", "aaa");
+    const { setLoadingHousehold, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, heatpumpCombinedUsage, setOffgridPVPercentageNoEMS, offgridPVPercentageNoEMS, setDatabaseResultHouseHold, heatpumpType, setTabToSelectEigenverbrauch, tabToSelectEigenverbrauch, ev, kfwValue, homeStorageSizekWh, pvOutputkWh, pvOutput, tabEntries, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
     if (noEMSTab) {
       var tab = noEMSTab;
     } else {
@@ -143,13 +142,11 @@ class HouseholdSwitch extends React.Component {
           if (noEMSTab) {
             this.energyUsageCombined(res.data.data[0]);
           } else {
-            setDatabaseResult(res.data.data[0]);
+            setDatabaseResultHouseHold(res.data.data[0]);
           }
 
           setLoadingHousehold(false);
         }
-
-        sessionStorage.setItem("Eigenverbrauch_energy_to_grid_kWh_PV_MFH", res.data.data[0].energy_to_grid_kWh_PV_MFH);
       });
   };
 
