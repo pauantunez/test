@@ -448,7 +448,6 @@ class Cost extends React.Component {
     const { electricityCostPVsavings, electricityCostPVEMSsavings, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
     // Ohne PV
     var OHNE_PV_cost1year = Math.abs(parseInt(this.energyUseEuro(5, 1).replace(".", "").replace(",", "")));
-    console.log("🚀 ~ Cost ~ render ~ OHNE_PV_cost1year:", OHNE_PV_cost1year);
     var OHNE_PV_cost20years = Math.abs(parseInt(this.electricityCostNoPV20Years()));
 
     if (sessionStorage.getItem("OHNE_PV_cost1year") == undefined) {
