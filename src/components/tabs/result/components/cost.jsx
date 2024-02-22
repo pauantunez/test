@@ -296,7 +296,7 @@ class Cost extends React.Component {
     return Math.abs(result);
   };
 
-  electricityCostPV1Years = () => {
+  electricityCostPV1Years = (mit_ems) => {
     const { costOverTime, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, pvOutputkWh, homeStorageSize, energyUsagekWh, electricityCost, electricityCostOffGridPercentage } = this.context;
     var investmentCostResult;
 
@@ -312,8 +312,14 @@ class Cost extends React.Component {
     if (investmentCostEUR > 0) {
       investmentCostResult = Math.abs(parseInt(investmentCostEUR) * -1);
     }
-    const result = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - electricityCostOffGridPercentage / 100) * (parseFloat(electricityCost) / 100)));
-    console.log("🚀 ~ Cost ~ result:", result);
+    if (mit_ems === true) {
+      var result = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - electricityCostOffGridPercentage / 100 - 5 / 100) * (parseFloat(electricityCost) / 100)));
+      console.log("🚀 ~ Cost ~ result ems:", result);
+    } else {
+      var result = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - electricityCostOffGridPercentage / 100) * (parseFloat(electricityCost) / 100)));
+      console.log("🚀 ~ Cost ~ result normal:", result);
+    }
+
     return Math.abs(result);
   };
 
@@ -477,7 +483,7 @@ class Cost extends React.Component {
     }
 
     // Mit PV und EMS
-    var costPVandEMS1year = parseInt(Math.abs(costOnlyPV1year * 0.95));
+    var costPVandEMS1year = parseInt(parseInt(this.electricityCostPV1Years(true)));
     var costPVandEMS20years = parseInt(Math.abs(costOnlyPV20years * 0.8));
     if (sessionStorage.getItem("costPVandEMS1year") == null) {
       sessionStorage.setItem("costPVandEMS1year", costPVandEMS1year);
