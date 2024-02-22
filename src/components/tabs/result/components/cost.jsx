@@ -274,8 +274,8 @@ class Cost extends React.Component {
     return result;
   };
 
-  electricityCostPV20Years = () => {
-    const { costOverTime, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, pvOutputkWh, homeStorageSize, energyUsagekWh, electricityCost, electricityCostOffGridPercentage } = this.context;
+  electricityCostPV20Years = (mit_ems) => {
+    const { costOverTime, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, pvOutputkWh, homeStorageSize, energyUsagekWh, electricityCost, electricityCostOffGridPercentage, electricityCostHouseholdPercentage, gridRevenue } = this.context;
     var investmentCostResult;
 
     let PVcostInTable = PVcostLookupTable.find((o) => o.pv === pvOutputkWh);
@@ -290,11 +290,18 @@ class Cost extends React.Component {
     if (investmentCostEUR > 0) {
       investmentCostResult = Math.abs(parseInt(investmentCostEUR) * -1);
     }
-    const anual_cost_first_year = Math.abs((1 - electricityCostOffGridPercentage / 100) * energyUsagekWh * ((parseFloat(electricityCost) / 100) * (1 + 0.02)));
-    const result = Math.abs(((1 - electricityCostOffGridPercentage / 100) * energyUsagekWh * ((parseFloat(electricityCost) / 100) * (1 + 0.02)) * (1 - (0.02 + 1) ** 20)) / 0.02);
 
-    return Math.abs(result + investmentCostResult);
-    /* return Math.abs(result); */
+    if (mit_ems === true) {
+      var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - (electricityCostHouseholdPercentage + 10) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
+      var operating_costs = Math.abs(Math.round((investmentCostResult + 400) * 0.01));
+      var anual_cost_first_year = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - (electricityCostOffGridPercentage + 10) / 100) * energyUsagekWh * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
+    } else {
+      var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - electricityCostHouseholdPercentage / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
+      var operating_costs = Math.abs(Math.round(investmentCostResult * 0.01));
+      var anual_cost_first_year = Math.abs(operating_costs - feed_in_revenue + (1 - electricityCostOffGridPercentage / 100) * energyUsagekWh * ((parseFloat(electricityCost) / 100) * (1 + 0.02)));
+    }
+    var result = Math.abs(Math.round((anual_cost_first_year * (1 - (0.02 + 1) ** 20)) / 0.02));
+    return Math.abs(result);
   };
 
   electricityCostPV1Years = (mit_ems) => {
@@ -488,7 +495,7 @@ class Cost extends React.Component {
 
     // Mit PV und EMS
     var costPVandEMS1year = parseInt(parseInt(this.electricityCostPV1Years(true)));
-    var costPVandEMS20years = parseInt(Math.abs(costOnlyPV20years * 0.8));
+    var costPVandEMS20years = parseInt(this.electricityCostPV20Years(true));
     if (sessionStorage.getItem("costPVandEMS1year") == null) {
       sessionStorage.setItem("costPVandEMS1year", costPVandEMS1year);
     }
