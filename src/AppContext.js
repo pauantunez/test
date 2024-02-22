@@ -199,19 +199,19 @@ class SimulatorProvider extends Component {
     PVcostLookupTable: [
       {
         pv: 4,
-        cost: 9000,
+        cost: 6000,
       },
       {
         pv: 7,
-        cost: 15000,
+        cost: 10000,
       },
       {
         pv: 10,
-        cost: 20000,
+        cost: 13000,
       },
       {
         pv: 14,
-        cost: 24000,
+        cost: 18000,
       },
     ],
     StorageCostLookupTable: [
