@@ -290,7 +290,6 @@ class Cost extends React.Component {
     if (investmentCostEUR > 0) {
       investmentCostResult = Math.abs(parseInt(investmentCostEUR) * -1);
     }
-    //55 8000 35
     const anual_cost_first_year = Math.abs((1 - electricityCostOffGridPercentage / 100) * energyUsagekWh * ((parseFloat(electricityCost) / 100) * (1 + 0.02)));
     const result = Math.abs(((1 - electricityCostOffGridPercentage / 100) * energyUsagekWh * ((parseFloat(electricityCost) / 100) * (1 + 0.02)) * (1 - (0.02 + 1) ** 20)) / 0.02);
 
@@ -299,7 +298,7 @@ class Cost extends React.Component {
   };
 
   electricityCostPV1Years = (mit_ems) => {
-    const { costOverTime, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, pvOutputkWh, homeStorageSize, energyUsagekWh, electricityCost, electricityCostOffGridPercentage } = this.context;
+    const { costOverTime, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, pvOutputkWh, homeStorageSize, energyUsagekWh, electricityCost, electricityCostOffGridPercentage, electricityCostHouseholdPercentage, gridRevenue } = this.context;
     var investmentCostResult;
 
     let PVcostInTable = PVcostLookupTable.find((o) => o.pv === pvOutputkWh);
@@ -314,12 +313,15 @@ class Cost extends React.Component {
     if (investmentCostEUR > 0) {
       investmentCostResult = Math.abs(parseInt(investmentCostEUR) * -1);
     }
+
     if (mit_ems === true) {
-      var result = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - electricityCostOffGridPercentage / 100 - 5 / 100) * (parseFloat(electricityCost) / 100)));
-      console.log("🚀 ~ Cost ~ result ems:", result);
+      var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - (electricityCostHouseholdPercentage + 10) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
+      var operating_costs = Math.abs(Math.round((investmentCostResult + 400) * 0.01));
+      var result = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - (electricityCostOffGridPercentage + 10) / 100) * energyUsagekWh * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
     } else {
-      var result = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - electricityCostOffGridPercentage / 100) * (parseFloat(electricityCost) / 100)));
-      console.log("🚀 ~ Cost ~ result normal:", result);
+      var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - electricityCostHouseholdPercentage / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
+      var operating_costs = Math.abs(Math.round(investmentCostResult * 0.01));
+      var result = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - electricityCostOffGridPercentage / 100) * energyUsagekWh * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
     }
 
     return Math.abs(result);
