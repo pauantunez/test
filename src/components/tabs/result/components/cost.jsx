@@ -312,8 +312,8 @@ class Cost extends React.Component {
     if (investmentCostEUR > 0) {
       investmentCostResult = Math.abs(parseInt(investmentCostEUR) * -1);
     }
-
-    const result = Math.abs(Math.round((1 - electricityCostOffGridPercentage / 100) * energyUsagekWh * (parseFloat(electricityCost) / 100)));
+    const result = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - electricityCostOffGridPercentage / 100) * (parseFloat(electricityCost) / 100)));
+    console.log("🚀 ~ Cost ~ result:", result);
     return Math.abs(result);
   };
 
@@ -496,7 +496,7 @@ class Cost extends React.Component {
     }
 
     // 1 year bar heights
-    var oneYearHeightMitPv = this.getBarHeights(OHNE_PV_cost1year, costOnlyPV1year, savingOnlyPV1year);
+    var oneYearHeightMitPv = this.getBarHeights(OHNE_PV_cost1year, savingOnlyPV1year, costOnlyPV1year);
     var oneYearHeightMitPvAndEMS = this.getBarHeights(OHNE_PV_cost1year, costPVandEMS1year, savingPVandEMS1year);
 
     // 20 years bar heights
