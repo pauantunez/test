@@ -178,7 +178,6 @@ class ElectricityUse extends React.Component {
 
     console.log(electricityUseChart1);
     console.log(electricityUseChart1_svg[0]);
-
     setElectricityUse1SVG(electricityUseChart1_svg[0]);
     setElectricityUse2SVG(electricityUseChart2_svg[0]);
 

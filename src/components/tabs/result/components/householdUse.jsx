@@ -140,30 +140,32 @@ class HouseholdUse extends React.Component {
     const { loading, loadingHousehold, setHouseholdUse1SVG, setHouseholdUse2SVG, setHousehold1SVG_EMS_Hidden, setHousehold2SVG_EMS_Hidden, setHousehold1SVG_NoEMS_Hidden, setHousehold2SVG_NoEMS_Hidden } = this.context;
 
     if (!loadingHousehold) {
-      const householdUseChart1 = document.getElementById("householdUse-1");
-      const householdUseChart2 = document.getElementById("householdUse-2");
-      const householdUseChart1_svg = householdUseChart1.getElementsByTagName("svg");
-      const householdUseChart2_svg = householdUseChart2.getElementsByTagName("svg");
+      setTimeout(() => {
+        const householdUseChart1 = document.getElementById("householdUse-1");
+        const householdUseChart2 = document.getElementById("householdUse-2");
+        const householdUseChart1_svg = householdUseChart1.getElementsByTagName("svg");
+        const householdUseChart2_svg = householdUseChart2.getElementsByTagName("svg");
 
-      const householdUseChart1Hidden = document.getElementById("householdUse-1-hidden");
-      const householdUseChart2Hidden = document.getElementById("householdUse-2-hidden");
-      const householdUseChart1_svg_hidden = householdUseChart1Hidden.getElementsByTagName("svg");
-      const householdUseChart2_svg_hidden = householdUseChart2Hidden.getElementsByTagName("svg");
+        const householdUseChart1Hidden = document.getElementById("householdUse-1-hidden");
+        const householdUseChart2Hidden = document.getElementById("householdUse-2-hidden");
+        const householdUseChart1_svg_hidden = householdUseChart1Hidden.getElementsByTagName("svg");
+        const householdUseChart2_svg_hidden = householdUseChart2Hidden.getElementsByTagName("svg");
 
-      const householdUseChart1_NoEMS_Hidden = document.getElementById("householdUse-1-noEMS-hidden");
-      const householdUseChart2_NoEMS_Hidden = document.getElementById("householdUse-2-noEMS-hidden");
-      const householdUseChart1_svg_noEMS_hidden = householdUseChart1_NoEMS_Hidden.getElementsByTagName("svg");
-      const householdUseChart2_svg_noEMS_hidden = householdUseChart2_NoEMS_Hidden.getElementsByTagName("svg");
+        const householdUseChart1_NoEMS_Hidden = document.getElementById("householdUse-1-noEMS-hidden");
+        const householdUseChart2_NoEMS_Hidden = document.getElementById("householdUse-2-noEMS-hidden");
+        const householdUseChart1_svg_noEMS_hidden = householdUseChart1_NoEMS_Hidden.getElementsByTagName("svg");
+        const householdUseChart2_svg_noEMS_hidden = householdUseChart2_NoEMS_Hidden.getElementsByTagName("svg");
 
-      console.log(householdUseChart1);
-      console.log(householdUseChart2_svg_hidden[0]);
+        console.log(householdUseChart1);
+        console.log(householdUseChart2_svg_hidden[0]);
 
-      setHouseholdUse1SVG(householdUseChart1_svg[0]);
-      setHouseholdUse2SVG(householdUseChart2_svg[0]);
-      setHousehold1SVG_EMS_Hidden(householdUseChart1_svg_hidden[0]);
-      setHousehold2SVG_EMS_Hidden(householdUseChart2_svg_hidden[0]);
-      setHousehold1SVG_NoEMS_Hidden(householdUseChart1_svg_noEMS_hidden[0]);
-      setHousehold2SVG_NoEMS_Hidden(householdUseChart2_svg_noEMS_hidden[0]);
+        setHouseholdUse1SVG(householdUseChart1_svg[0]);
+        setHouseholdUse2SVG(householdUseChart2_svg[0]);
+        setHousehold1SVG_EMS_Hidden(householdUseChart1_svg_hidden[0]);
+        setHousehold2SVG_EMS_Hidden(householdUseChart2_svg_hidden[0]);
+        setHousehold1SVG_NoEMS_Hidden(householdUseChart1_svg_noEMS_hidden[0]);
+        setHousehold2SVG_NoEMS_Hidden(householdUseChart2_svg_noEMS_hidden[0]);
+      }, "1000");
     }
   }
 
