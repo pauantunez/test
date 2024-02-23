@@ -103,6 +103,11 @@ class CustomSwitch extends React.Component {
   }
 
   componentDidMount() {
+    const { offgridEMS } = this.context;
+    this.inputOffgridEMS({ target: { checked: !offgridEMS } });
+    setTimeout(() => {
+      this.inputOffgridEMS({ target: { checked: offgridEMS } });
+    }, "2000");
     this.getInitialResult();
   }
 
@@ -157,6 +162,7 @@ class CustomSwitch extends React.Component {
     }
 
     let tabInTable = tabEntries.find((o) => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === emsValue);
+
     setTabToSelect(tabInTable.Tab);
     // console.log("Tab entries: " + tabInTable)
 

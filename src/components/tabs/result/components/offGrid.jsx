@@ -200,7 +200,6 @@ class OffGrid extends React.Component {
       const offgridChart2_EMS = document.getElementById("offgrid-2-ems-hidden");
       const offgridChart2_EMS_svg = offgridChart2_EMS.getElementsByTagName("svg"); */
       setTimeout(() => {
-        debugger;
         const offgridChart1 = document.getElementById("offgrid-1");
         const offgrid1_svg = offgridChart1.getElementsByTagName("svg");
 
@@ -225,7 +224,7 @@ class OffGrid extends React.Component {
         setOffgrid2SVG_NoEMS_Hidden(offgridChart2_NoEMS_svg[0]);
         setOffgrid1SVG_EMS_Hidden(offgridChart1_EMS_svg[0]);
         setOffgrid2SVG_EMS_Hidden(offgridChart2_EMS_svg[0]);
-      }, "1000");
+      }, "5000");
       /* setOffGrid1SVG(offgrid1_svg[0]);
       setOffGrid2SVG(offgrid2_svg[0]);
       setOffgrid1SVG_NoEMS_Hidden(offgridChart1_NoEMS_svg[0]);
@@ -258,8 +257,11 @@ class OffGrid extends React.Component {
 
     if (offgridEMS === true) {
       var roundedNoEMSGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentage()));
+      console.log("🚀 ~ OffGrid ~ render ~ roundedNoEMSGridUsagePercentage:", roundedNoEMSGridUsagePercentage);
       var roundedNoEMSPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentage() - Math.round(noEMSPercentageOffGrid)));
+      console.log("🚀 ~ OffGrid ~ render ~ roundedNoEMSPvUsagePercentage:", roundedNoEMSPvUsagePercentage);
       var roundedNoEMSPercentageOffGrid = Math.round(parseFloat(noEMSPercentageOffGrid));
+      console.log("🚀 ~ OffGrid ~ render ~ roundedNoEMSPercentageOffGrid:", roundedNoEMSPercentageOffGrid);
       roundedNoEMSPercentageOffGrid = this.adjustPercentage(roundedNoEMSPercentageOffGrid, roundedNoEMSGridUsagePercentage, roundedNoEMSPvUsagePercentage); // Rounded values for VictoryPieDataTest
       if (sessionStorage.getItem("MIT_GridUsagePercentage") != "") {
         sessionStorage.setItem("MIT_GridUsagePercentage", roundedNoEMSGridUsagePercentage);
@@ -284,9 +286,12 @@ class OffGrid extends React.Component {
 
       pieColors = ["#A4ABB3", "#00884A", "#18837E"];
     } else if (offgridEMS === false) {
+      console.log("🚀 ~ OffGrid ~ render ~ offgridEMS:", offgridEMS);
       // Rounded values for VictoryPieDataTest
       var roundedGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentage()));
+      console.log("🚀 ~ OffGrid ~ render ~ roundedGridUsagePercentage:", roundedGridUsagePercentage);
       var roundedPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentage()));
+      console.log("🚀 ~ OffGrid ~ render ~ roundedPvUsagePercentage:", roundedPvUsagePercentage);
       roundedGridUsagePercentage = this.adjustPercentage(roundedGridUsagePercentage, roundedPvUsagePercentage);
 
       if (sessionStorage.getItem("OHNE_GridUsagePercentage") != "") {
