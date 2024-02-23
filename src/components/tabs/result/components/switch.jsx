@@ -174,7 +174,6 @@ class CustomSwitch extends React.Component {
     } else {
       var tab = tabToSelect.toString();
     }
-
     axios
       .get(`https://bosch-endkundentool-api.azurewebsites.net/results`, {
         params: {
@@ -205,7 +204,7 @@ class CustomSwitch extends React.Component {
           Document: kfw,
           ScenNo: scenario,
           ConfigNo: heatpumpType.toString(),
-          Tab: "14",
+          Tab: "25",
         },
       })
       .then((res) => {
