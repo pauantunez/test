@@ -103,11 +103,6 @@ class CustomSwitch extends React.Component {
   }
 
   componentDidMount() {
-    const { offgridEMS } = this.context;
-    this.inputOffgridEMS({ target: { checked: !offgridEMS } });
-    setTimeout(() => {
-      this.inputOffgridEMS({ target: { checked: offgridEMS } });
-    }, "2000");
     this.getInitialResult();
   }
 
@@ -119,6 +114,7 @@ class CustomSwitch extends React.Component {
 
     //call getResult for the correct TAB
     this.getResult(kfwValue + ev, scenarioInDatabase, tabInTable.Tab);
+    this.getResultNoEMS(kfwValue + ev, scenarioInDatabase);
   };
 
   energyUsageCombined = (result) => {
@@ -178,6 +174,7 @@ class CustomSwitch extends React.Component {
     } else {
       var tab = tabToSelect.toString();
     }
+
     axios
       .get(`https://bosch-endkundentool-api.azurewebsites.net/results`, {
         params: {
@@ -197,6 +194,25 @@ class CustomSwitch extends React.Component {
           setLoadingOffGrid(false);
         }
         sessionStorage.setItem("Autarkie_energy_to_grid_kWh_PV_MFH", res.data.data[0].energy_to_grid_kWh_PV_MFH);
+      });
+  };
+
+  getResultNoEMS = (kfw, scenario, noEMSTab) => {
+    const { setLoading, setLoadingOffGrid, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, heatpumpCombinedUsage, setOffgridPVPercentageNoEMS, offgridPVPercentageNoEMS, setDatabaseResultNoEMS, heatpumpType, setTabToSelect, tabToSelect, ev, kfwValue, homeStorageSizekWh, pvOutputkWh, pvOutput, tabEntries, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
+    axios
+      .get(`https://bosch-endkundentool-api.azurewebsites.net/results`, {
+        params: {
+          Document: kfw,
+          ScenNo: scenario,
+          ConfigNo: heatpumpType.toString(),
+          Tab: "14",
+        },
+      })
+      .then((res) => {
+        if (res.data.data.length != 0) {
+          setDatabaseResultNoEMS(res.data.data[0]);
+        }
+        //sessionStorage.setItem("Autarkie_energy_to_grid_kWh_PV_MFH", res.data.data[0].energy_to_grid_kWh_PV_MFH);
       });
   };
 
