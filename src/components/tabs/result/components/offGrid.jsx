@@ -365,8 +365,9 @@ class OffGrid extends React.Component {
                       stroke: "#fff",
                       strokeWidth: 6,
                     },
-                    labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" },
+                    labels: { fill: ({ datum }) => datum.color, fontFamily: "Bosch-Bold", fontSize: "20px" },
                   }}
+                  labelComponent={<VictoryLabel backgroundStyle={{ fill: "white" }} backgroundPadding={6} />}
                 />
               </div>
               <div id="offgrid-2-ems-hidden" style={{ position: "absolute", width: "100%", height: "300px", display: "none" }}>
@@ -401,8 +402,9 @@ class OffGrid extends React.Component {
                       stroke: "#fff",
                       strokeWidth: 6,
                     },
-                    labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" },
+                    labels: { fill: ({ datum }) => datum.color, fontFamily: "Bosch-Bold", fontSize: "20px" },
                   }}
+                  labelComponent={<VictoryLabel backgroundStyle={{ fill: "white" }} backgroundPadding={6} />}
                 />
               </div>
               <div id="offgrid-2-hidden" style={{ position: "absolute", width: "100%", height: "300px", display: "none" }}>
