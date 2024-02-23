@@ -25,6 +25,12 @@ import { ReactComponent as EnergyManagementIcon } from "../../../../assets/img/i
 import { ReactComponent as MagnifyingGlassIcon } from "../../../../assets/img/icons/magnifying_glass_small.svg";
 import { ReactComponent as WrenchIcon } from "../../../../assets/img/icons/wrench_small.svg";
 import { ReactComponent as InfoIcon } from "../../../../assets/img/icons/info_large.svg";
+
+import { ReactComponent as HeatpumpQr } from "../../../../assets/img/heat_pump_qr.svg";
+import { ReactComponent as PhotovoltaicQr } from "../../../../assets/img/photovoltaic_qr.svg";
+import { ReactComponent as WallboxQr } from "../../../../assets/img/wallbox_qr.svg";
+import { ReactComponent as EnergyManagementQr } from "../../../../assets/img/energymanagement_qr.svg";
+
 import { styled } from "@mui/material/styles";
 import Radio from "@mui/material/Radio";
 import Slider from "rc-slider";
@@ -740,12 +746,12 @@ class Additional extends React.Component {
                       <HeatpumpSmallIcon />
                     </div>
                     <div class="panel-body" style={{ fontSize: "10px" }}>
-                      Solarstromrechner
+                      Wärmepumpe
                     </div>
                   </div>
                 </label>
                 <div style={{ marginTop: "20px" }}>
-                  <img src={require(`../../../../assets/img/qrCode.png`)} style={{ width: "90px" }} />
+                  <HeatpumpQr />
                 </div>
               </div>
               <div style={{ width: "25%", borderRight: "1px solid #999" }}>
@@ -756,14 +762,12 @@ class Additional extends React.Component {
                       <PhotovoltaicIcon />
                     </div>
                     <div class="panel-body" style={{ fontSize: "10px" }}>
-                      Hintergrundinfos/
-                      <br />
-                      Definitionen
+                      PV-Anlage
                     </div>
                   </div>
                 </label>
                 <div style={{ marginTop: "20px" }}>
-                  <img src={require(`../../../../assets/img/qrCode.png`)} style={{ width: "90px" }} />
+                  <PhotovoltaicQr />
                 </div>
               </div>
               <div style={{ width: "25%", borderRight: "1px solid #999" }}>
@@ -774,14 +778,12 @@ class Additional extends React.Component {
                       <WallboxIcon />
                     </div>
                     <div class="panel-body" style={{ fontSize: "10px" }}>
-                      Berechnungs-
-                      <br />
-                      grundlage
+                      Wallbox
                     </div>
                   </div>
                 </label>
                 <div style={{ marginTop: "20px" }}>
-                  <img src={require(`../../../../assets/img/qrCode.png`)} style={{ width: "90px" }} />
+                  <WallboxQr />
                 </div>
               </div>
               <div style={{ width: "25%" }}>
@@ -792,14 +794,14 @@ class Additional extends React.Component {
                       <EnergyManagementIcon />
                     </div>
                     <div class="panel-body" style={{ fontSize: "10px" }}>
-                      Kontakte zum
+                      Energiemanage-
                       <br />
-                      Fachbetrieb
+                      mentsystem
                     </div>
                   </div>
                 </label>
                 <div style={{ marginTop: "20px" }}>
-                  <img src={require(`../../../../assets/img/qrCode.png`)} style={{ width: "90px" }} />
+                  <EnergyManagementQr />
                 </div>
               </div>
             </div>
