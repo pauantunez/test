@@ -246,6 +246,17 @@ class HouseholdUse extends React.Component {
     var pieColorsPDFWithEMS = [];
     var pieColorsPDFWithoutEMS = [];
 
+    var roundedGridFeedPercentageNoEMS = Math.round(parseFloat(this.gridFeedPercentageNoEMS()));
+    var roundedHouseholdpvPercentNoEMS = Math.round(parseFloat(householdNoEMSpvPercent));
+    roundedHouseholdpvPercentNoEMS = this.adjustPercentage(roundedHouseholdpvPercentNoEMS, roundedGridFeedPercentageNoEMS);
+
+    if (sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent") != "") {
+      sessionStorage.setItem("Onhe_HouseholdNoEMSpvPercent_NoEMS", roundedHouseholdpvPercentNoEMS);
+    }
+    if (sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS") != "") {
+      sessionStorage.setItem("Onhe_GridFeedPercentage_NoEMS", roundedGridFeedPercentageNoEMS);
+    }
+
     if (householdEMS === true) {
       // Rounded values for VictoryPieData2
       var roundedGridFeedPercentage = Math.round(parseFloat(this.gridFeedPercentage()));
@@ -307,8 +318,8 @@ class HouseholdUse extends React.Component {
     pieColorsPDFWithEMS = ["#A4ABB3", "#00884A", "#18837E"];
 
     VictoryPieDataPDFWithoutEMS = [
-      { x: 3, y: parseInt(sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS")), name: "grid", label: sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS") + " %", img: "img/grid_in.svg", color: "#A4ABB3" },
-      { x: 1, y: parseInt(sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent")), name: "pv", label: sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent") + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
+      { x: 3, y: parseInt(sessionStorage.getItem("Onhe_GridFeedPercentage_NoEMS")), name: "grid", label: sessionStorage.getItem("Onhe_GridFeedPercentage_NoEMS") + " %", img: "img/grid_in.svg", color: "#A4ABB3" },
+      { x: 1, y: parseInt(sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent_NoEMS")), name: "pv", label: sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent_NoEMS") + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
     ];
     pieColorsPDFWithoutEMS = ["#A4ABB3", "#18837E"];
 

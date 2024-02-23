@@ -114,6 +114,7 @@ class HouseholdSwitch extends React.Component {
 
     //call getResult for the correct TAB
     this.getResult(kfwValue + ev, scenarioInDatabase, tabInTable.Tab);
+    this.getResultNoEMS(kfwValue + ev, scenarioInDatabase);
   };
 
   energyUsageCombined = (result) => {
@@ -132,7 +133,6 @@ class HouseholdSwitch extends React.Component {
     } else {
       var tab = tabToSelectEigenverbrauch.toString();
     }
-
     axios
       .get(`https://bosch-endkundentool-api.azurewebsites.net/results`, {
         params: { Document: kfw, ScenNo: scenario, ConfigNo: heatpumpType.toString(), Tab: tab },
@@ -146,6 +146,25 @@ class HouseholdSwitch extends React.Component {
           }
 
           setLoadingHousehold(false);
+        }
+      });
+  };
+
+  getResultNoEMS = (kfw, scenario, noEMSTab) => {
+    const { setLoadingHousehold, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, heatpumpCombinedUsage, setOffgridPVPercentageNoEMS, offgridPVPercentageNoEMS, setDatabaseResultHouseHoldNoEMS, heatpumpType, setTabToSelectEigenverbrauch, tabToSelectEigenverbrauch, ev, kfwValue, homeStorageSizekWh, pvOutputkWh, pvOutput, tabEntries, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
+
+    axios
+      .get(`https://bosch-endkundentool-api.azurewebsites.net/results`, {
+        params: {
+          Document: kfw,
+          ScenNo: scenario,
+          ConfigNo: heatpumpType.toString(),
+          Tab: "14",
+        },
+      })
+      .then((res) => {
+        if (res.data.data.length != 0) {
+          setDatabaseResultHouseHoldNoEMS(res.data.data[0]);
         }
       });
   };

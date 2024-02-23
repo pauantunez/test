@@ -1940,6 +1940,20 @@ class SimulatorProvider extends Component {
     this.setState((prevState) => ({ HH_EGen_hw_kWh_EDWW_MFH_Brine: result.EGen_hw_kWh_EDWW_MFH_Brine }));
   };
 
+  setDatabaseResultHouseHoldNoEMS = (result) => {
+    this.setState((prevState) => ({ HH_EGen_elc_kWh_PV_MFH_NoEMS: result.EGen_elc_kWh_PV_MFH }));
+    this.setState((prevState) => ({ HH_energy_to_grid_kWh_PV_MFH_NoEMS: result.energy_to_grid_kWh_PV_MFH }));
+    this.setState((prevState) => ({ HH_EGen_sh_kWh_HP_A_W_MFH_NoEMS: result.EGen_sh_kWh_HP_A_W_MFH }));
+    this.setState((prevState) => ({ HH_EGen_sh_kWh_HP_B_W_MFH_NoEMS: result.EGen_sh_kWh_HP_B_W_MFH }));
+    this.setState((prevState) => ({ HH_EGen_hw_kWh_HP_A_W_MFH_NoEMS: result.EGen_hw_kWh_HP_A_W_MFH }));
+    this.setState((prevState) => ({ HH_EGen_hw_kWh_HP_B_W_MFH_NoEMS: result.EGen_hw_kWh_HP_B_W_MFH }));
+    this.setState((prevState) => ({ HH_Avg_Eff_JAZ_HP_A_W_MFH_NoEMS: result.Avg_Eff_JAZ_HP_A_W_MFH }));
+    this.setState((prevState) => ({ HH_Avg_Eff_JAZ_HP_B_W_MFH_NoEMS: result.Avg_Eff_JAZ_HP_B_W_MFH }));
+    this.setState((prevState) => ({ HH_EGen_sh_kWh_EDWW_MFH_NoEMS: result.EGen_sh_kWh_EDWW_MFH }));
+    this.setState((prevState) => ({ HH_EGen_hw_kWh_EDWW_MFH_NoEMS: result.EGen_hw_kWh_EDWW_MFH }));
+    this.setState((prevState) => ({ HH_EGen_hw_kWh_EDWW_MFH_Brine_NoEMS: result.EGen_hw_kWh_EDWW_MFH_Brine }));
+  };
+
   setHeatpumpCombinedUsage = (result) => {
     this.setState((prevState) => ({ heatpumpCombinedUsage: result }));
   };
@@ -2809,6 +2823,7 @@ class SimulatorProvider extends Component {
       setDatabaseResult,
       setDatabaseResultNoEMS,
       setDatabaseResultHouseHold,
+      setDatabaseResultHouseHoldNoEMS,
       setHeatpumpCombinedUsage,
       setOffgridPVPercentageNoEMS,
       setNoEMScombinedEnergyUseKWH,
@@ -3125,6 +3140,7 @@ class SimulatorProvider extends Component {
           setDatabaseResult,
           setDatabaseResultNoEMS,
           setDatabaseResultHouseHold,
+          setDatabaseResultHouseHoldNoEMS,
           setHeatpumpCombinedUsage,
           setOffgridPVPercentageNoEMS,
           setNoEMScombinedEnergyUseKWH,
