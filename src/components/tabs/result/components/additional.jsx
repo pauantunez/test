@@ -146,8 +146,8 @@ class Additional extends React.Component {
     var autarkiegradWithEMS = mitNoEMSPercentage + mitPvUsagePercentage;
 
     // Ohne
-    var ohneGridUsagePercentage = parseInt(sessionStorage.getItem("OHNE_GridUsagePercentage"));
-    var ohnePvUsagePercentage = parseInt(sessionStorage.getItem("OHNE_PvUsagePercentage"));
+    var ohneGridUsagePercentage = parseInt(sessionStorage.getItem("OHNE_GridUsagePercentage_NoEMS"));
+    var ohnePvUsagePercentage = parseInt(sessionStorage.getItem("OHNE_PvUsagePercentage_NoEMS"));
 
     //household-use
     // Mit
@@ -157,8 +157,8 @@ class Additional extends React.Component {
     var eigenverbrauchsanteil = MIT_HouseholdUsagePercentage + MIT_HouseholdNoEMSpvPercent;
 
     // Ohne
-    var Onhe_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent"));
-    var Onhe_GridFeedPercentageNoEMS = parseInt(sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS"));
+    var Onhe_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent_NoEMS"));
+    var Onhe_GridFeedPercentageNoEMS = parseInt(sessionStorage.getItem("Onhe_GridFeedPercentage_NoEMS"));
 
     const addFooters = (doc) => {
       const pageCount = doc.internal.getNumberOfPages();
