@@ -54,24 +54,6 @@ class ResultStep1 extends React.Component {
     sessionStorage.clear();
   }
 
-  energyUsageCombined = () => {
-    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
-    var Avg_Eff_JAZ_HP;
-
-    if (heatpumpType === "1") {
-      Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_A_W_MFH;
-    } else {
-      Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_B_W_MFH;
-    }
-
-    //Enegery usage heatpump
-    var energyUsageHeatpump = (parseFloat(EGen_sh_kWh_HP_A_W_MFH) + parseFloat(EGen_sh_kWh_HP_B_W_MFH) + parseFloat(EGen_hw_kWh_HP_A_W_MFH) + parseFloat(EGen_hw_kWh_HP_B_W_MFH)) / parseFloat(Avg_Eff_JAZ_HP);
-
-    //Energy usage heating rod
-    var energyUsageHeatingRod = (parseFloat(EGen_sh_kWh_EDWW_MFH) + parseFloat(EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(EGen_hw_kWh_EDWW_MFH) + parseFloat(EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
-    return Math.round(energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH);
-  };
-
   inputPower_kW_PV_MFH = (event) => {
     const { overlayToggle, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH } = this.context;
 
@@ -102,10 +84,7 @@ class ResultStep1 extends React.Component {
     const { t } = this.props;
     const { overlayToggle } = this.state;
     const { Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption } = this.context;
-    var energyUsageCombined = this.energyUsageCombined();
-    if (sessionStorage.getItem("energyUsageCombined") != "") {
-      sessionStorage.setItem("energyUsageCombined", energyUsageCombined);
-    }
+
     return (
       <div style={{ marginLeft: "3%", marginRight: "3%" }}>
         <h3 style={{ display: "flex", justifyContent: "flex-start", textAlign: "left", fontSize: "24px" }}>Ergebnis Teil 1: Stromkosten und Amortisationszeit Ihrer PV-Anlage</h3>

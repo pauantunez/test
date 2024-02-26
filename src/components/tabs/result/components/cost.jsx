@@ -150,17 +150,24 @@ class Cost extends React.Component {
 
   componentWillMount() {
     const { products, btnThemes, fonts, setFwdBtn } = this.context;
-
     setFwdBtn(false);
   }
 
   componentDidMount() {
-    this.runningCostPVonly();
+    const { loading } = this.context;
+    if (!loading) {
+      this.energyUsageCombined();
+      this.runningCostPVonly();
+    }
   }
 
   componentDidUpdate() {
-    this.resultWithPV();
-    this.resultWithPVandEMS();
+    const { loading } = this.context;
+    if (!loading) {
+      this.energyUsageCombined();
+      this.resultWithPV();
+      this.resultWithPVandEMS();
+    }
   }
 
   inputPower_kW_PV_MFH = (event) => {
@@ -191,8 +198,8 @@ class Cost extends React.Component {
 
   energyUseEuro = (divided, years, bar) => {
     const { electricityCost, costOverTime } = this.context;
-
     var timeToNum;
+
     if (this.state.displayed == undefined) {
       timeToNum = parseInt(years);
     } else {
@@ -204,7 +211,7 @@ class Cost extends React.Component {
     }
     if (!bar) {
       if (years === 1) {
-        // return '- ' + Math.round(sessionStorage.getItem("energyUsageCombined") * (electricityCost / 100) / 5 * divided * timeToNum).toLocaleString("de-DE") + ' €';
+        // return '- ' + Math.round(parseInt(sessionStorage.getItem("energyUsageCombined")) * (electricityCost / 100) / 5 * divided * timeToNum).toLocaleString("de-DE") + ' €';
         return Math.round(((parseInt(sessionStorage.getItem("energyUsageCombined")) * (electricityCost / 100)) / 5) * divided * timeToNum).toLocaleString("de-DE") + " €";
       } else {
         // return '- ' + parseInt(this.electricityCostNoPV20Years() / 5 * divided).toLocaleString("de-DE") + ' €'
@@ -459,317 +466,341 @@ class Cost extends React.Component {
     return parseInt((value / 5) * step).toLocaleString("de-DE");
   };
 
+  energyUsageCombined = () => {
+    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    var Avg_Eff_JAZ_HP;
+    if (heatpumpType === "1") {
+      Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_A_W_MFH;
+    } else {
+      Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_B_W_MFH;
+    }
+
+    //Enegery usage heatpump
+    var energyUsageHeatpump = (parseFloat(EGen_sh_kWh_HP_A_W_MFH) + parseFloat(EGen_sh_kWh_HP_B_W_MFH) + parseFloat(EGen_hw_kWh_HP_A_W_MFH) + parseFloat(EGen_hw_kWh_HP_B_W_MFH)) / parseFloat(Avg_Eff_JAZ_HP);
+
+    //Energy usage heating rod
+    var energyUsageHeatingRod = (parseFloat(EGen_sh_kWh_EDWW_MFH) + parseFloat(EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(EGen_hw_kWh_EDWW_MFH) + parseFloat(EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
+
+    const energyUsageCombined = Math.round(energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH);
+    sessionStorage.setItem("energyUsageCombined", energyUsageCombined);
+  };
+
   render() {
-    const { t } = this.props;
-    const { overlayToggle } = this.state;
-    const { electricityCostPVsavings, electricityCostPVEMSsavings, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, electricityCost, heatpumpType, costOverTime } = this.context;
-    // Ohne PV
-    var OHNE_PV_cost1year = Math.abs(parseInt(this.energyUseEuro(5, 1).replace(".", "").replace(",", "")));
-    console.log("🚀 ~ Cost ~ render ~ OHNE_PV_cost1year:", OHNE_PV_cost1year);
-    var OHNE_PV_cost20years = Math.abs(parseInt(this.electricityCostNoPV20Years()));
+    const { loading } = this.context;
 
-    if (sessionStorage.getItem("OHNE_PV_cost1year") == undefined) {
-      sessionStorage.setItem("OHNE_PV_cost1year", OHNE_PV_cost1year);
-    }
-    if (sessionStorage.getItem("OHNE_PV_cost20years") == undefined) {
-      sessionStorage.setItem("OHNE_PV_cost20years", OHNE_PV_cost20years);
-    }
+    if (loading) {
+      return <div>Loading...</div>;
+    } else {
+      const { t } = this.props;
+      const { overlayToggle } = this.state;
+      const { electricityCostPVsavings, electricityCostPVEMSsavings, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
+      // Ohne PV
+      var OHNE_PV_cost1year = Math.abs(parseInt(this.energyUseEuro(5, 1).replace(".", "").replace(",", "")));
+      var OHNE_PV_cost20years = Math.abs(parseInt(this.electricityCostNoPV20Years()));
 
-    var costOnlyPV1year = parseInt(this.electricityCostPV1Years());
-    var costOnlyPV20years = parseInt(this.electricityCostPV20Years());
+      if (sessionStorage.getItem("OHNE_PV_cost1year") == undefined) {
+        sessionStorage.setItem("OHNE_PV_cost1year", OHNE_PV_cost1year);
+      }
+      if (sessionStorage.getItem("OHNE_PV_cost20years") == undefined) {
+        sessionStorage.setItem("OHNE_PV_cost20years", OHNE_PV_cost20years);
+      }
 
-    if (sessionStorage.getItem("costOnlyPV1year") == undefined) {
-      sessionStorage.setItem("costOnlyPV1year", costOnlyPV1year);
-    }
-    if (sessionStorage.getItem("costOnlyPV20years") == undefined) {
-      sessionStorage.setItem("costOnlyPV20years", costOnlyPV20years);
-    }
+      var costOnlyPV1year = parseInt(this.electricityCostPV1Years());
+      var costOnlyPV20years = parseInt(this.electricityCostPV20Years());
 
-    var savingOnlyPV1year = OHNE_PV_cost1year - costOnlyPV1year;
-    var savingOnlyPV20years = OHNE_PV_cost20years - costOnlyPV20years;
-    if (sessionStorage.getItem("savingOnlyPV1year") == undefined) {
-      sessionStorage.setItem("savingOnlyPV1year", savingOnlyPV1year);
-    }
-    if (sessionStorage.getItem("savingOnlyPV20years") == undefined) {
-      sessionStorage.setItem("savingOnlyPV20years", savingOnlyPV20years);
-    }
+      if (sessionStorage.getItem("costOnlyPV1year") == undefined) {
+        sessionStorage.setItem("costOnlyPV1year", costOnlyPV1year);
+      }
+      if (sessionStorage.getItem("costOnlyPV20years") == undefined) {
+        sessionStorage.setItem("costOnlyPV20years", costOnlyPV20years);
+      }
 
-    // Mit PV und EMS
-    var costPVandEMS1year = parseInt(parseInt(this.electricityCostPV1Years(true)));
-    var costPVandEMS20years = parseInt(this.electricityCostPV20Years(true));
-    if (sessionStorage.getItem("costPVandEMS1year") == null) {
-      sessionStorage.setItem("costPVandEMS1year", costPVandEMS1year);
-    }
-    if (sessionStorage.getItem("costPVandEMS20years") == null) {
-      sessionStorage.setItem("costPVandEMS20years", costPVandEMS20years);
-    }
+      var savingOnlyPV1year = OHNE_PV_cost1year - costOnlyPV1year;
+      var savingOnlyPV20years = OHNE_PV_cost20years - costOnlyPV20years;
+      if (sessionStorage.getItem("savingOnlyPV1year") == undefined) {
+        sessionStorage.setItem("savingOnlyPV1year", savingOnlyPV1year);
+      }
+      if (sessionStorage.getItem("savingOnlyPV20years") == undefined) {
+        sessionStorage.setItem("savingOnlyPV20years", savingOnlyPV20years);
+      }
 
-    var savingPVandEMS1year = OHNE_PV_cost1year - costPVandEMS1year;
-    var savingPVandEMS20years = OHNE_PV_cost20years - costPVandEMS20years;
-    if (sessionStorage.getItem("savingPVandEMS1year") == null) {
-      sessionStorage.setItem("savingPVandEMS1year", savingPVandEMS1year);
-    }
-    if (sessionStorage.getItem("savingPVandEMS20years") == null) {
-      sessionStorage.setItem("savingPVandEMS20years", savingPVandEMS20years);
-    }
+      // Mit PV und EMS
+      var costPVandEMS1year = parseInt(parseInt(this.electricityCostPV1Years(true)));
+      var costPVandEMS20years = parseInt(this.electricityCostPV20Years(true));
+      if (sessionStorage.getItem("costPVandEMS1year") == null) {
+        sessionStorage.setItem("costPVandEMS1year", costPVandEMS1year);
+      }
+      if (sessionStorage.getItem("costPVandEMS20years") == null) {
+        sessionStorage.setItem("costPVandEMS20years", costPVandEMS20years);
+      }
 
-    // 1 year bar heights
-    var oneYearHeightMitPv = this.getBarHeights(OHNE_PV_cost1year, costOnlyPV1year, savingOnlyPV1year);
-    var oneYearHeightMitPvAndEMS = this.getBarHeights(OHNE_PV_cost1year, costPVandEMS1year, savingPVandEMS1year);
+      var savingPVandEMS1year = OHNE_PV_cost1year - costPVandEMS1year;
+      var savingPVandEMS20years = OHNE_PV_cost20years - costPVandEMS20years;
+      if (sessionStorage.getItem("savingPVandEMS1year") == null) {
+        sessionStorage.setItem("savingPVandEMS1year", savingPVandEMS1year);
+      }
+      if (sessionStorage.getItem("savingPVandEMS20years") == null) {
+        sessionStorage.setItem("savingPVandEMS20years", savingPVandEMS20years);
+      }
 
-    // 20 years bar heights
-    var twentyYearsHeightMitPv = this.getBarHeights(OHNE_PV_cost20years, costOnlyPV20years, savingOnlyPV20years);
-    var twentyYearsHeightMitPvAndEms = this.getBarHeights(OHNE_PV_cost20years, costPVandEMS20years, savingPVandEMS20years);
+      // 1 year bar heights
+      var oneYearHeightMitPv = this.getBarHeights(OHNE_PV_cost1year, costOnlyPV1year, savingOnlyPV1year);
+      var oneYearHeightMitPvAndEMS = this.getBarHeights(OHNE_PV_cost1year, costPVandEMS1year, savingPVandEMS1year);
 
-    // Bar heights
-    // var barHeights1year = this.adjustBarHeight(costOverTime, 212, OHNE_PV_cost1year, Math.abs(electricityCostPVsavings), Math.abs(electricityCostPVEMSsavings));
-    // var barHeights20years = this.adjustBarHeight(costOverTime, 212, OHNE_PV_cost20years, Math.abs(electricityCostPVsavings), Math.abs(electricityCostPVEMSsavings));
-    // var selectedBarHeights = costOverTime == "1" ? barHeights1year : barHeights20years;
+      // 20 years bar heights
+      var twentyYearsHeightMitPv = this.getBarHeights(OHNE_PV_cost20years, costOnlyPV20years, savingOnlyPV20years);
+      var twentyYearsHeightMitPvAndEms = this.getBarHeights(OHNE_PV_cost20years, costPVandEMS20years, savingPVandEMS20years);
 
-    return (
-      <div>
-        <div class="flexRow" style={{ marginBottom: "30px" }}>
-          <div>
-            <label>
-              {this.state.displayed === undefined && <input type="radio" name="heating" value="1" class={this.context.selectedTheme === "buderus" ? "card-input-element-result" : "card-input-element"} checked={costOverTime === "1"} onChange={this.inputCostOverTime} />}
-              {this.state.displayed === "single" && <input type="radio" name="single-year" id="single-year" value="1" class={this.context.selectedTheme === "buderus" ? "card-input-element-result" : "card-input-element"} checked="true" />}
-              <div class="panel panel-default card-input-wide background-light-grey" style={{ height: "40px", width: "100%", fontSize: "14px", margin: "0", border: "none" }}>
-                <div class="panel-body">Gesamtkosten pro Jahr</div>
-              </div>
-            </label>
-          </div>
-          <div>
-            <label>
-              {this.state.displayed === undefined && <input type="radio" name="heating" value="20" class={this.context.selectedTheme === "buderus" ? "card-input-element-result" : "card-input-element"} checked={costOverTime === "20"} onChange={this.inputCostOverTime} />}
-              {this.state.displayed === "multi" && <input type="radio" name="multi-year" id="multi-year" value="20" class={this.context.selectedTheme === "buderus" ? "card-input-element-result" : "card-input-element"} checked="true" />}
-              <div class="panel panel-default card-input-wide background-light-grey" style={{ height: "40px", width: "100%", fontSize: "14px", margin: "0", border: "none" }}>
-                <div class="panel-body trackeable" data-event="gesamtkosten-strom-20-years">
-                  Gesamtkosten über 20 Jahre
+      // Bar heights
+      // var barHeights1year = this.adjustBarHeight(costOverTime, 212, OHNE_PV_cost1year, Math.abs(electricityCostPVsavings), Math.abs(electricityCostPVEMSsavings));
+      // var barHeights20years = this.adjustBarHeight(costOverTime, 212, OHNE_PV_cost20years, Math.abs(electricityCostPVsavings), Math.abs(electricityCostPVEMSsavings));
+      // var selectedBarHeights = costOverTime == "1" ? barHeights1year : barHeights20years;
+
+      return (
+        <div>
+          <div class="flexRow" style={{ marginBottom: "30px" }}>
+            <div>
+              <label>
+                {this.state.displayed === undefined && <input type="radio" name="heating" value="1" class={this.context.selectedTheme === "buderus" ? "card-input-element-result" : "card-input-element"} checked={costOverTime === "1"} onChange={this.inputCostOverTime} />}
+                {this.state.displayed === "single" && <input type="radio" name="single-year" id="single-year" value="1" class={this.context.selectedTheme === "buderus" ? "card-input-element-result" : "card-input-element"} checked="true" />}
+                <div class="panel panel-default card-input-wide background-light-grey" style={{ height: "40px", width: "100%", fontSize: "14px", margin: "0", border: "none" }}>
+                  <div class="panel-body">Gesamtkosten pro Jahr</div>
                 </div>
-              </div>
-            </label>
-          </div>
-        </div>
-
-        <div style={{ display: "flex", flexDirection: "row", width: "100%", height: "220px" }}>
-          <div style={{ display: "flex", flexDirection: "row", width: "100%", marginLeft: "17%", zIndex: "99999" }}>
-            {/* ohne PV */}
-            <div style={{ display: "flex", width: "73px", height: `212px`, background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", marginTop: "auto" }}>
-              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
-                {costOverTime == "1" && OHNE_PV_cost1year.toLocaleString("de-DE")}
-                {costOverTime == "1" && <span>&nbsp;€</span>}
-                {costOverTime == "20" && OHNE_PV_cost20years.toLocaleString("de-DE")}
-                {costOverTime == "20" && <span>&nbsp;€</span>}
-              </div>
+              </label>
             </div>
-
-            {/* Mit PV Price */}
-            <div style={{ width: "73px", color: "white", marginLeft: "10%", zIndex: "99999", marginTop: "auto" }}>
-              {/* Pattern bar 1 year */}
-              {costOverTime == "1" && (
-                <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPv["savings"]}px`, color: "white" }}>
-                  <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                        {savingOnlyPV1year.toLocaleString("DE-de")}
-                        <span>&nbsp;€</span>
-                      </span>
-                    </div>
+            <div>
+              <label>
+                {this.state.displayed === undefined && <input type="radio" name="heating" value="20" class={this.context.selectedTheme === "buderus" ? "card-input-element-result" : "card-input-element"} checked={costOverTime === "20"} onChange={this.inputCostOverTime} />}
+                {this.state.displayed === "multi" && <input type="radio" name="multi-year" id="multi-year" value="20" class={this.context.selectedTheme === "buderus" ? "card-input-element-result" : "card-input-element"} checked="true" />}
+                <div class="panel panel-default card-input-wide background-light-grey" style={{ height: "40px", width: "100%", fontSize: "14px", margin: "0", border: "none" }}>
+                  <div class="panel-body trackeable" data-event="gesamtkosten-strom-20-years">
+                    Gesamtkosten über 20 Jahre
                   </div>
                 </div>
-              )}
-
-              {/* Pattern bar 20 years */}
-              {costOverTime == "20" && (
-                <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPv["savings"]}px`, color: "white" }}>
-                  <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                        {savingOnlyPV20years.toLocaleString("DE-de")}
-                        <span>&nbsp;€</span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Blue bar 1 year */}
-              {costOverTime == "1" && (
-                <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPv["cost"]}px`, color: "white" }}>
-                  <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                        {costOnlyPV1year.toLocaleString("de-DE")}
-                        <span>&nbsp;€</span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Blue bar 20 years */}
-              {costOverTime == "20" && (
-                <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPv["cost"]}px`, color: "white" }}>
-                  <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                        {costOnlyPV20years.toLocaleString("de-DE")}
-                        <span>&nbsp;€</span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Mit PV und EMS */}
-            <div style={{ width: "73px", color: "white", marginLeft: "10%", zIndex: "99999", marginTop: "auto" }}>
-              {/* Pattern bar 1 year */}
-              {costOverTime == "1" && (
-                <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPvAndEMS["savings"]}px`, color: "white" }}>
-                  <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                        {savingPVandEMS1year.toLocaleString("DE-de")}
-                        <span>&nbsp;€</span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Pattern bar 20 years */}
-              {costOverTime == "20" && (
-                <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPvAndEms["savings"]}px`, color: "white" }}>
-                  <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                        {savingPVandEMS20years.toLocaleString("DE-de")}
-                        <span>&nbsp;€</span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Blue bar 1 year */}
-              {costOverTime == "1" && (
-                <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPvAndEMS["cost"]}px`, color: "white" }}>
-                  <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                        {costPVandEMS1year.toLocaleString("de-DE")}
-                        <span>&nbsp;€</span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Blue bar 20 years */}
-              {costOverTime == "20" && (
-                <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPvAndEms["cost"]}px`, color: "white" }}>
-                  <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                        {costPVandEMS20years.toLocaleString("de-DE")}
-                        <span>&nbsp;€</span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              )}
+              </label>
             </div>
           </div>
 
-          <div class="cost-chart-width" style={{ position: "absolute", zIndex: "99998" }}>
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <div class="bar-chart-left-legend">
-                <div>
-                  {costOverTime == "1" && this.divideValuesForChart(5, OHNE_PV_cost1year) + " €"}
-                  {costOverTime == "20" && this.divideValuesForChart(5, OHNE_PV_cost20years) + " €"}
-                </div>
-                <div>
-                  {costOverTime == "1" && this.divideValuesForChart(4, OHNE_PV_cost1year) + " €"}
-                  {costOverTime == "20" && this.divideValuesForChart(4, OHNE_PV_cost20years) + " €"}
-                </div>
-                <div>
-                  {costOverTime == "1" && this.divideValuesForChart(3, OHNE_PV_cost1year) + " €"}
-                  {costOverTime == "20" && this.divideValuesForChart(3, OHNE_PV_cost20years) + " €"}
-                </div>
-                <div>
-                  {costOverTime == "1" && this.divideValuesForChart(2, OHNE_PV_cost1year) + " €"}
-                  {costOverTime == "20" && this.divideValuesForChart(2, OHNE_PV_cost20years) + " €"}
-                </div>
-                <div>
-                  {costOverTime == "1" && this.divideValuesForChart(1, OHNE_PV_cost1year) + " €"}
-                  {costOverTime == "20" && this.divideValuesForChart(1, OHNE_PV_cost20years) + " €"}
-                </div>
-                <div>
-                  {costOverTime == "1" && this.divideValuesForChart(0, OHNE_PV_cost1year) + " €"}
-                  {costOverTime == "20" && this.divideValuesForChart(0, OHNE_PV_cost20years) + " €"}
+          <div style={{ display: "flex", flexDirection: "row", width: "100%", height: "220px" }}>
+            <div style={{ display: "flex", flexDirection: "row", width: "100%", marginLeft: "17%", zIndex: "99999" }}>
+              {/* ohne PV */}
+              <div style={{ display: "flex", width: "73px", height: `212px`, background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", marginTop: "auto" }}>
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
+                  {costOverTime == "1" && OHNE_PV_cost1year.toLocaleString("de-DE")}
+                  {costOverTime == "1" && <span>&nbsp;€</span>}
+                  {costOverTime == "20" && OHNE_PV_cost20years.toLocaleString("de-DE")}
+                  {costOverTime == "20" && <span>&nbsp;€</span>}
                 </div>
               </div>
-              <div data-html2canvas-ignore class="cost-chart-width" style={{ display: "flex", flexDirection: "column", marginLeft: "3px" }}>
-                <div class="cost-chart-width" style={{ marginTop: "7px", height: "1px", width: "450px", borderBottom: "1px solid #EFF1F2" }}></div>
-                <div class="cost-chart-width" style={{ marginTop: "19px", height: "1px", width: "450px", borderBottom: "1px solid #EFF1F2" }}></div>
-                <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "450px", borderBottom: "1px solid #EFF1F2" }}></div>
-                <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "450px", borderBottom: "1px solid #EFF1F2" }}></div>
-                <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "450px", borderBottom: "1px solid #EFF1F2" }}></div>
-                {/* <div class="cost-chart-width" style={{marginTop: '18px', height: '1px', width: '450px', borderBottom: '1px solid #000'}}></div> */}
-                <div class="cost-chart-width" style={{ marginTop: "19px", height: "1px", width: "450px", borderBottom: "1px solid #EFF1F2" }}></div>
-                <div class="cost-chart-width" style={{ marginTop: "19px", height: "1px", width: "450px", borderBottom: "1px solid #EFF1F2" }}></div>
-                <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "450px", borderBottom: "1px solid #EFF1F2" }}></div>
-                <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "450px", borderBottom: "1px solid #EFF1F2" }}></div>
-                <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "450px", borderBottom: "1px solid #EFF1F2" }}></div>
+
+              {/* Mit PV Price */}
+              <div style={{ width: "73px", color: "white", marginLeft: "10%", zIndex: "99999", marginTop: "auto" }}>
+                {/* Pattern bar 1 year */}
+                {costOverTime == "1" && (
+                  <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPv["savings"]}px`, color: "white" }}>
+                    <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
+                        <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                          {savingOnlyPV1year.toLocaleString("DE-de")}
+                          <span>&nbsp;€</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Pattern bar 20 years */}
+                {costOverTime == "20" && (
+                  <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPv["savings"]}px`, color: "white" }}>
+                    <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
+                        <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                          {savingOnlyPV20years.toLocaleString("DE-de")}
+                          <span>&nbsp;€</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Blue bar 1 year */}
+                {costOverTime == "1" && (
+                  <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPv["cost"]}px`, color: "white" }}>
+                    <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
+                        <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                          {costOnlyPV1year.toLocaleString("de-DE")}
+                          <span>&nbsp;€</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Blue bar 20 years */}
+                {costOverTime == "20" && (
+                  <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPv["cost"]}px`, color: "white" }}>
+                    <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
+                        <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                          {costOnlyPV20years.toLocaleString("de-DE")}
+                          <span>&nbsp;€</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Mit PV und EMS */}
+              <div style={{ width: "73px", color: "white", marginLeft: "10%", zIndex: "99999", marginTop: "auto" }}>
+                {/* Pattern bar 1 year */}
+                {costOverTime == "1" && (
+                  <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPvAndEMS["savings"]}px`, color: "white" }}>
+                    <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
+                        <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                          {savingPVandEMS1year.toLocaleString("DE-de")}
+                          <span>&nbsp;€</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Pattern bar 20 years */}
+                {costOverTime == "20" && (
+                  <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPvAndEms["savings"]}px`, color: "white" }}>
+                    <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
+                        <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                          {savingPVandEMS20years.toLocaleString("DE-de")}
+                          <span>&nbsp;€</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Blue bar 1 year */}
+                {costOverTime == "1" && (
+                  <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPvAndEMS["cost"]}px`, color: "white" }}>
+                    <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
+                        <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                          {costPVandEMS1year.toLocaleString("de-DE")}
+                          <span>&nbsp;€</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Blue bar 20 years */}
+                {costOverTime == "20" && (
+                  <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPvAndEms["cost"]}px`, color: "white" }}>
+                    <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
+                        <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                          {costPVandEMS20years.toLocaleString("de-DE")}
+                          <span>&nbsp;€</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div class="cost-chart-width" style={{ position: "absolute", zIndex: "99998" }}>
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <div class="bar-chart-left-legend">
+                  <div>
+                    {costOverTime == "1" && this.divideValuesForChart(5, OHNE_PV_cost1year) + " €"}
+                    {costOverTime == "20" && this.divideValuesForChart(5, OHNE_PV_cost20years) + " €"}
+                  </div>
+                  <div>
+                    {costOverTime == "1" && this.divideValuesForChart(4, OHNE_PV_cost1year) + " €"}
+                    {costOverTime == "20" && this.divideValuesForChart(4, OHNE_PV_cost20years) + " €"}
+                  </div>
+                  <div>
+                    {costOverTime == "1" && this.divideValuesForChart(3, OHNE_PV_cost1year) + " €"}
+                    {costOverTime == "20" && this.divideValuesForChart(3, OHNE_PV_cost20years) + " €"}
+                  </div>
+                  <div>
+                    {costOverTime == "1" && this.divideValuesForChart(2, OHNE_PV_cost1year) + " €"}
+                    {costOverTime == "20" && this.divideValuesForChart(2, OHNE_PV_cost20years) + " €"}
+                  </div>
+                  <div>
+                    {costOverTime == "1" && this.divideValuesForChart(1, OHNE_PV_cost1year) + " €"}
+                    {costOverTime == "20" && this.divideValuesForChart(1, OHNE_PV_cost20years) + " €"}
+                  </div>
+                  <div>
+                    {costOverTime == "1" && this.divideValuesForChart(0, OHNE_PV_cost1year) + " €"}
+                    {costOverTime == "20" && this.divideValuesForChart(0, OHNE_PV_cost20years) + " €"}
+                  </div>
+                </div>
+                <div data-html2canvas-ignore class="cost-chart-width" style={{ display: "flex", flexDirection: "column", marginLeft: "3px" }}>
+                  <div class="cost-chart-width" style={{ marginTop: "7px", height: "1px", width: "450px", borderBottom: "1px solid #EFF1F2" }}></div>
+                  <div class="cost-chart-width" style={{ marginTop: "19px", height: "1px", width: "450px", borderBottom: "1px solid #EFF1F2" }}></div>
+                  <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "450px", borderBottom: "1px solid #EFF1F2" }}></div>
+                  <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "450px", borderBottom: "1px solid #EFF1F2" }}></div>
+                  <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "450px", borderBottom: "1px solid #EFF1F2" }}></div>
+                  {/* <div class="cost-chart-width" style={{marginTop: '18px', height: '1px', width: '450px', borderBottom: '1px solid #000'}}></div> */}
+                  <div class="cost-chart-width" style={{ marginTop: "19px", height: "1px", width: "450px", borderBottom: "1px solid #EFF1F2" }}></div>
+                  <div class="cost-chart-width" style={{ marginTop: "19px", height: "1px", width: "450px", borderBottom: "1px solid #EFF1F2" }}></div>
+                  <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "450px", borderBottom: "1px solid #EFF1F2" }}></div>
+                  <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "450px", borderBottom: "1px solid #EFF1F2" }}></div>
+                  <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "450px", borderBottom: "1px solid #EFF1F2" }}></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
-          <div style={{ display: "flex", flexDirection: "row", width: "100%", marginTop: "5px", marginLeft: "17%", zIndex: "99999" }}>
-            <div style={{ display: "flex", width: "73px", height: "40px", color: "#000" }}>
-              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
-                {this.context.selectedTheme === "buderus" ? <BuderusLightningIcon /> : <LightningIcon />}
-                ohne PV
+          <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
+            <div style={{ display: "flex", flexDirection: "row", width: "100%", marginTop: "5px", marginLeft: "17%", zIndex: "99999" }}>
+              <div style={{ display: "flex", width: "73px", height: "40px", color: "#000" }}>
+                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
+                  {this.context.selectedTheme === "buderus" ? <BuderusLightningIcon /> : <LightningIcon />}
+                  ohne PV
+                </div>
               </div>
-            </div>
-            <div style={{ display: "flex", width: "73px", height: "40px", color: "#000", marginLeft: "10%" }}>
-              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
-                {this.context.selectedTheme === "buderus" ? <BuderusPVIcon /> : <PVIcon />}
-                mit PV
-              </div>
-            </div>
-            <div style={{ display: "flex", width: "73px", height: "40px", color: "#000", marginLeft: "10%" }}>
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
-                <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+              <div style={{ display: "flex", width: "73px", height: "40px", color: "#000", marginLeft: "10%" }}>
+                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
                   {this.context.selectedTheme === "buderus" ? <BuderusPVIcon /> : <PVIcon />}
-                  <div style={{ display: "block", margin: "0 2px -2px 2px" }}>+</div>
-                  {this.context.selectedTheme === "buderus" ? <BuderusElectricityIcon /> : <ElectricityIcon />}
+                  mit PV
                 </div>
-                mit PV und EMS
+              </div>
+              <div style={{ display: "flex", width: "73px", height: "40px", color: "#000", marginLeft: "10%" }}>
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
+                  <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                    {this.context.selectedTheme === "buderus" ? <BuderusPVIcon /> : <PVIcon />}
+                    <div style={{ display: "block", margin: "0 2px -2px 2px" }}>+</div>
+                    {this.context.selectedTheme === "buderus" ? <BuderusElectricityIcon /> : <ElectricityIcon />}
+                  </div>
+                  mit PV und EMS
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div style={{ display: "flex", flexDirection: "column", marginTop: "25px", fontFamily: "Bosch-Regular", fontSize: "12px" }}>
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            <div style={{ marginRight: "15px" }}>
-              <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", borderRadius: "12px" }}></div>
+          <div style={{ display: "flex", flexDirection: "column", marginTop: "25px", fontFamily: "Bosch-Regular", fontSize: "12px" }}>
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <div style={{ marginRight: "15px" }}>
+                <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", borderRadius: "12px" }}></div>
+              </div>
+              <div>Laufende Stromkosten</div>
             </div>
-            <div>Laufende Stromkosten</div>
-          </div>
-          <div style={{ display: "flex", flexDirection: "row", marginTop: "6px" }}>
-            <div style={{ marginRight: "15px" }}>
-              <div style={{ marginTop: "2px", width: "12px", height: "12px", borderRadius: "12px" }} class="pattern-round"></div>
+            <div style={{ display: "flex", flexDirection: "row", marginTop: "6px" }}>
+              <div style={{ marginRight: "15px" }}>
+                <div style={{ marginTop: "2px", width: "12px", height: "12px", borderRadius: "12px" }} class="pattern-round"></div>
+              </div>
+              <div>Ersparnis</div>
             </div>
-            <div>Ersparnis</div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
 
