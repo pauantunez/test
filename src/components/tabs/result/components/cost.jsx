@@ -150,17 +150,24 @@ class Cost extends React.Component {
 
   componentWillMount() {
     const { products, btnThemes, fonts, setFwdBtn } = this.context;
-
     setFwdBtn(false);
   }
 
   componentDidMount() {
-    this.runningCostPVonly();
+    const { loading } = this.context;
+    if (!loading) {
+      this.energyUsageCombined();
+      this.runningCostPVonly();
+    }
   }
 
   componentDidUpdate() {
-    this.resultWithPV();
-    this.resultWithPVandEMS();
+    const { loading } = this.context;
+    if (!loading) {
+      this.energyUsageCombined();
+      this.resultWithPV();
+      this.resultWithPVandEMS();
+    }
   }
 
   inputPower_kW_PV_MFH = (event) => {
@@ -191,8 +198,8 @@ class Cost extends React.Component {
 
   energyUseEuro = (divided, years, bar) => {
     const { electricityCost, costOverTime } = this.context;
-
     var timeToNum;
+
     if (this.state.displayed == undefined) {
       timeToNum = parseInt(years);
     } else {
@@ -204,7 +211,7 @@ class Cost extends React.Component {
     }
     if (!bar) {
       if (years === 1) {
-        // return '- ' + Math.round(sessionStorage.getItem("energyUsageCombined") * (electricityCost / 100) / 5 * divided * timeToNum).toLocaleString("de-DE") + ' €';
+        // return '- ' + Math.round(parseInt(sessionStorage.getItem("energyUsageCombined")) * (electricityCost / 100) / 5 * divided * timeToNum).toLocaleString("de-DE") + ' €';
         return Math.round(((parseInt(sessionStorage.getItem("energyUsageCombined")) * (electricityCost / 100)) / 5) * divided * timeToNum).toLocaleString("de-DE") + " €";
       } else {
         // return '- ' + parseInt(this.electricityCostNoPV20Years() / 5 * divided).toLocaleString("de-DE") + ' €'
@@ -306,7 +313,7 @@ class Cost extends React.Component {
 
   electricityCostPV1Years = (mit_ems) => {
     const { costOverTime, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, pvOutputkWh, homeStorageSize, electricityCost, electricityCostOffGridPercentage, electricityCostHouseholdPercentage, gridRevenue, noEMSPercentageOffGrid, householdNoEMSpvPercent } = this.context;
-    console.log("🚀 ~ Cost ~ noEMSPercentageOffGrid:", noEMSPercentageOffGrid);
+
     var investmentCostResult;
 
     let PVcostInTable = PVcostLookupTable.find((o) => o.pv === pvOutputkWh);
@@ -323,13 +330,13 @@ class Cost extends React.Component {
     }
 
     if (mit_ems === true) {
-      var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - (Math.round(parseFloat(householdNoEMSpvPercent)) + 10) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
+      var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - (parseFloat(sessionStorage.getItem("householdNoEMSPercent")) + 10) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
       var operating_costs = Math.abs(Math.round((investmentCostResult + 400) * 0.01));
-      var result = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - (Math.round(parseFloat(noEMSPercentageOffGrid)) + 10) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
+      var result = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - (parseFloat(sessionStorage.getItem("pvUsagePercentNoEMS")) + 10) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
     } else {
-      var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - Math.round(parseFloat(householdNoEMSpvPercent)) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
+      var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - parseFloat(sessionStorage.getItem("householdNoEMSPercent")) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
       var operating_costs = Math.abs(Math.round(investmentCostResult * 0.01));
-      var result = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - Math.round(parseFloat(noEMSPercentageOffGrid)) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
+      var result = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - parseFloat(sessionStorage.getItem("pvUsagePercentNoEMS")) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
     }
 
     return Math.abs(result);
@@ -460,56 +467,89 @@ class Cost extends React.Component {
     return parseInt((value / 5) * step).toLocaleString("de-DE");
   };
 
+  energyUsageCombined = () => {
+    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, setNoEMSPercentage, setHouseholdNoEMSpvPercent, heatpumpCombinedUsage } = this.context;
+    var Avg_Eff_JAZ_HP;
+    if (heatpumpType === "1") {
+      Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_A_W_MFH;
+    } else {
+      Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_B_W_MFH;
+    }
+
+    //Enegery usage heatpump
+    var energyUsageHeatpump = (parseFloat(EGen_sh_kWh_HP_A_W_MFH) + parseFloat(EGen_sh_kWh_HP_B_W_MFH) + parseFloat(EGen_hw_kWh_HP_A_W_MFH) + parseFloat(EGen_hw_kWh_HP_B_W_MFH)) / parseFloat(Avg_Eff_JAZ_HP);
+
+    //Energy usage heating rod
+    var energyUsageHeatingRod = (parseFloat(EGen_sh_kWh_EDWW_MFH) + parseFloat(EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(EGen_hw_kWh_EDWW_MFH) + parseFloat(EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
+
+    const energyUsageCombined = Math.round(energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH);
+    if (sessionStorage.getItem("energyUsageCombined") == undefined && energyUsageCombined) {
+      sessionStorage.setItem("energyUsageCombined", energyUsageCombined);
+    }
+
+    var pvUsagePercentNoEMS = Math.round(((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(energyUsageCombined)) * 100);
+    if (sessionStorage.getItem("pvUsagePercentNoEMS") == undefined && pvUsagePercentNoEMS) {
+      sessionStorage.setItem("pvUsagePercentNoEMS", pvUsagePercentNoEMS);
+    }
+
+    var householdNoEMSPercent = Math.round(((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(EGen_elc_kWh_PV_MFH)) * 100);
+
+    if (sessionStorage.getItem("householdNoEMSPercent") == undefined && pvUsagePercentNoEMS) {
+      sessionStorage.setItem("householdNoEMSPercent", householdNoEMSPercent);
+    }
+  };
+
   render() {
     const { t } = this.props;
     const { overlayToggle } = this.state;
-    const { electricityCostPVsavings, electricityCostPVEMSsavings, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, electricityCost, heatpumpType, costOverTime } = this.context;
+    const { electricityCostPVsavings, electricityCostPVEMSsavings, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
     // Ohne PV
     var OHNE_PV_cost1year = Math.abs(parseInt(this.energyUseEuro(5, 1).replace(".", "").replace(",", "")));
     var OHNE_PV_cost20years = Math.abs(parseInt(this.electricityCostNoPV20Years()));
 
-    if (sessionStorage.getItem("OHNE_PV_cost1year") == undefined) {
+    if (sessionStorage.getItem("OHNE_PV_cost1year") == undefined && OHNE_PV_cost1year) {
       sessionStorage.setItem("OHNE_PV_cost1year", OHNE_PV_cost1year);
     }
-    if (sessionStorage.getItem("OHNE_PV_cost20years") == undefined) {
+
+    if (sessionStorage.getItem("OHNE_PV_cost20years") == undefined && OHNE_PV_cost20years) {
       sessionStorage.setItem("OHNE_PV_cost20years", OHNE_PV_cost20years);
     }
 
     var costOnlyPV1year = parseInt(this.electricityCostPV1Years());
     var costOnlyPV20years = parseInt(this.electricityCostPV20Years());
 
-    if (sessionStorage.getItem("costOnlyPV1year") == undefined) {
+    if (sessionStorage.getItem("costOnlyPV1year") == undefined && costOnlyPV1year) {
       sessionStorage.setItem("costOnlyPV1year", costOnlyPV1year);
     }
-    if (sessionStorage.getItem("costOnlyPV20years") == undefined) {
+    if (sessionStorage.getItem("costOnlyPV20years") == undefined && costOnlyPV20years) {
       sessionStorage.setItem("costOnlyPV20years", costOnlyPV20years);
     }
 
     var savingOnlyPV1year = OHNE_PV_cost1year - costOnlyPV1year;
     var savingOnlyPV20years = OHNE_PV_cost20years - costOnlyPV20years;
-    if (sessionStorage.getItem("savingOnlyPV1year") == undefined) {
+    if (sessionStorage.getItem("savingOnlyPV1year") == undefined && savingOnlyPV1year) {
       sessionStorage.setItem("savingOnlyPV1year", savingOnlyPV1year);
     }
-    if (sessionStorage.getItem("savingOnlyPV20years") == undefined) {
+    if (sessionStorage.getItem("savingOnlyPV20years") == undefined && savingOnlyPV20years) {
       sessionStorage.setItem("savingOnlyPV20years", savingOnlyPV20years);
     }
 
     // Mit PV und EMS
     var costPVandEMS1year = parseInt(parseInt(this.electricityCostPV1Years(true)));
     var costPVandEMS20years = parseInt(this.electricityCostPV20Years(true));
-    if (sessionStorage.getItem("costPVandEMS1year") == null) {
+    if (sessionStorage.getItem("costPVandEMS1year") == null && costPVandEMS1year) {
       sessionStorage.setItem("costPVandEMS1year", costPVandEMS1year);
     }
-    if (sessionStorage.getItem("costPVandEMS20years") == null) {
+    if (sessionStorage.getItem("costPVandEMS20years") == null && costPVandEMS20years) {
       sessionStorage.setItem("costPVandEMS20years", costPVandEMS20years);
     }
 
     var savingPVandEMS1year = OHNE_PV_cost1year - costPVandEMS1year;
     var savingPVandEMS20years = OHNE_PV_cost20years - costPVandEMS20years;
-    if (sessionStorage.getItem("savingPVandEMS1year") == null) {
+    if (sessionStorage.getItem("savingPVandEMS1year") == null && savingPVandEMS1year) {
       sessionStorage.setItem("savingPVandEMS1year", savingPVandEMS1year);
     }
-    if (sessionStorage.getItem("savingPVandEMS20years") == null) {
+    if (sessionStorage.getItem("savingPVandEMS20years") == null && savingPVandEMS20years) {
       sessionStorage.setItem("savingPVandEMS20years", savingPVandEMS20years);
     }
 

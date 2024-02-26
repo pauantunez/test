@@ -141,6 +141,7 @@ class CustomSwitch extends React.Component {
     setNoEMSPercentage(pvUsagePercentNoEMS);
 
     var householdNoEMSPercent = ((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(result.EGen_elc_kWh_PV_MFH)) * 100;
+
     setHouseholdNoEMSpvPercent(householdNoEMSPercent);
 
     return energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH;

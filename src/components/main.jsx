@@ -276,16 +276,17 @@ class Main extends React.Component {
   };
 
   getResult = (kfw, scenario) => {
-    const { setDatabaseResult, setDatabaseResultHouseHold, heatpumpType, setTabToSelect, tabToSelect, ev, kfwValue, homeStorageSizekWh, pvOutputkWh, pvOutput, tabEntries, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
-
+    const { setDatabaseResult, setDatabaseResultHouseHold, heatpumpType, setTabToSelect, tabToSelect, ev, kfwValue, homeStorageSizekWh, pvOutputkWh, pvOutput, tabEntries, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption, setLoading } = this.context;
+    setLoading(true);
     axios
       .get(`https://bosch-endkundentool-api.azurewebsites.net/results`, {
-        params: { Document: kfw, ScenNo: scenario, ConfigNo: heatpumpType.toString(), Tab: tabToSelect.toString() },
+        params: { Document: kfw, ScenNo: scenario, ConfigNo: heatpumpType.toString(), Tab: 13 },
       })
       .then((res) => {
         if (res.data.data.length != 0) {
           setDatabaseResult(res.data.data[0]);
           setDatabaseResultHouseHold(res.data.data[0]);
+          setLoading(false);
         }
         console.log(res.data.data[0]);
         console.log(res);
