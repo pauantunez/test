@@ -215,29 +215,31 @@ class OffGrid extends React.Component {
       const offgridChart2_EMS_svg = offgridChart2_EMS.getElementsByTagName("svg"); */
       setTimeout(() => {
         const offgridChart1 = document.getElementById("offgrid-1");
-        const offgrid1_svg = offgridChart1.getElementsByTagName("svg");
-
         const offgridChart2 = document.getElementById("offgrid-2");
-        const offgrid2_svg = offgridChart2.getElementsByTagName("svg");
+        if (offgridChart1 && offgridChart2) {
+          const offgrid1_svg = offgridChart1.getElementsByTagName("svg");
 
-        const offgridChart1_NoEMS = document.getElementById("offgrid-1-hidden");
-        const offgridChart1_NoEMS_svg = offgridChart1_NoEMS.getElementsByTagName("svg");
+          const offgrid2_svg = offgridChart2.getElementsByTagName("svg");
 
-        const offgridChart2_NoEMS = document.getElementById("offgrid-2-hidden");
-        const offgridChart2_NoEMS_svg = offgridChart2_NoEMS.getElementsByTagName("svg");
+          const offgridChart1_NoEMS = document.getElementById("offgrid-1-hidden");
+          const offgridChart1_NoEMS_svg = offgridChart1_NoEMS.getElementsByTagName("svg");
 
-        const offgridChart1_EMS = document.getElementById("offgrid-1-ems-hidden");
-        const offgridChart1_EMS_svg = offgridChart1_EMS.getElementsByTagName("svg");
+          const offgridChart2_NoEMS = document.getElementById("offgrid-2-hidden");
+          const offgridChart2_NoEMS_svg = offgridChart2_NoEMS.getElementsByTagName("svg");
 
-        const offgridChart2_EMS = document.getElementById("offgrid-2-ems-hidden");
-        const offgridChart2_EMS_svg = offgridChart2_EMS.getElementsByTagName("svg");
+          const offgridChart1_EMS = document.getElementById("offgrid-1-ems-hidden");
+          const offgridChart1_EMS_svg = offgridChart1_EMS.getElementsByTagName("svg");
 
-        setOffGrid1SVG(offgrid1_svg[0]);
-        setOffGrid2SVG(offgrid2_svg[0]);
-        setOffgrid1SVG_NoEMS_Hidden(offgridChart1_NoEMS_svg[0]);
-        setOffgrid2SVG_NoEMS_Hidden(offgridChart2_NoEMS_svg[0]);
-        setOffgrid1SVG_EMS_Hidden(offgridChart1_EMS_svg[0]);
-        setOffgrid2SVG_EMS_Hidden(offgridChart2_EMS_svg[0]);
+          const offgridChart2_EMS = document.getElementById("offgrid-2-ems-hidden");
+          const offgridChart2_EMS_svg = offgridChart2_EMS.getElementsByTagName("svg");
+
+          setOffGrid1SVG(offgrid1_svg[0]);
+          setOffGrid2SVG(offgrid2_svg[0]);
+          setOffgrid1SVG_NoEMS_Hidden(offgridChart1_NoEMS_svg[0]);
+          setOffgrid2SVG_NoEMS_Hidden(offgridChart2_NoEMS_svg[0]);
+          setOffgrid1SVG_EMS_Hidden(offgridChart1_EMS_svg[0]);
+          setOffgrid2SVG_EMS_Hidden(offgridChart2_EMS_svg[0]);
+        }
       }, "1000");
       /* setOffGrid1SVG(offgrid1_svg[0]);
       setOffGrid2SVG(offgrid2_svg[0]);
