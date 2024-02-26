@@ -190,7 +190,7 @@ class Cost extends React.Component {
   }
 
   energyUseEuro = (divided, years, bar) => {
-    const { energyUsagekWh, electricityCost, costOverTime } = this.context;
+    const { electricityCost, costOverTime } = this.context;
 
     var timeToNum;
     if (this.state.displayed == undefined) {
@@ -204,19 +204,19 @@ class Cost extends React.Component {
     }
     if (!bar) {
       if (years === 1) {
-        // return '- ' + Math.round(energyUsagekWh * (electricityCost / 100) / 5 * divided * timeToNum).toLocaleString("de-DE") + ' €';
-        return Math.round(((energyUsagekWh * (electricityCost / 100)) / 5) * divided * timeToNum).toLocaleString("de-DE") + " €";
+        // return '- ' + Math.round(sessionStorage.getItem("energyUsageCombined") * (electricityCost / 100) / 5 * divided * timeToNum).toLocaleString("de-DE") + ' €';
+        return Math.round(((parseInt(sessionStorage.getItem("energyUsageCombined")) * (electricityCost / 100)) / 5) * divided * timeToNum).toLocaleString("de-DE") + " €";
       } else {
         // return '- ' + parseInt(this.electricityCostNoPV20Years() / 5 * divided).toLocaleString("de-DE") + ' €'
         return parseInt((this.electricityCostNoPV20Years() / 5) * divided).toLocaleString("de-DE") + " €";
       }
     } else {
-      return Math.round(((energyUsagekWh * (electricityCost / 100)) / 5) * divided * timeToNum);
+      return Math.round(((parseInt(sessionStorage.getItem("energyUsageCombined")) * (electricityCost / 100)) / 5) * divided * timeToNum);
     }
   };
 
   energyUseEuroNegative = (multiplier, result) => {
-    const { energyUsagekWh, electricityCost, costOverTime } = this.context;
+    const { electricityCost, costOverTime } = this.context;
     var timeToNum;
 
     if (this.state.displayed == undefined) {
@@ -267,15 +267,15 @@ class Cost extends React.Component {
   };
 
   electricityCostNoPV20Years = () => {
-    const { energyUsagekWh, electricityCost } = this.context;
+    const { electricityCost } = this.context;
 
-    const result = Math.abs((energyUsagekWh * (parseFloat(electricityCost) / 100) * (1 - (0.02 + 1) ** 20)) / 0.02);
+    const result = Math.abs((parseInt(sessionStorage.getItem("energyUsageCombined")) * (parseFloat(electricityCost) / 100) * (1 - (0.02 + 1) ** 20)) / 0.02);
 
     return result;
   };
 
   electricityCostPV20Years = (mit_ems) => {
-    const { costOverTime, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, pvOutputkWh, homeStorageSize, energyUsagekWh, electricityCost, electricityCostOffGridPercentage, electricityCostHouseholdPercentage, gridRevenue } = this.context;
+    const { costOverTime, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, pvOutputkWh, homeStorageSize, electricityCost, electricityCostOffGridPercentage, electricityCostHouseholdPercentage, gridRevenue } = this.context;
     var investmentCostResult;
 
     let PVcostInTable = PVcostLookupTable.find((o) => o.pv === pvOutputkWh);
@@ -294,18 +294,18 @@ class Cost extends React.Component {
     if (mit_ems === true) {
       var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - (electricityCostHouseholdPercentage + 10) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
       var operating_costs = Math.abs(Math.round((investmentCostResult + 400) * 0.01));
-      var anual_cost_first_year = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - (electricityCostOffGridPercentage + 10) / 100) * energyUsagekWh * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
+      var anual_cost_first_year = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - (electricityCostOffGridPercentage + 10) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
     } else {
       var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - electricityCostHouseholdPercentage / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
       var operating_costs = Math.abs(Math.round(investmentCostResult * 0.01));
-      var anual_cost_first_year = Math.abs(operating_costs - feed_in_revenue + (1 - electricityCostOffGridPercentage / 100) * energyUsagekWh * ((parseFloat(electricityCost) / 100) * (1 + 0.02)));
+      var anual_cost_first_year = Math.abs(operating_costs - feed_in_revenue + (1 - electricityCostOffGridPercentage / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02)));
     }
     var result = Math.abs(Math.round((anual_cost_first_year * (1 - (0.02 + 1) ** 20)) / 0.02));
     return Math.abs(result);
   };
 
   electricityCostPV1Years = (mit_ems) => {
-    const { costOverTime, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, pvOutputkWh, homeStorageSize, energyUsagekWh, electricityCost, electricityCostOffGridPercentage, electricityCostHouseholdPercentage, gridRevenue } = this.context;
+    const { costOverTime, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, pvOutputkWh, homeStorageSize, electricityCost, electricityCostOffGridPercentage, electricityCostHouseholdPercentage, gridRevenue } = this.context;
     var investmentCostResult;
 
     let PVcostInTable = PVcostLookupTable.find((o) => o.pv === pvOutputkWh);
@@ -324,18 +324,18 @@ class Cost extends React.Component {
     if (mit_ems === true) {
       var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - (electricityCostHouseholdPercentage + 10) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
       var operating_costs = Math.abs(Math.round((investmentCostResult + 400) * 0.01));
-      var result = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - (electricityCostOffGridPercentage + 10) / 100) * energyUsagekWh * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
+      var result = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - (electricityCostOffGridPercentage + 10) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
     } else {
       var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - electricityCostHouseholdPercentage / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
       var operating_costs = Math.abs(Math.round(investmentCostResult * 0.01));
-      var result = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - electricityCostOffGridPercentage / 100) * energyUsagekWh * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
+      var result = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - electricityCostOffGridPercentage / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
     }
 
     return Math.abs(result);
   };
 
   runningCostPVonly = () => {
-    const { PVcostLookupTable, StorageCostLookupTable, pvOutputkWh, homeStorageSize, energyUsagekWh, electricityCost, electricityCostOffGridPercentage } = this.context;
+    const { PVcostLookupTable, StorageCostLookupTable, pvOutputkWh, homeStorageSize, electricityCost, electricityCostOffGridPercentage } = this.context;
     var totalRunning = 0;
 
     if (!this.state.ranOnce) {
@@ -359,7 +359,7 @@ class Cost extends React.Component {
   };
 
   runningCostPVems = () => {
-    const { heatpumpPV, PVcostLookupTable, StorageCostLookupTable, pvOutputkWh, homeStorageSize, energyUsagekWh, electricityCost, electricityCostOffGridPercentage } = this.context;
+    const { heatpumpPV, PVcostLookupTable, StorageCostLookupTable, pvOutputkWh, homeStorageSize, electricityCost, electricityCostOffGridPercentage } = this.context;
     var totalRunning = 0;
 
     if (!this.state.ranOnceEMS) {
@@ -462,9 +462,10 @@ class Cost extends React.Component {
   render() {
     const { t } = this.props;
     const { overlayToggle } = this.state;
-    const { electricityCostPVsavings, electricityCostPVEMSsavings, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
+    const { electricityCostPVsavings, electricityCostPVEMSsavings, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, electricityCost, heatpumpType, costOverTime } = this.context;
     // Ohne PV
     var OHNE_PV_cost1year = Math.abs(parseInt(this.energyUseEuro(5, 1).replace(".", "").replace(",", "")));
+    console.log("🚀 ~ Cost ~ render ~ OHNE_PV_cost1year:", OHNE_PV_cost1year);
     var OHNE_PV_cost20years = Math.abs(parseInt(this.electricityCostNoPV20Years()));
 
     if (sessionStorage.getItem("OHNE_PV_cost1year") == undefined) {
