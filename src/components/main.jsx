@@ -280,7 +280,7 @@ class Main extends React.Component {
     setLoading(true);
     axios
       .get(`https://bosch-endkundentool-api.azurewebsites.net/results`, {
-        params: { Document: kfw, ScenNo: scenario, ConfigNo: heatpumpType.toString(), Tab: tabToSelect.toString() },
+        params: { Document: kfw, ScenNo: scenario, ConfigNo: heatpumpType.toString(), Tab: 13 },
       })
       .then((res) => {
         if (res.data.data.length != 0) {

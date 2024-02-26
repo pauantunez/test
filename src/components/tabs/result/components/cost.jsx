@@ -313,6 +313,7 @@ class Cost extends React.Component {
 
   electricityCostPV1Years = (mit_ems) => {
     const { costOverTime, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, pvOutputkWh, homeStorageSize, electricityCost, electricityCostOffGridPercentage, electricityCostHouseholdPercentage, gridRevenue, noEMSPercentageOffGrid, householdNoEMSpvPercent } = this.context;
+
     var investmentCostResult;
 
     let PVcostInTable = PVcostLookupTable.find((o) => o.pv === pvOutputkWh);
@@ -329,13 +330,13 @@ class Cost extends React.Component {
     }
 
     if (mit_ems === true) {
-      var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - (electricityCostHouseholdPercentage + 10) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
+      var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - (parseFloat(sessionStorage.getItem("householdNoEMSPercent")) + 10) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
       var operating_costs = Math.abs(Math.round((investmentCostResult + 400) * 0.01));
-      var result = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - (electricityCostOffGridPercentage + 10) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
+      var result = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - (parseFloat(sessionStorage.getItem("pvUsagePercentNoEMS")) + 10) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
     } else {
-      var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - electricityCostHouseholdPercentage / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
+      var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - parseFloat(sessionStorage.getItem("householdNoEMSPercent")) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
       var operating_costs = Math.abs(Math.round(investmentCostResult * 0.01));
-      var result = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - electricityCostOffGridPercentage / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
+      var result = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - parseFloat(sessionStorage.getItem("pvUsagePercentNoEMS")) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
     }
 
     return Math.abs(result);
@@ -467,7 +468,7 @@ class Cost extends React.Component {
   };
 
   energyUsageCombined = () => {
-    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, setNoEMSPercentage, setHouseholdNoEMSpvPercent, heatpumpCombinedUsage } = this.context;
     var Avg_Eff_JAZ_HP;
     if (heatpumpType === "1") {
       Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_A_W_MFH;
@@ -482,7 +483,20 @@ class Cost extends React.Component {
     var energyUsageHeatingRod = (parseFloat(EGen_sh_kWh_EDWW_MFH) + parseFloat(EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(EGen_hw_kWh_EDWW_MFH) + parseFloat(EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
 
     const energyUsageCombined = Math.round(energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH);
-    sessionStorage.setItem("energyUsageCombined", energyUsageCombined);
+    if (sessionStorage.getItem("energyUsageCombined") == undefined && energyUsageCombined) {
+      sessionStorage.setItem("energyUsageCombined", energyUsageCombined);
+    }
+
+    var pvUsagePercentNoEMS = Math.round(((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(energyUsageCombined)) * 100);
+    if (sessionStorage.getItem("pvUsagePercentNoEMS") == undefined && pvUsagePercentNoEMS) {
+      sessionStorage.setItem("pvUsagePercentNoEMS", pvUsagePercentNoEMS);
+    }
+
+    var householdNoEMSPercent = Math.round(((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(EGen_elc_kWh_PV_MFH)) * 100);
+
+    if (sessionStorage.getItem("householdNoEMSPercent") == undefined && pvUsagePercentNoEMS) {
+      sessionStorage.setItem("householdNoEMSPercent", householdNoEMSPercent);
+    }
   };
 
   render() {
