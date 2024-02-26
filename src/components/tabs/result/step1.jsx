@@ -1,26 +1,17 @@
-import React from 'react';
+import React from "react";
 import { withRouter } from "react-router-dom";
-import AppContext from '../../../AppContext'
-import {
-  Button,
-} from 'reactstrap';
-import axios from 'axios';
-import Cost from './components/cost';
-import BreakEven from './components/breakEven';
+import AppContext from "../../../AppContext";
+import { Button } from "reactstrap";
+import axios from "axios";
+import Cost from "./components/cost";
+import BreakEven from "./components/breakEven";
 
-import { withTranslation } from 'react-i18next';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import InfoBoxResult from '../infoBoxResult';
-import {
-  Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-} from "chart.js";
+import { withTranslation } from "react-i18next";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import InfoBoxResult from "../infoBoxResult";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, Title } from "chart.js";
 import { Doughnut, Line } from "react-chartjs-2";
-
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, Title);
 const queryString = window.location.search;
@@ -33,14 +24,11 @@ var fontHeadline;
 var fontRegular;
 var btnColor;
 
-
 const datapoints = [-27300, null, null, null, null, null, null, 0, null, null, null, 8000];
 
-
 class ResultStep1 extends React.Component {
-
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       overlayToggle: false,
@@ -48,13 +36,13 @@ class ResultStep1 extends React.Component {
       theme: props.theme,
       results: Array,
       Eta_sh_gas_EDWW_MFH_Brine: String,
-      heatpumpPVems: []
-    }
+      heatpumpPVems: [],
+    };
 
     this.onInputchange = this.onInputchange.bind(this);
   }
 
-  static contextType = AppContext
+  static contextType = AppContext;
 
   componentWillMount() {
     const { products, btnThemes, fonts, setFwdBtn } = this.context;
@@ -63,72 +51,85 @@ class ResultStep1 extends React.Component {
   }
 
   componentDidMount() {
-    sessionStorage.clear()
+    sessionStorage.clear();
   }
+
+  energyUsageCombined = () => {
+    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    var Avg_Eff_JAZ_HP;
+
+    if (heatpumpType === "1") {
+      Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_A_W_MFH;
+    } else {
+      Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_B_W_MFH;
+    }
+
+    //Enegery usage heatpump
+    var energyUsageHeatpump = (parseFloat(EGen_sh_kWh_HP_A_W_MFH) + parseFloat(EGen_sh_kWh_HP_B_W_MFH) + parseFloat(EGen_hw_kWh_HP_A_W_MFH) + parseFloat(EGen_hw_kWh_HP_B_W_MFH)) / parseFloat(Avg_Eff_JAZ_HP);
+
+    //Energy usage heating rod
+    var energyUsageHeatingRod = (parseFloat(EGen_sh_kWh_EDWW_MFH) + parseFloat(EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(EGen_hw_kWh_EDWW_MFH) + parseFloat(EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
+    return Math.round(energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH);
+  };
 
   inputPower_kW_PV_MFH = (event) => {
     const { overlayToggle, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH } = this.context;
 
-    setPower_kW_PV_MFH(event.target.value)
+    setPower_kW_PV_MFH(event.target.value);
   };
-  
 
   inputTCO_thermal_EUR_a = (event) => {
     const { overlayToggle, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a } = this.context;
 
-    setTCO_thermal_EUR_a(event.target.value)
+    setTCO_thermal_EUR_a(event.target.value);
   };
 
   onInputchange(event) {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   }
 
   async toggleModal() {
-
     if (this.state.overlayToggle) {
-      this.setState({ overlayToggle: false })
+      this.setState({ overlayToggle: false });
     } else {
-      this.setState({ overlayToggle: true })
+      this.setState({ overlayToggle: true });
     }
-
   }
 
   render() {
-
     const { t } = this.props;
     const { overlayToggle } = this.state;
     const { Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption } = this.context;
-
+    var energyUsageCombined = this.energyUsageCombined();
+    if (sessionStorage.getItem("energyUsageCombined") != "") {
+      sessionStorage.setItem("energyUsageCombined", energyUsageCombined);
+    }
     return (
-      <div style={{ marginLeft: '3%', marginRight: '3%' }}>
+      <div style={{ marginLeft: "3%", marginRight: "3%" }}>
+        <h3 style={{ display: "flex", justifyContent: "flex-start", textAlign: "left", fontSize: "24px" }}>Ergebnis Teil 1: Stromkosten und Amortisationszeit Ihrer PV-Anlage</h3>
 
-        <h3 style={{ display: 'flex', justifyContent: 'flex-start', textAlign: 'left', fontSize: '24px' }}>Ergebnis Teil 1: Stromkosten und Amortisationszeit Ihrer PV-Anlage</h3>
-
-        <div class="pie-flex" style={{ display: 'flex', width: '100%', flexWrap: 'nowrap', justifyContent: 'space-between', alignContent: 'center' }}>
-          <div style={{ alignItems: 'end' }}>
-            <div style={{ fontFamily: 'Bosch-Bold', fontSize: '20px', textAlign: 'left' }}> Gesamtkosten Strom</div>
-            <div style={{ marginTop: '20px' }}>
+        <div class="pie-flex" style={{ display: "flex", width: "100%", flexWrap: "nowrap", justifyContent: "space-between", alignContent: "center" }}>
+          <div style={{ alignItems: "end" }}>
+            <div style={{ fontFamily: "Bosch-Bold", fontSize: "20px", textAlign: "left" }}> Gesamtkosten Strom</div>
+            <div style={{ marginTop: "20px" }}>
               <Cost />
-              <div style={{ marginTop: '20px' }}>
+              <div style={{ marginTop: "20px" }}>
                 <InfoBoxResult box="left" />
               </div>
             </div>
           </div>
-          <div class="flex-line" style={{ width: '2px', height: '700px', background: '#E0E2E5', marginLeft: '50px', marginRight: '50px' }}>
-
-          </div>
+          <div class="flex-line" style={{ width: "2px", height: "700px", background: "#E0E2E5", marginLeft: "50px", marginRight: "50px" }}></div>
           <div class="top-margins">
-            <div style={{ fontFamily: 'Bosch-Bold', fontSize: '20px', textAlign: 'left' }}>Amortisationszeit</div>
-            <div style={{ marginTop: '20px' }}>
+            <div style={{ fontFamily: "Bosch-Bold", fontSize: "20px", textAlign: "left" }}>Amortisationszeit</div>
+            <div style={{ marginTop: "20px" }}>
               <BreakEven />
-              <div style={{ marginTop: '20px' }}>
+              <div style={{ marginTop: "20px" }}>
                 <InfoBoxResult box="right" />
               </div>
             </div>
           </div>
-
         </div>
 
         {/* <div class="welcomeBtns" style={{display: 'flex', margin: '3% 5% 0 5%'}}>
@@ -136,10 +137,8 @@ class ResultStep1 extends React.Component {
             <div class="calculationBase trackeable" onClick={handleOpen} style={{fontSize: '12px', fontFamily: 'Bosch-Regular', color: '#007BC0', cursor: 'pointer'}} data-event="berechnungsgrundlage">Berechnugsgrundlage</div>
           </div>
         </div> */}
-
       </div>
-    )
-
+    );
   }
 }
 
