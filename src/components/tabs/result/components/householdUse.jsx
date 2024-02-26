@@ -342,8 +342,9 @@ class HouseholdUse extends React.Component {
                       stroke: "#fff",
                       strokeWidth: 6,
                     },
-                    labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" },
+                    labels: { fill: ({ datum }) => datum.color, fontFamily: "Bosch-Bold", fontSize: "20px" },
                   }}
+                  labelComponent={<VictoryLabel backgroundStyle={{ fill: "white" }} backgroundPadding={6} />}
                 />
               </div>
 
@@ -358,7 +359,7 @@ class HouseholdUse extends React.Component {
                     data: {
                       fillOpacity: 0,
                       stroke: "#fff",
-                      strokeWidth: 6,
+                      strokeWidth: 0,
                     },
                     labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" },
                   }}
@@ -379,8 +380,9 @@ class HouseholdUse extends React.Component {
                       stroke: "#fff",
                       strokeWidth: 6,
                     },
-                    labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" },
+                    labels: { fill: ({ datum }) => datum.color, fontFamily: "Bosch-Bold", fontSize: "20px" },
                   }}
+                  labelComponent={<VictoryLabel backgroundStyle={{ fill: "white" }} backgroundPadding={6} />}
                 />
               </div>
 
@@ -395,7 +397,7 @@ class HouseholdUse extends React.Component {
                     data: {
                       fillOpacity: 0,
                       stroke: "#fff",
-                      strokeWidth: 6,
+                      strokeWidth: 0,
                     },
                     labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" },
                   }}

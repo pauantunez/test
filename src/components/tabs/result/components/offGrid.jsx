@@ -381,7 +381,7 @@ class OffGrid extends React.Component {
                     data: {
                       fillOpacity: 0,
                       stroke: "#fff",
-                      strokeWidth: 6,
+                      strokeWidth: 0,
                     },
                     labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" },
                   }}
@@ -418,7 +418,7 @@ class OffGrid extends React.Component {
                     data: {
                       fillOpacity: 0,
                       stroke: "#fff",
-                      strokeWidth: 6,
+                      strokeWidth: 0,
                     },
                     labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" },
                   }}
