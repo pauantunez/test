@@ -157,6 +157,7 @@ class Cost extends React.Component {
     const { scenarioInDatabase, kfwValue, ev, loading } = this.context;
     this.getResultNoEMS(kfwValue + ev, scenarioInDatabase);
     if (!loading) {
+      this.getHeatpumpCombinedUsage();
       this.runningCostPVonly();
     }
   }
@@ -164,6 +165,7 @@ class Cost extends React.Component {
   componentDidUpdate() {
     const { loading } = this.context;
     if (!loading) {
+      this.getHeatpumpCombinedUsage();
       this.resultWithPV();
       this.resultWithPVandEMS();
     }
@@ -333,9 +335,10 @@ class Cost extends React.Component {
     }
 
     if (mit_ems === true) {
-      var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - (parseFloat(sessionStorage.getItem("householdNoEMSPercent")) + 10) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
+      var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - parseFloat(68 /* householdems */) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
       var operating_costs = Math.abs(Math.round((investmentCostResult + 400) * 0.01));
-      var result = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - (parseFloat(sessionStorage.getItem("pvUsagePercentNoEMS")) + 10) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
+      var result = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - parseFloat(sessionStorage.getItem("autarkiegradWithEMS")) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
+      console.log("🚀 ~ Cost ~ result:", result);
     } else {
       var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - parseFloat(sessionStorage.getItem("householdNoEMSPercent")) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
       var operating_costs = Math.abs(Math.round(investmentCostResult * 0.01));
@@ -501,6 +504,24 @@ class Cost extends React.Component {
       sessionStorage.setItem("householdNoEMSPercent", householdNoEMSPercent);
     }
     const HeatpumpCombinedUsage = energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH;
+  };
+
+  getHeatpumpCombinedUsage = () => {
+    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH_NoEMS, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, setNoEMSPercentage, setHouseholdNoEMSpvPercent, heatpumpCombinedUsage } = this.context;
+    var Avg_Eff_JAZ_HP;
+    if (heatpumpType === "1") {
+      Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_A_W_MFH;
+    } else {
+      Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_B_W_MFH;
+    }
+
+    //Enegery usage heatpump
+    var energyUsageHeatpump = (parseFloat(EGen_sh_kWh_HP_A_W_MFH) + parseFloat(EGen_sh_kWh_HP_B_W_MFH) + parseFloat(EGen_hw_kWh_HP_A_W_MFH) + parseFloat(EGen_hw_kWh_HP_B_W_MFH)) / parseFloat(Avg_Eff_JAZ_HP);
+
+    //Energy usage heating rod
+    var energyUsageHeatingRod = (parseFloat(EGen_sh_kWh_EDWW_MFH) + parseFloat(EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(EGen_hw_kWh_EDWW_MFH) + parseFloat(EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
+
+    const HeatpumpCombinedUsage = energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH;
     if (sessionStorage.getItem("HeatpumpCombinedUsage") == undefined && HeatpumpCombinedUsage) {
       sessionStorage.setItem("HeatpumpCombinedUsage", HeatpumpCombinedUsage);
     }
@@ -522,7 +543,8 @@ class Cost extends React.Component {
   pvUsagePercentage = (type) => {
     const { noEMSPercentageOffGrid, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
 
-    var pvUsagePercent = ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(heatpumpCombinedUsage)) * 100;
+    var pvUsagePercent = ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(sessionStorage.getItem("HeatpumpCombinedUsage"))) * 100;
+
     return pvUsagePercent;
   };
 
@@ -637,17 +659,14 @@ class Cost extends React.Component {
     //Calculate offgrid and HouseHold
     var roundedNoEMSGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentage()));
     var roundedNoEMSPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentage() - Math.round(sessionStorage.getItem("pvUsagePercentNoEMS"))));
-    var roundedNoEMSPercentageOffGrid = Math.round(parseFloat(noEMSPercentageOffGrid));
+    var roundedNoEMSPercentageOffGrid = Math.round(parseFloat(sessionStorage.getItem("pvUsagePercentNoEMS")));
     roundedNoEMSPercentageOffGrid = this.adjustPercentage(roundedNoEMSPercentageOffGrid, roundedNoEMSGridUsagePercentage, roundedNoEMSPvUsagePercentage); // Rounded values for VictoryPieDataTest
-    if (sessionStorage.getItem("MIT_GridUsagePercentage") != "") {
-      sessionStorage.setItem("MIT_GridUsagePercentage", roundedNoEMSGridUsagePercentage);
+    const autarkiegradWithEMS = roundedNoEMSPercentageOffGrid + roundedNoEMSPvUsagePercentage;
+
+    if (sessionStorage.getItem("autarkiegradWithEMS") == null && autarkiegradWithEMS) {
+      sessionStorage.setItem("autarkiegradWithEMS", autarkiegradWithEMS);
     }
-    if (sessionStorage.getItem("MIT_PvUsagePercentage") != "") {
-      sessionStorage.setItem("MIT_PvUsagePercentage", roundedNoEMSPvUsagePercentage);
-    }
-    if (sessionStorage.getItem("MIT_NoEMSPercentageOffGrid") != "") {
-      sessionStorage.setItem("MIT_NoEMSPercentageOffGrid", roundedNoEMSPercentageOffGrid);
-    }
+
     return (
       <div>
         <div class="flexRow" style={{ marginBottom: "30px" }}>
