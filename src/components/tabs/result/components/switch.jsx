@@ -158,8 +158,9 @@ class CustomSwitch extends React.Component {
       var emsValue = "Nein";
     }
 
-    let tabInTable = tabEntries.find((o) => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === emsValue);
-
+    let tabInTable = tabEntries.find((o) => {
+      return o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === emsValue;
+    });
     setTabToSelect(tabInTable.Tab);
     // console.log("Tab entries: " + tabInTable)
 
@@ -170,6 +171,7 @@ class CustomSwitch extends React.Component {
 
   getResult = (kfw, scenario, noEMSTab) => {
     const { setLoading, setLoadingOffGrid, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, heatpumpCombinedUsage, setOffgridPVPercentageNoEMS, offgridPVPercentageNoEMS, setDatabaseResult, heatpumpType, setTabToSelect, tabToSelect, ev, kfwValue, homeStorageSizekWh, pvOutputkWh, pvOutput, tabEntries, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
+
     if (noEMSTab) {
       var tab = noEMSTab;
     } else {
@@ -199,13 +201,18 @@ class CustomSwitch extends React.Component {
 
   getResultNoEMS = (kfw, scenario, noEMSTab) => {
     const { setLoading, setLoadingOffGrid, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, heatpumpCombinedUsage, setOffgridPVPercentageNoEMS, offgridPVPercentageNoEMS, setDatabaseResultNoEMS, heatpumpType, setTabToSelect, tabToSelect, ev, kfwValue, homeStorageSizekWh, pvOutputkWh, pvOutput, tabEntries, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
+
+    let tabInTable = tabEntries.find((o) => {
+      return o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Nein";
+    });
+
     axios
       .get(`https://bosch-endkundentool-api.azurewebsites.net/results`, {
         params: {
           Document: kfw,
           ScenNo: scenario,
           ConfigNo: heatpumpType.toString(),
-          Tab: "25",
+          Tab: tabInTable.Tab,
         },
       })
       .then((res) => {
