@@ -300,10 +300,9 @@ class Cost extends React.Component {
     }
 
     if (mit_ems === true) {
-      var feed_in_revenue = (PVcostInTable.pv * 1000 * (1 - (parseFloat(sessionStorage.getItem("householdNoEMSPercent")) + 10) / 100) * parseFloat(gridRevenue.replace(",", "."))) / 100;
-      feed_in_revenue = Math.round(feed_in_revenue * 100) / 100;
-      var operating_costs = Math.round((investmentCostResult + 400) * 0.01);
-      var anual_cost_first_year = operating_costs - feed_in_revenue + (1 - (parseFloat(sessionStorage.getItem("pvUsagePercentNoEMS")) + 10) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02));
+      var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - parseFloat(sessionStorage.getItem("eigenverbrauchWithEms")) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
+      var operating_costs = Math.abs(Math.round((investmentCostResult + 400) * 0.01));
+      var anual_cost_first_year = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - parseFloat(sessionStorage.getItem("autarkiegradWithEMS")) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
       anual_cost_first_year = Math.round(anual_cost_first_year * 100) / 100;
     } else {
       var feed_in_revenue = (PVcostInTable.pv * 1000 * (1 - parseFloat(sessionStorage.getItem("householdNoEMSPercent")) / 100) * parseFloat(gridRevenue.replace(",", "."))) / 100;
@@ -335,10 +334,9 @@ class Cost extends React.Component {
     }
 
     if (mit_ems === true) {
-      var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - parseFloat(68 /* householdems */) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
+      var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - parseFloat(sessionStorage.getItem("eigenverbrauchWithEms")) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
       var operating_costs = Math.abs(Math.round((investmentCostResult + 400) * 0.01));
       var result = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - parseFloat(sessionStorage.getItem("autarkiegradWithEMS")) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
-      console.log("🚀 ~ Cost ~ result:", result);
     } else {
       var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - parseFloat(sessionStorage.getItem("householdNoEMSPercent")) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
       var operating_costs = Math.abs(Math.round(investmentCostResult * 0.01));
@@ -585,6 +583,22 @@ class Cost extends React.Component {
       });
   };
 
+  gridFeedPercentage = (type) => {
+    const { energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = this.context;
+
+    var gridFeedPercent = 100 - ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(EGen_elc_kWh_PV_MFH)) * 100;
+
+    return gridFeedPercent;
+  };
+
+  householdUsagePercentage = (type) => {
+    const { energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = this.context;
+
+    var pvUsagePercent = ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(EGen_elc_kWh_PV_MFH)) * 100;
+
+    return pvUsagePercent;
+  };
+
   render() {
     const { loading } = this.context;
 
@@ -652,10 +666,6 @@ class Cost extends React.Component {
     var twentyYearsHeightMitPv = this.getBarHeights(OHNE_PV_cost20years, costOnlyPV20years, savingOnlyPV20years);
     var twentyYearsHeightMitPvAndEms = this.getBarHeights(OHNE_PV_cost20years, costPVandEMS20years, savingPVandEMS20years);
 
-    // Bar heights
-    // var barHeights1year = this.adjustBarHeight(costOverTime, 212, OHNE_PV_cost1year, Math.abs(electricityCostPVsavings), Math.abs(electricityCostPVEMSsavings));
-    // var barHeights20years = this.adjustBarHeight(costOverTime, 212, OHNE_PV_cost20years, Math.abs(electricityCostPVsavings), Math.abs(electricityCostPVEMSsavings));
-    // var selectedBarHeights = costOverTime == "1" ? barHeights1year : barHeights20years;
     //Calculate offgrid and HouseHold
     var roundedNoEMSGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentage()));
     var roundedNoEMSPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentage() - Math.round(sessionStorage.getItem("pvUsagePercentNoEMS"))));
@@ -665,6 +675,17 @@ class Cost extends React.Component {
 
     if (sessionStorage.getItem("autarkiegradWithEMS") == null && autarkiegradWithEMS) {
       sessionStorage.setItem("autarkiegradWithEMS", autarkiegradWithEMS);
+    }
+
+    var roundedGridFeedPercentage = Math.round(parseFloat(this.gridFeedPercentage()));
+
+    var roundedHouseholdUsagePercentage = Math.round(parseFloat(this.householdUsagePercentage()) - sessionStorage.getItem("householdNoEMSPercent"));
+    var roundedHouseholdpvPercent = Math.round(parseFloat(sessionStorage.getItem("householdNoEMSPercent")));
+    roundedGridFeedPercentage = this.adjustPercentage(roundedGridFeedPercentage, roundedHouseholdUsagePercentage, roundedHouseholdpvPercent);
+    const eigenverbrauchWithEms = roundedHouseholdpvPercent + roundedHouseholdUsagePercentage;
+
+    if (sessionStorage.getItem("eigenverbrauchWithEms") == null && eigenverbrauchWithEms) {
+      sessionStorage.setItem("eigenverbrauchWithEms", eigenverbrauchWithEms);
     }
 
     return (
