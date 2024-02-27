@@ -154,9 +154,9 @@ class Cost extends React.Component {
   }
 
   componentDidMount() {
-    const { loading } = this.context;
+    const { scenarioInDatabase, kfwValue, ev, loading } = this.context;
+    this.getResultNoEMS(kfwValue + ev, scenarioInDatabase);
     if (!loading) {
-      this.energyUsageCombined();
       this.runningCostPVonly();
     }
   }
@@ -164,7 +164,6 @@ class Cost extends React.Component {
   componentDidUpdate() {
     const { loading } = this.context;
     if (!loading) {
-      this.energyUsageCombined();
       this.resultWithPV();
       this.resultWithPVandEMS();
     }
@@ -471,42 +470,108 @@ class Cost extends React.Component {
     return parseInt((value / 5) * step).toLocaleString("de-DE");
   };
 
-  energyUsageCombined = () => {
-    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, setNoEMSPercentage, setHouseholdNoEMSpvPercent, heatpumpCombinedUsage } = this.context;
+  energyUsageCombined = (result) => {
+    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH_NoEMS, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, setNoEMSPercentage, setHouseholdNoEMSpvPercent, heatpumpCombinedUsage } = this.context;
     var Avg_Eff_JAZ_HP;
     if (heatpumpType === "1") {
-      Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_A_W_MFH;
+      Avg_Eff_JAZ_HP = result.Avg_Eff_JAZ_HP_A_W_MFH;
     } else {
-      Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_B_W_MFH;
+      Avg_Eff_JAZ_HP = result.Avg_Eff_JAZ_HP_B_W_MFH;
     }
 
     //Enegery usage heatpump
-    var energyUsageHeatpump = (parseFloat(EGen_sh_kWh_HP_A_W_MFH) + parseFloat(EGen_sh_kWh_HP_B_W_MFH) + parseFloat(EGen_hw_kWh_HP_A_W_MFH) + parseFloat(EGen_hw_kWh_HP_B_W_MFH)) / parseFloat(Avg_Eff_JAZ_HP);
+    var energyUsageHeatpump = (parseFloat(result.EGen_sh_kWh_HP_A_W_MFH) + parseFloat(result.EGen_sh_kWh_HP_B_W_MFH) + parseFloat(result.EGen_hw_kWh_HP_A_W_MFH) + parseFloat(result.EGen_hw_kWh_HP_B_W_MFH)) / parseFloat(Avg_Eff_JAZ_HP);
 
     //Energy usage heating rod
-    var energyUsageHeatingRod = (parseFloat(EGen_sh_kWh_EDWW_MFH) + parseFloat(EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(EGen_hw_kWh_EDWW_MFH) + parseFloat(EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
+    var energyUsageHeatingRod = (parseFloat(result.EGen_sh_kWh_EDWW_MFH) + parseFloat(result.EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(result.EGen_hw_kWh_EDWW_MFH) + parseFloat(result.EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
 
     const energyUsageCombined = Math.round(energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH);
     if (sessionStorage.getItem("energyUsageCombined") == undefined && energyUsageCombined) {
       sessionStorage.setItem("energyUsageCombined", energyUsageCombined);
     }
 
-    var pvUsagePercentNoEMS = Math.round(((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(energyUsageCombined)) * 100);
+    var pvUsagePercentNoEMS = Math.round(((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(energyUsageCombined)) * 100);
     if (sessionStorage.getItem("pvUsagePercentNoEMS") == undefined && pvUsagePercentNoEMS) {
       sessionStorage.setItem("pvUsagePercentNoEMS", pvUsagePercentNoEMS);
     }
 
-    var householdNoEMSPercent = Math.round(((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(EGen_elc_kWh_PV_MFH)) * 100);
+    var householdNoEMSPercent = Math.round(((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(result.EGen_elc_kWh_PV_MFH)) * 100);
 
     if (sessionStorage.getItem("householdNoEMSPercent") == undefined && pvUsagePercentNoEMS) {
       sessionStorage.setItem("householdNoEMSPercent", householdNoEMSPercent);
     }
+    const HeatpumpCombinedUsage = energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH;
+    if (sessionStorage.getItem("HeatpumpCombinedUsage") == undefined && HeatpumpCombinedUsage) {
+      sessionStorage.setItem("HeatpumpCombinedUsage", HeatpumpCombinedUsage);
+    }
+  };
+
+  gridUsagePercentage = (type) => {
+    const { infoBoxOffGridGridUsage, setInfoBoxOffGridGridUsage, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+
+    var gridUsagePercent = 100 - ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(sessionStorage.getItem("HeatpumpCombinedUsage"))) * 100;
+
+    if (!this.state.infoBoxOffGridGridUsage) {
+      setInfoBoxOffGridGridUsage(gridUsagePercent);
+      this.setState({ infoBoxOffGridGridUsage: true });
+    }
+
+    return gridUsagePercent;
+  };
+
+  pvUsagePercentage = (type) => {
+    const { noEMSPercentageOffGrid, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+
+    var pvUsagePercent = ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(heatpumpCombinedUsage)) * 100;
+    return pvUsagePercent;
+  };
+
+  adjustPercentage(value1, value2, value3 = 0) {
+    const total = value1 + value2 + value3;
+
+    if (total > 100) {
+      return value1 - 1;
+    } else if (total < 100) {
+      return value1 + 1;
+    } else {
+      return value1;
+    }
+  }
+
+  getResultNoEMS = (kfw, scenario, noEMSTab) => {
+    const { setLoading, setLoadingOffGrid, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, heatpumpCombinedUsage, setOffgridPVPercentageNoEMS, offgridPVPercentageNoEMS, setDatabaseResultNoEMS, heatpumpType, setTabToSelect, tabToSelect, ev, kfwValue, homeStorageSizekWh, pvOutputkWh, pvOutput, tabEntries, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
+
+    let tabInTable = tabEntries.find((o) => {
+      return o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Nein";
+    });
+
+    axios
+      .get(`https://bosch-endkundentool-api.azurewebsites.net/results`, {
+        params: {
+          Document: kfw,
+          ScenNo: scenario,
+          ConfigNo: heatpumpType.toString(),
+          Tab: tabInTable.Tab,
+        },
+      })
+      .then((res) => {
+        if (res.data.data.length != 0) {
+          this.energyUsageCombined(res.data.data[0]);
+          setDatabaseResultNoEMS(res.data.data[0]);
+        }
+        //sessionStorage.setItem("Autarkie_energy_to_grid_kWh_PV_MFH", res.data.data[0].energy_to_grid_kWh_PV_MFH);
+      });
   };
 
   render() {
+    const { loading } = this.context;
+
+    if (loading) {
+      return <div>Loading...</div>; // Muestra un mensaje de carga mientras se cargan los datos
+    }
     const { t } = this.props;
     const { overlayToggle } = this.state;
-    const { electricityCostPVsavings, electricityCostPVEMSsavings, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
+    const { electricityCostPVsavings, electricityCostPVEMSsavings, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime, noEMSPercentageOffGrid } = this.context;
     // Ohne PV
     var OHNE_PV_cost1year = Math.abs(parseInt(this.energyUseEuro(5, 1).replace(".", "").replace(",", "")));
     var OHNE_PV_cost20years = Math.abs(parseInt(this.electricityCostNoPV20Years()));
@@ -569,7 +634,20 @@ class Cost extends React.Component {
     // var barHeights1year = this.adjustBarHeight(costOverTime, 212, OHNE_PV_cost1year, Math.abs(electricityCostPVsavings), Math.abs(electricityCostPVEMSsavings));
     // var barHeights20years = this.adjustBarHeight(costOverTime, 212, OHNE_PV_cost20years, Math.abs(electricityCostPVsavings), Math.abs(electricityCostPVEMSsavings));
     // var selectedBarHeights = costOverTime == "1" ? barHeights1year : barHeights20years;
-
+    //Calculate offgrid and HouseHold
+    var roundedNoEMSGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentage()));
+    var roundedNoEMSPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentage() - Math.round(sessionStorage.getItem("pvUsagePercentNoEMS"))));
+    var roundedNoEMSPercentageOffGrid = Math.round(parseFloat(noEMSPercentageOffGrid));
+    roundedNoEMSPercentageOffGrid = this.adjustPercentage(roundedNoEMSPercentageOffGrid, roundedNoEMSGridUsagePercentage, roundedNoEMSPvUsagePercentage); // Rounded values for VictoryPieDataTest
+    if (sessionStorage.getItem("MIT_GridUsagePercentage") != "") {
+      sessionStorage.setItem("MIT_GridUsagePercentage", roundedNoEMSGridUsagePercentage);
+    }
+    if (sessionStorage.getItem("MIT_PvUsagePercentage") != "") {
+      sessionStorage.setItem("MIT_PvUsagePercentage", roundedNoEMSPvUsagePercentage);
+    }
+    if (sessionStorage.getItem("MIT_NoEMSPercentageOffGrid") != "") {
+      sessionStorage.setItem("MIT_NoEMSPercentageOffGrid", roundedNoEMSPercentageOffGrid);
+    }
     return (
       <div>
         <div class="flexRow" style={{ marginBottom: "30px" }}>
