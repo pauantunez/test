@@ -251,7 +251,7 @@ class InfoBoxResult extends React.Component {
                   Die zusätzlichen Kosten für ein <strong>Energiemanagementsystem</strong> von <strong>400 €*</strong> haben sich bereits nach ca. <strong>{this.breakEvenPoint()} Jahren</strong> bezahlt gemacht.
                   <br />
                   <br />
-                  <small>* Bei Einsatz Fronius / Sungrow (ab Ende Q1/24) Wechselrichter</small>
+                  <small>* Bei Einsatz Fronius / Sungrow Wechselrichter (ab Ende Q1/24)</small>
                 </div>
               </div>
             </div>
