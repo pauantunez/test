@@ -212,14 +212,9 @@ class InfoBoxResult extends React.Component {
                       Mit einer <strong>PV-Anlage und einem Energiemanagementsystem</strong> lassen sich bis zu <strong>{savingPVandEMS1year.toLocaleString("de-DE")} € Stromkosten</strong> pro Jahr sparen.
                     </p>
                   )}
-                  {costOverTime == "1" && parseInt(savingOnlyPv1yearMinusSavingEMS1year) > 0 && (
+                  {costOverTime == "1" && (
                     <p>
                       Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis um bis zu <strong>{savingOnlyPv1yearMinusSavingEMS1year.toLocaleString("de-DE")} €</strong> pro Jahr.
-                    </p>
-                  )}
-                  {costOverTime == "1" && parseInt(savingOnlyPv1yearMinusSavingEMS1year) < 0 && (
-                    <p>
-                      Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis von +<strong>{Math.abs(savingOnlyPv1yearMinusSavingEMS1year.toLocaleString("de-DE"))} €</strong> pro Jahr.
                     </p>
                   )}
 
@@ -233,14 +228,9 @@ class InfoBoxResult extends React.Component {
                       Mit einer <strong>PV-Anlage und einem Energiemanagementsystem</strong> lassen sich bis zu <strong>{savingPVandEMS20years.toLocaleString("de-DE")} € Stromkosten</strong> über 20 Jahre sparen.
                     </p>
                   )}
-                  {costOverTime == "20" && parseInt(savingOnlyPv20yearsMinusSavingEMS20years) > 0 && (
+                  {costOverTime == "20" && (
                     <p>
                       Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis um bis zu <strong>{savingOnlyPv20yearsMinusSavingEMS20years.toLocaleString("de-DE")} €</strong> über 20 Jahre.
-                    </p>
-                  )}
-                  {costOverTime == "20" && parseInt(savingOnlyPv20yearsMinusSavingEMS20years) < 0 && (
-                    <p>
-                      Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis von +<strong>{Math.abs(savingOnlyPv20yearsMinusSavingEMS20years.toLocaleString("de-DE"))} €</strong> über 20 Jahre.
                     </p>
                   )}
                 </div>
