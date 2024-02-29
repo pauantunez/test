@@ -414,7 +414,7 @@ class Additional extends React.Component {
             </div>
           </div>
         </div>
-        <div id="printPdf" style={{ position: "absolute", left: "0px", width: "795px", height: "1150px", /*display: "none"*/ }}>
+        <div id="printPdf" style={{ position: "absolute", left: "0px", width: "795px", height: "1150px", display: "none" }}>
           <div style={{ position: "absolute", left: "0px", top: "0px" }}>
             <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
           </div>
@@ -686,14 +686,32 @@ class Additional extends React.Component {
                 </Box>
               </div>
             </div>
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", maxWidth: "700px" }}>
-              <hr style={{ width: "690px", height: "1px", marginTop: "0px", background: "#999", border: "none" }} />
+          </div>
+          <div style={{ position: "absolute", left: "60px", top: "1094px" }}>
+            <hr style={{ width: "690px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
+          </div>
+        </div>
+
+        <div id="printPdf4" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px" /* , display: "none" */ }}>
+          <div style={{ postion: "relative", height: "10px" }}>
+            <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
+          </div>
+          <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+            <div style={{ marginLeft: "60px" }}>
+              <BoschLogo style={{ maxWidth: "200px" }} />
             </div>
+          </div>
+          <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", maxWidth: "815px" }}>
+            <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginLeft: "60px", maxWidth: "1000px" }}>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "20px", paddingLeft: "0px", maxWidth: "815px" }}>
               <h3>Weitere Informationen</h3>
               <h3 style={{ fontFamily: "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "13px" }}>Um weitere Informationen zu erhalten, scannen sie den jeweiligen QR-Code.</h3>
-            </div>              <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignContent: "center", alignItems: "center", textAlign: "center", marginTop: "0px", marginBottom: "0px", paddingLeft: "0px", maxWidth: "690px" }}>
-              <div style={{ width: "25%", borderRight: "1px solid #999" }}>
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignContent: "center", alignItems: "center", textAlign: "center", marginTop: "0px", marginBottom: "0px", paddingLeft: "0px", maxWidth: "690px" }}>
+              <div style={{ width: "25%" }}>
                 <label>
                   <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
                   <div class="panel panel-default card-input-narrow card-pdf-width" style={{ marginLeft: "23px", width: "120px !important", height: "110px" }}>
@@ -709,7 +727,7 @@ class Additional extends React.Component {
                   <img src={require(`../../../../assets/img/qrCode.png`)} style={{ width: "90px" }} />
                 </div>
               </div>
-              <div style={{ width: "25%", borderRight: "1px solid #999" }}>
+              <div style={{ width: "25%" }}>
                 <label>
                   <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
                   <div class="panel panel-default card-input-narrow card-pdf-width" style={{ marginLeft: "23px", width: "120px !important", height: "110px" }}>
@@ -727,7 +745,7 @@ class Additional extends React.Component {
                   <img src={require(`../../../../assets/img/qrCode.png`)} style={{ width: "90px" }} />
                 </div>
               </div>
-              <div style={{ width: "25%", borderRight: "1px solid #999" }}>
+              <div style={{ width: "25%" }}>
                 <label>
                   <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
                   <div class="panel panel-default card-input-narrow card-pdf-width" style={{ marginLeft: "23px", width: "120px !important", height: "110px" }}>
@@ -745,20 +763,6 @@ class Additional extends React.Component {
                   <img src={require(`../../../../assets/img/qrCode.png`)} style={{ width: "90px" }} />
                 </div>
               </div>
-            </div>
-          </div>
-          <div style={{ position: "absolute", left: "60px", top: "1094px" }}>
-            <hr style={{ width: "690px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
-          </div>
-        </div>
-
-        <div id="printPdf4" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
-          <div style={{ postion: "relative", height: "10px" }}>
-            <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
-          </div>
-          <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
-            <div style={{ marginLeft: "60px" }}>
-              <BoschLogo style={{ maxWidth: "200px" }} />
             </div>
           </div>
           <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", maxWidth: "815px" }}>
@@ -770,7 +774,7 @@ class Additional extends React.Component {
               <h3 style={{ fontFamily: "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "13px" }}>Informationen zu unseren Produkten finden Sie unter den jeweiligen QR-Codes:</h3>
             </div>
             <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignContent: "center", alignItems: "center", textAlign: "center", marginTop: "0px", marginBottom: "0px", paddingLeft: "0px", maxWidth: "690px" }}>
-              <div style={{ width: "25%", borderRight: "1px solid #999" }}>
+              <div style={{ width: "25%" }}>
                 <label>
                   <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
                   <div class="panel panel-default card-input-narrow card-pdf-width" style={{ marginLeft: "23px", width: "120px !important", height: "110px" }}>
@@ -786,7 +790,7 @@ class Additional extends React.Component {
                   <HeatpumpQr />
                 </div>
               </div>
-              <div style={{ width: "25%", borderRight: "1px solid #999" }}>
+              <div style={{ width: "25%" }}>
                 <label>
                   <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
                   <div class="panel panel-default card-input-narrow card-pdf-width" style={{ marginLeft: "23px", width: "120px !important", height: "110px" }}>
@@ -802,7 +806,7 @@ class Additional extends React.Component {
                   <PhotovoltaicQr />
                 </div>
               </div>
-              <div style={{ width: "25%", borderRight: "1px solid #999" }}>
+              <div style={{ width: "25%" }}>
                 <label>
                   <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
                   <div class="panel panel-default card-input-narrow card-pdf-width" style={{ marginLeft: "23px", width: "120px !important", height: "110px" }}>
@@ -944,7 +948,7 @@ class Additional extends React.Component {
             <hr style={{ width: "690px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
           </div>
         </div>
-      </div >
+      </div>
     );
   }
 }
