@@ -186,49 +186,71 @@ class InfoBoxResultPdf extends React.Component {
     var Onhe_GridFeedPercentageNoEMS = parseInt(sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS"));
 
     return (
-      <Box component="span" class="infobox-container" style={{ fontSize: "16px", fontWeight: "400", boxShadow: "none", marginLeft: "0px", /*maxWidth: '500px',*/ padding: "16px" }}>
-        <div>
-          {this.state.boxType === "left" && (
+      <Box component="span" class="infobox-container" style={{
+        fontSize: "16px", fontWeight: "400", boxShadow: "none", marginLeft: "0px", /*maxWidth: '500px',*/ padding: "0 16px 0 16px"
+      }}>
+        < div >
+          {
+            this.state.boxType === "left" && (
+              <div>
+                <div class="infobox-row-container">
+                  <div class="infobox-row" style={{ display: "block", lineHeight: "24px", borderBottom: "none" }}>
+                    {this.state.displayed === "one-year" && (
+                      <p>
+                        Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{savingOnlyPV1year.toLocaleString("de-DE")} € Stromkosten </strong>pro Jahr sparen.
+                      </p>
+                    )}
+                    {this.state.displayed === "one-year" && (
+                      <p>
+                        Mit einer <strong>PV-Anlage und einem Energiemanagementsystem</strong> lassen sich bis zu <strong>{savingPVandEMS1year.toLocaleString("de-DE")} € Stromkosten</strong> pro Jahr sparen.
+                      </p>
+                    )}
+                    {this.state.displayed === "one-year" && (
+                      <p>
+                        Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis um bis zu <strong>{savingOnlyPv1yearMinusSavingEMS1year.toLocaleString("de-DE")} €</strong> pro Jahr.
+                      </p>
+                    )}
+
+                    {this.state.displayed === "twenty-years" && (
+                      <p>
+                        Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{savingOnlyPV20years.toLocaleString("de-DE")} € Stromkosten</strong> über 20 Jahre sparen.
+                      </p>
+                    )}
+                    {this.state.displayed === "twenty-years" && (
+                      <p>
+                        Mit einer <strong>PV-Anlage und einem Energiemanagementsystem</strong> lassen sich bis zu <strong>{savingPVandEMS20years.toLocaleString("de-DE")} € Stromkosten</strong> über 20 Jahre sparen.
+                      </p>
+                    )}
+                    {this.state.displayed === "twenty-years" && (
+                      <p>
+                        Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis um bis zu <strong>{savingOnlyPv20yearsMinusSavingEMS20years.toLocaleString("de-DE")} €</strong> über 20 Jahre.
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )
+          }
+          {this.state.boxType === "right" && (
             <div>
               <div class="infobox-row-container">
-                <div class="infobox-row" style={{ display: "block", lineHeight: "24px", borderBottom: "none" }}>
-                  {this.state.displayed === "one-year" && (
-                    <p>
-                      Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{savingOnlyPV1year.toLocaleString("de-DE")} € Stromkosten </strong>pro Jahr sparen.
-                    </p>
-                  )}
-                  {this.state.displayed === "one-year" && (
-                    <p>
-                      Mit einer <strong>PV-Anlage und einem Energiemanagementsystem</strong> lassen sich bis zu <strong>{savingPVandEMS1year.toLocaleString("de-DE")} € Stromkosten</strong> pro Jahr sparen.
-                    </p>
-                  )}
-                  {this.state.displayed === "one-year" && (
-                    <p>
-                      Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis um bis zu <strong>{savingOnlyPv1yearMinusSavingEMS1year.toLocaleString("de-DE")} €</strong> pro Jahr.
-                    </p>
-                  )}
-
-                  {this.state.displayed === "twenty-years" && (
-                    <p>
-                      Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{savingOnlyPV20years.toLocaleString("de-DE")} € Stromkosten</strong> über 20 Jahre sparen.
-                    </p>
-                  )}
-                  {this.state.displayed === "twenty-years" && (
-                    <p>
-                      Mit einer <strong>PV-Anlage und einem Energiemanagementsystem</strong> lassen sich bis zu <strong>{savingPVandEMS20years.toLocaleString("de-DE")} € Stromkosten</strong> über 20 Jahre sparen.
-                    </p>
-                  )}
-                  {this.state.displayed === "twenty-years" && (
-                    <p>
-                      Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis um bis zu <strong>{savingOnlyPv20yearsMinusSavingEMS20years.toLocaleString("de-DE")} €</strong> über 20 Jahre.
-                    </p>
-                  )}
+                <div class="infobox-row" style={{ fontSize: "14px", display: "block", lineHeight: "24px", borderBottom: "none" }}>
+                  Die Investition in eine <b>PV-Anlage</b> hat sich nach ca. <strong>{this.breakEvenPV()} Jahren</strong> amortisiert.
+                  <br />
+                  <br />
+                  Die Investition in eine <strong>PV-Anlage</strong> hat sich durch den Einsatz eines <strong>Energiemanagementsystems</strong> nach ca. <strong>{this.breakEvenPVems()} Jahren</strong> amortisiert.
+                  <br />
+                  <br />
+                  Die zusätzlichen Kosten für ein <strong>Energiemanagementsystem</strong> von <strong>400 €*</strong> haben sich bereits nach ca. <strong>{this.breakEvenPoint()} Jahren</strong> bezahlt gemacht.
+                  <br />
+                  <br />
+                  <small>* Bei Einsatz Fronius / Sungrow (ab Ende Q1/24) Wechselrichter</small>
                 </div>
               </div>
             </div>
           )}
         </div>
-      </Box>
+      </ Box>
     );
   }
 }

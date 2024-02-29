@@ -15,6 +15,10 @@ import pattern from "patternomaly";
 import { ReactComponent as LightningIcon } from "../../../../assets/img/icons/lightning_chart.svg";
 import { ReactComponent as PVIcon } from "../../../../assets/img/icons/photovoltaic_chart.svg";
 import { ReactComponent as ElectricityIcon } from "../../../../assets/img/icons/electricity_sun_chart.svg";
+
+import { ReactComponent as BuderusLightningIcon } from "../../../../assets/img/icons/buderus/lightning_chart.svg";
+import { ReactComponent as BuderusPVIcon } from "../../../../assets/img/icons/buderus/photovoltaic_chart.svg";
+import { ReactComponent as BuderusElectricityIcon } from "../../../../assets/img/icons/buderus/electricity_sun_chart.svg";
 import PatternImg from "../../../../assets/img/icons/pattern.svg";
 import PatternRoundImg from "../../../../assets/img/icons/pattern_small_round.svg";
 
@@ -129,9 +133,9 @@ class CostPdf extends React.Component {
     setFwdBtn(false);
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentDidUpdate() {}
+  componentDidUpdate() { }
 
   getBarHeights = (total, cost, savings) => {
     var heights = [];
@@ -370,8 +374,34 @@ class CostPdf extends React.Component {
                 <div class="cost-chart-width" style={{ marginTop: "18px", height: "1px", width: "450px", borderBottom: "1px solid #EFF1F2" }}></div>
               </div>
             </div>
+            <div style={{ display: "flex", flexDirection: "row", width: "75%" }}>
+              <div style={{ display: "flex", flexDirection: "row", width: "100%", marginTop: "5px", marginLeft: "17%", zIndex: "99999" }}>
+                <div style={{ display: "flex", width: "73px", height: "40px", color: "#000" }}>
+                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
+                    {this.context.selectedTheme === "buderus" ? <BuderusLightningIcon /> : <LightningIcon />}
+                    ohne PV
+                  </div>
+                </div>
+                <div style={{ display: "flex", width: "73px", height: "40px", color: "#000", marginLeft: "10%" }}>
+                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
+                    {this.context.selectedTheme === "buderus" ? <BuderusPVIcon /> : <PVIcon />}
+                    mit PV
+                  </div>
+                </div>
+                <div style={{ display: "flex", width: "73px", height: "40px", color: "#000", marginLeft: "10%" }}>
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
+                    <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                      {this.context.selectedTheme === "buderus" ? <BuderusPVIcon /> : <PVIcon />}
+                      <div style={{ display: "block", margin: "0 2px -2px 2px" }}>+</div>
+                      {this.context.selectedTheme === "buderus" ? <BuderusElectricityIcon /> : <ElectricityIcon />}
+                    </div>
+                    mit PV und EMS
+                  </div>
+                </div>
+              </div>
+            </div>
 
-            <div style={{ display: "flex", flexDirection: "column", marginTop: "25px", fontFamily: "Bosch-Regular", fontSize: "12px" }}>
+            <div style={{ display: "flex", flexDirection: "column", marginTop: "12px", fontFamily: "Bosch-Regular", fontSize: "12px" }}>
               <div style={{ display: "flex", flexDirection: "row" }}>
                 <div style={{ marginRight: "15px" }}>
                   <div style={{ marginTop: "2px", width: "12px", height: "12px", background: "#007BC0", borderRadius: "12px" }}></div>

@@ -248,7 +248,7 @@ class InfoBoxResult extends React.Component {
                   Die Investition in eine <strong>PV-Anlage</strong> hat sich durch den Einsatz eines <strong>Energiemanagementsystems</strong> nach ca. <strong>{this.breakEvenPVems()} Jahren</strong> amortisiert.
                   <br />
                   <br />
-                  Die zusätzlichen Kosten für ein <strong>Energiemanagementsystem</strong> von <strong>400 € *</strong> haben sich bereits nach ca. <strong>{this.breakEvenPoint()} Jahren</strong> bezahlt gemacht.
+                  Die zusätzlichen Kosten für ein <strong>Energiemanagementsystem</strong> von <strong>400 €*</strong> haben sich bereits nach ca. <strong>{this.breakEvenPoint()} Jahren</strong> bezahlt gemacht.
                   <br />
                   <br />
                   <small>* Bei Einsatz Fronius / Sungrow (ab Ende Q1/24) Wechselrichter</small>
@@ -276,7 +276,7 @@ class InfoBoxResult extends React.Component {
                       </div>
                     </IconButton>
                   </h3>
-                  Der errechnete Stromverbrauch aufgeteilt auf die großen Verbraucher, Wärmepumpe, E-Auto und Haushalt.
+                  Der errechnete Stromverbrauch aufgeteilt auf die großen Verbraucher Wärmepumpe, E-Auto und Haushalt.
                 </div>
               </div>
             </div>
