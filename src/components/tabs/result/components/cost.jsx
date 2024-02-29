@@ -602,9 +602,9 @@ class Cost extends React.Component {
   render() {
     const { loading } = this.context;
 
-    if (loading) {
+    /* if (loading) {
       return <div>Loading...</div>; // Muestra un mensaje de carga mientras se cargan los datos
-    }
+    } */
     const { t } = this.props;
     const { overlayToggle } = this.state;
     const { electricityCostPVsavings, electricityCostPVEMSsavings, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime, noEMSPercentageOffGrid } = this.context;
