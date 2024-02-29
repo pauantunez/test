@@ -175,7 +175,7 @@ class Additional extends React.Component {
         doc.setPage(i);
         doc.setFont("BoschSans-Medium", "normal");
         doc.setFontSize(10);
-        doc.text("© Bosch Thermotechnik GmbH 2023", 15.5, doc.internal.pageSize.getHeight() - 7);
+        doc.text("© Bosch Thermotechnik GmbH 2024", 15.5, doc.internal.pageSize.getHeight() - 7);
       }
     };
 
@@ -692,7 +692,7 @@ class Additional extends React.Component {
           </div>
         </div>
 
-        <div id="printPdf4" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px" /* , display: "none" */ }}>
+        <div id="printPdf4" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
           <div style={{ postion: "relative", height: "10px" }}>
             <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
           </div>
@@ -870,7 +870,6 @@ class Additional extends React.Component {
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "15px", paddingLeft: "0px", maxWidth: "815px" }}>
               <h3>Berechnungsgrundlage</h3>
             </div>
-
             <div style={{ display: "flex", width: "100%", justifyContent: "flex-start" }}>
               <div class="modal-content-width" style={{ position: "relative", width: "680px" }}>
                 <div style={{ display: "flex", flexDirection: "row", width: "100%", marginTop: "0px", marginBottom: "20px", textAlign: "left" }}>
@@ -878,7 +877,7 @@ class Additional extends React.Component {
                     <InfoIcon />
                   </div>
                   <h3 class="pdf-h3">
-                    <b>Bitte beachten Sie:</b> Die Ergebnisse des Tools basieren auf historischen Werten, simulierten Daten und darauf aufbauenden Optimierungen und können daher von tatsächlichen Verbräuchen und Erträgen abweichen. Die Daten werden regelmäßig kontrolliert und aktualisiert. Das Tool ersetzt nicht die exakte Planung durch einen/r von Ihnen beauftragten Planungsexperten/-expertin.
+                    <b>Bitte beachten Sie:</b> Die Ergebnisse des Tools basieren auf historischen Werten, simulierten Daten und darauf aufbauenden Optimierungen und können daher von tatsächlichen Verbräuchen und Erträgen abweichen. Die Daten werden regelmäßig kontrolliert und aktualisiert. Das Tool ersetzt nicht die exakte Planung durch eine/n von Ihnen beauftragte/n Planungsexperten/-expertin.
                   </h3>
                 </div>
               </div>
@@ -892,6 +891,7 @@ class Additional extends React.Component {
               <div style={{ width: "50%", transform: "scale(0.80)", transformOrigin: "top left" }}>
                 <div>
                   <InfoBoxCalculation box="calculation-1" />
+
                 </div>
                 <div style={{ marginTop: "25px" }}>
                   <InfoBoxCalculation box="calculation-2" />

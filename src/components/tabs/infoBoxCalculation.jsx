@@ -45,7 +45,7 @@ class InfoBoxCalculation extends React.Component {
     return (
       <Box component="span" class="infobox-container">
         {this.state.boxType === "calculation-1" && <h3 class="infobox-h3 Bosch-Medium">Gebäudeenergiestandard:</h3>}
-        {this.state.boxType === "calculation-2" && <span style={{ display: "block", paddingBottom: "10px" }}>Als Alternativeingabe wird der jährliche Öl- oder Gasverbrauch genutzt:</span>}
+        {/*this.state.boxType === "calculation-2" && <span style={{ display: "block", paddingBottom: "10px" }}>Als Alternativeingabe wird der jährliche Öl- oder Gasverbrauch genutzt:</span>*/}
         {this.state.boxType === "calculation-2" && (
           <h3 class="infobox-h3 Bosch-Medium" style={{ marginBottom: "10px" }}>
             Wärmeverteilsystem:
@@ -87,8 +87,10 @@ class InfoBoxCalculation extends React.Component {
           </h3>
         )}
         {this.state.boxType === "calculation-2" && <span style={{ display: "block" }}>Das Wärmeverteilsystem hat Einfluss auf die Vorlauftemperatur der Heizungsanlage.</span>}
-        <div class="infobox-padding-12-12">
-          {this.state.boxType === "calculation-1" && <span>Worin unterscheiden sich die Arten der Wärmepumpen?</span>}
+        <div class="infobox-padding-8-8">
+          {this.state.boxType === "calculation-1" && <span>Der Gebäudeenergiestandard beeinflusst den Heizbedarf eines Gebäudes pro Wohnfläche. Gemeinsam mit der ausgewählten Wohnfläche kann so der Heizbedarf pro Jahr errechnet werden.
+            <br /> Annahmen für die Heizlast:
+          </span>}
           {this.state.boxType === "calculation-3" && <span>Hier ist ausschließlich der Stromverbrauch des Haushalts gemeint. Die Wärmepumpe, der Heizstab der Wärmepumpe oder das E-Auto sind hier nicht mit inbegriffen.</span>}
           {this.state.boxType === "calculation-4" && (
             <span>
@@ -99,11 +101,11 @@ class InfoBoxCalculation extends React.Component {
               Bei einem Auto, das nur selten tagsüber geladen werden kann, wird davon ausgegangen, dass dieses zwischen 8:00 Uhr und 17:00 Uhr nicht zuhause ist.
             </span>
           )}
-          {this.state.boxType === "calculation-5" && <span>Die PV-Leistung ist abhängig von der Größe der nutzbaren Dachfläche, die Dachausrichtung sowie die Standortabhängige jährliche Sonnenstundenzahl. Je größer die Dachfläche, desto mehr kWp PV-Leistung sind möglich. Als Richtwert kann von folgenden Daten ausgegangen werden:</span>}
+          {this.state.boxType === "calculation-5" && <span>Die PV-Leistung ist abhängig von der Größe der nutzbaren Dachfläche, die Dachausrichtung sowie die standortabhängige jährliche Sonnenstundenzahl. Je größer die Dachfläche, desto mehr kWp PV-Leistung sind möglich. Als Richtwert kann von folgenden Daten ausgegangen werden:</span>}
           {this.state.boxType === "calculation-6" && <span>Die Leistung des Batteriespeichers ist abhängig von der Kapazität. Je größer die Kapazität, desto größer die Leistung.</span>}
           {this.state.boxType === "calculation-7" && (
             <span>
-              Anhand der errechneten Lastprofile werden geeignete Bosch Wärmepumpen ausgewählt und deren Leistungsdaten für die Berechnung des Jahresstrom-verbrauchs genutzt.
+              Anhand der errechneten Lastprofile werden geeignete Bosch Wärmepumpen ausgewählt und deren Leistungsdaten für die Berechnung des Jahresstromverbrauchs genutzt.
               <br />
               Es wird unterschieden zwischen einer Luft-Wasser Wärmepumpe und einer Erdwärmepumpe.
             </span>
@@ -413,7 +415,9 @@ class InfoBoxCalculation extends React.Component {
                 </div>
               </div>
             </div>
+            <span style={{ display: "block", paddingTop: "10px" }}>Als Alternativeingabe wird der jährliche Öl- oder Gasverbrauch genutzt:</span>
           </div>
+
         )}
 
         {/* Berechnungsgrundlage 2 */}
@@ -441,7 +445,7 @@ class InfoBoxCalculation extends React.Component {
                   Heizkörper
                 </div>
                 <div class="width-50" style={{ lineHeight: "1.6", width: "50%" }}>
-                  35/40 °C
+                  35/45 °C
                 </div>
               </div>
               <div class="infobox-row">
@@ -633,31 +637,31 @@ class InfoBoxCalculation extends React.Component {
               </div>
               <div class="infobox-row">
                 <div class="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
-                  4kWp = ca. 9.200€
+                  4kWp = ca. 6.000€
                 </div>
                 <div class="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
-                  6kWh = ca. 4.800€
+                  6kWh = ca. 5.000€
                 </div>
               </div>
               <div class="infobox-row">
                 <div class="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
-                  7kWp = ca. 15.400€
+                  7kWp = ca. 10.000€
                 </div>
                 <div class="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
-                  9kWh = ca. 6.930€
+                  9kWh = ca. 7.000€
                 </div>
               </div>
               <div class="infobox-row">
                 <div class="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
-                  10kWp = ca. 20.000€
+                  10kWp = ca. 13.000€
                 </div>
                 <div class="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
-                  12kWh = ca. 8.400€
+                  12kWh = ca. 8.000€
                 </div>
               </div>
               <div class="infobox-row">
                 <div class="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
-                  14kWp = 23.800€
+                  14kWp = 18.000€
                 </div>
                 <div class="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
                   15kWh = 9.000€
