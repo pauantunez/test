@@ -139,7 +139,6 @@ class OffGrid extends React.Component {
 
     var pvUsagePercent = ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(heatpumpCombinedUsage)) * 100;
     console.log("PV USAGE: " + pvUsagePercent);
-
     return pvUsagePercent;
   };
 
@@ -148,7 +147,13 @@ class OffGrid extends React.Component {
 
     var pvUsagePercentEMS = ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(heatpumpCombinedUsage)) * 100;
     console.log("PV USAGE: " + pvUsagePercentEMS);
+    return pvUsagePercentEMS;
+  };
 
+  pvUsagePercentageNoEMS = (type) => {
+    const { heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH_NoEMS, EGen_elc_kWh_PV_MFH_NoEMS } = this.context;
+
+    var pvUsagePercentEMS = ((parseFloat(EGen_elc_kWh_PV_MFH_NoEMS) - parseFloat(energy_to_grid_kWh_PV_MFH_NoEMS)) / parseFloat(heatpumpCombinedUsage)) * 100;
     return pvUsagePercentEMS;
   };
 
@@ -156,13 +161,20 @@ class OffGrid extends React.Component {
     const { infoBoxOffGridGridUsage, setInfoBoxOffGridGridUsage, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
 
     var gridUsagePercent = 100 - ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(heatpumpCombinedUsage)) * 100;
-    console.log("GRID USAGE: " + gridUsagePercent);
 
     if (!this.state.infoBoxOffGridGridUsage) {
       setInfoBoxOffGridGridUsage(gridUsagePercent);
       this.setState({ infoBoxOffGridGridUsage: true });
       console.log("infoBoxOffGridGridUsage: " + gridUsagePercent);
     }
+
+    return gridUsagePercent;
+  };
+
+  gridUsagePercentageNoEMS = (type) => {
+    const { infoBoxOffGridGridUsage, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH_NoEMS, EGen_elc_kWh_PV_MFH_NoEMS } = this.context;
+
+    var gridUsagePercent = 100 - ((parseFloat(EGen_elc_kWh_PV_MFH_NoEMS) - parseFloat(energy_to_grid_kWh_PV_MFH_NoEMS)) / parseFloat(heatpumpCombinedUsage)) * 100;
 
     return gridUsagePercent;
   };
@@ -184,7 +196,7 @@ class OffGrid extends React.Component {
     window.addEventListener("resize", this.handleResize);
 
     if (!loadingOffGrid) {
-      const offgridChart1 = document.getElementById("offgrid-1");
+      /* const offgridChart1 = document.getElementById("offgrid-1");
       const offgrid1_svg = offgridChart1.getElementsByTagName("svg");
 
       const offgridChart2 = document.getElementById("offgrid-2");
@@ -200,14 +212,41 @@ class OffGrid extends React.Component {
       const offgridChart1_EMS_svg = offgridChart1_EMS.getElementsByTagName("svg");
 
       const offgridChart2_EMS = document.getElementById("offgrid-2-ems-hidden");
-      const offgridChart2_EMS_svg = offgridChart2_EMS.getElementsByTagName("svg");
+      const offgridChart2_EMS_svg = offgridChart2_EMS.getElementsByTagName("svg"); */
+      setTimeout(() => {
+        const offgridChart1 = document.getElementById("offgrid-1");
+        const offgridChart2 = document.getElementById("offgrid-2");
+        if (offgridChart1 && offgridChart2) {
+          const offgrid1_svg = offgridChart1.getElementsByTagName("svg");
 
-      setOffGrid1SVG(offgrid1_svg[0]);
+          const offgrid2_svg = offgridChart2.getElementsByTagName("svg");
+
+          const offgridChart1_NoEMS = document.getElementById("offgrid-1-hidden");
+          const offgridChart1_NoEMS_svg = offgridChart1_NoEMS.getElementsByTagName("svg");
+
+          const offgridChart2_NoEMS = document.getElementById("offgrid-2-hidden");
+          const offgridChart2_NoEMS_svg = offgridChart2_NoEMS.getElementsByTagName("svg");
+
+          const offgridChart1_EMS = document.getElementById("offgrid-1-ems-hidden");
+          const offgridChart1_EMS_svg = offgridChart1_EMS.getElementsByTagName("svg");
+
+          const offgridChart2_EMS = document.getElementById("offgrid-2-ems-hidden");
+          const offgridChart2_EMS_svg = offgridChart2_EMS.getElementsByTagName("svg");
+
+          setOffGrid1SVG(offgrid1_svg[0]);
+          setOffGrid2SVG(offgrid2_svg[0]);
+          setOffgrid1SVG_NoEMS_Hidden(offgridChart1_NoEMS_svg[0]);
+          setOffgrid2SVG_NoEMS_Hidden(offgridChart2_NoEMS_svg[0]);
+          setOffgrid1SVG_EMS_Hidden(offgridChart1_EMS_svg[0]);
+          setOffgrid2SVG_EMS_Hidden(offgridChart2_EMS_svg[0]);
+        }
+      }, "1000");
+      /* setOffGrid1SVG(offgrid1_svg[0]);
       setOffGrid2SVG(offgrid2_svg[0]);
       setOffgrid1SVG_NoEMS_Hidden(offgridChart1_NoEMS_svg[0]);
       setOffgrid2SVG_NoEMS_Hidden(offgridChart2_NoEMS_svg[0]);
       setOffgrid1SVG_EMS_Hidden(offgridChart1_EMS_svg[0]);
-      setOffgrid2SVG_EMS_Hidden(offgridChart2_EMS_svg[0]);
+      setOffgrid2SVG_EMS_Hidden(offgridChart2_EMS_svg[0]); */
 
       // console.log(offgridChart1_NoEMS_svg[0]);
     }
@@ -232,34 +271,31 @@ class OffGrid extends React.Component {
     var VictoryPieData2NoEMS = [];
     var pieColors2NoEMS = [];
 
-    var roundedNoEMSGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentage()));
-    var roundedNoEMSPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentage() - Math.round(noEMSPercentageOffGrid)));
-    var roundedNoEMSPercentageOffGrid = Math.round(parseFloat(noEMSPercentageOffGrid));
-    roundedNoEMSPercentageOffGrid = this.adjustPercentage(roundedNoEMSPercentageOffGrid, roundedNoEMSGridUsagePercentage, roundedNoEMSPvUsagePercentage);
-    // Rounded values for VictoryPieDataTest
-    if (sessionStorage.getItem("MIT_GridUsagePercentage") != "") {
-      sessionStorage.setItem("MIT_GridUsagePercentage", roundedNoEMSGridUsagePercentage);
-    }
-    if (sessionStorage.getItem("MIT_PvUsagePercentage") != "") {
-      sessionStorage.setItem("MIT_PvUsagePercentage", roundedNoEMSPvUsagePercentage);
-    }
-    if (sessionStorage.getItem("MIT_NoEMSPercentageOffGrid") != "") {
-      sessionStorage.setItem("MIT_NoEMSPercentageOffGrid", roundedNoEMSPercentageOffGrid);
-    }
+    var roundedGridUsagePercentageNoEMS = Math.round(parseFloat(this.gridUsagePercentageNoEMS()));
+    var roundedPvUsagePercentageNoEMS = Math.round(parseFloat(this.pvUsagePercentageNoEMS()));
+    roundedGridUsagePercentageNoEMS = this.adjustPercentage(roundedGridUsagePercentageNoEMS, roundedPvUsagePercentageNoEMS);
 
-    // Rounded values for VictoryPieDataTest
-    var roundedGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentage()));
-    var roundedPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentage()));
-    roundedGridUsagePercentage = this.adjustPercentage(roundedGridUsagePercentage, roundedPvUsagePercentage);
-
-    if (sessionStorage.getItem("OHNE_GridUsagePercentage") != "") {
-      sessionStorage.setItem("OHNE_GridUsagePercentage", roundedGridUsagePercentage);
+    if (sessionStorage.getItem("OHNE_GridUsagePercentage_NoEMS") != "") {
+      sessionStorage.setItem("OHNE_GridUsagePercentage_NoEMS", roundedGridUsagePercentageNoEMS);
     }
-    if (sessionStorage.getItem("OHNE_PvUsagePercentage") != "") {
-      sessionStorage.setItem("OHNE_PvUsagePercentage", roundedPvUsagePercentage);
+    if (sessionStorage.getItem("OHNE_PvUsagePercentage_NoEMS") != "") {
+      sessionStorage.setItem("OHNE_PvUsagePercentage_NoEMS", roundedPvUsagePercentageNoEMS);
     }
 
     if (offgridEMS === true) {
+      var roundedNoEMSGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentage()));
+      var roundedNoEMSPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentage() - Math.round(noEMSPercentageOffGrid)));
+      var roundedNoEMSPercentageOffGrid = Math.round(parseFloat(noEMSPercentageOffGrid));
+      roundedNoEMSPercentageOffGrid = this.adjustPercentage(roundedNoEMSPercentageOffGrid, roundedNoEMSGridUsagePercentage, roundedNoEMSPvUsagePercentage); // Rounded values for VictoryPieDataTest
+      if (sessionStorage.getItem("MIT_GridUsagePercentage") != "") {
+        sessionStorage.setItem("MIT_GridUsagePercentage", roundedNoEMSGridUsagePercentage);
+      }
+      if (sessionStorage.getItem("MIT_PvUsagePercentage") != "") {
+        sessionStorage.setItem("MIT_PvUsagePercentage", roundedNoEMSPvUsagePercentage);
+      }
+      if (sessionStorage.getItem("MIT_NoEMSPercentageOffGrid") != "") {
+        sessionStorage.setItem("MIT_NoEMSPercentageOffGrid", roundedNoEMSPercentageOffGrid);
+      }
       VictoryPieData = [
         { x: 3, y: roundedNoEMSGridUsagePercentage, name: "grid", label: "3.000 kWh", img: "img/grid_in.svg", color: "#004975" },
         { x: 2, y: roundedNoEMSPvUsagePercentage, name: "plug", label: "1.400 kWh", img: "img/plug.svg", color: "#C535BC" },
@@ -274,6 +310,17 @@ class OffGrid extends React.Component {
 
       pieColors = ["#A4ABB3", "#00884A", "#18837E"];
     } else if (offgridEMS === false) {
+      // Rounded values for VictoryPieDataTest
+      var roundedGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentage()));
+      var roundedPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentage()));
+      roundedGridUsagePercentage = this.adjustPercentage(roundedGridUsagePercentage, roundedPvUsagePercentage);
+
+      if (sessionStorage.getItem("OHNE_GridUsagePercentage") != "") {
+        sessionStorage.setItem("OHNE_GridUsagePercentage", roundedGridUsagePercentage);
+      }
+      if (sessionStorage.getItem("OHNE_PvUsagePercentage") != "") {
+        sessionStorage.setItem("OHNE_PvUsagePercentage", roundedPvUsagePercentage);
+      }
       VictoryPieData = [
         { x: 3, y: roundedGridUsagePercentage, name: "grid", label: "3.000 kWh", img: "img/grid_in.svg", color: "#A4ABB3" },
         { x: 1, y: roundedPvUsagePercentage, name: "pv", label: "1.000 kWh", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
@@ -296,8 +343,8 @@ class OffGrid extends React.Component {
     pieColorsPDFWithEMS = ["#A4ABB3", "#00884A", "#18837E"];
 
     VictoryPieDataPDFWithoutEMS = [
-      { x: 3, y: parseInt(sessionStorage.getItem("OHNE_GridUsagePercentage")), name: "grid", label: sessionStorage.getItem("OHNE_GridUsagePercentage") + " %", img: "img/grid_in.svg", color: "#A4ABB3" },
-      { x: 1, y: parseInt(sessionStorage.getItem("OHNE_PvUsagePercentage")), name: "pv", label: sessionStorage.getItem("OHNE_PvUsagePercentage") + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
+      { x: 3, y: parseInt(sessionStorage.getItem("OHNE_GridUsagePercentage_NoEMS")), name: "grid", label: sessionStorage.getItem("OHNE_GridUsagePercentage_NoEMS") + " %", img: "img/grid_in.svg", color: "#A4ABB3" },
+      { x: 1, y: parseInt(sessionStorage.getItem("OHNE_PvUsagePercentage_NoEMS")), name: "pv", label: sessionStorage.getItem("OHNE_PvUsagePercentage_NoEMS") + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
     ];
     pieColorsPDFWithoutEMS = ["#A4ABB3", "#18837E"];
 
@@ -320,8 +367,9 @@ class OffGrid extends React.Component {
                       stroke: "#fff",
                       strokeWidth: 6,
                     },
-                    labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" },
+                    labels: { fill: ({ datum }) => datum.color, fontFamily: "Bosch-Bold", fontSize: "20px" },
                   }}
+                  labelComponent={<VictoryLabel backgroundStyle={{ fill: "white" }} backgroundPadding={6} />}
                 />
               </div>
               <div id="offgrid-2-ems-hidden" style={{ position: "absolute", width: "100%", height: "300px", display: "none" }}>
@@ -335,7 +383,7 @@ class OffGrid extends React.Component {
                     data: {
                       fillOpacity: 0,
                       stroke: "#fff",
-                      strokeWidth: 6,
+                      strokeWidth: 0,
                     },
                     labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" },
                   }}
@@ -356,8 +404,9 @@ class OffGrid extends React.Component {
                       stroke: "#fff",
                       strokeWidth: 6,
                     },
-                    labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" },
+                    labels: { fill: ({ datum }) => datum.color, fontFamily: "Bosch-Bold", fontSize: "20px" },
                   }}
+                  labelComponent={<VictoryLabel backgroundStyle={{ fill: "white" }} backgroundPadding={6} />}
                 />
               </div>
               <div id="offgrid-2-hidden" style={{ position: "absolute", width: "100%", height: "300px", display: "none" }}>
@@ -371,7 +420,7 @@ class OffGrid extends React.Component {
                     data: {
                       fillOpacity: 0,
                       stroke: "#fff",
-                      strokeWidth: 6,
+                      strokeWidth: 0,
                     },
                     labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" },
                   }}

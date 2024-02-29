@@ -114,6 +114,7 @@ class CustomSwitch extends React.Component {
 
     //call getResult for the correct TAB
     this.getResult(kfwValue + ev, scenarioInDatabase, tabInTable.Tab);
+    this.getResultNoEMS(kfwValue + ev, scenarioInDatabase);
   };
 
   energyUsageCombined = (result) => {
@@ -140,6 +141,7 @@ class CustomSwitch extends React.Component {
     setNoEMSPercentage(pvUsagePercentNoEMS);
 
     var householdNoEMSPercent = ((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(result.EGen_elc_kWh_PV_MFH)) * 100;
+
     setHouseholdNoEMSpvPercent(householdNoEMSPercent);
 
     return energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH;
@@ -156,7 +158,9 @@ class CustomSwitch extends React.Component {
       var emsValue = "Nein";
     }
 
-    let tabInTable = tabEntries.find((o) => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === emsValue);
+    let tabInTable = tabEntries.find((o) => {
+      return o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === emsValue;
+    });
     setTabToSelect(tabInTable.Tab);
     // console.log("Tab entries: " + tabInTable)
 
@@ -167,12 +171,12 @@ class CustomSwitch extends React.Component {
 
   getResult = (kfw, scenario, noEMSTab) => {
     const { setLoading, setLoadingOffGrid, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, heatpumpCombinedUsage, setOffgridPVPercentageNoEMS, offgridPVPercentageNoEMS, setDatabaseResult, heatpumpType, setTabToSelect, tabToSelect, ev, kfwValue, homeStorageSizekWh, pvOutputkWh, pvOutput, tabEntries, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
+
     if (noEMSTab) {
       var tab = noEMSTab;
     } else {
       var tab = tabToSelect.toString();
     }
-
     axios
       .get(`https://bosch-endkundentool-api.azurewebsites.net/results`, {
         params: {
@@ -187,16 +191,35 @@ class CustomSwitch extends React.Component {
           if (noEMSTab) {
             this.energyUsageCombined(res.data.data[0]);
           } else {
-            //setDatabaseResult(res.data.data[0])
+            setDatabaseResult(res.data.data[0]);
           }
-
           setLoadingOffGrid(false);
         }
+        sessionStorage.setItem("Autarkie_energy_to_grid_kWh_PV_MFH", res.data.data[0].energy_to_grid_kWh_PV_MFH);
+      });
+  };
 
-        console.log(res.data.data[0]);
-        console.log(res);
-        console.log(res.data);
-        console.log(res.data.data.length);
+  getResultNoEMS = (kfw, scenario, noEMSTab) => {
+    const { setLoading, setLoadingOffGrid, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, heatpumpCombinedUsage, setOffgridPVPercentageNoEMS, offgridPVPercentageNoEMS, setDatabaseResultNoEMS, heatpumpType, setTabToSelect, tabToSelect, ev, kfwValue, homeStorageSizekWh, pvOutputkWh, pvOutput, tabEntries, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
+
+    let tabInTable = tabEntries.find((o) => {
+      return o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Nein";
+    });
+
+    axios
+      .get(`https://bosch-endkundentool-api.azurewebsites.net/results`, {
+        params: {
+          Document: kfw,
+          ScenNo: scenario,
+          ConfigNo: heatpumpType.toString(),
+          Tab: tabInTable.Tab,
+        },
+      })
+      .then((res) => {
+        if (res.data.data.length != 0) {
+          setDatabaseResultNoEMS(res.data.data[0]);
+        }
+        //sessionStorage.setItem("Autarkie_energy_to_grid_kWh_PV_MFH", res.data.data[0].energy_to_grid_kWh_PV_MFH);
       });
   };
 

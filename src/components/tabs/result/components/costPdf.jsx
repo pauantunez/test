@@ -154,20 +154,20 @@ class CostPdf extends React.Component {
     const { overlayToggle } = this.state;
     // const { electricityCostPVsavings, electricityCostPVEMSsavings, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
 
-    var OHNE_PV_cost1year = sessionStorage.getItem("OHNE_PV_cost1year");
-    var OHNE_PV_cost20years = sessionStorage.getItem("OHNE_PV_cost20years");
+    var OHNE_PV_cost1year = parseInt(sessionStorage.getItem("OHNE_PV_cost1year"));
+    var OHNE_PV_cost20years = parseInt(sessionStorage.getItem("OHNE_PV_cost20years"));
 
-    var costOnlyPV1year = sessionStorage.getItem("costOnlyPV1year");
-    var costOnlyPV20years = sessionStorage.getItem("costOnlyPV20years");
+    var costOnlyPV1year = parseInt(sessionStorage.getItem("costOnlyPV1year"));
+    var costOnlyPV20years = parseInt(sessionStorage.getItem("costOnlyPV20years"));
 
-    var costPVandEMS1year = sessionStorage.getItem("costPVandEMS1year");
-    var costPVandEMS20years = sessionStorage.getItem("costPVandEMS20years");
+    var costPVandEMS1year = parseInt(sessionStorage.getItem("costPVandEMS1year"));
+    var costPVandEMS20years = parseInt(sessionStorage.getItem("costPVandEMS20years"));
 
-    var savingOnlyPV1year = sessionStorage.getItem("savingOnlyPV1year");
-    var savingOnlyPV20years = sessionStorage.getItem("savingOnlyPV20years");
+    var savingOnlyPV1year = parseInt(sessionStorage.getItem("savingOnlyPV1year"));
+    var savingOnlyPV20years = parseInt(sessionStorage.getItem("savingOnlyPV20years"));
 
-    var savingPVandEMS1year = sessionStorage.getItem("savingPVandEMS1year");
-    var savingPVandEMS20years = sessionStorage.getItem("savingPVandEMS20years");
+    var savingPVandEMS1year = parseInt(sessionStorage.getItem("savingPVandEMS1year"));
+    var savingPVandEMS20years = parseInt(sessionStorage.getItem("savingPVandEMS20years"));
 
     // 1 year bar heights
     var oneYearHeightMitPv = this.getBarHeights(OHNE_PV_cost1year, costOnlyPV1year, savingOnlyPV1year);

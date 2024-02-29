@@ -158,6 +158,7 @@ class SimulatorProvider extends Component {
       tab3: 0,
     },
     tabToSelect: "0",
+    tabToSelectEigenverbrauch: "0",
     scenarioInDatabase: "",
     steps: {
       0: false,
@@ -198,19 +199,19 @@ class SimulatorProvider extends Component {
     PVcostLookupTable: [
       {
         pv: 4,
-        cost: 9000,
+        cost: 6000,
       },
       {
         pv: 7,
-        cost: 15000,
+        cost: 10000,
       },
       {
         pv: 10,
-        cost: 20000,
+        cost: 13000,
       },
       {
         pv: 14,
-        cost: 24000,
+        cost: 18000,
       },
     ],
     StorageCostLookupTable: [
@@ -1458,17 +1459,51 @@ class SimulatorProvider extends Component {
       },
     ],
     EGen_elc_kWh_PV_MFH: 0,
+    HH_EGen_elc_kWh_PV_MFH: 0,
     energy_to_grid_kWh_PV_MFH: 0,
+    HH_energy_to_grid_kWh_PV_MFH: 0,
     EGen_sh_kWh_HP_A_W_MFH: 0,
+    HH_EGen_sh_kWh_HP_A_W_MFH: 0,
     EGen_sh_kWh_HP_B_W_MFH: 0,
+    HH_EGen_sh_kWh_HP_B_W_MFH: 0,
     EGen_hw_kWh_HP_A_W_MFH: 0,
+    HH_EGen_hw_kWh_HP_A_W_MFH: 0,
     EGen_hw_kWh_HP_B_W_MFH: 0,
+    HH_EGen_hw_kWh_HP_B_W_MFH: 0,
     Avg_Eff_JAZ_HP_A_W_MFH: 0,
+    HH_Avg_Eff_JAZ_HP_A_W_MFH: 0,
     Avg_Eff_JAZ_HP_B_W_MFH: 0,
+    HH_Avg_Eff_JAZ_HP_B_W_MFH: 0,
     EGen_sh_kWh_EDWW_MFH: 0,
+    HH_EGen_sh_kWh_EDWW_MFH: 0,
     EGen_sh_kWh_EDWW_MFH_Brine: 0,
     EGen_hw_kWh_EDWW_MFH: 0,
+    HH_EGen_hw_kWh_EDWW_MFH: 0,
     EGen_hw_kWh_EDWW_MFH_Brine: 0,
+    HH_EGen_hw_kWh_EDWW_MFH_Brine: 0,
+    EGen_elc_kWh_PV_MFH_NoEMS: 0,
+    HH_EGen_elc_kWh_PV_MFH_NoEMS: 0,
+    energy_to_grid_kWh_PV_MFH_NoEMS: 0,
+    HH_energy_to_grid_kWh_PV_MFH_NoEMS: 0,
+    EGen_sh_kWh_HP_A_W_MFH_NoEMS: 0,
+    HH_EGen_sh_kWh_HP_A_W_MFH_NoEMS: 0,
+    EGen_sh_kWh_HP_B_W_MFH_NoEMS: 0,
+    HH_EGen_sh_kWh_HP_B_W_MFH_NoEMS: 0,
+    EGen_hw_kWh_HP_A_W_MFH_NoEMS: 0,
+    HH_EGen_hw_kWh_HP_A_W_MFH_NoEMS: 0,
+    EGen_hw_kWh_HP_B_W_MFH_NoEMS: 0,
+    HH_EGen_hw_kWh_HP_B_W_MFH_NoEMS: 0,
+    Avg_Eff_JAZ_HP_A_W_MFH_NoEMS: 0,
+    HH_Avg_Eff_JAZ_HP_A_W_MFH_NoEMS: 0,
+    Avg_Eff_JAZ_HP_B_W_MFH_NoEMS: 0,
+    HH_Avg_Eff_JAZ_HP_B_W_MFH_NoEMS: 0,
+    EGen_sh_kWh_EDWW_MFH_NoEMS: 0,
+    HH_EGen_sh_kWh_EDWW_MFH_NoEMS: 0,
+    EGen_sh_kWh_EDWW_MFH_Brine_NoEMS: 0,
+    EGen_hw_kWh_EDWW_MFH_NoEMS: 0,
+    HH_EGen_hw_kWh_EDWW_MFH_NoEMS: 0,
+    EGen_hw_kWh_EDWW_MFH_Brine_NoEMS: 0,
+    HH_EGen_hw_kWh_EDWW_MFH_Brine_NoEMS: 0,
   };
 
   setProduct = (product) => {
@@ -1851,6 +1886,10 @@ class SimulatorProvider extends Component {
     this.setState((prevState) => ({ tabToSelect: tab }));
   };
 
+  setTabToSelectEigenverbrauch = (tab) => {
+    this.setState((prevState) => ({ tabToSelectEigenverbrauch: tab }));
+  };
+
   setPreHeatTempOption = (option) => {
     this.setState((prevState) => ({ preHeatTempOption: option }));
   };
@@ -1871,6 +1910,48 @@ class SimulatorProvider extends Component {
     this.setState((prevState) => ({ EGen_sh_kWh_EDWW_MFH: result.EGen_sh_kWh_EDWW_MFH }));
     this.setState((prevState) => ({ EGen_hw_kWh_EDWW_MFH: result.EGen_hw_kWh_EDWW_MFH }));
     this.setState((prevState) => ({ EGen_hw_kWh_EDWW_MFH_Brine: result.EGen_hw_kWh_EDWW_MFH_Brine }));
+  };
+
+  setDatabaseResultNoEMS = (result) => {
+    this.setState((prevState) => ({ EGen_elc_kWh_PV_MFH_NoEMS: result.EGen_elc_kWh_PV_MFH }));
+    this.setState((prevState) => ({ energy_to_grid_kWh_PV_MFH_NoEMS: result.energy_to_grid_kWh_PV_MFH }));
+    this.setState((prevState) => ({ EGen_sh_kWh_HP_A_W_MFH_NoEMS: result.EGen_sh_kWh_HP_A_W_MFH }));
+    this.setState((prevState) => ({ EGen_sh_kWh_HP_B_W_MFH_NoEMS: result.EGen_sh_kWh_HP_B_W_MFH }));
+    this.setState((prevState) => ({ EGen_hw_kWh_HP_A_W_MFH_NoEMS: result.EGen_hw_kWh_HP_A_W_MFH }));
+    this.setState((prevState) => ({ EGen_hw_kWh_HP_B_W_MFH_NoEMS: result.EGen_hw_kWh_HP_B_W_MFH }));
+    this.setState((prevState) => ({ Avg_Eff_JAZ_HP_A_W_MFH_NoEMS: result.Avg_Eff_JAZ_HP_A_W_MFH }));
+    this.setState((prevState) => ({ Avg_Eff_JAZ_HP_B_W_MFH_NoEMS: result.Avg_Eff_JAZ_HP_B_W_MFH }));
+    this.setState((prevState) => ({ EGen_sh_kWh_EDWW_MFH_NoEMS: result.EGen_sh_kWh_EDWW_MFH }));
+    this.setState((prevState) => ({ EGen_hw_kWh_EDWW_MFH_NoEMS: result.EGen_hw_kWh_EDWW_MFH }));
+    this.setState((prevState) => ({ EGen_hw_kWh_EDWW_MFH_Brine_NoEMS: result.EGen_hw_kWh_EDWW_MFH_Brine }));
+  };
+
+  setDatabaseResultHouseHold = (result) => {
+    this.setState((prevState) => ({ HH_EGen_elc_kWh_PV_MFH: result.EGen_elc_kWh_PV_MFH }));
+    this.setState((prevState) => ({ HH_energy_to_grid_kWh_PV_MFH: result.energy_to_grid_kWh_PV_MFH }));
+    this.setState((prevState) => ({ HH_EGen_sh_kWh_HP_A_W_MFH: result.EGen_sh_kWh_HP_A_W_MFH }));
+    this.setState((prevState) => ({ HH_EGen_sh_kWh_HP_B_W_MFH: result.EGen_sh_kWh_HP_B_W_MFH }));
+    this.setState((prevState) => ({ HH_EGen_hw_kWh_HP_A_W_MFH: result.EGen_hw_kWh_HP_A_W_MFH }));
+    this.setState((prevState) => ({ HH_EGen_hw_kWh_HP_B_W_MFH: result.EGen_hw_kWh_HP_B_W_MFH }));
+    this.setState((prevState) => ({ HH_Avg_Eff_JAZ_HP_A_W_MFH: result.Avg_Eff_JAZ_HP_A_W_MFH }));
+    this.setState((prevState) => ({ HH_Avg_Eff_JAZ_HP_B_W_MFH: result.Avg_Eff_JAZ_HP_B_W_MFH }));
+    this.setState((prevState) => ({ HH_EGen_sh_kWh_EDWW_MFH: result.EGen_sh_kWh_EDWW_MFH }));
+    this.setState((prevState) => ({ HH_EGen_hw_kWh_EDWW_MFH: result.EGen_hw_kWh_EDWW_MFH }));
+    this.setState((prevState) => ({ HH_EGen_hw_kWh_EDWW_MFH_Brine: result.EGen_hw_kWh_EDWW_MFH_Brine }));
+  };
+
+  setDatabaseResultHouseHoldNoEMS = (result) => {
+    this.setState((prevState) => ({ HH_EGen_elc_kWh_PV_MFH_NoEMS: result.EGen_elc_kWh_PV_MFH }));
+    this.setState((prevState) => ({ HH_energy_to_grid_kWh_PV_MFH_NoEMS: result.energy_to_grid_kWh_PV_MFH }));
+    this.setState((prevState) => ({ HH_EGen_sh_kWh_HP_A_W_MFH_NoEMS: result.EGen_sh_kWh_HP_A_W_MFH }));
+    this.setState((prevState) => ({ HH_EGen_sh_kWh_HP_B_W_MFH_NoEMS: result.EGen_sh_kWh_HP_B_W_MFH }));
+    this.setState((prevState) => ({ HH_EGen_hw_kWh_HP_A_W_MFH_NoEMS: result.EGen_hw_kWh_HP_A_W_MFH }));
+    this.setState((prevState) => ({ HH_EGen_hw_kWh_HP_B_W_MFH_NoEMS: result.EGen_hw_kWh_HP_B_W_MFH }));
+    this.setState((prevState) => ({ HH_Avg_Eff_JAZ_HP_A_W_MFH_NoEMS: result.Avg_Eff_JAZ_HP_A_W_MFH }));
+    this.setState((prevState) => ({ HH_Avg_Eff_JAZ_HP_B_W_MFH_NoEMS: result.Avg_Eff_JAZ_HP_B_W_MFH }));
+    this.setState((prevState) => ({ HH_EGen_sh_kWh_EDWW_MFH_NoEMS: result.EGen_sh_kWh_EDWW_MFH }));
+    this.setState((prevState) => ({ HH_EGen_hw_kWh_EDWW_MFH_NoEMS: result.EGen_hw_kWh_EDWW_MFH }));
+    this.setState((prevState) => ({ HH_EGen_hw_kWh_EDWW_MFH_Brine_NoEMS: result.EGen_hw_kWh_EDWW_MFH_Brine }));
   };
 
   setHeatpumpCombinedUsage = (result) => {
@@ -2566,6 +2647,7 @@ class SimulatorProvider extends Component {
       pvOutputkWh,
       homeStorageSizekWh,
       tabToSelect,
+      tabToSelectEigenverbrauch,
       kfwLookupTable,
       buildingTypePreHeatOption,
       preHeatTempOption,
@@ -2575,17 +2657,51 @@ class SimulatorProvider extends Component {
       dualPreHeatOptionEVLookupTable,
       scenarioInDatabase,
       EGen_elc_kWh_PV_MFH,
+      HH_EGen_elc_kWh_PV_MFH,
       energy_to_grid_kWh_PV_MFH,
+      HH_energy_to_grid_kWh_PV_MFH,
       EGen_sh_kWh_HP_A_W_MFH,
+      HH_EGen_sh_kWh_HP_A_W_MFH,
       EGen_sh_kWh_HP_B_W_MFH,
+      HH_EGen_sh_kWh_HP_B_W_MFH,
       EGen_hw_kWh_HP_A_W_MFH,
+      HH_EGen_hw_kWh_HP_A_W_MFH,
       EGen_hw_kWh_HP_B_W_MFH,
+      HH_EGen_hw_kWh_HP_B_W_MFH,
       Avg_Eff_JAZ_HP_A_W_MFH,
+      HH_Avg_Eff_JAZ_HP_A_W_MFH,
       Avg_Eff_JAZ_HP_B_W_MFH,
+      HH_Avg_Eff_JAZ_HP_B_W_MFH,
       EGen_sh_kWh_EDWW_MFH,
+      HH_EGen_sh_kWh_EDWW_MFH,
       EGen_sh_kWh_EDWW_MFH_Brine,
       EGen_hw_kWh_EDWW_MFH,
+      HH_EGen_hw_kWh_EDWW_MFH,
       EGen_hw_kWh_EDWW_MFH_Brine,
+      HH_EGen_hw_kWh_EDWW_MFH_Brine,
+      EGen_elc_kWh_PV_MFH_NoEMS,
+      HH_EGen_elc_kWh_PV_MFH_NoEMS,
+      energy_to_grid_kWh_PV_MFH_NoEMS,
+      HH_energy_to_grid_kWh_PV_MFH_NoEMS,
+      EGen_sh_kWh_HP_A_W_MFH_NoEMS,
+      HH_EGen_sh_kWh_HP_A_W_MFH_NoEMS,
+      EGen_sh_kWh_HP_B_W_MFH_NoEMS,
+      HH_EGen_sh_kWh_HP_B_W_MFH_NoEMS,
+      EGen_hw_kWh_HP_A_W_MFH_NoEMS,
+      HH_EGen_hw_kWh_HP_A_W_MFH_NoEMS,
+      EGen_hw_kWh_HP_B_W_MFH_NoEMS,
+      HH_EGen_hw_kWh_HP_B_W_MFH_NoEMS,
+      Avg_Eff_JAZ_HP_A_W_MFH_NoEMS,
+      HH_Avg_Eff_JAZ_HP_A_W_MFH_NoEMS,
+      Avg_Eff_JAZ_HP_B_W_MFH_NoEMS,
+      HH_Avg_Eff_JAZ_HP_B_W_MFH_NoEMS,
+      EGen_sh_kWh_EDWW_MFH_NoEMS,
+      HH_EGen_sh_kWh_EDWW_MFH_NoEMS,
+      EGen_sh_kWh_EDWW_MFH_Brine_NoEMS,
+      EGen_hw_kWh_EDWW_MFH_NoEMS,
+      HH_EGen_hw_kWh_EDWW_MFH_NoEMS,
+      EGen_hw_kWh_EDWW_MFH_Brine_NoEMS,
+      HH_EGen_hw_kWh_EDWW_MFH_Brine_NoEMS,
       heatpumpCombinedUsage,
       offgridPVPercentageNoEMS,
       NoEMScombinedEnergyUseKWH,
@@ -2701,9 +2817,13 @@ class SimulatorProvider extends Component {
       setWindowWidth,
       setWindowHeight,
       setTabToSelect,
+      setTabToSelectEigenverbrauch,
       setPreHeatTempOption,
       setScenarioInDatabase,
       setDatabaseResult,
+      setDatabaseResultNoEMS,
+      setDatabaseResultHouseHold,
+      setDatabaseResultHouseHoldNoEMS,
       setHeatpumpCombinedUsage,
       setOffgridPVPercentageNoEMS,
       setNoEMScombinedEnergyUseKWH,
@@ -2846,6 +2966,7 @@ class SimulatorProvider extends Component {
           pvMarks,
           pvOutputkWh,
           tabToSelect,
+          tabToSelectEigenverbrauch,
           kfwLookupTable,
           buildingTypePreHeatOption,
           preHeatTempOption,
@@ -2855,17 +2976,51 @@ class SimulatorProvider extends Component {
           dualPreHeatOptionEVLookupTable,
           scenarioInDatabase,
           EGen_elc_kWh_PV_MFH,
+          HH_EGen_elc_kWh_PV_MFH,
           energy_to_grid_kWh_PV_MFH,
+          HH_energy_to_grid_kWh_PV_MFH,
           EGen_sh_kWh_HP_A_W_MFH,
+          HH_EGen_sh_kWh_HP_A_W_MFH,
           EGen_sh_kWh_HP_B_W_MFH,
+          HH_EGen_sh_kWh_HP_B_W_MFH,
           EGen_hw_kWh_HP_A_W_MFH,
+          HH_EGen_hw_kWh_HP_A_W_MFH,
           EGen_hw_kWh_HP_B_W_MFH,
+          HH_EGen_hw_kWh_HP_B_W_MFH,
           Avg_Eff_JAZ_HP_A_W_MFH,
+          HH_Avg_Eff_JAZ_HP_A_W_MFH,
           Avg_Eff_JAZ_HP_B_W_MFH,
+          HH_Avg_Eff_JAZ_HP_B_W_MFH,
           EGen_sh_kWh_EDWW_MFH,
+          HH_EGen_sh_kWh_EDWW_MFH,
           EGen_sh_kWh_EDWW_MFH_Brine,
           EGen_hw_kWh_EDWW_MFH,
+          HH_EGen_hw_kWh_EDWW_MFH,
           EGen_hw_kWh_EDWW_MFH_Brine,
+          HH_EGen_hw_kWh_EDWW_MFH_Brine,
+          EGen_elc_kWh_PV_MFH_NoEMS,
+          HH_EGen_elc_kWh_PV_MFH_NoEMS,
+          energy_to_grid_kWh_PV_MFH_NoEMS,
+          HH_energy_to_grid_kWh_PV_MFH_NoEMS,
+          EGen_sh_kWh_HP_A_W_MFH_NoEMS,
+          HH_EGen_sh_kWh_HP_A_W_MFH_NoEMS,
+          EGen_sh_kWh_HP_B_W_MFH_NoEMS,
+          HH_EGen_sh_kWh_HP_B_W_MFH_NoEMS,
+          EGen_hw_kWh_HP_A_W_MFH_NoEMS,
+          HH_EGen_hw_kWh_HP_A_W_MFH_NoEMS,
+          EGen_hw_kWh_HP_B_W_MFH_NoEMS,
+          HH_EGen_hw_kWh_HP_B_W_MFH_NoEMS,
+          Avg_Eff_JAZ_HP_A_W_MFH_NoEMS,
+          HH_Avg_Eff_JAZ_HP_A_W_MFH_NoEMS,
+          Avg_Eff_JAZ_HP_B_W_MFH_NoEMS,
+          HH_Avg_Eff_JAZ_HP_B_W_MFH_NoEMS,
+          EGen_sh_kWh_EDWW_MFH_NoEMS,
+          HH_EGen_sh_kWh_EDWW_MFH_NoEMS,
+          EGen_sh_kWh_EDWW_MFH_Brine_NoEMS,
+          EGen_hw_kWh_EDWW_MFH_NoEMS,
+          HH_EGen_hw_kWh_EDWW_MFH_NoEMS,
+          EGen_hw_kWh_EDWW_MFH_Brine_NoEMS,
+          HH_EGen_hw_kWh_EDWW_MFH_Brine_NoEMS,
           heatpumpCombinedUsage,
           offgridPVPercentageNoEMS,
           NoEMScombinedEnergyUseKWH,
@@ -2979,9 +3134,13 @@ class SimulatorProvider extends Component {
           setWindowWidth,
           setWindowHeight,
           setTabToSelect,
+          setTabToSelectEigenverbrauch,
           setPreHeatTempOption,
           setScenarioInDatabase,
           setDatabaseResult,
+          setDatabaseResultNoEMS,
+          setDatabaseResultHouseHold,
+          setDatabaseResultHouseHoldNoEMS,
           setHeatpumpCombinedUsage,
           setOffgridPVPercentageNoEMS,
           setNoEMScombinedEnergyUseKWH,

@@ -25,6 +25,12 @@ import { ReactComponent as EnergyManagementIcon } from "../../../../assets/img/i
 import { ReactComponent as MagnifyingGlassIcon } from "../../../../assets/img/icons/magnifying_glass_small.svg";
 import { ReactComponent as WrenchIcon } from "../../../../assets/img/icons/wrench_small.svg";
 import { ReactComponent as InfoIcon } from "../../../../assets/img/icons/info_large.svg";
+
+import { ReactComponent as HeatpumpQr } from "../../../../assets/img/heat_pump_qr.svg";
+import { ReactComponent as PhotovoltaicQr } from "../../../../assets/img/photovoltaic_qr.svg";
+import { ReactComponent as WallboxQr } from "../../../../assets/img/wallbox_qr.svg";
+import { ReactComponent as EnergyManagementQr } from "../../../../assets/img/energymanagement_qr.svg";
+
 import { styled } from "@mui/material/styles";
 import Radio from "@mui/material/Radio";
 import Slider from "rc-slider";
@@ -55,7 +61,9 @@ class Additional extends React.Component {
 
   static contextType = AppContext;
 
-  componentDidMount() { }
+  componentDidMount() {
+    this.convertPies();
+  }
 
   inputPVOutput = (value) => {
     const { pvOutput, setPVOutput } = this.context;
@@ -144,8 +152,8 @@ class Additional extends React.Component {
     var autarkiegradWithEMS = mitNoEMSPercentage + mitPvUsagePercentage;
 
     // Ohne
-    var ohneGridUsagePercentage = parseInt(sessionStorage.getItem("OHNE_GridUsagePercentage"));
-    var ohnePvUsagePercentage = parseInt(sessionStorage.getItem("OHNE_PvUsagePercentage"));
+    var ohneGridUsagePercentage = parseInt(sessionStorage.getItem("OHNE_GridUsagePercentage_NoEMS"));
+    var ohnePvUsagePercentage = parseInt(sessionStorage.getItem("OHNE_PvUsagePercentage_NoEMS"));
 
     //household-use
     // Mit
@@ -155,8 +163,8 @@ class Additional extends React.Component {
     var eigenverbrauchsanteil = MIT_HouseholdUsagePercentage + MIT_HouseholdNoEMSpvPercent;
 
     // Ohne
-    var Onhe_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent"));
-    var Onhe_GridFeedPercentageNoEMS = parseInt(sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS"));
+    var Onhe_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent_NoEMS"));
+    var Onhe_GridFeedPercentageNoEMS = parseInt(sessionStorage.getItem("Onhe_GridFeedPercentage_NoEMS"));
 
     const addFooters = (doc) => {
       const pageCount = doc.internal.getNumberOfPages();
@@ -506,10 +514,10 @@ class Additional extends React.Component {
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginLeft: "60px", maxWidth: "1000px" }}>
             <div style={{ position: "relative", width: "730px", height: "253px" }}>
               <div style={{ position: "absolute", top: "0", left: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <canvas id="pie3" width="375" height="273" />
+                <canvas id="pie3" width="440" height="273" />
               </div>
               <div style={{ position: "absolute", top: "0", left: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <canvas id="pie4" width="375" height="273" />
+                <canvas id="pie4" width="440" height="273" />
               </div>
               <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
                 <InfoBoxResult box="electricity-use" />
@@ -524,10 +532,10 @@ class Additional extends React.Component {
             </div>
             <div style={{ position: "relative", width: "730px", height: "283px" }}>
               <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <canvas id="pie1" width="375" height="273" />
+                <canvas id="pie1" width="440" height="273" />
               </div>
               <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <canvas id="pie2" width="375" height="273" />
+                <canvas id="pie2" width="440" height="273" />
               </div>
               {/* <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
                 <InfoBoxResult box="off-grid" />
@@ -558,10 +566,10 @@ class Additional extends React.Component {
             </div>
             <div style={{ position: "relative", width: "730px", height: "283px" }}>
               <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <canvas id="pie1_NoEMS" width="375" height="273" />
+                <canvas id="pie1_NoEMS" width="440" height="273" />
               </div>
               <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <canvas id="pie2_NoEMS" width="375" height="273" />
+                <canvas id="pie2_NoEMS" width="440" height="273" />
               </div>
               {/* <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
                 <InfoBoxResult box="off-grid" />
@@ -775,7 +783,7 @@ class Additional extends React.Component {
                   </div>
                 </label>
                 <div style={{ marginTop: "20px" }}>
-                  <img src={require(`../../../../assets/img/qrCode.png`)} style={{ width: "90px" }} />
+                  <HeatpumpQr />
                 </div>
               </div>
               <div style={{ width: "25%", borderRight: "1px solid #999" }}>
@@ -791,7 +799,7 @@ class Additional extends React.Component {
                   </div>
                 </label>
                 <div style={{ marginTop: "20px" }}>
-                  <img src={require(`../../../../assets/img/qrCode.png`)} style={{ width: "90px" }} />
+                  <PhotovoltaicQr />
                 </div>
               </div>
               <div style={{ width: "25%", borderRight: "1px solid #999" }}>
@@ -807,7 +815,7 @@ class Additional extends React.Component {
                   </div>
                 </label>
                 <div style={{ marginTop: "20px" }}>
-                  <img src={require(`../../../../assets/img/qrCode.png`)} style={{ width: "90px" }} />
+                  <WallboxQr />
                 </div>
               </div>
               <div style={{ width: "25%" }}>
@@ -825,7 +833,7 @@ class Additional extends React.Component {
                   </div>
                 </label>
                 <div style={{ marginTop: "20px" }}>
-                  <img src={require(`../../../../assets/img/qrCode.png`)} style={{ width: "90px" }} />
+                  <EnergyManagementQr />
                 </div>
               </div>
             </div>

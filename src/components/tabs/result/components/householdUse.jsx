@@ -140,30 +140,34 @@ class HouseholdUse extends React.Component {
     const { loading, loadingHousehold, setHouseholdUse1SVG, setHouseholdUse2SVG, setHousehold1SVG_EMS_Hidden, setHousehold2SVG_EMS_Hidden, setHousehold1SVG_NoEMS_Hidden, setHousehold2SVG_NoEMS_Hidden } = this.context;
 
     if (!loadingHousehold) {
-      const householdUseChart1 = document.getElementById("householdUse-1");
-      const householdUseChart2 = document.getElementById("householdUse-2");
-      const householdUseChart1_svg = householdUseChart1.getElementsByTagName("svg");
-      const householdUseChart2_svg = householdUseChart2.getElementsByTagName("svg");
+      setTimeout(() => {
+        const householdUseChart1 = document.getElementById("householdUse-1");
+        const householdUseChart2 = document.getElementById("householdUse-2");
+        if (householdUseChart1 && householdUseChart2) {
+          const householdUseChart1_svg = householdUseChart1.getElementsByTagName("svg");
+          const householdUseChart2_svg = householdUseChart2.getElementsByTagName("svg");
 
-      const householdUseChart1Hidden = document.getElementById("householdUse-1-hidden");
-      const householdUseChart2Hidden = document.getElementById("householdUse-2-hidden");
-      const householdUseChart1_svg_hidden = householdUseChart1Hidden.getElementsByTagName("svg");
-      const householdUseChart2_svg_hidden = householdUseChart2Hidden.getElementsByTagName("svg");
+          const householdUseChart1Hidden = document.getElementById("householdUse-1-hidden");
+          const householdUseChart2Hidden = document.getElementById("householdUse-2-hidden");
+          const householdUseChart1_svg_hidden = householdUseChart1Hidden.getElementsByTagName("svg");
+          const householdUseChart2_svg_hidden = householdUseChart2Hidden.getElementsByTagName("svg");
 
-      const householdUseChart1_NoEMS_Hidden = document.getElementById("householdUse-1-noEMS-hidden");
-      const householdUseChart2_NoEMS_Hidden = document.getElementById("householdUse-2-noEMS-hidden");
-      const householdUseChart1_svg_noEMS_hidden = householdUseChart1_NoEMS_Hidden.getElementsByTagName("svg");
-      const householdUseChart2_svg_noEMS_hidden = householdUseChart2_NoEMS_Hidden.getElementsByTagName("svg");
+          const householdUseChart1_NoEMS_Hidden = document.getElementById("householdUse-1-noEMS-hidden");
+          const householdUseChart2_NoEMS_Hidden = document.getElementById("householdUse-2-noEMS-hidden");
+          const householdUseChart1_svg_noEMS_hidden = householdUseChart1_NoEMS_Hidden.getElementsByTagName("svg");
+          const householdUseChart2_svg_noEMS_hidden = householdUseChart2_NoEMS_Hidden.getElementsByTagName("svg");
 
-      console.log(householdUseChart1);
-      console.log(householdUseChart2_svg_hidden[0]);
+          console.log(householdUseChart1);
+          console.log(householdUseChart2_svg_hidden[0]);
 
-      setHouseholdUse1SVG(householdUseChart1_svg[0]);
-      setHouseholdUse2SVG(householdUseChart2_svg[0]);
-      setHousehold1SVG_EMS_Hidden(householdUseChart1_svg_hidden[0]);
-      setHousehold2SVG_EMS_Hidden(householdUseChart2_svg_hidden[0]);
-      setHousehold1SVG_NoEMS_Hidden(householdUseChart1_svg_noEMS_hidden[0]);
-      setHousehold2SVG_NoEMS_Hidden(householdUseChart2_svg_noEMS_hidden[0]);
+          setHouseholdUse1SVG(householdUseChart1_svg[0]);
+          setHouseholdUse2SVG(householdUseChart2_svg[0]);
+          setHousehold1SVG_EMS_Hidden(householdUseChart1_svg_hidden[0]);
+          setHousehold2SVG_EMS_Hidden(householdUseChart2_svg_hidden[0]);
+          setHousehold1SVG_NoEMS_Hidden(householdUseChart1_svg_noEMS_hidden[0]);
+          setHousehold2SVG_NoEMS_Hidden(householdUseChart2_svg_noEMS_hidden[0]);
+        }
+      }, "1000");
     }
   }
 
@@ -176,16 +180,16 @@ class HouseholdUse extends React.Component {
   }
 
   changeInfoBoxValue = (type, value) => {
-    const { infoBoxCombinedHouseholdUsage, setInfoBoxCombinedHouseholdUsage, noEMSPercentageOffGrid, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { infoBoxCombinedHouseholdUsage, setInfoBoxCombinedHouseholdUsage, noEMSPercentageOffGrid, heatpumpCombinedUsage, HH_energy_to_grid_kWh_PV_MFH, HH_EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, HH_EGen_hw_kWh_EDWW_MFH_Brine, HH_EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, HH_EGen_sh_kWh_EDWW_MFH, HH_Avg_Eff_JAZ_HP_B_W_MFH, HH_Avg_Eff_JAZ_HP_A_W_MFH, HH_EGen_sh_kWh_HP_A_W_MFH, HH_EGen_sh_kWh_HP_B_W_MFH, HH_EGen_hw_kWh_HP_A_W_MFH, HH_EGen_hw_kWh_HP_B_W_MFH } = this.context;
     console.log("INFO BOX: " + value);
 
     this.setState({ infoBoxCombinedHouseholdUsage: value });
   };
 
   householdUsagePercentage = (type) => {
-    const { setInfoBoxCombinedHouseholdUsage, noEMSPercentageOffGrid, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { setInfoBoxCombinedHouseholdUsage, noEMSPercentageOffGrid, heatpumpCombinedUsage, HH_energy_to_grid_kWh_PV_MFH, HH_EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, HH_EGen_hw_kWh_EDWW_MFH_Brine, HH_EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, HH_EGen_sh_kWh_EDWW_MFH, HH_Avg_Eff_JAZ_HP_B_W_MFH, HH_Avg_Eff_JAZ_HP_A_W_MFH, HH_EGen_sh_kWh_HP_A_W_MFH, HH_EGen_sh_kWh_HP_B_W_MFH, HH_EGen_hw_kWh_HP_A_W_MFH, HH_EGen_hw_kWh_HP_B_W_MFH } = this.context;
 
-    var pvUsagePercent = ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(EGen_elc_kWh_PV_MFH)) * 100;
+    var pvUsagePercent = ((parseFloat(HH_EGen_elc_kWh_PV_MFH) - parseFloat(HH_energy_to_grid_kWh_PV_MFH)) / parseFloat(HH_EGen_elc_kWh_PV_MFH)) * 100;
     console.log("HOUSEHOLD USAGE: " + pvUsagePercent);
 
     if (!this.state.infoBoxCombinedHouseholdUsage) {
@@ -198,9 +202,9 @@ class HouseholdUse extends React.Component {
   };
 
   gridFeedPercentage = (type) => {
-    const { setInfoBoxHouseholdGridFeed, infoBoxHouseholdGridFeed, noEMSPercentageOffGrid, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { setInfoBoxHouseholdGridFeed, infoBoxHouseholdGridFeed, noEMSPercentageOffGrid, heatpumpCombinedUsage, HH_energy_to_grid_kWh_PV_MFH, HH_EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, HH_EGen_hw_kWh_EDWW_MFH_Brine, HH_EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, HH_EGen_sh_kWh_EDWW_MFH, HH_Avg_Eff_JAZ_HP_B_W_MFH, HH_Avg_Eff_JAZ_HP_A_W_MFH, HH_EGen_sh_kWh_HP_A_W_MFH, HH_EGen_sh_kWh_HP_B_W_MFH, HH_EGen_hw_kWh_HP_A_W_MFH, HH_EGen_hw_kWh_HP_B_W_MFH } = this.context;
 
-    var gridFeedPercent = 100 - ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(EGen_elc_kWh_PV_MFH)) * 100;
+    var gridFeedPercent = 100 - ((parseFloat(HH_EGen_elc_kWh_PV_MFH) - parseFloat(HH_energy_to_grid_kWh_PV_MFH)) / parseFloat(HH_EGen_elc_kWh_PV_MFH)) * 100;
     console.log("GRID FEED USAGE: " + gridFeedPercent);
 
     if (!this.state.infoBoxHouseholdGridFeed) {
@@ -213,7 +217,7 @@ class HouseholdUse extends React.Component {
   };
 
   gridFeedPercentageNoEMS = (type) => {
-    const { householdNoEMSpvPercent, noEMSPercentageOffGrid, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { householdNoEMSpvPercent, noEMSPercentageOffGrid, heatpumpCombinedUsage, HH_energy_to_grid_kWh_PV_MFH, HH_EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, HH_EGen_hw_kWh_EDWW_MFH_Brine, HH_EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, HH_EGen_sh_kWh_EDWW_MFH, HH_Avg_Eff_JAZ_HP_B_W_MFH, HH_Avg_Eff_JAZ_HP_A_W_MFH, HH_EGen_sh_kWh_HP_A_W_MFH, HH_EGen_sh_kWh_HP_B_W_MFH, HH_EGen_hw_kWh_HP_A_W_MFH, HH_EGen_hw_kWh_HP_B_W_MFH } = this.context;
 
     var gridFeedPercentNoEMS = 100 - parseFloat(householdNoEMSpvPercent);
 
@@ -243,6 +247,17 @@ class HouseholdUse extends React.Component {
     var pieColors = [];
     var pieColorsPDFWithEMS = [];
     var pieColorsPDFWithoutEMS = [];
+
+    var roundedGridFeedPercentageNoEMS = Math.round(parseFloat(this.gridFeedPercentageNoEMS()));
+    var roundedHouseholdpvPercentNoEMS = Math.round(parseFloat(householdNoEMSpvPercent));
+    roundedHouseholdpvPercentNoEMS = this.adjustPercentage(roundedHouseholdpvPercentNoEMS, roundedGridFeedPercentageNoEMS);
+
+    if (sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent") != "") {
+      sessionStorage.setItem("Onhe_HouseholdNoEMSpvPercent_NoEMS", roundedHouseholdpvPercentNoEMS);
+    }
+    if (sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS") != "") {
+      sessionStorage.setItem("Onhe_GridFeedPercentage_NoEMS", roundedGridFeedPercentageNoEMS);
+    }
 
     if (householdEMS === true) {
       // Rounded values for VictoryPieData2
@@ -305,8 +320,8 @@ class HouseholdUse extends React.Component {
     pieColorsPDFWithEMS = ["#A4ABB3", "#00884A", "#18837E"];
 
     VictoryPieDataPDFWithoutEMS = [
-      { x: 3, y: parseInt(sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS")), name: "grid", label: sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS") + " %", img: "img/grid_in.svg", color: "#A4ABB3" },
-      { x: 1, y: parseInt(sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent")), name: "pv", label: sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent") + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
+      { x: 3, y: parseInt(sessionStorage.getItem("Onhe_GridFeedPercentage_NoEMS")), name: "grid", label: sessionStorage.getItem("Onhe_GridFeedPercentage_NoEMS") + " %", img: "img/grid_in.svg", color: "#A4ABB3" },
+      { x: 1, y: parseInt(sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent_NoEMS")), name: "pv", label: sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent_NoEMS") + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
     ];
     pieColorsPDFWithoutEMS = ["#A4ABB3", "#18837E"];
 
@@ -329,8 +344,9 @@ class HouseholdUse extends React.Component {
                       stroke: "#fff",
                       strokeWidth: 6,
                     },
-                    labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" },
+                    labels: { fill: ({ datum }) => datum.color, fontFamily: "Bosch-Bold", fontSize: "20px" },
                   }}
+                  labelComponent={<VictoryLabel backgroundStyle={{ fill: "white" }} backgroundPadding={6} />}
                 />
               </div>
 
@@ -345,7 +361,7 @@ class HouseholdUse extends React.Component {
                     data: {
                       fillOpacity: 0,
                       stroke: "#fff",
-                      strokeWidth: 6,
+                      strokeWidth: 0,
                     },
                     labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" },
                   }}
@@ -366,8 +382,9 @@ class HouseholdUse extends React.Component {
                       stroke: "#fff",
                       strokeWidth: 6,
                     },
-                    labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" },
+                    labels: { fill: ({ datum }) => datum.color, fontFamily: "Bosch-Bold", fontSize: "20px" },
                   }}
+                  labelComponent={<VictoryLabel backgroundStyle={{ fill: "white" }} backgroundPadding={6} />}
                 />
               </div>
 
@@ -382,7 +399,7 @@ class HouseholdUse extends React.Component {
                     data: {
                       fillOpacity: 0,
                       stroke: "#fff",
-                      strokeWidth: 6,
+                      strokeWidth: 0,
                     },
                     labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" },
                   }}

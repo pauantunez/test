@@ -23,7 +23,6 @@ var entryParam;
 
 function CustomLabelComponent(props) {
   const { x, y, datum, label } = props;
-  console.log("🚀 ~ CustomLabelComponent ~ datum:", datum);
   const imgHeight = props.iconSize;
   const imgWidth = props.iconSize;
   const fontSize = props.fontSize;
@@ -179,7 +178,6 @@ class ElectricityUse extends React.Component {
 
     console.log(electricityUseChart1);
     console.log(electricityUseChart1_svg[0]);
-
     setElectricityUse1SVG(electricityUseChart1_svg[0]);
     setElectricityUse2SVG(electricityUseChart2_svg[0]);
 
