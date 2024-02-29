@@ -414,7 +414,7 @@ class Additional extends React.Component {
             </div>
           </div>
         </div>
-        <div id="printPdf" style={{ position: "absolute", left: "0px", width: "795px", height: "1150px", display: "none" }}>
+        <div id="printPdf" style={{ position: "absolute", left: "0px", width: "795px", height: "1150px", /*display: "none"*/ }}>
           <div style={{ position: "absolute", left: "0px", top: "0px" }}>
             <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
           </div>
@@ -601,7 +601,7 @@ class Additional extends React.Component {
           </div>
         </div>
 
-        <div id="printPdf3" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", /*display: "none"*/ }}>
+        <div id="printPdf3" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
           <div style={{ postion: "relative", height: "10px" }}>
             <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
           </div>
@@ -752,7 +752,7 @@ class Additional extends React.Component {
           </div>
         </div>
 
-        <div id="printPdf4" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", /*display: "none"*/ }}>
+        <div id="printPdf4" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
           <div style={{ postion: "relative", height: "10px" }}>
             <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
           </div>

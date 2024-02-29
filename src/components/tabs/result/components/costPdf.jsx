@@ -375,7 +375,7 @@ class CostPdf extends React.Component {
               </div>
             </div>
             <div style={{ display: "flex", flexDirection: "row", width: "75%" }}>
-              <div style={{ display: "flex", flexDirection: "row", width: "100%", marginTop: "5px", marginLeft: "17%", zIndex: "99999" }}>
+              <div style={{ display: "flex", flexDirection: "row", width: "100%", marginTop: "5px", marginLeft: "100px", zIndex: "99999" }}>
                 <div style={{ display: "flex", width: "73px", height: "40px", color: "#000" }}>
                   <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
                     {this.context.selectedTheme === "buderus" ? <BuderusLightningIcon /> : <LightningIcon />}
