@@ -4,19 +4,13 @@ import { styled } from "@mui/material/styles";
 import { withRouter } from "react-router";
 import axios from "axios";
 import AppContext from "../AppContext";
-import Disclaimer from "./disclaimer/disclaimer";
-import Liability from "./liability/liability";
 import NavContent from "./tabs/navContent";
 import { withTranslation } from "react-i18next";
-import Slider from "rc-slider";
-import { FaVolumeUp, FaVolumeMute, FaHome, FaCloudSun, FaChartLine } from "react-icons/fa";
 import i18n from "i18next";
 import styles from "../styles/home.module.css";
 import "rc-slider/assets/index.css";
 
 import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
@@ -27,7 +21,7 @@ import { ReactComponent as FwdBtnIcon } from "../assets/img/icons/fwd_btn.svg";
 import { ReactComponent as FwdBtnInactiveIcon } from "../assets/img/icons/fwd_btn_inactive.svg";
 import { ReactComponent as MenuCloseIcon } from "../assets/img/icons/menu_close.svg";
 
-import { BrowserView, MobileView, isBrowser, isMobile } from "react-device-detect";
+import { isMobile } from "react-device-detect";
 
 import { ReactComponent as BuderusBackThinIcon } from "../assets/img/icons/buderus/arrow_back_thin.svg";
 
@@ -35,7 +29,6 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import Link from "@mui/material/Link";
-import electricityCost from "./tabs/cost/components/electricityCost";
 
 import CalculationModal from "./tabs/modal";
 
@@ -44,10 +37,6 @@ const urlParams = new URLSearchParams(queryString);
 var productEntry;
 var entryParam;
 var selectedTheme;
-var btnColor;
-var themeFont;
-var labelFont;
-var handIcon;
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -96,7 +85,7 @@ class Main extends React.Component {
 
   componentWillMount() {
     this.context.getTheme();
-    const { products, btnThemes, fonts, sendGAEvent } = this.context;
+    const { products, sendGAEvent } = this.context;
     const productsProps = Object.getOwnPropertyNames(products);
     var foundTheme = 0;
 
@@ -110,9 +99,6 @@ class Main extends React.Component {
           require("../styles/" + productsProps[themes] + ".css");
 
           selectedTheme = productsProps[themes];
-          btnColor = btnThemes[entryParam][0];
-          themeFont = fonts[entryParam][0];
-          labelFont = fonts[entryParam][1];
           console.log(selectedTheme);
 
           foundTheme++;
@@ -125,16 +111,10 @@ class Main extends React.Component {
       if (foundTheme === 0) {
         require("../styles/" + productsProps[0] + ".css");
         selectedTheme = productsProps[0];
-        btnColor = btnThemes.bosch[0];
-        themeFont = fonts.bosch[0];
-        labelFont = fonts.bosch[1];
       }
     } else {
       require("../styles/" + productsProps[0] + ".css");
       selectedTheme = productsProps[0];
-      btnColor = btnThemes.bosch[0];
-      themeFont = fonts.bosch[0];
-      labelFont = fonts.bosch[1];
     }
 
     // Tracking GA4 - Event listener
@@ -148,27 +128,30 @@ class Main extends React.Component {
   }
 
   componentWillReceiveProps = (nextProps, nextContext) => {
-    const { steps, products, productSelected, navSteps, selectedTab, setSelectedTab, setNavDirection, stepperNavActive, setActiveView, setActiveStep, navDirection, setStepperNav, heatpumpAudio, activeView, activeStep, disableSlider } = this.context;
-
     //isEnd
-    if (nextContext.activeView == 13) {
-      this.state.fwdBtn = true;
-      this.state.backBtn = false;
-      this.state.restart = false;
-    } else if (nextContext.activeView == 0) {
-      this.state.backBtn = true;
-      this.state.fwdBtn = false;
+    if (nextContext.activeView === 13) {
+      this.setState({
+        fwdBtn: true,
+        backBtn: false,
+        restart: false,
+      });
+    } else if (nextContext.activeView === 0) {
+      this.setState({
+        backBtn: true,
+        fwdBtn: false,
+      });
     } else {
-      this.state.backBtn = false;
-      this.state.fwdBtn = false;
+      this.setState({
+        backBtn: false,
+        fwdBtn: false,
+      });
     }
 
     //console.log(nextContext.navDirection)
   };
 
   handleClick(event) {
-    const { anchorEl, setAnchorEl, menuOpen, setMenu, setBackdrop, backdrop, setMenuBackdrop, menuBackdrop } = this.context;
-    console.log(menuBackdrop);
+    const { setMenuBackdrop, menuBackdrop } = this.context;
 
     if (menuBackdrop) {
       //setMenu(false);
@@ -180,9 +163,9 @@ class Main extends React.Component {
   }
 
   handleStep(step) {
-    const { selectedTab, activeView, activeStep, setActiveView, setActiveStep, steps, setSteps, setFwdBtn, setMenuBackdrop } = this.context;
-    if (activeView != step) {
-      if (step != 0) {
+    const { selectedTab, activeView, setActiveView, setActiveStep, steps, setFwdBtn, setMenuBackdrop } = this.context;
+    if (activeView !== step) {
+      if (step !== 0) {
         if (steps[step - 1] === false) {
           setActiveView(step);
           setActiveStep(selectedTab.toString() + "-" + step.toString());
@@ -196,7 +179,7 @@ class Main extends React.Component {
         setMenuBackdrop(false);
       }
 
-      if (step == 11) {
+      if (step === 11) {
         console.log(steps[11]);
       }
     }
@@ -262,7 +245,7 @@ class Main extends React.Component {
   isBeginning = () => {
     const { selectedTab, activeView } = this.context;
 
-    if (activeView == 1 && selectedTab == 0) {
+    if (activeView === 1 && selectedTab === 0) {
       return true;
     }
   };
@@ -270,13 +253,13 @@ class Main extends React.Component {
   isEnd = () => {
     const { selectedTab, activeView } = this.context;
 
-    if (activeView == 0 && selectedTab == 2) {
+    if (activeView === 0 && selectedTab === 2) {
       return true;
     }
   };
 
   getResult = (kfw, scenario) => {
-    const { setDatabaseResult, setDatabaseResultHouseHold, heatpumpType, setTabToSelect, tabToSelect, ev, kfwValue, homeStorageSizekWh, pvOutputkWh, pvOutput, tabEntries, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption, setLoading } = this.context;
+    const { setDatabaseResult, setDatabaseResultHouseHold, heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries, setLoading } = this.context;
     setLoading(true);
     let tabInTable = tabEntries.find((o) => {
       return o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Ja";
@@ -286,7 +269,7 @@ class Main extends React.Component {
         params: { Document: kfw, ScenNo: scenario, ConfigNo: heatpumpType.toString(), Tab: tabInTable.Tab },
       })
       .then((res) => {
-        if (res.data.data.length != 0) {
+        if (res.data.data.length !== 0) {
           setDatabaseResult(res.data.data[0]);
           setDatabaseResultHouseHold(res.data.data[0]);
           setLoading(false);
@@ -319,7 +302,7 @@ class Main extends React.Component {
 
     for (let index = 0; index < 50; index++) {
       const einsparungen = pvOutputkWh * 1000 * ((electricityCostHouseholdPercentage + 10) / 100) * (parseFloat(electricityCost / 100) * (1 + 0.02) ** [index + 1] - parseFloat(gridRevenue.replace(",", ".") / 100));
-      if (this.state.heatpumpPVems.length == 0) {
+      if (this.state.heatpumpPVems.length === 0) {
         this.state.heatpumpPVems.push({ expenditure: investmentCostResult + -400 });
       } else {
         this.state.heatpumpPVems.push({ expenditure: parseFloat(this.state.heatpumpPVems[index - 1].expenditure) + betriebskosten + einspeiseverguetung + einsparungen });
@@ -351,7 +334,7 @@ class Main extends React.Component {
     for (let index = 0; index < 50; index++) {
       const einsparungen = pvOutputkWh * 1000 * (electricityCostHouseholdPercentage / 100) * (parseFloat(electricityCost / 100) * (1 + 0.02) ** [index + 1] - parseFloat(gridRevenue.replace(",", ".") / 100));
 
-      if (this.state.heatpumpPV.length == 0) {
+      if (this.state.heatpumpPV.length === 0) {
         this.state.heatpumpPV.push({ expenditure: investmentCostResult, runningCost: betriebskosten });
       } else {
         this.state.heatpumpPV.push({ expenditure: parseFloat(this.state.heatpumpPV[index - 1].expenditure) + betriebskosten + einspeiseverguetung + einsparungen });
@@ -361,6 +344,8 @@ class Main extends React.Component {
   };
 
   render() {
+    // eslint-disable-next-line no-unused-vars
+    let value;
     const CustomButton = styled(Button)({
       textTransform: "none",
       borderRadius: "0px",
@@ -372,11 +357,7 @@ class Main extends React.Component {
       // Agrega más estilos según sea necesario
     });
 
-    const { kfwValue, ev, scenarioInDatabase, menuBackdrop, setMenuBackdrop, steps, menuOpen, products, productSelected, navSteps, selectedTab, setSelectedTab, stepperNavActive, setActiveView, setActiveStep, setNavDirection, setStepperNav, setDirectLink, heatpumpAudio, activeView, activeStep, activeMilestone, disableSlider, BuildingSize, fwdBtn, backBtn, setFwdBtn, setActiveMilestone, setMilestoneHeadline, backdrop, directLink, sendGAEvent, BuildingEnegeryStandard, OilUsageLiters, OilLNGValue, LNGUsage, homeCharging, odometerIncrease, homeStorageSize, pvOutput, energyUsagekWh, disabledInvestmentCost, investmentCostEUR, electricityCost, gridRevenue, setCalculationModal, calculationModal } = this.context;
-
-    const { t } = this.props;
-
-    const handleOpen = () => setCalculationModal(true);
+    const { kfwValue, ev, scenarioInDatabase, menuBackdrop, steps, menuOpen, navSteps, setActiveView, setNavDirection, setDirectLink, activeView, fwdBtn, setFwdBtn, setActiveMilestone, setMilestoneHeadline, backdrop, directLink, sendGAEvent, BuildingEnegeryStandard, OilUsageLiters, OilLNGValue, LNGUsage, homeCharging, odometerIncrease, homeStorageSize, pvOutput, energyUsagekWh, disabledInvestmentCost, investmentCostEUR, electricityCost, gridRevenue } = this.context;
 
     const nextTab = (event, newValue) => {
       console.log(navSteps[0]);
@@ -385,15 +366,15 @@ class Main extends React.Component {
 
       setActiveView(activeView + 1);
       setFwdBtn(true);
-      this.state.backBtn = false;
+      this.setState({ backBtn: false });
 
-      if (activeView + 1 == 4) {
+      if (activeView + 1 === 4) {
         setActiveMilestone(1);
         setMilestoneHeadline("Ausstattung");
-      } else if (activeView + 1 == 8) {
+      } else if (activeView + 1 === 8) {
         setActiveMilestone(2);
         setMilestoneHeadline("Ökonomische Größen");
-      } else if (activeView + 1 == 11) {
+      } else if (activeView + 1 === 11) {
         setActiveMilestone(3);
         setMilestoneHeadline("Ergebnis");
         this.getResult(kfwValue + ev, scenarioInDatabase);
@@ -406,9 +387,9 @@ class Main extends React.Component {
       setNavDirection("left");
 
       setActiveView(activeView - 1);
-      this.state.fwdBtn = false;
+      this.setState({ fwdBtn: false });
 
-      if (activeView - 1 == 0) {
+      if (activeView - 1 === 0) {
         setActiveMilestone(0);
         setMilestoneHeadline("Gebäude");
       } else if (activeView - 1 <= 3) {
@@ -422,36 +403,6 @@ class Main extends React.Component {
         setMilestoneHeadline("Ökonomische Größen");
       }
     };
-
-    const AntTabs = styled(Tabs)({
-      borderBottom: "1px solid #e8e8e8",
-      "& .MuiTabs-indicator": {
-        backgroundColor: "#1890ff",
-      },
-    });
-
-    const AntTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) => ({
-      textTransform: "none",
-      minWidth: 0,
-      [theme.breakpoints.up("sm")]: {
-        minWidth: 0,
-      },
-      fontWeight: theme.typography.fontWeightRegular,
-      marginRight: theme.spacing(1),
-      color: "rgba(0, 0, 0, 0.85)",
-      fontFamily: ["Bosch-Regular", "-apple-system", "BlinkMacSystemFont", '"Segoe UI"', "Roboto", '"Helvetica Neue"', "Arial", "sans-serif", '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"'].join(","),
-      "&:hover": {
-        color: "#40a9ff",
-        opacity: 1,
-      },
-      "&.Mui-selected": {
-        color: "#1890ff",
-        fontWeight: theme.typography.fontWeightMedium,
-      },
-      "&.Mui-focusVisible": {
-        backgroundColor: "#d1eaff",
-      },
-    }));
 
     return (
       <div className={styles.homeContainer}>
@@ -880,7 +831,7 @@ class Main extends React.Component {
               endIcon={<ForwardThinIcon />}
               disabled={fwdBtn}
               style={{ textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}
-              className={activeView != 13 ? styles.show : styles.hide}
+              className={activeView !== 13 ? styles.show : styles.hide}
               onClick={() => {
                 if (activeView === 3 && directLink === true) {
                   setDirectLink(false);
@@ -895,8 +846,8 @@ class Main extends React.Component {
                   }
                 } else if (activeView === 3) {
                   var value;
-                  if (energyUsagekWh == 0) value = 4000;
-                  else if (energyUsagekWh == 1) value = 6000;
+                  if (energyUsagekWh === 0) value = 4000;
+                  else if (energyUsagekWh === 1) value = 6000;
                   else value = 8000;
 
                   sendGAEvent("haushaltsstromverbrauch-kwh", value, window.location.href);
@@ -918,19 +869,17 @@ class Main extends React.Component {
                     nextTab();
                   }
                 } else if (activeView === 6) {
-                  var value;
-                  if (pvOutput == 0) value = 4;
-                  else if (pvOutput == 1) value = 7;
-                  else if (pvOutput == 2) value = 10;
+                  if (pvOutput === 0) value = 4;
+                  else if (pvOutput === 1) value = 7;
+                  else if (pvOutput === 2) value = 10;
                   else value = 14;
 
                   sendGAEvent("pv-leistung-kwp", value, window.location.href);
                   nextTab();
                 } else if (activeView === 7) {
-                  var value;
-                  if (homeStorageSize == 0) value = 6;
-                  else if (homeStorageSize == 1) value = 9;
-                  else if (homeStorageSize == 2) value = 12;
+                  if (homeStorageSize === 0) value = 6;
+                  else if (homeStorageSize === 1) value = 9;
+                  else if (homeStorageSize === 2) value = 12;
                   else value = 15;
 
                   sendGAEvent("batteriespeicher-kwh", value, window.location.href);
@@ -958,8 +907,8 @@ class Main extends React.Component {
               {activeView === 0 && <span>Weiter</span>}
               {activeView === 1 && <span>Weiter</span>}
               {activeView === 2 && <span>Weiter</span>}
-              {activeView === 3 && directLink == false && <span>Weiter</span>}
-              {activeView === 3 && directLink == true && (
+              {activeView === 3 && directLink === false && <span>Weiter</span>}
+              {activeView === 3 && directLink === true && (
                 <span class="trackeable" data-event="haushaltsstromverbrauch-back-to-result">
                   Zurück zum Ergebnis
                 </span>
@@ -983,7 +932,7 @@ class Main extends React.Component {
               startIcon={<HouseSmallIcon />}
               disabled={this.state.restart}
               style={{ textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}
-              className={activeView == 13 ? styles.show : styles.hide}
+              className={activeView === 13 ? styles.show : styles.hide}
               onClick={() => {
                 setActiveView(0);
               }}
