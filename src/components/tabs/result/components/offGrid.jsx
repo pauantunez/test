@@ -1,96 +1,51 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import AppContext from "../../../../AppContext";
-import { Button } from "reactstrap";
-import axios from "axios";
 
 import { withTranslation } from "react-i18next";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title } from "chart.js";
 import annotationPlugin from "chartjs-plugin-annotation";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import { VictoryChart, VictoryBar, VictoryPie, VictoryLabel } from "victory";
-
-import { styled } from "@mui/material/styles";
-import Switch from "@mui/material/Switch";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
+import { VictoryPie, VictoryLabel } from "victory";
 
 import CustomSwitch from "./switch";
 import InfoButton from "../../infoButton";
-
-import { Doughnut, Line, Bar, Pie } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
-import pattern from "patternomaly";
-import { ReactComponent as LightningIcon } from "../../../../assets/img/icons/lightning_chart.svg";
-import { ReactComponent as PVIcon } from "../../../../assets/img/icons/photovoltaic_chart.svg";
-import { ReactComponent as ElectricityIcon } from "../../../../assets/img/icons/electricity_sun_chart.svg";
 
 import { ReactComponent as GridIn } from "../../../../assets/img/grid_in.svg";
 import { ReactComponent as Plug } from "../../../../assets/img/plug.svg";
 import { ReactComponent as PV } from "../../../../assets/img/pv.svg";
 
-import CircularProgress from "@mui/material/CircularProgress";
-
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, annotationPlugin, ChartDataLabels);
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-var selectedTheme;
-var entryParam;
-var foundTheme;
-var btnFont;
-var fontHeadline;
-var fontRegular;
-var btnColor;
 
 function CustomLabelComponent(props) {
-  const { x, y, datum, label } = props;
+  const { x, y, datum } = props;
   console.log(props);
   const imgHeight = props.iconSize;
   const imgWidth = props.iconSize;
-  const fontSize = props.fontSize;
   const xPositionIconMargin = props.xPositionIconMargin;
   const yPositionIconMargin = props.yPositionIconMargin;
   const xPositionEVIconMargin = props.xPositionEVIconMargin;
   const yPositionEVIconMargin = props.yPositionEVIconMargin;
   const xPositionHouseholdIconMargin = props.xPositionHouseholdIconMargin;
   const yPositionHouseholdIconMargin = props.yPositionHouseholdIconMargin;
-  const xPositionHeatpumpLabel = props.xPositionHeatpumpLabel;
-  const xPositionEVLabel = props.xPositionEVLabel;
-  const xPositionHouseholdLabel = props.xPositionHouseholdLabel;
-  const yPositionHeatpumpLabel = props.yPositionHeatpumpLabel;
-  const yPositionEVLabel = props.yPositionEVLabel;
-  const yPositionHouseholdLabel = props.yPositionHouseholdLabel;
-  const padding = 5;
   var xPositionIcon;
   var yPositionIcon;
-  var xPositionLabel;
-  var yPositionLabel;
-  var xPositionPercentage;
-  var yPositionPercentage;
-  var xPositionIconTest = x - 40;
+
   var iconToUse;
 
-  if (datum.name == "grid") {
+  if (datum.name === "grid") {
     xPositionIcon = x - xPositionIconMargin;
     yPositionIcon = y + yPositionIconMargin;
-    xPositionLabel = x + xPositionHeatpumpLabel;
-    yPositionLabel = y - yPositionHeatpumpLabel;
 
     iconToUse = <GridIn width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} />;
-  } else if (datum.name == "plug") {
+  } else if (datum.name === "plug") {
     xPositionIcon = x - xPositionEVIconMargin;
     yPositionIcon = y + yPositionEVIconMargin;
-    xPositionLabel = x + xPositionEVLabel;
-    yPositionLabel = y - yPositionEVLabel;
 
     iconToUse = <Plug width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} />;
-  } else if (datum.name == "pv") {
+  } else if (datum.name === "pv") {
     xPositionIcon = x - xPositionHouseholdIconMargin;
     yPositionIcon = y + yPositionHouseholdIconMargin;
-    xPositionLabel = x - xPositionHouseholdLabel;
-    yPositionLabel = y - yPositionHouseholdLabel;
 
     iconToUse = <PV width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} />;
   }
@@ -116,18 +71,16 @@ class OffGrid extends React.Component {
   static contextType = AppContext;
 
   componentWillMount() {
-    const { products, btnThemes, fonts, setFwdBtn } = this.context;
+    const { setFwdBtn } = this.context;
 
     setFwdBtn(false);
     this.handleResize();
   }
 
   handleResize = () => {
-    const { pieChartSize, setPieSize } = this.context;
-    //console.log(window.innerWidth);
+    const { setPieSize } = this.context;
 
     if (window.innerWidth < 1300) {
-      //size, iconSize, innerRadius, fontSize, xHeatpumpLabel, xEVLabel, xHouseholdLabel, yHeatpumpLabel, yEVLabel, yHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin
       setPieSize(290, 50, 37, 14, 16, 2, 65, 0, 0, 36, 40, 15, 45, -10, 10, 0);
     } else if (window.innerWidth > 1300) {
       setPieSize(320, 70, 55, 18, 38, 25, 90, 0, 0, 34, 40, 15, 55, -20, 20, 0);
@@ -135,7 +88,7 @@ class OffGrid extends React.Component {
   };
 
   pvUsagePercentage = (type) => {
-    const { noEMSPercentageOffGrid, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = this.context;
 
     var pvUsagePercent = ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(heatpumpCombinedUsage)) * 100;
     console.log("PV USAGE: " + pvUsagePercent);
@@ -143,7 +96,7 @@ class OffGrid extends React.Component {
   };
 
   pvUsagePercentageEMS = (type) => {
-    const { noEMSPercentageOffGrid, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = this.context;
 
     var pvUsagePercentEMS = ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(heatpumpCombinedUsage)) * 100;
     console.log("PV USAGE: " + pvUsagePercentEMS);
@@ -158,7 +111,7 @@ class OffGrid extends React.Component {
   };
 
   gridUsagePercentage = (type) => {
-    const { infoBoxOffGridGridUsage, setInfoBoxOffGridGridUsage, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { setInfoBoxOffGridGridUsage, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = this.context;
 
     var gridUsagePercent = 100 - ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(heatpumpCombinedUsage)) * 100;
 
@@ -172,7 +125,7 @@ class OffGrid extends React.Component {
   };
 
   gridUsagePercentageNoEMS = (type) => {
-    const { infoBoxOffGridGridUsage, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH_NoEMS, EGen_elc_kWh_PV_MFH_NoEMS } = this.context;
+    const { heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH_NoEMS, EGen_elc_kWh_PV_MFH_NoEMS } = this.context;
 
     var gridUsagePercent = 100 - ((parseFloat(EGen_elc_kWh_PV_MFH_NoEMS) - parseFloat(energy_to_grid_kWh_PV_MFH_NoEMS)) / parseFloat(heatpumpCombinedUsage)) * 100;
 
@@ -192,27 +145,10 @@ class OffGrid extends React.Component {
   }
 
   componentDidMount() {
-    const { loading, loadingOffGrid, setOffGrid1SVG, offgrid1SVG, setOffGrid2SVG, setOffgrid1SVG_NoEMS_Hidden, setOffgrid2SVG_NoEMS_Hidden, setOffgrid1SVG_EMS_Hidden, setOffgrid2SVG_EMS_Hidden } = this.context;
+    const { loadingOffGrid, setOffGrid1SVG, setOffGrid2SVG, setOffgrid1SVG_NoEMS_Hidden, setOffgrid2SVG_NoEMS_Hidden, setOffgrid1SVG_EMS_Hidden, setOffgrid2SVG_EMS_Hidden } = this.context;
     window.addEventListener("resize", this.handleResize);
 
     if (!loadingOffGrid) {
-      /* const offgridChart1 = document.getElementById("offgrid-1");
-      const offgrid1_svg = offgridChart1.getElementsByTagName("svg");
-
-      const offgridChart2 = document.getElementById("offgrid-2");
-      const offgrid2_svg = offgridChart2.getElementsByTagName("svg");
-
-      const offgridChart1_NoEMS = document.getElementById("offgrid-1-hidden");
-      const offgridChart1_NoEMS_svg = offgridChart1_NoEMS.getElementsByTagName("svg");
-
-      const offgridChart2_NoEMS = document.getElementById("offgrid-2-hidden");
-      const offgridChart2_NoEMS_svg = offgridChart2_NoEMS.getElementsByTagName("svg");
-
-      const offgridChart1_EMS = document.getElementById("offgrid-1-ems-hidden");
-      const offgridChart1_EMS_svg = offgridChart1_EMS.getElementsByTagName("svg");
-
-      const offgridChart2_EMS = document.getElementById("offgrid-2-ems-hidden");
-      const offgridChart2_EMS_svg = offgridChart2_EMS.getElementsByTagName("svg"); */
       setTimeout(() => {
         const offgridChart1 = document.getElementById("offgrid-1");
         const offgridChart2 = document.getElementById("offgrid-2");
@@ -241,21 +177,11 @@ class OffGrid extends React.Component {
           setOffgrid2SVG_EMS_Hidden(offgridChart2_EMS_svg[0]);
         }
       }, "1000");
-      /* setOffGrid1SVG(offgrid1_svg[0]);
-      setOffGrid2SVG(offgrid2_svg[0]);
-      setOffgrid1SVG_NoEMS_Hidden(offgridChart1_NoEMS_svg[0]);
-      setOffgrid2SVG_NoEMS_Hidden(offgridChart2_NoEMS_svg[0]);
-      setOffgrid1SVG_EMS_Hidden(offgridChart1_EMS_svg[0]);
-      setOffgrid2SVG_EMS_Hidden(offgridChart2_EMS_svg[0]); */
-
-      // console.log(offgridChart1_NoEMS_svg[0]);
     }
   }
 
   render() {
-    const { t } = this.props;
-    const { overlayToggle } = this.state;
-    const { loading, loadingOffGrid, setInfoBoxOffGridGridUsage, noEMSPercentageOffGrid, pieChartSize, pieIconSize, innerRadiusMargin, pieLabelFontSize, xPositionHeatpumpLabel, xPositionEVLabel, xPositionHouseholdLabel, yPositionHeatpumpLabel, yPositionEVLabel, yPositionHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime, setOffgridEMS, offgridEMS } = this.context;
+    const { loadingOffGrid, noEMSPercentageOffGrid, pieChartSize, pieIconSize, innerRadiusMargin, pieLabelFontSize, xPositionHeatpumpLabel, xPositionEVLabel, xPositionHouseholdLabel, yPositionHeatpumpLabel, yPositionEVLabel, yPositionHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin, offgridEMS } = this.context;
     var VictoryPieData = [];
     var VictoryPieDataTest = [];
     var VictoryPieDataPDFWithEMS = [];
@@ -264,21 +190,14 @@ class OffGrid extends React.Component {
     var pieColorsPDFWithEMS = [];
     var pieColorsPDFWithoutEMS = [];
 
-    var VictoryPieData1EMS = [];
-    var VictoryPieData2EMS = [];
-    var pieColors1EMS = [];
-    var VictoryPieData1NoEMS = [];
-    var VictoryPieData2NoEMS = [];
-    var pieColors2NoEMS = [];
-
     var roundedGridUsagePercentageNoEMS = Math.round(parseFloat(this.gridUsagePercentageNoEMS()));
     var roundedPvUsagePercentageNoEMS = Math.round(parseFloat(this.pvUsagePercentageNoEMS()));
     roundedGridUsagePercentageNoEMS = this.adjustPercentage(roundedGridUsagePercentageNoEMS, roundedPvUsagePercentageNoEMS);
 
-    if (sessionStorage.getItem("OHNE_GridUsagePercentage_NoEMS") != "") {
+    if (sessionStorage.getItem("OHNE_GridUsagePercentage_NoEMS") !== "") {
       sessionStorage.setItem("OHNE_GridUsagePercentage_NoEMS", roundedGridUsagePercentageNoEMS);
     }
-    if (sessionStorage.getItem("OHNE_PvUsagePercentage_NoEMS") != "") {
+    if (sessionStorage.getItem("OHNE_PvUsagePercentage_NoEMS") !== "") {
       sessionStorage.setItem("OHNE_PvUsagePercentage_NoEMS", roundedPvUsagePercentageNoEMS);
     }
 
@@ -287,13 +206,13 @@ class OffGrid extends React.Component {
       var roundedNoEMSPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentage() - Math.round(noEMSPercentageOffGrid)));
       var roundedNoEMSPercentageOffGrid = Math.round(parseFloat(noEMSPercentageOffGrid));
       roundedNoEMSPercentageOffGrid = this.adjustPercentage(roundedNoEMSPercentageOffGrid, roundedNoEMSGridUsagePercentage, roundedNoEMSPvUsagePercentage); // Rounded values for VictoryPieDataTest
-      if (sessionStorage.getItem("MIT_GridUsagePercentage") != "") {
+      if (sessionStorage.getItem("MIT_GridUsagePercentage") !== "") {
         sessionStorage.setItem("MIT_GridUsagePercentage", roundedNoEMSGridUsagePercentage);
       }
-      if (sessionStorage.getItem("MIT_PvUsagePercentage") != "") {
+      if (sessionStorage.getItem("MIT_PvUsagePercentage") !== "") {
         sessionStorage.setItem("MIT_PvUsagePercentage", roundedNoEMSPvUsagePercentage);
       }
-      if (sessionStorage.getItem("MIT_NoEMSPercentageOffGrid") != "") {
+      if (sessionStorage.getItem("MIT_NoEMSPercentageOffGrid") !== "") {
         sessionStorage.setItem("MIT_NoEMSPercentageOffGrid", roundedNoEMSPercentageOffGrid);
       }
       VictoryPieData = [
@@ -315,10 +234,10 @@ class OffGrid extends React.Component {
       var roundedPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentage()));
       roundedGridUsagePercentage = this.adjustPercentage(roundedGridUsagePercentage, roundedPvUsagePercentage);
 
-      if (sessionStorage.getItem("OHNE_GridUsagePercentage") != "") {
+      if (sessionStorage.getItem("OHNE_GridUsagePercentage") !== "") {
         sessionStorage.setItem("OHNE_GridUsagePercentage", roundedGridUsagePercentage);
       }
-      if (sessionStorage.getItem("OHNE_PvUsagePercentage") != "") {
+      if (sessionStorage.getItem("OHNE_PvUsagePercentage") !== "") {
         sessionStorage.setItem("OHNE_PvUsagePercentage", roundedPvUsagePercentage);
       }
       VictoryPieData = [
