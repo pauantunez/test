@@ -1,47 +1,28 @@
-import React from 'react';
+import React from "react";
 import { withRouter } from "react-router-dom";
-import AppContext from '../../AppContext'
-import { ReactComponent as InfoIcon } from '../../assets/img/icons/info.svg';
-import { styled } from '@mui/material/styles';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import TextField from '@mui/material/TextField';
-import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+import AppContext from "../../AppContext";
+import Box from "@mui/material/Box";
 
-import { withTranslation } from 'react-i18next';
+import { withTranslation } from "react-i18next";
 
 class InfoBoxCalculation extends React.Component {
-
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       overlayToggle: false,
       imprint: [],
       theme: props.theme,
       text: props.text,
-      boxType: props.box
-    }
+      boxType: props.box,
+    };
   }
 
-  static contextType = AppContext
+  static contextType = AppContext;
 
-  componentDidMount() {
-
-  }
-
+  componentDidMount() {}
 
   render() {
-
-    const { t } = this.props;
-    const { BuildingEnegeryStandard, setBuildingEnegeryStandard, kfwValue, insulationValue, setInsulationValue, setKfwValue, OilLNGValue, setOilLNGValue, TCO_thermal_EUR_a, disabledOilUsage, OilUsageLiters, LNGUsage, disabledLNGUsage } = this.context;
-
     return (
       <Box component="span" class="infobox-container">
         {this.state.boxType === "calculation-1" && <h3 class="infobox-h3 Bosch-Medium">Gebäudeenergiestandard:</h3>}
@@ -88,9 +69,12 @@ class InfoBoxCalculation extends React.Component {
         )}
         {this.state.boxType === "calculation-2" && <span style={{ display: "block" }}>Das Wärmeverteilsystem hat Einfluss auf die Vorlauftemperatur der Heizungsanlage.</span>}
         <div class="infobox-padding-8-8">
-          {this.state.boxType === "calculation-1" && <span>Der Gebäudeenergiestandard beeinflusst den Heizbedarf eines Gebäudes pro Wohnfläche. Gemeinsam mit der ausgewählten Wohnfläche kann so der Heizbedarf pro Jahr errechnet werden.
-            <br /> Annahmen für die Heizlast:
-          </span>}
+          {this.state.boxType === "calculation-1" && (
+            <span>
+              Der Gebäudeenergiestandard beeinflusst den Heizbedarf eines Gebäudes pro Wohnfläche. Gemeinsam mit der ausgewählten Wohnfläche kann so der Heizbedarf pro Jahr errechnet werden.
+              <br /> Annahmen für die Heizlast:
+            </span>
+          )}
           {this.state.boxType === "calculation-3" && <span>Hier ist ausschließlich der Stromverbrauch des Haushalts gemeint. Die Wärmepumpe, der Heizstab der Wärmepumpe oder das E-Auto sind hier nicht mit inbegriffen.</span>}
           {this.state.boxType === "calculation-4" && (
             <span>
@@ -417,7 +401,6 @@ class InfoBoxCalculation extends React.Component {
             </div>
             <span style={{ display: "block", paddingTop: "10px" }}>Als Alternativeingabe wird der jährliche Öl- oder Gasverbrauch genutzt:</span>
           </div>
-
         )}
 
         {/* Berechnungsgrundlage 2 */}
@@ -673,7 +656,6 @@ class InfoBoxCalculation extends React.Component {
         )}
       </Box>
     );
-
   }
 }
 
