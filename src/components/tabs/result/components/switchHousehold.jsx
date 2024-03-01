@@ -1,39 +1,18 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import AppContext from "../../../../AppContext";
-import { Button } from "reactstrap";
 import axios from "axios";
 
 import { withTranslation } from "react-i18next";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title } from "chart.js";
 import annotationPlugin from "chartjs-plugin-annotation";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import { VictoryChart, VictoryBar, VictoryPie, VictoryLabel } from "victory";
 
 import { styled } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-
-import { Doughnut, Line, Bar, Pie } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
-import pattern from "patternomaly";
-import { ReactComponent as LightningIcon } from "../../../../assets/img/icons/lightning_chart.svg";
-import { ReactComponent as PVIcon } from "../../../../assets/img/icons/photovoltaic_chart.svg";
-import { ReactComponent as ElectricityIcon } from "../../../../assets/img/icons/electricity_sun_chart.svg";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, annotationPlugin, ChartDataLabels);
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-var selectedTheme;
-var entryParam;
-var foundTheme;
-var btnFont;
-var fontHeadline;
-var fontRegular;
-var btnColor;
 
 const AntSwitch = styled(Switch)(({ theme }) => {
   const { selectedTheme } = React.useContext(AppContext); // Obtén el tema seleccionado del contexto
@@ -96,7 +75,7 @@ class HouseholdSwitch extends React.Component {
   static contextType = AppContext;
 
   componentWillMount() {
-    const { setLoadingHousehold, products, btnThemes, fonts, setFwdBtn } = this.context;
+    const { setLoadingHousehold, setFwdBtn } = this.context;
 
     setFwdBtn(false);
     setLoadingHousehold(true);
@@ -107,7 +86,7 @@ class HouseholdSwitch extends React.Component {
   }
 
   getInitialResult = () => {
-    const { scenarioInDatabase, kfwValue, ev, homeStorageSizekWh, pvOutputkWh, tabEntries, products, btnThemes, fonts, setFwdBtn } = this.context;
+    const { scenarioInDatabase, kfwValue, ev, homeStorageSizekWh, pvOutputkWh, tabEntries } = this.context;
 
     //find the correct TAB for the "NO EMS" case
     let tabInTable = tabEntries.find((o) => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Nein");
@@ -118,7 +97,7 @@ class HouseholdSwitch extends React.Component {
   };
 
   energyUsageCombined = (result) => {
-    const { setHouseholdNoEMSpvPercent, setNoEMSPercentage, setNoEMScombinedEnergyUseKWH, noEMSPercentageOffGrid, energyUsagekWh, odometerIncreaseKWH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { setHouseholdNoEMSpvPercent } = this.context;
 
     var householdNoEMSPercent = ((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(result.EGen_elc_kWh_PV_MFH)) * 100;
     console.log("HOUSEHOLD NO EMS USAGE: " + householdNoEMSPercent);
@@ -127,18 +106,19 @@ class HouseholdSwitch extends React.Component {
   };
 
   getResult = (kfw, scenario, noEMSTab) => {
-    const { setLoadingHousehold, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, heatpumpCombinedUsage, setOffgridPVPercentageNoEMS, offgridPVPercentageNoEMS, setDatabaseResultHouseHold, heatpumpType, setTabToSelectEigenverbrauch, tabToSelectEigenverbrauch, ev, kfwValue, homeStorageSizekWh, pvOutputkWh, pvOutput, tabEntries, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
+    const { setLoadingHousehold, setDatabaseResultHouseHold, heatpumpType, tabToSelectEigenverbrauch } = this.context;
+    var tab;
     if (noEMSTab) {
-      var tab = noEMSTab;
+      tab = noEMSTab;
     } else {
-      var tab = tabToSelectEigenverbrauch.toString();
+      tab = tabToSelectEigenverbrauch.toString();
     }
     axios
       .get(`https://bosch-endkundentool-api.azurewebsites.net/results`, {
         params: { Document: kfw, ScenNo: scenario, ConfigNo: heatpumpType.toString(), Tab: tab },
       })
       .then((res) => {
-        if (res.data.data.length != 0) {
+        if (res.data.data.length !== 0) {
           if (noEMSTab) {
             this.energyUsageCombined(res.data.data[0]);
           } else {
@@ -151,7 +131,7 @@ class HouseholdSwitch extends React.Component {
   };
 
   getResultNoEMS = (kfw, scenario, noEMSTab) => {
-    const { setLoadingHousehold, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, heatpumpCombinedUsage, setOffgridPVPercentageNoEMS, offgridPVPercentageNoEMS, setDatabaseResultHouseHoldNoEMS, heatpumpType, setTabToSelectEigenverbrauch, tabToSelectEigenverbrauch, ev, kfwValue, homeStorageSizekWh, pvOutputkWh, pvOutput, tabEntries, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
+    const { setDatabaseResultHouseHoldNoEMS, heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries } = this.context;
 
     let tabInTable = tabEntries.find((o) => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Nein");
     axios
@@ -164,21 +144,21 @@ class HouseholdSwitch extends React.Component {
         },
       })
       .then((res) => {
-        if (res.data.data.length != 0) {
+        if (res.data.data.length !== 0) {
           setDatabaseResultHouseHoldNoEMS(res.data.data[0]);
         }
       });
   };
 
   inputHouseholdEMS = (event) => {
-    const { setLoadingHousehold, kfwValue, ev, setHouseholdEMS, offgridEMS, scenarioInDatabase, tabEntries, setTabToSelectEigenverbrauch, pvOutputkWh, homeStorageSizekWh, homeStorage, setHomeStorage, setHomeStorageSize } = this.context;
+    const { setLoadingHousehold, kfwValue, ev, setHouseholdEMS, scenarioInDatabase, tabEntries, setTabToSelectEigenverbrauch, pvOutputkWh, homeStorageSizekWh } = this.context;
     setHouseholdEMS(event.target.checked);
     setLoadingHousehold(true);
-
+    var emsValue;
     if (event.target.checked) {
-      var emsValue = "Ja";
+      emsValue = "Ja";
     } else {
-      var emsValue = "Nein";
+      emsValue = "Nein";
     }
 
     let tabInTable = tabEntries.find((o) => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === emsValue);
@@ -192,9 +172,7 @@ class HouseholdSwitch extends React.Component {
   };
 
   render() {
-    const { t } = this.props;
-    const { overlayToggle } = this.state;
-    const { offgridEMS, householdEMS, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
+    const { householdEMS } = this.context;
 
     return (
       <div>
