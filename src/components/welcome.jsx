@@ -1,12 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Button from "@mui/material/Button";
-import { styled } from "@mui/material/styles";
 import { withRouter } from "react-router";
-import axios from "axios";
 import AppContext from "../AppContext";
-import Disclaimer from "./disclaimer/disclaimer";
-import Liability from "./liability/liability";
 import { withTranslation } from "react-i18next";
 import i18n from "i18next";
 import styles from "../styles/home.module.css";
@@ -17,15 +12,8 @@ import { ReactComponent as ElectricitySunIcon } from "../assets/img/icons/electr
 import { ReactComponent as LightningSmallIcon } from "../assets/img/icons/lightning_small.svg";
 
 import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-
-import Select from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
 
 import CalculationModal from "./tabs/modal";
 
@@ -34,10 +22,6 @@ const urlParams = new URLSearchParams(queryString);
 var productEntry;
 var entryParam;
 var selectedTheme;
-var btnColor;
-var themeFont;
-var labelFont;
-var handIcon;
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -58,13 +42,6 @@ TabPanel.propTypes = {
   index: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
 };
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
 
 class Welcome extends React.Component {
   constructor(props) {
@@ -89,7 +66,7 @@ class Welcome extends React.Component {
   static contextType = AppContext;
 
   componentWillMount() {
-    const { products, btnThemes, fonts, sendGAEvent } = this.context;
+    const { products, sendGAEvent } = this.context;
     const productsProps = Object.getOwnPropertyNames(products);
     var foundTheme = 0;
 
@@ -103,9 +80,6 @@ class Welcome extends React.Component {
           import("../styles/" + productsProps[themes] + ".css");
 
           selectedTheme = productsProps[themes];
-          btnColor = btnThemes[entryParam][0];
-          themeFont = fonts[entryParam][0];
-          labelFont = fonts[entryParam][1];
           console.log(selectedTheme);
 
           foundTheme++;
@@ -118,16 +92,10 @@ class Welcome extends React.Component {
       if (foundTheme === 0) {
         import("../styles/" + productsProps[0] + ".css");
         selectedTheme = productsProps[0];
-        btnColor = btnThemes.bosch[0];
-        themeFont = fonts.bosch[0];
-        labelFont = fonts.bosch[1];
       }
     } else {
       import("../styles/" + productsProps[0] + ".css");
       selectedTheme = productsProps[0];
-      btnColor = btnThemes.bosch[0];
-      themeFont = fonts.bosch[0];
-      labelFont = fonts.bosch[1];
     }
 
     document.body.addEventListener("click", (event) => {
@@ -140,21 +108,14 @@ class Welcome extends React.Component {
   }
 
   componentWillReceiveProps = (nextProps, nextContext) => {
-    const { products, productSelected, navSteps, selectedTab, setSelectedTab, setNavDirection, stepperNavActive, setActiveView, setActiveStep, navDirection, setStepperNav, heatpumpAudio, activeView, activeStep, disableSlider } = this.context;
-
     //isEnd
-    if (nextContext.activeView == 0 && nextContext.selectedTab == 2) {
-      this.state.fwdBtn = true;
-      this.state.backBtn = false;
-    } else if (nextContext.activeView == 0 && nextContext.selectedTab == 0) {
-      this.state.backBtn = true;
-      this.state.fwdBtn = false;
+    if (nextContext.activeView === 0 && nextContext.selectedTab === 2) {
+      this.setState({ fwdBtn: true, backBtn: false });
+    } else if (nextContext.activeView === 0 && nextContext.selectedTab === 0) {
+      this.setState({ fwdBtn: false, backBtn: true });
     } else {
-      this.state.backBtn = false;
-      this.state.fwdBtn = false;
+      this.setState({ fwdBtn: false, backBtn: false });
     }
-
-    console.log(nextContext.navDirection);
   };
 
   getEntryParameter = async () => {
@@ -217,7 +178,7 @@ class Welcome extends React.Component {
   isBeginning = () => {
     const { selectedTab, activeView } = this.context;
 
-    if (activeView == 1 && selectedTab == 0) {
+    if (activeView === 1 && selectedTab === 0) {
       return true;
     }
   };
@@ -225,47 +186,15 @@ class Welcome extends React.Component {
   isEnd = () => {
     const { selectedTab, activeView } = this.context;
 
-    if (activeView == 0 && selectedTab == 2) {
+    if (activeView === 0 && selectedTab === 2) {
       return true;
     }
   };
 
   render() {
-    const { setCalculationModal, calculationModal, products, productSelected, navSteps, selectedTab, setSelectedTab, stepperNavActive, setActiveView, setActiveStep, setNavDirection, setStepperNav, heatpumpAudio, activeView, activeStep, disableSlider } = this.context;
-
-    const { t } = this.props;
+    const { setCalculationModal } = this.context;
 
     const handleOpen = () => setCalculationModal(true);
-
-    const AntTabs = styled(Tabs)({
-      borderBottom: "1px solid #e8e8e8",
-      "& .MuiTabs-indicator": {
-        backgroundColor: "#1890ff",
-      },
-    });
-
-    const AntTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) => ({
-      textTransform: "none",
-      minWidth: 0,
-      [theme.breakpoints.up("sm")]: {
-        minWidth: 0,
-      },
-      fontWeight: theme.typography.fontWeightRegular,
-      marginRight: theme.spacing(1),
-      color: "rgba(0, 0, 0, 0.85)",
-      fontFamily: ["Bosch-Regular", "-apple-system", "BlinkMacSystemFont", '"Segoe UI"', "Roboto", '"Helvetica Neue"', "Arial", "sans-serif", '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"'].join(","),
-      "&:hover": {
-        color: "#40a9ff",
-        opacity: 1,
-      },
-      "&.Mui-selected": {
-        color: "#1890ff",
-        fontWeight: theme.typography.fontWeightMedium,
-      },
-      "&.Mui-focusVisible": {
-        backgroundColor: "#d1eaff",
-      },
-    }));
 
     return (
       <div className={styles.homeContainer}>
