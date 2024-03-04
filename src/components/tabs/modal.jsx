@@ -47,8 +47,8 @@ class CalculationModal extends React.Component {
   render() {
     const { activeCalculationView, setCalculationModal, calculationModal } = this.context;
     const handleClose = () => {
-      var container = document.getElementsByClassName("home_homeContainer__CHK-E")[0];
-      container.style.display = "block";
+      /* var container = document.getElementsByClassName("home_homeContainer__CHK-E")[0];
+      container.style.display = "block"; */
       setCalculationModal(false);
     };
 
@@ -67,7 +67,7 @@ class CalculationModal extends React.Component {
     };
 
     return (
-      <Modal open={calculationModal} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+      <Modal open={calculationModal} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description" style={{ zIndex: 999999 }}>
         <Box class="calculationModal" sx={style}>
           {activeCalculationView === 0 && (
             <div class="modal-container-padding" style={{ display: "block" /*padding: '20px'*/ }}>

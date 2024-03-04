@@ -357,7 +357,9 @@ class Main extends React.Component {
       // Agrega más estilos según sea necesario
     });
 
-    const { kfwValue, ev, scenarioInDatabase, menuBackdrop, steps, menuOpen, navSteps, setActiveView, setNavDirection, setDirectLink, activeView, fwdBtn, setFwdBtn, setActiveMilestone, setMilestoneHeadline, backdrop, directLink, sendGAEvent, BuildingEnegeryStandard, OilUsageLiters, OilLNGValue, LNGUsage, homeCharging, odometerIncrease, homeStorageSize, pvOutput, energyUsagekWh, disabledInvestmentCost, investmentCostEUR, electricityCost, gridRevenue } = this.context;
+    const { kfwValue, ev, scenarioInDatabase, menuBackdrop, steps, menuOpen, navSteps, setActiveView, setNavDirection, setDirectLink, activeView, fwdBtn, setFwdBtn, setActiveMilestone, setMilestoneHeadline, backdrop, directLink, sendGAEvent, BuildingEnegeryStandard, OilUsageLiters, OilLNGValue, LNGUsage, homeCharging, odometerIncrease, homeStorageSize, pvOutput, energyUsagekWh, disabledInvestmentCost, investmentCostEUR, electricityCost, gridRevenue, setCalculationModal } = this.context;
+
+    const handleOpen = () => setCalculationModal(true);
 
     const nextTab = (event, newValue) => {
       console.log(navSteps[0]);
@@ -811,19 +813,19 @@ class Main extends React.Component {
               {activeView === 13 && <span>Ergebnis Teil 2</span>}
             </Button>
 
-            {/*  <CustomButton
+            <CustomButton
               style={{ background: "#FFF", border: "1px solid #007BC0", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}
               className={activeView === 11 || activeView === 12 || activeView === 13 ? styles.show : styles.hide}
               onClick={() => {
-                var container = document.getElementsByClassName("home_homeContainer__CHK-E")[0];
-                container.style.display = "none";
+                /* var container = document.getElementsByClassName("home_homeContainer__CHK-E")[0];
+                container.style.display = "none"; */
                 handleOpen();
               }}
             >
               <span className="trackeable" style={{ fontSize: "12px", fontFamily: "Bosch-Regular", color: "#007BC0", cursor: "pointer" }} data-event={activeView === 11 ? "result-part1-berechnungsgrundlage" : activeView === 12 ? "result-part2-berechnungsgrundlage" : activeView === 13 ? "result-part3-berechnungsgrundlage" : ""}>
                 Berechnugsgrundlage
               </span>
-            </CustomButton> */}
+            </CustomButton>
 
             <CustomButton
               id="nextTabBtn"
