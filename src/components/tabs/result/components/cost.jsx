@@ -1,16 +1,11 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import AppContext from "../../../../AppContext";
-import { Button } from "reactstrap";
 import axios from "axios";
 
 import { withTranslation } from "react-i18next";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title } from "chart.js";
 
-import { Doughnut, Line, Bar } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
 import pattern from "patternomaly";
 import { ReactComponent as LightningIcon } from "../../../../assets/img/icons/lightning_chart.svg";
 import { ReactComponent as PVIcon } from "../../../../assets/img/icons/photovoltaic_chart.svg";
@@ -20,21 +15,9 @@ import { ReactComponent as BuderusLightningIcon } from "../../../../assets/img/i
 import { ReactComponent as BuderusPVIcon } from "../../../../assets/img/icons/buderus/photovoltaic_chart.svg";
 import { ReactComponent as BuderusElectricityIcon } from "../../../../assets/img/icons/buderus/electricity_sun_chart.svg";
 
-import PatternImg from "../../../../assets/img/icons/pattern.svg";
-import PatternRoundImg from "../../../../assets/img/icons/pattern_small_round.svg";
-
-import { BrowserView, MobileView, isBrowser, isMobile, isSafari } from "react-device-detect";
+import { isSafari } from "react-device-detect";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title);
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-var selectedTheme;
-var entryParam;
-var foundTheme;
-var btnFont;
-var fontHeadline;
-var fontRegular;
-var btnColor;
 
 export const options = {
   plugins: {
@@ -149,7 +132,7 @@ class Cost extends React.Component {
   static contextType = AppContext;
 
   componentWillMount() {
-    const { products, btnThemes, fonts, setFwdBtn } = this.context;
+    const { setFwdBtn } = this.context;
     setFwdBtn(false);
   }
 
@@ -172,13 +155,13 @@ class Cost extends React.Component {
   }
 
   inputPower_kW_PV_MFH = (event) => {
-    const { overlayToggle, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH } = this.context;
+    const { setPower_kW_PV_MFH } = this.context;
 
     setPower_kW_PV_MFH(event.target.value);
   };
 
   inputTCO_thermal_EUR_a = (event) => {
-    const { overlayToggle, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a } = this.context;
+    const { setTCO_thermal_EUR_a } = this.context;
 
     setTCO_thermal_EUR_a(event.target.value);
   };
@@ -198,13 +181,13 @@ class Cost extends React.Component {
   }
 
   energyUseEuro = (divided, years, bar) => {
-    const { electricityCost, costOverTime } = this.context;
+    const { electricityCost } = this.context;
     var timeToNum;
 
-    if (this.state.displayed == undefined) {
+    if (this.state.displayed === undefined) {
       timeToNum = parseInt(years);
     } else {
-      if (this.state.displayed == "single") {
+      if (this.state.displayed === "single") {
         timeToNum = 1;
       } else {
         timeToNum = 20;
@@ -224,49 +207,36 @@ class Cost extends React.Component {
   };
 
   energyUseEuroNegative = (multiplier, result) => {
-    const { electricityCost, costOverTime } = this.context;
-    var timeToNum;
-
-    if (this.state.displayed == undefined) {
-      timeToNum = parseInt(costOverTime);
-    } else {
-      if (this.state.displayed == "single") {
-        timeToNum = 1;
-      } else {
-        timeToNum = 20;
-      }
-    }
-
     return "+ " + parseInt((result / 5) * multiplier).toLocaleString("de-DE") + " €";
   };
 
   electricityCostPV = () => {
     const { pvOutput, electricityCostOffGridPercentage, electricityCost } = this.context;
-
-    if (pvOutput == 0) {
-      var pvOutputKW = 4;
-    } else if (pvOutput == 1) {
-      var pvOutputKW = 7;
-    } else if (pvOutput == 2) {
-      var pvOutputKW = 10;
-    } else if (pvOutput == 3) {
-      var pvOutputKW = 14;
+    var pvOutputKW;
+    if (pvOutput === 0) {
+      pvOutputKW = 4;
+    } else if (pvOutput === 1) {
+      pvOutputKW = 7;
+    } else if (pvOutput === 2) {
+      pvOutputKW = 10;
+    } else if (pvOutput === 3) {
+      pvOutputKW = 14;
     }
 
     return (parseInt(pvOutputKW) * 1000 * (1 - parseFloat(electricityCostOffGridPercentage) / 10000) * (parseFloat(electricityCost) / 100)).toFixed(0);
   };
 
   electricityCostPVEMS = () => {
-    const { setElectricityCostPVEMSsavings, gridRevenue, electricityCostHouseholdPercentage, pvOutput, electricityCostOffGridPercentage, electricityCost } = this.context;
-
-    if (pvOutput == 0) {
-      var pvOutputKW = 4;
-    } else if (pvOutput == 1) {
-      var pvOutputKW = 7;
-    } else if (pvOutput == 2) {
-      var pvOutputKW = 10;
-    } else if (pvOutput == 3) {
-      var pvOutputKW = 14;
+    const { gridRevenue, pvOutput, electricityCostOffGridPercentage, electricityCost } = this.context;
+    var pvOutputKW;
+    if (pvOutput === 0) {
+      pvOutputKW = 4;
+    } else if (pvOutput === 1) {
+      pvOutputKW = 7;
+    } else if (pvOutput === 2) {
+      pvOutputKW = 10;
+    } else if (pvOutput === 3) {
+      pvOutputKW = 14;
     }
 
     const result = ((parseInt(pvOutputKW) * 1000 * (1 - parseFloat(electricityCostOffGridPercentage / 10000) - parseFloat(gridRevenue.replace(",", ".")) / 100) * parseFloat(electricityCost)) / 100).toFixed(0);
@@ -283,8 +253,12 @@ class Cost extends React.Component {
   };
 
   electricityCostPV20Years = (mit_ems) => {
-    const { costOverTime, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, pvOutputkWh, homeStorageSize, electricityCost, electricityCostOffGridPercentage, electricityCostHouseholdPercentage, gridRevenue } = this.context;
+    const { PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, pvOutputkWh, homeStorageSize, electricityCost, gridRevenue } = this.context;
     var investmentCostResult;
+
+    var anual_cost_first_year;
+    var operating_costs;
+    var feed_in_revenue;
 
     let PVcostInTable = PVcostLookupTable.find((o) => o.pv === pvOutputkWh);
     let StorageCostInTable = StorageCostLookupTable.find((o) => o.storage === homeStorageSize);
@@ -300,15 +274,15 @@ class Cost extends React.Component {
     }
 
     if (mit_ems === true) {
-      var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - parseFloat(sessionStorage.getItem("eigenverbrauchWithEms")) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
-      var operating_costs = Math.abs(Math.round((investmentCostResult + 400) * 0.01));
-      var anual_cost_first_year = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - parseFloat(sessionStorage.getItem("autarkiegradWithEMS")) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
+      feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - parseFloat(sessionStorage.getItem("eigenverbrauchWithEms")) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
+      operating_costs = Math.abs(Math.round((investmentCostResult + 400) * 0.01));
+      anual_cost_first_year = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - parseFloat(sessionStorage.getItem("autarkiegradWithEMS")) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
       anual_cost_first_year = Math.round(anual_cost_first_year * 100) / 100;
     } else {
-      var feed_in_revenue = (PVcostInTable.pv * 1000 * (1 - parseFloat(sessionStorage.getItem("householdNoEMSPercent")) / 100) * parseFloat(gridRevenue.replace(",", "."))) / 100;
+      feed_in_revenue = (PVcostInTable.pv * 1000 * (1 - parseFloat(sessionStorage.getItem("householdNoEMSPercent")) / 100) * parseFloat(gridRevenue.replace(",", "."))) / 100;
       feed_in_revenue = Math.round(feed_in_revenue * 100) / 100;
-      var operating_costs = Math.abs(Math.round(investmentCostResult * 0.01));
-      var anual_cost_first_year = Math.abs(operating_costs - feed_in_revenue + (1 - parseFloat(sessionStorage.getItem("pvUsagePercentNoEMS")) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02)));
+      operating_costs = Math.abs(Math.round(investmentCostResult * 0.01));
+      anual_cost_first_year = Math.abs(operating_costs - feed_in_revenue + (1 - parseFloat(sessionStorage.getItem("pvUsagePercentNoEMS")) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02)));
       anual_cost_first_year = Math.round(anual_cost_first_year * 100) / 100;
     }
     var result = Math.abs(Math.round((anual_cost_first_year * (1 - (0.02 + 1) ** 20)) / 0.02));
@@ -316,7 +290,11 @@ class Cost extends React.Component {
   };
 
   electricityCostPV1Years = (mit_ems) => {
-    const { costOverTime, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, pvOutputkWh, homeStorageSize, electricityCost, electricityCostOffGridPercentage, electricityCostHouseholdPercentage, gridRevenue, noEMSPercentageOffGrid, householdNoEMSpvPercent } = this.context;
+    const { PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, pvOutputkWh, homeStorageSize, electricityCost, gridRevenue } = this.context;
+
+    var result;
+    var operating_costs;
+    var feed_in_revenue;
 
     var investmentCostResult;
 
@@ -334,25 +312,25 @@ class Cost extends React.Component {
     }
 
     if (mit_ems === true) {
-      var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - parseFloat(sessionStorage.getItem("eigenverbrauchWithEms")) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
-      var operating_costs = Math.abs(Math.round((investmentCostResult + 400) * 0.01));
-      var result = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - parseFloat(sessionStorage.getItem("autarkiegradWithEMS")) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
+      feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - parseFloat(sessionStorage.getItem("eigenverbrauchWithEms")) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
+      operating_costs = Math.abs(Math.round((investmentCostResult + 400) * 0.01));
+      result = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - parseFloat(sessionStorage.getItem("autarkiegradWithEMS")) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
     } else {
-      var feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - parseFloat(sessionStorage.getItem("householdNoEMSPercent")) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
-      var operating_costs = Math.abs(Math.round(investmentCostResult * 0.01));
-      var result = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - parseFloat(sessionStorage.getItem("pvUsagePercentNoEMS")) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
+      feed_in_revenue = Math.abs(Math.round(PVcostInTable.pv * 1000 * (1 - parseFloat(sessionStorage.getItem("householdNoEMSPercent")) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
+      operating_costs = Math.abs(Math.round(investmentCostResult * 0.01));
+      result = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - parseFloat(sessionStorage.getItem("pvUsagePercentNoEMS")) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
     }
 
     return Math.abs(result);
   };
 
   runningCostPVonly = () => {
-    const { PVcostLookupTable, StorageCostLookupTable, pvOutputkWh, homeStorageSize, electricityCost, electricityCostOffGridPercentage } = this.context;
+    const { electricityCost, electricityCostOffGridPercentage } = this.context;
     var totalRunning = 0;
 
     if (!this.state.ranOnce) {
       for (let index = 0; index < 20; index++) {
-        if (this.state.runningCostPVonly.length == 0) {
+        if (this.state.runningCostPVonly.length === 0) {
           this.state.runningCostPVonly.push({ expenditure: -Math.abs((1 - electricityCostOffGridPercentage / 100) * 4000 * ((electricityCost / 100) * (1 + 0.02))) });
         } else {
           this.state.runningCostPVonly.push({ expenditure: parseFloat(this.state.runningCostPVonly[index - 1].expenditure) * (1 + 0.02) });
@@ -371,12 +349,12 @@ class Cost extends React.Component {
   };
 
   runningCostPVems = () => {
-    const { heatpumpPV, PVcostLookupTable, StorageCostLookupTable, pvOutputkWh, homeStorageSize, electricityCost, electricityCostOffGridPercentage } = this.context;
+    const { heatpumpPV, electricityCost, electricityCostOffGridPercentage } = this.context;
     var totalRunning = 0;
 
     if (!this.state.ranOnceEMS) {
       for (let index = 0; index < 20; index++) {
-        if (this.state.runningCostPVems.length == 0) {
+        if (this.state.runningCostPVems.length === 0) {
           this.state.runningCostPVems.push({ expenditure: Math.abs(heatpumpPV[0].runningCost + (1 - (electricityCostOffGridPercentage + 10) / 100) * 4000 * ((electricityCost / 100) * (1 + 0.02))) });
         } else {
           this.state.runningCostPVems.push({ expenditure: parseFloat(this.state.runningCostPVems[index - 1].expenditure) * (1 + 0.02) });
@@ -399,7 +377,7 @@ class Cost extends React.Component {
   };
 
   inputCostOverTime = (event) => {
-    const { costOverTime, setCostOverTime, setFwdBtn, steps, setSteps, activeView } = this.context;
+    const { setCostOverTime } = this.context;
     setCostOverTime(event.target.value);
   };
 
@@ -412,7 +390,7 @@ class Cost extends React.Component {
   };
 
   resultWithPV = () => {
-    const { costOverTime, setElectricityCostPVsavings, gridRevenue, electricityCostHouseholdPercentage, pvOutput, electricityCostOffGridPercentage, electricityCost } = this.context;
+    const { costOverTime, setElectricityCostPVsavings } = this.context;
     var result;
 
     if (costOverTime === "1") {
@@ -421,7 +399,7 @@ class Cost extends React.Component {
       result = parseInt(parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVonly);
     }
 
-    if (this.state.electricityCostPVsavings != result) {
+    if (this.state.electricityCostPVsavings !== result) {
       this.setState({ electricityCostPVsavings: result });
       setElectricityCostPVsavings(result);
     }
@@ -430,7 +408,7 @@ class Cost extends React.Component {
   };
 
   resultWithPVandEMS = () => {
-    const { costOverTime, setElectricityCostPVEMSsavings, gridRevenue, electricityCostHouseholdPercentage, pvOutput, electricityCostOffGridPercentage, electricityCost } = this.context;
+    const { costOverTime, setElectricityCostPVEMSsavings } = this.context;
     var result;
 
     if (costOverTime === "1") {
@@ -439,7 +417,7 @@ class Cost extends React.Component {
       result = parseInt(parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVems);
     }
 
-    if (this.state.electricityCostPVEMSsavings != result) {
+    if (this.state.electricityCostPVEMSsavings !== result) {
       this.setState({ electricityCostPVEMSsavings: result });
       setElectricityCostPVEMSsavings(result);
     }
@@ -472,7 +450,7 @@ class Cost extends React.Component {
   };
 
   energyUsageCombined = (result) => {
-    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH_NoEMS, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, setNoEMSPercentage, setHouseholdNoEMSpvPercent, heatpumpCombinedUsage } = this.context;
+    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH } = this.context;
     var Avg_Eff_JAZ_HP;
     if (heatpumpType === "1") {
       Avg_Eff_JAZ_HP = result.Avg_Eff_JAZ_HP_A_W_MFH;
@@ -487,25 +465,24 @@ class Cost extends React.Component {
     var energyUsageHeatingRod = (parseFloat(result.EGen_sh_kWh_EDWW_MFH) + parseFloat(result.EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(result.EGen_hw_kWh_EDWW_MFH) + parseFloat(result.EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
 
     const energyUsageCombined = Math.round(energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH);
-    if (sessionStorage.getItem("energyUsageCombined") == undefined && energyUsageCombined) {
+    if (sessionStorage.getItem("energyUsageCombined") === undefined && energyUsageCombined) {
       sessionStorage.setItem("energyUsageCombined", energyUsageCombined);
     }
 
     var pvUsagePercentNoEMS = Math.round(((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(energyUsageCombined)) * 100);
-    if (sessionStorage.getItem("pvUsagePercentNoEMS") == undefined && pvUsagePercentNoEMS) {
+    if (sessionStorage.getItem("pvUsagePercentNoEMS") === undefined && pvUsagePercentNoEMS) {
       sessionStorage.setItem("pvUsagePercentNoEMS", pvUsagePercentNoEMS);
     }
 
     var householdNoEMSPercent = Math.round(((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(result.EGen_elc_kWh_PV_MFH)) * 100);
 
-    if (sessionStorage.getItem("householdNoEMSPercent") == undefined && pvUsagePercentNoEMS) {
+    if (sessionStorage.getItem("householdNoEMSPercent") === undefined && pvUsagePercentNoEMS) {
       sessionStorage.setItem("householdNoEMSPercent", householdNoEMSPercent);
     }
-    const HeatpumpCombinedUsage = energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH;
   };
 
   getHeatpumpCombinedUsage = () => {
-    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH_NoEMS, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, setNoEMSPercentage, setHouseholdNoEMSpvPercent, heatpumpCombinedUsage } = this.context;
+    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
     var Avg_Eff_JAZ_HP;
     if (heatpumpType === "1") {
       Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_A_W_MFH;
@@ -520,13 +497,13 @@ class Cost extends React.Component {
     var energyUsageHeatingRod = (parseFloat(EGen_sh_kWh_EDWW_MFH) + parseFloat(EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(EGen_hw_kWh_EDWW_MFH) + parseFloat(EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
 
     const HeatpumpCombinedUsage = energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH;
-    if (sessionStorage.getItem("HeatpumpCombinedUsage") == undefined && HeatpumpCombinedUsage) {
+    if (sessionStorage.getItem("HeatpumpCombinedUsage") === undefined && HeatpumpCombinedUsage) {
       sessionStorage.setItem("HeatpumpCombinedUsage", HeatpumpCombinedUsage);
     }
   };
 
   gridUsagePercentage = (type) => {
-    const { infoBoxOffGridGridUsage, setInfoBoxOffGridGridUsage, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { setInfoBoxOffGridGridUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = this.context;
 
     var gridUsagePercent = 100 - ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(sessionStorage.getItem("HeatpumpCombinedUsage"))) * 100;
 
@@ -539,7 +516,7 @@ class Cost extends React.Component {
   };
 
   pvUsagePercentage = (type) => {
-    const { noEMSPercentageOffGrid, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = this.context;
 
     var pvUsagePercent = ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(sessionStorage.getItem("HeatpumpCombinedUsage"))) * 100;
 
@@ -559,7 +536,7 @@ class Cost extends React.Component {
   }
 
   getResultNoEMS = (kfw, scenario, noEMSTab) => {
-    const { setLoading, setLoadingOffGrid, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, heatpumpCombinedUsage, setOffgridPVPercentageNoEMS, offgridPVPercentageNoEMS, setDatabaseResultNoEMS, heatpumpType, setTabToSelect, tabToSelect, ev, kfwValue, homeStorageSizekWh, pvOutputkWh, pvOutput, tabEntries, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
+    const { setDatabaseResultNoEMS, heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries } = this.context;
 
     let tabInTable = tabEntries.find((o) => {
       return o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Nein";
@@ -575,7 +552,7 @@ class Cost extends React.Component {
         },
       })
       .then((res) => {
-        if (res.data.data.length != 0) {
+        if (res.data.data.length !== 0) {
           this.energyUsageCombined(res.data.data[0]);
           setDatabaseResultNoEMS(res.data.data[0]);
         }
@@ -602,37 +579,35 @@ class Cost extends React.Component {
   render() {
     const { loading } = this.context;
 
-    const { t } = this.props;
-    const { overlayToggle } = this.state;
-    const { electricityCostPVsavings, electricityCostPVEMSsavings, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime, noEMSPercentageOffGrid } = this.context;
+    const { costOverTime } = this.context;
     // Ohne PV
     var OHNE_PV_cost1year = Math.abs(parseInt(this.energyUseEuro(5, 1).replace(".", "").replace(",", "")));
     var OHNE_PV_cost20years = Math.abs(parseInt(this.electricityCostNoPV20Years()));
 
-    if (sessionStorage.getItem("OHNE_PV_cost1year") == undefined && OHNE_PV_cost1year) {
+    if (sessionStorage.getItem("OHNE_PV_cost1year") === undefined && OHNE_PV_cost1year) {
       sessionStorage.setItem("OHNE_PV_cost1year", OHNE_PV_cost1year);
     }
 
-    if (sessionStorage.getItem("OHNE_PV_cost20years") == undefined && OHNE_PV_cost20years) {
+    if (sessionStorage.getItem("OHNE_PV_cost20years") === undefined && OHNE_PV_cost20years) {
       sessionStorage.setItem("OHNE_PV_cost20years", OHNE_PV_cost20years);
     }
 
     var costOnlyPV1year = parseInt(this.electricityCostPV1Years());
     var costOnlyPV20years = parseInt(this.electricityCostPV20Years());
 
-    if (sessionStorage.getItem("costOnlyPV1year") == undefined && costOnlyPV1year) {
+    if (sessionStorage.getItem("costOnlyPV1year") === undefined && costOnlyPV1year) {
       sessionStorage.setItem("costOnlyPV1year", costOnlyPV1year);
     }
-    if (sessionStorage.getItem("costOnlyPV20years") == undefined && costOnlyPV20years) {
+    if (sessionStorage.getItem("costOnlyPV20years") === undefined && costOnlyPV20years) {
       sessionStorage.setItem("costOnlyPV20years", costOnlyPV20years);
     }
 
     var savingOnlyPV1year = OHNE_PV_cost1year - costOnlyPV1year;
     var savingOnlyPV20years = OHNE_PV_cost20years - costOnlyPV20years;
-    if (sessionStorage.getItem("savingOnlyPV1year") == undefined && savingOnlyPV1year) {
+    if (sessionStorage.getItem("savingOnlyPV1year") === undefined && savingOnlyPV1year) {
       sessionStorage.setItem("savingOnlyPV1year", savingOnlyPV1year);
     }
-    if (sessionStorage.getItem("savingOnlyPV20years") == undefined && savingOnlyPV20years) {
+    if (sessionStorage.getItem("savingOnlyPV20years") === undefined && savingOnlyPV20years) {
       sessionStorage.setItem("savingOnlyPV20years", savingOnlyPV20years);
     }
 
@@ -674,11 +649,9 @@ class Cost extends React.Component {
       sessionStorage.setItem("autarkiegradWithEMS", autarkiegradWithEMS);
     }
 
-    var roundedGridFeedPercentage = Math.round(parseFloat(this.gridFeedPercentage()));
-
     var roundedHouseholdUsagePercentage = Math.round(parseFloat(this.householdUsagePercentage()) - sessionStorage.getItem("householdNoEMSPercent"));
     var roundedHouseholdpvPercent = Math.round(parseFloat(sessionStorage.getItem("householdNoEMSPercent")));
-    roundedGridFeedPercentage = this.adjustPercentage(roundedGridFeedPercentage, roundedHouseholdUsagePercentage, roundedHouseholdpvPercent);
+
     const eigenverbrauchWithEms = roundedHouseholdpvPercent + roundedHouseholdUsagePercentage;
 
     if (sessionStorage.getItem("eigenverbrauchWithEms") == null && eigenverbrauchWithEms) {
@@ -723,17 +696,17 @@ class Cost extends React.Component {
                   {/* ohne PV */}
                   <div style={{ display: "flex", width: "73px", height: `212px`, background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", marginTop: "auto" }}>
                     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
-                      {costOverTime == "1" && OHNE_PV_cost1year.toLocaleString("de-DE")}
-                      {costOverTime == "1" && <span>&nbsp;€</span>}
-                      {costOverTime == "20" && OHNE_PV_cost20years.toLocaleString("de-DE")}
-                      {costOverTime == "20" && <span>&nbsp;€</span>}
+                      {costOverTime === "1" && OHNE_PV_cost1year.toLocaleString("de-DE")}
+                      {costOverTime === "1" && <span>&nbsp;€</span>}
+                      {costOverTime === "20" && OHNE_PV_cost20years.toLocaleString("de-DE")}
+                      {costOverTime === "20" && <span>&nbsp;€</span>}
                     </div>
                   </div>
 
                   {/* Mit PV Price */}
                   <div style={{ width: "73px", color: "white", marginLeft: "10%", zIndex: "99999", marginTop: "auto" }}>
                     {/* Pattern bar 1 year */}
-                    {costOverTime == "1" && (
+                    {costOverTime === "1" && (
                       <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPv["savings"]}px`, color: "white" }}>
                         <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
@@ -747,7 +720,7 @@ class Cost extends React.Component {
                     )}
 
                     {/* Pattern bar 20 years */}
-                    {costOverTime == "20" && (
+                    {costOverTime === "20" && (
                       <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPv["savings"]}px`, color: "white" }}>
                         <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
@@ -761,7 +734,7 @@ class Cost extends React.Component {
                     )}
 
                     {/* Blue bar 1 year */}
-                    {costOverTime == "1" && (
+                    {costOverTime === "1" && (
                       <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPv["cost"]}px`, color: "white" }}>
                         <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
@@ -775,7 +748,7 @@ class Cost extends React.Component {
                     )}
 
                     {/* Blue bar 20 years */}
-                    {costOverTime == "20" && (
+                    {costOverTime === "20" && (
                       <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPv["cost"]}px`, color: "white" }}>
                         <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
@@ -792,7 +765,7 @@ class Cost extends React.Component {
                   {/* Mit PV und EMS */}
                   <div style={{ width: "73px", color: "white", marginLeft: "10%", zIndex: "99999", marginTop: "auto" }}>
                     {/* Pattern bar 1 year */}
-                    {costOverTime == "1" && (
+                    {costOverTime === "1" && (
                       <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPvAndEMS["savings"]}px`, color: "white" }}>
                         <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
@@ -806,7 +779,7 @@ class Cost extends React.Component {
                     )}
 
                     {/* Pattern bar 20 years */}
-                    {costOverTime == "20" && (
+                    {costOverTime === "20" && (
                       <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPvAndEms["savings"]}px`, color: "white" }}>
                         <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
@@ -820,7 +793,7 @@ class Cost extends React.Component {
                     )}
 
                     {/* Blue bar 1 year */}
-                    {costOverTime == "1" && (
+                    {costOverTime === "1" && (
                       <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPvAndEMS["cost"]}px`, color: "white" }}>
                         <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
@@ -834,7 +807,7 @@ class Cost extends React.Component {
                     )}
 
                     {/* Blue bar 20 years */}
-                    {costOverTime == "20" && (
+                    {costOverTime === "20" && (
                       <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPvAndEms["cost"]}px`, color: "white" }}>
                         <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
@@ -853,28 +826,28 @@ class Cost extends React.Component {
                   <div style={{ display: "flex", flexDirection: "row" }}>
                     <div class="bar-chart-left-legend">
                       <div>
-                        {costOverTime == "1" && this.divideValuesForChart(5, OHNE_PV_cost1year) + " €"}
-                        {costOverTime == "20" && this.divideValuesForChart(5, OHNE_PV_cost20years) + " €"}
+                        {costOverTime === "1" && this.divideValuesForChart(5, OHNE_PV_cost1year) + " €"}
+                        {costOverTime === "20" && this.divideValuesForChart(5, OHNE_PV_cost20years) + " €"}
                       </div>
                       <div>
-                        {costOverTime == "1" && this.divideValuesForChart(4, OHNE_PV_cost1year) + " €"}
-                        {costOverTime == "20" && this.divideValuesForChart(4, OHNE_PV_cost20years) + " €"}
+                        {costOverTime === "1" && this.divideValuesForChart(4, OHNE_PV_cost1year) + " €"}
+                        {costOverTime === "20" && this.divideValuesForChart(4, OHNE_PV_cost20years) + " €"}
                       </div>
                       <div>
-                        {costOverTime == "1" && this.divideValuesForChart(3, OHNE_PV_cost1year) + " €"}
-                        {costOverTime == "20" && this.divideValuesForChart(3, OHNE_PV_cost20years) + " €"}
+                        {costOverTime === "1" && this.divideValuesForChart(3, OHNE_PV_cost1year) + " €"}
+                        {costOverTime === "20" && this.divideValuesForChart(3, OHNE_PV_cost20years) + " €"}
                       </div>
                       <div>
-                        {costOverTime == "1" && this.divideValuesForChart(2, OHNE_PV_cost1year) + " €"}
-                        {costOverTime == "20" && this.divideValuesForChart(2, OHNE_PV_cost20years) + " €"}
+                        {costOverTime === "1" && this.divideValuesForChart(2, OHNE_PV_cost1year) + " €"}
+                        {costOverTime === "20" && this.divideValuesForChart(2, OHNE_PV_cost20years) + " €"}
                       </div>
                       <div>
-                        {costOverTime == "1" && this.divideValuesForChart(1, OHNE_PV_cost1year) + " €"}
-                        {costOverTime == "20" && this.divideValuesForChart(1, OHNE_PV_cost20years) + " €"}
+                        {costOverTime === "1" && this.divideValuesForChart(1, OHNE_PV_cost1year) + " €"}
+                        {costOverTime === "20" && this.divideValuesForChart(1, OHNE_PV_cost20years) + " €"}
                       </div>
                       <div>
-                        {costOverTime == "1" && this.divideValuesForChart(0, OHNE_PV_cost1year) + " €"}
-                        {costOverTime == "20" && this.divideValuesForChart(0, OHNE_PV_cost20years) + " €"}
+                        {costOverTime === "1" && this.divideValuesForChart(0, OHNE_PV_cost1year) + " €"}
+                        {costOverTime === "20" && this.divideValuesForChart(0, OHNE_PV_cost20years) + " €"}
                       </div>
                     </div>
                     <div data-html2canvas-ignore class="cost-chart-width" style={{ display: "flex", flexDirection: "column", marginLeft: "3px" }}>
