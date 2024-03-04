@@ -1,13 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import AppContext from "../../../../AppContext";
-import InfoBox from "../../infoBox";
-import BreakEven from "./breakEven";
-import Cost from "./cost";
 import CostPdf from "./costPdf";
-import OffGrid from "./offGrid";
-import ElectricityUse from "./electricityUse";
-import HouseholdUse from "./householdUse";
 import InfoBoxResult from "../../infoBoxResult";
 import InfoBoxResultPdf from "../../infoBoxResultPdf";
 import InfoBoxCalculation from "../../infoBoxCalculation";
@@ -26,14 +20,6 @@ import { ReactComponent as MagnifyingGlassIcon } from "../../../../assets/img/ic
 import { ReactComponent as WrenchIcon } from "../../../../assets/img/icons/wrench_small.svg";
 import { ReactComponent as InfoIcon } from "../../../../assets/img/icons/info_large.svg";
 
-import { ReactComponent as HeatpumpQr } from "../../../../assets/img/heat_pump_qr.svg";
-import { ReactComponent as PhotovoltaicQr } from "../../../../assets/img/photovoltaic_qr.svg";
-import { ReactComponent as WallboxQr } from "../../../../assets/img/wallbox_qr.svg";
-import { ReactComponent as EnergyManagementQr } from "../../../../assets/img/energymanagement_qr.svg";
-
-import { styled } from "@mui/material/styles";
-import Radio from "@mui/material/Radio";
-import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -66,12 +52,12 @@ class Additional extends React.Component {
   }
 
   inputPVOutput = (value) => {
-    const { pvOutput, setPVOutput } = this.context;
+    const { setPVOutput } = this.context;
     setPVOutput(parseInt(value));
   };
 
   convertPies = () => {
-    const { offgrid1SVG, offgrid2SVG, electricityUse1SVG, electricityUse2SVG, householdUse1SVG, householdUse2SVG, offgrid1SVG_NoEMS_Hidden, offgrid2SVG_NoEMS_Hidden, offgrid1SVG_EMS_Hidden, offgrid2SVG_EMS_Hidden, household1SVG_EMS_Hidden, household2SVG_EMS_Hidden, household1SVG_NoEMS_Hidden, household2SVG_NoEMS_Hidden } = this.context;
+    const { electricityUse1SVG, electricityUse2SVG, offgrid1SVG_NoEMS_Hidden, offgrid2SVG_NoEMS_Hidden, offgrid1SVG_EMS_Hidden, offgrid2SVG_EMS_Hidden, household1SVG_EMS_Hidden, household2SVG_EMS_Hidden, household1SVG_NoEMS_Hidden, household2SVG_NoEMS_Hidden } = this.context;
 
     var xmlSerialize = new XMLSerializer();
     var svgString1 = xmlSerialize.serializeToString(offgrid1SVG_EMS_Hidden);
@@ -141,8 +127,7 @@ class Additional extends React.Component {
   };
 
   render() {
-    const { t } = this.props;
-    const { breakEvenBase64, setBreakEvenBase64, BuildingEnegeryStandard, setBuildingEnegeryStandard, kfwValue, insulationValue, setInsulationValue, setKfwValue, OilLNGValue, setOilLNGValue, TCO_thermal_EUR_a, disabledOilUsage, OilUsageLiters, LNGUsage, disabledLNGUsage, heatDistributionValue, energyUsagekWh, pvOutput, setBackdrop, backdrop } = this.context;
+    const { breakEvenBase64, setBackdrop } = this.context;
 
     //OffGrid
     // Mit
