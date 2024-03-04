@@ -2,14 +2,10 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import AppContext from "../../../../AppContext";
 import InfoButton from "../../infoButton";
-import { ReactComponent as HouseSunSmallIcon } from "../../../../assets/img/icons/house_sun_small.svg";
-import { ReactComponent as HouseSunLargeIcon } from "../../../../assets/img/icons/house_sun_large.svg";
-import { ReactComponent as HouseSunLargeWhiteIcon } from "../../../../assets/img/icons/house_sun_large_white.svg";
 import { ReactComponent as ChartUpLarge } from "../../../../assets/img/icons/chart_up_large.svg";
 import { ReactComponent as ChartUpSmall } from "../../../../assets/img/icons/chart_up_small.svg";
 import { ReactComponent as ChartOil } from "../../../../assets/img/icons/chart_oil.svg";
 import { ReactComponent as BuildingInsulationIcon } from "../../../../assets/img/icons/building_insulation.svg";
-import { ReactComponent as InfoIcon } from "../../../../assets/img/icons/info.svg";
 
 /* Buderus Icons */
 import { ReactComponent as BuderusHouseIcon } from "../../../../assets/img/icons/buderus/house_icon.svg";
@@ -22,21 +18,10 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
-import Tooltip from "@mui/material/Tooltip";
-import Button from "@mui/material/Button";
 
 import { withTranslation } from "react-i18next";
-import validator, { validate } from "validate.js";
-import JustValidate from "just-validate";
-
-var entryParam;
-var foundTheme;
-var btnFont;
-var fontHeadline;
-var fontRegular;
-var btnColor;
+import { validate } from "validate.js";
 
 class HeatingSelection extends React.Component {
   constructor(props) {
@@ -54,7 +39,7 @@ class HeatingSelection extends React.Component {
   componentDidMount() {}
 
   componentWillMount() {
-    const { BuildingEnegeryStandard, setFwdBtn, fwdBtn, steps, setSteps, activeView, kfwValue } = this.context;
+    const { setFwdBtn, steps, activeView } = this.context;
 
     if (steps[activeView] === false) {
       setFwdBtn(false);
@@ -70,13 +55,13 @@ class HeatingSelection extends React.Component {
   }
 
   inputTCO_thermal_EUR_a = (event) => {
-    const { overlayToggle, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a } = this.context;
+    const { setTCO_thermal_EUR_a } = this.context;
 
     setTCO_thermal_EUR_a(event.target.value);
   };
 
   inputHeatingSelection = (event) => {
-    const { BuildingEnegeryStandard, setBuildingEnegeryStandard, setFwdBtn, setKfwValue, kfwValue, setInsulationValue, setLNGUsage, setOilLNGValue, setOilUsageLiters, setDisabledLNGUsage, setDisabledOilUsage, activeView, steps, setSteps } = this.context;
+    const { setBuildingEnegeryStandard, setFwdBtn, setKfwValue, setInsulationValue, setLNGUsage, setOilLNGValue, setOilUsageLiters, setDisabledLNGUsage, setDisabledOilUsage, activeView, steps, setSteps } = this.context;
     setBuildingEnegeryStandard(event.target.value);
     setLNGUsage("");
     setOilUsageLiters("");
@@ -97,7 +82,7 @@ class HeatingSelection extends React.Component {
   };
 
   inputKfwValue = (event) => {
-    const { setPreHeatTempOption, preHeatTempOption, buildingTypePreHeatOption, kfwValue, setKfwValue, fwdBtn, setFwdBtn, steps, setSteps, activeView } = this.context;
+    const { setKfwValue, setFwdBtn, steps, setSteps, activeView } = this.context;
     setKfwValue(event.target.value);
 
     setFwdBtn(true);
@@ -108,7 +93,7 @@ class HeatingSelection extends React.Component {
   };
 
   inputInsulationValue = (event) => {
-    const { setKfwValue, insulationValue, setInsulationValue, fwdBtn, setFwdBtn, steps, setSteps, activeView } = this.context;
+    const { setKfwValue, setInsulationValue, setFwdBtn, steps, setSteps, activeView } = this.context;
     setInsulationValue(event.target.value);
     setKfwValue(event.target.value);
 
@@ -120,7 +105,7 @@ class HeatingSelection extends React.Component {
   };
 
   inputOilLNGValue = (event) => {
-    const { OilLNGValue, setOilLNGValue, disabledOilUsage, setOilUsageLiters, setDisabledOilUsage, disabledLNGUsage, setDisabledLNGUsage, setLNGUsage, setKfwValue, kfwValue, setFwdBtn, steps, setSteps, activeView } = this.context;
+    const { setOilLNGValue, setOilUsageLiters, setDisabledOilUsage, setDisabledLNGUsage, setLNGUsage, setFwdBtn, steps, setSteps, activeView } = this.context;
     setOilLNGValue(event.target.value);
 
     if (event.target.value === "oil-usage") {
@@ -141,7 +126,7 @@ class HeatingSelection extends React.Component {
   };
 
   inputOilUsageLiters = (event) => {
-    const { BuildingSize, setKfwValue, kfwLookupTable, OilUsageLiters, setOilUsageLiters, setFwdBtn, activeView, steps, setSteps } = this.context;
+    const { BuildingSize, setKfwValue, kfwLookupTable, setOilUsageLiters, setFwdBtn, activeView, steps, setSteps } = this.context;
     setOilUsageLiters(event.target.value);
 
     var inputNumber = parseInt(event.target.value);
@@ -196,7 +181,7 @@ class HeatingSelection extends React.Component {
   };
 
   inputLNGUsage = (event) => {
-    const { LNGUsage, setLNGUsage, setKfwValue, kfwLookupTable, setFwdBtn, activeView, steps, setSteps } = this.context;
+    const { setLNGUsage, setKfwValue, kfwLookupTable, setFwdBtn, activeView, steps, setSteps } = this.context;
     setLNGUsage(event.target.value);
 
     var inputNumber = parseInt(event.target.value);
@@ -248,64 +233,7 @@ class HeatingSelection extends React.Component {
   };
 
   render() {
-    const { t } = this.props;
-    const { BuildingEnegeryStandard, setBuildingEnegeryStandard, kfwValue, insulationValue, setInsulationValue, setKfwValue, OilLNGValue, setOilLNGValue, TCO_thermal_EUR_a, disabledOilUsage, OilUsageLiters, LNGUsage, disabledLNGUsage } = this.context;
-
-    const BpIcon = styled("span")(({ theme }) => ({
-      borderRadius: "0%",
-      width: 24,
-      height: 24,
-      backgroundColor: "#C1C7CC",
-      fontFamily: "Bosch-Medium",
-      ".Mui-focusVisible &": {
-        outline: "2px auto rgba(19,124,189,.6)",
-        outlineOffset: 2,
-      },
-      "input:hover ~ &": {
-        backgroundColor: "#C1C7CC",
-      },
-      "input:disabled ~ &": {
-        boxShadow: "none",
-        background: "rgba(206,217,224,.5)",
-      },
-    }));
-
-    const BpCheckedIcon = styled(BpIcon)({
-      backgroundColor: this.context.selectedTheme === "buderus" ? "#000000" : "#137cbd",
-      backgroundImage: "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
-      "&:before": {
-        display: "block",
-        width: 4,
-        height: 12,
-        transform: "rotate(45deg)",
-        marginTop: "10%",
-        marginLeft: "35%",
-        borderBottom: "2px solid #fff",
-        borderRight: "2px solid #fff",
-        content: '""',
-      },
-      "input:hover ~ &": {
-        backgroundColor: "#106ba3",
-      },
-    });
-
-    function BpRadio(props) {
-      return (
-        <Radio
-          disableRipple
-          color="default"
-          checkedIcon={<BpCheckedIcon />}
-          icon={<BpIcon />}
-          sx={{
-            "&, & + .MuiFormControlLabel-label": {
-              marginRight: "5px",
-              fontFamily: "Bosch-Regular",
-            },
-          }}
-          {...props}
-        />
-      );
-    }
+    const { BuildingEnegeryStandard, kfwValue, insulationValue, OilLNGValue, disabledOilUsage, OilUsageLiters, LNGUsage, disabledLNGUsage } = this.context;
 
     const OilLNGIcon = styled("span")(({ theme }) => ({
       borderRadius: this.context.selectedTheme === "buderus" ? "0px" : "50%",
