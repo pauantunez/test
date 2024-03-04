@@ -430,7 +430,7 @@ class Additional extends React.Component {
               <CostPdf displayed="one-year" />
             </div>
             <div style={{ position: "absolute", left: "365px", width: "405px", transform: "scale(0.75)", transformOrigin: "top left" }}>
-              <h3 style={{ marginBlockStart: "4px", marginBlockEnd: "8px", height: "14px" }}>Gesamtstromkosten über 20 Jahre</h3>
+              <h3 style={{ marginBlockStart: "4px", marginBlockEnd: "8px", fontSize: "14px" }}>Gesamtstromkosten über 20 Jahre</h3>
               {/* Gráfico barras 20 años */}
               <CostPdf displayed="twenty-years" />
             </div>
