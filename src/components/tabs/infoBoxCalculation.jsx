@@ -150,7 +150,7 @@ class InfoBoxCalculation extends React.Component {
                   Der Durschnittsstrompreis im 2. Halbjahr 2022 lag bei 35 Ct/kWh.
                   <br />
                   (inkl. MwSt.){" "}
-                  <a href="https://www-genesis.destatis.de/genesis/online?operation=previous&levelindex=1&step=1&titel=Ergebnis&levelid=1688366713147&acceptscookies=false#abreadcrumb" target="_blank">
+                  <a href="https://www-genesis.destatis.de/genesis/online?operation=previous&levelindex=1&step=1&titel=Ergebnis&levelid=1688366713147&acceptscookies=false#abreadcrumb" rel="noreferrer" target="_blank">
                     Quelle Destatis
                   </a>
                 </div>
