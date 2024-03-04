@@ -3,9 +3,6 @@ import { withRouter } from "react-router-dom";
 import AppContext from "../../AppContext";
 import Box from "@mui/material/Box";
 
-import IconButton from "@mui/material/IconButton";
-import { ReactComponent as EditIcon } from "../../assets/img/icons/pencil-7.svg";
-
 import { withTranslation } from "react-i18next";
 
 class InfoBoxResultPdf extends React.Component {
@@ -32,7 +29,7 @@ class InfoBoxResultPdf extends React.Component {
   }
 
   energyUsageCombined = () => {
-    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
     var Avg_Eff_JAZ_HP;
 
     if (heatpumpType === "1") {
@@ -51,7 +48,7 @@ class InfoBoxResultPdf extends React.Component {
   };
 
   pvUsagePercentage = (type) => {
-    const { noEMSPercentageOffGrid, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = this.context;
 
     var pvUsagePercent = ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(heatpumpCombinedUsage)) * 100;
 
@@ -59,7 +56,7 @@ class InfoBoxResultPdf extends React.Component {
   };
 
   gridUsagePercentage = (type) => {
-    const { infoBoxOffGridGridUsage, setInfoBoxOffGridGridUsage, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = this.context;
 
     var gridUsagePercent = 100 - ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(heatpumpCombinedUsage)) * 100;
 
@@ -67,7 +64,7 @@ class InfoBoxResultPdf extends React.Component {
   };
 
   findClosestPositionTo0 = () => {
-    const { heatpumpPV, heatpumpPVems } = this.context;
+    const { heatpumpPV } = this.context;
     let closestPosition = 0;
     let closestValue = Math.abs(heatpumpPV[0].expenditure);
     for (let i = 1; i < heatpumpPV.length; i++) {
@@ -83,7 +80,7 @@ class InfoBoxResultPdf extends React.Component {
   };
 
   breakEvenPV = () => {
-    const { heatpumpPV, heatpumpPVems } = this.context;
+    const { heatpumpPV } = this.context;
     let closestPosition = 0;
     let closestValue = Math.abs(heatpumpPV[0].expenditure);
     for (let i = 1; i < heatpumpPV.length; i++) {
@@ -98,11 +95,7 @@ class InfoBoxResultPdf extends React.Component {
   };
 
   breakEvenPVems = () => {
-    /* const { heatpumpPV, heatpumpPVems } = this.context;
-    let yearBreakEven = heatpumpPVems.findIndex((n) => n.expenditure > 0);
-
-    return yearBreakEven; */
-    const { heatpumpPV, heatpumpPVems } = this.context;
+    const { heatpumpPVems } = this.context;
     let closestPosition = 0;
     let closestValue = Math.abs(heatpumpPVems[0].expenditure);
     for (let i = 1; i < heatpumpPVems.length; i++) {
@@ -135,24 +128,13 @@ class InfoBoxResultPdf extends React.Component {
   };
 
   goToView = (newValue) => {
-    const { selectedTab, activeView, activeStep, setActiveView, setActiveStep, steps, setSteps, setFwdBtn, setMenuBackdrop, setDirectLink } = this.context;
+    const { setActiveView, setDirectLink } = this.context;
     setDirectLink(true);
     setActiveView(newValue);
   };
 
   render() {
-    const { t } = this.props;
-    const { costOverTime, electricityCostPVsavings, electricityCostPVEMSsavings, offgridEMS, householdEMS, noEMSPercentageOffGrid, householdNoEMSpvPercent, infoBoxOffGridGridUsage, infoBoxHouseholdGridFeed, infoBoxCombinedHouseholdUsage, BuildingEnegeryStandard, setBuildingEnegeryStandard, kfwValue, insulationValue, setInsulationValue, setKfwValue, OilLNGValue, setOilLNGValue, TCO_thermal_EUR_a, disabledOilUsage, OilUsageLiters, LNGUsage, disabledLNGUsage } = this.context;
-
     // Electricity savings
-    var OHNE_PV_cost1year = parseInt(sessionStorage.getItem("OHNE_PV_cost1year"));
-    var OHNE_PV_cost20years = parseInt(sessionStorage.getItem("OHNE_PV_cost20years"));
-
-    var costOnlyPV1year = parseInt(sessionStorage.getItem("costOnlyPV1year"));
-    var costOnlyPV20years = parseInt(sessionStorage.getItem("costOnlyPV20years"));
-
-    var costPVandEMS1year = parseInt(sessionStorage.getItem("costPVandEMS1year"));
-    var costPVandEMS20years = parseInt(sessionStorage.getItem("costPVandEMS20years"));
 
     var savingOnlyPV1year = parseInt(sessionStorage.getItem("savingOnlyPV1year"));
     var savingOnlyPV20years = parseInt(sessionStorage.getItem("savingOnlyPV20years"));
@@ -162,28 +144,6 @@ class InfoBoxResultPdf extends React.Component {
 
     var savingOnlyPv1yearMinusSavingEMS1year = savingPVandEMS1year - savingOnlyPV1year;
     var savingOnlyPv20yearsMinusSavingEMS20years = savingPVandEMS20years - savingOnlyPV20years;
-
-    //OffGrid
-    // Mit
-    var mitGridUsagePercentage = parseInt(sessionStorage.getItem("MIT_GridUsagePercentage"));
-    var mitNoEMSPercentage = parseInt(sessionStorage.getItem("MIT_NoEMSPercentageOffGrid"));
-    var mitPvUsagePercentage = parseInt(sessionStorage.getItem("MIT_PvUsagePercentage"));
-    var autarkiegradWithEMS = mitNoEMSPercentage + mitPvUsagePercentage;
-
-    // Ohne
-    var ohneGridUsagePercentage = parseInt(sessionStorage.getItem("OHNE_GridUsagePercentage"));
-    var ohnePvUsagePercentage = parseInt(sessionStorage.getItem("OHNE_PvUsagePercentage"));
-
-    //household-use
-    // Mit
-    var MIT_GridFeedPercentage = parseInt(sessionStorage.getItem("MIT_GridFeedPercentage"));
-    var MIT_HouseholdUsagePercentage = parseInt(sessionStorage.getItem("MIT_HouseholdUsagePercentage"));
-    var MIT_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("MIT_HouseholdNoEMSpvPercent"));
-    var eigenverbrauchsanteil = MIT_HouseholdUsagePercentage + MIT_HouseholdNoEMSpvPercent;
-
-    // Ohne
-    var Onhe_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent"));
-    var Onhe_GridFeedPercentageNoEMS = parseInt(sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS"));
 
     return (
       <Box

@@ -1,18 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import AppContext from "../../AppContext";
-import { ReactComponent as InfoIcon } from "../../assets/img/icons/info.svg";
-import { styled } from "@mui/material/styles";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
-import TextField from "@mui/material/TextField";
-import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 
 import IconButton from "@mui/material/IconButton";
 import { ReactComponent as EditIcon } from "../../assets/img/icons/pencil-7.svg";
@@ -42,7 +31,7 @@ class InfoBoxResult extends React.Component {
   }
 
   energyUsageCombined = () => {
-    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
     var Avg_Eff_JAZ_HP;
 
     if (heatpumpType === "1") {
@@ -61,7 +50,7 @@ class InfoBoxResult extends React.Component {
   };
 
   pvUsagePercentage = (type) => {
-    const { noEMSPercentageOffGrid, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = this.context;
 
     var pvUsagePercent = ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(heatpumpCombinedUsage)) * 100;
 
@@ -69,7 +58,7 @@ class InfoBoxResult extends React.Component {
   };
 
   gridUsagePercentage = (type) => {
-    const { infoBoxOffGridGridUsage, setInfoBoxOffGridGridUsage, heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = this.context;
 
     var gridUsagePercent = 100 - ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(heatpumpCombinedUsage)) * 100;
 
@@ -77,7 +66,7 @@ class InfoBoxResult extends React.Component {
   };
 
   findClosestPositionTo0 = () => {
-    const { heatpumpPV, heatpumpPVems } = this.context;
+    const { heatpumpPV } = this.context;
     let closestPosition = 0;
     let closestValue = Math.abs(heatpumpPV[0].expenditure);
     for (let i = 1; i < heatpumpPV.length; i++) {
@@ -93,7 +82,7 @@ class InfoBoxResult extends React.Component {
   };
 
   breakEvenPV = () => {
-    const { heatpumpPV, heatpumpPVems } = this.context;
+    const { heatpumpPV } = this.context;
     let closestPosition = 0;
     let closestValue = Math.abs(heatpumpPV[0].expenditure);
     for (let i = 1; i < heatpumpPV.length; i++) {
@@ -112,7 +101,7 @@ class InfoBoxResult extends React.Component {
     let yearBreakEven = heatpumpPVems.findIndex((n) => n.expenditure > 0);
 
     return yearBreakEven; */
-    const { heatpumpPV, heatpumpPVems } = this.context;
+    const { heatpumpPVems } = this.context;
     let closestPosition = 0;
     let closestValue = Math.abs(heatpumpPVems[0].expenditure);
     for (let i = 1; i < heatpumpPVems.length; i++) {
@@ -145,25 +134,15 @@ class InfoBoxResult extends React.Component {
   };
 
   goToView = (newValue) => {
-    const { selectedTab, activeView, activeStep, setActiveView, setActiveStep, steps, setSteps, setFwdBtn, setMenuBackdrop, setDirectLink } = this.context;
+    const { setActiveView, setDirectLink } = this.context;
     setDirectLink(true);
     setActiveView(newValue);
   };
 
   render() {
-    const { t } = this.props;
-    const { costOverTime, electricityCostPVsavings, electricityCostPVEMSsavings, offgridEMS, householdEMS, noEMSPercentageOffGrid, householdNoEMSpvPercent, infoBoxOffGridGridUsage, infoBoxHouseholdGridFeed, infoBoxCombinedHouseholdUsage, BuildingEnegeryStandard, setBuildingEnegeryStandard, kfwValue, insulationValue, setInsulationValue, setKfwValue, OilLNGValue, setOilLNGValue, TCO_thermal_EUR_a, disabledOilUsage, OilUsageLiters, LNGUsage, disabledLNGUsage } = this.context;
+    const { costOverTime, offgridEMS, householdEMS } = this.context;
 
     // Electricity savings
-    var OHNE_PV_cost1year = parseInt(sessionStorage.getItem("OHNE_PV_cost1year"));
-    var OHNE_PV_cost20years = parseInt(sessionStorage.getItem("OHNE_PV_cost20years"));
-
-    var costOnlyPV1year = parseInt(sessionStorage.getItem("costOnlyPV1year"));
-    var costOnlyPV20years = parseInt(sessionStorage.getItem("costOnlyPV20years"));
-
-    var costPVandEMS1year = parseInt(sessionStorage.getItem("costPVandEMS1year"));
-    var costPVandEMS20years = parseInt(sessionStorage.getItem("costPVandEMS20years"));
-
     var savingOnlyPV1year = parseInt(sessionStorage.getItem("savingOnlyPV1year"));
     var savingOnlyPV20years = parseInt(sessionStorage.getItem("savingOnlyPV20years"));
 
@@ -202,33 +181,33 @@ class InfoBoxResult extends React.Component {
             <div>
               <div class="infobox-row-container">
                 <div class="infobox-row" style={{ display: "block", lineHeight: "24px", borderBottom: "none" }}>
-                  {costOverTime == "1" && (
+                  {costOverTime === "1" && (
                     <p>
                       Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{savingOnlyPV1year.toLocaleString("de-DE")} € Stromkosten </strong>pro Jahr sparen.
                     </p>
                   )}
-                  {costOverTime == "1" && (
+                  {costOverTime === "1" && (
                     <p>
                       Mit einer <strong>PV-Anlage und einem Energiemanagementsystem</strong> lassen sich bis zu <strong>{savingPVandEMS1year.toLocaleString("de-DE")} € Stromkosten</strong> pro Jahr sparen.
                     </p>
                   )}
-                  {costOverTime == "1" && (
+                  {costOverTime === "1" && (
                     <p>
                       Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis um bis zu <strong>{savingOnlyPv1yearMinusSavingEMS1year.toLocaleString("de-DE")} €</strong> pro Jahr.
                     </p>
                   )}
 
-                  {costOverTime == "20" && (
+                  {costOverTime === "20" && (
                     <p>
                       Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{savingOnlyPV20years.toLocaleString("de-DE")} € Stromkosten</strong> über 20 Jahre sparen.
                     </p>
                   )}
-                  {costOverTime == "20" && (
+                  {costOverTime === "20" && (
                     <p>
                       Mit einer <strong>PV-Anlage und einem Energiemanagementsystem</strong> lassen sich bis zu <strong>{savingPVandEMS20years.toLocaleString("de-DE")} € Stromkosten</strong> über 20 Jahre sparen.
                     </p>
                   )}
-                  {costOverTime == "20" && (
+                  {costOverTime === "20" && (
                     <p>
                       Das <strong>Energiemanagementsystem</strong> bringt eine zusätzliche Kostenersparnis um bis zu <strong>{savingOnlyPv20yearsMinusSavingEMS20years.toLocaleString("de-DE")} €</strong> über 20 Jahre.
                     </p>
@@ -286,26 +265,26 @@ class InfoBoxResult extends React.Component {
             <div>
               <div class="infobox-row-container">
                 <div class="infobox-row" style={{ display: "block", lineHeight: "24px", fontSize: "14px", borderBottom: "none" }}>
-                  {offgridEMS == true && <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Autarkiegrad: ca. {autarkiegradWithEMS}%</h3>}
-                  {offgridEMS == false && <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Autarkiegrad: ca. {ohnePvUsagePercentage}%</h3>}
+                  {offgridEMS === true && <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Autarkiegrad: ca. {autarkiegradWithEMS}%</h3>}
+                  {offgridEMS === false && <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Autarkiegrad: ca. {ohnePvUsagePercentage}%</h3>}
 
-                  {offgridEMS == true && (
+                  {offgridEMS === true && (
                     <p>
                       Das bedeutet: bis zu <strong>{autarkiegradWithEMS}%</strong> Ihres Gesamtstromverbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
                     </p>
                   )}
-                  {offgridEMS == false && (
+                  {offgridEMS === false && (
                     <p>
                       Das bedeutet: bis zu <strong>{ohnePvUsagePercentage}%</strong> Ihres Gesamtstromverbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
                     </p>
                   )}
 
-                  {offgridEMS == true && (
+                  {offgridEMS === true && (
                     <p>
                       <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>{mitNoEMSPercentage}%</strong>.{" "}
                     </p>
                   )}
-                  {offgridEMS == false && (
+                  {offgridEMS === false && (
                     <p>
                       <strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Autarkiegrad</strong> auf bis zu <strong>{autarkiegradWithEMS}%</strong> erhöhen.{" "}
                     </p>
@@ -313,8 +292,8 @@ class InfoBoxResult extends React.Component {
 
                   <p>
                     Ca.&nbsp;
-                    {offgridEMS == false && <strong>{ohneGridUsagePercentage}%</strong>}
-                    {offgridEMS == true && <strong>{mitGridUsagePercentage}%</strong>}
+                    {offgridEMS === false && <strong>{ohneGridUsagePercentage}%</strong>}
+                    {offgridEMS === true && <strong>{mitGridUsagePercentage}%</strong>}
                     &nbsp;Ihres Gesamtstromverbrauchs beziehen Sie durch das <strong>öffentliche Stromnetz.</strong>
                   </p>
                 </div>
@@ -326,33 +305,33 @@ class InfoBoxResult extends React.Component {
             <div>
               <div class="infobox-row-container">
                 <div class="infobox-row" style={{ display: "block", lineHeight: "24px", fontSize: "14px", borderBottom: "none" }}>
-                  {householdEMS == true && <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Eigenverbrauchsanteil: ca. {eigenverbrauchsanteil}%</h3>}
-                  {householdEMS == false && <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Eigenverbrauchsanteil: ca. {Onhe_HouseholdNoEMSpvPercent}%</h3>}
-                  {householdEMS == true && (
+                  {householdEMS === true && <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Eigenverbrauchsanteil: ca. {eigenverbrauchsanteil}%</h3>}
+                  {householdEMS === false && <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Eigenverbrauchsanteil: ca. {Onhe_HouseholdNoEMSpvPercent}%</h3>}
+                  {householdEMS === true && (
                     <p>
                       Das bedeutet: bis zu <strong>{Math.round(parseFloat(eigenverbrauchsanteil).toFixed(2))}%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
                     </p>
                   )}
-                  {householdEMS == false && (
+                  {householdEMS === false && (
                     <p>
                       Das bedeutet: bis zu <strong>{Math.round(parseFloat(Onhe_HouseholdNoEMSpvPercent).toFixed(2))}%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
                     </p>
                   )}
 
-                  {householdEMS == true && (
+                  {householdEMS === true && (
                     <p>
                       <strong>Ohne ein Energiemanagementsystem</strong> beträgt der <strong>Eigenverbrauchsanteil</strong> lediglich ca. <strong>{MIT_HouseholdNoEMSpvPercent}%</strong>.{" "}
                     </p>
                   )}
-                  {householdEMS == false && (
+                  {householdEMS === false && (
                     <p>
                       <strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Eigenverbrauchsanteil</strong> auf bis zu <strong>{eigenverbrauchsanteil}%</strong> erhöhen.{" "}
                     </p>
                   )}
                   <p>
                     Ca.&nbsp;
-                    {householdEMS == false && <strong>{Onhe_GridFeedPercentageNoEMS}%</strong>}
-                    {householdEMS == true && <strong>{MIT_GridFeedPercentage}%</strong>}
+                    {householdEMS === false && <strong>{Onhe_GridFeedPercentageNoEMS}%</strong>}
+                    {householdEMS === true && <strong>{MIT_GridFeedPercentage}%</strong>}
                     &nbsp;Ihres eigens produzierten PV-Stroms speisen Sie ins <strong>öffentliche Stromnetz</strong> ein.
                   </p>
                 </div>

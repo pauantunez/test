@@ -1,17 +1,10 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import AppContext from "../../../../AppContext";
-import { Button } from "reactstrap";
-import axios from "axios";
 
 import { withTranslation } from "react-i18next";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title } from "chart.js";
 
-import { Doughnut, Line, Bar } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
-import pattern from "patternomaly";
 import { ReactComponent as LightningIcon } from "../../../../assets/img/icons/lightning_chart.svg";
 import { ReactComponent as PVIcon } from "../../../../assets/img/icons/photovoltaic_chart.svg";
 import { ReactComponent as ElectricityIcon } from "../../../../assets/img/icons/electricity_sun_chart.svg";
@@ -19,21 +12,10 @@ import { ReactComponent as ElectricityIcon } from "../../../../assets/img/icons/
 import { ReactComponent as BuderusLightningIcon } from "../../../../assets/img/icons/buderus/lightning_chart.svg";
 import { ReactComponent as BuderusPVIcon } from "../../../../assets/img/icons/buderus/photovoltaic_chart.svg";
 import { ReactComponent as BuderusElectricityIcon } from "../../../../assets/img/icons/buderus/electricity_sun_chart.svg";
-import PatternImg from "../../../../assets/img/icons/pattern.svg";
-import PatternRoundImg from "../../../../assets/img/icons/pattern_small_round.svg";
 
-import { BrowserView, MobileView, isBrowser, isMobile, isSafari } from "react-device-detect";
+import { isSafari } from "react-device-detect";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title);
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-var selectedTheme;
-var entryParam;
-var foundTheme;
-var btnFont;
-var fontHeadline;
-var fontRegular;
-var btnColor;
 
 export const options = {
   plugins: {
@@ -128,7 +110,7 @@ class CostPdf extends React.Component {
   static contextType = AppContext;
 
   componentWillMount() {
-    const { products, btnThemes, fonts, setFwdBtn } = this.context;
+    const { setFwdBtn } = this.context;
 
     setFwdBtn(false);
   }
@@ -150,10 +132,6 @@ class CostPdf extends React.Component {
   };
 
   render() {
-    const { t } = this.props;
-    const { overlayToggle } = this.state;
-    // const { electricityCostPVsavings, electricityCostPVEMSsavings, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
-
     var OHNE_PV_cost1year = parseInt(sessionStorage.getItem("OHNE_PV_cost1year"));
     var OHNE_PV_cost20years = parseInt(sessionStorage.getItem("OHNE_PV_cost20years"));
 
@@ -206,17 +184,17 @@ class CostPdf extends React.Component {
             {/* ohne PV */}
             <div style={{ display: "flex", width: "73px", height: `212px`, background: "#007BC0", color: "white", marginTop: "auto" }}>
               <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
-                {this.state.displayed == "one-year" && OHNE_PV_cost1year.toLocaleString("de-DE")}
-                {this.state.displayed == "one-year" && <span>&nbsp;€</span>}
-                {this.state.displayed == "twenty-years" && OHNE_PV_cost20years.toLocaleString("de-DE")}
-                {this.state.displayed == "twenty-years" && <span>&nbsp;€</span>}
+                {this.state.displayed === "one-year" && OHNE_PV_cost1year.toLocaleString("de-DE")}
+                {this.state.displayed === "one-year" && <span>&nbsp;€</span>}
+                {this.state.displayed === "twenty-years" && OHNE_PV_cost20years.toLocaleString("de-DE")}
+                {this.state.displayed === "twenty-years" && <span>&nbsp;€</span>}
               </div>
             </div>
 
             {/* Mit PV Price */}
             <div style={{ width: "73px", color: "white", marginLeft: "10%", zIndex: "99999", marginTop: "auto" }}>
               {/* Pattern bar 1 year */}
-              {this.state.displayed == "one-year" && (
+              {this.state.displayed === "one-year" && (
                 <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPv["savings"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
@@ -230,7 +208,7 @@ class CostPdf extends React.Component {
               )}
 
               {/* Pattern bar 20 years */}
-              {this.state.displayed == "twenty-years" && (
+              {this.state.displayed === "twenty-years" && (
                 <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPv["savings"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
@@ -244,7 +222,7 @@ class CostPdf extends React.Component {
               )}
 
               {/* Blue bar 1 year */}
-              {this.state.displayed == "one-year" && (
+              {this.state.displayed === "one-year" && (
                 <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPv["cost"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
@@ -258,7 +236,7 @@ class CostPdf extends React.Component {
               )}
 
               {/* Blue bar 20 years */}
-              {this.state.displayed == "twenty-years" && (
+              {this.state.displayed === "twenty-years" && (
                 <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPv["cost"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
@@ -275,7 +253,7 @@ class CostPdf extends React.Component {
             {/* Mit PV und EMS */}
             <div style={{ width: "73px", color: "white", marginLeft: "10%", zIndex: "99999", marginTop: "auto" }}>
               {/* Pattern bar 1 year */}
-              {this.state.displayed == "one-year" && (
+              {this.state.displayed === "one-year" && (
                 <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPvAndEMS["savings"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
@@ -289,7 +267,7 @@ class CostPdf extends React.Component {
               )}
 
               {/* Pattern bar 20 years */}
-              {this.state.displayed == "twenty-years" && (
+              {this.state.displayed === "twenty-years" && (
                 <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPvAndEms["savings"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
@@ -303,7 +281,7 @@ class CostPdf extends React.Component {
               )}
 
               {/* Blue bar 1 year */}
-              {this.state.displayed == "one-year" && (
+              {this.state.displayed === "one-year" && (
                 <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPvAndEMS["cost"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
@@ -317,7 +295,7 @@ class CostPdf extends React.Component {
               )}
 
               {/* Blue bar 20 years */}
-              {this.state.displayed == "twenty-years" && (
+              {this.state.displayed === "twenty-years" && (
                 <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPvAndEms["cost"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
@@ -336,28 +314,28 @@ class CostPdf extends React.Component {
             <div style={{ display: "flex", flexDirection: "row" }}>
               <div class="bar-chart-left-legend">
                 <div>
-                  {this.state.displayed == "one-year" && this.divideValuesForChart(5, OHNE_PV_cost1year) + " €"}
-                  {this.state.displayed == "twenty-years" && this.divideValuesForChart(5, OHNE_PV_cost20years) + " €"}
+                  {this.state.displayed === "one-year" && this.divideValuesForChart(5, OHNE_PV_cost1year) + " €"}
+                  {this.state.displayed === "twenty-years" && this.divideValuesForChart(5, OHNE_PV_cost20years) + " €"}
                 </div>
                 <div>
-                  {this.state.displayed == "one-year" && this.divideValuesForChart(4, OHNE_PV_cost1year) + " €"}
-                  {this.state.displayed == "twenty-years" && this.divideValuesForChart(4, OHNE_PV_cost20years) + " €"}
+                  {this.state.displayed === "one-year" && this.divideValuesForChart(4, OHNE_PV_cost1year) + " €"}
+                  {this.state.displayed === "twenty-years" && this.divideValuesForChart(4, OHNE_PV_cost20years) + " €"}
                 </div>
                 <div>
-                  {this.state.displayed == "one-year" && this.divideValuesForChart(3, OHNE_PV_cost1year) + " €"}
-                  {this.state.displayed == "twenty-years" && this.divideValuesForChart(3, OHNE_PV_cost20years) + " €"}
+                  {this.state.displayed === "one-year" && this.divideValuesForChart(3, OHNE_PV_cost1year) + " €"}
+                  {this.state.displayed === "twenty-years" && this.divideValuesForChart(3, OHNE_PV_cost20years) + " €"}
                 </div>
                 <div>
-                  {this.state.displayed == "one-year" && this.divideValuesForChart(2, OHNE_PV_cost1year) + " €"}
-                  {this.state.displayed == "twenty-years" && this.divideValuesForChart(2, OHNE_PV_cost20years) + " €"}
+                  {this.state.displayed === "one-year" && this.divideValuesForChart(2, OHNE_PV_cost1year) + " €"}
+                  {this.state.displayed === "twenty-years" && this.divideValuesForChart(2, OHNE_PV_cost20years) + " €"}
                 </div>
                 <div>
-                  {this.state.displayed == "one-year" && this.divideValuesForChart(1, OHNE_PV_cost1year) + " €"}
-                  {this.state.displayed == "twenty-years" && this.divideValuesForChart(1, OHNE_PV_cost20years) + " €"}
+                  {this.state.displayed === "one-year" && this.divideValuesForChart(1, OHNE_PV_cost1year) + " €"}
+                  {this.state.displayed === "twenty-years" && this.divideValuesForChart(1, OHNE_PV_cost20years) + " €"}
                 </div>
                 <div>
-                  {this.state.displayed == "one-year" && this.divideValuesForChart(0, OHNE_PV_cost1year) + " €"}
-                  {this.state.displayed == "twenty-year" && this.divideValuesForChart(0, OHNE_PV_cost20years) + " €"}
+                  {this.state.displayed === "one-year" && this.divideValuesForChart(0, OHNE_PV_cost1year) + " €"}
+                  {this.state.displayed === "twenty-year" && this.divideValuesForChart(0, OHNE_PV_cost20years) + " €"}
                 </div>
               </div>
               <div data-html2canvas-ignore class="cost-chart-width" style={{ display: "flex", flexDirection: "column", marginLeft: "3px" }}>

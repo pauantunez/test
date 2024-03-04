@@ -1582,14 +1582,14 @@ a.card-input-narrow {
 
   .explanationBtn {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
     width: 50%;
   }
 
   .startBtn {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     width: 50%;
   }
