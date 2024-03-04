@@ -42,7 +42,7 @@ class Disclaimer extends React.Component {
           if(entryParam === productsProps[themes]) {
             console.log(productsProps[themes])
   
-            require("../../styles/"+productsProps[themes]+".css");
+            import("../../styles/"+productsProps[themes]+".css");
 
             btnFont = fonts[entryParam][2];
             btnColor = btnThemes[entryParam][0];
@@ -55,14 +55,14 @@ class Disclaimer extends React.Component {
         }
   
         if(foundTheme === 0) {
-          require("../../styles/"+productsProps[0]+".css");
+          import("../../styles/"+productsProps[0]+".css");
           btnFont = fonts.bosch[2];
           btnColor = btnThemes.bosch[0];
           fontRegular = fonts.bosch[1];
         }
   
       } else {
-        require("../../styles/"+productsProps[0]+".css");
+        import("../../styles/"+productsProps[0]+".css");
         btnFont = fonts.bosch[2];
         btnColor = btnThemes.bosch[0];
         fontRegular = fonts.bosch[1];

@@ -94,26 +94,22 @@ class Main extends React.Component {
 
       for (let themes = 0; themes < productsProps.length; themes++) {
         if (entryParam === productsProps[themes]) {
-          console.log(productsProps[themes]);
-
-          require("../styles/" + productsProps[themes] + ".css");
+          import("../styles/" + productsProps[themes] + ".css");
 
           selectedTheme = productsProps[themes];
-          console.log(selectedTheme);
 
           foundTheme++;
         } else {
-          require("ignore");
           console.log("ignore:" + productsProps[themes]);
         }
       }
 
       if (foundTheme === 0) {
-        require("../styles/" + productsProps[0] + ".css");
+        import("../styles/" + productsProps[0] + ".css");
         selectedTheme = productsProps[0];
       }
     } else {
-      require("../styles/" + productsProps[0] + ".css");
+      import("../styles/" + productsProps[0] + ".css");
       selectedTheme = productsProps[0];
     }
 

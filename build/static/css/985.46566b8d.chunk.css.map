@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/985.46566b8d.chunk.css","mappings":"AAAA,wCAEI,MAAO,CADP,iBAAkB,CAElB,SAAU,CACV,cACJ,CACA,6BACI,YACJ","sources":["styles/backgroundAudio.module.css"],"sourcesContent":[".backgroundAudio {\n    position: absolute;\n    left: 0;\n    top: 100px;\n    z-index: 999998;\n}\n.hide {\n    display: none;\n}"],"names":[],"sourceRoot":""}
