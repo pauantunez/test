@@ -202,19 +202,10 @@ class Additional extends React.Component {
       }).then(function (canvas) {
         const divImage = canvas.toDataURL("image/jpeg", 1.0);
 
-        const imgProps = pdf.getImageProperties(divImage);
         const pdfWidth = pdf.internal.pageSize.getWidth();
         console.log("INTERAL WIDTH");
         console.log(pdfWidth);
         const pdfHeight = pdf.internal.pageSize.getHeight();
-
-        const imageAsBlob = canvas.toBlob(
-          (blob) => {
-            /* … */
-          },
-          "image/jpeg",
-          0.95
-        );
 
         pdf.addImage(divImage, "JPG", 0, 0, pdfWidth, pdfHeight, null, "NONE");
         pdf.setFont("BoschSans-Bold", "normal");
@@ -340,7 +331,7 @@ class Additional extends React.Component {
                   <div>Erhalten Sie ein kostenloses, unverbindliches Angebot von einem Installateur in Ihrer</div>
                 </div>
                 <div style={{ display: "flex", alignItems: "end" }}>
-                  <a href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/beratung-und-kauf/angebot-anfordern/" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                  <a rel="noreferrer" href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/beratung-und-kauf/angebot-anfordern/" target="_blank" style={{ textDecoration: "none", display: "block" }}>
                     <Button variant="outlined" startIcon={<ContractIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
                       Angebot anfordern
                     </Button>
@@ -358,7 +349,7 @@ class Additional extends React.Component {
                   <div>
                     <label>
                       <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
-                      <a href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/waermepumpen-854510-c/" target="_blank" class="panel panel-default card-input-narrow">
+                      <a rel="noreferrer" href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/waermepumpen-854510-c/" target="_blank" class="panel panel-default card-input-narrow">
                         <div class="panel-heading-narrow">
                           <HeatpumpSmallIcon />
                         </div>
@@ -371,7 +362,7 @@ class Additional extends React.Component {
                   <div>
                     <label>
                       <input type="radio" name="heating" value="OilLNG" class="card-input-element" />
-                      <a href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/solarthermieanlagen-854604-c/" target="_blank" class="panel panel-default card-input-narrow">
+                      <a rel="noreferrer" href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/solarthermieanlagen-854604-c/" target="_blank" class="panel panel-default card-input-narrow">
                         <div class="panel-heading-narrow">
                           <PhotovoltaicIcon />
                         </div>
@@ -384,7 +375,7 @@ class Additional extends React.Component {
                   <div>
                     <label>
                       <input type="radio" name="heating" value="BuildingInsulation" class="card-input-element" />
-                      <a href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/power-charge-7000i-19378337-p/" target="_blank" class="panel panel-default card-input-narrow">
+                      <a rel="noreferrer" href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/power-charge-7000i-19378337-p/" target="_blank" class="panel panel-default card-input-narrow">
                         <div class="panel-heading-narrow">
                           <WallboxIcon />
                         </div>
@@ -397,7 +388,7 @@ class Additional extends React.Component {
                   <div>
                     <label>
                       <input type="radio" name="heating" value="BuildingInsulation" class="card-input-element" />
-                      <a href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/energiemanagement-19317456-c/" target="_blank" class="panel panel-default card-input-narrow">
+                      <a rel="noreferrer" href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/energiemanagement-19317456-c/" target="_blank" class="panel panel-default card-input-narrow">
                         <div class="panel-heading-narrow">
                           <EnergyManagementIcon />
                         </div>
@@ -439,7 +430,7 @@ class Additional extends React.Component {
               <CostPdf displayed="one-year" />
             </div>
             <div style={{ position: "absolute", left: "365px", width: "405px", transform: "scale(0.75)", transformOrigin: "top left" }}>
-              <h3 style={{ marginTop: "0px", marginBlockStart: "4px", marginBlockEnd: "8px", height: "18px" }}></h3>
+              <h3 style={{ marginBlockStart: "4px", marginBlockEnd: "8px", height: "14px" }}>Gesamtstromkosten über 20 Jahre</h3>
               {/* Gráfico barras 20 años */}
               <CostPdf displayed="twenty-years" />
             </div>
@@ -466,7 +457,7 @@ class Additional extends React.Component {
                 <span style={{ display: "block", marginBottom: "15px" }}>
                   Investitionskosten PV-System: <strong>{sessionStorage.getItem("InvestmentCostEUR").toLocaleString("DE-de")} €</strong>
                 </span>
-                <img src={breakEvenBase64} style={{ width: "440px" }} />
+                <img alt="" src={breakEvenBase64} style={{ width: "440px" }} />
                 <div style={{ display: "flex", flexDirection: "column", marginTop: "25px", fontFamily: "Bosch-Regular", fontSize: "12px" }}>
                   <div style={{ display: "flex", flexDirection: "row" }}>
                     <div style={{ marginRight: "15px" }}>
@@ -714,8 +705,14 @@ class Additional extends React.Component {
               <div style={{ width: "25%" }}>
                 <label>
                   <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
-                  <a href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/wissen/der-energiemanager/sektorenkopplung/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_tool&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance
-" target="_blank" class="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
+                  <a
+                    href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/wissen/der-energiemanager/sektorenkopplung/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_tool&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance
+"
+                    rel="noreferrer"
+                    target="_blank"
+                    class="panel panel-default card-input-narrow card-pdf-width"
+                    style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}
+                  >
                     <div class="panel-heading-narrow" style={{ marginTop: "20px" }}>
                       <PhotovoltaicIcon />
                     </div>
@@ -725,14 +722,20 @@ class Additional extends React.Component {
                   </a>
                 </label>
                 <div style={{ marginTop: "20px" }}>
-                  <img src={require(`../../../../assets/img/qr/sectorcoupling_tool.png`)} style={{ width: "90px" }} />
+                  <img alt="sectorcoupling_tool" src={require(`../../../../assets/img/qr/sectorcoupling_tool.png`)} style={{ width: "90px" }} />
                 </div>
               </div>
               <div style={{ width: "25%" }}>
                 <label>
                   <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
-                  <a href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/service-und-support/installateur-finden/dealersearch/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_dealersearch&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance
-" target="_blank" class="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
+                  <a
+                    href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/service-und-support/installateur-finden/dealersearch/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_dealersearch&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance
+"
+                    rel="noreferrer"
+                    target="_blank"
+                    class="panel panel-default card-input-narrow card-pdf-width"
+                    style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}
+                  >
                     <div class="panel-heading-narrow" style={{ marginTop: "20px" }}>
                       <ContractIcon />
                     </div>
@@ -744,14 +747,20 @@ class Additional extends React.Component {
                   </a>
                 </label>
                 <div style={{ marginTop: "20px" }}>
-                  <img src={require(`../../../../assets/img/qr/dealer_search.png`)} style={{ width: "90px" }} />
+                  <img alt="dealer_search" src={require(`../../../../assets/img/qr/dealer_search.png`)} style={{ width: "90px" }} />
                 </div>
               </div>
               <div style={{ width: "25%" }}>
                 <label>
                   <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
-                  <a href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/beratung-und-kauf/angebot-anfordern/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_lmt&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance
-" target="_blank" class="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
+                  <a
+                    href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/beratung-und-kauf/angebot-anfordern/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_lmt&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance
+"
+                    rel="noreferrer"
+                    target="_blank"
+                    class="panel panel-default card-input-narrow card-pdf-width"
+                    style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}
+                  >
                     <div class="panel-heading-narrow" style={{ marginTop: "20px" }}>
                       <WrenchIcon />
                     </div>
@@ -763,7 +772,7 @@ class Additional extends React.Component {
                   </a>
                 </label>
                 <div style={{ marginTop: "20px" }}>
-                  <img src={require(`../../../../assets/img/qr/lmt.png`)} style={{ width: "100px" }} />
+                  <img alt="lmt" src={require(`../../../../assets/img/qr/lmt.png`)} style={{ width: "100px" }} />
                 </div>
               </div>
             </div>
@@ -780,8 +789,14 @@ class Additional extends React.Component {
               <div style={{ width: "25%" }}>
                 <label>
                   <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
-                  <a href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/waermepumpen-854510-c/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_heatpump&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance
-" target="_blank" class="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
+                  <a
+                    href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/waermepumpen-854510-c/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_heatpump&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance
+"
+                    rel="noreferrer"
+                    target="_blank"
+                    class="panel panel-default card-input-narrow card-pdf-width"
+                    style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}
+                  >
                     <div class="panel-heading-narrow" style={{ marginTop: "20px" }}>
                       <HeatpumpSmallIcon />
                     </div>
@@ -791,14 +806,20 @@ class Additional extends React.Component {
                   </a>
                 </label>
                 <div style={{ marginTop: "20px" }}>
-                  <img src={require(`../../../../assets/img/qr/heatpump.png`)} style={{ width: "100px" }} />
+                  <img alt="heatpump" src={require(`../../../../assets/img/qr/heatpump.png`)} style={{ width: "100px" }} />
                 </div>
               </div>
               <div style={{ width: "25%" }}>
                 <label>
                   <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
-                  <a href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/solarthermieanlagen-854604-c/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_pv&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance
-" target="_blank" class="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
+                  <a
+                    href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/solarthermieanlagen-854604-c/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_pv&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance
+"
+                    rel="noreferrer"
+                    target="_blank"
+                    class="panel panel-default card-input-narrow card-pdf-width"
+                    style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}
+                  >
                     <div class="panel-heading-narrow" style={{ marginTop: "20px" }}>
                       <PhotovoltaicIcon />
                     </div>
@@ -808,14 +829,20 @@ class Additional extends React.Component {
                   </a>
                 </label>
                 <div style={{ marginTop: "20px" }}>
-                  <img src={require(`../../../../assets/img/qr/pv.png`)} style={{ width: "100px" }} />
+                  <img alt="pv" src={require(`../../../../assets/img/qr/pv.png`)} style={{ width: "100px" }} />
                 </div>
               </div>
               <div style={{ width: "25%" }}>
                 <label>
                   <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
-                  <a href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/power-charge-7000i-19378337-p/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_wallbox&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance
-" target="_blank" class="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
+                  <a
+                    href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/power-charge-7000i-19378337-p/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_wallbox&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance
+"
+                    rel="noreferrer"
+                    target="_blank"
+                    class="panel panel-default card-input-narrow card-pdf-width"
+                    style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}
+                  >
                     <div class="panel-heading-narrow" style={{ marginTop: "20px" }}>
                       <WallboxIcon />
                     </div>
@@ -825,14 +852,20 @@ class Additional extends React.Component {
                   </a>
                 </label>
                 <div style={{ marginTop: "20px" }}>
-                  <img src={require(`../../../../assets/img/qr/wallbox.png`)} style={{ width: "100px" }} />
+                  <img alt="" src={require(`../../../../assets/img/qr/wallbox.png`)} style={{ width: "100px" }} />
                 </div>
               </div>
               <div style={{ width: "25%" }}>
                 <label>
                   <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
-                  <a href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/energiemanagement-19317456-c/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_ems&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance
-" target="_blank" class="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
+                  <a
+                    href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/energiemanagement-19317456-c/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_ems&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance
+"
+                    target="_blank"
+                    rel="noreferrer"
+                    class="panel panel-default card-input-narrow card-pdf-width"
+                    style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}
+                  >
                     <div class="panel-heading-narrow" style={{ marginTop: "20px" }}>
                       <EnergyManagementIcon />
                     </div>
@@ -844,7 +877,7 @@ class Additional extends React.Component {
                   </a>
                 </label>
                 <div style={{ marginTop: "20px" }}>
-                  <img src={require(`../../../../assets/img/qr/ems.png`)} style={{ width: "100px" }} />
+                  <img alt="" src={require(`../../../../assets/img/qr/ems.png`)} style={{ width: "100px" }} />
                 </div>
               </div>
             </div>
@@ -891,7 +924,6 @@ class Additional extends React.Component {
               <div style={{ width: "50%", transform: "scale(0.80)", transformOrigin: "top left" }}>
                 <div>
                   <InfoBoxCalculation box="calculation-1" />
-
                 </div>
                 <div style={{ marginTop: "25px" }}>
                   <InfoBoxCalculation box="calculation-2" />
@@ -955,7 +987,7 @@ class Additional extends React.Component {
             <hr style={{ width: "690px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
           </div>
         </div>
-      </div >
+      </div>
     );
   }
 }
