@@ -11,7 +11,6 @@ import styles from "../../styles/home.module.css";
 var entryParam;
 var foundTheme;
 var btnFont;
-var fontHeadline;
 var fontRegular;
 var btnColor;
 
@@ -48,7 +47,7 @@ class Liability extends React.Component {
       entryParam = this.state.theme;
 
       for (let themes = 0; themes < productsProps.length; themes++) {
-        if (entryParam == productsProps[themes]) {
+        if (entryParam === productsProps[themes]) {
           console.log(productsProps[themes]);
 
           import("../../styles/" + productsProps[themes] + ".css");
@@ -62,7 +61,7 @@ class Liability extends React.Component {
         }
       }
 
-      if (foundTheme == 0) {
+      if (foundTheme === 0) {
         import("../../styles/" + productsProps[0] + ".css");
         btnFont = fonts.bosch[2];
         fontHeadline = fonts.bosch[2];
@@ -87,7 +86,6 @@ class Liability extends React.Component {
   }
 
   render() {
-    const { t } = this.props;
     const { overlayToggle } = this.state;
 
     return (
