@@ -1,28 +1,16 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import AppContext from "../../../../AppContext";
-import Validation from "../../../validation/validation";
 import { ReactComponent as HouseSunSmallIcon } from "../../../../assets/img/icons/house_sun_small.svg";
 import { ReactComponent as HouseSunLargeIcon } from "../../../../assets/img/icons/house_sun_large.svg";
-import { ReactComponent as HouseSunLargeWhiteIcon } from "../../../../assets/img/icons/house_sun_large_white.svg";
 import { ReactComponent as HouseCircleIcon } from "../../../../assets/img/icons/house_circle.svg";
 /* Buderus Icons */
 import { ReactComponent as BuderusHouseIcon } from "../../../../assets/img/icons/buderus/house_icon.svg";
 import { ReactComponent as BuderusHouseSmallIcon } from "../../../../assets/img/icons/buderus/house_small_icon.svg";
 import { ReactComponent as BuderusHouseLargeIcon } from "../../../../assets/img/icons/buderus/house_large_icon.svg";
 
-import { Button } from "reactstrap";
-import axios from "axios";
-
 import { withTranslation } from "react-i18next";
-import validator, { validate } from "validate.js";
-
-var entryParam;
-var foundTheme;
-var btnFont;
-var fontHeadline;
-var fontRegular;
-var btnColor;
+import { validate } from "validate.js";
 
 class BuildingSize extends React.Component {
   constructor(props) {
@@ -40,7 +28,7 @@ class BuildingSize extends React.Component {
   componentDidMount() {}
 
   componentWillMount() {
-    const { BuildingSize, setBuildingSize, setFwdBtn, fwdBtn } = this.context;
+    const { BuildingSize, setFwdBtn } = this.context;
 
     if (validate.isEmpty(BuildingSize)) {
       setFwdBtn(true);
@@ -64,7 +52,7 @@ class BuildingSize extends React.Component {
   }
 
   inputBuildingSize = (event) => {
-    const { BuildingSize, setBuildingSize, setFwdBtn, fwdBtn, steps, setSteps, activeView, goToView } = this.context;
+    const { setBuildingSize, setFwdBtn, steps, setSteps, activeView, goToView } = this.context;
     setBuildingSize(event.target.value);
 
     setFwdBtn(false);
@@ -75,8 +63,7 @@ class BuildingSize extends React.Component {
   };
 
   render() {
-    const { t } = this.props;
-    const { BuildingSize, setBuildingSize } = this.context;
+    const { BuildingSize } = this.context;
 
     return (
       <div>
