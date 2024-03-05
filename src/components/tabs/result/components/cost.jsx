@@ -132,13 +132,15 @@ class Cost extends React.Component {
   static contextType = AppContext;
 
   componentWillMount() {
-    const { setFwdBtn } = this.context;
+    const { setFwdBtn, setCostOverTime, kfwValue, ev, scenarioInDatabase } = this.context;
+    setCostOverTime("1");
+    this.getResultNoEMS(kfwValue + ev, scenarioInDatabase);
     setFwdBtn(false);
   }
 
   componentDidMount() {
-    const { scenarioInDatabase, kfwValue, ev, loading } = this.context;
-    this.getResultNoEMS(kfwValue + ev, scenarioInDatabase);
+    const { loading } = this.context;
+
     if (!loading) {
       this.getHeatpumpCombinedUsage();
       this.runningCostPVonly();
@@ -540,8 +542,7 @@ class Cost extends React.Component {
   }
 
   getResultNoEMS = (kfw, scenario, noEMSTab) => {
-    const { setDatabaseResultNoEMS, heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries } = this.context;
-
+    const { setDatabaseResultNoEMS, heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries, setCostOverTime } = this.context;
     let tabInTable = tabEntries.find((o) => {
       return o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Nein";
     });
