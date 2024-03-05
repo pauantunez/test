@@ -221,7 +221,6 @@ class BreakEven extends React.Component {
   findIntersectionPosition(datapoints1, datapoints2) {
     let closestPosition = 0;
     let smallestDifference = Math.abs(datapoints1[0] - datapoints2[0]);
-
     for (let i = 1; i < datapoints1.length; i++) {
       const difference = Math.abs(datapoints1[i] - datapoints2[i]);
 
