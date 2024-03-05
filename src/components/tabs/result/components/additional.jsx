@@ -303,9 +303,11 @@ class Additional extends React.Component {
                   <div>Finden Sie einen Experten in Ihrer Nähe, der Sie bei der Umsetzung unterstützt</div>
                 </div>
                 <div class="trackeable" data-event="result-part3-contact" style={{ display: "flex", alignItems: "end" }}>
-                  <Button variant="outlined" startIcon={<MagnifyingGlassIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
-                    Jetzt Fachbetrieb finden
-                  </Button>
+                  <a rel="noreferrer" href=" https://www.bosch-homecomfort.com/de/de/wohngebaeude/service-und-support/installateur-finden/dealersearch/" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                    <Button variant="outlined" startIcon={<MagnifyingGlassIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
+                      Jetzt Fachbetrieb finden
+                    </Button>
+                  </a>
                 </div>
               </div>
             </div>
