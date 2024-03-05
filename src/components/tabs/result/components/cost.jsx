@@ -596,6 +596,26 @@ class Cost extends React.Component {
       sessionStorage.setItem("OHNE_PV_cost20years", OHNE_PV_cost20years);
     }
 
+    //Calculate offgrid and HouseHold
+    var roundedNoEMSGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentage()));
+    var roundedNoEMSPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentage() - Math.round(sessionStorage.getItem("pvUsagePercentNoEMS"))));
+    var roundedNoEMSPercentageOffGrid = Math.round(parseFloat(sessionStorage.getItem("pvUsagePercentNoEMS")));
+    roundedNoEMSPercentageOffGrid = this.adjustPercentage(roundedNoEMSPercentageOffGrid, roundedNoEMSGridUsagePercentage, roundedNoEMSPvUsagePercentage); // Rounded values for VictoryPieDataTest
+    const autarkiegradWithEMS = roundedNoEMSPercentageOffGrid + roundedNoEMSPvUsagePercentage;
+
+    if (sessionStorage.getItem("autarkiegradWithEMS") == null && autarkiegradWithEMS) {
+      sessionStorage.setItem("autarkiegradWithEMS", autarkiegradWithEMS);
+    }
+
+    var roundedHouseholdUsagePercentage = Math.round(parseFloat(this.householdUsagePercentage()) - sessionStorage.getItem("householdNoEMSPercent"));
+    var roundedHouseholdpvPercent = Math.round(parseFloat(sessionStorage.getItem("householdNoEMSPercent")));
+
+    const eigenverbrauchWithEms = roundedHouseholdpvPercent + roundedHouseholdUsagePercentage;
+
+    if (sessionStorage.getItem("eigenverbrauchWithEms") == null && eigenverbrauchWithEms) {
+      sessionStorage.setItem("eigenverbrauchWithEms", eigenverbrauchWithEms);
+    }
+
     var costOnlyPV1year = parseInt(this.electricityCostPV1Years());
     var costOnlyPV20years = parseInt(this.electricityCostPV20Years());
 
@@ -642,26 +662,6 @@ class Cost extends React.Component {
     // 20 years bar heights
     var twentyYearsHeightMitPv = this.getBarHeights(OHNE_PV_cost20years, costOnlyPV20years, savingOnlyPV20years);
     var twentyYearsHeightMitPvAndEms = this.getBarHeights(OHNE_PV_cost20years, costPVandEMS20years, savingPVandEMS20years);
-
-    //Calculate offgrid and HouseHold
-    var roundedNoEMSGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentage()));
-    var roundedNoEMSPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentage() - Math.round(sessionStorage.getItem("pvUsagePercentNoEMS"))));
-    var roundedNoEMSPercentageOffGrid = Math.round(parseFloat(sessionStorage.getItem("pvUsagePercentNoEMS")));
-    roundedNoEMSPercentageOffGrid = this.adjustPercentage(roundedNoEMSPercentageOffGrid, roundedNoEMSGridUsagePercentage, roundedNoEMSPvUsagePercentage); // Rounded values for VictoryPieDataTest
-    const autarkiegradWithEMS = roundedNoEMSPercentageOffGrid + roundedNoEMSPvUsagePercentage;
-
-    if (sessionStorage.getItem("autarkiegradWithEMS") == null && autarkiegradWithEMS) {
-      sessionStorage.setItem("autarkiegradWithEMS", autarkiegradWithEMS);
-    }
-
-    var roundedHouseholdUsagePercentage = Math.round(parseFloat(this.householdUsagePercentage()) - sessionStorage.getItem("householdNoEMSPercent"));
-    var roundedHouseholdpvPercent = Math.round(parseFloat(sessionStorage.getItem("householdNoEMSPercent")));
-
-    const eigenverbrauchWithEms = roundedHouseholdpvPercent + roundedHouseholdUsagePercentage;
-
-    if (sessionStorage.getItem("eigenverbrauchWithEms") == null && eigenverbrauchWithEms) {
-      sessionStorage.setItem("eigenverbrauchWithEms", eigenverbrauchWithEms);
-    }
 
     return (
       <div>
@@ -715,7 +715,7 @@ class Cost extends React.Component {
                       <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
                           <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                            {savingOnlyPV1year.toLocaleString("DE-de")}
+                            {savingOnlyPV1year ? savingOnlyPV1year.toLocaleString("DE-de") : ""}
                             <span>&nbsp;€</span>
                           </span>
                         </div>
@@ -729,7 +729,7 @@ class Cost extends React.Component {
                       <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
                           <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                            {savingOnlyPV20years.toLocaleString("DE-de")}
+                            {savingOnlyPV20years ? savingOnlyPV20years.toLocaleString("DE-de") : ""}
                             <span>&nbsp;€</span>
                           </span>
                         </div>
@@ -743,7 +743,7 @@ class Cost extends React.Component {
                       <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                           <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                            {costOnlyPV1year.toLocaleString("de-DE")}
+                            {costOnlyPV1year ? costOnlyPV1year.toLocaleString("de-DE") : ""}
                             <span>&nbsp;€</span>
                           </span>
                         </div>
@@ -757,7 +757,7 @@ class Cost extends React.Component {
                       <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                           <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                            {costOnlyPV20years.toLocaleString("de-DE")}
+                            {costOnlyPV20years ? costOnlyPV20years.toLocaleString("de-DE") : ""}
                             <span>&nbsp;€</span>
                           </span>
                         </div>
@@ -774,7 +774,7 @@ class Cost extends React.Component {
                       <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
                           <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                            {savingPVandEMS1year.toLocaleString("DE-de")}
+                            {savingPVandEMS1year ? savingPVandEMS1year.toLocaleString("DE-de") : ""}
                             <span>&nbsp;€</span>
                           </span>
                         </div>
@@ -788,7 +788,7 @@ class Cost extends React.Component {
                       <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
                           <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                            {savingPVandEMS20years.toLocaleString("DE-de")}
+                            {savingPVandEMS20years ? savingPVandEMS20years.toLocaleString("DE-de") : ""}
                             <span>&nbsp;€</span>
                           </span>
                         </div>
@@ -802,7 +802,7 @@ class Cost extends React.Component {
                       <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                           <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                            {costPVandEMS1year.toLocaleString("de-DE")}
+                            {costPVandEMS1year ? costPVandEMS1year.toLocaleString("de-DE") : ""}
                             <span>&nbsp;€</span>
                           </span>
                         </div>
@@ -816,7 +816,7 @@ class Cost extends React.Component {
                       <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                           <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
-                            {costPVandEMS20years.toLocaleString("de-DE")}
+                            {costPVandEMS20years ? costPVandEMS20years.toLocaleString("de-DE") : ""}
                             <span>&nbsp;€</span>
                           </span>
                         </div>
