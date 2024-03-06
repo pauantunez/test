@@ -380,7 +380,7 @@ class NavContent extends React.Component {
       height: 32,
       display: "flex",
       marginTop: "7px",
-      borderRadius: "50%",
+      borderRadius: this.context.selectedTheme === "buderus" ? "0" : "50%",
       justifyContent: "center",
       cursor: "pointer",
       alignItems: "center",
