@@ -303,9 +303,11 @@ class Additional extends React.Component {
                   <div>Finden Sie einen Experten in Ihrer Nähe, der Sie bei der Umsetzung unterstützt</div>
                 </div>
                 <div class="trackeable" data-event="result-part3-contact" style={{ display: "flex", alignItems: "end" }}>
-                  <Button variant="outlined" startIcon={<MagnifyingGlassIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
-                    Jetzt Fachbetrieb finden
-                  </Button>
+                  <a rel="noreferrer" href=" https://www.bosch-homecomfort.com/de/de/wohngebaeude/service-und-support/installateur-finden/dealersearch/" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                    <Button variant="outlined" startIcon={<MagnifyingGlassIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
+                      Jetzt Fachbetrieb finden
+                    </Button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -448,13 +450,13 @@ class Additional extends React.Component {
                     <div style={{ marginRight: "15px" }}>
                       <div style={{ marginTop: "2px", width: "14px", height: "14px", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", borderRadius: "14px" }}></div>
                     </div>
-                    <div>Kapitalentwicklung mit PV ohne Energiemanagementsystem *</div>
+                    <div>Kapitalentwicklung mit PV ohne Energiemanagementsystem </div>
                   </div>
                   <div style={{ display: "flex", flexDirection: "row", marginTop: "6px" }}>
                     <div style={{ marginRight: "15px" }}>
                       <div style={{ marginTop: "2px", width: "14px", height: "14px", background: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#18837E", borderRadius: "14px" }}></div>
                     </div>
-                    <div>Kapitalentwicklung mit PV mit Energiemanagementsystem</div>
+                    <div>Kapitalentwicklung mit PV und mit Energiemanagementsystem *</div>
                   </div>
                 </div>
               </div>

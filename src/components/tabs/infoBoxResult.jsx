@@ -118,12 +118,18 @@ class InfoBoxResult extends React.Component {
 
   breakEvenPoint = () => {
     const { heatpumpPV, heatpumpPVems } = this.context;
+    let closestPosition = 0;
+    let smallestDifference = Math.abs(heatpumpPVems[0].expenditure - heatpumpPV[0].expenditure);
 
-    for (let index = 0; index < heatpumpPV.length; index++) {
-      if (heatpumpPVems[index].expenditure > heatpumpPV[index].expenditure) {
-        return index;
+    for (let i = 1; i < heatpumpPVems.length; i++) {
+      const difference = Math.abs(heatpumpPVems[i].expenditure - heatpumpPV[i].expenditure);
+
+      if (difference < smallestDifference) {
+        smallestDifference = difference;
+        closestPosition = i;
       }
     }
+    return closestPosition;
   };
 
   amortizationDifference = () => {
