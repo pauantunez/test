@@ -15,6 +15,10 @@ import { ReactComponent as GridOut } from "../../../../assets/img/grid_out.svg";
 import { ReactComponent as Plug } from "../../../../assets/img/plug.svg";
 import { ReactComponent as HousePV } from "../../../../assets/img/house_pv.svg";
 
+import { ReactComponent as BuderusPlug } from "../../../../assets/img/buderus/ev_small.svg";
+import { ReactComponent as BuderusPV } from "../../../../assets/img/buderus/pv.svg";
+import { ReactComponent as BuderusGridOut } from "../../../../assets/img/buderus/grid_out.svg";
+
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, annotationPlugin, ChartDataLabels);
 
 function CustomLabelComponent(props) {
@@ -31,20 +35,20 @@ function CustomLabelComponent(props) {
   var xPositionIcon;
   var yPositionIcon;
   var iconToUse;
-
+  const { selectedTheme } = React.useContext(AppContext);
   if (datum.name === "grid") {
     xPositionIcon = x - xPositionIconMargin;
     yPositionIcon = y + yPositionIconMargin;
 
-    iconToUse = <GridOut width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} />;
+    iconToUse = selectedTheme === "buderus" ? <BuderusGridOut width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} /> : <GridOut width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} />;
   } else if (datum.name === "plug") {
     xPositionIcon = x - xPositionEVIconMargin;
     yPositionIcon = y + yPositionEVIconMargin;
-    iconToUse = <Plug width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} />;
+    iconToUse = selectedTheme === "buderus" ? <BuderusPlug width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} /> : <Plug width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} />;
   } else if (datum.name === "pv") {
     xPositionIcon = x - xPositionHouseholdIconMargin;
     yPositionIcon = y + yPositionHouseholdIconMargin;
-    iconToUse = <HousePV width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} />;
+    iconToUse = selectedTheme === "buderus" ? <BuderusPV width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} /> : <HousePV width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} />;
   }
 
   return <React.Fragment>{iconToUse}</React.Fragment>;
