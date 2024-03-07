@@ -15,6 +15,10 @@ import { ReactComponent as GridIn } from "../../../../assets/img/grid_in.svg";
 import { ReactComponent as Plug } from "../../../../assets/img/plug.svg";
 import { ReactComponent as PV } from "../../../../assets/img/pv.svg";
 
+import { ReactComponent as BuderusPlug } from "../../../../assets/img/buderus/ev_small.svg";
+import { ReactComponent as BuderusPV } from "../../../../assets/img/buderus/pv.svg";
+import { ReactComponent as BuderusGridIn } from "../../../../assets/img/buderus/grid_in.svg";
+
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, annotationPlugin, ChartDataLabels);
 
 function CustomLabelComponent(props) {
@@ -30,24 +34,24 @@ function CustomLabelComponent(props) {
   const yPositionHouseholdIconMargin = props.yPositionHouseholdIconMargin;
   var xPositionIcon;
   var yPositionIcon;
-
+  const { selectedTheme } = React.useContext(AppContext);
   var iconToUse;
 
   if (datum.name === "grid") {
     xPositionIcon = x - xPositionIconMargin;
     yPositionIcon = y + yPositionIconMargin;
 
-    iconToUse = <GridIn width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} />;
+    iconToUse = selectedTheme === "buderus" ? <BuderusGridIn width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} /> : <GridIn width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} />;
   } else if (datum.name === "plug") {
     xPositionIcon = x - xPositionEVIconMargin;
     yPositionIcon = y + yPositionEVIconMargin;
 
-    iconToUse = <Plug width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} />;
+    iconToUse = selectedTheme === "buderus" ? <BuderusPlug width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} /> : <Plug width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} />;
   } else if (datum.name === "pv") {
     xPositionIcon = x - xPositionHouseholdIconMargin;
     yPositionIcon = y + yPositionHouseholdIconMargin;
 
-    iconToUse = <PV width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} />;
+    iconToUse = selectedTheme === "buderus" ? <BuderusPV width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} /> : <PV width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} />;
   }
 
   return <React.Fragment>{iconToUse}</React.Fragment>;
