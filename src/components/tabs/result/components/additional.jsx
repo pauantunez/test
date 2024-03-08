@@ -20,6 +20,10 @@ import { ReactComponent as MagnifyingGlassIcon } from "../../../../assets/img/ic
 import { ReactComponent as WrenchIcon } from "../../../../assets/img/icons/wrench_small.svg";
 import { ReactComponent as InfoIcon } from "../../../../assets/img/icons/info_large.svg";
 
+import { ReactComponent as BuderusPDFIcon } from "../../../../assets/img/icons/buderus/pdf_small.svg";
+import { ReactComponent as BuderusMagnifyingGlassIcon } from "../../../../assets/img/icons/buderus/magnifying_glass_small.svg";
+import { ReactComponent as BuderusContractIcon } from "../../../../assets/img/icons/buderus/contract.svg";
+
 import "rc-slider/assets/index.css";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -290,7 +294,7 @@ class Additional extends React.Component {
                   <div>Sichern Sie sich Ihre Ergebnisse, indem Sie diese als PDF jetzt herunterladen</div>
                 </div>
                 <div class="trackeable" data-event="result-part3-save-pdf" style={{ display: "flex", alignItems: "end" }}>
-                  <Button onClick={printPDF} variant="outlined" startIcon={<PDFIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
+                  <Button onClick={printPDF} variant="outlined" startIcon={this.context.selectedTheme === "buderus" ? <BuderusPDFIcon /> : <PDFIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular", border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "", color: this.context.selectedTheme === "buderus" ? "#000000" : "" }}>
                     Ergebnisse herunterladen
                   </Button>
                 </div>
@@ -304,7 +308,7 @@ class Additional extends React.Component {
                 </div>
                 <div class="trackeable" data-event="result-part3-contact" style={{ display: "flex", alignItems: "end" }}>
                   <a rel="noreferrer" href=" https://www.bosch-homecomfort.com/de/de/wohngebaeude/service-und-support/installateur-finden/dealersearch/" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                    <Button variant="outlined" startIcon={<MagnifyingGlassIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
+                    <Button variant="outlined" startIcon={this.context.selectedTheme === "buderus" ? <BuderusMagnifyingGlassIcon /> : <MagnifyingGlassIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular", border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "", color: this.context.selectedTheme === "buderus" ? "#000000" : "" }}>
                       Jetzt Fachbetrieb finden
                     </Button>
                   </a>
@@ -319,7 +323,7 @@ class Additional extends React.Component {
                 </div>
                 <div style={{ display: "flex", alignItems: "end" }}>
                   <a rel="noreferrer" href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/beratung-und-kauf/angebot-anfordern/" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                    <Button variant="outlined" startIcon={<ContractIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
+                    <Button variant="outlined" startIcon={this.context.selectedTheme === "buderus" ? <BuderusContractIcon /> : <ContractIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular", border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "", color: this.context.selectedTheme === "buderus" ? "#000000" : "" }}>
                       Angebot anfordern
                     </Button>
                   </a>
