@@ -812,6 +812,8 @@ class Main extends React.Component {
             </Button>
 
             <CustomButton
+              id="CalcInfoBtn"
+              startIcon={this.context.selectedTheme === "buderus" ? <BuderusInfoIcon /> : <InfoIcon />}
               style={{ background: "#FFF", border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "1px solid #007BC0", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}
               className={activeView === 11 || activeView === 12 || activeView === 13 ? styles.show : styles.hide}
               onClick={() => {
