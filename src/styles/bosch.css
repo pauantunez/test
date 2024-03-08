@@ -10,8 +10,10 @@ a {
   margin: 10px;
   padding: 00px;
   border: 1px solid #CCC;
-  width: 150px;
-  height: 150px;
+  /* width: 150px;
+  height: 150px; */
+  width: 190px;
+  height: 170px;
 }
 
 .card-input:hover {
@@ -1257,6 +1259,11 @@ a.card-input-narrow {
     padding-left: 12px;
     padding-right: 10px;
   }
+  .card-input {
+    margin: 6px;
+    width: 150px;
+    height: 150px;
+  }
   
 }
 
@@ -1625,6 +1632,7 @@ a.card-input-narrow {
 @media only screen and (max-width: 600px) {
   .card-input-wide{
     height: 150px;
+    width: 150px;
   }
   .slider-label{
     font-size: 13px;
@@ -1694,7 +1702,7 @@ a.card-input-narrow {
 
   .card-input-wide {
     margin: 10px;
-    padding: 00px;
+    padding: 0px;
     border: 1px solid #CCC;
     width: 190px;
     height: 170px;
