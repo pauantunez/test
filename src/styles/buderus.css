@@ -32,15 +32,16 @@ a.card-input-narrow {
 .card-input-narrow {
   margin: 5px 20px 0 0;
   padding: 0px;
-  border: 1px solid #CCC;
+  border: 1px solid #000000;
   width: 190px;
   height: 150px;
+  color: #000000;
 }
 
 .card-input-narrow:hover {
   cursor: pointer;
-  background: #007BC0;
-  color: #FFF;
+  background: #EDEDED;
+  color: #000000;
 }
 
 .card-input-narrow:hover svg {

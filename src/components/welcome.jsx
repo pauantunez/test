@@ -16,6 +16,11 @@ import { ReactComponent as PVSunIcon } from "../assets/img/icons/pv_sun_small.sv
 import { ReactComponent as ElectricitySunIcon } from "../assets/img/icons/electricity_sun_small.svg";
 import { ReactComponent as LightningSmallIcon } from "../assets/img/icons/lightning_small.svg";
 
+import { ReactComponent as BuderusCoinIcon } from "../assets/img/icons/buderus/coins_small.svg";
+import { ReactComponent as BuderusPVSunIcon } from "../assets/img/icons/buderus/pv_sun_small.svg";
+import { ReactComponent as BuderusElectricitySunIcon } from "../assets/img/icons/buderus/electricity_sun_small.svg";
+import { ReactComponent as BuderusLightningSmallIcon } from "../assets/img/icons/buderus/lightning_small.svg";
+
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -89,6 +94,7 @@ class Welcome extends React.Component {
   static contextType = AppContext;
 
   componentWillMount() {
+    this.context.getTheme();
     const { products, btnThemes, fonts, sendGAEvent } = this.context;
     const productsProps = Object.getOwnPropertyNames(products);
     var foundTheme = 0;
@@ -282,33 +288,25 @@ class Welcome extends React.Component {
                 <p style={{ paddingTop: "25px" }}>Ermitteln Sie mit dem Tool für Ihr Einfamilienhaus:</p>
                 <div style={{ display: "flex", flexDirection: "column", lineHeight: "24px" }}>
                   <div style={{ display: "flex", flexDirection: "row", padding: "15px 0 15px 0" }}>
-                    <div>
-                      <CoinIcon style={{ paddingRight: "10px" }} />
-                    </div>
+                    <div>{this.context.selectedTheme === "buderus" ? <BuderusCoinIcon style={{ paddingRight: "10px" }} /> : <CoinIcon style={{ paddingRight: "10px" }} />}</div>
                     <div>
                       <span style={{ fontFamily: "Bosch-Bold" }}>Stromkostenersparnis:</span> Wieviel Stromkosten kann man durch eine PV-Anlage einsparen?
                     </div>
                   </div>
                   <div style={{ display: "flex", flexDirection: "row", padding: "15px 0 15px 0" }}>
-                    <div>
-                      <PVSunIcon style={{ paddingRight: "10px" }} />
-                    </div>
+                    <div>{this.context.selectedTheme === "buderus" ? <BuderusPVSunIcon style={{ paddingRight: "10px" }} /> : <PVSunIcon style={{ paddingRight: "10px" }} />}</div>
                     <div>
                       <span style={{ fontFamily: "Bosch-Bold" }}>Amortisationszeit:</span> Wann sind die Investitionskosten für eine PV-Anlage durch geringere jährliche Stromkosten erwirtschaftet?
                     </div>
                   </div>
                   <div style={{ display: "flex", flexDirection: "row", padding: "15px 0 15px 0" }}>
-                    <div>
-                      <ElectricitySunIcon style={{ paddingRight: "10px" }} />
-                    </div>
+                    <div>{this.context.selectedTheme === "buderus" ? <BuderusElectricitySunIcon style={{ paddingRight: "10px" }} /> : <ElectricitySunIcon style={{ paddingRight: "10px" }} />}</div>
                     <div>
                       <span style={{ fontFamily: "Bosch-Bold" }}>Autarkie:</span> Welchen Anteil des Strombedarfs können Sie durch eine PV-Anlage selbst produzieren?
                     </div>
                   </div>
                   <div style={{ display: "flex", flexDirection: "row", padding: "15px 0 15px 0" }}>
-                    <div>
-                      <LightningSmallIcon style={{ paddingRight: "10px" }} />
-                    </div>
+                    <div>{this.context.selectedTheme === "buderus" ? <BuderusLightningSmallIcon style={{ paddingRight: "10px" }} /> : <LightningSmallIcon style={{ paddingRight: "10px" }} />}</div>
                     <div>
                       <span style={{ fontFamily: "Bosch-Bold" }}>Eigenverbrauchsanteil:</span> Wieviel des selbst erzeugten PV-Stroms verbrauchen Sie selbst?
                     </div>
@@ -316,19 +314,19 @@ class Welcome extends React.Component {
                 </div>
               </div>
               <div style={{ display: "flex", justifyContent: "end" }}>
-                <img src={require(`../assets/img/preview.png`)} alt="" style={{ width: "85%", height: "auto", objectFit: "contain", margin: "14px" }} />
+                <img src={this.context.selectedTheme === "buderus" ? require(`../assets/img/buderus/preview.png`) : require(`../assets/img/preview.png`)} alt="" style={{ width: this.context.selectedTheme === "buderus" ? "" : "85%", height: "auto", objectFit: "contain", margin: "14px" }} />
               </div>
             </div>
             <div class="welcomeBtns" style={{ display: "flex", margin: "3% 5% 0 5%" }}>
               <div class="startBtn">
                 <span class="trackeable" data-event="jetzt-solarstromrechner-starten">
-                  <Link style={{ display: "inline-block", textAlign: "center", backgroundColor: "#006a9b", color: "#FFF", textDecoration: "none", margin: "5px 10px 0 0", padding: "10px 20px 10px 20px", fontSize: "14px", fontFamily: "Bosch-Regular" }} to="./main">
+                  <Link style={{ display: "inline-block", textAlign: "center", backgroundColor: this.context.selectedTheme === "buderus" ? "#002D59" : "#006a9b", color: this.context.selectedTheme === "buderus" ? "#FFFFFF" : "#FFF", textDecoration: "none", margin: "5px 10px 0 0", padding: "10px 20px 10px 20px", fontSize: "14px", fontFamily: "Bosch-Regular" }} to={this.context.selectedTheme === "buderus" ? "./main?theme=buderus" : "./main"}>
                     Jetzt Solarstromrechner starten
                   </Link>
                 </span>
               </div>
               <div class="explanationBtn">
-                <div class="calculationBase trackeable" onClick={handleOpen} style={{ fontSize: "12px", fontFamily: "Bosch-Regular", color: "#007BC0", cursor: "pointer" }} data-event="berechnungsgrundlage">
+                <div class="calculationBase trackeable" onClick={handleOpen} style={{ fontSize: "12px", fontFamily: "Bosch-Regular", color: this.context.selectedTheme === "buderus" ? "#000000" : "#007BC0", cursor: "pointer" }} data-event="berechnungsgrundlage">
                   Berechnugsgrundlage
                 </div>
               </div>

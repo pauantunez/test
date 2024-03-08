@@ -11,6 +11,10 @@ import { ReactComponent as InfoIcon } from "../../assets/img/icons/info_large.sv
 import { ReactComponent as ForwardThinIcon } from "../../assets/img/icons/arrow_forward_thin.svg";
 import { ReactComponent as BackThinIcon } from "../../assets/img/icons/arrow_back_thin.svg";
 
+import { ReactComponent as BuderusBackThinIcon } from "../../assets/img/icons/buderus/arrow_back_thin.svg";
+
+import { ReactComponent as BuderusInfoIcon } from "../../assets/img/icons/buderus/info_large.svg";
+
 import { withTranslation } from "react-i18next";
 
 class CalculationModal extends React.Component {
@@ -86,9 +90,7 @@ class CalculationModal extends React.Component {
                 <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
                   <div class="modal-content-width" style={{ position: "relative" }}>
                     <div style={{ display: "flex", flexDirection: "row", lineHeight: "24px", width: "100%", marginTop: "35px", marginBottom: "30px", fontFamily: "Bosch-Regular", textAlign: "left" }}>
-                      <div style={{ marginRight: "10px" }}>
-                        <InfoIcon />
-                      </div>
+                      <div style={{ marginRight: "10px" }}>{this.context.selectedTheme === "buderus" ? <BuderusInfoIcon /> : <InfoIcon />}</div>
                       <div>
                         <strong>Bitte beachten Sie:</strong> Die Ergebnisse des Tools basieren auf historischen Werten, simulierten Daten und darauf aufbauenden Optimierungen und können daher von tatsächlichen Verbräuchen und Erträgen abweichen. Die Daten werden regelmäßig kontrolliert und aktualisiert. Das Tool ersetzt nicht die exakte Planung durch eine/n von Ihnen beauftragte/n Planungsexperten/-expertin.
                       </div>
@@ -129,7 +131,15 @@ class CalculationModal extends React.Component {
                             onClick={() => {
                               this.nextTab();
                             }}
-                            style={{ textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}
+                            style={{
+                              textTransform: "none",
+                              borderRadius: "0px",
+                              fontFamily: "Bosch-Regular",
+                              backgroundColor: this.context.selectedTheme === "buderus" ? "#002d59" : "#007BC0",
+                              "&:hover": {
+                                backgroundColor: this.context.selectedTheme === "buderus" ? "#001d39" : "#00629A",
+                              },
+                            }}
                           >
                             Weiter
                           </Button>
@@ -188,11 +198,21 @@ class CalculationModal extends React.Component {
                         <Button
                           id="previousTabBtn"
                           variant="outlined"
-                          startIcon={<BackThinIcon />}
+                          startIcon={this.context.selectedTheme === "buderus" ? <BuderusBackThinIcon /> : <BackThinIcon />}
                           onClick={() => {
                             this.previousTab();
                           }}
-                          style={{ background: "#FFF", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}
+                          style={{
+                            background: "#FFF",
+                            textTransform: "none",
+                            borderRadius: "0px",
+                            fontFamily: "Bosch-Regular",
+                            color: this.context.selectedTheme === "buderus" ? "#000000" : "",
+                            border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "",
+                            "&:hover": {
+                              border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "",
+                            },
+                          }}
                         >
                           Zurück
                         </Button>
@@ -205,7 +225,15 @@ class CalculationModal extends React.Component {
                           onClick={() => {
                             this.nextTab();
                           }}
-                          style={{ textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}
+                          style={{
+                            textTransform: "none",
+                            borderRadius: "0px",
+                            fontFamily: "Bosch-Regular",
+                            backgroundColor: this.context.selectedTheme === "buderus" ? "#002d59" : "#007BC0",
+                            "&:hover": {
+                              backgroundColor: this.context.selectedTheme === "buderus" ? "#001d39" : "#00629A",
+                            },
+                          }}
                         >
                           Weiter
                         </Button>
@@ -260,17 +288,40 @@ class CalculationModal extends React.Component {
                         <Button
                           id="previousTabBtn"
                           variant="outlined"
-                          startIcon={<BackThinIcon />}
+                          startIcon={this.context.selectedTheme === "buderus" ? <BuderusBackThinIcon /> : <BackThinIcon />}
                           onClick={() => {
                             this.previousTab();
                           }}
-                          style={{ background: "#FFF", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}
+                          style={{
+                            background: "#FFF",
+                            textTransform: "none",
+                            borderRadius: "0px",
+                            fontFamily: "Bosch-Regular",
+                            color: this.context.selectedTheme === "buderus" ? "#000000" : "",
+                            border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "",
+                            "&:hover": {
+                              border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "",
+                            },
+                          }}
                         >
                           Zurück
                         </Button>
                       </div>
                       <div>
-                        <Button id="nextTabBtn" variant="contained" onClick={handleClose} style={{ textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
+                        <Button
+                          id="nextTabBtn"
+                          variant="contained"
+                          onClick={handleClose}
+                          style={{
+                            textTransform: "none",
+                            borderRadius: "0px",
+                            fontFamily: "Bosch-Regular",
+                            backgroundColor: this.context.selectedTheme === "buderus" ? "#002d59" : "#007BC0",
+                            "&:hover": {
+                              backgroundColor: this.context.selectedTheme === "buderus" ? "#001d39" : "#00629A",
+                            },
+                          }}
+                        >
                           Schließen
                         </Button>
                       </div>
