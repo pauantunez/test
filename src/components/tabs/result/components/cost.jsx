@@ -666,7 +666,7 @@ class Cost extends React.Component {
 
     return (
       <div>
-        <div class="flexRow" style={{ marginBottom: "30px" }}>
+        <div class="flexRow tabs" style={{ marginBottom: "30px" }}>
           <div>
             <label>
               {this.state.displayed === undefined && <input type="radio" name="heating" value="1" class={this.context.selectedTheme === "buderus" ? "card-input-element-result" : "card-input-element"} checked={costOverTime === "1"} onChange={this.inputCostOverTime} />}

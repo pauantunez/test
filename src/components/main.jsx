@@ -20,10 +20,12 @@ import { ReactComponent as HouseSmallIcon } from "../assets/img/icons/house_smal
 import { ReactComponent as FwdBtnIcon } from "../assets/img/icons/fwd_btn.svg";
 import { ReactComponent as FwdBtnInactiveIcon } from "../assets/img/icons/fwd_btn_inactive.svg";
 import { ReactComponent as MenuCloseIcon } from "../assets/img/icons/menu_close.svg";
+import { ReactComponent as InfoIcon } from "../assets/img/icons/info.svg";
 
 import { isMobile } from "react-device-detect";
 
 import { ReactComponent as BuderusBackThinIcon } from "../assets/img/icons/buderus/arrow_back_thin.svg";
+import { ReactComponent as BuderusInfoIcon } from "../assets/img/icons/buderus/info.svg";
 
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -771,7 +773,7 @@ class Main extends React.Component {
           </div>
         </div>
         .
-        <div style={{ position: isMobile ? "absolute" : "fixed", width: "100%", bottom: "3%", zIndex: "999999" }}>
+        <div class="bottomNav" style={{ position: isMobile ? "absolute" : "fixed", width: "100%", bottom: "3%", zIndex: "999999" }}>
           <div style={{ display: "flex", justifyContent: "space-between", marginLeft: "3%", marginRight: "3%" }}>
             <Button
               id="previousTabBtn"
@@ -810,6 +812,8 @@ class Main extends React.Component {
             </Button>
 
             <CustomButton
+              id="CalcInfoBtn"
+              startIcon={this.context.selectedTheme === "buderus" ? <BuderusInfoIcon /> : <InfoIcon />}
               style={{ background: "#FFF", border: "1px solid #007BC0", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}
               className={activeView === 11 || activeView === 12 || activeView === 13 ? styles.show : styles.hide}
               onClick={() => {

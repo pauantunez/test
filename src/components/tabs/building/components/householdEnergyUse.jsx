@@ -302,7 +302,7 @@ class HouseholdEnergyUse extends React.Component {
                     onChange={this.inputEnergyUsageKWH}
                   />
 
-                  <div style={{ position: "relative", top: "5px", left: 0, fontFamily: "Bosch-Regular", fontSize: "12px" }}>
+                  <div class="slider-label" style={{ position: "relative", top: "5px", left: 0, fontFamily: "Bosch-Regular", fontSize: "12px" }}>
                     <div style={{ position: "absolute", left: "0%", transform: "translateX(-50%)" }}>
                       <div style={{ width: "1px", height: "10px", background: "#000" }}></div>
                     </div>
@@ -313,11 +313,11 @@ class HouseholdEnergyUse extends React.Component {
                       <div style={{ width: "1px", height: "10px", background: "#000" }}></div>
                     </div>
                   </div>
-                  <div style={{ position: "relative", top: "17px", left: 0, fontFamily: "Bosch-Regular", fontSize: "16px" }}>
+                  <div class="slider-label" style={{ position: "relative", top: "17px", left: 0, fontFamily: "Bosch-Regular", fontSize: "16px" }}>
                     <div style={{ position: "absolute", left: "0%", transform: "translateX(-50%)" }}>4.000</div>
                     <div style={{ position: "absolute", left: "50%", transform: "translateX(-50%)" }}>6.000</div>
                     <div style={{ position: "absolute", left: "100%", transform: "translateX(-50%)" }}>8.000</div>
-                    <div style={{ position: "absolute", left: "115%", transform: "translateX(-50%)" }}>kWh</div>
+                    <div class="kwp-label" style={{ position: "absolute", left: "115%", transform: "translateX(-50%)" }}>kWh</div>
                   </div>
                 </div>
 

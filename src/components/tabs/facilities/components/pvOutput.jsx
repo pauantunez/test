@@ -106,7 +106,7 @@ class PVOutput extends React.Component {
                     onChange={this.inputPVOutput}
                   />
 
-                  <div style={{ position: "relative", top: "5px", left: 0, fontFamily: "Bosch-Regular", fontSize: "12px" }}>
+                  <div class="slider-label" style={{ position: "relative", top: "5px", left: 0, fontFamily: "Bosch-Regular", fontSize: "12px" }}>
                     <div style={{ position: "absolute", left: "0%", transform: "translateX(-50%)" }}>
                       <div style={{ width: "1px", height: "10px", background: "#000" }}></div>
                     </div>
@@ -120,12 +120,12 @@ class PVOutput extends React.Component {
                       <div style={{ width: "1px", height: "10px", background: "#000" }}></div>
                     </div>
                   </div>
-                  <div style={{ position: "relative", top: "17px", left: 0, fontFamily: "Bosch-Regular", fontSize: "16px" }}>
+                  <div class="slider-label" style={{ position: "relative", top: "17px", left: 0, fontFamily: "Bosch-Regular", fontSize: "16px" }}>
                     <div style={{ position: "absolute", left: "0%", transform: "translateX(-50%)" }}>4</div>
                     <div style={{ position: "absolute", left: "33.333%", transform: "translateX(-50%)" }}>7</div>
                     <div style={{ position: "absolute", left: "66.6667%", transform: "translateX(-50%)" }}>10</div>
                     <div style={{ position: "absolute", left: "100%", transform: "translateX(-50%)" }}>14</div>
-                    <div style={{ position: "absolute", left: "100%", marginLeft: "29px" }}>kWp</div>
+                    <div class="kwp-label" style={{ position: "absolute", left: "100%", marginLeft: "29px" }}>kWp</div>
                   </div>
                 </div>
                 <div style={{ marginTop: "105px" }}>

@@ -192,6 +192,7 @@ a.card-input-narrow {
   box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.5);
 }*/
 
+
 @media only screen and (max-width: 600px) {
   .setupContainer {
     position: relative;
@@ -199,6 +200,18 @@ a.card-input-narrow {
     left: 0%;
     margin: 40px 10px 0 10px;
     text-align: left;
+  }
+  #CalcInfoBtn{
+    margin-left: 3%;
+    position: absolute;
+    bottom: 45px;
+    left: 0px;
+  }
+  .infobox-row-container{
+    font-size: 14px;
+  }
+  .flexContent .txt{
+    font-size: 14px;
   }
 
   .disclaimerContainer {
@@ -214,6 +227,10 @@ a.card-input-narrow {
     background: #FFF;
     border: 1px solid #000;
   }
+  .flexContent {
+    width: 100%;
+  }
+
 
   .disclaimerContainer p {
     /*padding: 10px 10px 10px 13px;*/
@@ -1182,12 +1199,6 @@ a.card-input-narrow {
   float: right;
 }
 
-@media only screen and (max-width: 600px) {
-  .cardLargeIcon {
-    display: none;
-  }
-}
-
 .cardContent {
   display: flex;
   flex: 4 1 0;
@@ -1196,10 +1207,57 @@ a.card-input-narrow {
   align-items: start;*/
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
   .cardContent {
     margin-right: 0px;
   }
+  .flexContent{
+    width: 100%;
+  }
+  .cardLargeIcon{
+    display: none;
+  }
+  .kwp-label{
+    left: 108%!important;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .cardLargeIcon {
+    display: none;
+  }
+  .slider-label > div{
+    font-size: 14px;
+  }
+  .kwp-label{
+    left: 115%!important;
+  }
+  .CalcInfoBtn{
+    font-size: 11px;
+  }
+  .wrapper-container h3{
+    font-size: 22px;
+    line-height: 130%;
+  }
+  .pie-flex{
+    margin-top: 30px;
+  }
+  #previousTabBtn{
+    font-size: 12px;
+    padding-left: 5px;
+    padding-right: 10px;
+  }
+  #nextTabBtn{
+    font-size: 12px;
+    padding-left: 10px;
+    padding-right: 5px;
+  }
+  #restartBtn{
+    font-size: 12px;
+    padding-left: 12px;
+    padding-right: 10px;
+  }
+  
 }
 
 .flexContent {
@@ -1440,6 +1498,9 @@ a.card-input-narrow {
   /*.VictoryContainer {
     transform: scale(0.8);
   }*/
+  .cardLargeIcon{
+    visibility: hidden;
+  }
   .slider-size {
     width: 79%;
     margin-left: 15px;
@@ -1483,7 +1544,7 @@ a.card-input-narrow {
   }
 
   .card-input-narrow {
-    width: 160px !important;
+    width: 150px !important;
   }
 
   .additional-links-container {
@@ -1492,6 +1553,8 @@ a.card-input-narrow {
 
   .flexRow {
     flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
   }
 
   .additional-flex {
@@ -1503,11 +1566,17 @@ a.card-input-narrow {
   }
 
   .card-input-wide {
-    margin: 10px;
+    margin: 5px;
     padding: 00px;
     border: 1px solid #CCC;
     width: 155px;
     height: 170px;
+  }
+  .cardDescription{
+    font-size: 14px;
+  }
+  .MuiFormControlLabel-label{
+    font-size: 13px;
   }
 
 
@@ -1542,6 +1611,7 @@ a.card-input-narrow {
     font-size: 12px;
     padding: 11px 8px 11px 8px;
   }
+  
 
   .stepper-step-display {
     display: none;
@@ -1549,6 +1619,24 @@ a.card-input-narrow {
     flex: 1;
     padding-left: 8px;
     padding-right: 8px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .card-input-wide{
+    height: 150px;
+  }
+  .slider-label{
+    font-size: 13px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .tabs .panel-body{
+    font-size: 11px;    
+  }
+  .card-input{
+    margin: 5px;
   }
 }
 
@@ -1618,9 +1706,17 @@ a.card-input-narrow {
     display: none;
   }
 
-  .pie-flex {
+  .pie-flex{
     flex-direction: row;
   }
+  .pie-flex > div{
+    width: 50%;
+  }
+  .pie-flex .flex-line{
+    width: 2px;
+  }
+
+   
 
   .bar-chart-left-legend {
     display: flex;
