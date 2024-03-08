@@ -412,7 +412,7 @@ class HouseholdUse extends React.Component {
           </div>
           <div style={{ marginLeft: "12px", marginRight: "12px", paddingTop: "2px", fontFamily: "Bosch-Regular", fontSize: "16px" }}>Mit Energiemanagementsystem</div>
           <div>
-            <InfoButton color="#007BC0" size="14px" placement="right" text="Unter Energiemanagement wird die Kombination verschiedener Maßnahmen und Strategien verstanden, um Energie zu beschaffen, zu verteilen und optimal zu nutzen. Ziel ist es, Energieverbräuche zu senken und die Energieeffizienz im Haushalt zu optimieren, um wirtschaftliche und ökologische Ziele zu erreichen." />
+            <InfoButton color={this.context.selectedTheme === "buderus" ? "#000" : "#007BC0"} size="14px" placement="right" text="Unter Energiemanagement wird die Kombination verschiedener Maßnahmen und Strategien verstanden, um Energie zu beschaffen, zu verteilen und optimal zu nutzen. Ziel ist es, Energieverbräuche zu senken und die Energieeffizienz im Haushalt zu optimieren, um wirtschaftliche und ökologische Ziele zu erreichen." />
           </div>
         </div>
       </div>
