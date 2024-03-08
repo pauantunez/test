@@ -309,22 +309,24 @@ class HeatingSelection extends React.Component {
 
     const OilLNGIcon = styled("span")(({ theme }) => ({
       borderRadius: this.context.selectedTheme === "buderus" ? "0px" : "50%",
+      border: this.context.selectedTheme === "buderus" ? "1px solid #3C3C3B" : "",
       width: 24,
       height: 24,
-      backgroundColor: "#8A9097",
+      backgroundColor: this.context.selectedTheme === "buderus" ? "#FFFFFF" : "#8A9097",
       fontFamily: "Bosch-Medium",
       ".Mui-focusVisible &": {
         outline: "2px auto rgba(19,124,189,.6)",
         outlineOffset: 2,
       },
       "input:hover ~ &": {
-        backgroundColor: this.context.selectedTheme === "buderus" ? "#000000" : "#106ba3",
+        backgroundColor: this.context.selectedTheme === "buderus" ? "#D8D8D8" : "#106ba3",
       },
       "input:disabled ~ &": {
         boxShadow: "none",
         background: "rgba(206,217,224,.5)",
       },
     }));
+    const checkmarkSVG = "M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z";
 
     const OilLNGCheckedIcon = styled(OilLNGIcon)({
       backgroundColor: this.context.selectedTheme === "buderus" ? "#000000" : "#137cbd",
@@ -332,13 +334,12 @@ class HeatingSelection extends React.Component {
       "&:before": {
         content: '""',
         display: "block",
-        width: this.context.selectedTheme === "buderus" ? 12 : 24,
-        height: this.context.selectedTheme === "buderus" ? 12 : 24,
-        backgroundColor: this.context.selectedTheme === "buderus" ? "#fff" : "",
+        width: /* this.context.selectedTheme === "buderus" ? 12 : */ 24,
+        height: /* this.context.selectedTheme === "buderus" ? 12 : */ 24,
         borderRadius: 2,
         margin: "50%",
         transform: "translate(-50%, -50%)",
-        backgroundImage: this.context.selectedTheme === "buderus" ? "" : "radial-gradient(#fff,#fff 28%,transparent 32%)",
+        backgroundImage: this.context.selectedTheme === "buderus" ? `url("data:image/svg+xml, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'><path d='${checkmarkSVG}'/></svg>")` : "radial-gradient(#fff,#fff 28%,transparent 32%)",
       },
     });
 
