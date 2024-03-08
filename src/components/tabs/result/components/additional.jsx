@@ -23,6 +23,10 @@ import { ReactComponent as InfoIcon } from "../../../../assets/img/icons/info_la
 import { ReactComponent as BuderusPDFIcon } from "../../../../assets/img/icons/buderus/pdf_small.svg";
 import { ReactComponent as BuderusMagnifyingGlassIcon } from "../../../../assets/img/icons/buderus/magnifying_glass_small.svg";
 import { ReactComponent as BuderusContractIcon } from "../../../../assets/img/icons/buderus/contract.svg";
+import { ReactComponent as BuderusHeatpumpSmallIcon } from "../../../../assets/img/icons/buderus/heatpump_small.svg";
+import { ReactComponent as BuderusPhotovoltaicIcon } from "../../../../assets/img/icons/buderus/photovoltaic_small.svg";
+import { ReactComponent as BuderusWallboxIcon } from "../../../../assets/img/icons/buderus/wallbox_small.svg";
+import { ReactComponent as BuderusEnergyManagementIcon } from "../../../../assets/img/icons/buderus/energy_management_small.svg";
 
 import "rc-slider/assets/index.css";
 import Button from "@mui/material/Button";
@@ -341,9 +345,7 @@ class Additional extends React.Component {
                     <label>
                       <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
                       <a rel="noreferrer" href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/waermepumpen-854510-c/" target="_blank" class="panel panel-default card-input-narrow">
-                        <div class="panel-heading-narrow">
-                          <HeatpumpSmallIcon />
-                        </div>
+                        <div class="panel-heading-narrow">{this.context.selectedTheme === "buderus" ? <BuderusHeatpumpSmallIcon /> : <HeatpumpSmallIcon />}</div>
                         <div class="panel-body trackeable" data-event="result-part3-heatpump">
                           Wärmepumpe
                         </div>
@@ -354,9 +356,7 @@ class Additional extends React.Component {
                     <label>
                       <input type="radio" name="heating" value="OilLNG" class="card-input-element" />
                       <a rel="noreferrer" href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/solarthermieanlagen-854604-c/" target="_blank" class="panel panel-default card-input-narrow">
-                        <div class="panel-heading-narrow">
-                          <PhotovoltaicIcon />
-                        </div>
+                        <div class="panel-heading-narrow">{this.context.selectedTheme === "buderus" ? <BuderusPhotovoltaicIcon /> : <PhotovoltaicIcon />}</div>
                         <div class="panel-body trackeable" data-event="result-part3-pv">
                           PV-Anlage
                         </div>
@@ -367,9 +367,7 @@ class Additional extends React.Component {
                     <label>
                       <input type="radio" name="heating" value="BuildingInsulation" class="card-input-element" />
                       <a rel="noreferrer" href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/power-charge-7000i-19378337-p/" target="_blank" class="panel panel-default card-input-narrow">
-                        <div class="panel-heading-narrow">
-                          <WallboxIcon />
-                        </div>
+                        <div class="panel-heading-narrow">{this.context.selectedTheme === "buderus" ? <BuderusWallboxIcon /> : <WallboxIcon />}</div>
                         <div class="panel-body trackeable" data-event="result-part3-wallbox">
                           Wallbox
                         </div>
@@ -380,9 +378,7 @@ class Additional extends React.Component {
                     <label>
                       <input type="radio" name="heating" value="BuildingInsulation" class="card-input-element" />
                       <a rel="noreferrer" href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/energiemanagement-19317456-c/" target="_blank" class="panel panel-default card-input-narrow">
-                        <div class="panel-heading-narrow">
-                          <EnergyManagementIcon />
-                        </div>
+                        <div class="panel-heading-narrow">{this.context.selectedTheme === "buderus" ? <BuderusEnergyManagementIcon /> : <EnergyManagementIcon />}</div>
                         <div class="panel-body trackeable" data-event="result-part3-energie-management">
                           Energiemanage-
                           <br />
