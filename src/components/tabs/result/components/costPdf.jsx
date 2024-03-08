@@ -160,8 +160,8 @@ class CostPdf extends React.Component {
         <div class="flexRow" style={{ marginBottom: "30px" }}>
           <div>
             <label>
-              {this.state.displayed === undefined && <input type="radio" name="heating" value="1" class="card-input-element" checked={this.state.displayed === "one-year"} />}
-              {this.state.displayed === "one-year" && <input type="radio" name="single-year" id="single-year" value="1" class="card-input-element" checked="true" />}
+              {this.state.displayed === undefined && <input type="radio" name="heating" value="1" class={this.context.selectedTheme === "buderus" ? "card-input-element-result" : "card-input-element"} checked={this.state.displayed === "one-year"} />}
+              {this.state.displayed === "one-year" && <input type="radio" name="single-year" id="single-year" value="1" class={this.context.selectedTheme === "buderus" ? "card-input-element-result" : "card-input-element"} checked="true" />}
               <div class="panel panel-default card-input-wide background-light-grey" style={{ height: "40px", width: "100%", fontSize: "14px", margin: "0", border: "none" }}>
                 <div class="panel-body">Gesamtkosten pro Jahr</div>
               </div>
@@ -169,8 +169,8 @@ class CostPdf extends React.Component {
           </div>
           <div>
             <label>
-              {this.state.displayed === undefined && <input type="radio" name="heating" value="20" class="card-input-element" checked={this.state.displayed === "twenty-years"} />}
-              {this.state.displayed === "twenty-years" && <input type="radio" name="multi-year" id="multi-year" value="20" class="card-input-element" checked="true" />}
+              {this.state.displayed === undefined && <input type="radio" name="heating" value="20" class={this.context.selectedTheme === "buderus" ? "card-input-element-result" : "card-input-element"} checked={this.state.displayed === "twenty-years"} />}
+              {this.state.displayed === "twenty-years" && <input type="radio" name="multi-year" id="multi-year" value="20" class={this.context.selectedTheme === "buderus" ? "card-input-element-result" : "card-input-element"} checked="true" />}
               <div class="panel panel-default card-input-wide background-light-grey" style={{ height: "40px", width: "100%", fontSize: "14px", margin: "0", border: "none" }}>
                 <div class="panel-body trackeable" data-event="gesamtkosten-strom-20-years">
                   Gesamtkosten über 20 Jahre
@@ -182,7 +182,7 @@ class CostPdf extends React.Component {
         <div style={{ display: "flex", flexDirection: "row", width: "100%", height: "220px" }}>
           <div style={{ display: "flex", flexDirection: "row", width: "100%", marginLeft: "17%", zIndex: "99999" }}>
             {/* ohne PV */}
-            <div style={{ display: "flex", width: "73px", height: `212px`, background: "#007BC0", color: "white", marginTop: "auto" }}>
+            <div style={{ display: "flex", width: "73px", height: `212px`, background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", marginTop: "auto" }}>
               <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
                 {this.state.displayed === "one-year" && OHNE_PV_cost1year.toLocaleString("de-DE")}
                 {this.state.displayed === "one-year" && <span>&nbsp;€</span>}
@@ -197,7 +197,7 @@ class CostPdf extends React.Component {
               {this.state.displayed === "one-year" && (
                 <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPv["savings"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
                         {savingOnlyPV1year.toLocaleString("DE-de")}
                         <span>&nbsp;€</span>
@@ -211,7 +211,7 @@ class CostPdf extends React.Component {
               {this.state.displayed === "twenty-years" && (
                 <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPv["savings"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
                         {savingOnlyPV20years.toLocaleString("DE-de")}
                         <span>&nbsp;€</span>
@@ -225,8 +225,8 @@ class CostPdf extends React.Component {
               {this.state.displayed === "one-year" && (
                 <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPv["cost"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
+                      <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
                         {costOnlyPV1year.toLocaleString("de-DE")}
                         <span>&nbsp;€</span>
                       </span>
@@ -239,8 +239,8 @@ class CostPdf extends React.Component {
               {this.state.displayed === "twenty-years" && (
                 <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPv["cost"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
+                      <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
                         {costOnlyPV20years.toLocaleString("de-DE")}
                         <span>&nbsp;€</span>
                       </span>
@@ -256,7 +256,7 @@ class CostPdf extends React.Component {
               {this.state.displayed === "one-year" && (
                 <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPvAndEMS["savings"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
                         {savingPVandEMS1year.toLocaleString("DE-de")}
                         <span>&nbsp;€</span>
@@ -270,7 +270,7 @@ class CostPdf extends React.Component {
               {this.state.displayed === "twenty-years" && (
                 <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPvAndEms["savings"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
                         {savingPVandEMS20years.toLocaleString("DE-de")}
                         <span>&nbsp;€</span>
@@ -284,8 +284,8 @@ class CostPdf extends React.Component {
               {this.state.displayed === "one-year" && (
                 <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPvAndEMS["cost"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
+                      <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
                         {costPVandEMS1year.toLocaleString("de-DE")}
                         <span>&nbsp;€</span>
                       </span>
@@ -298,8 +298,8 @@ class CostPdf extends React.Component {
               {this.state.displayed === "twenty-years" && (
                 <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPvAndEms["cost"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} class={isSafari ? "pattern-safari" : "pattern"}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
+                      <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
                         {costPVandEMS20years.toLocaleString("de-DE")}
                         <span>&nbsp;€</span>
                       </span>
@@ -382,7 +382,7 @@ class CostPdf extends React.Component {
             <div style={{ display: "flex", flexDirection: "column", marginTop: "12px", fontFamily: "Bosch-Regular", fontSize: "12px" }}>
               <div style={{ display: "flex", flexDirection: "row" }}>
                 <div style={{ marginRight: "15px" }}>
-                  <div style={{ marginTop: "2px", width: "12px", height: "12px", background: "#007BC0", borderRadius: "12px" }}></div>
+                  <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", borderRadius: "12px" }}></div>
                 </div>
                 <div>Laufende Stromkosten</div>
               </div>
