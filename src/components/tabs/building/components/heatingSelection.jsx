@@ -334,8 +334,8 @@ class HeatingSelection extends React.Component {
       "&:before": {
         content: '""',
         display: "block",
-        width: /* this.context.selectedTheme === "buderus" ? 12 : */ 24,
-        height: /* this.context.selectedTheme === "buderus" ? 12 : */ 24,
+        width: 24,
+        height: 24,
         borderRadius: 2,
         margin: "50%",
         transform: "translate(-50%, -50%)",
