@@ -380,7 +380,7 @@ class NavContent extends React.Component {
       height: 32,
       display: "flex",
       marginTop: "7px",
-      borderRadius: "50%",
+      borderRadius: this.context.selectedTheme === "buderus" ? "0" : "50%",
       justifyContent: "center",
       cursor: "pointer",
       alignItems: "center",
@@ -395,14 +395,14 @@ class NavContent extends React.Component {
     }));
 
     const ColorlibStepIconRootSmall = styled("div")(({ theme, ownerState }) => ({
-      backgroundColor: theme.palette.mode === "dark" ? theme.palette.grey[700] : "#ccc",
+      backgroundColor: this.context.selectedTheme === "buderus" ? "#eaeaf0" : "#ccc",
       zIndex: 1,
       color: "#fff",
       width: 16,
-      height: 16,
+      height: this.context.selectedTheme === "buderus" ? 3 : 16,
       display: "flex",
-      marginTop: "15px",
-      borderRadius: "50%",
+      marginTop: this.context.selectedTheme === "buderus" ? "22px" : "15px",
+      borderRadius: this.context.selectedTheme === "buderus" ? 0 : "50%",
       justifyContent: "center",
       cursor: "pointer",
       alignItems: "center",

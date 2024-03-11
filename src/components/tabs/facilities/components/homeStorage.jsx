@@ -308,7 +308,7 @@ class HomeStorage extends React.Component {
               {/* Storage Size */}
               {homeStorage === "true" && (
                 <div style={{ marginTop: "0px", marginLeft: "0px", marginRight: "0px", fontFamily: "Bosch-Regular" }}>
-                  <div style={{ marginTop: "15px" }}>Wie groß ist Ihr installierter oder geplanter Batteriespeicher?</div>
+                  <div class="txt" style={{ marginTop: "15px" }}>Wie groß ist Ihr installierter oder geplanter Batteriespeicher?</div>
                   <div class="slider-size" style={{ position: "relative", height: "90px", marginTop: "25px" }}>
                     <Slider
                       min={0}
@@ -329,7 +329,7 @@ class HomeStorage extends React.Component {
                       }}
                       onChange={this.inputStorageSize}
                     />
-                    <div style={{ position: "relative", top: "5px", left: 0, fontFamily: "Bosch-Regular", fontSize: "12px" }}>
+                    <div class="slider-label" style={{ position: "relative", top: "5px", left: 0, fontFamily: "Bosch-Regular", fontSize: "12px" }}>
                       <div style={{ position: "absolute", left: "0%", transform: "translateX(-50%)" }}>
                         <div style={{ width: "1px", height: "10px", background: "#000" }}></div>
                       </div>
@@ -343,12 +343,12 @@ class HomeStorage extends React.Component {
                         <div style={{ width: "1px", height: "10px", background: "#000" }}></div>
                       </div>
                     </div>
-                    <div style={{ position: "relative", top: "17px", left: 0, fontFamily: "Bosch-Regular", fontSize: "16px" }}>
+                    <div class="slider-label" style={{ position: "relative", top: "17px", left: 0, fontFamily: "Bosch-Regular", fontSize: "16px" }}>
                       <div style={{ position: "absolute", left: "0%", transform: "translateX(-50%)" }}>6</div>
                       <div style={{ position: "absolute", left: "33.333%", transform: "translateX(-50%)" }}>9</div>
                       <div style={{ position: "absolute", left: "66.6667%", transform: "translateX(-50%)" }}>12</div>
                       <div style={{ position: "absolute", left: "100%", transform: "translateX(-50%)" }}>15</div>
-                      <div style={{ position: "absolute", left: "100%", marginLeft: "29px" }}>kWh</div>
+                      <div class="kwp-label" style={{ position: "absolute", left: "100%", marginLeft: "29px" }}>kWh</div>
                     </div>
                   </div>
 

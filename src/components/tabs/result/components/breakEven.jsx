@@ -221,7 +221,6 @@ class BreakEven extends React.Component {
   findIntersectionPosition(datapoints1, datapoints2) {
     let closestPosition = 0;
     let smallestDifference = Math.abs(datapoints1[0] - datapoints2[0]);
-
     for (let i = 1; i < datapoints1.length; i++) {
       const difference = Math.abs(datapoints1[i] - datapoints2[i]);
 
@@ -470,13 +469,13 @@ class BreakEven extends React.Component {
             <div style={{ marginRight: "15px" }}>
               <div style={{ marginTop: "2px", width: "14px", height: "14px", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", borderRadius: "14px" }}></div>
             </div>
-            <div>Kapitalentwicklung mit PV ohne Energiemanagementsystem *</div>
+            <div>Kapitalentwicklung mit PV ohne Energiemanagementsystem </div>
           </div>
           <div style={{ display: "flex", flexDirection: "row", marginTop: "6px" }}>
             <div style={{ marginRight: "15px" }}>
               <div style={{ marginTop: "2px", width: "14px", height: "14px", background: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#18837E", borderRadius: "14px" }}></div>
             </div>
-            <div>Kapitalentwicklung mit PV mit Energiemanagementsystem</div>
+            <div>Kapitalentwicklung mit PV und mit Energiemanagementsystem *</div>
           </div>
         </div>
       </div>

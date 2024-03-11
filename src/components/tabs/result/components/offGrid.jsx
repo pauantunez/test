@@ -15,6 +15,10 @@ import { ReactComponent as GridIn } from "../../../../assets/img/grid_in.svg";
 import { ReactComponent as Plug } from "../../../../assets/img/plug.svg";
 import { ReactComponent as PV } from "../../../../assets/img/pv.svg";
 
+import { ReactComponent as BuderusPlug } from "../../../../assets/img/buderus/ev_small.svg";
+import { ReactComponent as BuderusPV } from "../../../../assets/img/buderus/pv.svg";
+import { ReactComponent as BuderusGridIn } from "../../../../assets/img/buderus/grid_in.svg";
+
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, annotationPlugin, ChartDataLabels);
 
 function CustomLabelComponent(props) {
@@ -30,24 +34,24 @@ function CustomLabelComponent(props) {
   const yPositionHouseholdIconMargin = props.yPositionHouseholdIconMargin;
   var xPositionIcon;
   var yPositionIcon;
-
+  const { selectedTheme } = React.useContext(AppContext);
   var iconToUse;
 
   if (datum.name === "grid") {
     xPositionIcon = x - xPositionIconMargin;
     yPositionIcon = y + yPositionIconMargin;
 
-    iconToUse = <GridIn width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} />;
+    iconToUse = selectedTheme === "buderus" ? <BuderusGridIn width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} /> : <GridIn width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} />;
   } else if (datum.name === "plug") {
     xPositionIcon = x - xPositionEVIconMargin;
     yPositionIcon = y + yPositionEVIconMargin;
 
-    iconToUse = <Plug width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} />;
+    iconToUse = selectedTheme === "buderus" ? <BuderusPlug width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} /> : <Plug width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} />;
   } else if (datum.name === "pv") {
     xPositionIcon = x - xPositionHouseholdIconMargin;
     yPositionIcon = y + yPositionHouseholdIconMargin;
 
-    iconToUse = <PV width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} />;
+    iconToUse = selectedTheme === "buderus" ? <BuderusPV width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} /> : <PV width={imgWidth} height={imgHeight} x={xPositionIcon} y={yPositionIcon - 30} />;
   }
 
   return <React.Fragment>{iconToUse}</React.Fragment>;
@@ -216,18 +220,18 @@ class OffGrid extends React.Component {
         sessionStorage.setItem("MIT_NoEMSPercentageOffGrid", roundedNoEMSPercentageOffGrid);
       }
       VictoryPieData = [
-        { x: 3, y: roundedNoEMSGridUsagePercentage, name: "grid", label: "3.000 kWh", img: "img/grid_in.svg", color: "#004975" },
-        { x: 2, y: roundedNoEMSPvUsagePercentage, name: "plug", label: "1.400 kWh", img: "img/plug.svg", color: "#C535BC" },
-        { x: 1, y: roundedNoEMSPercentageOffGrid, name: "pv", label: "1.000 kWh", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#9E2896" },
+        { x: 3, y: roundedNoEMSGridUsagePercentage, name: "grid", label: "3.000 kWh", img: "img/grid_in.svg", color: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3" },
+        { x: 2, y: roundedNoEMSPvUsagePercentage, name: "plug", label: "1.400 kWh", img: "img/plug.svg", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A" },
+        { x: 1, y: roundedNoEMSPercentageOffGrid, name: "pv", label: "1.000 kWh", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" },
       ];
 
       VictoryPieDataTest = [
-        { x: 3, y: roundedNoEMSGridUsagePercentage, name: "grid", label: roundedNoEMSGridUsagePercentage + "%", img: "img/grid_in.svg", color: "#A4ABB3" },
-        { x: 2, y: roundedNoEMSPvUsagePercentage, name: "plug", label: roundedNoEMSPvUsagePercentage + "%", img: "img/plug.svg", color: "#00884A" },
-        { x: 1, y: roundedNoEMSPercentageOffGrid, name: "pv", label: roundedNoEMSPercentageOffGrid + "%", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
+        { x: 3, y: roundedNoEMSGridUsagePercentage, name: "grid", label: roundedNoEMSGridUsagePercentage + "%", img: "img/grid_in.svg", color: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3" },
+        { x: 2, y: roundedNoEMSPvUsagePercentage, name: "plug", label: roundedNoEMSPvUsagePercentage + "%", img: "img/plug.svg", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A" },
+        { x: 1, y: roundedNoEMSPercentageOffGrid, name: "pv", label: roundedNoEMSPercentageOffGrid + "%", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" },
       ];
 
-      pieColors = ["#A4ABB3", "#00884A", "#18837E"];
+      pieColors = [this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3", this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A", this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E"];
     } else if (offgridEMS === false) {
       // Rounded values for VictoryPieDataTest
       var roundedGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentage()));
@@ -241,31 +245,31 @@ class OffGrid extends React.Component {
         sessionStorage.setItem("OHNE_PvUsagePercentage", roundedPvUsagePercentage);
       }
       VictoryPieData = [
-        { x: 3, y: roundedGridUsagePercentage, name: "grid", label: "3.000 kWh", img: "img/grid_in.svg", color: "#A4ABB3" },
-        { x: 1, y: roundedPvUsagePercentage, name: "pv", label: "1.000 kWh", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
+        { x: 3, y: roundedGridUsagePercentage, name: "grid", label: "3.000 kWh", img: "img/grid_in.svg", color: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3" },
+        { x: 1, y: roundedPvUsagePercentage, name: "pv", label: "1.000 kWh", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" },
       ];
 
       VictoryPieDataTest = [
-        { x: 3, y: roundedGridUsagePercentage, name: "grid", label: roundedGridUsagePercentage + " %", img: "img/grid_in.svg", color: "#A4ABB3" },
-        { x: 1, y: roundedPvUsagePercentage, name: "pv", label: roundedPvUsagePercentage + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
+        { x: 3, y: roundedGridUsagePercentage, name: "grid", label: roundedGridUsagePercentage + " %", img: "img/grid_in.svg", color: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3" },
+        { x: 1, y: roundedPvUsagePercentage, name: "pv", label: roundedPvUsagePercentage + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" },
       ];
 
-      pieColors = ["#A4ABB3", "#18837E"];
+      pieColors = [this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3", this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E"];
     }
 
     // Data for PDF victory pie
     VictoryPieDataPDFWithEMS = [
-      { x: 3, y: parseInt(sessionStorage.getItem("MIT_GridUsagePercentage")), name: "grid", label: sessionStorage.getItem("MIT_GridUsagePercentage") + "%", img: "img/grid_in.svg", color: "#A4ABB3" },
-      { x: 2, y: parseInt(sessionStorage.getItem("MIT_PvUsagePercentage")), name: "plug", label: sessionStorage.getItem("MIT_PvUsagePercentage") + " %", img: "img/plug.svg", color: "#00884A" },
-      { x: 1, y: parseInt(sessionStorage.getItem("MIT_NoEMSPercentageOffGrid")), name: "pv", label: sessionStorage.getItem("MIT_NoEMSPercentageOffGrid") + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
+      { x: 3, y: parseInt(sessionStorage.getItem("MIT_GridUsagePercentage")), name: "grid", label: sessionStorage.getItem("MIT_GridUsagePercentage") + "%", img: "img/grid_in.svg", color: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3" },
+      { x: 2, y: parseInt(sessionStorage.getItem("MIT_PvUsagePercentage")), name: "plug", label: sessionStorage.getItem("MIT_PvUsagePercentage") + " %", img: "img/plug.svg", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A" },
+      { x: 1, y: parseInt(sessionStorage.getItem("MIT_NoEMSPercentageOffGrid")), name: "pv", label: sessionStorage.getItem("MIT_NoEMSPercentageOffGrid") + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" },
     ];
-    pieColorsPDFWithEMS = ["#A4ABB3", "#00884A", "#18837E"];
+    pieColorsPDFWithEMS = [this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3", this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A", this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E"];
 
     VictoryPieDataPDFWithoutEMS = [
-      { x: 3, y: parseInt(sessionStorage.getItem("OHNE_GridUsagePercentage_NoEMS")), name: "grid", label: sessionStorage.getItem("OHNE_GridUsagePercentage_NoEMS") + " %", img: "img/grid_in.svg", color: "#A4ABB3" },
-      { x: 1, y: parseInt(sessionStorage.getItem("OHNE_PvUsagePercentage_NoEMS")), name: "pv", label: sessionStorage.getItem("OHNE_PvUsagePercentage_NoEMS") + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: "#18837E" },
+      { x: 3, y: parseInt(sessionStorage.getItem("OHNE_GridUsagePercentage_NoEMS")), name: "grid", label: sessionStorage.getItem("OHNE_GridUsagePercentage_NoEMS") + " %", img: "img/grid_in.svg", color: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3" },
+      { x: 1, y: parseInt(sessionStorage.getItem("OHNE_PvUsagePercentage_NoEMS")), name: "pv", label: sessionStorage.getItem("OHNE_PvUsagePercentage_NoEMS") + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" },
     ];
-    pieColorsPDFWithoutEMS = ["#A4ABB3", "#18837E"];
+    pieColorsPDFWithoutEMS = [this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3", this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E"];
 
     return (
       <div>
@@ -401,7 +405,7 @@ class OffGrid extends React.Component {
           </div>
           <div style={{ marginLeft: "12px", marginRight: "12px", paddingTop: "2px", fontFamily: "Bosch-Regular", fontSize: "16px" }}>Mit Energiemanagementsystem</div>
           <div>
-            <InfoButton color="#007BC0" size="14px" placement="right" text="Unter Energiemanagement wird die Kombination verschiedener Maßnahmen und Strategien verstanden, um Energie zu beschaffen, zu verteilen und optimal zu nutzen. Ziel ist es, Energieverbräuche zu senken und die Energieeffizienz im Haushalt zu optimieren, um wirtschaftliche und ökologische Ziele zu erreichen." />
+            <InfoButton color={this.context.selectedTheme === "buderus" ? "#000" : "#007BC0"} size="14px" placement="right" text="Unter Energiemanagement wird die Kombination verschiedener Maßnahmen und Strategien verstanden, um Energie zu beschaffen, zu verteilen und optimal zu nutzen. Ziel ist es, Energieverbräuche zu senken und die Energieeffizienz im Haushalt zu optimieren, um wirtschaftliche und ökologische Ziele zu erreichen." />
           </div>
         </div>
       </div>

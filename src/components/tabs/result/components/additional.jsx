@@ -20,6 +20,16 @@ import { ReactComponent as MagnifyingGlassIcon } from "../../../../assets/img/ic
 import { ReactComponent as WrenchIcon } from "../../../../assets/img/icons/wrench_small.svg";
 import { ReactComponent as InfoIcon } from "../../../../assets/img/icons/info_large.svg";
 
+import { ReactComponent as BuderusPDFIcon } from "../../../../assets/img/icons/buderus/pdf_small.svg";
+import { ReactComponent as BuderusMagnifyingGlassIcon } from "../../../../assets/img/icons/buderus/magnifying_glass_small.svg";
+import { ReactComponent as BuderusContractIcon } from "../../../../assets/img/icons/buderus/contract.svg";
+import { ReactComponent as BuderusHeatpumpSmallIcon } from "../../../../assets/img/icons/buderus/heatpump_small.svg";
+import { ReactComponent as BuderusPhotovoltaicIcon } from "../../../../assets/img/icons/buderus/photovoltaic_small.svg";
+import { ReactComponent as BuderusWallboxIcon } from "../../../../assets/img/icons/buderus/wallbox_small.svg";
+import { ReactComponent as BuderusEnergyManagementIcon } from "../../../../assets/img/icons/buderus/energy_management_small.svg";
+import { ReactComponent as BuderusWrenchIcon } from "../../../../assets/img/icons/buderus/wrench_small.svg";
+import { ReactComponent as BuderusInfoIcon } from "../../../../assets/img/icons/buderus/info_large.svg";
+
 import "rc-slider/assets/index.css";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -27,6 +37,8 @@ import Box from "@mui/material/Box";
 import { Canvg } from "canvg";
 
 import { ReactComponent as BoschLogo } from "../../../../assets/img/bosch.svg";
+
+import { ReactComponent as BuderusLogo } from "../../../../assets/img/buderus/buderus.svg";
 
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
@@ -287,43 +299,113 @@ class Additional extends React.Component {
               <div class="flexContent additional-flex" style={{ width: "100%", justifyContent: "space-between" }}>
                 <div style={{ paddingRight: "45px", paddingBottom: "10px" }}>
                   <h3>Ergebnisse speichern</h3>
-                  <div>Sichern Sie sich Ihre Ergebnisse, indem Sie diese als PDF jetzt herunterladen</div>
+                  <div class="txt">Sichern Sie sich Ihre Ergebnisse, indem Sie diese als PDF jetzt herunterladen</div>
                 </div>
                 <div class="trackeable" data-event="result-part3-save-pdf" style={{ display: "flex", alignItems: "end" }}>
-                  <Button onClick={printPDF} variant="outlined" startIcon={<PDFIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
+                  <Button onClick={printPDF} variant="outlined" startIcon={this.context.selectedTheme === "buderus" ? <BuderusPDFIcon /> : <PDFIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular", border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "", color: this.context.selectedTheme === "buderus" ? "#000000" : "" }}>
                     Ergebnisse herunterladen
                   </Button>
                 </div>
               </div>
             </div>
-            <div class="cardContent" style={{ borderTop: "1px solid #E0E2E5", marginBottom: "40px" }}>
-              <div class="flexContent additional-flex" style={{ width: "100%", justifyContent: "space-between", marginTop: "8px" }}>
-                <div style={{ paddingRight: "30px", paddingBottom: "10px" }}>
-                  <h3>Kontakt zum Fachbetrieb</h3>
-                  <div>Finden Sie einen Experten in Ihrer Nähe, der Sie bei der Umsetzung unterstützt</div>
+            {this.context.selectedTheme === "buderus" ? (
+              <>
+                <div class="cardContent" style={{ borderTop: "1px solid #E0E2E5", marginBottom: "40px" }}>
+                  <div class="flexContent additional-flex" style={{ width: "100%", justifyContent: "space-between", marginTop: "8px" }}>
+                    <div style={{ paddingRight: "30px", paddingBottom: "10px" }}>
+                      <h3>Kontakt zum Fachbetrieb</h3>
+                      <div>Finden Sie einen Experten in Ihrer Nähe, der Sie bei der Umsetzung unterstützt</div>
+                    </div>
+                    <div class="trackeable" data-event="result-part3-contact" style={{ display: "flex", alignItems: "end" }}>
+                      <a rel="noreferrer" href="https://www.buderus.de/de/services-tools/experten-in-ihrer-naehe/fachbetriebe-in-ihrer-naehe-21776" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                        <Button variant="outlined" startIcon={<BuderusMagnifyingGlassIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular", border: "1px solid #000000", color: "#000000" }}>
+                          Jetzt Fachbetrieb finden
+                        </Button>
+                      </a>
+                    </div>
+                  </div>
                 </div>
-                <div class="trackeable" data-event="result-part3-contact" style={{ display: "flex", alignItems: "end" }}>
-                  <Button variant="outlined" startIcon={<MagnifyingGlassIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
-                    Jetzt Fachbetrieb finden
-                  </Button>
+                <div class="cardContent" style={{ borderTop: "1px solid #E0E2E5", marginBottom: "40px" }}>
+                  <div class="flexContent additional-flex" style={{ width: "100%", justifyContent: "space-between", marginTop: "8px" }}>
+                    <div style={{ paddingRight: "30px", paddingBottom: "10px" }}>
+                      <h3>Angebot für ein energieeffizientes System</h3>
+                      <div>Erhalten Sie ein kostenloses, unverbindliches Angebot von einem Installateur in Ihrer</div>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "end" }}>
+                      <a rel="noreferrer" href="https://www.buderus.de/de/angebot-anfordern" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                        <Button variant="outlined" startIcon={<BuderusContractIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular", border: "1px solid #000000", color: "#000000" }}>
+                          Angebot anfordern
+                        </Button>
+                      </a>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div class="cardContent" style={{ borderTop: "1px solid #E0E2E5", marginBottom: "40px" }}>
-              <div class="flexContent additional-flex" style={{ width: "100%", justifyContent: "space-between", marginTop: "8px" }}>
-                <div style={{ paddingRight: "30px", paddingBottom: "10px" }}>
-                  <h3>Angebot für ein energieeffizientes System</h3>
-                  <div>Erhalten Sie ein kostenloses, unverbindliches Angebot von einem Installateur in Ihrer</div>
+                <div class="cardContent" style={{ borderTop: "1px solid #E0E2E5", marginBottom: "40px" }}>
+                  <div class="flexContent additional-flex" style={{ width: "100%", justifyContent: "space-between", marginTop: "8px" }}>
+                    <div style={{ paddingRight: "30px", paddingBottom: "10px" }}>
+                      <h3>Beratungshotline</h3>
+                      <div>Zur Beratungshotline</div>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "end" }}>
+                      <a rel="noreferrer" href="https://www.buderus.de/de/kontakt-klimapaket" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                        <Button variant="outlined" startIcon={<BuderusContractIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular", border: "1px solid #000000", color: "#000000" }}>
+                          Beratungshotline
+                        </Button>
+                      </a>
+                    </div>
+                  </div>
                 </div>
-                <div style={{ display: "flex", alignItems: "end" }}>
-                  <a rel="noreferrer" href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/beratung-und-kauf/angebot-anfordern/" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                    <Button variant="outlined" startIcon={<ContractIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
-                      Angebot anfordern
-                    </Button>
-                  </a>
+                <div class="cardContent" style={{ borderTop: "1px solid #E0E2E5", marginBottom: "40px" }}>
+                  <div class="flexContent additional-flex" style={{ width: "100%", justifyContent: "space-between", marginTop: "8px" }}>
+                    <div style={{ paddingRight: "30px", paddingBottom: "10px" }}>
+                      <h3>Niederlassungssuche</h3>
+                      <div>Zur Niederlassungssuche</div>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "end" }}>
+                      <a rel="noreferrer" href="https://www.buderus.de/de/niederlassungen" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                        <Button variant="outlined" startIcon={<BuderusContractIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular", border: "1px solid #000000", color: "#000000" }}>
+                          Niederlassungssuche
+                        </Button>
+                      </a>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </>
+            ) : (
+              <>
+                <div class="cardContent" style={{ borderTop: "1px solid #E0E2E5", marginBottom: "40px" }}>
+                  <div class="flexContent additional-flex" style={{ width: "100%", justifyContent: "space-between", marginTop: "8px" }}>
+                    <div style={{ paddingRight: "30px", paddingBottom: "10px" }}>
+                      <h3>Kontakt zum Fachbetrieb</h3>
+                      <div>Finden Sie einen Experten in Ihrer Nähe, der Sie bei der Umsetzung unterstützt</div>
+                    </div>
+                    <div class="trackeable" data-event="result-part3-contact" style={{ display: "flex", alignItems: "end" }}>
+                      <a rel="noreferrer" href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/service-und-support/installateur-finden/dealersearch/" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                        <Button variant="outlined" startIcon={<MagnifyingGlassIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
+                          Jetzt Fachbetrieb finden
+                        </Button>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="cardContent" style={{ borderTop: "1px solid #E0E2E5", marginBottom: "40px" }}>
+                  <div class="flexContent additional-flex" style={{ width: "100%", justifyContent: "space-between", marginTop: "8px" }}>
+                    <div style={{ paddingRight: "30px", paddingBottom: "10px" }}>
+                      <h3>Angebot für ein energieeffizientes System</h3>
+                      <div>Erhalten Sie ein kostenloses, unverbindliches Angebot von einem Installateur in Ihrer</div>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "end" }}>
+                      <a rel="noreferrer" href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/beratung-und-kauf/angebot-anfordern/" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                        <Button variant="outlined" startIcon={<ContractIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
+                          Angebot anfordern
+                        </Button>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+
             <div class="cardContent" style={{ borderTop: "1px solid #E0E2E5", marginBottom: "40px" }}>
               <div class="flexContent" style={{ flexDirection: "column", justifyContent: "center", marginTop: "8px", width: "100%" }}>
                 <div style={{ paddingRight: "30px", paddingBottom: "10px" }}>
@@ -334,10 +416,8 @@ class Additional extends React.Component {
                   <div>
                     <label>
                       <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
-                      <a rel="noreferrer" href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/waermepumpen-854510-c/" target="_blank" class="panel panel-default card-input-narrow">
-                        <div class="panel-heading-narrow">
-                          <HeatpumpSmallIcon />
-                        </div>
+                      <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/waermepumpe" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/waermepumpen-854510-c/"} target="_blank" class="panel panel-default card-input-narrow">
+                        <div class="panel-heading-narrow">{this.context.selectedTheme === "buderus" ? <BuderusHeatpumpSmallIcon /> : <HeatpumpSmallIcon />}</div>
                         <div class="panel-body trackeable" data-event="result-part3-heatpump">
                           Wärmepumpe
                         </div>
@@ -347,10 +427,8 @@ class Additional extends React.Component {
                   <div>
                     <label>
                       <input type="radio" name="heating" value="OilLNG" class="card-input-element" />
-                      <a rel="noreferrer" href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/solarthermieanlagen-854604-c/" target="_blank" class="panel panel-default card-input-narrow">
-                        <div class="panel-heading-narrow">
-                          <PhotovoltaicIcon />
-                        </div>
+                      <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/alle-produkte?query=&facetFilters=filterNames~categoryC:Produkt-Kategorie:9049:Photovoltaik%20und%20Energiemanagement;&pageNum=12" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/solarthermieanlagen-854604-c/"} target="_blank" class="panel panel-default card-input-narrow">
+                        <div class="panel-heading-narrow">{this.context.selectedTheme === "buderus" ? <BuderusPhotovoltaicIcon /> : <PhotovoltaicIcon />}</div>
                         <div class="panel-body trackeable" data-event="result-part3-pv">
                           PV-Anlage
                         </div>
@@ -360,10 +438,8 @@ class Additional extends React.Component {
                   <div>
                     <label>
                       <input type="radio" name="heating" value="BuildingInsulation" class="card-input-element" />
-                      <a rel="noreferrer" href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/power-charge-7000i-19378337-p/" target="_blank" class="panel panel-default card-input-narrow">
-                        <div class="panel-heading-narrow">
-                          <WallboxIcon />
-                        </div>
+                      <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/alle-produkte/195985_logavolt-wls11i" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/power-charge-7000i-19378337-p/"} target="_blank" class="panel panel-default card-input-narrow">
+                        <div class="panel-heading-narrow">{this.context.selectedTheme === "buderus" ? <BuderusWallboxIcon /> : <WallboxIcon />}</div>
                         <div class="panel-body trackeable" data-event="result-part3-wallbox">
                           Wallbox
                         </div>
@@ -373,10 +449,8 @@ class Additional extends React.Component {
                   <div>
                     <label>
                       <input type="radio" name="heating" value="BuildingInsulation" class="card-input-element" />
-                      <a rel="noreferrer" href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/energiemanagement-19317456-c/" target="_blank" class="panel panel-default card-input-narrow">
-                        <div class="panel-heading-narrow">
-                          <EnergyManagementIcon />
-                        </div>
+                      <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/services-tools/apps/energiemanager-6036" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/energiemanagement-19317456-c/"} target="_blank" class="panel panel-default card-input-narrow">
+                        <div class="panel-heading-narrow">{this.context.selectedTheme === "buderus" ? <BuderusEnergyManagementIcon /> : <EnergyManagementIcon />}</div>
                         <div class="panel-body trackeable" data-event="result-part3-energie-management">
                           Energiemanage-
                           <br />
@@ -391,15 +465,24 @@ class Additional extends React.Component {
           </div>
         </div>
         <div id="printPdf" style={{ position: "absolute", left: "0px", width: "795px", height: "1150px", display: "none" }}>
-          <div style={{ position: "absolute", left: "0px", top: "0px" }}>
-            <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
-          </div>
-          <div style={{ position: "absolute", left: "60px", top: "10px" }}>
-            <BoschLogo style={{ maxWidth: "200px" }} />
-          </div>
-          <div style={{ position: "absolute", left: "60px", top: "90px" }}>
-            <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
-          </div>
+          {this.context.selectedTheme === "buderus" ? (
+            <div style={{ position: "absolute", left: "600px" }}>
+              <BuderusLogo style={{ maxWidth: "200px" }} />
+            </div>
+          ) : (
+            <>
+              <div style={{ position: "absolute", left: "0px", top: "0px" }}>
+                <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
+              </div>
+              <div style={{ position: "absolute", left: "60px", top: "10px" }}>
+                <BoschLogo style={{ maxWidth: "200px" }} />
+              </div>
+              <div style={{ position: "absolute", left: "60px", top: "90px" }}>
+                <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
+              </div>
+            </>
+          )}
+
           <div style={{ position: "absolute", left: "60px", top: "103px" }}>
             <h1 style={{ marginBlockStart: "4px", marginBlockEnd: "5px" }}>Sparen Sie Stromkosten</h1>
             <div style={{ fontSize: "14px" }}>mit der smarten Kombination aus Photovoltaik, Wärmepumpe, Wallbox und einem intelligenten Energiemanagementsystem.</div>
@@ -448,13 +531,13 @@ class Additional extends React.Component {
                     <div style={{ marginRight: "15px" }}>
                       <div style={{ marginTop: "2px", width: "14px", height: "14px", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", borderRadius: "14px" }}></div>
                     </div>
-                    <div>Kapitalentwicklung mit PV ohne Energiemanagementsystem *</div>
+                    <div>Kapitalentwicklung mit PV ohne Energiemanagementsystem </div>
                   </div>
                   <div style={{ display: "flex", flexDirection: "row", marginTop: "6px" }}>
                     <div style={{ marginRight: "15px" }}>
                       <div style={{ marginTop: "2px", width: "14px", height: "14px", background: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#18837E", borderRadius: "14px" }}></div>
                     </div>
-                    <div>Kapitalentwicklung mit PV mit Energiemanagementsystem</div>
+                    <div>Kapitalentwicklung mit PV und mit Energiemanagementsystem *</div>
                   </div>
                 </div>
               </div>
@@ -470,17 +553,28 @@ class Additional extends React.Component {
         </div>
 
         <div id="printPdf2" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
-          <div style={{ postion: "relative", height: "10px" }}>
-            <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
-          </div>
-          <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
-            <div style={{ marginLeft: "60px" }}>
-              <BoschLogo style={{ maxWidth: "200px" }} />
+          {this.context.selectedTheme === "buderus" ? (
+            <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+              <div style={{ marginLeft: "600px" }}>
+                <BuderusLogo style={{ maxWidth: "200px" }} />
+              </div>
             </div>
-          </div>
-          <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
-            <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
-          </div>
+          ) : (
+            <>
+              <div style={{ postion: "relative", height: "10px" }}>
+                <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
+              </div>
+              <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+                <div style={{ marginLeft: "60px" }}>
+                  <BoschLogo style={{ maxWidth: "200px" }} />
+                </div>
+              </div>
+              <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
+                <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
+              </div>
+            </>
+          )}
+
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "20px", paddingLeft: "60px", maxWidth: "815px" }}>
             <h3>Ergebnis Teil 2: Stromverbrauch, Autarkie und Eigenverbrauch</h3>
           </div>
@@ -578,17 +672,27 @@ class Additional extends React.Component {
         </div>
 
         <div id="printPdf3" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
-          <div style={{ postion: "relative", height: "10px" }}>
-            <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
-          </div>
-          <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
-            <div style={{ marginLeft: "60px" }}>
-              <BoschLogo style={{ maxWidth: "200px" }} />
+          {this.context.selectedTheme === "buderus" ? (
+            <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+              <div style={{ marginLeft: "600px" }}>
+                <BuderusLogo style={{ maxWidth: "200px" }} />
+              </div>
             </div>
-          </div>
-          <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", maxWidth: "815px" }}>
-            <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
-          </div>
+          ) : (
+            <>
+              <div style={{ postion: "relative", height: "10px" }}>
+                <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
+              </div>
+              <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+                <div style={{ marginLeft: "60px" }}>
+                  <BoschLogo style={{ maxWidth: "200px" }} />
+                </div>
+              </div>
+              <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
+                <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
+              </div>
+            </>
+          )}
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "20px", paddingLeft: "60px", maxWidth: "815px" }}>
             <h3>Ergebnis Teil 2: Stromverbrauch, Autarkie und Eigenverbrauch</h3>
           </div>
@@ -669,17 +773,27 @@ class Additional extends React.Component {
         </div>
 
         <div id="printPdf4" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
-          <div style={{ postion: "relative", height: "10px" }}>
-            <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
-          </div>
-          <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
-            <div style={{ marginLeft: "60px" }}>
-              <BoschLogo style={{ maxWidth: "200px" }} />
+          {this.context.selectedTheme === "buderus" ? (
+            <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+              <div style={{ marginLeft: "600px" }}>
+                <BuderusLogo style={{ maxWidth: "200px" }} />
+              </div>
             </div>
-          </div>
-          <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", maxWidth: "815px" }}>
-            <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
-          </div>
+          ) : (
+            <>
+              <div style={{ postion: "relative", height: "10px" }}>
+                <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
+              </div>
+              <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+                <div style={{ marginLeft: "60px" }}>
+                  <BoschLogo style={{ maxWidth: "200px" }} />
+                </div>
+              </div>
+              <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
+                <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
+              </div>
+            </>
+          )}
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginLeft: "60px", maxWidth: "1000px" }}>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "20px", paddingLeft: "0px", maxWidth: "815px" }}>
               <h3>Weitere Informationen</h3>
@@ -699,7 +813,7 @@ class Additional extends React.Component {
                     style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}
                   >
                     <div class="panel-heading-narrow" style={{ marginTop: "20px" }}>
-                      <PhotovoltaicIcon />
+                      {this.context.selectedTheme === "buderus" ? <BuderusPhotovoltaicIcon /> : <PhotovoltaicIcon />}
                     </div>
                     <div class="panel-body" style={{ fontSize: "10px" }}>
                       Solarstromrechner
@@ -722,7 +836,7 @@ class Additional extends React.Component {
                     style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}
                   >
                     <div class="panel-heading-narrow" style={{ marginTop: "20px" }}>
-                      <ContractIcon />
+                      {this.context.selectedTheme === "buderus" ? <BuderusContractIcon /> : <ContractIcon />}
                     </div>
                     <div class="panel-body" style={{ fontSize: "10px" }}>
                       Unverbindliches
@@ -747,7 +861,7 @@ class Additional extends React.Component {
                     style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}
                   >
                     <div class="panel-heading-narrow" style={{ marginTop: "20px" }}>
-                      <WrenchIcon />
+                      {this.context.selectedTheme === "buderus" ? <BuderusWrenchIcon /> : <WrenchIcon />}
                     </div>
                     <div class="panel-body" style={{ fontSize: "10px" }}>
                       Kontakte zum
@@ -783,7 +897,7 @@ class Additional extends React.Component {
                     style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}
                   >
                     <div class="panel-heading-narrow" style={{ marginTop: "20px" }}>
-                      <HeatpumpSmallIcon />
+                      {this.context.selectedTheme === "buderus" ? <BuderusHeatpumpSmallIcon /> : <HeatpumpSmallIcon />}
                     </div>
                     <div class="panel-body" style={{ fontSize: "10px" }}>
                       Wärmepumpe
@@ -806,7 +920,7 @@ class Additional extends React.Component {
                     style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}
                   >
                     <div class="panel-heading-narrow" style={{ marginTop: "20px" }}>
-                      <PhotovoltaicIcon />
+                      {this.context.selectedTheme === "buderus" ? <BuderusPhotovoltaicIcon /> : <PhotovoltaicIcon />}
                     </div>
                     <div class="panel-body" style={{ fontSize: "10px" }}>
                       PV-Anlage
@@ -829,7 +943,7 @@ class Additional extends React.Component {
                     style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}
                   >
                     <div class="panel-heading-narrow" style={{ marginTop: "20px" }}>
-                      <WallboxIcon />
+                      {this.context.selectedTheme === "buderus" ? <BuderusWallboxIcon /> : <WallboxIcon />}
                     </div>
                     <div class="panel-body" style={{ fontSize: "10px" }}>
                       Wallbox
@@ -852,7 +966,7 @@ class Additional extends React.Component {
                     style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}
                   >
                     <div class="panel-heading-narrow" style={{ marginTop: "20px" }}>
-                      <EnergyManagementIcon />
+                      {this.context.selectedTheme === "buderus" ? <BuderusEnergyManagementIcon /> : <EnergyManagementIcon />}
                     </div>
                     <div class="panel-body" style={{ fontSize: "10px" }}>
                       Energiemanage-
@@ -873,17 +987,27 @@ class Additional extends React.Component {
         </div>
 
         <div id="printPdf5" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
-          <div style={{ postion: "relative", height: "10px" }}>
-            <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
-          </div>
-          <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
-            <div style={{ marginLeft: "60px" }}>
-              <BoschLogo style={{ maxWidth: "200px" }} />
+          {this.context.selectedTheme === "buderus" ? (
+            <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+              <div style={{ marginLeft: "600px" }}>
+                <BuderusLogo style={{ maxWidth: "200px" }} />
+              </div>
             </div>
-          </div>
-          <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", maxWidth: "815px" }}>
-            <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
-          </div>
+          ) : (
+            <>
+              <div style={{ postion: "relative", height: "10px" }}>
+                <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
+              </div>
+              <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+                <div style={{ marginLeft: "60px" }}>
+                  <BoschLogo style={{ maxWidth: "200px" }} />
+                </div>
+              </div>
+              <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
+                <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
+              </div>
+            </>
+          )}
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginLeft: "60px", maxWidth: "1000px" }}>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "15px", paddingLeft: "0px", maxWidth: "815px" }}>
               <h3>Berechnungsgrundlage</h3>
@@ -891,9 +1015,7 @@ class Additional extends React.Component {
             <div style={{ display: "flex", width: "100%", justifyContent: "flex-start" }}>
               <div class="modal-content-width" style={{ position: "relative", width: "680px" }}>
                 <div style={{ display: "flex", flexDirection: "row", width: "100%", marginTop: "0px", marginBottom: "20px", textAlign: "left" }}>
-                  <div style={{ marginRight: "10px", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                    <InfoIcon />
-                  </div>
+                  <div style={{ marginRight: "10px", transform: "scale(0.85)", transformOrigin: "top left" }}>{this.context.selectedTheme === "buderus" ? <BuderusInfoIcon /> : <InfoIcon />}</div>
                   <h3 class="pdf-h3">
                     <b>Bitte beachten Sie:</b> Die Ergebnisse des Tools basieren auf historischen Werten, simulierten Daten und darauf aufbauenden Optimierungen und können daher von tatsächlichen Verbräuchen und Erträgen abweichen. Die Daten werden regelmäßig kontrolliert und aktualisiert. Das Tool ersetzt nicht die exakte Planung durch eine/n von Ihnen beauftragte/n Planungsexperten/-expertin.
                   </h3>
@@ -930,17 +1052,27 @@ class Additional extends React.Component {
         </div>
 
         <div id="printPdf6" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
-          <div style={{ postion: "relative", height: "10px" }}>
-            <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
-          </div>
-          <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
-            <div style={{ marginLeft: "60px" }}>
-              <BoschLogo style={{ maxWidth: "200px" }} />
+          {this.context.selectedTheme === "buderus" ? (
+            <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+              <div style={{ marginLeft: "600px" }}>
+                <BuderusLogo style={{ maxWidth: "200px" }} />
+              </div>
             </div>
-          </div>
-          <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", maxWidth: "815px" }}>
-            <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
-          </div>
+          ) : (
+            <>
+              <div style={{ postion: "relative", height: "10px" }}>
+                <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
+              </div>
+              <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+                <div style={{ marginLeft: "60px" }}>
+                  <BoschLogo style={{ maxWidth: "200px" }} />
+                </div>
+              </div>
+              <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
+                <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
+              </div>
+            </>
+          )}
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginLeft: "60px", maxWidth: "1000px" }}>
             <div style={{ marginBottom: "15px" }}>
               <h3 style={{ marginBlockStart: "4px", marginBlockEnd: "8px", fontSize: "14px" }}>Grundlage für die angezeigten Verbrauchs-, Ertrags- und Amortisationsabschätzungen sind folgende Annahmen:</h3>
