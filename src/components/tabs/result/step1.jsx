@@ -1,30 +1,14 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import AppContext from "../../../AppContext";
-import { Button } from "reactstrap";
-import axios from "axios";
 import Cost from "./components/cost";
 import BreakEven from "./components/breakEven";
 
 import { withTranslation } from "react-i18next";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import InfoBoxResult from "../infoBoxResult";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, Title } from "chart.js";
-import { Doughnut, Line } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, Title);
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-var selectedTheme;
-var entryParam;
-var foundTheme;
-var btnFont;
-var fontHeadline;
-var fontRegular;
-var btnColor;
-
-const datapoints = [-27300, null, null, null, null, null, null, 0, null, null, null, 8000];
 
 class ResultStep1 extends React.Component {
   constructor(props) {
@@ -45,7 +29,7 @@ class ResultStep1 extends React.Component {
   static contextType = AppContext;
 
   componentWillMount() {
-    const { products, btnThemes, fonts, setFwdBtn } = this.context;
+    const { setFwdBtn } = this.context;
 
     setFwdBtn(false);
   }
@@ -55,7 +39,7 @@ class ResultStep1 extends React.Component {
   }
 
   energyUsageCombined = () => {
-    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
     var Avg_Eff_JAZ_HP;
 
     if (heatpumpType === "1") {
@@ -73,13 +57,13 @@ class ResultStep1 extends React.Component {
   };
 
   inputPower_kW_PV_MFH = (event) => {
-    const { overlayToggle, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH } = this.context;
+    const { setPower_kW_PV_MFH } = this.context;
 
     setPower_kW_PV_MFH(event.target.value);
   };
 
   inputTCO_thermal_EUR_a = (event) => {
-    const { overlayToggle, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a } = this.context;
+    const { setTCO_thermal_EUR_a } = this.context;
 
     setTCO_thermal_EUR_a(event.target.value);
   };
@@ -99,11 +83,8 @@ class ResultStep1 extends React.Component {
   }
 
   render() {
-    const { t } = this.props;
-    const { overlayToggle } = this.state;
-    const { Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption } = this.context;
     var energyUsageCombined = this.energyUsageCombined();
-    if (sessionStorage.getItem("energyUsageCombined") != "") {
+    if (sessionStorage.getItem("energyUsageCombined") !== "") {
       sessionStorage.setItem("energyUsageCombined", energyUsageCombined);
     }
     return (
