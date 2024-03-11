@@ -4,8 +4,6 @@ import AppContext from "../../../../AppContext";
 import InfoBox from "../../infoBox";
 import { ReactComponent as HouseholdEnergyUseIcon } from "../../../../assets/img/icons/household_energy_use_icon.svg";
 import { ReactComponent as BuderusPvLeistung } from "../../../../assets/img/icons/buderus/pv_leistung.svg";
-import { styled } from "@mui/material/styles";
-import Radio from "@mui/material/Radio";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 
@@ -26,7 +24,7 @@ class PVOutput extends React.Component {
   static contextType = AppContext;
 
   componentDidMount() {
-    const { setTabToSelect, tabEntries, pvOutputkWh, homeStorageSizekWh, pvOutput, setPVOutput } = this.context;
+    const { setTabToSelect, tabEntries, pvOutputkWh, homeStorageSizekWh } = this.context;
 
     if (this.state.pvOutputkW == null) {
       let tabInTable = tabEntries.find((o) => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Ja");
@@ -36,7 +34,7 @@ class PVOutput extends React.Component {
   }
 
   componentWillMount() {
-    const { setFwdBtn, fwdBtn, steps, setSteps, activeView } = this.context;
+    const { setFwdBtn, steps, setSteps, activeView } = this.context;
 
     steps[activeView] = false;
     setSteps({ ...steps });
@@ -47,7 +45,7 @@ class PVOutput extends React.Component {
   }
 
   componentDidUpdate(previousProps, previousState) {
-    const { setTabToSelect, tabEntries, pvOutputkWh, homeStorageSizekWh, pvOutput, setPVOutput } = this.context;
+    const { setTabToSelect, tabEntries, pvOutputkWh, homeStorageSizekWh } = this.context;
 
     let tabInTable = tabEntries.find((o) => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Ja");
 
@@ -61,15 +59,14 @@ class PVOutput extends React.Component {
   }
 
   inputPVOutput = (value) => {
-    const { setFwdBtn, setTabToSelect, tabEntries, pvOutputkWh, homeStorageSizekWh, pvOutput, setPVOutput } = this.context;
+    const { setPVOutput } = this.context;
     setPVOutput(parseInt(value));
     this.setState({ pvOutputkW: parseInt(value) });
     //this.context.goToView(7);
   };
 
   render() {
-    const { t } = this.props;
-    const { pvMarks, BuildingEnegeryStandard, setBuildingEnegeryStandard, kfwValue, insulationValue, setInsulationValue, setKfwValue, OilLNGValue, setOilLNGValue, TCO_thermal_EUR_a, disabledOilUsage, OilUsageLiters, LNGUsage, disabledLNGUsage, heatDistributionValue, energyUsagekWh, pvOutput } = this.context;
+    const { pvOutput } = this.context;
 
     return (
       <div>
@@ -125,7 +122,9 @@ class PVOutput extends React.Component {
                     <div style={{ position: "absolute", left: "33.333%", transform: "translateX(-50%)" }}>7</div>
                     <div style={{ position: "absolute", left: "66.6667%", transform: "translateX(-50%)" }}>10</div>
                     <div style={{ position: "absolute", left: "100%", transform: "translateX(-50%)" }}>14</div>
-                    <div class="kwp-label" style={{ position: "absolute", left: "100%", marginLeft: "29px" }}>kWp</div>
+                    <div class="kwp-label" style={{ position: "absolute", left: "100%", marginLeft: "29px" }}>
+                      kWp
+                    </div>
                   </div>
                 </div>
                 <div style={{ marginTop: "105px" }}>
