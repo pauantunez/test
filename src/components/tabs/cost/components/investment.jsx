@@ -1,7 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import AppContext from "../../../../AppContext";
-import InfoButton from "../../infoButton";
 import InfoBox from "../../infoBox";
 import { ReactComponent as Coins } from "../../../../assets/img/icons/coins.svg";
 import { ReactComponent as BuderusCoins } from "../../../../assets/img/icons/buderus/coins.svg";
@@ -10,20 +9,10 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
-import Tooltip from "@mui/material/Tooltip";
-import Button from "@mui/material/Button";
 
 import { withTranslation } from "react-i18next";
-import validator, { validate } from "validate.js";
-
-var entryParam;
-var foundTheme;
-var btnFont;
-var fontHeadline;
-var fontRegular;
-var btnColor;
+import { validate } from "validate.js";
 
 class Investment extends React.Component {
   constructor(props) {
@@ -38,13 +27,10 @@ class Investment extends React.Component {
 
   static contextType = AppContext;
 
-  componentDidMount() {
-    const { EGen_sh_kWh_HP_A_W_MFH, energy_to_grid_kWh_PV_MFH } = this.context;
-    console.log(energy_to_grid_kWh_PV_MFH);
-  }
+  componentDidMount() {}
 
   componentWillMount() {
-    const { BuildingEnegeryStandard, setFwdBtn, fwdBtn, steps, setSteps, activeView, kfwValue } = this.context;
+    const { setFwdBtn, steps, activeView } = this.context;
 
     if (steps[activeView] === false) {
       setFwdBtn(false);
@@ -60,33 +46,33 @@ class Investment extends React.Component {
   }
 
   inputTCO_thermal_EUR_a = (event) => {
-    const { overlayToggle, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a } = this.context;
+    const { setTCO_thermal_EUR_a } = this.context;
 
     setTCO_thermal_EUR_a(event.target.value);
   };
 
   inputHeatingSelection = (event) => {
-    const { BuildingEnegeryStandard, setBuildingEnegeryStandard } = this.context;
+    const { setBuildingEnegeryStandard } = this.context;
     setBuildingEnegeryStandard(event.target.value);
   };
 
   inputHeatingDistribution = (event) => {
-    const { heatDistributionValue, setHeatDistribution } = this.context;
+    const { setHeatDistribution } = this.context;
     setHeatDistribution(event.target.value);
   };
 
   inputKfwValue = (event) => {
-    const { kfwValue, setKfwValue } = this.context;
+    const { setKfwValue } = this.context;
     setKfwValue(event.target.value);
   };
 
   inputInsulationValue = (event) => {
-    const { insulationValue, setInsulationValue } = this.context;
+    const { setInsulationValue } = this.context;
     setInsulationValue(event.target.value);
   };
 
   inputOilLNGValue = (event) => {
-    const { OilLNGValue, setOilLNGValue, disabledOilUsage, setDisabledOilUsage, disabledLNGUsage, setDisabledLNGUsage } = this.context;
+    const { setOilLNGValue, setDisabledOilUsage, setDisabledLNGUsage } = this.context;
     setOilLNGValue(event.target.value);
 
     if (event.target.value === "oil-usage") {
@@ -99,17 +85,17 @@ class Investment extends React.Component {
   };
 
   inputOilUsageLiters = (event) => {
-    const { OilUsageLiters, setOilUsageLiters } = this.context;
+    const { setOilUsageLiters } = this.context;
     setOilUsageLiters(event.target.value);
   };
 
   inputLNGUsage = (event) => {
-    const { LNGUsage, setLNGUsage } = this.context;
+    const { setLNGUsage } = this.context;
     setLNGUsage(event.target.value);
   };
 
   inputInvestmentCostEUR = (event) => {
-    const { investmentCostEUR, setInvestmentCostEUR, setFwdBtn, steps, setSteps, activeView } = this.context;
+    const { setInvestmentCostEUR, setFwdBtn, steps, setSteps, activeView } = this.context;
     setInvestmentCostEUR(event.target.value);
 
     var inputNumber = parseInt(event.target.value);
@@ -127,7 +113,7 @@ class Investment extends React.Component {
   };
 
   inputInvestmentCost = (event) => {
-    const { investmentCost, setInvestmentCost, setInvestmentCostEUR, setDisabledInvestmentCost, disabledInvestmentCost, setFwdBtn, steps, setSteps, activeView } = this.context;
+    const { setInvestmentCost, setInvestmentCostEUR, setDisabledInvestmentCost, setFwdBtn, steps, setSteps, activeView } = this.context;
     setInvestmentCost(event.target.value);
     setInvestmentCostEUR("");
 
@@ -150,70 +136,13 @@ class Investment extends React.Component {
 
   avoidPointAndCharacters = (event) => {
     let ASCIICode = event.which ? event.which : event.keyCode;
-    if (!/[0-9,]/.test(event.key) && ASCIICode != 8) {
+    if (!/[0-9,]/.test(event.key) && ASCIICode !== 8) {
       event.preventDefault();
     }
   };
 
   render() {
-    const { t } = this.props;
-    const { BuildingEnegeryStandard, setBuildingEnegeryStandard, kfwValue, insulationValue, setInsulationValue, setKfwValue, OilLNGValue, setOilLNGValue, TCO_thermal_EUR_a, disabledOilUsage, OilUsageLiters, LNGUsage, disabledLNGUsage, heatDistributionValue, energyUsagekWh, investmentCost, setInvestmentCost, setDisabledInvestmentCost, disabledInvestmentCost, investmentCostEUR } = this.context;
-
-    const BpIcon = styled("span")(({ theme }) => ({
-      borderRadius: "0%",
-      width: 24,
-      height: 24,
-      backgroundColor: "#C1C7CC",
-      fontFamily: "Bosch-Medium",
-      ".Mui-focusVisible &": {
-        outline: "2px auto rgba(19,124,189,.6)",
-        outlineOffset: 2,
-      },
-      "input:hover ~ &": {
-        backgroundColor: "#C1C7CC",
-      },
-      "input:disabled ~ &": {
-        boxShadow: "none",
-        background: "rgba(206,217,224,.5)",
-      },
-    }));
-
-    const BpCheckedIcon = styled(BpIcon)({
-      backgroundColor: "#137cbd",
-      backgroundImage: "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
-      "&:before": {
-        display: "block",
-        width: 4,
-        height: 12,
-        transform: "rotate(45deg)",
-        marginTop: "10%",
-        marginLeft: "35%",
-        borderBottom: "2px solid #fff",
-        borderRight: "2px solid #fff",
-        content: '""',
-      },
-      "input:hover ~ &": {
-        backgroundColor: "#106ba3",
-      },
-    });
-
-    function BpRadio(props) {
-      return (
-        <Radio
-          disableRipple
-          color="default"
-          checkedIcon={<BpCheckedIcon />}
-          icon={<BpIcon />}
-          sx={{
-            "&, & + .MuiFormControlLabel-label": {
-              marginRight: "5px",
-              fontFamily: "Bosch-Regular",
-            },
-          }}
-          {...props}
-        />
-      );
-    }
+    const { investmentCost, disabledInvestmentCost, investmentCostEUR } = this.context;
 
     const OilLNGIcon = styled("span")(({ theme }) => ({
       borderRadius: this.context.selectedTheme === "buderus" ? "0px" : "50%",
