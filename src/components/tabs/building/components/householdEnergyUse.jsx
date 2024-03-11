@@ -180,7 +180,9 @@ class HouseholdEnergyUse extends React.Component {
                     <div style={{ position: "absolute", left: "0%", transform: "translateX(-50%)" }}>4.000</div>
                     <div style={{ position: "absolute", left: "50%", transform: "translateX(-50%)" }}>6.000</div>
                     <div style={{ position: "absolute", left: "100%", transform: "translateX(-50%)" }}>8.000</div>
-                    <div class="kwp-label" style={{ position: "absolute", left: "115%", transform: "translateX(-50%)" }}>kWh</div>
+                    <div class="kwp-label" style={{ position: "absolute", left: "115%", transform: "translateX(-50%)" }}>
+                      kWh
+                    </div>
                   </div>
                 </div>
 
