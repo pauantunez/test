@@ -72,7 +72,7 @@ class Welcome extends React.Component {
 
   componentWillMount() {
     this.context.getTheme();
-    const { products, btnThemes, fonts, sendGAEvent } = this.context;
+    const { products /* , sendGAEvent */ } = this.context;
     const productsProps = Object.getOwnPropertyNames(products);
     var foundTheme = 0;
 
