@@ -4,12 +4,6 @@ import AppContext from "../../AppContext";
 import { ReactComponent as InfoIcon } from "../../assets/img/icons/info.svg";
 import { ReactComponent as BuderusInfoIcon } from "../../assets/img/icons/buderus/info.svg";
 import { styled } from "@mui/material/styles";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
-import TextField from "@mui/material/TextField";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import Button from "@mui/material/Button";
 
@@ -40,9 +34,6 @@ class InfoButton extends React.Component {
   componentDidMount() {}
 
   render() {
-    const { t } = this.props;
-    const { BuildingEnegeryStandard, setBuildingEnegeryStandard, kfwValue, insulationValue, setInsulationValue, setKfwValue, OilLNGValue, setOilLNGValue, TCO_thermal_EUR_a, disabledOilUsage, OilUsageLiters, LNGUsage, disabledLNGUsage } = this.context;
-
     const LightTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(({ theme }) => ({
       [`& .${tooltipClasses.arrow}`]: {
         color: "#ffffff",
