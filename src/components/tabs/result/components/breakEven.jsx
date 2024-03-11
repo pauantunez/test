@@ -1,31 +1,14 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import AppContext from "../../../../AppContext";
-import { Button } from "reactstrap";
-import axios from "axios";
 
 import { withTranslation } from "react-i18next";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title } from "chart.js";
 
-import { Doughnut, Line, Bar } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
+import { Line } from "react-chartjs-2";
 import pattern from "patternomaly";
-import { ReactComponent as LightningIcon } from "../../../../assets/img/icons/lightning_chart.svg";
-import { ReactComponent as PVIcon } from "../../../../assets/img/icons/photovoltaic_chart.svg";
-import { ReactComponent as ElectricityIcon } from "../../../../assets/img/icons/electricity_sun_chart.svg";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title);
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-var selectedTheme;
-var entryParam;
-var foundTheme;
-var btnFont;
-var fontHeadline;
-var fontRegular;
-var btnColor;
 
 export const options = {
   plugins: {
@@ -130,13 +113,13 @@ class BreakEven extends React.Component {
   static contextType = AppContext;
 
   componentWillMount() {
-    const { products, btnThemes, fonts, setFwdBtn } = this.context;
+    const { setFwdBtn } = this.context;
 
     setFwdBtn(false);
   }
 
   componentDidMount() {
-    const { heatpumpPVems, breakEvenBase64, setBreakEvenBase64 } = this.context;
+    const { setBreakEvenBase64 } = this.context;
 
     setTimeout(() => {
       const breakEvenCanvas = document.getElementById("breakEvenChart");
@@ -150,13 +133,13 @@ class BreakEven extends React.Component {
   }
 
   inputPower_kW_PV_MFH = (event) => {
-    const { overlayToggle, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH } = this.context;
+    const { setPower_kW_PV_MFH } = this.context;
 
     setPower_kW_PV_MFH(event.target.value);
   };
 
   inputTCO_thermal_EUR_a = (event) => {
-    const { overlayToggle, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a } = this.context;
+    const { setTCO_thermal_EUR_a } = this.context;
 
     setTCO_thermal_EUR_a(event.target.value);
   };
@@ -183,15 +166,14 @@ class BreakEven extends React.Component {
   };
 
   inputCostOverTime = (event) => {
-    const { costOverTime, setCostOverTime, setFwdBtn, steps, setSteps, activeView } = this.context;
+    const { setCostOverTime } = this.context;
     setCostOverTime(event.target.value);
   };
 
   investmentCost = () => {
-    const { pvOutputkWh, homeStorageSize, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, addHeatpumpPVems } = this.context;
+    const { pvOutputkWh, PVcostLookupTable, investmentCostEUR } = this.context;
 
     let PVcostInTable = PVcostLookupTable.find((o) => o.pv === pvOutputkWh);
-    let StorageCostInTable = StorageCostLookupTable.find((o) => o.storage === homeStorageSize);
 
     let investmentCostResult = Math.abs(PVcostInTable.cost);
 
@@ -234,7 +216,7 @@ class BreakEven extends React.Component {
   }
 
   breakEvenPV = () => {
-    const { heatpumpPV, heatpumpPVems } = this.context;
+    const { heatpumpPV } = this.context;
     let closestPosition = 0;
     let closestValue = Math.abs(heatpumpPV[0].expenditure);
     for (let i = 1; i < heatpumpPV.length; i++) {
@@ -249,11 +231,7 @@ class BreakEven extends React.Component {
   };
 
   breakEvenPVems = () => {
-    /* const { heatpumpPV, heatpumpPVems } = this.context;
-    let yearBreakEven = heatpumpPVems.findIndex((n) => n.expenditure > 0);
-
-    return yearBreakEven; */
-    const { heatpumpPV, heatpumpPVems } = this.context;
+    const { heatpumpPVems } = this.context;
     let closestPosition = 0;
     let closestValue = Math.abs(heatpumpPVems[0].expenditure);
     for (let i = 1; i < heatpumpPVems.length; i++) {
@@ -269,14 +247,7 @@ class BreakEven extends React.Component {
   };
 
   render() {
-    const { t } = this.props;
-    const { overlayToggle } = this.state;
-    const { heatpumpPV, heatpumpPVems, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
-
-    /*const datapoints = [heatpumpPVems[0].expenditure, heatpumpPVems[1].expenditure, heatpumpPVems[2].expenditure, heatpumpPVems[3].expenditure, heatpumpPVems[4].expenditure, heatpumpPVems[5].expenditure, heatpumpPVems[6].expenditure, heatpumpPVems[7].expenditure, heatpumpPVems[8].expenditure, heatpumpPVems[9].expenditure, heatpumpPVems[10].expenditure, heatpumpPVems[11].expenditure, heatpumpPVems[12].expenditure, heatpumpPVems[13].expenditure, heatpumpPVems[14].expenditure, heatpumpPVems[15].expenditure, heatpumpPVems[16].expenditure, heatpumpPVems[17].expenditure, heatpumpPVems[18].expenditure, heatpumpPVems[19].expenditure, heatpumpPVems[20].expenditure, heatpumpPVems[21].expenditure, heatpumpPVems[22].expenditure];
-    const datapoints2 = [heatpumpPV[0].expenditure, heatpumpPV[1].expenditure, heatpumpPV[2].expenditure, heatpumpPV[3].expenditure, heatpumpPV[4].expenditure, heatpumpPV[5].expenditure, heatpumpPV[6].expenditure, heatpumpPV[7].expenditure, heatpumpPV[8].expenditure, heatpumpPV[9].expenditure, heatpumpPV[10].expenditure, heatpumpPV[11].expenditure, heatpumpPV[12].expenditure, heatpumpPV[13].expenditure, heatpumpPV[14].expenditure, heatpumpPV[15].expenditure, heatpumpPV[16].expenditure, heatpumpPV[17].expenditure, heatpumpPV[18].expenditure, heatpumpPV[19].expenditure, heatpumpPV[20].expenditure, heatpumpPV[21].expenditure, heatpumpPV[22].expenditure];
-    const closestPosition02 = this.findClosestPositionTo0(datapoints2);*/
-    // const datapoints3 = [0, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null, null, null, null, null, null, 0];
+    const { heatpumpPV, heatpumpPVems } = this.context;
 
     // Function to create datapoints array up to a certain position
     function createDataPoints(dataArray, position) {
@@ -294,7 +265,6 @@ class BreakEven extends React.Component {
 
     // Create datapoints arrays
     const numYears01 = this.breakEvenPV();
-    const numYears02 = this.breakEvenPVems();
     const datapoints = createDataPoints(heatpumpPVems, numYears01 + 3);
     const closestPosition01 = this.findClosestPositionTo0(datapoints);
     const datapoints2 = createDataPoints(heatpumpPV, numYears01 + 3);
