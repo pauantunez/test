@@ -1,39 +1,18 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import AppContext from "../../../../AppContext";
-import { Button } from "reactstrap";
 import axios from "axios";
 
 import { withTranslation } from "react-i18next";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title } from "chart.js";
 import annotationPlugin from "chartjs-plugin-annotation";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import { VictoryChart, VictoryBar, VictoryPie, VictoryLabel } from "victory";
 
 import { styled } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-
-import { Doughnut, Line, Bar, Pie } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
-import pattern from "patternomaly";
-import { ReactComponent as LightningIcon } from "../../../../assets/img/icons/lightning_chart.svg";
-import { ReactComponent as PVIcon } from "../../../../assets/img/icons/photovoltaic_chart.svg";
-import { ReactComponent as ElectricityIcon } from "../../../../assets/img/icons/electricity_sun_chart.svg";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, annotationPlugin, ChartDataLabels);
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-var selectedTheme;
-var entryParam;
-var foundTheme;
-var btnFont;
-var fontHeadline;
-var fontRegular;
-var btnColor;
 
 const AntSwitch = styled(Switch)(({ theme }) => {
   const { selectedTheme } = React.useContext(AppContext); // Obtén el tema seleccionado del contexto
@@ -96,7 +75,7 @@ class CustomSwitch extends React.Component {
   static contextType = AppContext;
 
   componentWillMount() {
-    const { setLoading, setLoadingOffGrid, heatpumpType, scenarioInDatabase, kfwValue, ev, homeStorageSizekWh, pvOutputkWh, tabEntries, products, btnThemes, fonts, setFwdBtn } = this.context;
+    const { setLoadingOffGrid, setFwdBtn } = this.context;
 
     setFwdBtn(false);
     setLoadingOffGrid(true);
@@ -107,7 +86,7 @@ class CustomSwitch extends React.Component {
   }
 
   getInitialResult = () => {
-    const { scenarioInDatabase, kfwValue, ev, homeStorageSizekWh, pvOutputkWh, tabEntries, products, btnThemes, fonts, setFwdBtn } = this.context;
+    const { scenarioInDatabase, kfwValue, ev, homeStorageSizekWh, pvOutputkWh, tabEntries } = this.context;
 
     //find the correct TAB for the "NO EMS" case
     let tabInTable = tabEntries.find((o) => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Nein");
@@ -118,7 +97,7 @@ class CustomSwitch extends React.Component {
   };
 
   energyUsageCombined = (result) => {
-    const { heatpumpType, setHouseholdNoEMSpvPercent, setNoEMSPercentage, setNoEMScombinedEnergyUseKWH, noEMSPercentageOffGrid, energyUsagekWh, odometerIncreaseKWH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { heatpumpType, setHouseholdNoEMSpvPercent, setNoEMSPercentage, setNoEMScombinedEnergyUseKWH, energyUsagekWh, odometerIncreaseKWH } = this.context;
     var Avg_Eff_JAZ_HP;
 
     if (heatpumpType === "1") {
@@ -148,14 +127,14 @@ class CustomSwitch extends React.Component {
   };
 
   inputOffgridEMS = (event) => {
-    const { setLoading, setLoadingOffGrid, kfwValue, ev, setOffgridEMS, offgridEMS, scenarioInDatabase, tabEntries, setTabToSelect, pvOutputkWh, homeStorageSizekWh, homeStorage, setHomeStorage, setHomeStorageSize } = this.context;
+    const { setLoadingOffGrid, kfwValue, ev, setOffgridEMS, scenarioInDatabase, tabEntries, setTabToSelect, pvOutputkWh, homeStorageSizekWh } = this.context;
     setOffgridEMS(event.target.checked);
     setLoadingOffGrid(true);
-
+    var emsValue;
     if (event.target.checked) {
-      var emsValue = "Ja";
+      emsValue = "Ja";
     } else {
-      var emsValue = "Nein";
+      emsValue = "Nein";
     }
 
     let tabInTable = tabEntries.find((o) => {
@@ -170,12 +149,12 @@ class CustomSwitch extends React.Component {
   };
 
   getResult = (kfw, scenario, noEMSTab) => {
-    const { setLoading, setLoadingOffGrid, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, heatpumpCombinedUsage, setOffgridPVPercentageNoEMS, offgridPVPercentageNoEMS, setDatabaseResult, heatpumpType, setTabToSelect, tabToSelect, ev, kfwValue, homeStorageSizekWh, pvOutputkWh, pvOutput, tabEntries, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
-
+    const { setLoadingOffGrid, setDatabaseResult, heatpumpType, tabToSelect } = this.context;
+    var tab;
     if (noEMSTab) {
-      var tab = noEMSTab;
+      tab = noEMSTab;
     } else {
-      var tab = tabToSelect.toString();
+      tab = tabToSelect.toString();
     }
     axios
       .get(`https://bosch-endkundentool-api.azurewebsites.net/results`, {
@@ -187,7 +166,7 @@ class CustomSwitch extends React.Component {
         },
       })
       .then((res) => {
-        if (res.data.data.length != 0) {
+        if (res.data.data.length !== 0) {
           if (noEMSTab) {
             this.energyUsageCombined(res.data.data[0]);
           } else {
@@ -200,7 +179,7 @@ class CustomSwitch extends React.Component {
   };
 
   getResultNoEMS = (kfw, scenario, noEMSTab) => {
-    const { setLoading, setLoadingOffGrid, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH, heatpumpCombinedUsage, setOffgridPVPercentageNoEMS, offgridPVPercentageNoEMS, setDatabaseResultNoEMS, heatpumpType, setTabToSelect, tabToSelect, ev, kfwValue, homeStorageSizekWh, pvOutputkWh, pvOutput, tabEntries, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, setPower_kW_PV_MFH, TCO_thermal_EUR_a, elc_Self_Consumption, setElc_Self_Consumption } = this.context;
+    const { setDatabaseResultNoEMS, heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries } = this.context;
 
     let tabInTable = tabEntries.find((o) => {
       return o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Nein";
@@ -216,7 +195,7 @@ class CustomSwitch extends React.Component {
         },
       })
       .then((res) => {
-        if (res.data.data.length != 0) {
+        if (res.data.data.length !== 0) {
           setDatabaseResultNoEMS(res.data.data[0]);
         }
         //sessionStorage.setItem("Autarkie_energy_to_grid_kWh_PV_MFH", res.data.data[0].energy_to_grid_kWh_PV_MFH);
@@ -224,10 +203,7 @@ class CustomSwitch extends React.Component {
   };
 
   render() {
-    const { t } = this.props;
-    const { overlayToggle } = this.state;
-    const { switchId } = this.state;
-    const { offgridEMS, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
+    const { offgridEMS } = this.context;
 
     return (
       <div>
