@@ -136,13 +136,13 @@ class Welcome extends React.Component {
       labelFont = fonts.bosch[1];
     }
 
-    document.body.addEventListener("click", (event) => {
+    /* document.body.addEventListener("click", (event) => {
       var trackeableElement = event.target.closest(".trackeable");
       if (trackeableElement) {
         var eventName = trackeableElement.dataset.event;
         sendGAEvent(eventName, null, window.location.href);
       }
-    });
+    }); */
   }
 
   componentWillReceiveProps = (nextProps, nextContext) => {
