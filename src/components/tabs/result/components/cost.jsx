@@ -542,7 +542,7 @@ class Cost extends React.Component {
   }
 
   getResultNoEMS = (kfw, scenario, noEMSTab) => {
-    const { setDatabaseResultNoEMS, heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries, setCostOverTime } = this.context;
+    const { setDatabaseResultNoEMS, heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries } = this.context;
     let tabInTable = tabEntries.find((o) => {
       return o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Nein";
     });
