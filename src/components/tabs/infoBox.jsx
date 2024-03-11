@@ -1,18 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import AppContext from "../../AppContext";
-import { ReactComponent as InfoIcon } from "../../assets/img/icons/info.svg";
-import { styled } from "@mui/material/styles";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
-import TextField from "@mui/material/TextField";
-import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 
 import { withTranslation } from "react-i18next";
 
@@ -34,9 +23,6 @@ class InfoBox extends React.Component {
   componentDidMount() {}
 
   render() {
-    const { t } = this.props;
-    const { BuildingEnegeryStandard, setBuildingEnegeryStandard, kfwValue, insulationValue, setInsulationValue, setKfwValue, OilLNGValue, setOilLNGValue, TCO_thermal_EUR_a, disabledOilUsage, OilUsageLiters, LNGUsage, disabledLNGUsage } = this.context;
-
     return (
       <Box component="span" class="infobox-container">
         <h3 class="infobox-h3 Bosch-Medium">Infobox:</h3>
@@ -85,7 +71,7 @@ class InfoBox extends React.Component {
                   Der Durschnittsstrompreis im 2. Halbjahr 2022 lag bei 35 Ct/kWh.
                   <br />
                   (inkl. MwSt.){" "}
-                  <a href="https://www-genesis.destatis.de/genesis/online?operation=previous&levelindex=1&step=1&titel=Ergebnis&levelid=1688366713147&acceptscookies=false#abreadcrumb" target="_blank">
+                  <a href="https://www-genesis.destatis.de/genesis/online?operation=previous&levelindex=1&step=1&titel=Ergebnis&levelid=1688366713147&acceptscookies=false#abreadcrumb" target="_blank" rel="noreferrer">
                     Quelle Destatis
                   </a>
                 </div>
