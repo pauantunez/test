@@ -8,6 +8,7 @@ import HouseholdUse from "./components/householdUse";
 import { withTranslation } from "react-i18next";
 import InfoBoxResult from "../infoBoxResult";
 import InfoButton from "../infoButton";
+import CustomSwitch from "./components/switchCombined";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, Title } from "chart.js";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, Title);
@@ -84,7 +85,9 @@ class ResultStep2 extends React.Component {
     return (
       <div style={{ marginLeft: "3%", marginRight: "3%" }}>
         <h3 style={{ display: "flex", justifyContent: "flex-start", textAlign: "left", fontSize: "24px" }}>Ergebnis Teil 2: Stromverbrauch, Autarkie und Eigenverbrauch</h3>
-
+        <div /*class="trackeable"  data-event="result-part2-switch-energiemanagement" */ /* TODO:add event */>
+          <CustomSwitch />
+        </div>
         <div class="pie-flex" style={{ display: "flex", marginTop: "50px", height: "100%", width: "100%", flexWrap: "nowrap" /*justifyContent: 'space-between',*/ /*alignContent: 'center'*/ }}>
           <div style={{ alignItems: "end" }}>
             <div style={{ fontFamily: "Bosch-Bold", fontSize: "20px", textAlign: "left" }}>Stromverbrauch</div>
