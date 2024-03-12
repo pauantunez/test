@@ -293,7 +293,7 @@ class Additional extends React.Component {
 
     return (
       <div>
-        <div class="cardContainer" style={{ flexDirection: "column", justifyContent: "center", alignItems: "center", fontFamily: "Bosch-Regular" }}>
+        <div class="cardContainer last-page" style={{ flexDirection: "column", justifyContent: "center", alignItems: "center", fontFamily: "Bosch-Regular" }}>
           <div>
             <div class="cardContent" style={{ marginBottom: "40px" }}>
               <div class="flexContent additional-flex" style={{ width: "100%", justifyContent: "space-between" }}>
