@@ -29,7 +29,7 @@ class HeatDistribution extends React.Component {
   componentDidMount() {}
 
   componentWillMount() {
-    const { setFwdBtn, steps, activeView, kfwValue, insulationValue } = this.context;
+    const { setFwdBtn, steps, activeView } = this.context;
 
     if (steps[activeView] === false) {
       setFwdBtn(false);
@@ -115,22 +115,48 @@ class HeatDistribution extends React.Component {
     setLNGUsage(event.target.value);
   };
 
+  calculateClosestShBedarf = (ShBedarf) => {
+    const options = [25, 35, 45, 55, 65, 95, 120, 150];
+    let closestPosition = options[0];
+    let minDifference = Math.abs(ShBedarf - options[0]);
+
+    options.forEach((option) => {
+      const currentDifference = Math.abs(ShBedarf - option);
+      if (currentDifference < minDifference) {
+        minDifference = currentDifference;
+        closestPosition = option;
+      }
+    });
+
+    return closestPosition;
+  };
+
   render() {
-    const { heatDistributionValue, kfwValue, insulationValue } = this.context;
+    const { heatDistributionValue, kfwValue, insulationValue, OilUsageLiters, BuildingSize, LNGUsage } = this.context;
     var radiatorDisabled;
     var underfloorRadiatorDisable;
     var underfloorDisabled;
-    if (kfwValue === "kfW_40_" || insulationValue === "kfW_40_" || kfwValue === "kfW_55_") {
+    var ShBedarf;
+    if (OilUsageLiters > 0) {
+      ShBedarf = Math.round((OilUsageLiters * 9.8) / BuildingSize);
+      ShBedarf = this.calculateClosestShBedarf(ShBedarf);
+    }
+    if (LNGUsage > 0) {
+      ShBedarf = Math.round(LNGUsage / BuildingSize);
+      ShBedarf = this.calculateClosestShBedarf(ShBedarf);
+    }
+    if (kfwValue === "kfW_40_" || insulationValue === "kfW_40_" || kfwValue === "kfW_55_" || ShBedarf === 25 || ShBedarf === 35) {
       radiatorDisabled = "disabled";
       underfloorRadiatorDisable = "disabled";
     }
-    if (kfwValue === "kfW_70_" || insulationValue === "kfW_70_" || kfwValue === "kfW_85_" || kfwValue === "kfW_100_") {
+    if (kfwValue === "kfW_70_" || insulationValue === "kfW_70_" || kfwValue === "kfW_85_" || kfwValue === "kfW_100_" || ShBedarf === 45 || ShBedarf === 55 || ShBedarf === 65) {
       radiatorDisabled = "disabled";
     }
-    if (insulationValue === "p_isolated" || insulationValue === "un_ren_") {
+    if (insulationValue === "p_isolated" || insulationValue === "un_ren_" || ShBedarf === 95 || ShBedarf === 120 || ShBedarf === 150) {
       underfloorRadiatorDisable = "disabled";
       underfloorDisabled = "disabled";
     }
+
     return (
       <div>
         <div class="cardContainer">
