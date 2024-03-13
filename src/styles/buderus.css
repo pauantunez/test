@@ -1621,6 +1621,23 @@ a.card-input-narrow {
     height: 170px;
   }
 
+  .last-page .cardContent h3{
+    font-size: 44px;
+    letter-spacing: -1px;
+  }
+  .flexContent.block-content{
+    flex-direction: column;
+  }
+  .flexContent.block-content .block-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .flexContent.block-content .block-container .block.contact{
+    border: 1px solid rgb(224, 226, 229);
+    padding: 20px;
+  }
+
   .cardIconInset {
     display: none;
   }

@@ -311,51 +311,62 @@ class Additional extends React.Component {
             {this.context.selectedTheme === "buderus" ? (
               <>
                 <div class="cardContent" style={{ borderTop: "1px solid #E0E2E5", marginBottom: "40px" }}>
-                  <div class="flexContent additional-flex block-content" style={{ width: "100%", justifyContent: "space-between", marginTop: "8px" }}>
+                  <div class="flexContent additional-flex" style={{ width: "100%", justifyContent: "space-between", marginTop: "8px" }}>
                     <div style={{ paddingRight: "30px", paddingBottom: "10px" }}>
                       <h3>Kontakt zum Fachbetrieb</h3>
+                      <div>Finden Sie einen Experten in Ihrer Nähe, der Sie bei der Umsetzung unterstützt</div>
                     </div>
-                    <div class="block-container">
-                      <div class="block contact">
-                        <p>Fachbetriebe in ihrer Nähe</p>
-                        <div class="trackeable" data-event="result-part3-contact" style={{ display: "flex", alignItems: "end" }}>
-                          <a rel="noreferrer" href="https://www.buderus.de/de/services-tools/experten-in-ihrer-naehe/fachbetriebe-in-ihrer-naehe-21776" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                            <Button variant="outlined" startIcon={<BuderusMagnifyingGlassIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular", border: "1px solid #000000", color: "#000000" }}>
-                              Fachbetrieb suchen
-                            </Button>
-                          </a>
-                        </div>
-                      </div>
-                      <div class="block contact">
-                        <p>Angebot anfordern</p>
-                        <div style={{ display: "flex", alignItems: "end" }}>
-                          <a rel="noreferrer" href="https://www.buderus.de/de/angebot-anfordern" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                            <Button variant="outlined" startIcon={<BuderusContractIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular", border: "1px solid #000000", color: "#000000" }}>
-                              Unverbindliches Angebot anfordem
-                            </Button>
-                          </a>
-                        </div>
-                      </div>
-                      <div class="block contact">
-                        <p>Beratungshotline</p>
-                        <div style={{ display: "flex", alignItems: "end" }}>
-                          <a rel="noreferrer" href="https://www.buderus.de/de/kontakt-klimapaket" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                            <Button variant="outlined" startIcon={<BuderusContractIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular", border: "1px solid #000000", color: "#000000" }}>
-                              Zur Beratungshotline
-                            </Button>
-                          </a>
-                        </div>
-                      </div>
-                      <div class="block contact">
-                        <p>Niederlassungssuche</p>
-                        <div style={{ display: "flex", alignItems: "end" }}>
-                          <a rel="noreferrer" href="https://www.buderus.de/de/niederlassungen" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                            <Button variant="outlined" startIcon={<BuderusContractIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular", border: "1px solid #000000", color: "#000000" }}>
-                              Zur Niederlassungssuche
-                            </Button>
-                          </a>
-                        </div>
-                      </div>
+                    <div class="trackeable" data-event="result-part3-contact" style={{ display: "flex", alignItems: "end" }}>
+                      <a rel="noreferrer" href="https://www.buderus.de/de/services-tools/experten-in-ihrer-naehe/fachbetriebe-in-ihrer-naehe-21776" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                        <Button variant="outlined" startIcon={<BuderusMagnifyingGlassIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular", border: "1px solid #000000", color: "#000000" }}>
+                          Jetzt Fachbetrieb finden
+                        </Button>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="cardContent" style={{ borderTop: "1px solid #E0E2E5", marginBottom: "40px" }}>
+                  <div class="flexContent additional-flex" style={{ width: "100%", justifyContent: "space-between", marginTop: "8px" }}>
+                    <div style={{ paddingRight: "30px", paddingBottom: "10px" }}>
+                      <h3>Angebot für ein energieeffizientes System</h3>
+                      <div>Erhalten Sie ein kostenloses, unverbindliches Angebot von einem Installateur in Ihrer</div>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "end" }}>
+                      <a rel="noreferrer" href="https://www.buderus.de/de/angebot-anfordern" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                        <Button variant="outlined" startIcon={<BuderusContractIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular", border: "1px solid #000000", color: "#000000" }}>
+                          Angebot anfordern
+                        </Button>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="cardContent" style={{ borderTop: "1px solid #E0E2E5", marginBottom: "40px" }}>
+                  <div class="flexContent additional-flex" style={{ width: "100%", justifyContent: "space-between", marginTop: "8px" }}>
+                    <div style={{ paddingRight: "30px", paddingBottom: "10px" }}>
+                      <h3>Beratungshotline</h3>
+                      <div>Zur Beratungshotline</div>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "end" }}>
+                      <a rel="noreferrer" href="https://www.buderus.de/de/kontakt-klimapaket" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                        <Button variant="outlined" startIcon={<BuderusContractIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular", border: "1px solid #000000", color: "#000000" }}>
+                          Beratungshotline
+                        </Button>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="cardContent" style={{ borderTop: "1px solid #E0E2E5", marginBottom: "40px" }}>
+                  <div class="flexContent additional-flex" style={{ width: "100%", justifyContent: "space-between", marginTop: "8px" }}>
+                    <div style={{ paddingRight: "30px", paddingBottom: "10px" }}>
+                      <h3>Niederlassungssuche</h3>
+                      <div>Zur Niederlassungssuche</div>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "end" }}>
+                      <a rel="noreferrer" href="https://www.buderus.de/de/niederlassungen" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                        <Button variant="outlined" startIcon={<BuderusContractIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular", border: "1px solid #000000", color: "#000000" }}>
+                          Niederlassungssuche
+                        </Button>
+                      </a>
                     </div>
                   </div>
                 </div>
