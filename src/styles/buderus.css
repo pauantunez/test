@@ -8,10 +8,10 @@ a {
 
 .card-input {
   margin: 10px;
-  padding: 00px;
+  padding: 0px;
   border: 1px solid #CCC;
-  width: 150px;
-  height: 150px;
+  width: 190px;
+  height: 170px;
 }
 
 .card-input:hover {
@@ -1621,14 +1621,18 @@ a.card-input-narrow {
     height: 170px;
   }
 
-
-
   .cardIconInset {
     display: none;
   }
 
   .pie-flex {
     flex-direction: row;
+  }
+  .pie-flex > div{
+    width: 50%;
+  }
+  .pie-flex .flex-line{
+    width: 2px;
   }
 
   .bar-chart-left-legend {
