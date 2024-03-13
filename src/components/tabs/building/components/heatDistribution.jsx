@@ -29,7 +29,7 @@ class HeatDistribution extends React.Component {
   componentDidMount() {}
 
   componentWillMount() {
-    const { setFwdBtn, steps, activeView } = this.context;
+    const { setFwdBtn, steps, activeView, kfwValue, insulationValue } = this.context;
 
     if (steps[activeView] === false) {
       setFwdBtn(false);
@@ -116,8 +116,21 @@ class HeatDistribution extends React.Component {
   };
 
   render() {
-    const { heatDistributionValue } = this.context;
-
+    const { heatDistributionValue, kfwValue, insulationValue } = this.context;
+    var radiatorDisabled;
+    var underfloorRadiatorDisable;
+    var underfloorDisabled;
+    if (kfwValue === "kfW_40_" || insulationValue === "kfW_40_" || kfwValue === "kfW_55_") {
+      radiatorDisabled = "disabled";
+      underfloorRadiatorDisable = "disabled";
+    }
+    if (kfwValue === "kfW_70_" || insulationValue === "kfW_70_" || kfwValue === "kfW_85_" || kfwValue === "kfW_100_") {
+      radiatorDisabled = "disabled";
+    }
+    if (insulationValue === "p_isolated" || insulationValue === "un_ren_") {
+      underfloorRadiatorDisable = "disabled";
+      underfloorDisabled = "disabled";
+    }
     return (
       <div>
         <div class="cardContainer">
@@ -134,8 +147,8 @@ class HeatDistribution extends React.Component {
               <div class="flexRow">
                 <div>
                   <label>
-                    <input type="radio" name="heating" value="Radiator" class="card-input-element trackeable" checked={heatDistributionValue === "Radiator"} onChange={this.inputHeatingDistribution} data-event="warmeverteilsystem-heizkorper" />
-                    <div class="panel panel-default card-input-wide">
+                    <input type="radio" name="heating" value="Radiator" class="card-input-element trackeable" checked={heatDistributionValue === "Radiator"} onChange={this.inputHeatingDistribution} data-event="warmeverteilsystem-heizkorper" disabled={radiatorDisabled} />
+                    <div class={`panel panel-default card-input-wide ${radiatorDisabled}`}>
                       <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusRadiatorIcon /> : <RadiatorIcon />}</div>
                       <div class="panel-body">Heizkörper</div>
                     </div>
@@ -143,8 +156,8 @@ class HeatDistribution extends React.Component {
                 </div>
                 <div>
                   <label>
-                    <input type="radio" name="heating" value="Underfloor" class="card-input-element trackeable" checked={heatDistributionValue === "Underfloor"} onChange={this.inputHeatingDistribution} data-event="warmeverteilsystem-fubodenheizung" />
-                    <div class="panel panel-default card-input-wide">
+                    <input type="radio" name="heating" value="Underfloor" class="card-input-element trackeable" checked={heatDistributionValue === "Underfloor"} onChange={this.inputHeatingDistribution} data-event="warmeverteilsystem-fubodenheizung" disabled={underfloorDisabled} />
+                    <div class={`panel panel-default card-input-wide ${underfloorDisabled}`}>
                       <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusUnderfloorHeatingIcon /> : <UnderfloorHeatingIcon />}</div>
                       <div class="panel-body">Fußbodenheizung</div>
                     </div>
@@ -152,8 +165,8 @@ class HeatDistribution extends React.Component {
                 </div>
                 <div>
                   <label>
-                    <input type="radio" name="heating" value="UnderfloorRadiator" class="card-input-element trackeable" checked={heatDistributionValue === "UnderfloorRadiator"} onChange={this.inputHeatingDistribution} data-event="warmeverteilsystem-fubodenheizung-und-heizkorper" />
-                    <div class="panel panel-default card-input-wide">
+                    <input type="radio" name="heating" value="UnderfloorRadiator" class="card-input-element trackeable" checked={heatDistributionValue === "UnderfloorRadiator"} onChange={this.inputHeatingDistribution} data-event="warmeverteilsystem-fubodenheizung-und-heizkorper" disabled={underfloorRadiatorDisable} />
+                    <div class={`panel panel-default card-input-wide ${underfloorRadiatorDisable}`}>
                       <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusUnderfloorRadiatorIcon /> : <UnderfloorRadiatorIcon />}</div>
                       <div class="panel-body">Fußbodenheizung und Heizkörper</div>
                     </div>
