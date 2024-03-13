@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import AppContext from "../../../../AppContext";
+import InfoBox from "../../infoBox";
 import { ReactComponent as RadiatorIcon } from "../../../../assets/img/icons/radiator.svg";
 import { ReactComponent as UnderfloorHeatingIcon } from "../../../../assets/img/icons/underfloor_heating.svg";
 import { ReactComponent as UnderfloorRadiatorIcon } from "../../../../assets/img/icons/underfloor_radiator.svg";
@@ -198,6 +199,9 @@ class HeatDistribution extends React.Component {
                     </div>
                   </label>
                 </div>
+              </div>
+              <div style={{ marginTop: "70px" }}>
+                <InfoBox box="heat-distribution-system" />
               </div>
             </div>
           </div>

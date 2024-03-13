@@ -27,6 +27,13 @@ class InfoBox extends React.Component {
       <Box component="span" class="infobox-container">
         <h3 class="infobox-h3 Bosch-Medium">Infobox:</h3>
         <div class="infobox-padding-12-12">
+          {this.state.boxType === "heat-distribution-system" && (
+            <span>
+              Die Auswahlmöglichkeiten des Heizverteilsystems (Heizkörper, Fußbodenheizung, gemischt)
+              <br /> sind je nach SH-Bedarf eingeschränkt, da bisher nur die am häufigsten vorkommenden
+              <br /> Systemvarianten je Gebäudetyp berechnet wurden.:
+            </span>
+          )}
           {this.state.boxType === "2-row-2-col" && <span>Als Richtwert kann von folgenden Werten ausgegangen werden:</span>}
           {this.state.boxType === "2-row-2-col-revenue" && (
             <span>
