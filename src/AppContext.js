@@ -2503,7 +2503,8 @@ class SimulatorProvider extends Component {
 
       window.parent.postMessage(
         {
-          event: eventArray[eventName],
+          event: "GA4event",
+          event_name: eventArray[eventName],
           [eventArray[eventParameterName1]]: eventArray[parameterValue1],
           [eventArray[eventParameterName2]]: eventArray[parameterValue2],
           [eventArray[eventParameterName3]]: eventArray[parameterValue3],

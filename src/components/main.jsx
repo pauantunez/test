@@ -118,9 +118,10 @@ class Main extends React.Component {
     // Tracking GA4 - Event listener
     document.body.addEventListener("click", (event) => {
       var trackeableElement = event.target.closest(".trackeable");
-      if (trackeableElement) {
+      if (trackeableElement && !trackeableElement.dataset.handled) {
         var eventName = trackeableElement.dataset.event;
         sendGAEvent(eventName, null, window.location.href);
+        trackeableElement.dataset.handled = true;
       }
     });
   }
