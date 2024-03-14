@@ -150,7 +150,7 @@ class GridRevenue extends React.Component {
 
     return (
       <div>
-        <div class="cardContainer">
+        <div class="cardContainer step-eleven">
           <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusCoins /> : <GridRevenueIcon />}</div>
           <div class="cardContent">
             <div class="flexContent">

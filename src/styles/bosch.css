@@ -1201,24 +1201,98 @@ a.card-input-narrow {
 
 .cardContent {
   display: flex;
-  flex: 4 1 0;
+  width: 640px;
+  /* flex: 4 1 0; */
   /*margin-right: 27%;*/
   /*justify-content: start;
   align-items: start;*/
 }
 
-@media only screen and (max-width: 1200px) {
-  .cardContent {
-    margin-right: 0px;
+
+  .step-one .cardLargeIcon, .step-two .cardLargeIcon, .step-three .cardLargeIcon, .step-four .cardLargeIcon, .step-five .cardLargeIcon, .step-six .cardLargeIcon, .step-seven .cardLargeIcon, .step-eight .cardLargeIcon, .step-nine .cardLargeIcon, .step-ten .cardLargeIcon, .step-eleven .cardLargeIcon{
+    display: none;
   }
   .flexContent{
     width: 100%;
+  }
+  .flex-line{
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+
+@media only screen and (max-width: 1200px) {
+  .cardContent {
+    width: 510px;
+  }
+  .panel-body {
+    font-size: 15px;
+  }
+  .bar-chart-left-legend{
+    min-width: 55px;
+  }
+  .graph-container > div > .cost-chart-width, #breakEvenChart{
+    max-width: 450px;
+    overflow: hidden;
+  }
+  .pie-flex .top-margins {
+    margin-top: 0px;
+  }
+  .pie-flex > div{
+    min-width: 32%;
+  }
+  .pie-flex > div.flex-line{
+    min-width: 1px;
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+  .tabs .panel-body {
+    font-size: 12px;
+  }
+  .graph-container > div > .cost-chart-width, #breakEvenChart{
+    max-width: 360px;
+  }
+  .txt-switch{
+    font-size: 12px!important;
+  }
+  
+}
+
+@media only screen and (max-width: 1000px) {
+  .graph-container > div > .cost-chart-width, #breakEvenChart{
+    max-width: 300px;
+  }
+  .pie-flex > div{
+    min-width: 30%;
+  }
+  .pie-flex > div.flex-line{
+    min-width: 1px;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .graph-container > div > .cost-chart-width, #breakEvenChart{
+    max-width: inherit;
+  }
+  .cardContent {
+    margin-right: 0px;
+  }
+  .panel-body {
+    font-size: 12px;
   }
   .cardLargeIcon{
     display: none;
   }
   .kwp-label{
     left: 108%!important;
+  }
+  .pie-flex {
+    flex-direction: column;
+    margin-bottom: 80px;
+  }
+
+  .flex-line {
+    display: none;
   }
 }
 
@@ -1586,14 +1660,7 @@ a.card-input-narrow {
 
 
 
-  .pie-flex {
-    flex-direction: column;
-    margin-bottom: 80px;
-  }
-
-  .flex-line {
-    display: none;
-  }
+  
 
   .top-margins {
     margin-top: 30px;
@@ -1613,7 +1680,7 @@ a.card-input-narrow {
   .panel-body {
     text-align: center;
     font-family: 'Bosch-Regular';
-    font-size: 12px;
+    /* font-size: 12px; */
     padding: 11px 8px 11px 8px;
   }
   
@@ -1708,9 +1775,9 @@ a.card-input-narrow {
 
 
 
-  .cardIconInset {
+  /*.cardIconInset {
     display: none;
-  }
+  } */
 
   .pie-flex{
     flex-direction: row;

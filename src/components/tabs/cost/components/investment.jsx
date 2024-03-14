@@ -201,7 +201,7 @@ class Investment extends React.Component {
 
     return (
       <div>
-        <div class="cardContainer">
+        <div class="cardContainer step-nine">
           <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusCoins /> : <Coins />}</div>
           <div class="cardContent">
             <div class="flexContent">

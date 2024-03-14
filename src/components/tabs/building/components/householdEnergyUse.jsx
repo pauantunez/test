@@ -128,7 +128,7 @@ class HouseholdEnergyUse extends React.Component {
 
     return (
       <div>
-        <div class="cardContainer">
+        <div class="cardContainer step-four">
           <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusHouseholdEnergyUseIcon /> : <HouseholdEnergyUseIcon />}</div>
           <div class="cardContent">
             <div class="flexContent">

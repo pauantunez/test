@@ -695,7 +695,7 @@ class Cost extends React.Component {
             </div>
           </div>
         ) : (
-          <div>
+          <div class="graph-container">
             <div style={{ display: "flex", flexDirection: "row", width: "100%", height: "220px" }}>
               <div style={{ display: "flex", flexDirection: "row", width: "100%", marginLeft: "17%", zIndex: "99999" }}>
                 {/* ohne PV */}

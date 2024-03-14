@@ -291,7 +291,7 @@ class HeatingSelection extends React.Component {
 
     return (
       <div>
-        <div class="cardContainer">
+        <div class="cardContainer step-two">
           <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusHouseIcon /> : <ChartUpLarge />}</div>
           <div class="cardContent">
             <div class="flexContent">

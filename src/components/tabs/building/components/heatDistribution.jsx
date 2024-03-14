@@ -160,7 +160,7 @@ class HeatDistribution extends React.Component {
 
     return (
       <div>
-        <div class="cardContainer">
+        <div class="cardContainer step-three">
           <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusHeatLarge /> : <HeatLarge />}</div>
           <div class="cardContent">
             <div class="flexContent">

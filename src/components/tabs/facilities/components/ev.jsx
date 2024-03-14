@@ -272,7 +272,7 @@ class EV extends React.Component {
 
     return (
       <div>
-        <div class="cardContainer">
+        <div class="cardContainer step-six">
           <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusEVLargeIcon /> : <EVLargeIcon />}</div>
           <div class="cardContent">
             <div class="flexContent">
