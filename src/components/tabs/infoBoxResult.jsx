@@ -104,7 +104,10 @@ class InfoBoxResult extends React.Component {
     let yearBreakEven = heatpumpPVems.findIndex((n) => n.expenditure > 0);
 
     return yearBreakEven; */
-    const { heatpumpPVems } = this.context;
+    const heatpumpPVems = JSON.parse(sessionStorage.getItem("heatpumpPVems"));
+    if (!heatpumpPVems || heatpumpPVems.length === 0) {
+      return null;
+    }
     let closestPosition = 0;
     let closestValue = Math.abs(heatpumpPVems[0].expenditure);
     for (let i = 1; i < heatpumpPVems.length; i++) {
@@ -120,9 +123,9 @@ class InfoBoxResult extends React.Component {
   };
 
   breakEvenPoint = () => {
-    const { heatpumpPVems } = this.context;
+    const heatpumpPVems = JSON.parse(sessionStorage.getItem("heatpumpPVems"));
     const heatpumpPV = JSON.parse(sessionStorage.getItem("heatpumpPV"));
-    if (!heatpumpPV || heatpumpPV.length === 0) {
+    if (!heatpumpPV || heatpumpPV.length === 0 || !heatpumpPVems || heatpumpPVems.length === 0) {
       return null;
     }
     let closestPosition = 0;

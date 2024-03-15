@@ -233,7 +233,7 @@ class BreakEven extends React.Component {
   };
 
   breakEvenPVems = () => {
-    const { heatpumpPVems } = this.context;
+    const heatpumpPVems = JSON.parse(sessionStorage.getItem("heatpumpPVems"));
     let closestPosition = 0;
     let closestValue = Math.abs(heatpumpPVems[0].expenditure);
     for (let i = 1; i < heatpumpPVems.length; i++) {
@@ -250,7 +250,7 @@ class BreakEven extends React.Component {
 
   render() {
     const loading = this.context;
-    const { heatpumpPVems } = this.context;
+    const heatpumpPVems = JSON.parse(sessionStorage.getItem("heatpumpPVems"));
     const heatpumpPV = JSON.parse(sessionStorage.getItem("heatpumpPV"));
 
     // Function to create datapoints array up to a certain position

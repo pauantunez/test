@@ -272,6 +272,7 @@ class Main extends React.Component {
           setDatabaseResult(res.data.data[0]);
           setDatabaseResultHouseHold(res.data.data[0]);
           setLoading(false);
+          this.breakEven(res.data.data[0]);
         }
         console.log(res.data.data[0]);
         console.log(res);
@@ -303,33 +304,45 @@ class Main extends React.Component {
       });
   };
 
-  breakEven = (year) => {
+  breakEven = (result) => {
     const { electricityCost, gridRevenue, electricityCostHouseholdPercentage, pvOutputkWh, homeStorageSize, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, addHeatpumpPVems } = this.context;
     var investmentCostResult;
     this.setState({ heatpumpPVems: [] });
 
     let PVcostInTable = PVcostLookupTable.find((o) => o.pv === pvOutputkWh);
+    let StorageCostInTable = StorageCostLookupTable.find((o) => o.storage === homeStorageSize);
     if (homeStorageSize === "none") {
       investmentCostResult = -Math.abs(PVcostInTable.cost);
     } else {
-      let StorageCostInTable = StorageCostLookupTable.find((o) => o.storage === homeStorageSize);
       investmentCostResult = -Math.abs(PVcostInTable.cost + StorageCostInTable.cost);
     }
     if (investmentCostEUR > 0) {
       investmentCostResult = parseInt(investmentCostEUR) * -1;
     }
+    var betriebskosten;
+    var einspeiseverguetung;
+    var einsparungen;
 
-    const betriebskosten = (1 / 100) * (investmentCostResult + -400);
-    const einspeiseverguetung = pvOutputkWh * 1000 * (1 - (electricityCostHouseholdPercentage + 10) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100);
+    betriebskosten = -Math.abs(Math.round(investmentCostResult * 0.01));
+
+    var householdNoEMSPercent = Math.round(((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(result.EGen_elc_kWh_PV_MFH)) * 100);
+
+    einspeiseverguetung = (result.EGen_elc_kWh_PV_MFH * (1 - parseFloat(householdNoEMSPercent) / 100) * parseFloat(gridRevenue.replace(",", "."))) / 100;
+    einspeiseverguetung = Math.round(einspeiseverguetung * 100) / 100;
 
     for (let index = 0; index < 50; index++) {
-      const einsparungen = pvOutputkWh * 1000 * ((electricityCostHouseholdPercentage + 10) / 100) * (parseFloat(electricityCost / 100) * (1 + 0.02) ** [index + 1] - parseFloat(gridRevenue.replace(",", ".") / 100));
+      const einsparungen = result.EGen_elc_kWh_PV_MFH * (householdNoEMSPercent / 100) * (parseFloat(electricityCost / 100) * (1 + 0.02) ** [index] - parseFloat(gridRevenue.replace(",", ".") / 100));
+      console.log("🚀 ~ Main ~ einsparungen:", einsparungen);
       if (this.state.heatpumpPVems.length === 0) {
         this.state.heatpumpPVems.push({ expenditure: investmentCostResult + -400 });
       } else {
         this.state.heatpumpPVems.push({ expenditure: parseFloat(this.state.heatpumpPVems[index - 1].expenditure) + betriebskosten + einspeiseverguetung + einsparungen });
       }
     }
+    if (sessionStorage.getItem("heatpumpPVems") !== "") {
+      sessionStorage.setItem("heatpumpPVems", JSON.stringify(this.state.heatpumpPVems));
+    }
+
     addHeatpumpPVems(this.state.heatpumpPVems);
   };
 
@@ -353,24 +366,8 @@ class Main extends React.Component {
     var einsparungen;
 
     betriebskosten = -Math.abs(Math.round(investmentCostResult * 0.01));
-    console.log("🚀 ~ Main ~ betriebskosten:", betriebskosten);
-
-    /* var Avg_Eff_JAZ_HP;
-    if (heatpumpType === "1") {
-      Avg_Eff_JAZ_HP = result.Avg_Eff_JAZ_HP_A_W_MFH;
-    } else {
-      Avg_Eff_JAZ_HP = result.Avg_Eff_JAZ_HP_B_W_MFH;
-    } */
-
-    //Enegery usage heatpump
-    /* var energyUsageHeatpump = (parseFloat(result.EGen_sh_kWh_HP_A_W_MFH) + parseFloat(result.EGen_sh_kWh_HP_B_W_MFH) + parseFloat(result.EGen_hw_kWh_HP_A_W_MFH) + parseFloat(result.EGen_hw_kWh_HP_B_W_MFH)) / parseFloat(Avg_Eff_JAZ_HP);
-    //Energy usage heating rod
-    var energyUsageHeatingRod = (parseFloat(result.EGen_sh_kWh_EDWW_MFH) + parseFloat(result.EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(result.EGen_hw_kWh_EDWW_MFH) + parseFloat(result.EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
-
-    const energyUsageCombined = Math.round(energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH); */
 
     var householdNoEMSPercent = Math.round(((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(result.EGen_elc_kWh_PV_MFH)) * 100);
-    /* var pvUsagePercentNoEMS = Math.round(((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(energyUsageCombined)) * 100); */
 
     einspeiseverguetung = (result.EGen_elc_kWh_PV_MFH * (1 - parseFloat(householdNoEMSPercent) / 100) * parseFloat(gridRevenue.replace(",", "."))) / 100;
     einspeiseverguetung = Math.round(einspeiseverguetung * 100) / 100;
@@ -378,7 +375,6 @@ class Main extends React.Component {
     for (let index = 0; index < 50; index++) {
       einsparungen = result.EGen_elc_kWh_PV_MFH * (householdNoEMSPercent / 100) * (parseFloat(electricityCost / 100) * (1 + 0.02) ** [index] - parseFloat(gridRevenue.replace(",", ".") / 100));
       einsparungen = Math.round(einsparungen * 100) / 100;
-      console.log("🚀 ~ Main ~ einsparungen:", einsparungen);
 
       if (this.state.heatpumpPV.length === 0) {
         this.state.heatpumpPV.push({ expenditure: investmentCostResult, runningCost: betriebskosten });
@@ -431,7 +427,7 @@ class Main extends React.Component {
         setMilestoneHeadline("Ergebnis");
         this.getResult(kfwValue + ev, scenarioInDatabase);
         this.getResultNoEMS(kfwValue + ev, scenarioInDatabase);
-        this.breakEven();
+        /* this.breakEven(); */
         /* this.breakEvenPVonly(); */
       }
     };
