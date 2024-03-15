@@ -280,6 +280,29 @@ class Main extends React.Component {
       });
   };
 
+  getResultNoEMS = (kfw, scenario, noEMSTab) => {
+    const { setDatabaseResultNoEMS, heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries } = this.context;
+    let tabInTable = tabEntries.find((o) => {
+      return o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Nein";
+    });
+
+    axios
+      .get(`https://bosch-endkundentool-api.azurewebsites.net/results`, {
+        params: {
+          Document: kfw,
+          ScenNo: scenario,
+          ConfigNo: heatpumpType.toString(),
+          Tab: tabInTable.Tab,
+        },
+      })
+      .then((res) => {
+        if (res.data.data.length !== 0) {
+          this.breakEvenPVonly(res.data.data[0]);
+        }
+        //sessionStorage.setItem("Autarkie_energy_to_grid_kWh_PV_MFH", res.data.data[0].energy_to_grid_kWh_PV_MFH);
+      });
+  };
+
   breakEven = (year) => {
     const { electricityCost, gridRevenue, electricityCostHouseholdPercentage, pvOutputkWh, homeStorageSize, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, addHeatpumpPVems } = this.context;
     var investmentCostResult;
@@ -307,29 +330,34 @@ class Main extends React.Component {
         this.state.heatpumpPVems.push({ expenditure: parseFloat(this.state.heatpumpPVems[index - 1].expenditure) + betriebskosten + einspeiseverguetung + einsparungen });
       }
     }
+    console.log("🚀 ~ Main ~ this.state.heatpumpPVems:", this.state.heatpumpPVems);
     addHeatpumpPVems(this.state.heatpumpPVems);
   };
 
-  breakEvenPVonly = (year) => {
+  breakEvenPVonly = (result) => {
     const { electricityCost, gridRevenue, electricityCostHouseholdPercentage, pvOutputkWh, homeStorageSize, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, addHeatpumpPV } = this.context;
     var investmentCostResult;
 
     let PVcostInTable = PVcostLookupTable.find((o) => o.pv === pvOutputkWh);
+    let StorageCostInTable = StorageCostLookupTable.find((o) => o.storage === homeStorageSize);
     if (homeStorageSize === "none") {
       investmentCostResult = -Math.abs(PVcostInTable.cost);
     } else {
-      let StorageCostInTable = StorageCostLookupTable.find((o) => o.storage === homeStorageSize);
       investmentCostResult = -Math.abs(PVcostInTable.cost + StorageCostInTable.cost);
     }
     if (investmentCostEUR > 0) {
       investmentCostResult = parseInt(investmentCostEUR) * -1;
     }
-
     this.setState({ heatpumpPV: [] });
+    var betriebskosten;
+    var einspeiseverguetung;
 
-    const betriebskosten = (1 / 100) * investmentCostResult;
-    const einspeiseverguetung = pvOutputkWh * 1000 * (1 - electricityCostHouseholdPercentage / 100) * parseFloat(gridRevenue.replace(",", ".") / 100);
-
+    betriebskosten = Math.abs(Math.round(investmentCostResult * 0.01));
+    var householdNoEMSPercent = Math.round(((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(result.EGen_elc_kWh_PV_MFH)) * 100);
+    einspeiseverguetung = (result.EGen_elc_kWh_PV_MFH * (1 - parseFloat(householdNoEMSPercent) / 100) * parseFloat(gridRevenue.replace(",", "."))) / 100;
+    console.log("🚀 ~ Main ~ result.EGen_elc_kWh_PV_MFH:", result.EGen_elc_kWh_PV_MFH, householdNoEMSPercent);
+    einspeiseverguetung = Math.round(einspeiseverguetung * 100) / 100;
+    console.log("🚀 ~ Main ~ betriebskosten:", betriebskosten, einspeiseverguetung);
     for (let index = 0; index < 50; index++) {
       const einsparungen = pvOutputkWh * 1000 * (electricityCostHouseholdPercentage / 100) * (parseFloat(electricityCost / 100) * (1 + 0.02) ** [index + 1] - parseFloat(gridRevenue.replace(",", ".") / 100));
 
@@ -339,6 +367,11 @@ class Main extends React.Component {
         this.state.heatpumpPV.push({ expenditure: parseFloat(this.state.heatpumpPV[index - 1].expenditure) + betriebskosten + einspeiseverguetung + einsparungen });
       }
     }
+    console.log("🚀 ~ BreakEven ~ this.state.heatpumpPV:", this.state.heatpumpPV);
+    if (sessionStorage.getItem("heatpumpPV") !== "") {
+      sessionStorage.setItem("heatpumpPV", JSON.stringify(this.state.heatpumpPV));
+    }
+
     addHeatpumpPV(this.state.heatpumpPV);
   };
 
@@ -379,8 +412,9 @@ class Main extends React.Component {
         setActiveMilestone(3);
         setMilestoneHeadline("Ergebnis");
         this.getResult(kfwValue + ev, scenarioInDatabase);
+        this.getResultNoEMS(kfwValue + ev, scenarioInDatabase);
         this.breakEven();
-        this.breakEvenPVonly();
+        /* this.breakEvenPVonly(); */
       }
     };
 

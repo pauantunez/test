@@ -482,7 +482,7 @@ class Cost extends React.Component {
 
     var householdNoEMSPercent = Math.round(((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(result.EGen_elc_kWh_PV_MFH)) * 100);
 
-    if (sessionStorage.getItem("householdNoEMSPercent") == null && pvUsagePercentNoEMS) {
+    if (sessionStorage.getItem("householdNoEMSPercent") == null && householdNoEMSPercent) {
       sessionStorage.setItem("householdNoEMSPercent", householdNoEMSPercent);
     }
   };

@@ -82,7 +82,10 @@ class InfoBoxResult extends React.Component {
   };
 
   breakEvenPV = () => {
-    const { heatpumpPV } = this.context;
+    const heatpumpPV = JSON.parse(sessionStorage.getItem("heatpumpPV"));
+    if (!heatpumpPV || heatpumpPV.length === 0) {
+      return null;
+    }
     let closestPosition = 0;
     let closestValue = Math.abs(heatpumpPV[0].expenditure);
     for (let i = 1; i < heatpumpPV.length; i++) {
@@ -117,7 +120,11 @@ class InfoBoxResult extends React.Component {
   };
 
   breakEvenPoint = () => {
-    const { heatpumpPV, heatpumpPVems } = this.context;
+    const { heatpumpPVems } = this.context;
+    const heatpumpPV = JSON.parse(sessionStorage.getItem("heatpumpPV"));
+    if (!heatpumpPV || heatpumpPV.length === 0) {
+      return null;
+    }
     let closestPosition = 0;
     let smallestDifference = Math.abs(heatpumpPVems[0].expenditure - heatpumpPV[0].expenditure);
 

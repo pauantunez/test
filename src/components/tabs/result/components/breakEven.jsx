@@ -216,15 +216,17 @@ class BreakEven extends React.Component {
   }
 
   breakEvenPV = () => {
-    const { heatpumpPV } = this.context;
+    const heatpumpPV = JSON.parse(sessionStorage.getItem("heatpumpPV"));
     let closestPosition = 0;
-    let closestValue = Math.abs(heatpumpPV[0].expenditure);
-    for (let i = 1; i < heatpumpPV.length; i++) {
-      const actualValue = Math.abs(heatpumpPV[i].expenditure);
+    if (heatpumpPV) {
+      let closestValue = Math.abs(heatpumpPV[0].expenditure);
+      for (let i = 1; i < heatpumpPV.length; i++) {
+        const actualValue = Math.abs(heatpumpPV[i].expenditure);
 
-      if (actualValue < closestValue) {
-        closestValue = actualValue;
-        closestPosition = i;
+        if (actualValue < closestValue) {
+          closestValue = actualValue;
+          closestPosition = i;
+        }
       }
     }
     return closestPosition;
@@ -247,17 +249,21 @@ class BreakEven extends React.Component {
   };
 
   render() {
-    const { heatpumpPV, heatpumpPVems } = this.context;
+    const loading = this.context;
+    const { heatpumpPVems } = this.context;
+    const heatpumpPV = JSON.parse(sessionStorage.getItem("heatpumpPV"));
 
     // Function to create datapoints array up to a certain position
     function createDataPoints(dataArray, position) {
       var points = [];
-      for (var i = 0; i <= position; i++) {
-        if (dataArray[i] !== undefined) {
-          points.push(dataArray[i].expenditure);
-        } else {
-          // Handle cases where dataArray[i] might be undefined
-          points.push(null); // or some other default value
+      if (dataArray) {
+        for (var i = 0; i <= position; i++) {
+          if (dataArray[i] !== undefined) {
+            points.push(dataArray[i].expenditure);
+          } else {
+            // Handle cases where dataArray[i] might be undefined
+            points.push(null); // or some other default value
+          }
         }
       }
       return points;
@@ -426,7 +432,7 @@ class BreakEven extends React.Component {
       <div id="break-even">
         <div style={{ display: "flex", marginBottom: "20px", fontSize: "16px" }}>
           <div>
-            Investitionskosten PV-System: <span style={{ fontFamily: "Bosch-Bold" }}> {Math.abs(heatpumpPV[0].expenditure).toLocaleString("de-DE")} €</span>
+            Investitionskosten PV-System: <span style={{ fontFamily: "Bosch-Bold" }}> {Math.abs(heatpumpPV?.[0]?.expenditure).toLocaleString("de-DE")} €</span>
           </div>
         </div>
 
