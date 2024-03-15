@@ -3244,7 +3244,7 @@ axios@^0.28.0:
   resolved "https://registry.npmjs.org/axios/-/axios-0.28.0.tgz#801a4d991d0404961bccef46800e1170f8278c89"
   integrity sha512-Tu7NYoGY4Yoc7I+Npf9HhUMtEEpV7ZiLH9yndTCoNhcpBH0kwcvFbzYN9/u5QKI5A6uefjsNNWaz5olJVYS62Q==
   dependencies:
-    follow-redirects "^1.15.0"
+    follow-redirects "^1.15.6"
     form-data "^4.0.0"
     proxy-from-env "^1.1.0"
 
@@ -5899,7 +5899,7 @@ http-proxy@^1.18.1:
   integrity sha512-7mz/721AbnJwIVbnaSv1Cz3Am0ZLT/UBwkC92VlxhXv/k/BBQfM2fXElQNC27BVGr0uwUpplYPQM9LnaBMR5NQ==
   dependencies:
     eventemitter3 "^4.0.0"
-    follow-redirects "^1.0.0"
+    follow-redirects "^1.15.6"
     requires-port "^1.0.0"
 
 https-proxy-agent@^5.0.0:
