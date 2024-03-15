@@ -29,6 +29,7 @@ import { ReactComponent as BuderusWallboxIcon } from "../../../../assets/img/ico
 import { ReactComponent as BuderusEnergyManagementIcon } from "../../../../assets/img/icons/buderus/energy_management_small.svg";
 import { ReactComponent as BuderusWrenchIcon } from "../../../../assets/img/icons/buderus/wrench_small.svg";
 import { ReactComponent as BuderusInfoIcon } from "../../../../assets/img/icons/buderus/info_large.svg";
+import { ReactComponent as BuderusLinkIcon } from "../../../../assets/img/icons/buderus/arrow_fwd_large.svg";
 
 import "rc-slider/assets/index.css";
 import Button from "@mui/material/Button";
@@ -293,7 +294,7 @@ class Additional extends React.Component {
 
     return (
       <div>
-        <div class="cardContainer last-page" style={{ flexDirection: "column", justifyContent: "center", alignItems: "center", fontFamily: "Bosch-Regular" }}>
+        <div class="cardContainer last-step" style={{ flexDirection: "column", justifyContent: "center", alignItems: "center", fontFamily: "Bosch-Regular" }}>
           <div>
             <div class="cardContent" style={{ marginBottom: "40px" }}>
               <div class="flexContent additional-flex" style={{ width: "100%", justifyContent: "space-between" }}>
@@ -320,7 +321,7 @@ class Additional extends React.Component {
                         <p>Fachbetriebe in ihrer Nähe</p>
                         <div class="trackeable" data-event="result-part3-contact" style={{ display: "flex", alignItems: "end" }}>
                           <a rel="noreferrer" href="https://www.buderus.de/de/services-tools/experten-in-ihrer-naehe/fachbetriebe-in-ihrer-naehe-21776" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                            <Button variant="outlined" startIcon={<BuderusMagnifyingGlassIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular", border: "1px solid #000000", color: "#000000" }}>
+                            <Button class="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart} >
                               Fachbetrieb suchen
                             </Button>
                           </a>
@@ -330,7 +331,7 @@ class Additional extends React.Component {
                         <p>Angebot anfordern</p>
                         <div style={{ display: "flex", alignItems: "end" }}>
                           <a rel="noreferrer" href="https://www.buderus.de/de/angebot-anfordern" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                            <Button variant="outlined" startIcon={<BuderusContractIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular", border: "1px solid #000000", color: "#000000" }}>
+                            <Button class="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
                               Unverbindliches Angebot anfordem
                             </Button>
                           </a>
@@ -340,7 +341,7 @@ class Additional extends React.Component {
                         <p>Beratungshotline</p>
                         <div style={{ display: "flex", alignItems: "end" }}>
                           <a rel="noreferrer" href="https://www.buderus.de/de/kontakt-klimapaket" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                            <Button variant="outlined" startIcon={<BuderusContractIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular", border: "1px solid #000000", color: "#000000" }}>
+                            <Button class="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
                               Zur Beratungshotline
                             </Button>
                           </a>
@@ -350,7 +351,7 @@ class Additional extends React.Component {
                         <p>Niederlassungssuche</p>
                         <div style={{ display: "flex", alignItems: "end" }}>
                           <a rel="noreferrer" href="https://www.buderus.de/de/niederlassungen" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                            <Button variant="outlined" startIcon={<BuderusContractIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular", border: "1px solid #000000", color: "#000000" }}>
+                            <Button class="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
                               Zur Niederlassungssuche
                             </Button>
                           </a>

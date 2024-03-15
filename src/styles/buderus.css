@@ -163,6 +163,33 @@ a.card-input-narrow {
   font-size: 14px;
   font-family: 'Helvetica-Neue-Roman' !important;
 }
+.kontakt-btn{
+  text-transform: none;
+  background: none;
+  border: none;
+  border-radius: 0px;
+  font-family: Bosch-Regular;
+  border-bottom: 1px solid rgb(0, 0, 0);
+  color: rgb(0, 0, 0);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  font-size: 12px;
+  cursor: pointer;
+}
+.kontakt-btn:focus{
+  outline: 1px solid #fff;
+  outline-offset: -4px;
+}
+.kontakt-btn svg{
+  width: 12px;
+}
+.kontakt-btn span{
+  display: block;
+  margin-right: -4px;
+  margin-left: 9px;
+  margin-top: -1px;
+  float: right;
+}
 
 .productContainer {
   position: relative;
@@ -209,6 +236,18 @@ a.card-input-narrow {
     left: 0%;
     margin: 40px 10px 0 10px;
     text-align: left;
+  }
+  #CalcInfoBtn{
+    margin-left: 3%;
+    position: absolute;
+    bottom: 45px;
+    left: 0px;
+  }
+  .infobox-row-container{
+    font-size: 14px;
+  }
+  .flexContent .txt{
+    font-size: 14px;
   }
 
   .disclaimerContainer {
@@ -1192,24 +1231,214 @@ a.card-input-narrow {
   float: right;
 }
 
-@media only screen and (max-width: 600px) {
-  .cardLargeIcon {
+.cardContent {
+  display: flex;
+  width: 640px;
+  /* flex: 4 1 0;
+  margin-right: 27%;
+  justify-content: start;
+  align-items: start;*/
+}
+.last-step .cardContent{
+  width: 100%;
+}
+
+.step-one .cardLargeIcon, .step-two .cardLargeIcon, .step-three .cardLargeIcon, .step-four .cardLargeIcon, .step-five .cardLargeIcon, .step-six .cardLargeIcon, .step-seven .cardLargeIcon, .step-eight .cardLargeIcon, .step-nine .cardLargeIcon, .step-ten .cardLargeIcon, .step-eleven .cardLargeIcon{
+  display: none;
+}
+.flexContent{
+  width: 100%;
+}
+.flex-line{
+  margin-left: 30px;
+  margin-right: 30px;
+}
+.flexContent.block-content .block-container{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.flexContent.block-content .block-container .block.contact{
+  border: 1px solid rgb(224, 226, 229);
+  padding: 20px 8px;
+  border-left: 3px solid #000;
+  width: 22%;
+  height: 130px;
+  display: flex;
+  align-content: center;
+  justify-content: space-around;
+  flex-direction: column;
+}
+.flexContent.block-content .block-container{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.flexContent.block-content .block-container .block.contact{
+  border: 1px solid rgb(224, 226, 229);
+  padding: 20px 8px;
+  border-left: 3px solid #000;
+  width: 22%;
+  height: 130px;
+  display: flex;
+  align-content: center;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+@media only screen and (max-width: 1200px) {
+
+  .pie-flex > div{
+    width: 50%;
+  }
+  .pie-flex .flex-line{
+    width: 2px;
+  }
+  .cardContent {
+    width: 510px;
+  }
+  .panel-body {
+    font-size: 15px;
+  }
+  .bar-chart-left-legend{
+    min-width: 55px;
+  }
+  .graph-container > div > .cost-chart-width, #breakEvenChart{
+    max-width: 450px;
+    overflow: hidden;
+  }
+  .pie-flex .top-margins {
+    margin-top: 0px;
+  }
+  .pie-flex > div{
+    min-width: 32%;
+  }
+  .pie-flex > div.flex-line{
+    min-width: 1px;
+  }
+  .flexContent.block-content .block-container{
+    flex-wrap: wrap;
+  }
+  .flexContent.block-content .block-container .block.contact{
+    width: 46%;
+    margin-bottom: 20px;
+  }
+
+}
+
+@media only screen and (max-width: 1100px) {
+  .tabs .panel-body {
+    font-size: 12px;
+  }
+  .graph-container > div > .cost-chart-width, #breakEvenChart{
+    max-width: 360px;
+  }
+  .txt-switch{
+    font-size: 12px!important;
+  }
+  
+}
+
+@media only screen and (max-width: 1000px) {
+  .graph-container > div > .cost-chart-width, #breakEvenChart{
+    max-width: 300px;
+  }
+  .pie-flex > div{
+    min-width: 30%;
+  }
+  .pie-flex > div.flex-line{
+    min-width: 1px;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .cardContent {
+    width: 100%;
+  }
+  .pie-flex > div{
+    width: 100%;
+  }
+  .infobox-container{
+    margin-bottom: 20px;
+  }
+  .pie-flex .left-box{
+    margin-bottom: 20px;
+  }
+  .graph-container > div > .cost-chart-width, #breakEvenChart{
+    max-width: inherit;
+  }
+  .cardContent {
+    margin-right: 0px;
+  }
+  .panel-body {
+    font-size: 12px;
+  }
+  .cardLargeIcon{
+    display: none;
+  }
+  .kwp-label{
+    left: 108%!important;
+  }
+  .pie-flex {
+    flex-direction: column;
+    margin-bottom: 80px;
+  }
+
+  .flex-line {
     display: none;
   }
 }
 
-.cardContent {
-  display: flex;
-  flex: 4 1 0;
-  /*margin-right: 27%;*/
-  /*justify-content: start;
-  align-items: start;*/
+@media only screen and (max-width: 700px) {
+  .flexContent.block-content .block-container .block.contact{
+    width: 100%;
+  }
 }
 
 @media only screen and (max-width: 600px) {
+  .cardLargeIcon {
+    display: none;
+  }
+  .slider-label > div{
+    font-size: 14px;
+  }
+  .kwp-label{
+    left: 115%!important;
+  }
+  .CalcInfoBtn{
+    font-size: 11px;
+  }
+  .wrapper-container h3{
+    font-size: 22px;
+    line-height: 130%;
+  }
+  .pie-flex{
+    margin-top: 30px;
+  }
+  #previousTabBtn{
+    font-size: 12px;
+    padding-left: 5px;
+    padding-right: 10px;
+  }
+  #nextTabBtn{
+    font-size: 12px;
+    padding-left: 10px;
+    padding-right: 5px;
+  }
+  #restartBtn{
+    font-size: 12px;
+    padding-left: 12px;
+    padding-right: 10px;
+  }
+  .card-input {
+    margin: 6px;
+    width: 150px;
+    height: 150px;
+  }
   .cardContent {
     margin-right: 0px;
   }
+ 
 }
 
 .flexContent {
@@ -1501,6 +1730,8 @@ a.card-input-narrow {
 
   .flexRow {
     flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
   }
 
   .additional-flex {
@@ -1512,7 +1743,7 @@ a.card-input-narrow {
   }
 
   .card-input-wide {
-    margin: 10px;
+    margin: 5px;
     padding: 00px;
     border: 1px solid #CCC;
     width: 155px;
@@ -1520,15 +1751,9 @@ a.card-input-narrow {
   }
 
 
-
-  .pie-flex {
-    flex-direction: column;
-    margin-bottom: 80px;
-  }
-
-  .flex-line {
+  /* .flex-line {
     display: none;
-  }
+  } */
 
   .top-margins {
     margin-top: 30px;
@@ -1548,7 +1773,7 @@ a.card-input-narrow {
   .panel-body {
     text-align: center;
     font-family: 'Bosch-Regular';
-    font-size: 12px;
+    /* font-size: 12px; */
     padding: 11px 8px 11px 8px;
   }
 
@@ -1559,6 +1784,13 @@ a.card-input-narrow {
     padding-left: 8px;
     padding-right: 8px;
   }
+  .cardDescription {
+    font-size: 14px;
+  }
+  .MuiFormControlLabel-label {
+    font-size: 13px;
+  }
+  
 }
 
 @media only screen and (min-width: 1200px) {
@@ -1621,26 +1853,19 @@ a.card-input-narrow {
     height: 170px;
   }
 
-  .last-page .cardContent h3{
+  .last-step .cardContent h3{
     font-size: 44px;
     letter-spacing: -1px;
+    margin-bottom: 10px;
   }
   .flexContent.block-content{
     flex-direction: column;
   }
-  .flexContent.block-content .block-container{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
-  .flexContent.block-content .block-container .block.contact{
-    border: 1px solid rgb(224, 226, 229);
-    padding: 20px;
-  }
+  
 
-  .cardIconInset {
+  /* .cardIconInset {
     display: none;
-  }
+  } */
 
   .pie-flex {
     flex-direction: row;
