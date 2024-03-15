@@ -1221,6 +1221,13 @@ a.card-input-narrow {
   }
 
 @media only screen and (max-width: 1200px) {
+
+  .pie-flex > div{
+    width: 50%;
+  }
+  .pie-flex .flex-line{
+    width: 2px;
+  }
   .cardContent {
     width: 510px;
   }
@@ -1271,6 +1278,18 @@ a.card-input-narrow {
 }
 
 @media only screen and (max-width: 900px) {
+  .cardContent {
+    width: 100%;
+  }
+  .pie-flex > div{
+    width: 100%;
+  }
+  .infobox-container{
+    margin-bottom: 20px;
+  }
+  .pie-flex .left-box{
+    margin-bottom: 20px;
+  }
   .graph-container > div > .cost-chart-width, #breakEvenChart{
     max-width: inherit;
   }
