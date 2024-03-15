@@ -271,8 +271,8 @@ class Main extends React.Component {
         if (res.data.data.length !== 0) {
           setDatabaseResult(res.data.data[0]);
           setDatabaseResultHouseHold(res.data.data[0]);
-          setLoading(false);
           this.breakEven(res.data.data[0]);
+          setLoading(false);
         }
         console.log(res.data.data[0]);
         console.log(res);
@@ -282,7 +282,7 @@ class Main extends React.Component {
   };
 
   getResultNoEMS = (kfw, scenario, noEMSTab) => {
-    const { setDatabaseResultNoEMS, heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries } = this.context;
+    const { heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries } = this.context;
     let tabInTable = tabEntries.find((o) => {
       return o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Nein";
     });
@@ -305,7 +305,7 @@ class Main extends React.Component {
   };
 
   breakEven = (result) => {
-    const { electricityCost, gridRevenue, electricityCostHouseholdPercentage, pvOutputkWh, homeStorageSize, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, addHeatpumpPVems } = this.context;
+    const { electricityCost, gridRevenue, pvOutputkWh, homeStorageSize, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, addHeatpumpPVems } = this.context;
     var investmentCostResult;
     this.setState({ heatpumpPVems: [] });
 
@@ -331,8 +331,8 @@ class Main extends React.Component {
     einspeiseverguetung = Math.round(einspeiseverguetung * 100) / 100;
 
     for (let index = 0; index < 50; index++) {
-      const einsparungen = result.EGen_elc_kWh_PV_MFH * (householdNoEMSPercent / 100) * (parseFloat(electricityCost / 100) * (1 + 0.02) ** [index] - parseFloat(gridRevenue.replace(",", ".") / 100));
-      console.log("🚀 ~ Main ~ einsparungen:", einsparungen);
+      einsparungen = result.EGen_elc_kWh_PV_MFH * (householdNoEMSPercent / 100) * (parseFloat(electricityCost / 100) * (1 + 0.02) ** [index] - parseFloat(gridRevenue.replace(",", ".") / 100));
+      einsparungen = Math.round(einsparungen * 100) / 100;
       if (this.state.heatpumpPVems.length === 0) {
         this.state.heatpumpPVems.push({ expenditure: investmentCostResult + -400 });
       } else {
@@ -347,7 +347,7 @@ class Main extends React.Component {
   };
 
   breakEvenPVonly = (result) => {
-    const { electricityCost, gridRevenue, electricityCostHouseholdPercentage, pvOutputkWh, homeStorageSize, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, addHeatpumpPV, energyUsagekWh, odometerIncreaseKWH, heatpumpType } = this.context;
+    const { electricityCost, gridRevenue, pvOutputkWh, homeStorageSize, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, addHeatpumpPV } = this.context;
     var investmentCostResult;
 
     let PVcostInTable = PVcostLookupTable.find((o) => o.pv === pvOutputkWh);

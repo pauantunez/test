@@ -123,12 +123,13 @@ class BreakEven extends React.Component {
 
     setTimeout(() => {
       const breakEvenCanvas = document.getElementById("breakEvenChart");
+      if (breakEvenCanvas) {
+        breakEvenCanvas.toBlob((blob) => {
+          const url = URL.createObjectURL(blob);
 
-      breakEvenCanvas.toBlob((blob) => {
-        const url = URL.createObjectURL(blob);
-
-        setBreakEvenBase64(url);
-      });
+          setBreakEvenBase64(url);
+        });
+      }
     }, 200);
   }
 
@@ -249,7 +250,8 @@ class BreakEven extends React.Component {
   };
 
   render() {
-    const loading = this.context;
+    const { loading } = this.context;
+
     const heatpumpPVems = JSON.parse(sessionStorage.getItem("heatpumpPVems"));
     const heatpumpPV = JSON.parse(sessionStorage.getItem("heatpumpPV"));
 
@@ -432,13 +434,20 @@ class BreakEven extends React.Component {
       <div id="break-even">
         <div style={{ display: "flex", marginBottom: "20px", fontSize: "16px" }}>
           <div>
-            Investitionskosten PV-System: <span style={{ fontFamily: "Bosch-Bold" }}> {Math.abs(heatpumpPV?.[0]?.expenditure).toLocaleString("de-DE")} €</span>
+            Investitionskosten PV-System: <span style={{ fontFamily: "Bosch-Bold" }}> {heatpumpPV ? Math.abs(heatpumpPV[0].expenditure).toLocaleString("de-DE") + " €" : ""}</span>
           </div>
         </div>
-
-        <div style={{ maxWidth: "550px" }}>
-          <Line id="breakEvenChart" options={lineOptions} data={lineData} />
-        </div>
+        {loading ? (
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <div style={{ position: "relative", width: "100%", height: "220px", top: "0", left: "0" }}>
+              <div style={{ position: "absolute", left: "50%", top: "100px" }}>Lädt...</div>
+            </div>
+          </div>
+        ) : (
+          <div style={{ maxWidth: "550px" }}>
+            <Line id="breakEvenChart" options={lineOptions} data={lineData} />
+          </div>
+        )}
 
         <div style={{ display: "flex", flexDirection: "column", marginTop: "25px", fontFamily: "Bosch-Regular", fontSize: "12px" }}>
           <div style={{ display: "flex", flexDirection: "row" }}>
