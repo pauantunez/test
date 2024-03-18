@@ -8871,7 +8871,7 @@ react-scripts@5.0.1:
     react-dev-utils "^12.0.1"
     react-refresh "^0.11.0"
     resolve "^1.20.0"
-    resolve-url-loader "^4.0.0"
+    resolve-url-loader "^5.0.0"
     sass-loader "^12.3.0"
     semver "^7.3.5"
     source-map-loader "^3.0.0"
@@ -9112,7 +9112,7 @@ resolve-url-loader@^5.0.0:
     adjust-sourcemap-loader "^4.0.0"
     convert-source-map "^1.7.0"
     loader-utils "^2.0.0"
-    postcss "^8.2.14"
+    postcss "^8.4.31"
     source-map "0.6.1"
 
 resolve.exports@^1.1.0:
@@ -9907,7 +9907,7 @@ tailwindcss@^3.0.2:
     normalize-path "^3.0.0"
     object-hash "^3.0.0"
     picocolors "^1.0.0"
-    postcss "^8.4.23"
+    postcss "^8.4.31"
     postcss-import "^15.1.0"
     postcss-js "^4.0.1"
     postcss-load-config "^4.0.1"
