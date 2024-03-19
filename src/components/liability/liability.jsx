@@ -53,7 +53,6 @@ class Liability extends React.Component {
           import("../../styles/" + productsProps[themes] + ".css");
 
           btnFont = fonts[entryParam][2];
-          fontHeadline = fonts[entryParam][2];
           fontRegular = fonts[entryParam][1];
           btnColor = btnThemes[entryParam][0];
 
@@ -64,14 +63,12 @@ class Liability extends React.Component {
       if (foundTheme === 0) {
         import("../../styles/" + productsProps[0] + ".css");
         btnFont = fonts.bosch[2];
-        fontHeadline = fonts.bosch[2];
         fontRegular = fonts.bosch[1];
         btnColor = btnThemes.bosch[0];
       }
     } else {
       import("../../styles/" + productsProps[0] + ".css");
       btnFont = fonts.bosch[2];
-      fontHeadline = fonts.bosch[2];
       fontRegular = fonts.bosch[1];
       btnColor = btnThemes.bosch[0];
     }

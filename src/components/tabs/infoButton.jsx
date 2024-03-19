@@ -53,6 +53,7 @@ class InfoButton extends React.Component {
         fontFamily: "Bosch-Regular",
         lineHeight: "1.4",
         padding: "6px 6px 6px 8px",
+        width: "150px"// <600 px
       },
     }));
 

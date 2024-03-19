@@ -70,7 +70,7 @@ class PVOutput extends React.Component {
 
     return (
       <div>
-        <div class="cardContainer">
+        <div class="cardContainer step-seven">
           <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusPvLeistung /> : <HouseholdEnergyUseIcon />}</div>
           <div class="cardContent">
             <div class="flexContent">

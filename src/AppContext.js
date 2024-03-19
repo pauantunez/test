@@ -2499,20 +2499,28 @@ class SimulatorProvider extends Component {
           break;
       }
 
-      console.log("Evento lanzado: ", eventArray);
-
       window.parent.postMessage(
         {
-          event: eventArray[eventName],
-          [eventArray[eventParameterName1]]: eventArray[parameterValue1],
-          [eventArray[eventParameterName2]]: eventArray[parameterValue2],
-          [eventArray[eventParameterName3]]: eventArray[parameterValue3],
+          event: "GA4event",
+          event_name: eventArray[eventName],
+          event_parameterName1: eventArray[eventParameterName1],
+          event_parameterValue1: eventArray[parameterValue1],
+          event_parameterName2: eventArray[eventParameterName2],
+          event_parameterValue2: eventArray[parameterValue2],
+          event_parameterName3: eventArray[eventParameterName3],
+          event_parameterValue3: eventArray[parameterValue3],
           eventAction: location,
         },
         "*"
       );
     }
+
+    window.addEventListener('message', function (event) {
+      console.log(event.data);
+    });
   };
+
+
 
   getTheme = () => {
     const urlParams = new URLSearchParams(queryString);

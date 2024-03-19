@@ -146,7 +146,7 @@ class HomeStorage extends React.Component {
 
     return (
       <div>
-        <div class="cardContainer">
+        <div class="cardContainer step-eight">
           <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusBatteryIcon /> : <BatteryIcon />}</div>
           <div class="cardContent">
             <div class="flexContent">

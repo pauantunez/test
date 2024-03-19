@@ -102,7 +102,7 @@ class ResultStep2 extends React.Component {
           <div>
             <div class="top-margins" style={{ display: "flex", flexDirection: "row", fontFamily: "Bosch-Bold", fontSize: "20px", textAlign: "left" }}>
               <div style={{ marginRight: "20px" }}>Autarkie</div>
-              <InfoButton color={this.context.selectedTheme === "buderus" ? "#000" : "#007BC0"} size="14px" placement="right" text="Die Autarkie eines Energiesystems beschreibt, welcher Anteil des Stromverbrauchs durch die eigene PV-Anlage abgedeckt wird." />
+              <InfoButton class="tooltip-box" color={this.context.selectedTheme === "buderus" ? "#000" : "#007BC0"} size="14px" placement="right" text="Die Autarkie eines Energiesystems beschreibt, welcher Anteil des Stromverbrauchs durch die eigene PV-Anlage abgedeckt wird." />
             </div>
             <div style={{ marginTop: "0px" }}>
               <OffGrid />

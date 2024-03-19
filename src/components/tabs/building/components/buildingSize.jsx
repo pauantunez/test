@@ -67,7 +67,7 @@ class BuildingSize extends React.Component {
 
     return (
       <div>
-        <div class="cardContainer">
+        <div class="cardContainer step-one">
           <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusHouseIcon /> : <HouseCircleIcon />}</div>
           <div class="cardContent">
             <div class="flexContent">

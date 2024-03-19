@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import AppContext from "../../../../AppContext";
+import InfoBox from "../../infoBox";
 import { ReactComponent as RadiatorIcon } from "../../../../assets/img/icons/radiator.svg";
 import { ReactComponent as UnderfloorHeatingIcon } from "../../../../assets/img/icons/underfloor_heating.svg";
 import { ReactComponent as UnderfloorRadiatorIcon } from "../../../../assets/img/icons/underfloor_radiator.svg";
@@ -115,12 +116,51 @@ class HeatDistribution extends React.Component {
     setLNGUsage(event.target.value);
   };
 
+  calculateClosestShBedarf = (ShBedarf) => {
+    const options = [25, 35, 45, 55, 65, 95, 120, 150];
+    let closestPosition = options[0];
+    let minDifference = Math.abs(ShBedarf - options[0]);
+
+    options.forEach((option) => {
+      const currentDifference = Math.abs(ShBedarf - option);
+      if (currentDifference < minDifference) {
+        minDifference = currentDifference;
+        closestPosition = option;
+      }
+    });
+
+    return closestPosition;
+  };
+
   render() {
-    const { heatDistributionValue } = this.context;
+    const { heatDistributionValue, kfwValue, insulationValue, OilUsageLiters, BuildingSize, LNGUsage } = this.context;
+    var radiatorDisabled;
+    var underfloorRadiatorDisable;
+    var underfloorDisabled;
+    var ShBedarf;
+    if (OilUsageLiters > 0) {
+      ShBedarf = Math.round((OilUsageLiters * 9.8) / BuildingSize);
+      ShBedarf = this.calculateClosestShBedarf(ShBedarf);
+    }
+    if (LNGUsage > 0) {
+      ShBedarf = Math.round(LNGUsage / BuildingSize);
+      ShBedarf = this.calculateClosestShBedarf(ShBedarf);
+    }
+    if (kfwValue === "kfW_40_" || insulationValue === "kfW_40_" || kfwValue === "kfW_55_" || ShBedarf === 25 || ShBedarf === 35) {
+      radiatorDisabled = "disabled";
+      underfloorRadiatorDisable = "disabled";
+    }
+    if (kfwValue === "kfW_70_" || insulationValue === "kfW_70_" || kfwValue === "kfW_85_" || kfwValue === "kfW_100_" || ShBedarf === 45 || ShBedarf === 55 || ShBedarf === 65) {
+      radiatorDisabled = "disabled";
+    }
+    if (insulationValue === "p_isolated" || insulationValue === "un_ren_" || ShBedarf === 95 || ShBedarf === 120 || ShBedarf === 150) {
+      underfloorRadiatorDisable = "disabled";
+      underfloorDisabled = "disabled";
+    }
 
     return (
       <div>
-        <div class="cardContainer">
+        <div class="cardContainer step-three">
           <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusHeatLarge /> : <HeatLarge />}</div>
           <div class="cardContent">
             <div class="flexContent">
@@ -134,8 +174,8 @@ class HeatDistribution extends React.Component {
               <div class="flexRow">
                 <div>
                   <label>
-                    <input type="radio" name="heating" value="Radiator" class="card-input-element trackeable" checked={heatDistributionValue === "Radiator"} onChange={this.inputHeatingDistribution} data-event="warmeverteilsystem-heizkorper" />
-                    <div class="panel panel-default card-input-wide">
+                    <input type="radio" name="heating" value="Radiator" class="card-input-element trackeable" checked={heatDistributionValue === "Radiator"} onChange={this.inputHeatingDistribution} data-event="warmeverteilsystem-heizkorper" disabled={radiatorDisabled} />
+                    <div class={`panel panel-default card-input-wide ${radiatorDisabled}`}>
                       <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusRadiatorIcon /> : <RadiatorIcon />}</div>
                       <div class="panel-body">Heizkörper</div>
                     </div>
@@ -143,8 +183,8 @@ class HeatDistribution extends React.Component {
                 </div>
                 <div>
                   <label>
-                    <input type="radio" name="heating" value="Underfloor" class="card-input-element trackeable" checked={heatDistributionValue === "Underfloor"} onChange={this.inputHeatingDistribution} data-event="warmeverteilsystem-fubodenheizung" />
-                    <div class="panel panel-default card-input-wide">
+                    <input type="radio" name="heating" value="Underfloor" class="card-input-element trackeable" checked={heatDistributionValue === "Underfloor"} onChange={this.inputHeatingDistribution} data-event="warmeverteilsystem-fubodenheizung" disabled={underfloorDisabled} />
+                    <div class={`panel panel-default card-input-wide ${underfloorDisabled}`}>
                       <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusUnderfloorHeatingIcon /> : <UnderfloorHeatingIcon />}</div>
                       <div class="panel-body">Fußbodenheizung</div>
                     </div>
@@ -152,13 +192,16 @@ class HeatDistribution extends React.Component {
                 </div>
                 <div>
                   <label>
-                    <input type="radio" name="heating" value="UnderfloorRadiator" class="card-input-element trackeable" checked={heatDistributionValue === "UnderfloorRadiator"} onChange={this.inputHeatingDistribution} data-event="warmeverteilsystem-fubodenheizung-und-heizkorper" />
-                    <div class="panel panel-default card-input-wide">
+                    <input type="radio" name="heating" value="UnderfloorRadiator" class="card-input-element trackeable" checked={heatDistributionValue === "UnderfloorRadiator"} onChange={this.inputHeatingDistribution} data-event="warmeverteilsystem-fubodenheizung-und-heizkorper" disabled={underfloorRadiatorDisable} />
+                    <div class={`panel panel-default card-input-wide ${underfloorRadiatorDisable}`}>
                       <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusUnderfloorRadiatorIcon /> : <UnderfloorRadiatorIcon />}</div>
                       <div class="panel-body">Fußbodenheizung und Heizkörper</div>
                     </div>
                   </label>
                 </div>
+              </div>
+              <div style={{ marginTop: "70px" }}>
+                <InfoBox box="heat-distribution-system" />
               </div>
             </div>
           </div>
