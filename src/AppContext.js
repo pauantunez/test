@@ -1509,6 +1509,7 @@ class SimulatorProvider extends Component {
     HH_EGen_hw_kWh_EDWW_MFH_NoEMS: 0,
     EGen_hw_kWh_EDWW_MFH_Brine_NoEMS: 0,
     HH_EGen_hw_kWh_EDWW_MFH_Brine_NoEMS: 0,
+    backendUrl: `https://bosch-endkundentool-api.azurewebsites.net/results`,
   };
 
   setProduct = (product) => {
@@ -2520,12 +2521,10 @@ class SimulatorProvider extends Component {
       );
     }
 
-    window.addEventListener('message', function (event) {
+    window.addEventListener("message", function (event) {
       console.log(event.data);
     });
   };
-
-
 
   getTheme = () => {
     const urlParams = new URLSearchParams(queryString);
@@ -2737,6 +2736,7 @@ class SimulatorProvider extends Component {
       loadingHousehold,
       directLink,
       selectedTheme,
+      backendUrl,
     } = this.state;
     const {
       setProduct,
@@ -3173,6 +3173,7 @@ class SimulatorProvider extends Component {
           setDirectLink,
           setSelectedTheme,
           sendGAEvent,
+          backendUrl,
         }}
       >
         {children}

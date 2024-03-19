@@ -258,7 +258,8 @@ class Main extends React.Component {
   };
 
   getResult = (kfw, scenario) => {
-    const { setDatabaseResult, setDatabaseResultHouseHold, heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries, setLoading } = this.context;
+    const { backendUrl, setDatabaseResult, setDatabaseResultHouseHold, heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries, setLoading } = this.context;
+    console.log("🚀 ~ Main ~ backendUrl:", backendUrl);
     setLoading(true);
     let tabInTable = tabEntries.find((o) => {
       return o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Ja";
