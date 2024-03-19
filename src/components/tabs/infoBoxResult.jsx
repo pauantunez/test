@@ -267,7 +267,7 @@ class InfoBoxResult extends React.Component {
               <div class="infobox-row-container">
                 <div class="infobox-row" style={{ display: "block", lineHeight: "24px", fontSize: "14px", borderBottom: "none" }}>
                   <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>
-                    Stromverbrauch gesamt: {parseFloat(this.energyUsageCombined().toLocaleString("de-DE"))} kWh
+                    Stromverbrauch gesamt: {Math.round(this.energyUsageCombined()).toLocaleString("de-DE")} kWh
                     <IconButton
                       id="editBtn"
                       aria-label="edit"

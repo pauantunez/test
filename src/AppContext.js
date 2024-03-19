@@ -234,6 +234,11 @@ class SimulatorProvider extends Component {
     ],
     kWhUsageLookupTable: [
       {
+        kwh: "2000",
+        offGridPercentage: 85,
+        householdPercentage: 25,
+      },
+      {
         kwh: "4000",
         offGridPercentage: 75,
         householdPercentage: 35,
