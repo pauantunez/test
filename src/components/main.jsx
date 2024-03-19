@@ -259,7 +259,7 @@ class Main extends React.Component {
 
   getResult = (kfw, scenario) => {
     const { backendUrl, setDatabaseResult, setDatabaseResultHouseHold, heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries, setLoading } = this.context;
-    console.log("🚀 ~ Main ~ backendUrl:", backendUrl);
+
     setLoading(true);
     let tabInTable = tabEntries.find((o) => {
       return o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Ja";
@@ -324,7 +324,7 @@ class Main extends React.Component {
     var einspeiseverguetung;
     var einsparungen;
 
-    betriebskosten = -Math.abs(Math.round(investmentCostResult * 0.01));
+    betriebskosten = -Math.abs(Math.round((investmentCostResult - 400) * 0.01));
 
     var Avg_Eff_JAZ_HP;
     if (heatpumpType === "1") {
@@ -343,20 +343,16 @@ class Main extends React.Component {
     var householdNoEMSPercent = Math.round(((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(result.EGen_elc_kWh_PV_MFH)) * 100);
 
     var pvUsagePercentNoEMS = Math.round(((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(energyUsageCombined)) * 100);
-    console.log("🚀 ~ Main ~ 1>>>pvUsagePercentNoEMS:", pvUsagePercentNoEMS)
-    console.log("🚀 ~ Main ~ 1>>>energyUsageCombined:", energyUsageCombined)
-
 
     einspeiseverguetung = (result.EGen_elc_kWh_PV_MFH * (1 - parseFloat(householdNoEMSPercent) / 100) * parseFloat(gridRevenue.replace(",", "."))) / 100;
+
     einspeiseverguetung = Math.round(einspeiseverguetung * 100) / 100;
 
     for (let index = 0; index < 50; index++) {
+      einsparungen = energyUsageCombined * (pvUsagePercentNoEMS / 100) * (parseFloat(electricityCost / 100) * Math.pow(1 + 0.02, index));
 
-      //  =(D10*I6*((D11*(1+D15))))
-      einsparungen = energyUsageCombined * (pvUsagePercentNoEMS / 100) * (parseFloat(electricityCost / 100) * (1 + 0.02) ** [index]);
-      console.log("🚀 ~ >>>Main EMS ~", energyUsageCombined, " * (", pvUsagePercentNoEMS, " / 100) * (parseFloat(", electricityCost, " / 100) * (1 + 0.02) ** ", [index])
       einsparungen = Math.round(einsparungen * 100) / 100;
-      console.log("🚀 ~ >>>Main ~ einsparungen EMS:", index, '-->', einsparungen)
+
       if (this.state.heatpumpPVems.length === 0) {
         this.state.heatpumpPVems.push({ expenditure: investmentCostResult + -400 });
       } else {
@@ -406,15 +402,15 @@ class Main extends React.Component {
     var householdNoEMSPercent = Math.round(((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(result.EGen_elc_kWh_PV_MFH)) * 100);
 
     var pvUsagePercentNoEMS = Math.round(((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(energyUsageCombined)) * 100);
-    // console.log("🚀 ~ Main ~ >>>pvUsagePercentNoEMS:", pvUsagePercentNoEMS)
-    // console.log("🚀 ~ Main ~ >>>energyUsageCombined:", energyUsageCombined)
+
     einspeiseverguetung = (result.EGen_elc_kWh_PV_MFH * (1 - parseFloat(householdNoEMSPercent) / 100) * parseFloat(gridRevenue.replace(",", "."))) / 100;
     einspeiseverguetung = Math.round(einspeiseverguetung * 100) / 100;
 
     for (let index = 0; index < 50; index++) {
-      einsparungen = energyUsageCombined * (pvUsagePercentNoEMS / 100) * (parseFloat(electricityCost / 100) * (1 + 0.02) ** [index]);
+      einsparungen = energyUsageCombined * (pvUsagePercentNoEMS / 100) * (parseFloat(electricityCost / 100) * Math.pow(1 + 0.02, index));
+
       einsparungen = Math.round(einsparungen * 100) / 100;
-      //console.log("🚀 ~ >>>Main ~ einsparungen:", index, '-->', einsparungen)
+
       if (this.state.heatpumpPV.length === 0) {
         this.state.heatpumpPV.push({ expenditure: investmentCostResult, runningCost: betriebskosten });
       } else {
@@ -491,6 +487,7 @@ class Main extends React.Component {
         setMilestoneHeadline("Ökonomische Größen");
       } else if (activeView - 1 <= 11) {
         this.getResultNoEMS(kfwValue + ev, scenarioInDatabase);
+        this.getResult(kfwValue + ev, scenarioInDatabase);
       }
     };
 
