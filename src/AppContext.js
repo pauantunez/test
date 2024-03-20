@@ -2448,6 +2448,13 @@ class SimulatorProvider extends Component {
           eventArray[eventParameterName2] = "sc_clicked_element";
           eventArray[parameterValue2] = "Contact";
           break;
+        case "result-part3-offer":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_result";
+          eventArray[parameterValue1] = "Next steps";
+          eventArray[eventParameterName2] = "sc_clicked_element";
+          eventArray[parameterValue2] = "Angebot";
+          break;
 
         case "result-part3-heatpump":
           eventArray[eventName] = "sc_answers";
