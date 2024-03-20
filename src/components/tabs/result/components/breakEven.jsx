@@ -119,18 +119,19 @@ class BreakEven extends React.Component {
   }
 
   componentDidMount() {
-    const { setBreakEvenBase64 } = this.context;
+    const { setBreakEvenBase64, loading } = this.context;
+    if (loading) {
+      setTimeout(() => {
+        const breakEvenCanvas = document.getElementById("breakEvenChart");
+        if (breakEvenCanvas) {
+          breakEvenCanvas.toBlob((blob) => {
+            const url = URL.createObjectURL(blob);
 
-    setTimeout(() => {
-      const breakEvenCanvas = document.getElementById("breakEvenChart");
-      if (breakEvenCanvas) {
-        breakEvenCanvas.toBlob((blob) => {
-          const url = URL.createObjectURL(blob);
-
-          setBreakEvenBase64(url);
-        });
-      }
-    }, 200);
+            setBreakEvenBase64(url);
+          });
+        }
+      }, 1000);
+    }
   }
 
   inputPower_kW_PV_MFH = (event) => {

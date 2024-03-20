@@ -193,6 +193,8 @@ class Additional extends React.Component {
 
       html2canvas(divToDisplay, {
         useCORS: true,
+        quality: 2,
+        scale: 4,
         allowTaint: false,
         onclone: function (clonedDoc) {
           clonedDoc.getElementById("printPdf").style.display = "block";
@@ -213,6 +215,8 @@ class Additional extends React.Component {
         html2canvas(divToDisplay2, {
           useCORS: true,
           allowTaint: false,
+          quality: 2,
+          scale: 4,
           onclone: function (clonedDoc2) {
             clonedDoc2.getElementById("printPdf2").style.display = "block";
           },
@@ -228,6 +232,8 @@ class Additional extends React.Component {
           html2canvas(divToDisplay3, {
             useCORS: true,
             allowTaint: false,
+            quality: 2,
+            scale: 4,
             onclone: function (clonedDoc3) {
               clonedDoc3.getElementById("printPdf3").style.display = "block";
             },
@@ -242,6 +248,8 @@ class Additional extends React.Component {
             html2canvas(divToDisplay4, {
               useCORS: true,
               allowTaint: true,
+              quality: 2,
+              scale: 4,
               onclone: function (clonedDoc4) {
                 clonedDoc4.getElementById("printPdf4").style.display = "block";
               },
@@ -270,6 +278,8 @@ class Additional extends React.Component {
                 html2canvas(divToDisplay6, {
                   useCORS: true,
                   allowTaint: false,
+                  quality: 2,
+                  scale: 4,
                   onclone: function (clonedDoc6) {
                     clonedDoc6.getElementById("printPdf6").style.display = "block";
                   },
@@ -321,7 +331,7 @@ class Additional extends React.Component {
                         <p>Fachbetriebe in ihrer Nähe</p>
                         <div class="trackeable" data-event="result-part3-contact" style={{ display: "flex", alignItems: "end" }}>
                           <a rel="noreferrer" href="https://www.buderus.de/de/services-tools/experten-in-ihrer-naehe/fachbetriebe-in-ihrer-naehe-21776" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                            <Button class="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart} >
+                            <Button class="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
                               Fachbetrieb suchen
                             </Button>
                           </a>
