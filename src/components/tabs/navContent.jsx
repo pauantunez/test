@@ -81,10 +81,10 @@ class NavContent extends React.Component {
   }
 
   getResult = (kfw, scenario) => {
-    const { setDatabaseResult, setDatabaseResultHouseHold, heatpumpType, tabToSelect } = this.context;
+    const { backendUrl, setDatabaseResult, setDatabaseResultHouseHold, heatpumpType, tabToSelect } = this.context;
 
     axios
-      .get(`https://bosch-endkundentool-api.azurewebsites.net/results`, {
+      .get(backendUrl, {
         params: { Document: kfw, ScenNo: scenario, ConfigNo: heatpumpType.toString(), Tab: tabToSelect.toString() },
       })
       .then((res) => {

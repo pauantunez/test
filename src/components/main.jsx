@@ -283,13 +283,13 @@ class Main extends React.Component {
   };
 
   getResultNoEMS = (kfw, scenario, noEMSTab) => {
-    const { heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries } = this.context;
+    const { backendUrl, heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries } = this.context;
     let tabInTable = tabEntries.find((o) => {
       return o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Nein";
     });
 
     axios
-      .get(`https://bosch-endkundentool-api.azurewebsites.net/results`, {
+      .get(backendUrl, {
         params: {
           Document: kfw,
           ScenNo: scenario,

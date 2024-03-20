@@ -20,7 +20,7 @@ class InfoBox extends React.Component {
 
   static contextType = AppContext;
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   render() {
     return (
@@ -29,9 +29,7 @@ class InfoBox extends React.Component {
         <div class="infobox-padding-12-12">
           {this.state.boxType === "heat-distribution-system" && (
             <span>
-              Die Auswahlmöglichkeiten des Heizverteilsystems (Heizkörper, Fußbodenheizung, gemischt)
-              <br /> sind je nach SH-Bedarf eingeschränkt, da bisher nur die am häufigsten vorkommenden
-              <br /> Systemvarianten je Gebäudetyp berechnet wurden.:
+              Die Auswahlmöglichkeiten des Heizverteilsystems (Heizkörper, Fußbodenheizung, gemischt) sind je nach SH-Bedarf eingeschränkt, da bisher nur die am häufigsten vorkommenden Systemvarianten je Gebäudetyp berechnet wurden.
             </span>
           )}
           {this.state.boxType === "2-row-2-col" && <span>Als Richtwert kann von folgenden Werten ausgegangen werden:</span>}
@@ -134,7 +132,7 @@ class InfoBox extends React.Component {
                 <div class="width-50" style={{ width: "33%" }}>
                   Erdwärmepumpe
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.5", width: "39%", textAlign: "right" }}>
+                <div class="width-50" style={{ width: "39%", textAlign: "right" }}>
                   Luft-Wasser-Wärmepumpe
                 </div>
               </div>
