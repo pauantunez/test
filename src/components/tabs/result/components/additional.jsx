@@ -321,7 +321,7 @@ class Additional extends React.Component {
                         <p>Fachbetriebe in ihrer Nähe</p>
                         <div class="trackeable" data-event="result-part3-contact" style={{ display: "flex", alignItems: "end" }}>
                           <a rel="noreferrer" href="https://www.buderus.de/de/services-tools/experten-in-ihrer-naehe/fachbetriebe-in-ihrer-naehe-21776" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                            <Button class="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart} >
+                            <Button class="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
                               Fachbetrieb suchen
                             </Button>
                           </a>
