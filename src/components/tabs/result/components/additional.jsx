@@ -329,7 +329,7 @@ class Additional extends React.Component {
                       </div>
                       <div class="block contact">
                         <p>Angebot anfordern</p>
-                        <div style={{ display: "flex", alignItems: "end" }}>
+                        <div class="trackeable" data-event="result-part3-offer" style={{ display: "flex", alignItems: "end" }}>
                           <a rel="noreferrer" href="https://www.buderus.de/de/angebot-anfordern" target="_blank" style={{ textDecoration: "none", display: "block" }}>
                             <Button class="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
                               Unverbindliches Angebot anfordem

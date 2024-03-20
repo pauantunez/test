@@ -862,7 +862,6 @@ class Main extends React.Component {
             </Box>
           </div>
         </div>
-        .
         <div class="bottomNav" style={{ position: isMobile ? "absolute" : "fixed", width: "100%", bottom: "3%", zIndex: "999999" }}>
           <div style={{ display: "flex", justifyContent: "space-between", marginLeft: "3%", marginRight: "3%" }}>
             <Button
