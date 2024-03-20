@@ -106,7 +106,7 @@ class HouseholdSwitch extends React.Component {
   };
 
   getResult = (kfw, scenario, noEMSTab) => {
-    const { setLoadingHousehold, setDatabaseResultHouseHold, heatpumpType, tabToSelectEigenverbrauch } = this.context;
+    const { backendUrl, setLoadingHousehold, setDatabaseResultHouseHold, heatpumpType, tabToSelectEigenverbrauch } = this.context;
     var tab;
     if (noEMSTab) {
       tab = noEMSTab;
@@ -114,7 +114,7 @@ class HouseholdSwitch extends React.Component {
       tab = tabToSelectEigenverbrauch.toString();
     }
     axios
-      .get(`https://bosch-endkundentool-api.azurewebsites.net/results`, {
+      .get(backendUrl, {
         params: { Document: kfw, ScenNo: scenario, ConfigNo: heatpumpType.toString(), Tab: tab },
       })
       .then((res) => {
@@ -131,11 +131,11 @@ class HouseholdSwitch extends React.Component {
   };
 
   getResultNoEMS = (kfw, scenario, noEMSTab) => {
-    const { setDatabaseResultHouseHoldNoEMS, heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries } = this.context;
+    const { backendUrl, setDatabaseResultHouseHoldNoEMS, heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries } = this.context;
 
     let tabInTable = tabEntries.find((o) => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Nein");
     axios
-      .get(`https://bosch-endkundentool-api.azurewebsites.net/results`, {
+      .get(backendUrl, {
         params: {
           Document: kfw,
           ScenNo: scenario,

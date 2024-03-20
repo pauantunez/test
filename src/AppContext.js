@@ -1509,7 +1509,8 @@ class SimulatorProvider extends Component {
     HH_EGen_hw_kWh_EDWW_MFH_NoEMS: 0,
     EGen_hw_kWh_EDWW_MFH_Brine_NoEMS: 0,
     HH_EGen_hw_kWh_EDWW_MFH_Brine_NoEMS: 0,
-    backendUrl: `https://bosch-endkundentool-api.azurewebsites.net/results`,
+    backendUrl: `https://sectorcoupling-api.thernovotools.com/results`,
+    //backendUrl: `https://bosch-endkundentool-api.azurewebsites.net/results`,
   };
 
   setProduct = (product) => {
@@ -2524,6 +2525,16 @@ class SimulatorProvider extends Component {
     window.addEventListener("message", function (event) {
       console.log(event.data);
     });
+
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+      document.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          window.scrollTo(0, 0);
+        });
+      });
+    });
+
   };
 
   getTheme = () => {

@@ -155,7 +155,7 @@ class CombinedSwitch extends React.Component {
   };
 
   getResult = (kfw, scenario, noEMSTab) => {
-    const { setLoadingOffGrid, setDatabaseResult, heatpumpType, tabToSelect } = this.context;
+    const { backendUrl, setLoadingOffGrid, setDatabaseResult, heatpumpType, tabToSelect } = this.context;
     var tab;
     if (noEMSTab) {
       tab = noEMSTab;
@@ -163,7 +163,7 @@ class CombinedSwitch extends React.Component {
       tab = tabToSelect.toString();
     }
     axios
-      .get(`https://bosch-endkundentool-api.azurewebsites.net/results`, {
+      .get(backendUrl, {
         params: {
           Document: kfw,
           ScenNo: scenario,
@@ -190,7 +190,7 @@ class CombinedSwitch extends React.Component {
       tab = tabToSelectEigenverbrauch.toString();
     }
     axios
-      .get(`https://bosch-endkundentool-api.azurewebsites.net/results`, {
+      .get(backendUrl, {
         params: { Document: kfw, ScenNo: scenario, ConfigNo: heatpumpType.toString(), Tab: tab },
       })
       .then((res) => {
@@ -207,14 +207,14 @@ class CombinedSwitch extends React.Component {
   };
 
   getResultNoEMS = (kfw, scenario, noEMSTab) => {
-    const { setDatabaseResultNoEMS, heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries } = this.context;
+    const { backendUrl, setDatabaseResultNoEMS, heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries } = this.context;
 
     let tabInTable = tabEntries.find((o) => {
       return o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Nein";
     });
 
     axios
-      .get(`https://bosch-endkundentool-api.azurewebsites.net/results`, {
+      .get(backendUrl, {
         params: {
           Document: kfw,
           ScenNo: scenario,
