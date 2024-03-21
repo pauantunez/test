@@ -205,14 +205,14 @@ class Welcome extends React.Component {
     return (
       <div className={styles.homeContainer}>
         <div className={styles.setupContainer}>
-          <div style={{ marginTop: "4%" }}>
+          <div>
             <div>{/*<img src={require(`../assets/img/house-placeholder.png`)} alt="" style={{width: '100%'}} />*/}</div>
 
             <h1 style={{ textAlign: "center", fontSize: "36px !important" }}>Solarstromrechner</h1>
             <div style={{ fontFamily: "Bosch-Regular", fontSize: "22px", textAlign: "center" }}>Selbsterzeugten Strom intelligent verbrauchen und Stromkosten sparen.</div>
 
             <div class="welcomeContainer" style={{ display: "flex" }}>
-              <div>
+              <div class="left-container">
                 <p style={{ fontFamily: "Bosch-Bold", fontSize: "16px" }}>Sparen Sie Stromkosten – mit der smarten Kombination aus Photovoltaik, Wärmepumpe, Wallbox und einem intelligenten Energiemanagementsystem</p>
                 <p style={{ paddingTop: "25px" }}>Ermitteln Sie mit dem Tool für Ihr Einfamilienhaus:</p>
                 <div style={{ display: "flex", flexDirection: "column", lineHeight: "24px" }}>
@@ -242,7 +242,7 @@ class Welcome extends React.Component {
                   </div>
                 </div>
               </div>
-              <div style={{ display: "flex", justifyContent: "end" }}>
+              <div class="right-container" style={{ display: "flex", justifyContent: "end" }}>
                 <img src={this.context.selectedTheme === "buderus" ? require(`../assets/img/buderus/preview.png`) : require(`../assets/img/preview.png`)} alt="" style={{ width: this.context.selectedTheme === "buderus" ? "" : "85%", height: "auto", objectFit: "contain", margin: "14px" }} />
               </div>
             </div>

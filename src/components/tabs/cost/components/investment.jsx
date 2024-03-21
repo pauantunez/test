@@ -220,7 +220,7 @@ class Investment extends React.Component {
                 <div style={{ marginTop: "10px", marginLeft: "10px", fontFamily: "Bosch-Regular" }}>
                   <FormControl>
                     <RadioGroup sx={{ flexWrap: "inherit", flexDirection: "row" }} name="oil-lng-value" row>
-                      <div style={{ display: "flex", flexDirection: "column" }}>
+                      <div class="label" style={{ display: "flex", flexDirection: "column" }}>
                         <span class="trackeable" data-event="investitionskosten-nein">
                           <FormControlLabel value="false" control={<OilLNGRadio />} style={{ marginRight: "0px" }} label="Ich kenne die Investitionskosten nicht." checked={investmentCost === "false"} onChange={this.inputInvestmentCost} />
                         </span>

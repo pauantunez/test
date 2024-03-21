@@ -107,10 +107,10 @@ class ElectricityUse extends React.Component {
     const { pieChartSize, setPieSize } = this.context;
     console.log(window.innerWidth);
 
-    if (window.innerWidth < 1300) {
-      setPieSize(290, 50, 37, 14, 16, 2, 65, 0, 0, 36, 40, 15, 55, 5, 10, 0);
-    } else if (window.innerWidth > 1300) {
-      setPieSize(320, 70, 55, 18, 38, 25, 90, 0, 0, 34, 40, 15, 55, 5, 20, 0);
+    if (window.innerWidth < 1200) {
+      setPieSize(200, 50, 37, 14, 16, 2, 65, 0, 0, 36, 40, 15, 55, 5, 10, 0);
+    } else if (window.innerWidth > 1200) {
+      setPieSize(220, 70, 55, 18, 38, 25, 90, 0, 0, 34, 40, 15, 55, 5, 20, 0);
     }
   };
 
@@ -266,7 +266,7 @@ class ElectricityUse extends React.Component {
           </div>
         </div>
 
-        <div class="additional-flex" style={{ display: "flex", justifyContent: "space-around", marginTop: "38px", fontFamily: "Bosch-Regular", fontSize: "14px" }}>
+        <div class="additional-flex first-col" style={{ display: "flex", justifyContent: "space-around", fontFamily: "Bosch-Regular", fontSize: "14px" }}>
           <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896" }}>
             <div style={{ marginRight: "10px" }}>
               <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896", borderRadius: "12px" }}></div>

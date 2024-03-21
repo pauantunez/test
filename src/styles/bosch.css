@@ -1208,6 +1208,40 @@ a.card-input-narrow {
   align-items: start;*/
 }
 
+.bottomNav #previousTabBtn{
+  background-color: #fff;
+}
+.bottomNav #previousTabBtn:hover{
+  background-color: rgba(255, 255, 255, 0.8);
+}
+.switch-box{
+  float: left;
+  margin-right: 5px;
+}
+.switch-label{
+  font-size: 16px;
+  margin-left: 4px;
+  margin-right: 6px;
+  padding-top: 2px;
+  font-family: "Bosch-Regular";
+}
+.switch-container{
+  display: flex;
+}
+.additional-flex.first-col{
+  margin-top: 13px;
+  display: flex;
+  justify-content: space-around;
+  font-family: "Bosch-Regular";
+  font-size: "14px";
+}
+.infobox-row p{
+  line-height: 140%;
+}
+.graphs-container{
+  margin: 0px;
+}
+
 
   .step-one .cardLargeIcon, .step-two .cardLargeIcon, .step-three .cardLargeIcon, .step-four .cardLargeIcon, .step-five .cardLargeIcon, .step-six .cardLargeIcon, .step-seven .cardLargeIcon, .step-eight .cardLargeIcon, .step-nine .cardLargeIcon, .step-ten .cardLargeIcon, .step-eleven .cardLargeIcon{
     display: none;
@@ -1444,6 +1478,7 @@ a.card-input-narrow {
   font-size: 14px;
   font-family: Bosch-Regular;
   box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.20);
+  min-height: 234px;
 }
 
 .infobox-h3 {
@@ -1637,7 +1672,7 @@ a.card-input-narrow {
   }
 
   .welcomeContainer {
-    flex-direction: column;
+    flex-direction: row;
     margin: 3% 3% 0px;
   }
 
@@ -1673,10 +1708,37 @@ a.card-input-narrow {
   .cardDescription{
     font-size: 14px;
   }
+  .txt{
+    font-size: 14px;
+  }
+  .infobox-row{
+    font-size: 14px;
+  }
+  .infobox-row h3, .infobox-row p{
+    font-size: 13px;
+    line-height: 140%;
+    margin: 6px 0px;
+  }
+  .label, .label span{
+    font-size: 14px;
+  }
+  .switch-label{
+    font-size: 14px;
+  }
   .MuiFormControlLabel-label{
     font-size: 13px;
   }
-
+  #editBtn svg{
+    width: 18px;
+    height: 16px;
+    margin-left: 5px;
+  }
+  .additional-flex.first-col{
+    margin-top: -24px;
+  }
+  .infobox-container{
+    min-height: 220px;
+  }
 
 
   
@@ -1710,6 +1772,21 @@ a.card-input-narrow {
     flex: 1;
     padding-left: 8px;
     padding-right: 8px;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .infobox-container {
+    min-height: 280px;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .welcomeContainer {
+    flex-direction: column;
+  }
+  .infobox-container {
+    min-height: inherit;
   }
 }
 

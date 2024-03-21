@@ -310,23 +310,23 @@ class EV extends React.Component {
                   <div style={{ marginTop: "15px" }}>
                     <FormControl>
                       <RadioGroup name="charging-value">
-                        <div>
+                        <div class="label">
                           <FormControlLabel value="Commuter_" control={<StandardRadio />} label="Das E-Auto kann nur selten tagsüber zuhause geladen werden." checked={homeCharging === "Commuter_"} onChange={this.inputChargingValue} />
                         </div>
-                        <div class="top-margin-10">
+                        <div class="label top-margin-10">
                           <FormControlLabel value="Family_" control={<StandardRadio />} label="Das E-Auto wird vorwiegend tagsüber zuhause geladen." checked={homeCharging === "Family_"} onChange={this.inputChargingValue} />
                         </div>
                       </RadioGroup>
                     </FormControl>
                   </div>
-                  <div style={{ marginTop: "15px" }}>Jahreskilometer:</div>
+                  <div class="label" style={{ marginTop: "15px" }}>Jahreskilometer:</div>
                   <div style={{ marginTop: "10px" }}>
                     <FormControl>
                       <RadioGroup name="odometer-value">
-                        <div>
+                        <div class="label">
                           <FormControlLabel value="10k" control={<StandardRadio />} label="ca. 10.000 km" checked={odometerIncrease === "10k"} onChange={this.inputOdometerValue} />
                         </div>
-                        <div>
+                        <div class="label">
                           <FormControlLabel value="20k" control={<StandardRadio />} label="ca. 20.000 km" checked={odometerIncrease === "20k"} onChange={this.inputOdometerValue} />
                         </div>
                       </RadioGroup>

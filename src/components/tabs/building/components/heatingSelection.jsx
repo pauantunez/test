@@ -343,7 +343,7 @@ class HeatingSelection extends React.Component {
 
                 {/* Gebäudeenergiestandard */}
                 {BuildingEnegeryStandard === "BuildingEnergyStandard" && (
-                  <div style={{ marginTop: "30px", marginLeft: "10px", fontFamily: "Bosch-Regular" }}>
+                  <div class="label" style={{ marginTop: "30px", marginLeft: "10px", fontFamily: "Bosch-Regular" }}>
                     Welchen Energiestandard besitzt Ihr Gebäude?
                     <div style={{ marginTop: "15px" }}>
                       <FormControl>
