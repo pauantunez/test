@@ -201,16 +201,16 @@ class InfoBoxResultPdf extends React.Component {
             <div>
               <div class="infobox-row-container">
                 <div class="infobox-row" style={{ fontSize: "14px", display: "block", lineHeight: "24px", borderBottom: "none" }}>
-                  Die Investition in eine <b>PV-Anlage</b> hat sich nach ca. <strong>{this.breakEvenPV()} Jahren</strong> amortisiert.
+                  <p>Die Investition in eine <b>PV-Anlage</b> hat sich nach ca. <strong>{this.breakEvenPV()} Jahren</strong> amortisiert.</p>
                   <br />
                   <br />
-                  Die Investition in eine <strong>PV-Anlage</strong> hat sich durch den Einsatz eines <strong>Energiemanagementsystems</strong> nach ca. <strong>{this.breakEvenPVems()} Jahren</strong> amortisiert.
+                  <p>Die Investition in eine <strong>PV-Anlage</strong> hat sich durch den Einsatz eines <strong>Energiemanagementsystems</strong> nach ca. <strong>{this.breakEvenPVems()} Jahren</strong> amortisiert.</p>
                   <br />
                   <br />
-                  Die zusätzlichen Kosten für ein <strong>Energiemanagementsystem</strong> von <strong>400 €*</strong> haben sich bereits nach ca. <strong>{this.breakEvenPoint()} Jahren</strong> bezahlt gemacht.
+                  <p>Die zusätzlichen Kosten für ein <strong>Energiemanagementsystem</strong> von <strong>400 €*</strong> haben sich bereits nach ca. <strong>{this.breakEvenPoint()} Jahren</strong> bezahlt gemacht.</p>
                   <br />
                   <br />
-                  <small>* Bei Einsatz Fronius / Sungrow Wechselrichter (ab Ende Q1/24)</small>
+                  <p><small>* Bei Einsatz Fronius / Sungrow Wechselrichter (ab Ende Q1/24)</small></p>
                 </div>
               </div>
             </div>

@@ -94,7 +94,7 @@ class ResultStep2 extends React.Component {
             <InfoButton color={this.context.selectedTheme === "buderus" ? "#000" : "#007BC0"} size="14px" placement="right" text="Unter Energiemanagement wird die Kombination verschiedener Maßnahmen und Strategien verstanden, um Energie zu beschaffen, zu verteilen und optimal zu nutzen. Ziel ist es, Energieverbräuche zu senken und die Energieeffizienz im Haushalt zu optimieren, um wirtschaftliche und ökologische Ziele zu erreichen." />
           </div>
         </div>
-        <div class="pie-flex" style={{ display: "flex", marginTop: "50px", height: "100%", width: "100%", flexWrap: "nowrap" /*justifyContent: 'space-between',*/ /*alignContent: 'center'*/ }}>
+        <div class="pie-flex results-page-two" style={{ display: "flex", marginTop: "50px", height: "100%", width: "100%", flexWrap: "nowrap" /*justifyContent: 'space-between',*/ /*alignContent: 'center'*/ }}>
           <div style={{ alignItems: "end" }}>
             <div style={{ fontFamily: "Bosch-Bold", fontSize: "20px", textAlign: "left" }}>Stromverbrauch</div>
             <div style={{ marginTop: "0px" }}>

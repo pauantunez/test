@@ -91,7 +91,7 @@ class ResultStep1 extends React.Component {
       <div class="wrapper-container" style={{ marginLeft: "3%", marginRight: "3%" }}>
         <h3 style={{ display: "flex", justifyContent: "flex-start", textAlign: "left", fontSize: "24px" }}>Ergebnis Teil 1: Stromkosten und Amortisationszeit Ihrer PV-Anlage</h3>
 
-        <div class="pie-flex" style={{ display: "flex", width: "100%", flexWrap: "nowrap", justifyContent: "space-between", alignContent: "center" }}>
+        <div class="pie-flex results-page-one" style={{ display: "flex", width: "100%", flexWrap: "nowrap", justifyContent: "space-between", alignContent: "center" }}>
           <div class="left-box" style={{ alignItems: "end" }}>
             <div style={{ fontFamily: "Bosch-Bold", fontSize: "20px", textAlign: "left" }}> Gesamtkosten Strom</div>
             <div style={{ marginTop: "20px" }}>
