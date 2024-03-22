@@ -29,7 +29,6 @@ class PVOutput extends React.Component {
     if (this.state.pvOutputkW == null) {
       let tabInTable = tabEntries.find((o) => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Ja");
       setTabToSelect(tabInTable.Tab);
-      console.log(tabInTable);
     }
   }
 
@@ -49,12 +48,8 @@ class PVOutput extends React.Component {
 
     let tabInTable = tabEntries.find((o) => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Ja");
 
-    console.log(previousState.pvOutputkW);
-    console.log(this.state.pvOutputkW);
-
     if (previousState.pvOutputkW !== this.state.pvOutputkW) {
       setTabToSelect(tabInTable.Tab);
-      console.log(tabInTable);
     }
   }
 

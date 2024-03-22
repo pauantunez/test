@@ -8,8 +8,8 @@ import annotationPlugin from "chartjs-plugin-annotation";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { VictoryPie, VictoryLabel } from "victory";
 
-import CustomSwitch from "./switch";
-import InfoButton from "../../infoButton";
+/* import CustomSwitch from "./switch"; */
+/* import InfoButton from "../../infoButton"; */
 
 import { ReactComponent as GridIn } from "../../../../assets/img/grid_in.svg";
 import { ReactComponent as Plug } from "../../../../assets/img/plug.svg";
@@ -23,7 +23,7 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointE
 
 function CustomLabelComponent(props) {
   const { x, y, datum } = props;
-  console.log(props);
+
   const imgHeight = props.iconSize;
   const imgWidth = props.iconSize;
   const xPositionIconMargin = props.xPositionIconMargin;
@@ -95,7 +95,7 @@ class OffGrid extends React.Component {
     const { heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = this.context;
 
     var pvUsagePercent = ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(heatpumpCombinedUsage)) * 100;
-    console.log("PV USAGE: " + pvUsagePercent);
+
     return pvUsagePercent;
   };
 
@@ -103,7 +103,7 @@ class OffGrid extends React.Component {
     const { heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = this.context;
 
     var pvUsagePercentEMS = ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(heatpumpCombinedUsage)) * 100;
-    console.log("PV USAGE: " + pvUsagePercentEMS);
+
     return pvUsagePercentEMS;
   };
 
@@ -122,7 +122,6 @@ class OffGrid extends React.Component {
     if (!this.state.infoBoxOffGridGridUsage) {
       setInfoBoxOffGridGridUsage(gridUsagePercent);
       this.setState({ infoBoxOffGridGridUsage: true });
-      console.log("infoBoxOffGridGridUsage: " + gridUsagePercent);
     }
 
     return gridUsagePercent;
@@ -234,8 +233,8 @@ class OffGrid extends React.Component {
       pieColors = [this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3", this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A", this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E"];
     } else if (offgridEMS === false) {
       // Rounded values for VictoryPieDataTest
-      var roundedGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentage()));
-      var roundedPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentage()));
+      var roundedGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentageNoEMS()));
+      var roundedPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentageNoEMS()));
       roundedGridUsagePercentage = this.adjustPercentage(roundedGridUsagePercentage, roundedPvUsagePercentage);
 
       if (sessionStorage.getItem("OHNE_GridUsagePercentage") !== "") {

@@ -100,7 +100,6 @@ class HouseholdSwitch extends React.Component {
     const { setHouseholdNoEMSpvPercent } = this.context;
 
     var householdNoEMSPercent = ((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(result.EGen_elc_kWh_PV_MFH)) * 100;
-    console.log("HOUSEHOLD NO EMS USAGE: " + householdNoEMSPercent);
 
     setHouseholdNoEMSpvPercent(householdNoEMSPercent);
   };

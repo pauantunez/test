@@ -112,7 +112,6 @@ class CustomSwitch extends React.Component {
     //Energy usage heating rod
     var energyUsageHeatingRod = (parseFloat(result.EGen_sh_kWh_EDWW_MFH) + parseFloat(result.EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(result.EGen_hw_kWh_EDWW_MFH) + parseFloat(result.EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
 
-    //console.log(energyUsageHeatpump+energyUsageHeatingRod+parseInt(energyUsagekWh)+odometerIncreaseKWH);
     var combinedResult = energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH;
     setNoEMScombinedEnergyUseKWH(combinedResult);
 
@@ -141,7 +140,6 @@ class CustomSwitch extends React.Component {
       return o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === emsValue;
     });
     setTabToSelect(tabInTable.Tab);
-    // console.log("Tab entries: " + tabInTable)
 
     setTimeout(() => {
       this.getResult(kfwValue + ev, scenarioInDatabase);

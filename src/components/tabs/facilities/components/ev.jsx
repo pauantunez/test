@@ -77,23 +77,16 @@ class EV extends React.Component {
 
     let validateOptions = buildingTypePreHeatOption.find((o) => o.buildingType === kfwValue);
     let scenarioInDatabase;
-    console.log(validateOptions);
 
     if (validateOptions.option2 === "-") {
       //if one, use singlePreHeatOptionNoEVLookupTable as lookup table
       scenarioInDatabase = singlePreHeatOptionEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString() && o.evProfile === evProfile);
-      console.log("HAS FIRST OPTION, NO SECOND OPTION");
-      console.log(scenarioInDatabase);
       //this.context.goToView(6);
     } else {
       if (preHeatTempOption === 1) {
         scenarioInDatabase = dualPreHeatOptionEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString() && o.evProfile === evProfile);
-        console.log("HAS FIRST OPTION, USE FIRST OPTION");
-        console.log(scenarioInDatabase);
       } else {
         scenarioInDatabase = dualPreHeatOptionEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString() && o.evProfile === evProfile);
-        console.log("HAS FIRST OPTION, USE SECOND OPTION");
-        console.log(scenarioInDatabase);
       }
     }
     setScenarioInDatabase(scenarioInDatabase.scenario);
@@ -120,23 +113,17 @@ class EV extends React.Component {
       //check if vorlauftemp has two options, or one
       let validateOptions = buildingTypePreHeatOption.find((o) => o.buildingType === kfwValue);
       let scenarioInDatabase;
-      console.log(validateOptions);
+
       this.context.goToView(6);
       setFwdBtn(true);
       if (validateOptions.option2 === "-") {
         //if one, use singlePreHeatOptionNoEVLookupTable as lookup table
         scenarioInDatabase = singlePreHeatOptionNoEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString());
-        console.log("HAS FIRST OPTION, NO SECOND OPTION");
-        console.log(scenarioInDatabase);
       } else {
         if (preHeatTempOption === 1) {
           scenarioInDatabase = dualPreHeatOptionNoEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString());
-          console.log("HAS FIRST OPTION, USE FIRST OPTION");
-          console.log(scenarioInDatabase);
         } else {
           scenarioInDatabase = dualPreHeatOptionNoEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString());
-          console.log("HAS FIRST OPTION, USE SECOND OPTION");
-          console.log(scenarioInDatabase);
         }
       }
       setScenarioInDatabase(scenarioInDatabase.scenario);
@@ -319,7 +306,9 @@ class EV extends React.Component {
                       </RadioGroup>
                     </FormControl>
                   </div>
-                  <div class="label" style={{ marginTop: "15px" }}>Jahreskilometer:</div>
+                  <div class="label" style={{ marginTop: "15px" }}>
+                    Jahreskilometer:
+                  </div>
                   <div style={{ marginTop: "10px" }}>
                     <FormControl>
                       <RadioGroup name="odometer-value">
