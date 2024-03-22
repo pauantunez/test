@@ -233,8 +233,8 @@ class OffGrid extends React.Component {
       pieColors = [this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3", this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A", this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E"];
     } else if (offgridEMS === false) {
       // Rounded values for VictoryPieDataTest
-      var roundedGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentage()));
-      var roundedPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentage()));
+      var roundedGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentageNoEMS()));
+      var roundedPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentageNoEMS()));
       roundedGridUsagePercentage = this.adjustPercentage(roundedGridUsagePercentage, roundedPvUsagePercentage);
 
       if (sessionStorage.getItem("OHNE_GridUsagePercentage") !== "") {
