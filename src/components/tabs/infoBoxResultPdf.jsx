@@ -207,7 +207,7 @@ class InfoBoxResultPdf extends React.Component {
                   <p>Die Investition in eine <strong>PV-Anlage</strong> hat sich durch den Einsatz eines <strong>Energiemanagementsystems</strong> nach ca. <strong>{this.breakEvenPVems()} Jahren</strong> amortisiert.</p>
                   <br />
                   <br />
-                  <p>Die zusätzlichen Kosten für ein <strong>Energiemanagementsystem</strong> von <strong>400 €*</strong> haben sich bereits nach ca. <strong>{this.breakEvenPoint()} Jahren</strong> bezahlt gemacht.</p>
+                  <p>Die zusätzlichen Kosten für ein <strong>Energiemanagementsystem</strong> von <strong>400 €*</strong> haben sich bereits nach ca. <strong>{this.breakEvenPoint()} {(this.breakEvenPoint() > 1) ? 'Jahren' : 'Jahr'} </strong> bezahlt gemacht.</p>
                   <br />
                   <br />
                   <p><small>* Bei Einsatz Fronius / Sungrow Wechselrichter (ab Ende Q1/24)</small></p>
