@@ -8,8 +8,8 @@ import annotationPlugin from "chartjs-plugin-annotation";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { VictoryPie, VictoryLabel } from "victory";
 
-import HouseholdSwitch from "./switchHousehold";
-import InfoButton from "../../infoButton";
+/* import HouseholdSwitch from "./switchHousehold";
+import InfoButton from "../../infoButton"; */
 
 import { ReactComponent as GridOut } from "../../../../assets/img/grid_out.svg";
 import { ReactComponent as Plug } from "../../../../assets/img/plug.svg";

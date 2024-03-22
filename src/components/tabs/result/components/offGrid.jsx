@@ -8,8 +8,8 @@ import annotationPlugin from "chartjs-plugin-annotation";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { VictoryPie, VictoryLabel } from "victory";
 
-import CustomSwitch from "./switch";
-import InfoButton from "../../infoButton";
+/* import CustomSwitch from "./switch"; */
+/* import InfoButton from "../../infoButton"; */
 
 import { ReactComponent as GridIn } from "../../../../assets/img/grid_in.svg";
 import { ReactComponent as Plug } from "../../../../assets/img/plug.svg";

@@ -21,7 +21,6 @@ import { ReactComponent as WrenchIcon } from "../../../../assets/img/icons/wrenc
 import { ReactComponent as InfoIcon } from "../../../../assets/img/icons/info_large.svg";
 
 import { ReactComponent as BuderusPDFIcon } from "../../../../assets/img/icons/buderus/pdf_small.svg";
-import { ReactComponent as BuderusMagnifyingGlassIcon } from "../../../../assets/img/icons/buderus/magnifying_glass_small.svg";
 import { ReactComponent as BuderusContractIcon } from "../../../../assets/img/icons/buderus/contract.svg";
 import { ReactComponent as BuderusHeatpumpSmallIcon } from "../../../../assets/img/icons/buderus/heatpump_small.svg";
 import { ReactComponent as BuderusPhotovoltaicIcon } from "../../../../assets/img/icons/buderus/photovoltaic_small.svg";

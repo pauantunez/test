@@ -16,17 +16,13 @@ import { ReactComponent as BuderusEV } from "../../../../assets/img/buderus/ev_s
 import { ReactComponent as BuderusHousehold } from "../../../../assets/img/buderus/household_small.svg";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, annotationPlugin, ChartDataLabels);
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-var selectedTheme;
-var entryParam;
 
 function CustomLabelComponent(props) {
-  const { x, y, datum, label } = props;
+  const { x, y, datum } = props;
   const imgHeight = props.iconSize;
   const imgWidth = props.iconSize;
   const fontSize = props.fontSize;
-  const pieLabelFontSize = props.pieLabelFontSize;
+
   const xPositionIconMargin = props.xPositionIconMargin;
   const yPositionIconMargin = props.yPositionIconMargin;
   const xPositionEVIconMargin = props.xPositionEVIconMargin;
@@ -39,31 +35,28 @@ function CustomLabelComponent(props) {
   const yPositionHeatpumpLabel = props.yPositionHeatpumpLabel;
   const yPositionEVLabel = props.yPositionEVLabel;
   const yPositionHouseholdLabel = props.yPositionHouseholdLabel;
-  const padding = 5;
   var xPositionIcon;
   var yPositionIcon;
   var xPositionLabel;
   var yPositionLabel;
-  var xPositionPercentage;
-  var yPositionPercentage;
-  var xPositionIconTest = x - 40;
+
   var iconToUse;
   const { selectedTheme } = React.useContext(AppContext);
-  if (datum.name == "heatpump") {
+  if (datum.name === "heatpump") {
     xPositionIcon = x - xPositionIconMargin;
     yPositionIcon = y + yPositionIconMargin;
     xPositionLabel = x + xPositionHeatpumpLabel;
     yPositionLabel = y - yPositionHeatpumpLabel;
 
     iconToUse = selectedTheme === "buderus" ? <BuderusHeatpump width={imgWidth} height={imgHeight} x={xPositionIcon} y={y - 30} /> : <Heatpump width={imgWidth} height={imgHeight} x={xPositionIcon} y={y - 30} />;
-  } else if (datum.name == "ev") {
+  } else if (datum.name === "ev") {
     xPositionIcon = x - xPositionEVIconMargin;
     yPositionIcon = y + yPositionEVIconMargin;
     xPositionLabel = x + xPositionEVLabel;
     yPositionLabel = y - yPositionEVLabel;
 
     iconToUse = selectedTheme === "buderus" ? <BuderusEV width={imgWidth} height={imgHeight} x={xPositionIcon} y={y - 30} /> : <EV width={imgWidth} height={imgHeight} x={xPositionIcon} y={y - 30} />;
-  } else if (datum.name == "household") {
+  } else if (datum.name === "household") {
     xPositionIcon = x - xPositionHouseholdIconMargin;
     yPositionIcon = y + yPositionHouseholdIconMargin;
     xPositionLabel = xPositionIcon - xPositionHouseholdLabel;
@@ -97,14 +90,14 @@ class ElectricityUse extends React.Component {
   static contextType = AppContext;
 
   componentWillMount() {
-    const { products, btnThemes, fonts, setFwdBtn } = this.context;
+    const { setFwdBtn } = this.context;
 
     setFwdBtn(false);
     this.handleResize();
   }
 
   handleResize = () => {
-    const { pieChartSize, setPieSize } = this.context;
+    const { setPieSize } = this.context;
 
     if (window.innerWidth < 1200) {
       setPieSize(200, 50, 37, 14, 16, 2, 65, 0, 0, 36, 40, 15, 55, 5, 10, 0);
@@ -114,7 +107,7 @@ class ElectricityUse extends React.Component {
   };
 
   heatpumpUsageKWH = (type) => {
-    const { heatpumpType, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { heatpumpType, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
     var Avg_Eff_JAZ_HP;
 
     if (heatpumpType === "1") {
@@ -132,7 +125,7 @@ class ElectricityUse extends React.Component {
   };
 
   energyUsageCombined = () => {
-    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, setHeatpumpCombinedUsage, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
     var Avg_Eff_JAZ_HP;
 
     if (heatpumpType === "1") {
@@ -166,7 +159,7 @@ class ElectricityUse extends React.Component {
   componentDidMount() {
     window.addEventListener("resize", this.handleResize);
 
-    const { setHeatpumpCombinedUsage, setElectricityUse1SVG, setElectricityUse2SVG, electricityUse1SVG, electricityUse2SVG } = this.context;
+    const { setHeatpumpCombinedUsage, setElectricityUse1SVG, setElectricityUse2SVG } = this.context;
 
     const electricityUseChart1 = document.getElementById("electricityUse-1");
     const electricityUseChart2 = document.getElementById("electricityUse-2");
@@ -196,9 +189,7 @@ class ElectricityUse extends React.Component {
   }
 
   render() {
-    const { t } = this.props;
-    const { overlayToggle } = this.state;
-    const { odometerIncreaseKWH, pieChartSize, pieIconSize, innerRadiusMargin, pieLabelFontSize, xPositionHeatpumpLabel, xPositionEVLabel, xPositionHouseholdLabel, yPositionHeatpumpLabel, yPositionEVLabel, yPositionHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin, Eta_sh_gas_EDWW_MFH_Brine, setGasBrine, Power_kW_PV_MFH, TCO_thermal_EUR_a, setTCO_thermal_EUR_a, elc_Self_Consumption, energyUsagekWh, electricityCost, heatpumpType, costOverTime } = this.context;
+    const { odometerIncreaseKWH, pieChartSize, pieIconSize, innerRadiusMargin, pieLabelFontSize, xPositionHeatpumpLabel, xPositionEVLabel, xPositionHouseholdLabel, yPositionHeatpumpLabel, yPositionEVLabel, yPositionHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin, energyUsagekWh } = this.context;
 
     const VictoryPieData = [{ x: 3, y: this.heatpumpUsageKWH(), name: "heatpump", label: parseInt(this.heatpumpUsageKWH()).toLocaleString("de-DE") + " kWh", img: "/img/heatpump_small.svg", color: this.context.selectedTheme === "buderus" ? "#CC36BD" : "#004975" }, ...(odometerIncreaseKWH !== 0 ? [{ x: 2, y: odometerIncreaseKWH, name: "ev", label: odometerIncreaseKWH.toLocaleString("de-DE") + " kWh", img: "/img/ev_small.svg", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#C535BC" }] : []), { x: 1, y: parseInt(energyUsagekWh), name: "household", label: energyUsagekWh.toLocaleString("de-DE") + " kWh", img: "/img/household_small.svg", color: this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896" }];
 

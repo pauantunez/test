@@ -26,7 +26,6 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 var productEntry;
 var entryParam;
-var selectedTheme;
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -83,8 +82,6 @@ class Welcome extends React.Component {
         if (entryParam === productsProps[themes]) {
           import("../styles/" + productsProps[themes] + ".css");
 
-          selectedTheme = productsProps[themes];
-
           foundTheme++;
         } else {
           require("ignore");
@@ -93,11 +90,9 @@ class Welcome extends React.Component {
 
       if (foundTheme === 0) {
         import("../styles/" + productsProps[0] + ".css");
-        selectedTheme = productsProps[0];
       }
     } else {
       import("../styles/" + productsProps[0] + ".css");
-      selectedTheme = productsProps[0];
     }
 
     /* document.body.addEventListener("click", (event) => {
