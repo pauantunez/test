@@ -176,7 +176,6 @@ class NavContent extends React.Component {
       }
 
       if (step === 11) {
-        console.log(steps[11]);
         this.getResult(kfwValue + ev, scenarioInDatabase);
         this.breakEven();
         this.breakEvenPVonly();

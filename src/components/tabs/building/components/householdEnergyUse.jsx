@@ -30,7 +30,6 @@ class HouseholdEnergyUse extends React.Component {
     var percentageInTable = kWhUsageLookupTable.find((o) => o.kwh === energyUsagekWh.toString());
 
     setElectricityCostPercentage(percentageInTable.offGridPercentage, percentageInTable.householdPercentage);
-    console.log(percentageInTable);
   }
 
   componentWillMount() {
@@ -107,7 +106,6 @@ class HouseholdEnergyUse extends React.Component {
 
     var percentageInTable = kWhUsageLookupTable.find((o) => o.kwh === value.toString());
     setElectricityCostPercentage(percentageInTable.offGridPercentage, percentageInTable.householdPercentage);
-    console.log(percentageInTable);
 
     var inputNumber = parseInt(value);
 

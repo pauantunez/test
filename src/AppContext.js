@@ -2529,19 +2529,13 @@ class SimulatorProvider extends Component {
       );
     }
 
-    window.addEventListener("message", function (event) {
-      console.log(event.data);
-    });
-
-
-    document.addEventListener('DOMContentLoaded', (event) => {
-      document.querySelectorAll('a').forEach(function (link) {
-        link.addEventListener('click', function (e) {
+    document.addEventListener("DOMContentLoaded", (event) => {
+      document.querySelectorAll("a").forEach(function (link) {
+        link.addEventListener("click", function (e) {
           window.scrollTo(0, 0);
         });
       });
     });
-
   };
 
   getTheme = () => {

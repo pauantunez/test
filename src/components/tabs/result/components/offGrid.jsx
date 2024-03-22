@@ -23,7 +23,7 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointE
 
 function CustomLabelComponent(props) {
   const { x, y, datum } = props;
-  console.log(props);
+
   const imgHeight = props.iconSize;
   const imgWidth = props.iconSize;
   const xPositionIconMargin = props.xPositionIconMargin;
@@ -95,7 +95,7 @@ class OffGrid extends React.Component {
     const { heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = this.context;
 
     var pvUsagePercent = ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(heatpumpCombinedUsage)) * 100;
-    console.log("PV USAGE: " + pvUsagePercent);
+
     return pvUsagePercent;
   };
 
@@ -103,7 +103,7 @@ class OffGrid extends React.Component {
     const { heatpumpCombinedUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = this.context;
 
     var pvUsagePercentEMS = ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(heatpumpCombinedUsage)) * 100;
-    console.log("PV USAGE: " + pvUsagePercentEMS);
+
     return pvUsagePercentEMS;
   };
 
@@ -122,7 +122,6 @@ class OffGrid extends React.Component {
     if (!this.state.infoBoxOffGridGridUsage) {
       setInfoBoxOffGridGridUsage(gridUsagePercent);
       this.setState({ infoBoxOffGridGridUsage: true });
-      console.log("infoBoxOffGridGridUsage: " + gridUsagePercent);
     }
 
     return gridUsagePercent;

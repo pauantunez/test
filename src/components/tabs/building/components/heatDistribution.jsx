@@ -27,7 +27,7 @@ class HeatDistribution extends React.Component {
 
   static contextType = AppContext;
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   componentWillMount() {
     const { setFwdBtn, steps, activeView } = this.context;
@@ -65,14 +65,11 @@ class HeatDistribution extends React.Component {
 
     if (preHeatOptionValue.option2 === "-") {
       setPreHeatTempOption(1);
-      console.log(preHeatOptionValue.option1);
     } else {
       if (event.target.value === "Radiator") {
         setPreHeatTempOption(1);
-        console.log(preHeatOptionValue.option1);
       } else {
         setPreHeatTempOption(2);
-        console.log(preHeatOptionValue.option2);
       }
     }
 

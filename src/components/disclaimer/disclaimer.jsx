@@ -34,8 +34,6 @@ class Disclaimer extends React.Component {
 
       for (let themes = 0; themes < productsProps.length; themes++) {
         if (entryParam === productsProps[themes]) {
-          console.log(productsProps[themes]);
-
           import("../../styles/" + productsProps[themes] + ".css");
 
           btnColor = btnThemes[entryParam][0];

@@ -105,7 +105,6 @@ class ElectricityUse extends React.Component {
 
   handleResize = () => {
     const { pieChartSize, setPieSize } = this.context;
-    console.log(window.innerWidth);
 
     if (window.innerWidth < 1200) {
       setPieSize(200, 50, 37, 14, 16, 2, 65, 0, 0, 36, 40, 15, 55, 5, 10, 0);
@@ -126,10 +125,8 @@ class ElectricityUse extends React.Component {
 
     //Enegery usage heatpump
     var energyUsageHeatpump = (parseFloat(EGen_sh_kWh_HP_A_W_MFH) + parseFloat(EGen_sh_kWh_HP_B_W_MFH) + parseFloat(EGen_hw_kWh_HP_A_W_MFH) + parseFloat(EGen_hw_kWh_HP_B_W_MFH)) / parseFloat(Avg_Eff_JAZ_HP);
-    console.log("RESULT: " + energyUsageHeatpump);
 
     var energyUsageHeatingRod = (parseFloat(EGen_sh_kWh_EDWW_MFH) + parseFloat(EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(EGen_hw_kWh_EDWW_MFH) + parseFloat(EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
-    console.log("RESULT HEATING ROD: " + energyUsageHeatingRod);
 
     return energyUsageHeatpump + energyUsageHeatingRod;
   };
@@ -176,8 +173,6 @@ class ElectricityUse extends React.Component {
     const electricityUseChart1_svg = electricityUseChart1.getElementsByTagName("svg");
     const electricityUseChart2_svg = electricityUseChart2.getElementsByTagName("svg");
 
-    console.log(electricityUseChart1);
-    console.log(electricityUseChart1_svg[0]);
     setElectricityUse1SVG(electricityUseChart1_svg[0]);
     setElectricityUse2SVG(electricityUseChart2_svg[0]);
 

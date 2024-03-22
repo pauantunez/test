@@ -81,17 +81,13 @@ class Welcome extends React.Component {
 
       for (let themes = 0; themes < productsProps.length; themes++) {
         if (entryParam === productsProps[themes]) {
-          console.log(productsProps[themes]);
-
           import("../styles/" + productsProps[themes] + ".css");
 
           selectedTheme = productsProps[themes];
-          console.log(selectedTheme);
 
           foundTheme++;
         } else {
           require("ignore");
-          console.log("ignore:" + productsProps[themes]);
         }
       }
 
@@ -159,8 +155,6 @@ class Welcome extends React.Component {
     if (!userTracked) {
       window.parent.postMessage({ event: "HP-Soundtool", eventCategory: "ToolStart", eventAction: window.location.href }, "*");
       trackUser(true);
-
-      console.log(window.location.href);
     }
   };
 
@@ -177,7 +171,6 @@ class Welcome extends React.Component {
   setTermsState = (e) => {
     const { setTerms } = this.context;
 
-    console.log(e);
     setTerms(e);
   };
 

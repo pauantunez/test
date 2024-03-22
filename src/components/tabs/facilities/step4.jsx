@@ -58,7 +58,6 @@ class FacilitiesStep4 extends React.Component {
   async changeVolume(e, value) {
     const { setEnergyUse } = this.context;
     setEnergyUse(value);
-    console.log(value);
   }
 
   render() {
