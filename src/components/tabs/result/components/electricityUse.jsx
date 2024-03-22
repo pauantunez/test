@@ -107,11 +107,21 @@ class ElectricityUse extends React.Component {
     const { pieChartSize, setPieSize } = this.context;
     console.log(window.innerWidth);
 
-    if (window.innerWidth < 1200) {
-      setPieSize(200, 50, 37, 14, 16, 2, 65, 0, 0, 36, 40, 15, 55, 5, 10, 0);
-    } else if (window.innerWidth > 1200) {
-      setPieSize(220, 70, 55, 18, 38, 25, 90, 0, 0, 34, 40, 15, 55, 5, 20, 0);
-    }
+    if (window.innerWidth > 1600) {
+      //size, iconSize, innerRadius, fontSize, xHeatpumpLabel, xEVLabel, xHouseholdLabel, yHeatpumpLabel, yEVLabel, yHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin
+        setPieSize(340, 50, 37, 14, 16, 2, 65, 0, 0, 36, 40, 15, 55, 5, 10, 0);
+      } else if (window.innerWidth > 1500) {
+        setPieSize(320, 70, 55, 18, 38, 25, 90, 0, 0, 34, 40, 15, 55, 5, 20, 0);
+      } else if (window.innerWidth > 1400) {
+        setPieSize(260, 70, 55, 18, 38, 25, 40, 0, 0, 34, 40, 15, 55, 5, 20, 0);
+      } else if (window.innerWidth > 1300) {
+        setPieSize(240, 70, 55, 18, 38, 22, 40, 0, 0, 34, 40, 15, 55, 5, 20, 0);
+      } else if (window.innerWidth > 1200) {
+        setPieSize(200, 50, 37, 14, 16, 2, 65, 0, 0, 36, 40, 15, 55, 5, 10, 0);
+      } else {
+        setPieSize(260, 70, 55, 18, 38, 25, 40, 0, 0, 34, 40, 15, 55, 5, 20, 0);
+      }
+      
   };
 
   heatpumpUsageKWH = (type) => {

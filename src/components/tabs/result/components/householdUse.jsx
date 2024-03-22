@@ -84,11 +84,19 @@ class HouseholdUse extends React.Component {
     const { setPieSize } = this.context;
     console.log(window.innerWidth);
 
-    if (window.innerWidth < 1300) {
+    if (window.innerWidth > 1600) {
       //size, iconSize, innerRadius, fontSize, xHeatpumpLabel, xEVLabel, xHouseholdLabel, yHeatpumpLabel, yEVLabel, yHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin
-      setPieSize(290, 50, 37, 14, 16, 2, 65, 0, 0, 36, 40, 15, 45, -10, 10, 0);
+      setPieSize(340, 70, 55, 18, 38, 25, 90, 0, 0, 34, 40, 15, 55, -20, 20, 0);
+    } else if (window.innerWidth > 1500) {
+      setPieSize(320, 50, 37, 14, 16, 2, 65, 0, 0, 36, 40, 15, 45, -10, 10, 0);
+    } else if (window.innerWidth > 1400) {
+      setPieSize(260, 50, 67, 14, 16, 2, 65, 0, 0, 36, 40, 15, 45, -10, 10, 0);
     } else if (window.innerWidth > 1300) {
-      setPieSize(320, 70, 55, 18, 38, 25, 90, 0, 0, 34, 40, 15, 55, -20, 20, 0);
+      setPieSize(240, 50, 60, 14, 16, 2, 65, 0, 0, 36, 40, 15, 45, -10, 10, 0);
+    } else if (window.innerWidth > 1200) {
+      setPieSize(220, 50, 40, 14, 16, 2, 65, 0, 0, 36, 40, 15, 45, -10, 10, 0);
+    } else {
+      setPieSize(260, 50, 67, 14, 16, 2, 65, 0, 0, 36, 40, 15, 45, -10, 10, 0);
     }
   };
 

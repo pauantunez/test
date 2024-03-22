@@ -95,7 +95,7 @@ class ResultStep2 extends React.Component {
           </div>
         </div>
         <div class="pie-flex results-page-two" style={{ display: "flex", marginTop: "50px", height: "100%", width: "100%", flexWrap: "nowrap" /*justifyContent: 'space-between',*/ /*alignContent: 'center'*/ }}>
-          <div style={{ alignItems: "end" }}>
+          <div class="results col-one">
             <div style={{ fontFamily: "Bosch-Bold", fontSize: "20px", textAlign: "left" }}>Stromverbrauch</div>
             <div style={{ marginTop: "0px" }}>
               <ElectricityUse />
@@ -105,7 +105,7 @@ class ResultStep2 extends React.Component {
             </div>
           </div>
           <div class="flex-line" style={{ width: "2px", height: "initial", background: "#E0E2E5", marginLeft: "15px", marginRight: "15px" }}></div>
-          <div>
+          <div class="results col-two">
             <div class="top-margins" style={{ display: "flex", flexDirection: "row", fontFamily: "Bosch-Bold", fontSize: "20px", textAlign: "left" }}>
               <div style={{ marginRight: "20px" }}>Autarkie</div>
               <InfoButton class="tooltip-box" color={this.context.selectedTheme === "buderus" ? "#000" : "#007BC0"} size="14px" placement="right" text="Die Autarkie eines Energiesystems beschreibt, welcher Anteil des Stromverbrauchs durch die eigene PV-Anlage abgedeckt wird." />
@@ -118,7 +118,7 @@ class ResultStep2 extends React.Component {
             </div>
           </div>
           <div class="flex-line" style={{ width: "2px", height: "initial", background: "#E0E2E5", marginLeft: "15px", marginRight: "15px" }}></div>
-          <div>
+          <div class="results col-three">
             <div class="top-margins" style={{ display: "flex", flexDirection: "row", fontFamily: "Bosch-Bold", fontSize: "20px", textAlign: "left" }}>
               <div style={{ marginRight: "20px" }}>Eigenverbrauch</div>
               <InfoButton color={this.context.selectedTheme === "buderus" ? "#000" : "#007BC0"} size="14px" placement="right" text="Der Eigenverbrauch eines Energiesystems beschreibt, welcher Anteil des eigens produzierten PV-Stroms selbst verbraucht wird." />

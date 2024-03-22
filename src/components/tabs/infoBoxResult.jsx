@@ -275,7 +275,7 @@ class InfoBoxResult extends React.Component {
                       </div>
                     </IconButton>
                   </h3>
-                  Der errechnete Stromverbrauch aufgeteilt auf die großen Verbraucher Wärmepumpe, E-Auto und Haushalt.
+                  <p>Der errechnete Stromverbrauch aufgeteilt auf die großen Verbraucher Wärmepumpe, E-Auto und Haushalt.</p>
                 </div>
               </div>
             </div>

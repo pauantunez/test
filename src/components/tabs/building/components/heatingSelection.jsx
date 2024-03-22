@@ -371,7 +371,7 @@ class HeatingSelection extends React.Component {
 
                 {/* Öl oder Gasverbrauch */}
                 {BuildingEnegeryStandard === "OilLNG" && (
-                  <div style={{ marginTop: "30px", marginLeft: "10px", fontFamily: "Bosch-Regular" }}>
+                  <div class="label" style={{ marginTop: "30px", marginLeft: "10px", fontFamily: "Bosch-Regular" }}>
                     Nennen Sie uns entweder Ihren Gas- oder Ölverbrauch pro Jahr
                     <div style={{ marginTop: "40px" }}>
                       <FormControl>
@@ -393,7 +393,7 @@ class HeatingSelection extends React.Component {
 
                 {/* Gebäudeisolierung */}
                 {BuildingEnegeryStandard === "BuildingInsulation" && (
-                  <div style={{ marginTop: "30px", marginLeft: "10px", fontFamily: "Bosch-Regular" }}>
+                  <div class="label" style={{ marginTop: "30px", marginLeft: "10px", fontFamily: "Bosch-Regular" }}>
                     Wie gut ist Ihr Gebäude isoliert?
                     <div style={{ marginTop: "15px" }}>
                       <FormControl>

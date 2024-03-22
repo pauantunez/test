@@ -1241,6 +1241,13 @@ a.card-input-narrow {
 .graphs-container{
   margin: 0px;
 }
+.results{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: space-between;
+}
+
 
 
   .step-one .cardLargeIcon, .step-two .cardLargeIcon, .step-three .cardLargeIcon, .step-four .cardLargeIcon, .step-five .cardLargeIcon, .step-six .cardLargeIcon, .step-seven .cardLargeIcon, .step-eight .cardLargeIcon, .step-nine .cardLargeIcon, .step-ten .cardLargeIcon, .step-eleven .cardLargeIcon{
@@ -1253,6 +1260,27 @@ a.card-input-narrow {
     margin-left: 30px;
     margin-right: 30px;
   }
+
+@media only screen and (max-width: 1400px) {
+  #electricityUse-1 .VictoryContainer svg g text tspan{
+    font-size: 15px!important;
+  }
+  #electricityUse-2 .VictoryContainer svg g text.small{
+    font-size: 12px!important;
+  }
+  #offgrid-1 .VictoryContainer svg g text tspan{
+    font-size: 15px!important;
+  }
+  #offgrid-2 .VictoryContainer svg g text.small{
+    font-size: 12px!important;
+  }
+  #householdUse-1 .VictoryContainer svg g text tspan{
+    font-size: 15px!important;
+  }
+  #householdUse-2 .VictoryContainer svg g text.small{
+    font-size: 12px!important;
+  }
+}
 
 @media only screen and (max-width: 1200px) {
 
@@ -1489,7 +1517,7 @@ a.card-input-narrow {
   min-height: 185px;
 }
 .results-page-two .infobox-container{
-  min-height: 234px;
+  min-height: 255px;
 }
 
 .infobox-h3 {
@@ -1735,7 +1763,7 @@ a.card-input-narrow {
     font-size: 14px;
   }
   .MuiFormControlLabel-label{
-    font-size: 13px;
+    font-size: 14px!important;
   }
   #editBtn svg{
     width: 18px;
@@ -1814,6 +1842,9 @@ a.card-input-narrow {
     flex-direction: column;
   }
   .infobox-container {
+    min-height: inherit;
+  }
+  .results-page-two .infobox-container {
     min-height: inherit;
   }
   .results-page-one .infobox-container{
