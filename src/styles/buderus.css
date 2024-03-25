@@ -1242,6 +1242,12 @@ a.card-input-narrow {
 .last-step .cardContent{
   width: 100%;
 }
+.results {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: space-between;
+}
 
 .step-one .cardLargeIcon, .step-two .cardLargeIcon, .step-three .cardLargeIcon, .step-four .cardLargeIcon, .step-five .cardLargeIcon, .step-six .cardLargeIcon, .step-seven .cardLargeIcon, .step-eight .cardLargeIcon, .step-nine .cardLargeIcon, .step-ten .cardLargeIcon, .step-eleven .cardLargeIcon{
   display: none;
@@ -1528,6 +1534,32 @@ a.card-input-narrow {
   font-family: Bosch-Regular;
   box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.20);
 }
+.results-page-one .infobox-container{
+  min-height: 204px;
+}
+.results-page-one .right-box .infobox-container{
+  min-height: 244px;
+}
+.results-page-one .left-box .infobox-container{
+  min-height: 185px;
+}
+.results-page-two .infobox-container{
+  min-height: 255px;
+}
+.switch-container {
+  display: flex;
+}
+.switch-label {
+  font-size: 16px;
+  margin-left: 4px;
+  margin-right: 6px;
+  padding-top: 2px;
+  font-family: "Bosch-Regular";
+}
+.switch-box {
+  float: left;
+  margin-right: 5px;
+}
 
 .infobox-h3 {
   font-family: Bosch-Medium;
@@ -1748,6 +1780,44 @@ a.card-input-narrow {
     border: 1px solid #CCC;
     width: 155px;
     height: 170px;
+  }
+
+  .cardDescription{
+    font-size: 14px;
+  }
+  .txt{
+    font-size: 14px;
+  }
+  .infobox-row{
+    font-size: 14px;
+  }
+  .infobox-row h3, .infobox-row p{
+    font-size: 13px;
+    line-height: 140%;
+    margin: 6px 0px;
+  }
+  .label, .label span{
+    font-size: 14px;
+  }
+  .switch-label{
+    font-size: 14px;
+  }
+  .MuiFormControlLabel-label{
+    font-size: 14px!important;
+  }
+  #editBtn svg{
+    width: 18px;
+    height: 16px;
+    margin-left: 5px;
+  }
+  .additional-flex.first-col{
+    margin-top: -24px;
+  }
+  .infobox-container .results-page-one{
+    min-height: 220px;
+  }
+  .infobox-container .results-page-two{
+    min-height: 220px;
   }
 
 

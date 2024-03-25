@@ -1260,6 +1260,12 @@ a.card-input-narrow {
     margin-left: 30px;
     margin-right: 30px;
   }
+  .additional-links-container {
+    flex-wrap: wrap;
+  }
+  .additional-links-container .card-input-narrow {
+    margin: 5px 0 15px 0;
+  }
   
 
 @media only screen and (max-width: 1400px) {
