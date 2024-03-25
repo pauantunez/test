@@ -399,7 +399,7 @@ class InfoBoxCalculation extends React.Component {
                 </div>
               </div>
             </div>
-            <span style={{ display: "block", paddingTop: "10px" }}>Als Alternativeingabe wird der jährliche Öl- oder Gasverbrauch genutzt</span>
+            <span style={{ display: "block", paddingTop: "10px" }}>Als Alternativeingabe wird der jährliche Öl- oder Gasverbrauch genutzt.</span>
           </div>
         )}
 
