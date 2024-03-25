@@ -123,8 +123,6 @@ class Additional extends React.Component {
     const ctx8 = canvas8.getContext("2d");
     const v8 = Canvg.fromString(ctx8, svgString8);
 
-    console.log(svgString5);
-
     // Start SVG rendering with animations and mouse handling.
     v.start();
     v2.start();
@@ -200,8 +198,6 @@ class Additional extends React.Component {
         const divImage = canvas.toDataURL("image/jpeg", 1.0);
 
         const pdfWidth = pdf.internal.pageSize.getWidth();
-        console.log("INTERAL WIDTH");
-        console.log(pdfWidth);
         const pdfHeight = pdf.internal.pageSize.getHeight();
 
         pdf.addImage(divImage, "JPG", 0, 0, pdfWidth, pdfHeight, null, "NONE");
@@ -217,7 +213,6 @@ class Additional extends React.Component {
           },
         }).then(function (canvas2) {
           const divImage2 = canvas2.toDataURL("image/jpeg", 1.0);
-          console.log(divImage2);
           const pdfWidth = pdf.internal.pageSize.getWidth();
           const pdfHeight = pdf.internal.pageSize.getHeight();
 

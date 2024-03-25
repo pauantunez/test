@@ -6,7 +6,7 @@ export const AppContext = React.createContext();
 export const SimulatorConsumer = AppContext.Consumer;
 
 const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
+
 var productEntry = 0;
 
 class SimulatorProvider extends Component {
@@ -1708,13 +1708,13 @@ class SimulatorProvider extends Component {
   setPVOutput = (result) => {
     this.setState((prevState) => ({ pvOutput: result }));
 
-    if (result == 0) {
+    if (result === 0) {
       this.setState((prevState) => ({ pvOutputkWh: 4 }));
-    } else if (result == 1) {
+    } else if (result === 1) {
       this.setState((prevState) => ({ pvOutputkWh: 7 }));
-    } else if (result == 2) {
+    } else if (result === 2) {
       this.setState((prevState) => ({ pvOutputkWh: 10 }));
-    } else if (result == 3) {
+    } else if (result === 3) {
       this.setState((prevState) => ({ pvOutputkWh: 14 }));
     }
   };
@@ -1729,13 +1729,13 @@ class SimulatorProvider extends Component {
     if (result === "none") {
       this.setState((prevState) => ({ homeStorageSizekWh: 0 }));
     } else {
-      if (result == 0) {
+      if (result === 0) {
         this.setState((prevState) => ({ homeStorageSizekWh: 6 }));
-      } else if (result == 1) {
+      } else if (result === 1) {
         this.setState((prevState) => ({ homeStorageSizekWh: 9 }));
-      } else if (result == 2) {
+      } else if (result === 2) {
         this.setState((prevState) => ({ homeStorageSizekWh: 12 }));
-      } else if (result == 3) {
+      } else if (result === 3) {
         this.setState((prevState) => ({ homeStorageSizekWh: 15 }));
       }
     }
@@ -2035,7 +2035,7 @@ class SimulatorProvider extends Component {
   };
 
   goToView = (newValue, directLink) => {
-    if (directLink == true) {
+    if (directLink === true) {
       this.setDirectLink(true);
     }
     this.setActiveView(newValue);
@@ -2511,6 +2511,7 @@ class SimulatorProvider extends Component {
           eventArray[eventParameterName2] = "sc_clicked_element";
           eventArray[parameterValue2] = "Back to startpage";
           break;
+        default:
       }
 
       window.parent.postMessage(
@@ -2529,19 +2530,13 @@ class SimulatorProvider extends Component {
       );
     }
 
-    window.addEventListener("message", function (event) {
-      console.log(event.data);
-    });
-
-
-    document.addEventListener('DOMContentLoaded', (event) => {
-      document.querySelectorAll('a').forEach(function (link) {
-        link.addEventListener('click', function (e) {
+    document.addEventListener("DOMContentLoaded", (event) => {
+      document.querySelectorAll("a").forEach(function (link) {
+        link.addEventListener("click", function (e) {
           window.scrollTo(0, 0);
         });
       });
     });
-
   };
 
   getTheme = () => {

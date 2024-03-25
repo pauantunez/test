@@ -8,8 +8,8 @@ import annotationPlugin from "chartjs-plugin-annotation";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { VictoryPie, VictoryLabel } from "victory";
 
-import HouseholdSwitch from "./switchHousehold";
-import InfoButton from "../../infoButton";
+/* import HouseholdSwitch from "./switchHousehold";
+import InfoButton from "../../infoButton"; */
 
 import { ReactComponent as GridOut } from "../../../../assets/img/grid_out.svg";
 import { ReactComponent as Plug } from "../../../../assets/img/plug.svg";
@@ -23,7 +23,7 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointE
 
 function CustomLabelComponent(props) {
   const { x, y, datum } = props;
-  console.log(props);
+
   const imgHeight = props.iconSize;
   const imgWidth = props.iconSize;
   const xPositionIconMargin = props.xPositionIconMargin;
@@ -82,7 +82,6 @@ class HouseholdUse extends React.Component {
 
   handleResize = () => {
     const { setPieSize } = this.context;
-    console.log(window.innerWidth);
 
     if (window.innerWidth > 1600) {
       //size, iconSize, innerRadius, fontSize, xHeatpumpLabel, xEVLabel, xHouseholdLabel, yHeatpumpLabel, yEVLabel, yHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin
@@ -123,9 +122,6 @@ class HouseholdUse extends React.Component {
           const householdUseChart1_svg_noEMS_hidden = householdUseChart1_NoEMS_Hidden.getElementsByTagName("svg");
           const householdUseChart2_svg_noEMS_hidden = householdUseChart2_NoEMS_Hidden.getElementsByTagName("svg");
 
-          console.log(householdUseChart1);
-          console.log(householdUseChart2_svg_hidden[0]);
-
           setHouseholdUse1SVG(householdUseChart1_svg[0]);
           setHouseholdUse2SVG(householdUseChart2_svg[0]);
           setHousehold1SVG_EMS_Hidden(householdUseChart1_svg_hidden[0]);
@@ -139,7 +135,6 @@ class HouseholdUse extends React.Component {
 
   componentDidUpdate(previousProps, previousState) {
     if (previousState.infoBoxCombinedHouseholdUsage !== this.state.infoBoxCombinedHouseholdUsage) {
-      console.log("infoBoxCombinedHouseholdUsage: " + this.state.infoBoxCombinedHouseholdUsage);
     }
   }
 
@@ -151,12 +146,10 @@ class HouseholdUse extends React.Component {
     const { setInfoBoxCombinedHouseholdUsage, HH_energy_to_grid_kWh_PV_MFH, HH_EGen_elc_kWh_PV_MFH } = this.context;
 
     var pvUsagePercent = ((parseFloat(HH_EGen_elc_kWh_PV_MFH) - parseFloat(HH_energy_to_grid_kWh_PV_MFH)) / parseFloat(HH_EGen_elc_kWh_PV_MFH)) * 100;
-    console.log("HOUSEHOLD USAGE: " + pvUsagePercent);
 
     if (!this.state.infoBoxCombinedHouseholdUsage) {
       setInfoBoxCombinedHouseholdUsage(pvUsagePercent);
       this.setState({ infoBoxCombinedHouseholdUsage: true });
-      console.log("infoBoxCombinedHouseholdUsage: " + pvUsagePercent);
     }
 
     return pvUsagePercent;
@@ -166,12 +159,10 @@ class HouseholdUse extends React.Component {
     const { setInfoBoxHouseholdGridFeed, HH_energy_to_grid_kWh_PV_MFH, HH_EGen_elc_kWh_PV_MFH } = this.context;
 
     var gridFeedPercent = 100 - ((parseFloat(HH_EGen_elc_kWh_PV_MFH) - parseFloat(HH_energy_to_grid_kWh_PV_MFH)) / parseFloat(HH_EGen_elc_kWh_PV_MFH)) * 100;
-    console.log("GRID FEED USAGE: " + gridFeedPercent);
 
     if (!this.state.infoBoxHouseholdGridFeed) {
       setInfoBoxHouseholdGridFeed(gridFeedPercent);
       this.setState({ infoBoxHouseholdGridFeed: true });
-      console.log("infoBoxHouseholdGridFeed: " + gridFeedPercent);
     }
 
     return gridFeedPercent;
@@ -418,7 +409,6 @@ class HouseholdUse extends React.Component {
           {/* <div class="trackeable" data-event="result-part2-switch-energiemanagement">
             <HouseholdSwitch />
           </div> */}
-
         </div>
       </div>
     );

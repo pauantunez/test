@@ -33,14 +33,10 @@ class Liability extends React.Component {
     const productsProps = Object.getOwnPropertyNames(products);
     const langString = i18n.language;
     const adaptedLangString = langString.slice(0, 2) + "-" + langString.slice(2);
-    console.log("Adapted lang: ", adaptedLangString);
 
     axios.get(`https://policies.ttprivacy.com/api/v1/imprints/legalentity/TTDE/language/${adaptedLangString}`).then((res) => {
       const imprint = res.data;
       this.setState({ imprint });
-
-      //console.log(this.state.imprint)
-      console.log(this.state);
     });
 
     if (this.state.theme) {
@@ -48,8 +44,6 @@ class Liability extends React.Component {
 
       for (let themes = 0; themes < productsProps.length; themes++) {
         if (entryParam === productsProps[themes]) {
-          console.log(productsProps[themes]);
-
           import("../../styles/" + productsProps[themes] + ".css");
 
           btnFont = fonts[entryParam][2];

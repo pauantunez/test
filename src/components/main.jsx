@@ -102,7 +102,6 @@ class Main extends React.Component {
 
           foundTheme++;
         } else {
-          console.log("ignore:" + productsProps[themes]);
         }
       }
 
@@ -145,8 +144,6 @@ class Main extends React.Component {
         fwdBtn: false,
       });
     }
-
-    //console.log(nextContext.navDirection)
   };
 
   handleClick(event) {
@@ -176,10 +173,6 @@ class Main extends React.Component {
         setActiveStep(selectedTab.toString() + "-" + step.toString());
         setFwdBtn(true);
         setMenuBackdrop(false);
-      }
-
-      if (step === 11) {
-        console.log(steps[11]);
       }
     }
   }
@@ -219,8 +212,6 @@ class Main extends React.Component {
     if (!userTracked) {
       window.parent.postMessage({ event: "HP-Soundtool", eventCategory: "ToolStart", eventAction: window.location.href }, "*");
       trackUser(true);
-
-      console.log(window.location.href);
     }
   };
 
@@ -237,7 +228,6 @@ class Main extends React.Component {
   setTermsState = (e) => {
     const { setTerms } = this.context;
 
-    console.log(e);
     setTerms(e);
   };
 
@@ -275,10 +265,6 @@ class Main extends React.Component {
           this.breakEven(res.data.data[0]);
           setLoading(false);
         }
-        console.log(res.data.data[0]);
-        console.log(res);
-        console.log(res.data);
-        console.log(res.data.data.length);
       });
   };
 
@@ -438,15 +424,11 @@ class Main extends React.Component {
       // Agrega más estilos según sea necesario
     });
 
-    const { kfwValue, ev, scenarioInDatabase, menuBackdrop, steps, menuOpen, navSteps, setActiveView, setNavDirection, setDirectLink, activeView, fwdBtn, setFwdBtn, setActiveMilestone, setMilestoneHeadline, backdrop, directLink, sendGAEvent, BuildingEnegeryStandard, OilUsageLiters, OilLNGValue, LNGUsage, homeCharging, odometerIncrease, homeStorageSize, pvOutput, energyUsagekWh, disabledInvestmentCost, investmentCostEUR, electricityCost, gridRevenue, setCalculationModal } = this.context;
+    const { kfwValue, ev, scenarioInDatabase, menuBackdrop, steps, menuOpen, setActiveView, setNavDirection, setDirectLink, activeView, fwdBtn, setFwdBtn, setActiveMilestone, setMilestoneHeadline, backdrop, directLink, sendGAEvent, BuildingEnegeryStandard, OilUsageLiters, OilLNGValue, LNGUsage, homeCharging, odometerIncrease, homeStorageSize, pvOutput, energyUsagekWh, disabledInvestmentCost, investmentCostEUR, electricityCost, gridRevenue, setCalculationModal } = this.context;
 
     const handleOpen = () => setCalculationModal(true);
 
     const nextTab = (event, newValue) => {
-      console.log(navSteps[0]);
-
-      console.log(activeView);
-
       setActiveView(activeView + 1);
       setFwdBtn(true);
       this.setState({ backBtn: false });

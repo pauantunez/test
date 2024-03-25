@@ -134,39 +134,38 @@ class HeatingSelection extends React.Component {
     if (validate.isInteger(inputNumber)) {
       var kWhUsage = inputNumber * 9.8;
       var usagePerSqm = kWhUsage / parseInt(BuildingSize);
-      console.log(usagePerSqm);
 
       if (usagePerSqm < 35) {
         let kfWInTable = kfwLookupTable.find((o) => o.kWh === 25);
-        console.log(kfWInTable);
+
         setKfwValue(kfWInTable.kfW);
       } else if (usagePerSqm >= 35 && usagePerSqm < 45) {
         let kfWInTable = kfwLookupTable.find((o) => o.kWh === 35);
-        console.log(kfWInTable);
+
         setKfwValue(kfWInTable.kfW);
       } else if (usagePerSqm >= 45 && usagePerSqm < 55) {
         let kfWInTable = kfwLookupTable.find((o) => o.kWh === 45);
-        console.log(kfWInTable);
+
         setKfwValue(kfWInTable.kfW);
       } else if (usagePerSqm >= 55 && usagePerSqm < 65) {
         let kfWInTable = kfwLookupTable.find((o) => o.kWh === 55);
-        console.log(kfWInTable);
+
         setKfwValue(kfWInTable.kfW);
       } else if (usagePerSqm >= 65 && usagePerSqm < 95) {
         let kfWInTable = kfwLookupTable.find((o) => o.kWh === 65);
-        console.log(kfWInTable);
+
         setKfwValue(kfWInTable.kfW);
       } else if (usagePerSqm >= 95 && usagePerSqm < 120) {
         let kfWInTable = kfwLookupTable.find((o) => o.kWh === 95);
-        console.log(kfWInTable);
+
         setKfwValue(kfWInTable.kfW);
       } else if (usagePerSqm >= 120 && usagePerSqm < 150) {
         let kfWInTable = kfwLookupTable.find((o) => o.kWh === 120);
-        console.log(kfWInTable);
+
         setKfwValue(kfWInTable.kfW);
       } else if (usagePerSqm >= 150) {
         let kfWInTable = kfwLookupTable.find((o) => o.kWh === 150);
-        console.log(kfWInTable);
+
         setKfwValue(kfWInTable.kfW);
       }
 
@@ -185,40 +184,39 @@ class HeatingSelection extends React.Component {
     setLNGUsage(event.target.value);
 
     var inputNumber = parseInt(event.target.value);
-    console.log(inputNumber);
 
     if (validate.isInteger(inputNumber)) {
       if (inputNumber < 35) {
         let kfWInTable = kfwLookupTable.find((o) => o.kWh === 25);
-        console.log(kfWInTable);
+
         setKfwValue(kfWInTable.kfW);
       } else if (inputNumber >= 35 && inputNumber < 45) {
         let kfWInTable = kfwLookupTable.find((o) => o.kWh === 35);
-        console.log(kfWInTable);
+
         setKfwValue(kfWInTable.kfW);
       } else if (inputNumber >= 45 && inputNumber < 55) {
         let kfWInTable = kfwLookupTable.find((o) => o.kWh === 45);
-        console.log(kfWInTable);
+
         setKfwValue(kfWInTable.kfW);
       } else if (inputNumber >= 55 && inputNumber < 65) {
         let kfWInTable = kfwLookupTable.find((o) => o.kWh === 55);
-        console.log(kfWInTable);
+
         setKfwValue(kfWInTable.kfW);
       } else if (inputNumber >= 65 && inputNumber < 95) {
         let kfWInTable = kfwLookupTable.find((o) => o.kWh === 65);
-        console.log(kfWInTable);
+
         setKfwValue(kfWInTable.kfW);
       } else if (inputNumber >= 95 && inputNumber < 120) {
         let kfWInTable = kfwLookupTable.find((o) => o.kWh === 95);
-        console.log(kfWInTable);
+
         setKfwValue(kfWInTable.kfW);
       } else if (inputNumber >= 120 && inputNumber < 150) {
         let kfWInTable = kfwLookupTable.find((o) => o.kWh === 120);
-        console.log(kfWInTable);
+
         setKfwValue(kfWInTable.kfW);
       } else if (inputNumber >= 150) {
         let kfWInTable = kfwLookupTable.find((o) => o.kWh === 150);
-        console.log(kfWInTable);
+
         setKfwValue(kfWInTable.kfW);
       }
 
