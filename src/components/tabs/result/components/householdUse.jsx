@@ -85,9 +85,9 @@ class HouseholdUse extends React.Component {
 
     if (window.innerWidth > 1600) {
       //size, iconSize, innerRadius, fontSize, xHeatpumpLabel, xEVLabel, xHouseholdLabel, yHeatpumpLabel, yEVLabel, yHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin
-      setPieSize(340, 70, 55, 18, 38, 25, 90, 0, 0, 34, 40, 15, 55, -20, 20, 0);
+      setPieSize(300, 70, 55, 18, 38, 25, 90, 0, 0, 34, 40, 15, 55, -20, 20, 0);
     } else if (window.innerWidth > 1500) {
-      setPieSize(320, 50, 37, 14, 16, 2, 65, 0, 0, 36, 40, 15, 45, -10, 10, 0);
+      setPieSize(280, 50, 37, 14, 16, 2, 65, 0, 0, 36, 40, 15, 45, -10, 10, 0);
     } else if (window.innerWidth > 1400) {
       setPieSize(260, 50, 67, 14, 16, 2, 65, 0, 0, 36, 40, 15, 45, -10, 10, 0);
     } else if (window.innerWidth > 1300) {
