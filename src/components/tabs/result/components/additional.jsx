@@ -309,7 +309,7 @@ class Additional extends React.Component {
                   <div class="txt">Sichern Sie sich Ihre Ergebnisse, indem Sie diese als PDF jetzt herunterladen</div>
                 </div>
                 <div class="trackeable" data-event="result-part3-save-pdf" style={{ display: "flex", alignItems: "end" }}>
-                  <Button onClick={printPDF} variant="outlined" startIcon={this.context.selectedTheme === "buderus" ? <BuderusPDFIcon /> : <PDFIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular", border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "", color: this.context.selectedTheme === "buderus" ? "#000000" : "" }}>
+                  <Button disableRipple onClick={printPDF} variant="outlined" startIcon={this.context.selectedTheme === "buderus" ? <BuderusPDFIcon /> : <PDFIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular", border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "", color: this.context.selectedTheme === "buderus" ? "#000000" : "" }}>
                     Ergebnisse herunterladen
                   </Button>
                 </div>
@@ -327,7 +327,7 @@ class Additional extends React.Component {
                         <p>Fachbetriebe in ihrer Nähe</p>
                         <div class="trackeable" data-event="result-part3-contact" style={{ display: "flex", alignItems: "end" }}>
                           <a rel="noreferrer" href="https://www.buderus.de/de/services-tools/experten-in-ihrer-naehe/fachbetriebe-in-ihrer-naehe-21776" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                            <Button class="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
+                            <Button disableRipple class="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
                               Fachbetrieb suchen
                             </Button>
                           </a>
@@ -337,7 +337,7 @@ class Additional extends React.Component {
                         <p>Angebot anfordern</p>
                         <div class="trackeable" data-event="result-part3-offer" style={{ display: "flex", alignItems: "end" }}>
                           <a rel="noreferrer" href="https://www.buderus.de/de/angebot-anfordern" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                            <Button class="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
+                            <Button disableRipple class="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
                               Unverbindliches Angebot anfordem
                             </Button>
                           </a>
@@ -347,7 +347,7 @@ class Additional extends React.Component {
                         <p>Beratungshotline</p>
                         <div style={{ display: "flex", alignItems: "end" }}>
                           <a rel="noreferrer" href="https://www.buderus.de/de/kontakt-klimapaket" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                            <Button class="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
+                            <Button disableRipple class="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
                               Zur Beratungshotline
                             </Button>
                           </a>
@@ -357,7 +357,7 @@ class Additional extends React.Component {
                         <p>Niederlassungssuche</p>
                         <div style={{ display: "flex", alignItems: "end" }}>
                           <a rel="noreferrer" href="https://www.buderus.de/de/niederlassungen" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                            <Button class="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
+                            <Button disableRipple class="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
                               Zur Niederlassungssuche
                             </Button>
                           </a>
@@ -795,82 +795,113 @@ class Additional extends React.Component {
               <h3>Weitere Informationen</h3>
               <h3 style={{ fontFamily: "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "13px" }}>Um weitere Informationen zu erhalten, scannen sie den jeweiligen QR-Code.</h3>
             </div>
-
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignContent: "center", alignItems: "center", textAlign: "center", marginTop: "0px", marginBottom: "0px", paddingLeft: "0px", maxWidth: "690px" }}>
-              <div style={{ width: "25%" }}>
-                <label>
-                  <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
-                  <a
-                    href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/wissen/der-energiemanager/sektorenkopplung/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_tool&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance
-"
-                    rel="noreferrer"
-                    target="_blank"
-                    class="panel panel-default card-input-narrow card-pdf-width"
-                    style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}
-                  >
-                    <div class="panel-heading-narrow" style={{ marginTop: "20px" }}>
-                      {this.context.selectedTheme === "buderus" ? <BuderusPhotovoltaicIcon /> : <PhotovoltaicIcon />}
+            {this.context.selectedTheme === "buderus" ? (
+              <>
+                <div class="cardContent" style={{ marginBottom: "40px" }}>
+                  <div class="flexContent additional-flex block-content" style={{ width: "100%", justifyContent: "space-between", marginTop: "8px" }}>
+                    <div class="block-container">
+                      <div class="block contact">
+                        <p>Fachbetriebe in ihrer Nähe</p>
+                        <div class="trackeable" data-event="result-part3-contact" style={{ display: "flex", alignItems: "end" }}>
+                          <a rel="noreferrer" href="https://www.buderus.de/de/services-tools/experten-in-ihrer-naehe/fachbetriebe-in-ihrer-naehe-21776" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                            <Button class="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
+                              Fachbetrieb suchen
+                            </Button>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="block contact">
+                        <p>Angebot anfordern</p>
+                        <div class="trackeable" data-event="result-part3-offer" style={{ display: "flex", alignItems: "end" }}>
+                          <a rel="noreferrer" href="https://www.buderus.de/de/angebot-anfordern" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                            <Button class="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
+                              Unverbindliches Angebot anfordem
+                            </Button>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="block contact">
+                        <p>Beratungshotline</p>
+                        <div style={{ display: "flex", alignItems: "end" }}>
+                          <a rel="noreferrer" href="https://www.buderus.de/de/kontakt-klimapaket" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                            <Button class="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
+                              Zur Beratungshotline
+                            </Button>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="block contact">
+                        <p>Niederlassungssuche</p>
+                        <div style={{ display: "flex", alignItems: "end" }}>
+                          <a rel="noreferrer" href="https://www.buderus.de/de/niederlassungen" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                            <Button class="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
+                              Zur Niederlassungssuche
+                            </Button>
+                          </a>
+                        </div>
+                      </div>
                     </div>
-                    <div class="panel-body" style={{ fontSize: "10px" }}>
-                      Solarstromrechner
-                    </div>
-                  </a>
-                </label>
-                <div style={{ marginTop: "20px" }}>
-                  <img alt="sectorcoupling_tool" src={require(`../../../../assets/img/qr/sectorcoupling_tool.png`)} style={{ width: "90px" }} />
+                  </div>
                 </div>
-              </div>
-              <div style={{ width: "25%" }}>
-                <label>
-                  <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
-                  <a
-                    href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/service-und-support/installateur-finden/dealersearch/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_dealersearch&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance
-"
-                    rel="noreferrer"
-                    target="_blank"
-                    class="panel panel-default card-input-narrow card-pdf-width"
-                    style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}
-                  >
-                    <div class="panel-heading-narrow" style={{ marginTop: "20px" }}>
-                      {this.context.selectedTheme === "buderus" ? <BuderusContractIcon /> : <ContractIcon />}
+              </>
+            ) : (
+              <>
+                <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignContent: "center", alignItems: "center", textAlign: "center", marginTop: "0px", marginBottom: "0px", paddingLeft: "0px", maxWidth: "690px" }}>
+                  <div style={{ width: "25%" }}>
+                    <label>
+                      <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
+                      <a href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/wissen/der-energiemanager/sektorenkopplung/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_tool&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance" rel="noreferrer" target="_blank" class="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
+                        <div class="panel-heading-narrow" style={{ marginTop: "20px" }}>
+                          {this.context.selectedTheme === "buderus" ? <BuderusPhotovoltaicIcon /> : <PhotovoltaicIcon />}
+                        </div>
+                        <div class="panel-body" style={{ fontSize: "10px" }}>
+                          Solarstromrechner
+                        </div>
+                      </a>
+                    </label>
+                    <div style={{ marginTop: "20px" }}>
+                      <img alt="sectorcoupling_tool" src={require(`../../../../assets/img/qr/sectorcoupling_tool.png`)} style={{ width: "90px" }} />
                     </div>
-                    <div class="panel-body" style={{ fontSize: "10px" }}>
-                      Unverbindliches
-                      <br />
-                      Angebot anfragen
+                  </div>
+                  <div style={{ width: "25%" }}>
+                    <label>
+                      <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
+                      <a href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/service-und-support/installateur-finden/dealersearch/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_dealersearch&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance" rel="noreferrer" target="_blank" class="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
+                        <div class="panel-heading-narrow" style={{ marginTop: "20px" }}>
+                          {this.context.selectedTheme === "buderus" ? <BuderusContractIcon /> : <ContractIcon />}
+                        </div>
+                        <div class="panel-body" style={{ fontSize: "10px" }}>
+                          Unverbindliches
+                          <br />
+                          Angebot anfragen
+                        </div>
+                      </a>
+                    </label>
+                    <div style={{ marginTop: "20px" }}>
+                      <img alt="dealer_search" src={require(`../../../../assets/img/qr/dealer_search.png`)} style={{ width: "90px" }} />
                     </div>
-                  </a>
-                </label>
-                <div style={{ marginTop: "20px" }}>
-                  <img alt="dealer_search" src={require(`../../../../assets/img/qr/dealer_search.png`)} style={{ width: "90px" }} />
+                  </div>
+                  <div style={{ width: "25%" }}>
+                    <label>
+                      <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
+                      <a href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/beratung-und-kauf/angebot-anfordern/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_lmt&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance" rel="noreferrer" target="_blank" class="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
+                        <div class="panel-heading-narrow" style={{ marginTop: "20px" }}>
+                          {this.context.selectedTheme === "buderus" ? <BuderusWrenchIcon /> : <WrenchIcon />}
+                        </div>
+                        <div class="panel-body" style={{ fontSize: "10px" }}>
+                          Kontakte zum
+                          <br />
+                          Fachbetrieb
+                        </div>
+                      </a>
+                    </label>
+                    <div style={{ marginTop: "20px" }}>
+                      <img alt="lmt" src={require(`../../../../assets/img/qr/lmt.png`)} style={{ width: "100px" }} />
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div style={{ width: "25%" }}>
-                <label>
-                  <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
-                  <a
-                    href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/beratung-und-kauf/angebot-anfordern/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_lmt&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance
-"
-                    rel="noreferrer"
-                    target="_blank"
-                    class="panel panel-default card-input-narrow card-pdf-width"
-                    style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}
-                  >
-                    <div class="panel-heading-narrow" style={{ marginTop: "20px" }}>
-                      {this.context.selectedTheme === "buderus" ? <BuderusWrenchIcon /> : <WrenchIcon />}
-                    </div>
-                    <div class="panel-body" style={{ fontSize: "10px" }}>
-                      Kontakte zum
-                      <br />
-                      Fachbetrieb
-                    </div>
-                  </a>
-                </label>
-                <div style={{ marginTop: "20px" }}>
-                  <img alt="lmt" src={require(`../../../../assets/img/qr/lmt.png`)} style={{ width: "100px" }} />
-                </div>
-              </div>
-            </div>
+              </>
+            )}
           </div>
           <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", maxWidth: "815px" }}>
             <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
@@ -884,14 +915,7 @@ class Additional extends React.Component {
               <div style={{ width: "25%" }}>
                 <label>
                   <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
-                  <a
-                    href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/waermepumpen-854510-c/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_heatpump&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance
-"
-                    rel="noreferrer"
-                    target="_blank"
-                    class="panel panel-default card-input-narrow card-pdf-width"
-                    style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}
-                  >
+                  <a href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/waermepumpen-854510-c/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_heatpump&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance" rel="noreferrer" target="_blank" class="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
                     <div class="panel-heading-narrow" style={{ marginTop: "20px" }}>
                       {this.context.selectedTheme === "buderus" ? <BuderusHeatpumpSmallIcon /> : <HeatpumpSmallIcon />}
                     </div>
@@ -907,14 +931,7 @@ class Additional extends React.Component {
               <div style={{ width: "25%" }}>
                 <label>
                   <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
-                  <a
-                    href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/solarthermieanlagen-854604-c/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_pv&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance
-"
-                    rel="noreferrer"
-                    target="_blank"
-                    class="panel panel-default card-input-narrow card-pdf-width"
-                    style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}
-                  >
+                  <a href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/solarthermieanlagen-854604-c/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_pv&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance" rel="noreferrer" target="_blank" class="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
                     <div class="panel-heading-narrow" style={{ marginTop: "20px" }}>
                       {this.context.selectedTheme === "buderus" ? <BuderusPhotovoltaicIcon /> : <PhotovoltaicIcon />}
                     </div>
@@ -930,14 +947,7 @@ class Additional extends React.Component {
               <div style={{ width: "25%" }}>
                 <label>
                   <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
-                  <a
-                    href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/power-charge-7000i-19378337-p/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_wallbox&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance
-"
-                    rel="noreferrer"
-                    target="_blank"
-                    class="panel panel-default card-input-narrow card-pdf-width"
-                    style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}
-                  >
+                  <a href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/power-charge-7000i-19378337-p/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_wallbox&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance" rel="noreferrer" target="_blank" class="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
                     <div class="panel-heading-narrow" style={{ marginTop: "20px" }}>
                       {this.context.selectedTheme === "buderus" ? <BuderusWallboxIcon /> : <WallboxIcon />}
                     </div>
@@ -953,14 +963,7 @@ class Additional extends React.Component {
               <div style={{ width: "25%" }}>
                 <label>
                   <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" />
-                  <a
-                    href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/energiemanagement-19317456-c/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_ems&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance
-"
-                    target="_blank"
-                    rel="noreferrer"
-                    class="panel panel-default card-input-narrow card-pdf-width"
-                    style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}
-                  >
+                  <a href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/energiemanagement-19317456-c/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_ems&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance" target="_blank" rel="noreferrer" class="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
                     <div class="panel-heading-narrow" style={{ marginTop: "20px" }}>
                       {this.context.selectedTheme === "buderus" ? <BuderusEnergyManagementIcon /> : <EnergyManagementIcon />}
                     </div>

@@ -11,7 +11,7 @@ import { VictoryPie, VictoryLabel } from "victory";
 /* import HouseholdSwitch from "./switchHousehold";
 import InfoButton from "../../infoButton"; */
 
-import { ReactComponent as GridOut } from "../../../../assets/img/grid_out.svg";
+import { ReactComponent as GridOut } from "../../../../assets/img/grid_in.svg";
 import { ReactComponent as Plug } from "../../../../assets/img/plug.svg";
 import { ReactComponent as HousePV } from "../../../../assets/img/house_pv.svg";
 
@@ -92,10 +92,8 @@ class HouseholdUse extends React.Component {
       setPieSize(260, 50, 67, 14, 16, 2, 65, 0, 0, 36, 40, 15, 45, -10, 10, 0);
     } else if (window.innerWidth > 1300) {
       setPieSize(240, 50, 60, 14, 16, 2, 65, 0, 0, 36, 40, 15, 45, -10, 10, 0);
-    } else if (window.innerWidth > 1100) {
-      setPieSize(220, 40, 40, 14, 16, 2, 35, 0, 0, 36, 40, 15, 45, -10, 10, 0);
-    } else if (window.innerWidth > 900) {
-      setPieSize(200, 40, 40, 14, 16, 2, 35, 0, 0, 36, 40, 15, 45, -10, 10, 0);
+    } else if (window.innerWidth > 1200) {
+      setPieSize(220, 50, 40, 14, 16, 2, 65, 0, 0, 36, 40, 15, 45, -10, 10, 0);
     } else {
       setPieSize(260, 50, 67, 14, 16, 2, 65, 0, 0, 36, 40, 15, 45, -10, 10, 0);
     }

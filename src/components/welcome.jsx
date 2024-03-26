@@ -195,10 +195,6 @@ class Welcome extends React.Component {
         <div className={styles.setupContainer}>
           <div>
             <div>{/*<img src={require(`../assets/img/house-placeholder.png`)} alt="" style={{width: '100%'}} />*/}</div>
-
-            <h1 style={{ textAlign: "center", fontSize: "36px !important" }}>Solarstromrechner</h1>
-            <div style={{ fontFamily: "Bosch-Regular", fontSize: "22px", textAlign: "center" }}>Selbsterzeugten Strom intelligent verbrauchen und Stromkosten sparen.</div>
-
             <div class="welcomeContainer" style={{ display: "flex" }}>
               <div class="left-container">
                 <p style={{ fontFamily: "Bosch-Bold", fontSize: "16px" }}>Sparen Sie Stromkosten – mit der smarten Kombination aus Photovoltaik, Wärmepumpe, Wallbox und einem intelligenten Energiemanagementsystem</p>
