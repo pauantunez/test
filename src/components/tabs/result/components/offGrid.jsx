@@ -398,7 +398,7 @@ class OffGrid extends React.Component {
           </div>
         )}
 
-        <div data-html2canvas-ignore style={{ display: "flex", marginTop: "30px", justifyContent: "flex-start", flexDirection: "row" }}>
+        <div data-html2canvas-ignore style={{ display: "flex", marginTop: "0px", justifyContent: "flex-start", flexDirection: "row" }}>
           {/* <div class="trackeable" data-event="result-part2-switch-energiemanagement">
             <CustomSwitch />
           </div> */}

@@ -101,12 +101,12 @@ class ResultStep1 extends React.Component {
               </div>
             </div>
           </div>
-          <div class="flex-line" style={{ width: "2px", height: "700px", background: "#E0E2E5", marginLeft: "50px", marginRight: "50px" }}></div>
+          <div class="flex-line" style={{ width: "2px", background: "#E0E2E5", marginLeft: "50px", marginRight: "50px" }}></div>
           <div class="right-box top-margins">
             <div style={{ fontFamily: "Bosch-Bold", fontSize: "20px", textAlign: "left" }}>Amortisationszeit</div>
             <div style={{ marginTop: "20px" }}>
               <BreakEven />
-              <div style={{ marginTop: "20px" }}>
+              <div class="upper-space" style={{ marginTop: "20px" }}>
                 <InfoBoxResult box="right" />
               </div>
             </div>

@@ -1249,6 +1249,9 @@ a.card-input-narrow {
   justify-content: space-between;
   align-content: space-between;
 }
+.results-page-two .infobox-container {
+  min-height: 255px;
+}
 
 
 
@@ -1525,8 +1528,11 @@ a.card-input-narrow {
 .results-page-one .left-box .infobox-container{
   min-height: 185px;
 }
-.results-page-two .infobox-container{
-  min-height: 255px;
+/* .results-page-two .infobox-container{
+  min-height: 200px;
+} */
+.graphs-container{
+  margin-bottom: 80px !important;
 }
 
 .infobox-h3 {
@@ -1567,6 +1573,10 @@ a.card-input-narrow {
   background-color: transparent;
   opacity: 1;
   /*background: repeating-linear-gradient(-45deg, #747474, #18837E 2px, transparent 2px, transparent 3px);*/
+}
+
+#electricityUse-1, #electricityUse-2{
+  margin-top: -14px;
 }
 
 @media print {}
@@ -1779,8 +1789,8 @@ a.card-input-narrow {
     height: 16px;
     margin-left: 5px;
   }
-  .additional-flex.first-col{
-    margin-top: -24px;
+  .additional-flex.first-col, .additional-flex.second-col, .additional-flex.third-col{
+    margin-top: -50px;
   }
   .infobox-container .results-page-one{
     min-height: 220px;

@@ -92,10 +92,12 @@ class HouseholdUse extends React.Component {
       setPieSize(260, 50, 67, 14, 16, 2, 65, 0, 0, 36, 40, 15, 45, -10, 10, 0);
     } else if (window.innerWidth > 1300) {
       setPieSize(240, 50, 60, 14, 16, 2, 65, 0, 0, 36, 40, 15, 45, -10, 10, 0);
-    } else if (window.innerWidth > 1200) {
-      setPieSize(220, 50, 40, 14, 16, 2, 65, 0, 0, 36, 40, 15, 45, -10, 10, 0);
+    } else if (window.innerWidth > 1100) {
+      setPieSize(220, 50, 37, 14, 16, 5, 50, 0, 0, 36, 40, 15, 55, -5, 10, 0);
+    } else if (window.innerWidth > 900) {
+      setPieSize(200, 50, 37, 14, 16, 5, 50, 0, 0, 36, 40, 15, 55, 5, 10, 0);
     } else {
-      setPieSize(260, 50, 67, 14, 16, 2, 65, 0, 0, 36, 40, 15, 45, -10, 10, 0);
+      setPieSize(260, 50, 67, 14, 16, 2, 65, 20, 30, 36, 40, 15, 45, -10, 10, 0);
     }
   };
 
@@ -405,7 +407,7 @@ class HouseholdUse extends React.Component {
           </div>
         )}
 
-        <div data-html2canvas-ignore style={{ display: "flex", marginTop: "30px", justifyContent: "flex-start", flexDirection: "row" }}>
+        <div data-html2canvas-ignore style={{ display: "flex", marginTop: "0px", justifyContent: "flex-start", flexDirection: "row" }}>
           {/* <div class="trackeable" data-event="result-part2-switch-energiemanagement">
             <HouseholdSwitch />
           </div> */}
