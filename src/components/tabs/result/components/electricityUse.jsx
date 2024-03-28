@@ -109,11 +109,11 @@ class ElectricityUse extends React.Component {
       } else if (window.innerWidth > 1300) {
         setPieSize(240, 70, 55, 18, 38, 22, 40, 0, 0, 34, 40, 15, 55, 5, 20, 0);
       } else if (window.innerWidth > 1100) {
-        setPieSize(220, 50, 37, 14, 16, 2, 65, 0, 0, 36, 40, 15, 55, 5, 10, 0);
+        setPieSize(220, 50, 37, 14, 16, 5, 50, 0, 0, 36, 40, 15, 55, 5, 10, 0);
       } else if (window.innerWidth > 900) {
-        setPieSize(200, 50, 37, 14, 16, 2, 65, 0, 0, 36, 40, 15, 55, 5, 10, 0);
+        setPieSize(200, 50, 37, 14, 16, 5, 40, 0, 0, 36, 40, 15, 55, 5, 10, 0);
       } else {
-        setPieSize(260, 50, 55, 18, 38, 2, 40, 0, 0, 34, 40, 15, 55, 5, 20, 0);
+        setPieSize(260, 50, 55, 18, 35, 5, 40, 0, 50, 36, 40, 15, 60, 5, 20, 0);
       }
       
   };

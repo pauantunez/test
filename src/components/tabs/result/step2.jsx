@@ -96,9 +96,12 @@ class ResultStep2 extends React.Component {
         </div>
         <div class="pie-flex results-page-two" style={{ display: "flex", marginTop: "50px", height: "100%", width: "100%", flexWrap: "nowrap" /*justifyContent: 'space-between',*/ /*alignContent: 'center'*/ }}>
           <div class="results col-one">
-            <div style={{ fontFamily: "Bosch-Bold", fontSize: "20px", textAlign: "left" }}>Stromverbrauch</div>
+            <div class="top-margins">
+              <div style={{ fontFamily: "Bosch-Bold", fontSize: "20px", textAlign: "left" }}>Stromverbrauch</div>
+            </div>
             <div style={{ marginTop: "0px" }}>
               <ElectricityUse />
+
               <div style={{ marginTop: "20px" }}>
                 <InfoBoxResult box="electricity-use" />
               </div>
@@ -115,21 +118,21 @@ class ResultStep2 extends React.Component {
               <div style={{ marginTop: "20px" }}>
                 
                 <div class="additional-flex second-col" style={{ display: "flex", justifyContent: "space-around", fontFamily: "Bosch-Regular", fontSize: "14px" }}>
-                  <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#996193" : "#18837E" }}>
+                  <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" }}>
                     <div style={{ marginRight: "10px" }}>
-                      <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#996193" : "#18837E", borderRadius: "12px" }}></div>
+                      <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E", borderRadius: "12px" }}></div>
                     </div>
-                    <div>PV-Strom</div>
+                    <div>Produktion</div>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#CC36BD" : "#00884A" }}>
+                  <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A" }}>
                     <div style={{ marginRight: "10px" }}>
-                      <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#CC36BD" : "#00884A", borderRadius: "12px" }}></div>
+                      <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A", borderRadius: "12px" }}></div>
                     </div>
                     <div>Bezug Netzstrom</div>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#A4ABB3" }}>
+                  <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3" }}>
                     <div style={{ marginRight: "10px" }}>
-                      <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#5278A2" : "#A4ABB3", borderRadius: "12px" }}></div>
+                      <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3", borderRadius: "12px" }}></div>
                     </div>
                     <div>Mit EMS</div>
                   </div>
@@ -150,7 +153,32 @@ class ResultStep2 extends React.Component {
             <div style={{ marginTop: "0px" }}>
               <HouseholdUse />
               <div style={{ marginTop: "20px" }}>
-                <InfoBoxResult box="household-use" />
+                
+               <div class="additional-flex third-col" style={{ display: "flex", justifyContent: "space-around", fontFamily: "Bosch-Regular", fontSize: "14px" }}>
+                  <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" }}>
+                    <div style={{ marginRight: "10px" }}>
+                      <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E", borderRadius: "12px" }}></div>
+                    </div>
+                    <div>Verbrauch</div>
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A" }}>
+                    <div style={{ marginRight: "10px" }}>
+                      <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A", borderRadius: "12px" }}></div>
+                    </div>
+                    <div>Einspeisung</div>
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3" }}>
+                    <div style={{ marginRight: "10px" }}>
+                      <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3", borderRadius: "12px" }}></div>
+                    </div>
+                    <div>Mit EMS</div>
+                  </div>
+                </div>
+
+                <div style={{ marginTop: "20px" }}>
+                  <InfoBoxResult box="household-use" />
+                </div>
+                
               </div>
             </div>
           </div>

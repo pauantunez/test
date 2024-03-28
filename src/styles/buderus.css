@@ -1291,6 +1291,22 @@ a.card-input-narrow {
   justify-content: space-around;
   flex-direction: column;
 }
+.graphs-container, .wrapper-container {
+  margin-bottom: 80px !important;
+}
+.results-page-two .infobox-container{
+  min-height: 255px;
+}
+.title-col-two{
+  margin-bottom: 26px;
+}
+.graph-container{
+  margin-bottom: 69px;
+  min-height: 220px;
+}
+.left-box .graph-container{
+  margin-bottom: 0px;
+}
 
 @media only screen and (max-width: 1200px) {
 
@@ -1345,6 +1361,14 @@ a.card-input-narrow {
   
 }
 
+@media only screen and (max-width: 10200px) {
+
+  .right-box .text-mobile{
+    font-size: 11px;
+  }
+
+}
+
 @media only screen and (max-width: 1000px) {
   .graph-container > div > .cost-chart-width, #breakEvenChart{
     max-width: 300px;
@@ -1355,6 +1379,25 @@ a.card-input-narrow {
   .pie-flex > div.flex-line{
     min-width: 1px;
   }
+}
+
+@media only screen and (max-width: 960px) {
+
+  .right-box .upper-space{
+    margin-top: 9px!important;
+  }
+
+}
+
+@media only screen and (max-width: 920px) {
+  
+  .right-box .text-mobile{
+    font-size: 10px;
+  }
+  .right-box .upper-space{
+    margin-top: 21px!important;
+  }
+
 }
 
 @media only screen and (max-width: 900px) {
@@ -1388,6 +1431,15 @@ a.card-input-narrow {
   .pie-flex {
     flex-direction: column;
     margin-bottom: 80px;
+  }
+  .results-page-two .infobox-container {
+    min-height: inherit;
+  }
+  .results-page-one .left-box .infobox-container {
+    min-height: inherit!important;
+  }
+  .results-page-one .right-box .infobox-container {
+    min-height: inherit!important;
   }
 
   .flex-line {
@@ -1541,13 +1593,13 @@ a.card-input-narrow {
   min-height: 244px;
 }
 .results-page-one .left-box .infobox-container{
-  min-height: 185px;
+  min-height: 244px;
 }
-.results-page-two .infobox-container{
-  min-height: 255px;
-}
+
 .switch-container {
   display: flex;
+  align-content: end;
+  justify-content: end;
 }
 .switch-label {
   font-size: 16px;
@@ -1811,7 +1863,10 @@ a.card-input-narrow {
     margin-left: 5px;
   }
   .additional-flex.first-col{
-    margin-top: -24px;
+    margin-top: -30px;
+  }
+  .additional-flex.second-col, .additional-flex.third-col{
+    margin-top: -50px;
   }
   .infobox-container .results-page-one{
     min-height: 220px;
