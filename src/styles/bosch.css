@@ -1252,6 +1252,15 @@ a.card-input-narrow {
 .results-page-two .infobox-container {
   min-height: 255px;
 }
+.noticeBottom {
+  position: relative;
+  width: 100%;
+  color: #A4ABB3;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
 
 
 
@@ -1523,15 +1532,34 @@ a.card-input-narrow {
   min-height: 204px;
 }
 .results-page-one .right-box .infobox-container{
-  min-height: 244px;
+  min-height: 190px;
 }
 .results-page-one .left-box .infobox-container{
-  min-height: 185px;
+  min-height: 187px;
 }
+
+@media only screen and (max-width: 1105px) {
+  .results-page-one .right-box .infobox-container{
+    min-height: 230px;
+  }
+  .results-page-one .left-box .infobox-container {
+    min-height: 230px;
+  }
+}
+@media only screen and (max-width: 1020px) {
+
+  .results-page-one .right-box .text-mobile{
+    font-size: 10px;
+    margin-top: 2px;
+    margin-bottom: 3px;
+  }
+
+}
+
 /* .results-page-two .infobox-container{
   min-height: 200px;
 } */
-.graphs-container{
+.graphs-container, .wrapper-container{
   margin-bottom: 80px !important;
 }
 
@@ -1577,6 +1605,9 @@ a.card-input-narrow {
 
 #electricityUse-1, #electricityUse-2{
   margin-top: -14px;
+}
+#break-even .graph-container{
+  min-height: 270px;
 }
 
 @media print {}
@@ -1721,12 +1752,14 @@ a.card-input-narrow {
     align-items: center;
   }
 
-  .noticeBottom {
+  /* .noticeBottom {
     display: none;
-  }
+  } */
 
   .welcomeBtns {
-    flex-direction: column;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
   }
 
   .welcomeContainer {
@@ -1746,6 +1779,14 @@ a.card-input-narrow {
     flex-wrap: wrap;
     align-content: center;
     justify-content: center;
+  }
+  .flexRow.tabs{
+    align-content: start;
+    justify-content: start;
+  }
+  #break-even .title-col-two{
+    margin-bottom: 10px;
+    margin-top: 8px;
   }
 
   .additional-flex {
@@ -1851,9 +1892,7 @@ a.card-input-narrow {
   .results-page-one .infobox-container{
     min-height: 180px;
   }
-  .results-page-one .right-box .infobox-container{
-    min-height: 267px;
-  }
+  
 }
 
 @media only screen and (max-width: 900px) {

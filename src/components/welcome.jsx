@@ -247,7 +247,7 @@ class Welcome extends React.Component {
           </div>
         </div>
 
-        <div class="noticeBottom" style={{ position: "fixed", width: "100%", bottom: "2%", color: "#A4ABB3", fontSize: "12px", textAlign: "center" }}>
+        <div class="noticeBottom">
           Hinweis: Die Ergebnisse beruhen auf Annahmen und können in der Realität abweichen. Bitte besprechen Sie die Details mit einem Fachbetrieb in Ihrer Nähe.
         </div>
 
