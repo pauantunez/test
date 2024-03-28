@@ -101,21 +101,20 @@ class ElectricityUse extends React.Component {
 
     if (window.innerWidth > 1600) {
       //size, iconSize, innerRadius, fontSize, xHeatpumpLabel, xEVLabel, xHouseholdLabel, yHeatpumpLabel, yEVLabel, yHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin
-        setPieSize(300, 60, 55, 18, 38, 25, 90, 0, 0, 34, 40, 15, 55, 5, 20, 0);
-      } else if (window.innerWidth > 1500) {
-        setPieSize(280, 70, 55, 18, 38, 25, 90, 0, 0, 34, 40, 15, 55, 5, 20, 0);
-      } else if (window.innerWidth > 1400) {
-        setPieSize(260, 70, 55, 18, 38, 25, 40, 0, 0, 34, 40, 15, 55, 5, 20, 0);
-      } else if (window.innerWidth > 1300) {
-        setPieSize(240, 70, 55, 18, 38, 22, 40, 0, 0, 34, 40, 15, 55, 5, 20, 0);
-      } else if (window.innerWidth > 1100) {
-        setPieSize(220, 50, 37, 14, 16, 5, 50, 0, 0, 36, 40, 15, 55, 5, 10, 0);
-      } else if (window.innerWidth > 900) {
-        setPieSize(200, 50, 37, 14, 16, 5, 40, 0, 0, 36, 40, 15, 55, 5, 10, 0);
-      } else {
-        setPieSize(260, 50, 55, 18, 35, 5, 40, 0, 50, 36, 40, 15, 60, 5, 20, 0);
-      }
-      
+      setPieSize(300, 60, 55, 18, 38, 25, 90, 0, 0, 34, 40, 15, 55, 5, 20, 0);
+    } else if (window.innerWidth > 1500) {
+      setPieSize(280, 70, 55, 18, 38, 25, 90, 0, 0, 34, 40, 15, 55, 5, 20, 0);
+    } else if (window.innerWidth > 1400) {
+      setPieSize(260, 70, 55, 18, 38, 25, 40, 0, 0, 34, 40, 15, 55, 5, 20, 0);
+    } else if (window.innerWidth > 1300) {
+      setPieSize(240, 70, 55, 18, 38, 22, 40, 0, 0, 34, 40, 15, 55, 5, 20, 0);
+    } else if (window.innerWidth > 1100) {
+      setPieSize(220, 50, 37, 14, 16, 5, 50, 0, 0, 36, 40, 15, 55, 5, 10, 0);
+    } else if (window.innerWidth > 900) {
+      setPieSize(200, 50, 37, 14, 16, 5, 40, 0, 0, 36, 40, 15, 55, 5, 10, 0);
+    } else {
+      setPieSize(260, 50, 55, 18, 35, 5, 40, 0, 50, 36, 40, 15, 60, 5, 20, 0);
+    }
   };
 
   heatpumpUsageKWH = (type) => {
@@ -211,6 +210,10 @@ class ElectricityUse extends React.Component {
     var roundedHouseholdNoEMSpvPercentHousehold = Math.round(parseFloat(this.energyUsagePercentage("household")));
     roundedEnergyUsagePercentageHeatpump = this.adjustPercentage(roundedEnergyUsagePercentageHeatpump, roundedEnergyUsagePercentageEv, roundedHouseholdNoEMSpvPercentHousehold);
     const VictoryPieData2 = [{ x: 3, y: this.heatpumpUsageKWH(), name: "heatpump", label: roundedEnergyUsagePercentageHeatpump + "%", img: "/img/heatpump_small.svg", color: this.context.selectedTheme === "buderus" ? "#CC36BD" : "#004975" }, ...(odometerIncreaseKWH !== 0 ? [{ x: 2, y: odometerIncreaseKWH, name: "ev", label: roundedEnergyUsagePercentageEv + "%", img: "/img/ev_small.svg", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#C535BC" }] : []), { x: 1, y: parseInt(energyUsagekWh), name: "household", label: roundedHouseholdNoEMSpvPercentHousehold + "%", img: "/img/household_small.svg", color: this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896" }];
+    const colorScale = [this.context.selectedTheme === "buderus" ? "#CC36BD" : "#004975", odometerIncreaseKWH !== 0 ? (this.context.selectedTheme === "buderus" ? "#5278A2" : "#C535BC") : undefined, this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896"].filter((color) => color !== undefined);
+
+    console.log("🚀 ~ ElectricityUse ~ render ~ colorScale:", colorScale);
+    console.log("🚀 ~ ElectricityUse ~ render ~ VictoryPieData2:", VictoryPieData2);
 
     return (
       <div>
@@ -222,7 +225,7 @@ class ElectricityUse extends React.Component {
                 width={pieChartSize}
                 padding={{ top: 0 }}
                 pointerEvents="auto"
-                colorScale={[this.context.selectedTheme === "buderus" ? "#CC36BD" : "#004975", this.context.selectedTheme === "buderus" ? "#5278A2" : "#C535BC", this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896"]}
+                colorScale={colorScale}
                 labelRadius={({ innerRadius }) => innerRadius + innerRadiusMargin}
                 innerRadius={0}
                 style={{
@@ -246,7 +249,7 @@ class ElectricityUse extends React.Component {
                 width={pieChartSize}
                 padding={{ top: 0 }}
                 pointerEvents="auto"
-                colorScale={[this.context.selectedTheme === "buderus" ? "#CC36BD" : "#004975", this.context.selectedTheme === "buderus" ? "#5278A2" : "#C535BC", this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896"]}
+                colorScale={colorScale}
                 labelComponent={<CustomLabelComponent iconSize={pieIconSize} fontSize={pieLabelFontSize} xPositionIconMargin={xPositionIconMargin} yPositionIconMargin={yPositionIconMargin} xPositionEVIconMargin={xPositionEVIconMargin} yPositionEVIconMargin={yPositionEVIconMargin} xPositionHouseholdIconMargin={xPositionHouseholdIconMargin} yPositionHouseholdIconMargin={yPositionHouseholdIconMargin} xPositionHeatpumpLabel={xPositionHeatpumpLabel} xPositionEVLabel={xPositionEVLabel} xPositionHouseholdLabel={xPositionHouseholdLabel} yPositionHeatpumpLabel={yPositionHeatpumpLabel} yPositionEVLabel={yPositionEVLabel} yPositionHouseholdLabel={yPositionHouseholdLabel} />}
                 style={{
                   pointerEvents: "auto",
