@@ -212,9 +212,6 @@ class ElectricityUse extends React.Component {
     const VictoryPieData2 = [{ x: 3, y: this.heatpumpUsageKWH(), name: "heatpump", label: roundedEnergyUsagePercentageHeatpump + "%", img: "/img/heatpump_small.svg", color: this.context.selectedTheme === "buderus" ? "#CC36BD" : "#004975" }, ...(odometerIncreaseKWH !== 0 ? [{ x: 2, y: odometerIncreaseKWH, name: "ev", label: roundedEnergyUsagePercentageEv + "%", img: "/img/ev_small.svg", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#C535BC" }] : []), { x: 1, y: parseInt(energyUsagekWh), name: "household", label: roundedHouseholdNoEMSpvPercentHousehold + "%", img: "/img/household_small.svg", color: this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896" }];
     const colorScale = [this.context.selectedTheme === "buderus" ? "#CC36BD" : "#004975", odometerIncreaseKWH !== 0 ? (this.context.selectedTheme === "buderus" ? "#5278A2" : "#C535BC") : undefined, this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896"].filter((color) => color !== undefined);
 
-    console.log("🚀 ~ ElectricityUse ~ render ~ colorScale:", colorScale);
-    console.log("🚀 ~ ElectricityUse ~ render ~ VictoryPieData2:", VictoryPieData2);
-
     return (
       <div>
         <div style={{ display: "flex", justifyContent: "center" }}>
