@@ -4,7 +4,7 @@ import AppContext from "../../AppContext";
 import { Button } from "reactstrap";
 import { withTranslation } from "react-i18next";
 import styles from "../../styles/home.module.css";
-import licensesData from "../../licenses.json";
+import LicensesData from "./licensesData";
 
 var fontRegular;
 var btnColor;
@@ -33,9 +33,6 @@ class Disclaimer extends React.Component {
   render() {
     const { overlayToggle } = this.state;
 
-    // Convertir licensesData en un array de objetos
-    const licensesArray = Object.entries(licensesData).map(([key, value]) => ({ ...value, key }));
-
     return (
       <div>
         <div className={`${overlayToggle ? styles.show : styles.hide} ${styles.disclaimerContainer} ${styles.scaleDisclaimerContainer}`} style={{ zIndex: "99999999999" }}>
@@ -46,15 +43,7 @@ class Disclaimer extends React.Component {
                   <strong>Licenze OSS</strong>
                 </p>
 
-                {licensesArray.map((license, index) => (
-                  <p key={index}>
-                    <strong>{license.key}</strong>
-                    <br />
-                    <a href={license.repository} rel="noreferrer" target="_blank">
-                      {license.licenses}
-                    </a>
-                  </p>
-                ))}
+                <LicensesData />
                 <br />
               </div>
             </div>
