@@ -201,27 +201,27 @@ class Investment extends React.Component {
 
     return (
       <div>
-        <div class="cardContainer step-nine">
-          <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusCoins /> : <Coins />}</div>
-          <div class="cardContent">
-            <div class="flexContent">
+        <div className="cardContainer step-nine">
+          <div className="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusCoins /> : <Coins />}</div>
+          <div className="cardContent">
+            <div className="flexContent">
               <div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <div class="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusCoins style={{ marginLeft: "10px", width: "55px" }} /> : <Coins style={{ marginLeft: "10px", width: "55px" }} />}</div>
-                  <h3 class="cardHeadline">Investitionskosten</h3>
+                  <div className="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusCoins style={{ marginLeft: "10px", width: "55px" }} /> : <Coins style={{ marginLeft: "10px", width: "55px" }} />}</div>
+                  <h3 className="cardHeadline">Investitionskosten</h3>
                 </div>
-                <span class="cardDescription">
+                <span className="cardDescription">
                   Wie viel hat das PV-System gekostet oder wird es kosten
                   <br />
                   (inkl. Kosten des Batteriespeichers und Kosten für Montage)?
                 </span>
               </div>
-              <div class="flexRow" style={{ flexDirection: "column" }}>
+              <div className="flexRow" style={{ flexDirection: "column" }}>
                 <div style={{ marginTop: "10px", marginLeft: "10px", fontFamily: "Bosch-Regular" }}>
                   <FormControl>
                     <RadioGroup sx={{ flexWrap: "inherit", flexDirection: "row" }} name="oil-lng-value" row>
-                      <div class="label" style={{ display: "flex", flexDirection: "column" }}>
-                        <span class="trackeable" data-event="investitionskosten-nein">
+                      <div className="label" style={{ display: "flex", flexDirection: "column" }}>
+                        <span className="trackeable" data-event="investitionskosten-nein">
                           <FormControlLabel value="false" control={<OilLNGRadio />} style={{ marginRight: "0px" }} label="Ich kenne die Investitionskosten nicht." checked={investmentCost === "false"} onChange={this.inputInvestmentCost} />
                         </span>
                         <FormControlLabel value="true" control={<OilLNGRadio />} style={{ marginRight: "0px" }} label="Der Gesamtbetrag beläuft sich auf folgende Summe" checked={investmentCost === "true"} onChange={this.inputInvestmentCost} />

@@ -408,7 +408,7 @@ class HouseholdUse extends React.Component {
         )}
 
         <div data-html2canvas-ignore style={{ display: "flex", marginTop: "0px", justifyContent: "flex-start", flexDirection: "row" }}>
-          {/* <div class="trackeable" data-event="result-part2-switch-energiemanagement">
+          {/* <div className="trackeable" data-event="result-part2-switch-energiemanagement">
             <HouseholdSwitch />
           </div> */}
         </div>

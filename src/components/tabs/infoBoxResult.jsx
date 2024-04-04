@@ -191,12 +191,12 @@ class InfoBoxResult extends React.Component {
     var Onhe_GridFeedPercentageNoEMS = parseInt(sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS"));
 
     return (
-      <Box component="span" class="infobox-container" style={{ fontSize: "16px", fontWeight: "400", boxShadow: "none", marginLeft: "0px", /*maxWidth: '500px',*/ padding: "16px" }}>
+      <Box component="span" className="infobox-container" style={{ fontSize: "16px", fontWeight: "400", boxShadow: "none", marginLeft: "0px", /*maxWidth: '500px',*/ padding: "16px" }}>
         <div>
           {this.state.boxType === "left" && (
             <div>
-              <div class="infobox-row-container">
-                <div class="infobox-row" style={{ display: "block", lineHeight: "24px", borderBottom: "none" }}>
+              <div className="infobox-row-container">
+                <div className="infobox-row" style={{ display: "block", lineHeight: "24px", borderBottom: "none" }}>
                   {costOverTime === "1" && (
                     <p>
                       Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{savingOnlyPV1year.toLocaleString("de-DE")} € Stromkosten </strong>pro Jahr sparen.
@@ -245,12 +245,24 @@ class InfoBoxResult extends React.Component {
 
           {this.state.boxType === "right" && (
             <div>
-              <div class="infobox-row-container">
-                <div class="infobox-row" style={{ display: "block", lineHeight: "24px", borderBottom: "none" }}>
-                  <p>Die Investition in eine <b>PV-Anlage</b> hat sich nach ca. <strong>{this.breakEvenPV()} Jahren</strong> amortisiert.</p>
-                  <p>Die Investition in eine <strong>PV-Anlage</strong> hat sich durch den Einsatz eines <strong>Energiemanagementsystems</strong> nach ca. <strong>{this.breakEvenPVems()} Jahren</strong> amortisiert.</p>
-                  <p>Die zusätzlichen Kosten für ein <strong>Energiemanagementsystem</strong> von <strong>400 €*</strong> haben sich bereits nach ca. <strong>{this.breakEvenPoint()} {(this.breakEvenPoint() > 1) ? 'Jahren' : 'Jahr'} </strong> bezahlt gemacht.</p>
-                  <p><small>* Bei Einsatz Fronius / Sungrow Wechselrichter (ab Ende Q1/24)</small></p>
+              <div className="infobox-row-container">
+                <div className="infobox-row" style={{ display: "block", lineHeight: "24px", borderBottom: "none" }}>
+                  <p>
+                    Die Investition in eine <b>PV-Anlage</b> hat sich nach ca. <strong>{this.breakEvenPV()} Jahren</strong> amortisiert.
+                  </p>
+                  <p>
+                    Die Investition in eine <strong>PV-Anlage</strong> hat sich durch den Einsatz eines <strong>Energiemanagementsystems</strong> nach ca. <strong>{this.breakEvenPVems()} Jahren</strong> amortisiert.
+                  </p>
+                  <p>
+                    Die zusätzlichen Kosten für ein <strong>Energiemanagementsystem</strong> von <strong>400 €*</strong> haben sich bereits nach ca.{" "}
+                    <strong>
+                      {this.breakEvenPoint()} {this.breakEvenPoint() > 1 ? "Jahren" : "Jahr"}{" "}
+                    </strong>{" "}
+                    bezahlt gemacht.
+                  </p>
+                  <p>
+                    <small>* Bei Einsatz Fronius / Sungrow Wechselrichter (ab Ende Q1/24)</small>
+                  </p>
                 </div>
               </div>
             </div>
@@ -258,8 +270,8 @@ class InfoBoxResult extends React.Component {
 
           {this.state.boxType === "electricity-use" && (
             <div>
-              <div class="infobox-row-container">
-                <div class="infobox-row" style={{ display: "block", lineHeight: "24px", fontSize: "14px", borderBottom: "none" }}>
+              <div className="infobox-row-container">
+                <div className="infobox-row" style={{ display: "block", lineHeight: "24px", fontSize: "14px", borderBottom: "none" }}>
                   <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>
                     Stromverbrauch gesamt: {Math.round(this.energyUsageCombined()).toLocaleString("de-DE")} kWh
                     <IconButton
@@ -270,7 +282,7 @@ class InfoBoxResult extends React.Component {
                         this.goToView(3, true);
                       }}
                     >
-                      <div class="trackeable" data-event="result-part2-change-electricity">
+                      <div className="trackeable" data-event="result-part2-change-electricity">
                         <EditIcon />
                       </div>
                     </IconButton>
@@ -283,8 +295,8 @@ class InfoBoxResult extends React.Component {
 
           {this.state.boxType === "off-grid" && (
             <div>
-              <div class="infobox-row-container">
-                <div class="infobox-row" style={{ display: "block", lineHeight: "24px", fontSize: "14px", borderBottom: "none" }}>
+              <div className="infobox-row-container">
+                <div className="infobox-row" style={{ display: "block", lineHeight: "24px", fontSize: "14px", borderBottom: "none" }}>
                   {offgridEMS === true && <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Autarkiegrad: ca. {autarkiegradWithEMS}%</h3>}
                   {offgridEMS === false && <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Autarkiegrad: ca. {ohnePvUsagePercentage}%</h3>}
 
@@ -323,8 +335,8 @@ class InfoBoxResult extends React.Component {
 
           {this.state.boxType === "household-use" && (
             <div>
-              <div class="infobox-row-container">
-                <div class="infobox-row" style={{ display: "block", lineHeight: "24px", fontSize: "14px", borderBottom: "none" }}>
+              <div className="infobox-row-container">
+                <div className="infobox-row" style={{ display: "block", lineHeight: "24px", fontSize: "14px", borderBottom: "none" }}>
                   {householdEMS === true && <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Eigenverbrauchsanteil: ca. {eigenverbrauchsanteil}%</h3>}
                   {householdEMS === false && <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Eigenverbrauchsanteil: ca. {Onhe_HouseholdNoEMSpvPercent}%</h3>}
                   {householdEMS === true && (

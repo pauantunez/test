@@ -126,22 +126,22 @@ class HouseholdEnergyUse extends React.Component {
 
     return (
       <div>
-        <div class="cardContainer step-four">
-          <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusHouseholdEnergyUseIcon /> : <HouseholdEnergyUseIcon />}</div>
-          <div class="cardContent">
-            <div class="flexContent">
+        <div className="cardContainer step-four">
+          <div className="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusHouseholdEnergyUseIcon /> : <HouseholdEnergyUseIcon />}</div>
+          <div className="cardContent">
+            <div className="flexContent">
               <div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <div class="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusHouseholdEnergyUseIcon style={{ marginLeft: "10px", width: "55px" }} /> : <HouseholdEnergyUseIcon style={{ marginLeft: "10px", width: "55px" }} />}</div>
-                  <h3 class="cardHeadline">Haushaltsstromverbrauch</h3>
+                  <div className="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusHouseholdEnergyUseIcon style={{ marginLeft: "10px", width: "55px" }} /> : <HouseholdEnergyUseIcon style={{ marginLeft: "10px", width: "55px" }} />}</div>
+                  <h3 className="cardHeadline">Haushaltsstromverbrauch</h3>
                 </div>
-                <span class="cardDescription">
+                <span className="cardDescription">
                   Wie groß ist ihr Haushaltsstromverbrauch pro Jahr
                   <br /> (ohne Stromverbrauch für Wärmepumpe und E-Auto)?
                 </span>
               </div>
-              <div class="flexRow" style={{ flexDirection: "column", marginTop: "20px" }}>
-                <div class="slider-size">
+              <div className="flexRow" style={{ flexDirection: "column", marginTop: "20px" }}>
+                <div className="slider-size">
                   <Slider
                     min={2000}
                     max={8000}
@@ -163,7 +163,7 @@ class HouseholdEnergyUse extends React.Component {
                     onChange={this.inputEnergyUsageKWH}
                   />
 
-                  <div class="slider-label" style={{ position: "relative", top: "5px", left: 0, fontFamily: "Bosch-Regular", fontSize: "12px" }}>
+                  <div className="slider-label" style={{ position: "relative", top: "5px", left: 0, fontFamily: "Bosch-Regular", fontSize: "12px" }}>
                     <div style={{ position: "absolute", left: "0%", transform: "translateX(-50%)" }}>
                       <div style={{ width: "1px", height: "10px", background: "#000" }}></div>
                     </div>
@@ -177,12 +177,12 @@ class HouseholdEnergyUse extends React.Component {
                       <div style={{ width: "1px", height: "10px", background: "#000" }}></div>
                     </div>
                   </div>
-                  <div class="slider-label" style={{ position: "relative", top: "17px", left: 0, fontFamily: "Bosch-Regular", fontSize: "16px" }}>
+                  <div className="slider-label" style={{ position: "relative", top: "17px", left: 0, fontFamily: "Bosch-Regular", fontSize: "16px" }}>
                     <div style={{ position: "absolute", left: "0%", transform: "translateX(-50%)" }}>2.000</div>
                     <div style={{ position: "absolute", left: "33%", transform: "translateX(-50%)" }}>4.000</div>
                     <div style={{ position: "absolute", left: "67%", transform: "translateX(-50%)" }}>6.000</div>
                     <div style={{ position: "absolute", left: "100%", transform: "translateX(-50%)" }}>8.000</div>
-                    <div class="kwp-label" style={{ position: "absolute", left: "115%", transform: "translateX(-50%)" }}>
+                    <div className="kwp-label" style={{ position: "absolute", left: "115%", transform: "translateX(-50%)" }}>
                       kWh
                     </div>
                   </div>

@@ -67,33 +67,33 @@ class BuildingSize extends React.Component {
 
     return (
       <div>
-        <div class="cardContainer step-one">
-          <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusHouseIcon /> : <HouseCircleIcon />}</div>
-          <div class="cardContent">
-            <div class="flexContent">
+        <div className="cardContainer step-one">
+          <div className="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusHouseIcon /> : <HouseCircleIcon />}</div>
+          <div className="cardContent">
+            <div className="flexContent">
               <div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <div class="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusHouseIcon style={{ marginLeft: "10px", width: "55px" }} /> : <HouseCircleIcon style={{ marginLeft: "10px", width: "55px" }} />}</div>
-                  <h3 class="cardHeadline">Gebäudegröße</h3>
+                  <div className="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusHouseIcon style={{ marginLeft: "10px", width: "55px" }} /> : <HouseCircleIcon style={{ marginLeft: "10px", width: "55px" }} />}</div>
+                  <h3 className="cardHeadline">Gebäudegröße</h3>
                 </div>
-                <span class="cardDescription">Wie viel m&#178; Wohnfläche besitzt Ihr Gebäude?</span>
+                <span className="cardDescription">Wie viel m&#178; Wohnfläche besitzt Ihr Gebäude?</span>
               </div>
-              <div class="flexRow">
+              <div className="flexRow">
                 <div>
                   <label>
-                    <input type="radio" name="product" value="150" class="card-input-element trackeable" checked={BuildingSize === "150"} onChange={this.inputBuildingSize} data-event="gebaudegrobe-125-175" />
-                    <div class="panel panel-default card-input">
-                      <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusHouseSmallIcon /> : <HouseSunSmallIcon />}</div>
-                      <div class="panel-body">125 - 175 m&#178;</div>
+                    <input type="radio" name="product" value="150" className="card-input-element trackeable" checked={BuildingSize === "150"} onChange={this.inputBuildingSize} data-event="gebaudegrobe-125-175" />
+                    <div className="panel panel-default card-input">
+                      <div className="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusHouseSmallIcon /> : <HouseSunSmallIcon />}</div>
+                      <div className="panel-body">125 - 175 m&#178;</div>
                     </div>
                   </label>
                 </div>
                 <div>
                   <label>
-                    <input type="radio" name="product" value="200" class="card-input-element trackeable" checked={BuildingSize === "200"} onChange={this.inputBuildingSize} data-event="gebaudegrobe-175-225" />
-                    <div class="panel panel-default card-input">
-                      <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusHouseLargeIcon /> : <HouseSunLargeIcon />}</div>
-                      <div class="panel-body">175 - 225 m&#178;</div>
+                    <input type="radio" name="product" value="200" className="card-input-element trackeable" checked={BuildingSize === "200"} onChange={this.inputBuildingSize} data-event="gebaudegrobe-175-225" />
+                    <div className="panel panel-default card-input">
+                      <div className="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusHouseLargeIcon /> : <HouseSunLargeIcon />}</div>
+                      <div className="panel-body">175 - 225 m&#178;</div>
                     </div>
                   </label>
                 </div>

@@ -68,7 +68,7 @@ function CustomLabelComponent(props) {
   return (
     <React.Fragment>
       {iconToUse}
-      <text x={xPositionLabel} y={yPositionLabel} class="small" fill={datum.color} font-family="Bosch-Bold" font-size={fontSize}>
+      <text x={xPositionLabel} y={yPositionLabel} className="small" fill={datum.color} font-family="Bosch-Bold" font-size={fontSize}>
         {datum.label}
       </text>
     </React.Fragment>
@@ -216,7 +216,7 @@ class ElectricityUse extends React.Component {
       <div>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div style={{ position: "relative", width: "100%", height: "300px", top: "0", left: "0" /*maxWidth: '450px'*/ }}>
-            <div id="electricityUse-1" class="pieContainer" style={{ position: "absolute", width: "100%", height: "300px" }}>
+            <div id="electricityUse-1" className="pieContainer" style={{ position: "absolute", width: "100%", height: "300px" }}>
               <VictoryPie
                 data={VictoryPieData2}
                 width={pieChartSize}
@@ -240,7 +240,7 @@ class ElectricityUse extends React.Component {
               />
             </div>
 
-            <div id="electricityUse-2" class="pieContainer" style={{ position: "absolute", width: "100%", height: "300px" }}>
+            <div id="electricityUse-2" className="pieContainer" style={{ position: "absolute", width: "100%", height: "300px" }}>
               <VictoryPie
                 data={VictoryPieData}
                 width={pieChartSize}
@@ -264,7 +264,7 @@ class ElectricityUse extends React.Component {
           </div>
         </div>
 
-        <div class="additional-flex first-col" style={{ display: "flex", justifyContent: "space-around", fontFamily: "Bosch-Regular", fontSize: "14px" }}>
+        <div className="additional-flex first-col" style={{ display: "flex", justifyContent: "space-around", fontFamily: "Bosch-Regular", fontSize: "14px" }}>
           <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896" }}>
             <div style={{ marginRight: "10px" }}>
               <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896", borderRadius: "12px" }}></div>

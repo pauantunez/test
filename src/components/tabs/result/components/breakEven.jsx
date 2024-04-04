@@ -434,7 +434,7 @@ class BreakEven extends React.Component {
     return (
       <div id="break-even">
         <div style={{ display: "flex", marginBottom: "20px", fontSize: "16px" }}>
-          <div class="title-col-two">
+          <div className="title-col-two">
             Investitionskosten PV-System: <span style={{ fontFamily: "Bosch-Bold" }}> {heatpumpPV ? Math.abs(heatpumpPV[0].expenditure).toLocaleString("de-DE") + " €" : ""}</span>
           </div>
         </div>
@@ -445,7 +445,7 @@ class BreakEven extends React.Component {
             </div>
           </div>
         ) : (
-          <div class="graph-container" style={{ maxWidth: "550px" }}>
+          <div className="graph-container" style={{ maxWidth: "550px" }}>
             <Line id="breakEvenChart" options={lineOptions} data={lineData} />
           </div>
         )}
@@ -455,13 +455,13 @@ class BreakEven extends React.Component {
             <div style={{ marginRight: "15px" }}>
               <div style={{ marginTop: "2px", width: "14px", height: "14px", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", borderRadius: "14px" }}></div>
             </div>
-            <div class="text-mobile">Kapitalentwicklung mit PV ohne Energiemanagementsystem </div>
+            <div className="text-mobile">Kapitalentwicklung mit PV ohne Energiemanagementsystem </div>
           </div>
           <div style={{ display: "flex", flexDirection: "row", marginTop: "6px" }}>
             <div style={{ marginRight: "15px" }}>
               <div style={{ marginTop: "2px", width: "14px", height: "14px", background: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#18837E", borderRadius: "14px" }}></div>
             </div>
-            <div class="text-mobile">Kapitalentwicklung mit PV und mit Energiemanagementsystem *</div>
+            <div className="text-mobile">Kapitalentwicklung mit PV und mit Energiemanagementsystem *</div>
           </div>
         </div>
       </div>

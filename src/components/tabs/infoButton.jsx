@@ -53,12 +53,12 @@ class InfoButton extends React.Component {
         fontFamily: "Bosch-Regular",
         lineHeight: "1.4",
         padding: "6px 6px 6px 8px",
-        width: "150px"// <600 px
+        width: "150px", // <600 px
       },
     }));
 
     return (
-      <LightTooltip enterTouchDelay={0} leaveTouchDelay={5000} arrow tooltipId={this.state.tooltipId} title={this.state.text} placement={this.state.placement}>
+      <LightTooltip enterTouchDelay={0} leaveTouchDelay={5000} arrow tooltipid={this.state.tooltipId} title={this.state.text} placement={this.state.placement}>
         <Button style={{ minWidth: "unset", padding: 0 }}>{this.context.selectedTheme === "buderus" ? <BuderusInfoIcon /> : <InfoIcon />}</Button>
       </LightTooltip>
     );

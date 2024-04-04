@@ -65,19 +65,19 @@ class PVOutput extends React.Component {
 
     return (
       <div>
-        <div class="cardContainer step-seven">
-          <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusPvLeistung /> : <HouseholdEnergyUseIcon />}</div>
-          <div class="cardContent">
-            <div class="flexContent">
+        <div className="cardContainer step-seven">
+          <div className="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusPvLeistung /> : <HouseholdEnergyUseIcon />}</div>
+          <div className="cardContent">
+            <div className="flexContent">
               <div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <div class="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusPvLeistung style={{ marginLeft: "10px", width: "55px" }} /> : <HouseholdEnergyUseIcon style={{ marginLeft: "10px", width: "55px" }} />}</div>
-                  <h3 class="cardHeadline">PV-Leistung</h3>
+                  <div className="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusPvLeistung style={{ marginLeft: "10px", width: "55px" }} /> : <HouseholdEnergyUseIcon style={{ marginLeft: "10px", width: "55px" }} />}</div>
+                  <h3 className="cardHeadline">PV-Leistung</h3>
                 </div>
-                <span class="cardDescription">Welche Leistung hat die installierte oder geplante PV-Anlage?</span>
+                <span className="cardDescription">Welche Leistung hat die installierte oder geplante PV-Anlage?</span>
               </div>
-              <div class="flexRow" style={{ flexDirection: "column", marginTop: "20px" }}>
-                <div class="slider-size">
+              <div className="flexRow" style={{ flexDirection: "column", marginTop: "20px" }}>
+                <div className="slider-size">
                   <Slider
                     min={0}
                     max={3}
@@ -98,7 +98,7 @@ class PVOutput extends React.Component {
                     onChange={this.inputPVOutput}
                   />
 
-                  <div class="slider-label" style={{ position: "relative", top: "5px", left: 0, fontFamily: "Bosch-Regular", fontSize: "12px" }}>
+                  <div className="slider-label" style={{ position: "relative", top: "5px", left: 0, fontFamily: "Bosch-Regular", fontSize: "12px" }}>
                     <div style={{ position: "absolute", left: "0%", transform: "translateX(-50%)" }}>
                       <div style={{ width: "1px", height: "10px", background: "#000" }}></div>
                     </div>
@@ -112,12 +112,12 @@ class PVOutput extends React.Component {
                       <div style={{ width: "1px", height: "10px", background: "#000" }}></div>
                     </div>
                   </div>
-                  <div class="slider-label" style={{ position: "relative", top: "17px", left: 0, fontFamily: "Bosch-Regular", fontSize: "16px" }}>
+                  <div className="slider-label" style={{ position: "relative", top: "17px", left: 0, fontFamily: "Bosch-Regular", fontSize: "16px" }}>
                     <div style={{ position: "absolute", left: "0%", transform: "translateX(-50%)" }}>4</div>
                     <div style={{ position: "absolute", left: "33.333%", transform: "translateX(-50%)" }}>7</div>
                     <div style={{ position: "absolute", left: "66.6667%", transform: "translateX(-50%)" }}>10</div>
                     <div style={{ position: "absolute", left: "100%", transform: "translateX(-50%)" }}>14</div>
-                    <div class="kwp-label" style={{ position: "absolute", left: "100%", marginLeft: "29px" }}>
+                    <div className="kwp-label" style={{ position: "absolute", left: "100%", marginLeft: "29px" }}>
                       kWp
                     </div>
                   </div>

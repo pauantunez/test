@@ -72,12 +72,12 @@ class CalculationModal extends React.Component {
 
     return (
       <Modal open={calculationModal} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description" style={{ zIndex: 999999 }}>
-        <Box class="calculationModal" sx={style}>
+        <Box className="calculationModal" sx={style}>
           {activeCalculationView === 0 && (
-            <div class="modal-container-padding" style={{ display: "block" /*padding: '20px'*/ }}>
+            <div className="modal-container-padding" style={{ display: "block" /*padding: '20px'*/ }}>
               <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
-                <div class="modal-content-width" style={{ position: "relative" }}>
-                  <div class="text-alignment" style={{ width: "100%" }}>
+                <div className="modal-content-width" style={{ position: "relative" }}>
+                  <div className="text-alignment" style={{ width: "100%" }}>
                     <h1>Berechnungsgrundlage 1/3</h1>
                   </div>
                   <div onClick={handleClose} style={{ position: "absolute", right: "0px", top: "10px", cursor: "pointer" }}>
@@ -88,7 +88,7 @@ class CalculationModal extends React.Component {
 
               <div id="scrollable-container">
                 <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
-                  <div class="modal-content-width" style={{ position: "relative" }}>
+                  <div className="modal-content-width" style={{ position: "relative" }}>
                     <div style={{ display: "flex", flexDirection: "row", lineHeight: "24px", width: "100%", marginTop: "35px", marginBottom: "30px", fontFamily: "Bosch-Regular", textAlign: "left" }}>
                       <div style={{ marginRight: "10px" }}>{this.context.selectedTheme === "buderus" ? <BuderusInfoIcon /> : <InfoIcon />}</div>
                       <div>
@@ -98,29 +98,29 @@ class CalculationModal extends React.Component {
                   </div>
                 </div>
                 <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
-                  <div class="modal-content-width" style={{ position: "relative" }}>
+                  <div className="modal-content-width" style={{ position: "relative" }}>
                     <hr style={{ width: "100%", height: "2px", border: "none", background: "#E0E2E5" }} />
                   </div>
                 </div>
                 <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
-                  <div class="modal-content-width" style={{ position: "relative", marginBottom: "10px" }}>
+                  <div className="modal-content-width" style={{ position: "relative", marginBottom: "10px" }}>
                     <h3>Grundlage für die angezeigten Verbrauchs-, Ertrags- und Amortisationsabschätzungen sind folgende Annahmen:</h3>
                   </div>
                 </div>
-                <div class="modal-content-flex-direction" style={{ display: "flex", width: "100%", justifyContent: "center" }}>
-                  <div class="modal-content-box-width">
+                <div className="modal-content-flex-direction" style={{ display: "flex", width: "100%", justifyContent: "center" }}>
+                  <div className="modal-content-box-width">
                     <InfoBoxCalculation box="calculation-1" />
                   </div>
-                  <div class="divider-hide" style={{ width: "2%" }}>
+                  <div className="divider-hide" style={{ width: "2%" }}>
                     <hr style={{ width: "1px", height: "100%", border: "none", background: "#E0E2E5" }} />
                   </div>
-                  <div class="modal-content-box-width top-30">
+                  <div className="modal-content-box-width top-30">
                     <InfoBoxCalculation box="calculation-2" />
                   </div>
                 </div>
                 <div style={{ position: "fixed", width: "100%", bottom: "2.5%" }}>
-                  <div class="justify-nav" style={{ display: "flex", width: "100%" }}>
-                    <div class="modal-nav-width" style={{ position: "relative", marginTop: "30px" }}>
+                  <div className="justify-nav" style={{ display: "flex", width: "100%" }}>
+                    <div className="modal-nav-width" style={{ position: "relative", marginTop: "30px" }}>
                       <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <div></div>
                         <div>
@@ -153,10 +153,10 @@ class CalculationModal extends React.Component {
           )}
 
           {activeCalculationView === 1 && (
-            <div class="modal-container-padding" style={{ display: "block" /*padding: '20px'*/ }}>
+            <div className="modal-container-padding" style={{ display: "block" /*padding: '20px'*/ }}>
               <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
-                <div class="modal-content-width" style={{ position: "relative" }}>
-                  <div class="text-alignment" style={{ width: "100%" }}>
+                <div className="modal-content-width" style={{ position: "relative" }}>
+                  <div className="text-alignment" style={{ width: "100%" }}>
                     <h1>Berechnungsgrundlage 2/3</h1>
                   </div>
                   <div onClick={handleClose} style={{ position: "absolute", right: "0px", top: "10px", cursor: "pointer" }}>
@@ -165,12 +165,12 @@ class CalculationModal extends React.Component {
                 </div>
               </div>
               <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
-                <div class="modal-content-width" style={{ position: "relative", marginBottom: "10px" }}>
+                <div className="modal-content-width" style={{ position: "relative", marginBottom: "10px" }}>
                   <h3>Grundlage für die angezeigten Verbrauchs-, Ertrags- und Amortisationsabschätzungen sind folgende Annahmen:</h3>
                 </div>
               </div>
-              <div class="modal-content-flex-direction" style={{ display: "flex", width: "100%", justifyContent: "center" }}>
-                <div class="modal-content-box-width">
+              <div className="modal-content-flex-direction" style={{ display: "flex", width: "100%", justifyContent: "center" }}>
+                <div className="modal-content-box-width">
                   <div>
                     <InfoBoxCalculation box="calculation-3" />
                   </div>
@@ -178,10 +178,10 @@ class CalculationModal extends React.Component {
                     <InfoBoxCalculation box="calculation-5" />
                   </div>
                 </div>
-                <div class="divider-hide" style={{ width: "2%" }}>
+                <div className="divider-hide" style={{ width: "2%" }}>
                   <hr style={{ width: "1px", height: "100%", border: "none", background: "#E0E2E5" }} />
                 </div>
-                <div class="modal-content-box-width top-30">
+                <div className="modal-content-box-width top-30">
                   <div>
                     <InfoBoxCalculation box="calculation-4" />
                   </div>
@@ -191,8 +191,8 @@ class CalculationModal extends React.Component {
                 </div>
               </div>
               <div style={{ position: "fixed", width: "100%", bottom: "2.5%" }}>
-                <div class="justify-nav" style={{ display: "flex", width: "100%" }}>
-                  <div class="modal-nav-width" style={{ position: "relative", marginTop: "30px" }}>
+                <div className="justify-nav" style={{ display: "flex", width: "100%" }}>
+                  <div className="modal-nav-width" style={{ position: "relative", marginTop: "30px" }}>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                       <div>
                         <Button
@@ -246,10 +246,10 @@ class CalculationModal extends React.Component {
           )}
 
           {activeCalculationView === 2 && (
-            <div class="modal-container-padding" style={{ display: "block", /*padding: '20px',*/ overflow: "hidden" }}>
+            <div className="modal-container-padding" style={{ display: "block", /*padding: '20px',*/ overflow: "hidden" }}>
               <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
-                <div class="modal-content-width" style={{ position: "relative" }}>
-                  <div class="text-alignment" style={{ width: "100%" }}>
+                <div className="modal-content-width" style={{ position: "relative" }}>
+                  <div className="text-alignment" style={{ width: "100%" }}>
                     <h1>Berechnungsgrundlage 3/3</h1>
                   </div>
                   <div onClick={handleClose} style={{ position: "absolute", right: "0px", top: "10px", cursor: "pointer" }}>
@@ -258,31 +258,31 @@ class CalculationModal extends React.Component {
                 </div>
               </div>
               <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
-                <div class="modal-content-width" style={{ position: "relative", marginBottom: "10px" }}>
+                <div className="modal-content-width" style={{ position: "relative", marginBottom: "10px" }}>
                   <h3>Grundlage für die angezeigten Verbrauchs-, Ertrags- und Amortisationsabschätzungen sind folgende Annahmen:</h3>
                 </div>
               </div>
-              <div class="modal-content-flex-direction" style={{ display: "flex", width: "100%", justifyContent: "center" }}>
-                <div class="modal-content-box-width">
+              <div className="modal-content-flex-direction" style={{ display: "flex", width: "100%", justifyContent: "center" }}>
+                <div className="modal-content-box-width">
                   <div>
                     <InfoBoxCalculation box="calculation-7" />
                   </div>
                 </div>
-                <div class="divider-hide" style={{ width: "2%" }}>
+                <div className="divider-hide" style={{ width: "2%" }}>
                   <hr style={{ width: "1px", height: "100%", border: "none", background: "#E0E2E5" }} />
                 </div>
-                <div class="modal-content-box-width">
-                  <div class="top-30">
+                <div className="modal-content-box-width">
+                  <div className="top-30">
                     <InfoBoxCalculation box="calculation-9" />
                   </div>
-                  <div class="top-30" style={{ marginTop: "30px" }}>
+                  <div className="top-30" style={{ marginTop: "30px" }}>
                     <InfoBoxCalculation box="calculation-8" />
                   </div>
                 </div>
               </div>
               <div style={{ position: "fixed", width: "100%", bottom: "2.5%" }}>
-                <div class="justify-nav" style={{ display: "flex", width: "100%" }}>
-                  <div class="modal-nav-width" style={{ position: "relative", marginTop: "30px" }}>
+                <div className="justify-nav" style={{ display: "flex", width: "100%" }}>
+                  <div className="modal-nav-width" style={{ position: "relative", marginTop: "30px" }}>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                       <div>
                         <Button

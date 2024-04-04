@@ -83,20 +83,20 @@ class ResultStep2 extends React.Component {
 
   render() {
     return (
-      <div class="graphs-container">
+      <div className="graphs-container">
         <h3 style={{ display: "flex", justifyContent: "flex-start", textAlign: "left", fontSize: "24px" }}>Ergebnis Teil 2: Stromverbrauch, Autarkie und Eigenverbrauch</h3>
-        <div class="switch-container">
-          <div class="switch-box" /*class="trackeable"  data-event="result-part2-switch-energiemanagement" */ /* TODO:add event */>
+        <div className="switch-container">
+          <div className="switch-box" /*className="trackeable"  data-event="result-part2-switch-energiemanagement" */ /* TODO:add event */>
             <CustomSwitch />
           </div>
-          <div class="switch-label">Mit Energiemanagementsystem</div>
-          <div class="switch-selector">
+          <div className="switch-label">Mit Energiemanagementsystem</div>
+          <div className="switch-selector">
             <InfoButton color={this.context.selectedTheme === "buderus" ? "#000" : "#007BC0"} size="14px" placement="right" text="Unter Energiemanagement wird die Kombination verschiedener Maßnahmen und Strategien verstanden, um Energie zu beschaffen, zu verteilen und optimal zu nutzen. Ziel ist es, Energieverbräuche zu senken und die Energieeffizienz im Haushalt zu optimieren, um wirtschaftliche und ökologische Ziele zu erreichen." />
           </div>
         </div>
-        <div class="pie-flex results-page-two" style={{ display: "flex", marginTop: "50px", height: "100%", width: "100%", flexWrap: "nowrap" /*justifyContent: 'space-between',*/ /*alignContent: 'center'*/ }}>
-          <div class="results col-one">
-            <div class="top-margins">
+        <div className="pie-flex results-page-two" style={{ display: "flex", marginTop: "50px", height: "100%", width: "100%", flexWrap: "nowrap" /*justifyContent: 'space-between',*/ /*alignContent: 'center'*/ }}>
+          <div className="results col-one">
+            <div className="top-margins">
               <div style={{ fontFamily: "Bosch-Bold", fontSize: "20px", textAlign: "left" }}>Stromverbrauch</div>
             </div>
             <div style={{ marginTop: "0px" }}>
@@ -107,17 +107,16 @@ class ResultStep2 extends React.Component {
               </div>
             </div>
           </div>
-          <div class="flex-line" style={{ width: "2px", height: "initial", background: "#E0E2E5", marginLeft: "15px", marginRight: "15px" }}></div>
-          <div class="results col-two">
-            <div class="top-margins" style={{ display: "flex", flexDirection: "row", fontFamily: "Bosch-Bold", fontSize: "20px", textAlign: "left" }}>
+          <div className="flex-line" style={{ width: "2px", height: "initial", background: "#E0E2E5", marginLeft: "15px", marginRight: "15px" }}></div>
+          <div className="results col-two">
+            <div className="top-margins" style={{ display: "flex", flexDirection: "row", fontFamily: "Bosch-Bold", fontSize: "20px", textAlign: "left" }}>
               <div style={{ marginRight: "20px" }}>Autarkie</div>
-              <InfoButton class="tooltip-box" color={this.context.selectedTheme === "buderus" ? "#000" : "#007BC0"} size="14px" placement="right" text="Die Autarkie eines Energiesystems beschreibt, welcher Anteil des Stromverbrauchs durch die eigene PV-Anlage abgedeckt wird." />
+              <InfoButton className="tooltip-box" color={this.context.selectedTheme === "buderus" ? "#000" : "#007BC0"} size="14px" placement="right" text="Die Autarkie eines Energiesystems beschreibt, welcher Anteil des Stromverbrauchs durch die eigene PV-Anlage abgedeckt wird." />
             </div>
             <div style={{ marginTop: "0px" }}>
               <OffGrid />
               <div style={{ marginTop: "20px" }}>
-                
-                <div class="additional-flex second-col" style={{ display: "flex", justifyContent: "space-around", fontFamily: "Bosch-Regular", fontSize: "14px" }}>
+                <div className="additional-flex second-col" style={{ display: "flex", justifyContent: "space-around", fontFamily: "Bosch-Regular", fontSize: "14px" }}>
                   <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" }}>
                     <div style={{ marginRight: "10px" }}>
                       <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E", borderRadius: "12px" }}></div>
@@ -144,17 +143,16 @@ class ResultStep2 extends React.Component {
               </div>
             </div>
           </div>
-          <div class="flex-line" style={{ width: "2px", height: "initial", background: "#E0E2E5", marginLeft: "15px", marginRight: "15px" }}></div>
-          <div class="results col-three">
-            <div class="top-margins" style={{ display: "flex", flexDirection: "row", fontFamily: "Bosch-Bold", fontSize: "20px", textAlign: "left" }}>
+          <div className="flex-line" style={{ width: "2px", height: "initial", background: "#E0E2E5", marginLeft: "15px", marginRight: "15px" }}></div>
+          <div className="results col-three">
+            <div className="top-margins" style={{ display: "flex", flexDirection: "row", fontFamily: "Bosch-Bold", fontSize: "20px", textAlign: "left" }}>
               <div style={{ marginRight: "20px" }}>Eigenverbrauch</div>
               <InfoButton color={this.context.selectedTheme === "buderus" ? "#000" : "#007BC0"} size="14px" placement="right" text="Der Eigenverbrauch eines Energiesystems beschreibt, welcher Anteil des eigens produzierten PV-Stroms selbst verbraucht wird." />
             </div>
             <div style={{ marginTop: "0px" }}>
               <HouseholdUse />
               <div style={{ marginTop: "20px" }}>
-                
-               <div class="additional-flex third-col" style={{ display: "flex", justifyContent: "space-around", fontFamily: "Bosch-Regular", fontSize: "14px" }}>
+                <div className="additional-flex third-col" style={{ display: "flex", justifyContent: "space-around", fontFamily: "Bosch-Regular", fontSize: "14px" }}>
                   <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" }}>
                     <div style={{ marginRight: "10px" }}>
                       <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E", borderRadius: "12px" }}></div>
@@ -178,7 +176,6 @@ class ResultStep2 extends React.Component {
                 <div style={{ marginTop: "20px" }}>
                   <InfoBoxResult box="household-use" />
                 </div>
-                
               </div>
             </div>
           </div>

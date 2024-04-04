@@ -145,33 +145,33 @@ class HomeStorage extends React.Component {
 
     return (
       <div>
-        <div class="cardContainer step-eight">
-          <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusBatteryIcon /> : <BatteryIcon />}</div>
-          <div class="cardContent">
-            <div class="flexContent">
+        <div className="cardContainer step-eight">
+          <div className="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusBatteryIcon /> : <BatteryIcon />}</div>
+          <div className="cardContent">
+            <div className="flexContent">
               <div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <div class="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusBatteryIcon style={{ marginLeft: "10px", width: "55px" }} /> : <BatteryIcon style={{ marginLeft: "10px", width: "55px" }} />}</div>
-                  <h3 class="cardHeadline">Batteriespeicher</h3>
+                  <div className="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusBatteryIcon style={{ marginLeft: "10px", width: "55px" }} /> : <BatteryIcon style={{ marginLeft: "10px", width: "55px" }} />}</div>
+                  <h3 className="cardHeadline">Batteriespeicher</h3>
                 </div>
-                <span class="cardDescription">Ist ein Batteriespeicher installiert oder geplant?</span>
+                <span className="cardDescription">Ist ein Batteriespeicher installiert oder geplant?</span>
               </div>
-              <div class="flexRow">
+              <div className="flexRow">
                 <div>
                   <label>
-                    <input type="radio" name="heating" value="true" class="card-input-element" checked={homeStorage === "true"} onChange={this.inputHomeStorage} />
-                    <div class="panel panel-default card-input">
-                      <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusAcceptIcon /> : <AcceptIcon />}</div>
-                      <div class="panel-body">Ja</div>
+                    <input type="radio" name="heating" value="true" className="card-input-element" checked={homeStorage === "true"} onChange={this.inputHomeStorage} />
+                    <div className="panel panel-default card-input">
+                      <div className="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusAcceptIcon /> : <AcceptIcon />}</div>
+                      <div className="panel-body">Ja</div>
                     </div>
                   </label>
                 </div>
                 <div>
                   <label>
-                    <input type="radio" name="heating" value="false" class="card-input-element trackeable" checked={homeStorage === "false"} onChange={this.inputHomeStorage} data-event="batteriespeicher-nein" />
-                    <div class="panel panel-default card-input">
-                      <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusDenyIcon /> : <DenyIcon />}</div>
-                      <div class="panel-body">Nein</div>
+                    <input type="radio" name="heating" value="false" className="card-input-element trackeable" checked={homeStorage === "false"} onChange={this.inputHomeStorage} data-event="batteriespeicher-nein" />
+                    <div className="panel panel-default card-input">
+                      <div className="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusDenyIcon /> : <DenyIcon />}</div>
+                      <div className="panel-body">Nein</div>
                     </div>
                   </label>
                 </div>
@@ -180,10 +180,10 @@ class HomeStorage extends React.Component {
               {/* Storage Size */}
               {homeStorage === "true" && (
                 <div style={{ marginTop: "0px", marginLeft: "0px", marginRight: "0px", fontFamily: "Bosch-Regular" }}>
-                  <div class="txt" style={{ marginTop: "15px" }}>
+                  <div className="txt" style={{ marginTop: "15px" }}>
                     Wie groß ist Ihr installierter oder geplanter Batteriespeicher?
                   </div>
-                  <div class="slider-size" style={{ position: "relative", height: "90px", marginTop: "25px" }}>
+                  <div className="slider-size" style={{ position: "relative", height: "90px", marginTop: "25px" }}>
                     <Slider
                       min={0}
                       max={3}
@@ -203,7 +203,7 @@ class HomeStorage extends React.Component {
                       }}
                       onChange={this.inputStorageSize}
                     />
-                    <div class="slider-label" style={{ position: "relative", top: "5px", left: 0, fontFamily: "Bosch-Regular", fontSize: "12px" }}>
+                    <div className="slider-label" style={{ position: "relative", top: "5px", left: 0, fontFamily: "Bosch-Regular", fontSize: "12px" }}>
                       <div style={{ position: "absolute", left: "0%", transform: "translateX(-50%)" }}>
                         <div style={{ width: "1px", height: "10px", background: "#000" }}></div>
                       </div>
@@ -217,12 +217,12 @@ class HomeStorage extends React.Component {
                         <div style={{ width: "1px", height: "10px", background: "#000" }}></div>
                       </div>
                     </div>
-                    <div class="slider-label" style={{ position: "relative", top: "17px", left: 0, fontFamily: "Bosch-Regular", fontSize: "16px" }}>
+                    <div className="slider-label" style={{ position: "relative", top: "17px", left: 0, fontFamily: "Bosch-Regular", fontSize: "16px" }}>
                       <div style={{ position: "absolute", left: "0%", transform: "translateX(-50%)" }}>6</div>
                       <div style={{ position: "absolute", left: "33.333%", transform: "translateX(-50%)" }}>9</div>
                       <div style={{ position: "absolute", left: "66.6667%", transform: "translateX(-50%)" }}>12</div>
                       <div style={{ position: "absolute", left: "100%", transform: "translateX(-50%)" }}>15</div>
-                      <div class="kwp-label" style={{ position: "absolute", left: "100%", marginLeft: "29px" }}>
+                      <div className="kwp-label" style={{ position: "absolute", left: "100%", marginLeft: "29px" }}>
                         kWh
                       </div>
                     </div>

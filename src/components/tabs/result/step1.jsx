@@ -88,11 +88,11 @@ class ResultStep1 extends React.Component {
       sessionStorage.setItem("energyUsageCombined", energyUsageCombined);
     }
     return (
-      <div class="wrapper-container" style={{ marginLeft: "3%", marginRight: "3%" }}>
+      <div className="wrapper-container" style={{ marginLeft: "3%", marginRight: "3%" }}>
         <h3 style={{ display: "flex", justifyContent: "flex-start", textAlign: "left", fontSize: "24px" }}>Ergebnis Teil 1: Stromkosten und Amortisationszeit Ihrer PV-Anlage</h3>
 
-        <div class="pie-flex results-page-one" style={{ display: "flex", width: "100%", flexWrap: "nowrap", justifyContent: "space-between", alignContent: "center" }}>
-          <div class="left-box" style={{ alignItems: "end" }}>
+        <div className="pie-flex results-page-one" style={{ display: "flex", width: "100%", flexWrap: "nowrap", justifyContent: "space-between", alignContent: "center" }}>
+          <div className="left-box" style={{ alignItems: "end" }}>
             <div style={{ fontFamily: "Bosch-Bold", fontSize: "20px", textAlign: "left" }}> Gesamtkosten Strom</div>
             <div style={{ marginTop: "20px" }}>
               <Cost />
@@ -101,21 +101,21 @@ class ResultStep1 extends React.Component {
               </div>
             </div>
           </div>
-          <div class="flex-line" style={{ width: "2px", background: "#E0E2E5", marginLeft: "50px", marginRight: "50px" }}></div>
-          <div class="right-box top-margins">
+          <div className="flex-line" style={{ width: "2px", background: "#E0E2E5", marginLeft: "50px", marginRight: "50px" }}></div>
+          <div className="right-box top-margins">
             <div style={{ fontFamily: "Bosch-Bold", fontSize: "20px", textAlign: "left" }}>Amortisationszeit</div>
             <div style={{ marginTop: "20px" }}>
               <BreakEven />
-              <div class="upper-space" style={{ marginTop: "20px" }}>
+              <div className="upper-space" style={{ marginTop: "20px" }}>
                 <InfoBoxResult box="right" />
               </div>
             </div>
           </div>
         </div>
 
-        {/* <div class="welcomeBtns" style={{display: 'flex', margin: '3% 5% 0 5%'}}>
-          <div class="explanationBtn">
-            <div class="calculationBase trackeable" onClick={handleOpen} style={{fontSize: '12px', fontFamily: 'Bosch-Regular', color: '#007BC0', cursor: 'pointer'}} data-event="berechnungsgrundlage">Berechnugsgrundlage</div>
+        {/* <div className="welcomeBtns" style={{display: 'flex', margin: '3% 5% 0 5%'}}>
+          <div className="explanationBtn">
+            <div className="calculationBase trackeable" onClick={handleOpen} style={{fontSize: '12px', fontFamily: 'Bosch-Regular', color: '#007BC0', cursor: 'pointer'}} data-event="berechnungsgrundlage">Berechnugsgrundlage</div>
           </div>
         </div> */}
       </div>

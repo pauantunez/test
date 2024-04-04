@@ -289,25 +289,25 @@ class HeatingSelection extends React.Component {
 
     return (
       <div>
-        <div class="cardContainer step-two">
-          <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusHouseIcon /> : <ChartUpLarge />}</div>
-          <div class="cardContent">
-            <div class="flexContent">
+        <div className="cardContainer step-two">
+          <div className="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusHouseIcon /> : <ChartUpLarge />}</div>
+          <div className="cardContent">
+            <div className="flexContent">
               <form id="async_form">
                 <div>
                   <div style={{ display: "flex", flexDirection: "row" }}>
-                    <div class="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusHouseIcon style={{ marginLeft: "10px", width: "55px" }} /> : <ChartUpLarge style={{ marginLeft: "10px", width: "55px" }} />}</div>
-                    <h3 class="cardHeadline">Heizenergiebedarf</h3>
+                    <div className="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusHouseIcon style={{ marginLeft: "10px", width: "55px" }} /> : <ChartUpLarge style={{ marginLeft: "10px", width: "55px" }} />}</div>
+                    <h3 className="cardHeadline">Heizenergiebedarf</h3>
                   </div>
-                  <span class="cardDescription">Wählen Sie eine der drei Möglichkeiten zur Bestimmung Ihres Heizenergiebedarfs.</span>
+                  <span className="cardDescription">Wählen Sie eine der drei Möglichkeiten zur Bestimmung Ihres Heizenergiebedarfs.</span>
                 </div>
-                <div class="flexRow" style={{ flexWrap: "wrap" }}>
+                <div className="flexRow" style={{ flexWrap: "wrap" }}>
                   <div>
                     <label>
-                      <input type="radio" name="heating" value="BuildingEnergyStandard" class="card-input-element" checked={BuildingEnegeryStandard === "BuildingEnergyStandard"} onChange={this.inputHeatingSelection} />
-                      <div class="panel panel-default card-input-wide">
-                        <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusEfficienteIcon /> : <ChartUpSmall />}</div>
-                        <div class="panel-body">
+                      <input type="radio" name="heating" value="BuildingEnergyStandard" className="card-input-element" checked={BuildingEnegeryStandard === "BuildingEnergyStandard"} onChange={this.inputHeatingSelection} />
+                      <div className="panel panel-default card-input-wide">
+                        <div className="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusEfficienteIcon /> : <ChartUpSmall />}</div>
+                        <div className="panel-body">
                           Gebäude-
                           <br />
                           energiestandard
@@ -317,10 +317,10 @@ class HeatingSelection extends React.Component {
                   </div>
                   <div>
                     <label>
-                      <input type="radio" name="heating" value="OilLNG" class="card-input-element" checked={BuildingEnegeryStandard === "OilLNG"} onChange={this.inputHeatingSelection} />
-                      <div class="panel panel-default card-input-wide">
-                        <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusOilIcon /> : <ChartOil />}</div>
-                        <div class="panel-body">
+                      <input type="radio" name="heating" value="OilLNG" className="card-input-element" checked={BuildingEnegeryStandard === "OilLNG"} onChange={this.inputHeatingSelection} />
+                      <div className="panel panel-default card-input-wide">
+                        <div className="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusOilIcon /> : <ChartOil />}</div>
+                        <div className="panel-body">
                           Öl- oder
                           <br />
                           Gasverbrauch
@@ -330,10 +330,10 @@ class HeatingSelection extends React.Component {
                   </div>
                   <div>
                     <label>
-                      <input type="radio" name="heating" value="BuildingInsulation" class="card-input-element" checked={BuildingEnegeryStandard === "BuildingInsulation"} onChange={this.inputHeatingSelection} />
-                      <div class="panel panel-default card-input-wide">
-                        <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusHomeIsolierungIcon /> : <BuildingInsulationIcon />}</div>
-                        <div class="panel-body">Gebäudeisolierung</div>
+                      <input type="radio" name="heating" value="BuildingInsulation" className="card-input-element" checked={BuildingEnegeryStandard === "BuildingInsulation"} onChange={this.inputHeatingSelection} />
+                      <div className="panel panel-default card-input-wide">
+                        <div className="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusHomeIsolierungIcon /> : <BuildingInsulationIcon />}</div>
+                        <div className="panel-body">Gebäudeisolierung</div>
                       </div>
                     </label>
                   </div>
@@ -341,7 +341,7 @@ class HeatingSelection extends React.Component {
 
                 {/* Gebäudeenergiestandard */}
                 {BuildingEnegeryStandard === "BuildingEnergyStandard" && (
-                  <div class="label" style={{ marginTop: "30px", marginLeft: "10px", fontFamily: "Bosch-Regular" }}>
+                  <div className="label" style={{ marginTop: "30px", marginLeft: "10px", fontFamily: "Bosch-Regular" }}>
                     Welchen Energiestandard besitzt Ihr Gebäude?
                     <div style={{ marginTop: "15px" }}>
                       <FormControl>
@@ -369,7 +369,7 @@ class HeatingSelection extends React.Component {
 
                 {/* Öl oder Gasverbrauch */}
                 {BuildingEnegeryStandard === "OilLNG" && (
-                  <div class="label" style={{ marginTop: "30px", marginLeft: "10px", fontFamily: "Bosch-Regular" }}>
+                  <div className="label" style={{ marginTop: "30px", marginLeft: "10px", fontFamily: "Bosch-Regular" }}>
                     Nennen Sie uns entweder Ihren Gas- oder Ölverbrauch pro Jahr
                     <div style={{ marginTop: "40px" }}>
                       <FormControl>
@@ -391,34 +391,34 @@ class HeatingSelection extends React.Component {
 
                 {/* Gebäudeisolierung */}
                 {BuildingEnegeryStandard === "BuildingInsulation" && (
-                  <div class="label" style={{ marginTop: "30px", marginLeft: "10px", fontFamily: "Bosch-Regular" }}>
+                  <div className="label" style={{ marginTop: "30px", marginLeft: "10px", fontFamily: "Bosch-Regular" }}>
                     Wie gut ist Ihr Gebäude isoliert?
                     <div style={{ marginTop: "15px" }}>
                       <FormControl>
                         <RadioGroup name="insulation-value">
                           <div>
-                            <span class="trackeable" data-event="heizenergiebedard-vollstandig">
+                            <span className="trackeable" data-event="heizenergiebedard-vollstandig">
                               <FormControlLabel value="kfW_40_" control={<OilLNGRadio />} label="Vollständig sehr gut isoliert" checked={insulationValue === "kfW_40_"} onChange={this.inputInsulationValue} />
                             </span>
-                            <InfoButton tooltipId="1" text="Die auschlaggebenden Faktoren für die Gebäudedämmung sind das Dach, die Gebäudehülle und die Fenster. Bei einer vollständig, sehr guten Dämmung wurden alle Faktoren bereits auf den neusten Stand gebracht." color="#000" />
+                            <InfoButton tooltipid="1" text="Die auschlaggebenden Faktoren für die Gebäudedämmung sind das Dach, die Gebäudehülle und die Fenster. Bei einer vollständig, sehr guten Dämmung wurden alle Faktoren bereits auf den neusten Stand gebracht." color="#000" />
                           </div>
                           <div>
-                            <span class="trackeable" data-event="heizenergiebedard-grobtenteils">
+                            <span className="trackeable" data-event="heizenergiebedard-grobtenteils">
                               <FormControlLabel value="kfW_70_" control={<OilLNGRadio />} label="Größtenteils gut isoliert" checked={insulationValue === "kfW_70_"} onChange={this.inputInsulationValue} />
                             </span>
-                            <InfoButton tooltipId="2" text="Die auschlaggebenden Faktoren für die Gebäudedämmung sind das Dach, die Gebäudehülle und die Fenster. Bei einer größtenteils guten Dämmung wurden mindestens 2 Faktoren bereits auf den neusten Stand gebracht." color="#000" />
+                            <InfoButton tooltipid="2" text="Die auschlaggebenden Faktoren für die Gebäudedämmung sind das Dach, die Gebäudehülle und die Fenster. Bei einer größtenteils guten Dämmung wurden mindestens 2 Faktoren bereits auf den neusten Stand gebracht." color="#000" />
                           </div>
                           <div>
-                            <span class="trackeable" data-event="heizenergiebedard-teilweise">
+                            <span className="trackeable" data-event="heizenergiebedard-teilweise">
                               <FormControlLabel value="p_isolated" control={<OilLNGRadio />} label="Teilweise isoliert" checked={insulationValue === "p_isolated"} onChange={this.inputInsulationValue} />
                             </span>
-                            <InfoButton tooltipId="3" text="Die auschlaggebenden Faktoren für die Gebäudedämmung sind das Dach, die Gebäudehülle und die Fenster. Bei einer Teil-Dämmung wurde mindestens ein Faktor bereits auf den neusten Stand gebracht." color="#000" />
+                            <InfoButton tooltipid="3" text="Die auschlaggebenden Faktoren für die Gebäudedämmung sind das Dach, die Gebäudehülle und die Fenster. Bei einer Teil-Dämmung wurde mindestens ein Faktor bereits auf den neusten Stand gebracht." color="#000" />
                           </div>
                           <div>
-                            <span class="trackeable" data-event="heizenergiebedard-schlecht">
+                            <span className="trackeable" data-event="heizenergiebedard-schlecht">
                               <FormControlLabel value="un_ren_" control={<OilLNGRadio />} label="Schlecht bis gar nicht isoliert" checked={insulationValue === "un_ren_"} onChange={this.inputInsulationValue} />
                             </span>
-                            <InfoButton tooltipId="4" text="Die auschlaggebenden Faktoren für die Gebäudedämmung sind das Dach, die Gebäudehülle und die Fenster. Nicht isoliert bedeutet, dass noch kein Faktor auf den neusten Stand gebracht wurde." color="#000" />
+                            <InfoButton tooltipid="4" text="Die auschlaggebenden Faktoren für die Gebäudedämmung sind das Dach, die Gebäudehülle und die Fenster. Nicht isoliert bedeutet, dass noch kein Faktor auf den neusten Stand gebracht wurde." color="#000" />
                           </div>
                         </RadioGroup>
                       </FormControl>

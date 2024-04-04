@@ -62,7 +62,6 @@ class HeatDistribution extends React.Component {
     setHeatDistribution(event.target.value);
 
     let preHeatOptionValue = buildingTypePreHeatOption.find((o) => o.buildingType === kfwValue);
-
     if (preHeatOptionValue.option2 === "-") {
       setPreHeatTempOption(1);
     } else {
@@ -157,42 +156,42 @@ class HeatDistribution extends React.Component {
 
     return (
       <div>
-        <div class="cardContainer step-three">
-          <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusHeatLarge /> : <HeatLarge />}</div>
-          <div class="cardContent">
-            <div class="flexContent">
+        <div className="cardContainer step-three">
+          <div className="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusHeatLarge /> : <HeatLarge />}</div>
+          <div className="cardContent">
+            <div className="flexContent">
               <div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <div class="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusHeatLarge style={{ marginLeft: "10px", width: "55px" }} /> : <HeatLarge style={{ marginLeft: "10px", width: "55px" }} />}</div>
-                  <h3 class="cardHeadline">Wärmeverteilsystem</h3>
+                  <div className="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusHeatLarge style={{ marginLeft: "10px", width: "55px" }} /> : <HeatLarge style={{ marginLeft: "10px", width: "55px" }} />}</div>
+                  <h3 className="cardHeadline">Wärmeverteilsystem</h3>
                 </div>
-                <span class="cardDescription">Wie werden Ihre Räume beheizt?</span>
+                <span className="cardDescription">Wie werden Ihre Räume beheizt?</span>
               </div>
-              <div class="flexRow">
+              <div className="flexRow">
                 <div>
                   <label>
-                    <input type="radio" name="heating" value="Radiator" class="card-input-element trackeable" checked={heatDistributionValue === "Radiator" && radiatorDisabled !== "disabled"} onChange={this.inputHeatingDistribution} data-event="warmeverteilsystem-heizkorper" disabled={radiatorDisabled} />
-                    <div class={`panel panel-default card-input-wide ${radiatorDisabled}`}>
-                      <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusRadiatorIcon /> : <RadiatorIcon />}</div>
-                      <div class="panel-body">Heizkörper</div>
+                    <input type="radio" name="heating" value="Radiator" className="card-input-element trackeable" checked={heatDistributionValue === "Radiator" && radiatorDisabled !== "disabled"} onChange={this.inputHeatingDistribution} data-event="warmeverteilsystem-heizkorper" disabled={radiatorDisabled} />
+                    <div className={`panel panel-default card-input-wide ${radiatorDisabled}`}>
+                      <div className="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusRadiatorIcon /> : <RadiatorIcon />}</div>
+                      <div className="panel-body">Heizkörper</div>
                     </div>
                   </label>
                 </div>
                 <div>
                   <label>
-                    <input type="radio" name="heating" value="Underfloor" class="card-input-element trackeable" checked={heatDistributionValue === "Underfloor" && underfloorDisabled !== "disabled"} onChange={this.inputHeatingDistribution} data-event="warmeverteilsystem-fubodenheizung" disabled={underfloorDisabled} />
-                    <div class={`panel panel-default card-input-wide ${underfloorDisabled}`}>
-                      <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusUnderfloorHeatingIcon /> : <UnderfloorHeatingIcon />}</div>
-                      <div class="panel-body">Fußbodenheizung</div>
+                    <input type="radio" name="heating" value="Underfloor" className="card-input-element trackeable" checked={heatDistributionValue === "Underfloor" && underfloorDisabled !== "disabled"} onChange={this.inputHeatingDistribution} data-event="warmeverteilsystem-fubodenheizung" disabled={underfloorDisabled} />
+                    <div className={`panel panel-default card-input-wide ${underfloorDisabled}`}>
+                      <div className="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusUnderfloorHeatingIcon /> : <UnderfloorHeatingIcon />}</div>
+                      <div className="panel-body">Fußbodenheizung</div>
                     </div>
                   </label>
                 </div>
                 <div>
                   <label>
-                    <input type="radio" name="heating" value="UnderfloorRadiator" class="card-input-element trackeable" checked={heatDistributionValue === "UnderfloorRadiator" && underfloorRadiatorDisable !== "disabled"} onChange={this.inputHeatingDistribution} data-event="warmeverteilsystem-fubodenheizung-und-heizkorper" disabled={underfloorRadiatorDisable} />
-                    <div class={`panel panel-default card-input-wide ${underfloorRadiatorDisable}`}>
-                      <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusUnderfloorRadiatorIcon /> : <UnderfloorRadiatorIcon />}</div>
-                      <div class="panel-body">Fußbodenheizung und Heizkörper</div>
+                    <input type="radio" name="heating" value="UnderfloorRadiator" className="card-input-element trackeable" checked={heatDistributionValue === "UnderfloorRadiator" && underfloorRadiatorDisable !== "disabled"} onChange={this.inputHeatingDistribution} data-event="warmeverteilsystem-fubodenheizung-und-heizkorper" disabled={underfloorRadiatorDisable} />
+                    <div className={`panel panel-default card-input-wide ${underfloorRadiatorDisable}`}>
+                      <div className="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusUnderfloorRadiatorIcon /> : <UnderfloorRadiatorIcon />}</div>
+                      <div className="panel-body">Fußbodenheizung und Heizkörper</div>
                     </div>
                   </label>
                 </div>

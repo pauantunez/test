@@ -195,8 +195,8 @@ class Welcome extends React.Component {
         <div className={styles.setupContainer}>
           <div>
             <div>{/*<img src={require(`../assets/img/house-placeholder.png`)} alt="" style={{width: '100%'}} />*/}</div>
-            <div class="welcomeContainer" style={{ display: "flex" }}>
-              <div class="left-container">
+            <div className="welcomeContainer" style={{ display: "flex" }}>
+              <div className="left-container">
                 <p style={{ fontFamily: "Bosch-Bold", fontSize: "16px" }}>Sparen Sie Stromkosten – mit der smarten Kombination aus Photovoltaik, Wärmepumpe, Wallbox und einem intelligenten Energiemanagementsystem</p>
                 <p style={{ paddingTop: "25px" }}>Ermitteln Sie mit dem Tool für Ihr Einfamilienhaus:</p>
                 <div style={{ display: "flex", flexDirection: "column", lineHeight: "24px" }}>
@@ -226,20 +226,20 @@ class Welcome extends React.Component {
                   </div>
                 </div>
               </div>
-              <div class="right-container" style={{ display: "flex", justifyContent: "end" }}>
+              <div className="right-container" style={{ display: "flex", justifyContent: "end" }}>
                 <img src={this.context.selectedTheme === "buderus" ? require(`../assets/img/buderus/preview.png`) : require(`../assets/img/preview.png`)} alt="" style={{ width: this.context.selectedTheme === "buderus" ? "" : "85%", height: "auto", objectFit: "contain", margin: "14px" }} />
               </div>
             </div>
-            <div class="welcomeBtns" style={{ display: "flex", margin: "3% 5% 0 5%" }}>
-              <div class="startBtn">
-                <span class="trackeable" data-event="jetzt-solarstromrechner-starten">
+            <div className="welcomeBtns" style={{ display: "flex", margin: "3% 5% 0 5%" }}>
+              <div className="startBtn">
+                <span className="trackeable" data-event="jetzt-solarstromrechner-starten">
                   <Link style={{ display: "inline-block", textAlign: "center", backgroundColor: this.context.selectedTheme === "buderus" ? "#002D59" : "#006a9b", color: this.context.selectedTheme === "buderus" ? "#FFFFFF" : "#FFF", textDecoration: "none", margin: "5px 10px 0 0", padding: "10px 20px 10px 20px", fontSize: "14px", fontFamily: "Bosch-Regular" }} to={this.context.selectedTheme === "buderus" ? "./main?theme=buderus" : "./main"}>
                     Jetzt Solarstromrechner starten
                   </Link>
                 </span>
               </div>
-              <div class="explanationBtn">
-                <div class="calculationBase trackeable" onClick={handleOpen} style={{ fontSize: "12px", fontFamily: "Bosch-Regular", color: this.context.selectedTheme === "buderus" ? "#000000" : "#007BC0", cursor: "pointer" }} data-event="berechnungsgrundlage">
+              <div className="explanationBtn">
+                <div className="calculationBase trackeable" onClick={handleOpen} style={{ fontSize: "12px", fontFamily: "Bosch-Regular", color: this.context.selectedTheme === "buderus" ? "#000000" : "#007BC0", cursor: "pointer" }} data-event="berechnungsgrundlage">
                   Berechnugsgrundlage
                 </div>
               </div>
@@ -247,9 +247,7 @@ class Welcome extends React.Component {
           </div>
         </div>
 
-        <div class="noticeBottom">
-          Hinweis: Die Ergebnisse beruhen auf Annahmen und können in der Realität abweichen. Bitte besprechen Sie die Details mit einem Fachbetrieb in Ihrer Nähe.
-        </div>
+        <div className="noticeBottom">Hinweis: Die Ergebnisse beruhen auf Annahmen und können in der Realität abweichen. Bitte besprechen Sie die Details mit einem Fachbetrieb in Ihrer Nähe.</div>
 
         <CalculationModal />
       </div>

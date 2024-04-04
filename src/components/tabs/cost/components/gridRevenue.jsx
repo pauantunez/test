@@ -150,19 +150,19 @@ class GridRevenue extends React.Component {
 
     return (
       <div>
-        <div class="cardContainer step-eleven">
-          <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusCoins /> : <GridRevenueIcon />}</div>
-          <div class="cardContent">
-            <div class="flexContent">
+        <div className="cardContainer step-eleven">
+          <div className="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusCoins /> : <GridRevenueIcon />}</div>
+          <div className="cardContent">
+            <div className="flexContent">
               <div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <div class="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusCoins style={{ marginLeft: "10px", width: "55px" }} /> : <GridRevenueIcon style={{ marginLeft: "10px", width: "55px" }} />}</div>
-                  <h3 class="cardHeadline">Einspeisevergütung</h3>
+                  <div className="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusCoins style={{ marginLeft: "10px", width: "55px" }} /> : <GridRevenueIcon style={{ marginLeft: "10px", width: "55px" }} />}</div>
+                  <h3 className="cardHeadline">Einspeisevergütung</h3>
                 </div>
-                <span class="cardDescription">Wie hoch ist die Einspeisevergütung?</span>
+                <span className="cardDescription">Wie hoch ist die Einspeisevergütung?</span>
               </div>
-              <div class="flexRow" style={{ flexDirection: "column" }}>
-                <div class="input-margins">
+              <div className="flexRow" style={{ flexDirection: "column" }}>
+                <div className="input-margins">
                   <TextField id="filled-basic" style={{ width: "100%" }} name="gridRevenue" placeholder="8,2" type="text" value={gridRevenue} label="Einspeisevergütung in Ct/kWh" variant="filled" InputLabelProps={{ shrink: true }} onChange={this.inputGridRevenue} onKeyDown={this.avoidPointAndCharacters} />
                 </div>
                 <div style={{ marginTop: "70px" }}>

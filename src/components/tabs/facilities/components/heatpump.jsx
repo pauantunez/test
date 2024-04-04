@@ -190,33 +190,33 @@ class Heatpump extends React.Component {
 
     return (
       <div>
-        <div class="cardContainer step-three">
-          <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusHeatpumpLarge /> : <HeatpumpLarge />}</div>
-          <div class="cardContent">
-            <div class="flexContent">
+        <div className="cardContainer step-three">
+          <div className="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusHeatpumpLarge /> : <HeatpumpLarge />}</div>
+          <div className="cardContent">
+            <div className="flexContent">
               <div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <div class="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusHeatpumpLarge style={{ marginLeft: "10px", width: "55px" }} /> : <HeatpumpLarge style={{ marginLeft: "10px", width: "55px" }} />}</div>
-                  <h3 class="cardHeadline">Wärmepumpe</h3>
+                  <div className="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusHeatpumpLarge style={{ marginLeft: "10px", width: "55px" }} /> : <HeatpumpLarge style={{ marginLeft: "10px", width: "55px" }} />}</div>
+                  <h3 className="cardHeadline">Wärmepumpe</h3>
                 </div>
-                <span class="cardDescription">Welche Art Wärmepumpe ist verbaut oder geplant?</span>
+                <span className="cardDescription">Welche Art Wärmepumpe ist verbaut oder geplant?</span>
               </div>
-              <div class="flexRow">
+              <div className="flexRow">
                 <div>
                   <label>
-                    <input type="radio" name="heating" value="2" class="card-input-element trackeable" checked={heatpumpType === "2"} onChange={this.inputHeatpumpType} data-event="warmepumpe-erdwarmepumpe" />
-                    <div class="panel panel-default card-input-wide">
-                      <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusGeothermalHeatpumpIcon /> : <GeothermalHeatpumpIcon />}</div>
-                      <div class="panel-body">Erdwärmepumpe</div>
+                    <input type="radio" name="heating" value="2" className="card-input-element trackeable" checked={heatpumpType === "2"} onChange={this.inputHeatpumpType} data-event="warmepumpe-erdwarmepumpe" />
+                    <div className="panel panel-default card-input-wide">
+                      <div className="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusGeothermalHeatpumpIcon /> : <GeothermalHeatpumpIcon />}</div>
+                      <div className="panel-body">Erdwärmepumpe</div>
                     </div>
                   </label>
                 </div>
                 <div>
                   <label>
-                    <input type="radio" name="heating" value="1" class="card-input-element trackeable" checked={heatpumpType === "1"} onChange={this.inputHeatpumpType} data-event="warmepumpe-luftwasserwarmepumper" />
-                    <div class="panel panel-default card-input-wide">
-                      <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusAirWaterHeatpumpIcon /> : <AirWaterHeatpumpIcon />}</div>
-                      <div class="panel-body">Luft-Wasser-Wärmepumpe</div>
+                    <input type="radio" name="heating" value="1" className="card-input-element trackeable" checked={heatpumpType === "1"} onChange={this.inputHeatpumpType} data-event="warmepumpe-luftwasserwarmepumper" />
+                    <div className="panel panel-default card-input-wide">
+                      <div className="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusAirWaterHeatpumpIcon /> : <AirWaterHeatpumpIcon />}</div>
+                      <div className="panel-body">Luft-Wasser-Wärmepumpe</div>
                     </div>
                   </label>
                 </div>

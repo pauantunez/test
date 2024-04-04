@@ -259,33 +259,33 @@ class EV extends React.Component {
 
     return (
       <div>
-        <div class="cardContainer step-six">
-          <div class="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusEVLargeIcon /> : <EVLargeIcon />}</div>
-          <div class="cardContent">
-            <div class="flexContent">
+        <div className="cardContainer step-six">
+          <div className="cardLargeIcon">{this.context.selectedTheme === "buderus" ? <BuderusEVLargeIcon /> : <EVLargeIcon />}</div>
+          <div className="cardContent">
+            <div className="flexContent">
               <div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <div class="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusEVLargeIcon style={{ marginLeft: "10px", width: "55px" }} /> : <EVLargeIcon style={{ marginLeft: "10px", width: "55px" }} />}</div>
-                  <h3 class="cardHeadline">Elektroauto</h3>
+                  <div className="cardIconInset">{this.context.selectedTheme === "buderus" ? <BuderusEVLargeIcon style={{ marginLeft: "10px", width: "55px" }} /> : <EVLargeIcon style={{ marginLeft: "10px", width: "55px" }} />}</div>
+                  <h3 className="cardHeadline">Elektroauto</h3>
                 </div>
-                <span class="cardDescription">Ist ein Elektroauto vorhanden oder geplant?</span>
+                <span className="cardDescription">Ist ein Elektroauto vorhanden oder geplant?</span>
               </div>
-              <div class="flexRow">
+              <div className="flexRow">
                 <div>
                   <label>
-                    <input type="radio" name="heating" value="EV" class="card-input-element" checked={ev === "EV"} onChange={this.inputEV} />
-                    <div class="panel panel-default card-input">
-                      <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusAcceptIcon /> : <AcceptIcon />}</div>
-                      <div class="panel-body">Ja</div>
+                    <input type="radio" name="heating" value="EV" className="card-input-element" checked={ev === "EV"} onChange={this.inputEV} />
+                    <div className="panel panel-default card-input">
+                      <div className="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusAcceptIcon /> : <AcceptIcon />}</div>
+                      <div className="panel-body">Ja</div>
                     </div>
                   </label>
                 </div>
                 <div>
                   <label>
-                    <input type="radio" name="heating" value="noEV" class="card-input-element trackeable" checked={ev === "noEV"} onChange={this.inputEV} data-event="elektroauto-nein" />
-                    <div class="panel panel-default card-input">
-                      <div class="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusDenyIcon /> : <DenyIcon />}</div>
-                      <div class="panel-body">Nein</div>
+                    <input type="radio" name="heating" value="noEV" className="card-input-element trackeable" checked={ev === "noEV"} onChange={this.inputEV} data-event="elektroauto-nein" />
+                    <div className="panel panel-default card-input">
+                      <div className="panel-heading">{this.context.selectedTheme === "buderus" ? <BuderusDenyIcon /> : <DenyIcon />}</div>
+                      <div className="panel-body">Nein</div>
                     </div>
                   </label>
                 </div>
@@ -297,25 +297,25 @@ class EV extends React.Component {
                   <div style={{ marginTop: "15px" }}>
                     <FormControl>
                       <RadioGroup name="charging-value">
-                        <div class="label">
+                        <div className="label">
                           <FormControlLabel value="Commuter_" control={<StandardRadio />} label="Das E-Auto kann nur selten tagsüber zuhause geladen werden." checked={homeCharging === "Commuter_"} onChange={this.inputChargingValue} />
                         </div>
-                        <div class="label top-margin-10">
+                        <div className="label top-margin-10">
                           <FormControlLabel value="Family_" control={<StandardRadio />} label="Das E-Auto wird vorwiegend tagsüber zuhause geladen." checked={homeCharging === "Family_"} onChange={this.inputChargingValue} />
                         </div>
                       </RadioGroup>
                     </FormControl>
                   </div>
-                  <div class="label" style={{ marginTop: "15px" }}>
+                  <div className="label" style={{ marginTop: "15px" }}>
                     Jahreskilometer:
                   </div>
                   <div style={{ marginTop: "10px" }}>
                     <FormControl>
                       <RadioGroup name="odometer-value">
-                        <div class="label">
+                        <div className="label">
                           <FormControlLabel value="10k" control={<StandardRadio />} label="ca. 10.000 km" checked={odometerIncrease === "10k"} onChange={this.inputOdometerValue} />
                         </div>
-                        <div class="label">
+                        <div className="label">
                           <FormControlLabel value="20k" control={<StandardRadio />} label="ca. 20.000 km" checked={odometerIncrease === "20k"} onChange={this.inputOdometerValue} />
                         </div>
                       </RadioGroup>

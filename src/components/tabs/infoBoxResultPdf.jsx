@@ -148,7 +148,7 @@ class InfoBoxResultPdf extends React.Component {
     return (
       <Box
         component="span"
-        class="infobox-container"
+        className="infobox-container"
         style={{
           fontSize: "16px",
           fontWeight: "400",
@@ -160,8 +160,8 @@ class InfoBoxResultPdf extends React.Component {
         <div>
           {this.state.boxType === "left" && (
             <div>
-              <div class="infobox-row-container">
-                <div class="infobox-row" style={{ display: "block", lineHeight: "24px", borderBottom: "none" }}>
+              <div className="infobox-row-container">
+                <div className="infobox-row" style={{ display: "block", lineHeight: "24px", borderBottom: "none" }}>
                   {this.state.displayed === "one-year" && (
                     <p>
                       Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{savingOnlyPV1year.toLocaleString("de-DE")} € Stromkosten </strong>pro Jahr sparen.
@@ -199,8 +199,8 @@ class InfoBoxResultPdf extends React.Component {
           )}
           {this.state.boxType === "right" && (
             <div>
-              <div class="infobox-row-container">
-                <div class="infobox-row" style={{ fontSize: "14px", display: "block", lineHeight: "24px", borderBottom: "none" }}>
+              <div className="infobox-row-container">
+                <div className="infobox-row" style={{ fontSize: "14px", display: "block", lineHeight: "24px", borderBottom: "none" }}>
                   <p>
                     Die Investition in eine <b>PV-Anlage</b> hat sich nach ca. <strong>{this.breakEvenPV()} Jahren</strong> amortisiert.
                   </p>

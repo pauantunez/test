@@ -482,7 +482,7 @@ class Main extends React.Component {
                 <h3 style={{ marginBottom: "10px", fontSize: "20px", marginBlockStart: "0", color: "#000" }}>Gebäude</h3>
               </div>
               <Link
-                class={steps[0] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[0] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(0);
                 }}
@@ -494,7 +494,7 @@ class Main extends React.Component {
                 </span>
               </Link>
               <Link
-                class={steps[1] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[1] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(1);
                 }}
@@ -506,7 +506,7 @@ class Main extends React.Component {
                 </span>
               </Link>
               <Link
-                class={steps[2] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[2] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(2);
                 }}
@@ -521,7 +521,7 @@ class Main extends React.Component {
                 <h3 style={{ marginBottom: "10px", fontSize: "20px" }}>Ausstattung</h3>
               </div>
               <Link
-                class={steps[3] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[3] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(3);
                 }}
@@ -533,7 +533,7 @@ class Main extends React.Component {
                 </span>
               </Link>
               <Link
-                class={steps[4] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[4] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(4);
                 }}
@@ -545,7 +545,7 @@ class Main extends React.Component {
                 </span>
               </Link>
               <Link
-                class={steps[5] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[5] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(5);
                 }}
@@ -557,7 +557,7 @@ class Main extends React.Component {
                 </span>
               </Link>
               <Link
-                class={steps[6] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[6] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(6);
                 }}
@@ -569,7 +569,7 @@ class Main extends React.Component {
                 </span>
               </Link>
               <Link
-                class={steps[7] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[7] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(7);
                 }}
@@ -584,7 +584,7 @@ class Main extends React.Component {
                 <h3 style={{ marginBottom: "10px", fontSize: "20px" }}>Ökonomische Kenngrößen</h3>
               </div>
               <Link
-                class={steps[8] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[8] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(8);
                 }}
@@ -596,7 +596,7 @@ class Main extends React.Component {
                 </span>
               </Link>
               <Link
-                class={steps[9] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[9] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(9);
                 }}
@@ -608,7 +608,7 @@ class Main extends React.Component {
                 </span>
               </Link>
               <Link
-                class={steps[10] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[10] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(10);
                 }}
@@ -623,7 +623,7 @@ class Main extends React.Component {
                 <h3 style={{ marginBottom: "10px", fontSize: "20px" }}>Ergebnis</h3>
               </div>
               <Link
-                class={steps[10] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[10] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(11);
                 }}
@@ -635,7 +635,7 @@ class Main extends React.Component {
                 </span>
               </Link>
               <Link
-                class={steps[10] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[10] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(12);
                 }}
@@ -667,7 +667,7 @@ class Main extends React.Component {
                 <h3 style={{ fontFamily: "Bosch-Medium", color: "#000", marginBottom: "10px", fontSize: "20px", marginBlockStart: "0" }}>Gebäude</h3>
               </div>
               <Link
-                class={steps[0] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[0] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(0);
                 }}
@@ -679,7 +679,7 @@ class Main extends React.Component {
                 </span>
               </Link>
               <Link
-                class={steps[1] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[1] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(1);
                 }}
@@ -691,7 +691,7 @@ class Main extends React.Component {
                 </span>
               </Link>
               <Link
-                class={steps[2] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[2] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(2);
                 }}
@@ -706,7 +706,7 @@ class Main extends React.Component {
                 <h3 style={{ fontFamily: "Bosch-Medium", color: "#000", marginBottom: "10px", fontSize: "20px" }}>Ausstattung</h3>
               </div>
               <Link
-                class={steps[3] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[3] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(3);
                 }}
@@ -718,7 +718,7 @@ class Main extends React.Component {
                 </span>
               </Link>
               <Link
-                class={steps[4] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[4] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(4);
                 }}
@@ -730,7 +730,7 @@ class Main extends React.Component {
                 </span>
               </Link>
               <Link
-                class={steps[5] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[5] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(5);
                 }}
@@ -742,7 +742,7 @@ class Main extends React.Component {
                 </span>
               </Link>
               <Link
-                class={steps[6] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[6] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(6);
                 }}
@@ -754,7 +754,7 @@ class Main extends React.Component {
                 </span>
               </Link>
               <Link
-                class={steps[7] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[7] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(7);
                 }}
@@ -769,7 +769,7 @@ class Main extends React.Component {
                 <h3 style={{ fontFamily: "Bosch-Medium", color: "#000", marginBottom: "10px", fontSize: "20px" }}>Ökonomische Kenngrößen</h3>
               </div>
               <Link
-                class={steps[8] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[8] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(8);
                 }}
@@ -781,7 +781,7 @@ class Main extends React.Component {
                 </span>
               </Link>
               <Link
-                class={steps[9] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[9] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(9);
                 }}
@@ -793,7 +793,7 @@ class Main extends React.Component {
                 </span>
               </Link>
               <Link
-                class={steps[10] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[10] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(10);
                 }}
@@ -808,7 +808,7 @@ class Main extends React.Component {
                 <h3 style={{ fontFamily: "Bosch-Medium", color: "#000", marginBottom: "10px", fontSize: "20px" }}>Ergebnis</h3>
               </div>
               <Link
-                class={steps[10] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[10] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(11);
                 }}
@@ -820,7 +820,7 @@ class Main extends React.Component {
                 </span>
               </Link>
               <Link
-                class={steps[10] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[10] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(12);
                 }}
@@ -841,7 +841,7 @@ class Main extends React.Component {
             </Box>
           </div>
         </div>
-        <div class="bottomNav" style={{ position: isMobile ? "absolute" : "fixed", width: "100%", bottom: "3%", zIndex: "999999" }}>
+        <div className="bottomNav" style={{ position: isMobile ? "absolute" : "fixed", width: "100%", bottom: "3%", zIndex: "999999" }}>
           <div style={{ display: "flex", justifyContent: "space-between", marginLeft: "3%", marginRight: "3%" }}>
             <Button
               id="previousTabBtn"
@@ -970,7 +970,7 @@ class Main extends React.Component {
             >
               {activeView === 10 && <span>Ergebnis Teil 1</span>}
               {activeView === 11 && (
-                <span class="trackeable" data-event="result-part1-next">
+                <span className="trackeable" data-event="result-part1-next">
                   Ergebnis Teil 2
                 </span>
               )}
@@ -979,7 +979,7 @@ class Main extends React.Component {
               {activeView === 2 && <span>Weiter</span>}
               {activeView === 3 && directLink === false && <span>Weiter</span>}
               {activeView === 3 && directLink === true && (
-                <span class="trackeable" data-event="haushaltsstromverbrauch-back-to-result">
+                <span className="trackeable" data-event="haushaltsstromverbrauch-back-to-result">
                   Zurück zum Ergebnis
                 </span>
               )}
@@ -990,7 +990,7 @@ class Main extends React.Component {
               {activeView === 8 && <span>Weiter</span>}
               {activeView === 9 && <span>Weiter</span>}
               {activeView === 12 && (
-                <span class="trackeable" data-event="result-part2-next">
+                <span className="trackeable" data-event="result-part2-next">
                   Zusatz
                 </span>
               )}
@@ -1007,7 +1007,7 @@ class Main extends React.Component {
                 setActiveView(0);
               }}
             >
-              <span class="trackeable" data-event="result-part3-back-to-startpage">
+              <span className="trackeable" data-event="result-part3-back-to-startpage">
                 Zurück zum Start
               </span>
             </CustomButton>

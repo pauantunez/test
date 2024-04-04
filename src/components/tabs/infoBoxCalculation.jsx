@@ -20,55 +20,55 @@ class InfoBoxCalculation extends React.Component {
 
   static contextType = AppContext;
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   render() {
     return (
-      <Box component="span" class="infobox-container">
-        {this.state.boxType === "calculation-1" && <h3 class="infobox-h3 Bosch-Medium">Gebäudeenergiestandard:</h3>}
+      <Box component="span" className="infobox-container">
+        {this.state.boxType === "calculation-1" && <h3 className="infobox-h3 Bosch-Medium">Gebäudeenergiestandard:</h3>}
         {/*this.state.boxType === "calculation-2" && <span style={{ display: "block", paddingBottom: "10px" }}>Als Alternativeingabe wird der jährliche Öl- oder Gasverbrauch genutzt:</span>*/}
         {this.state.boxType === "calculation-2" && (
-          <h3 class="infobox-h3 Bosch-Medium" style={{ marginBottom: "10px" }}>
+          <h3 className="infobox-h3 Bosch-Medium" style={{ marginBottom: "10px" }}>
             Wärmeverteilsystem:
           </h3>
         )}
         {this.state.boxType === "calculation-3" && (
-          <h3 class="infobox-h3 Bosch-Medium" style={{ marginBottom: "0px" }}>
+          <h3 className="infobox-h3 Bosch-Medium" style={{ marginBottom: "0px" }}>
             Haushaltsstrombedarf:
           </h3>
         )}
         {this.state.boxType === "calculation-4" && (
-          <h3 class="infobox-h3 Bosch-Medium" style={{ marginBottom: "0px" }}>
+          <h3 className="infobox-h3 Bosch-Medium" style={{ marginBottom: "0px" }}>
             E-Auto:
           </h3>
         )}
         {this.state.boxType === "calculation-5" && (
-          <h3 class="infobox-h3 Bosch-Medium" style={{ marginBottom: "0px" }}>
+          <h3 className="infobox-h3 Bosch-Medium" style={{ marginBottom: "0px" }}>
             PV-Leistung:
           </h3>
         )}
         {this.state.boxType === "calculation-6" && (
-          <h3 class="infobox-h3 Bosch-Medium" style={{ marginBottom: "0px" }}>
+          <h3 className="infobox-h3 Bosch-Medium" style={{ marginBottom: "0px" }}>
             Stromspeicher:
           </h3>
         )}
         {this.state.boxType === "calculation-7" && (
-          <h3 class="infobox-h3 Bosch-Medium" style={{ marginBottom: "0px" }}>
+          <h3 className="infobox-h3 Bosch-Medium" style={{ marginBottom: "0px" }}>
             Wärmepumpe:
           </h3>
         )}
         {this.state.boxType === "calculation-8" && (
-          <h3 class="infobox-h3 Bosch-Medium" style={{ marginBottom: "0px" }}>
+          <h3 className="infobox-h3 Bosch-Medium" style={{ marginBottom: "0px" }}>
             Ergebnisse:
           </h3>
         )}
         {this.state.boxType === "calculation-9" && (
-          <h3 class="infobox-h3 Bosch-Medium" style={{ marginBottom: "0px" }}>
+          <h3 className="infobox-h3 Bosch-Medium" style={{ marginBottom: "0px" }}>
             Investitionskosten:
           </h3>
         )}
         {this.state.boxType === "calculation-2" && <span style={{ display: "block" }}>Das Wärmeverteilsystem hat Einfluss auf die Vorlauftemperatur der Heizungsanlage.</span>}
-        <div class="infobox-padding-8-8">
+        <div className="infobox-padding-8-8">
           {this.state.boxType === "calculation-1" && (
             <span>
               Der Gebäudeenergiestandard beeinflusst den Heizbedarf eines Gebäudes pro Wohnfläche. Gemeinsam mit der ausgewählten Wohnfläche kann so der Heizbedarf pro Jahr errechnet werden.
@@ -123,8 +123,8 @@ class InfoBoxCalculation extends React.Component {
           {/* One row and one column - Investment */}
           {this.state.boxType === "1-row-1-col" && (
             <div>
-              <div class="infobox-row-container">
-                <div class="infobox-row" style={{ display: "block", lineHeight: "20px", borderBottom: "none" }}>
+              <div className="infobox-row-container">
+                <div className="infobox-row" style={{ display: "block", lineHeight: "20px", borderBottom: "none" }}>
                   Um die Investitionssumme Ihrer Anlage ermitteln zu können, werden
                   <br />
                   Marktübliche Richtpreise für die PV-Anlage und den Stromspeicher
@@ -145,8 +145,8 @@ class InfoBoxCalculation extends React.Component {
           {/* One row and one column - Investment */}
           {this.state.boxType === "1-row-1-col-electricity" && (
             <div>
-              <div class="infobox-row-container">
-                <div class="infobox-row" style={{ display: "block", lineHeight: "20px", borderBottom: "none" }}>
+              <div className="infobox-row-container">
+                <div className="infobox-row" style={{ display: "block", lineHeight: "20px", borderBottom: "none" }}>
                   Der Durschnittsstrompreis im 2. Halbjahr 2022 lag bei 35 Ct/kWh.
                   <br />
                   (inkl. MwSt.){" "}
@@ -161,18 +161,18 @@ class InfoBoxCalculation extends React.Component {
         {/* Two rows and two columns */}
         {this.state.boxType === "2-row-2-col" && (
           <div>
-            <div class="infobox-row-container">
-              <div class="infobox-row borderDark Bosch-Medium">
-                <div class="width-50 padding-left-10">Anzahl Personen</div>
-                <div class="width-50">Stromverbrauch in kWh</div>
+            <div className="infobox-row-container">
+              <div className="infobox-row borderDark Bosch-Medium">
+                <div className="width-50 padding-left-10">Anzahl Personen</div>
+                <div className="width-50">Stromverbrauch in kWh</div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10">3 - 4 Personen</div>
-                <div class="width-50">4.000 kWh</div>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10">3 - 4 Personen</div>
+                <div className="width-50">4.000 kWh</div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10">5 - 6 Personen</div>
-                <div class="width-50">6.000 kWh</div>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10">5 - 6 Personen</div>
+                <div className="width-50">6.000 kWh</div>
               </div>
             </div>
           </div>
@@ -180,18 +180,18 @@ class InfoBoxCalculation extends React.Component {
 
         {this.state.boxType === "2-row-2-col-revenue" && (
           <div>
-            <div class="infobox-row-container">
-              <div class="infobox-row borderDark Bosch-Medium">
-                <div class="width-50 padding-left-10">Anlagengröße</div>
-                <div class="width-50">Einspeisevergütung</div>
+            <div className="infobox-row-container">
+              <div className="infobox-row borderDark Bosch-Medium">
+                <div className="width-50 padding-left-10">Anlagengröße</div>
+                <div className="width-50">Einspeisevergütung</div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10">&lt; 10 kWp</div>
-                <div class="width-50">8,2 Ct/kWh</div>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10">&lt; 10 kWp</div>
+                <div className="width-50">8,2 Ct/kWh</div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10">&gt; 10 kWp</div>
-                <div class="width-50">7,1 Ct/kWh</div>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10">&gt; 10 kWp</div>
+                <div className="width-50">7,1 Ct/kWh</div>
               </div>
             </div>
           </div>
@@ -200,35 +200,35 @@ class InfoBoxCalculation extends React.Component {
         {/* Two rows and three columns */}
         {this.state.boxType === "2-row-3-col" && (
           <div>
-            <div class="infobox-row-container">
-              <div class="infobox-row borderDark Bosch-Medium" style={{ paddingBottom: "3px" }}>
-                <div class="width-50 padding-left-10" style={{ width: "28%" }}></div>
-                <div class="width-50" style={{ width: "33%" }}>
+            <div className="infobox-row-container">
+              <div className="infobox-row borderDark Bosch-Medium" style={{ paddingBottom: "3px" }}>
+                <div className="width-50 padding-left-10" style={{ width: "28%" }}></div>
+                <div className="width-50" style={{ width: "33%" }}>
                   Erdwärmepumpe
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.5", width: "39%" }}>
+                <div className="width-50" style={{ lineHeight: "1.5", width: "39%" }}>
                   Luft-Wasser-Wärmepumpe
                 </div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10 Bosch-Medium" style={{ lineHeight: "2.9", width: "28%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10 Bosch-Medium" style={{ lineHeight: "2.9", width: "28%" }}>
                   Wärmequelle
                 </div>
-                <div class="width-50" style={{ lineHeight: "2.9", width: "33%" }}>
+                <div className="width-50" style={{ lineHeight: "2.9", width: "33%" }}>
                   Erdreich
                 </div>
-                <div class="width-50" style={{ lineHeight: "2.9", width: "39%" }}>
+                <div className="width-50" style={{ lineHeight: "2.9", width: "39%" }}>
                   Umgebungsluft
                 </div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10 Bosch-Medium" style={{ lineHeight: "2.9", width: "28%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10 Bosch-Medium" style={{ lineHeight: "2.9", width: "28%" }}>
                   Eigenschaft
                 </div>
-                <div class="width-50" style={{ lineHeight: "2.9", width: "33%" }}>
+                <div className="width-50" style={{ lineHeight: "2.9", width: "33%" }}>
                   Hohe Effizienz
                 </div>
-                <div class="width-50" style={{ lineHeight: "2.9", width: "39%" }}>
+                <div className="width-50" style={{ lineHeight: "2.9", width: "39%" }}>
                   Geringer Platzbedarf
                 </div>
               </div>
@@ -239,34 +239,34 @@ class InfoBoxCalculation extends React.Component {
         {/* Four rows and two columns */}
         {this.state.boxType === "4-row-2-col" && (
           <div>
-            <div class="infobox-row-container">
-              <div class="infobox-row borderDark Bosch-Medium">
-                <div class="width-50 padding-left-10">Platzbedarf Dachfläche*</div>
-                <div class="width-50">PV-Leistung</div>
+            <div className="infobox-row-container">
+              <div className="infobox-row borderDark Bosch-Medium">
+                <div className="width-50 padding-left-10">Platzbedarf Dachfläche*</div>
+                <div className="width-50">PV-Leistung</div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10">
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10">
                   24m<sup>2</sup>
                 </div>
-                <div class="width-50">4 kWp</div>
+                <div className="width-50">4 kWp</div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10">
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10">
                   42m<sup>2</sup>
                 </div>
-                <div class="width-50">7 kWp</div>
+                <div className="width-50">7 kWp</div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10">
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10">
                   60m<sup>2</sup>
                 </div>
-                <div class="width-50">10 kWp</div>
+                <div className="width-50">10 kWp</div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10">
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10">
                   84m<sup>2</sup>
                 </div>
-                <div class="width-50">14 kWp</div>
+                <div className="width-50">14 kWp</div>
               </div>
             </div>
           </div>
@@ -275,32 +275,32 @@ class InfoBoxCalculation extends React.Component {
         {/* Four rows and two columns - Battery Storage */}
         {this.state.boxType === "4-row-2-col-battery" && (
           <div>
-            <div class="infobox-row-container">
-              <div class="infobox-row borderDark Bosch-Medium">
-                <div class="width-50 padding-left-10">PV-Leistung</div>
-                <div class="width-50">Größe Batteriespeicher</div>
+            <div className="infobox-row-container">
+              <div className="infobox-row borderDark Bosch-Medium">
+                <div className="width-50 padding-left-10">PV-Leistung</div>
+                <div className="width-50">Größe Batteriespeicher</div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10">5 kWp</div>
-                <div class="width-50">6 kWh</div>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10">5 kWp</div>
+                <div className="width-50">6 kWh</div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10">7 kWp</div>
-                <div class="width-50">9 kWh</div>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10">7 kWp</div>
+                <div className="width-50">9 kWh</div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10">10 kWp</div>
-                <div class="width-50">12 kWh</div>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10">10 kWp</div>
+                <div className="width-50">12 kWh</div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10">14 kWp</div>
-                <div class="width-50">15 kWh</div>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10">14 kWp</div>
+                <div className="width-50">15 kWh</div>
               </div>
             </div>
           </div>
         )}
         {this.state.boxType === "4-row-2-col" && (
-          <div class="infobox-padding-12-0 font12">
+          <div className="infobox-padding-12-0 font12">
             <span>
               * Platzbedarf bei kompakter Anordnung ohne Störflächen, Randabstand nicht
               <br />
@@ -312,89 +312,89 @@ class InfoBoxCalculation extends React.Component {
         {/* Berechnungsgrundlage 1 */}
         {this.state.boxType === "calculation-1" && (
           <div>
-            <div class="infobox-row-container" style={{ marginTop: "8px" }}>
-              <div class="infobox-row borderDark Bosch-Medium" style={{ paddingBottom: "3px" }}>
-                <div class="width-50 padding-left-10" style={{ lineHeight: "1.5", width: "28%" }}>
+            <div className="infobox-row-container" style={{ marginTop: "8px" }}>
+              <div className="infobox-row borderDark Bosch-Medium" style={{ paddingBottom: "3px" }}>
+                <div className="width-50 padding-left-10" style={{ lineHeight: "1.5", width: "28%" }}>
                   Heizbedarf pro Jahr in kWh/m²
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "33%" }}>
+                <div className="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "33%" }}>
                   Gebäudeenergiestandard
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "39%" }}>
+                <div className="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "39%" }}>
                   Gebäudeisolierung
                 </div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10" style={{ lineHeight: "1.6", width: "28%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10" style={{ lineHeight: "1.6", width: "28%" }}>
                   25
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.6", width: "33%" }}>
+                <div className="width-50" style={{ lineHeight: "1.6", width: "33%" }}>
                   kfW 40
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.6", height: "auto", width: "39%" }}>
+                <div className="width-50" style={{ lineHeight: "1.6", height: "auto", width: "39%" }}>
                   Vollständig sehr gut isoliert
                 </div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10" style={{ lineHeight: "1.6", width: "28%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10" style={{ lineHeight: "1.6", width: "28%" }}>
                   35
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.6", width: "33%" }}>
+                <div className="width-50" style={{ lineHeight: "1.6", width: "33%" }}>
                   kfW 55
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.6", width: "39%" }}></div>
+                <div className="width-50" style={{ lineHeight: "1.6", width: "39%" }}></div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10" style={{ lineHeight: "1.6", width: "28%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10" style={{ lineHeight: "1.6", width: "28%" }}>
                   45
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.6", width: "33%" }}>
+                <div className="width-50" style={{ lineHeight: "1.6", width: "33%" }}>
                   kfW 70
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.6", width: "39%" }}>
+                <div className="width-50" style={{ lineHeight: "1.6", width: "39%" }}>
                   Größtenteils sehr gut isoliert
                 </div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10" style={{ lineHeight: "1.6", width: "28%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10" style={{ lineHeight: "1.6", width: "28%" }}>
                   55
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.6", width: "33%" }}>
+                <div className="width-50" style={{ lineHeight: "1.6", width: "33%" }}>
                   kfW 85
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.6", width: "39%" }}></div>
+                <div className="width-50" style={{ lineHeight: "1.6", width: "39%" }}></div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10" style={{ lineHeight: "1.6", width: "28%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10" style={{ lineHeight: "1.6", width: "28%" }}>
                   65
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.6", width: "33%" }}>
+                <div className="width-50" style={{ lineHeight: "1.6", width: "33%" }}>
                   kfW 100
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.6", width: "39%" }}></div>
+                <div className="width-50" style={{ lineHeight: "1.6", width: "39%" }}></div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10" style={{ lineHeight: "1.6", width: "28%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10" style={{ lineHeight: "1.6", width: "28%" }}>
                   95
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.6", width: "33%" }}></div>
-                <div class="width-50" style={{ lineHeight: "1.6", width: "39%" }}>
+                <div className="width-50" style={{ lineHeight: "1.6", width: "33%" }}></div>
+                <div className="width-50" style={{ lineHeight: "1.6", width: "39%" }}>
                   Teilweise isoliert
                 </div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10" style={{ lineHeight: "1.6", width: "28%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10" style={{ lineHeight: "1.6", width: "28%" }}>
                   120
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.6", width: "33%" }}></div>
-                <div class="width-50" style={{ lineHeight: "1.6", width: "39%" }}></div>
+                <div className="width-50" style={{ lineHeight: "1.6", width: "33%" }}></div>
+                <div className="width-50" style={{ lineHeight: "1.6", width: "39%" }}></div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10" style={{ lineHeight: "1.6", width: "28%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10" style={{ lineHeight: "1.6", width: "28%" }}>
                   150
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.6", width: "33%" }}></div>
-                <div class="width-50" style={{ lineHeight: "1.6", width: "39%" }}>
+                <div className="width-50" style={{ lineHeight: "1.6", width: "33%" }}></div>
+                <div className="width-50" style={{ lineHeight: "1.6", width: "39%" }}>
                   Schlecht bis gar nicht isoliert
                 </div>
               </div>
@@ -406,36 +406,36 @@ class InfoBoxCalculation extends React.Component {
         {/* Berechnungsgrundlage 2 */}
         {this.state.boxType === "calculation-2" && (
           <div>
-            <div class="infobox-row-container" style={{ marginTop: "4px" }}>
-              <div class="infobox-row borderDark Bosch-Medium" style={{ paddingBottom: "3px" }}>
-                <div class="width-50 padding-left-10" style={{ lineHeight: "1.5", width: "50%" }}>
+            <div className="infobox-row-container" style={{ marginTop: "4px" }}>
+              <div className="infobox-row borderDark Bosch-Medium" style={{ paddingBottom: "3px" }}>
+                <div className="width-50 padding-left-10" style={{ lineHeight: "1.5", width: "50%" }}>
                   Heizverteilsystem
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.5", width: "50%" }}>
+                <div className="width-50" style={{ lineHeight: "1.5", width: "50%" }}>
                   Vorlauftemperatur
                 </div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10" style={{ lineHeight: "1.6", width: "50%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10" style={{ lineHeight: "1.6", width: "50%" }}>
                   Fußbodenheizung
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.6", width: "50%" }}>
+                <div className="width-50" style={{ lineHeight: "1.6", width: "50%" }}>
                   35 °C
                 </div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10" style={{ lineHeight: "1.6", width: "50%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10" style={{ lineHeight: "1.6", width: "50%" }}>
                   Heizkörper
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.6", width: "50%" }}>
+                <div className="width-50" style={{ lineHeight: "1.6", width: "50%" }}>
                   35/45 °C
                 </div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10" style={{ lineHeight: "1.6", width: "50%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10" style={{ lineHeight: "1.6", width: "50%" }}>
                   Fußbodenheizung und Heizkörper
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.6", width: "50%" }}>
+                <div className="width-50" style={{ lineHeight: "1.6", width: "50%" }}>
                   55 °C
                 </div>
               </div>
@@ -445,44 +445,44 @@ class InfoBoxCalculation extends React.Component {
 
         {this.state.boxType === "calculation-5" && (
           <div>
-            <div class="infobox-row-container" style={{ marginTop: "4px" }}>
-              <div class="infobox-row borderDark Bosch-Medium" style={{ paddingBottom: "3px" }}>
-                <div class="width-50 padding-left-10" style={{ lineHeight: "1.5", width: "50%" }}>
+            <div className="infobox-row-container" style={{ marginTop: "4px" }}>
+              <div className="infobox-row borderDark Bosch-Medium" style={{ paddingBottom: "3px" }}>
+                <div className="width-50 padding-left-10" style={{ lineHeight: "1.5", width: "50%" }}>
                   Platzbedarf Dachfläche
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.5", width: "50%" }}>
+                <div className="width-50" style={{ lineHeight: "1.5", width: "50%" }}>
                   PV-Leistung
                 </div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
                   24m<sup>2</sup>
                 </div>
-                <div class="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
+                <div className="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
                   4 kWp
                 </div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
                   42m<sup>2</sup>
                 </div>
-                <div class="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
+                <div className="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
                   7 kWp
                 </div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
                   60m<sup>2</sup>
                 </div>
-                <div class="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
+                <div className="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
                   10 kWp
                 </div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
                   84m<sup>2</sup>
                 </div>
-                <div class="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
+                <div className="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
                   14 kWp
                 </div>
               </div>
@@ -493,44 +493,44 @@ class InfoBoxCalculation extends React.Component {
 
         {this.state.boxType === "calculation-6" && (
           <div>
-            <div class="infobox-row-container" style={{ marginTop: "4px" }}>
-              <div class="infobox-row borderDark Bosch-Medium" style={{ paddingBottom: "3px" }}>
-                <div class="width-50 padding-left-10" style={{ lineHeight: "1.5", width: "50%" }}>
+            <div className="infobox-row-container" style={{ marginTop: "4px" }}>
+              <div className="infobox-row borderDark Bosch-Medium" style={{ paddingBottom: "3px" }}>
+                <div className="width-50 padding-left-10" style={{ lineHeight: "1.5", width: "50%" }}>
                   Kapazität in kWh
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.5", width: "50%" }}>
+                <div className="width-50" style={{ lineHeight: "1.5", width: "50%" }}>
                   Leistung in kW
                 </div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
                   6
                 </div>
-                <div class="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
+                <div className="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
                   3
                 </div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
                   9
                 </div>
-                <div class="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
+                <div className="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
                   4,5
                 </div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
                   12
                 </div>
-                <div class="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
+                <div className="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
                   6
                 </div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
                   15
                 </div>
-                <div class="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
+                <div className="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
                   7,5
                 </div>
               </div>
@@ -542,64 +542,64 @@ class InfoBoxCalculation extends React.Component {
         {/* Berechnungsgrundlage 3 */}
         {this.state.boxType === "calculation-7" && (
           <div>
-            <div class="infobox-row-container" style={{ marginTop: "8px" }}>
-              <div class="infobox-row borderDark Bosch-Medium" style={{ paddingBottom: "3px" }}>
-                <div class="width-50 padding-left-10" style={{ lineHeight: "1.5", width: "28%" }}></div>
-                <div class="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "33%" }}>
+            <div className="infobox-row-container" style={{ marginTop: "8px" }}>
+              <div className="infobox-row borderDark Bosch-Medium" style={{ paddingBottom: "3px" }}>
+                <div className="width-50 padding-left-10" style={{ lineHeight: "1.5", width: "28%" }}></div>
+                <div className="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "33%" }}>
                   Erdwärmepumpe
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "39%" }}>
+                <div className="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "39%" }}>
                   Luft-Wasser-Wärmepumpe
                 </div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10 Bosch-Medium" style={{ lineHeight: "2.9", width: "28%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10 Bosch-Medium" style={{ lineHeight: "2.9", width: "28%" }}>
                   Wärmequelle
                 </div>
-                <div class="width-50" style={{ lineHeight: "2.9", width: "33%" }}>
+                <div className="width-50" style={{ lineHeight: "2.9", width: "33%" }}>
                   Erdwärme
                 </div>
-                <div class="width-50" style={{ lineHeight: "2.9", width: "39%" }}>
+                <div className="width-50" style={{ lineHeight: "2.9", width: "39%" }}>
                   Umgebungsluft
                 </div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10 Bosch-Medium" style={{ lineHeight: "1.6", width: "28%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10 Bosch-Medium" style={{ lineHeight: "1.6", width: "28%" }}>
                   Funktion
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.6", width: "33%" }}>
+                <div className="width-50" style={{ lineHeight: "1.6", width: "33%" }}>
                   Erdkollektor oder Erdsonde
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.6", lineBreak: "anywhere", width: "39%" }}>
+                <div className="width-50" style={{ lineHeight: "1.6", lineBreak: "anywhere", width: "39%" }}>
                   Ventilatoren/Luftfilter
                 </div>
               </div>
-              <div class="infobox-row" style={{ border: "none" }}>
-                <div class="width-50 padding-left-10 Bosch-Medium" style={{ lineHeight: "1.6", width: "28%" }}>
+              <div className="infobox-row" style={{ border: "none" }}>
+                <div className="width-50 padding-left-10 Bosch-Medium" style={{ lineHeight: "1.6", width: "28%" }}>
                   Eigenschaften
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.6", width: "33%" }}>
+                <div className="width-50" style={{ lineHeight: "1.6", width: "33%" }}>
                   Hohe Effizienz
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.6", width: "39%" }}>
+                <div className="width-50" style={{ lineHeight: "1.6", width: "39%" }}>
                   Geringer Platzbedarf
                 </div>
               </div>
-              <div class="infobox-row" style={{ border: "none", marginTop: "12px" }}>
-                <div class="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "28%" }}></div>
-                <div class="width-50" style={{ lineHeight: "1.5", width: "33%" }}>
+              <div className="infobox-row" style={{ border: "none", marginTop: "12px" }}>
+                <div className="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "28%" }}></div>
+                <div className="width-50" style={{ lineHeight: "1.5", width: "33%" }}>
                   Geringer Platzbedarf bei Erdsonden
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.5", width: "39%" }}>
+                <div className="width-50" style={{ lineHeight: "1.5", width: "39%" }}>
                   Einfache Erschließung der Wärmequelle
                 </div>
               </div>
-              <div class="infobox-row" style={{ marginTop: "12px" }}>
-                <div class="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "28%" }}></div>
-                <div class="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "33%" }}>
+              <div className="infobox-row" style={{ marginTop: "12px" }}>
+                <div className="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "28%" }}></div>
+                <div className="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "33%" }}>
                   Geringe Leistungsschwankungen
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "39%" }}>
+                <div className="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "39%" }}>
                   Geringe Investitionskosten
                 </div>
               </div>
@@ -609,44 +609,44 @@ class InfoBoxCalculation extends React.Component {
 
         {this.state.boxType === "calculation-9" && (
           <div>
-            <div class="infobox-row-container" style={{ marginTop: "4px" }}>
-              <div class="infobox-row borderDark Bosch-Medium" style={{ paddingBottom: "3px" }}>
-                <div class="width-50 padding-left-10" style={{ lineHeight: "1.5", width: "50%" }}>
+            <div className="infobox-row-container" style={{ marginTop: "4px" }}>
+              <div className="infobox-row borderDark Bosch-Medium" style={{ paddingBottom: "3px" }}>
+                <div className="width-50 padding-left-10" style={{ lineHeight: "1.5", width: "50%" }}>
                   PV-Anlage
                 </div>
-                <div class="width-50" style={{ lineHeight: "1.5", width: "50%" }}>
+                <div className="width-50" style={{ lineHeight: "1.5", width: "50%" }}>
                   Stromspeicher
                 </div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
                   4kWp = ca. 6.000€
                 </div>
-                <div class="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
+                <div className="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
                   6kWh = ca. 5.000€
                 </div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
                   7kWp = ca. 10.000€
                 </div>
-                <div class="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
+                <div className="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
                   9kWh = ca. 7.000€
                 </div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
                   10kWp = ca. 13.000€
                 </div>
-                <div class="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
+                <div className="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
                   12kWh = ca. 8.000€
                 </div>
               </div>
-              <div class="infobox-row">
-                <div class="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
+              <div className="infobox-row">
+                <div className="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "50%" }}>
                   14kWp = 18.000€
                 </div>
-                <div class="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
+                <div className="width-50" style={{ lineHeight: "2.9", width: "50%" }}>
                   15kWh = 9.000€
                 </div>
               </div>
