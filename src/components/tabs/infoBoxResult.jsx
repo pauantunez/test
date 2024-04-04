@@ -128,18 +128,11 @@ class InfoBoxResult extends React.Component {
     if (!heatpumpPV || heatpumpPV.length === 0 || !heatpumpPVems || heatpumpPVems.length === 0) {
       return null;
     }
-    let closestPosition = 0;
-    let smallestDifference = Math.abs(heatpumpPVems[0].expenditure - heatpumpPV[0].expenditure);
-
-    for (let i = 1; i < heatpumpPVems.length; i++) {
-      const difference = Math.abs(heatpumpPVems[i].expenditure - heatpumpPV[i].expenditure);
-
-      if (difference < smallestDifference) {
-        smallestDifference = difference;
-        closestPosition = i;
+    for (let index = 0; index < heatpumpPV.length; index++) {
+      if (heatpumpPVems[index].expenditure > heatpumpPV[index].expenditure) {
+        return index;
       }
     }
-    return closestPosition;
   };
 
   amortizationDifference = () => {
