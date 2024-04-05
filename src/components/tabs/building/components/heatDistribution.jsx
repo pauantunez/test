@@ -134,22 +134,14 @@ class HeatDistribution extends React.Component {
     var underfloorRadiatorDisable;
     var underfloorDisabled;
     var ShBedarf;
-    if (OilUsageLiters > 0) {
-      ShBedarf = Math.round((OilUsageLiters * 9.8) / BuildingSize);
-      ShBedarf = this.calculateClosestShBedarf(ShBedarf);
-    }
-    if (LNGUsage > 0) {
-      ShBedarf = Math.round(LNGUsage / BuildingSize);
-      ShBedarf = this.calculateClosestShBedarf(ShBedarf);
-    }
-    if (kfwValue === "kfW_40_" || insulationValue === "kfW_40_" || kfwValue === "kfW_55_" || ShBedarf === 25 || ShBedarf === 35) {
+    if (kfwValue === "kfW_40_" || insulationValue === "kfW_40_" || kfwValue === "kfW_55_") {
       radiatorDisabled = "disabled";
       underfloorRadiatorDisable = "disabled";
     }
-    if (kfwValue === "kfW_70_" || insulationValue === "kfW_70_" || kfwValue === "kfW_85_" || kfwValue === "kfW_100_" || ShBedarf === 45 || ShBedarf === 55 || ShBedarf === 65) {
+    if (kfwValue === "kfW_70_" || insulationValue === "kfW_70_" || kfwValue === "kfW_85_" || kfwValue === "kfW_100_") {
       radiatorDisabled = "disabled";
     }
-    if (insulationValue === "p_isolated" || insulationValue === "un_ren_" || ShBedarf === 95 || ShBedarf === 120 || ShBedarf === 150) {
+    if (insulationValue === "p_isolated" || insulationValue === "un_ren_") {
       underfloorRadiatorDisable = "disabled";
       underfloorDisabled = "disabled";
     }

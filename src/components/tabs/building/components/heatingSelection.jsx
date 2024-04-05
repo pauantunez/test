@@ -180,41 +180,41 @@ class HeatingSelection extends React.Component {
   };
 
   inputLNGUsage = (event) => {
-    const { setLNGUsage, setKfwValue, kfwLookupTable, setFwdBtn, activeView, steps, setSteps } = this.context;
+    const { setLNGUsage, setKfwValue, kfwLookupTable, setFwdBtn, activeView, steps, setSteps, BuildingSize } = this.context;
     setLNGUsage(event.target.value);
 
     var inputNumber = parseInt(event.target.value);
-
+    var usagePerSqm = inputNumber / parseInt(BuildingSize);
     if (validate.isInteger(inputNumber)) {
-      if (inputNumber < 35) {
+      if (usagePerSqm < 35) {
         let kfWInTable = kfwLookupTable.find((o) => o.kWh === 25);
 
         setKfwValue(kfWInTable.kfW);
-      } else if (inputNumber >= 35 && inputNumber < 45) {
+      } else if (usagePerSqm >= 35 && usagePerSqm < 45) {
         let kfWInTable = kfwLookupTable.find((o) => o.kWh === 35);
 
         setKfwValue(kfWInTable.kfW);
-      } else if (inputNumber >= 45 && inputNumber < 55) {
+      } else if (usagePerSqm >= 45 && usagePerSqm < 55) {
         let kfWInTable = kfwLookupTable.find((o) => o.kWh === 45);
 
         setKfwValue(kfWInTable.kfW);
-      } else if (inputNumber >= 55 && inputNumber < 65) {
+      } else if (usagePerSqm >= 55 && usagePerSqm < 65) {
         let kfWInTable = kfwLookupTable.find((o) => o.kWh === 55);
 
         setKfwValue(kfWInTable.kfW);
-      } else if (inputNumber >= 65 && inputNumber < 95) {
+      } else if (usagePerSqm >= 65 && usagePerSqm < 95) {
         let kfWInTable = kfwLookupTable.find((o) => o.kWh === 65);
 
         setKfwValue(kfWInTable.kfW);
-      } else if (inputNumber >= 95 && inputNumber < 120) {
+      } else if (usagePerSqm >= 95 && usagePerSqm < 120) {
         let kfWInTable = kfwLookupTable.find((o) => o.kWh === 95);
 
         setKfwValue(kfWInTable.kfW);
-      } else if (inputNumber >= 120 && inputNumber < 150) {
+      } else if (usagePerSqm >= 120 && usagePerSqm < 150) {
         let kfWInTable = kfwLookupTable.find((o) => o.kWh === 120);
 
         setKfwValue(kfWInTable.kfW);
-      } else if (inputNumber >= 150) {
+      } else if (usagePerSqm >= 150) {
         let kfWInTable = kfwLookupTable.find((o) => o.kWh === 150);
 
         setKfwValue(kfWInTable.kfW);

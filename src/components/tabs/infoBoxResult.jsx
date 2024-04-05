@@ -53,7 +53,6 @@ class InfoBoxResult extends React.Component {
         Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_B_W_MFH_NoEMS;
       }
       var energyUsageHeatpump = (parseFloat(EGen_sh_kWh_HP_A_W_MFH_NoEMS) + parseFloat(EGen_sh_kWh_HP_B_W_MFH_NoEMS) + parseFloat(EGen_hw_kWh_HP_A_W_MFH_NoEMS) + parseFloat(EGen_hw_kWh_HP_B_W_MFH_NoEMS)) / parseFloat(Avg_Eff_JAZ_HP);
-      console.log("🚀 ~ InfoBoxResult ~ energyUsageHeatpump:", EGen_sh_kWh_HP_A_W_MFH_NoEMS, EGen_sh_kWh_HP_B_W_MFH_NoEMS, EGen_hw_kWh_HP_A_W_MFH_NoEMS, EGen_hw_kWh_HP_B_W_MFH_NoEMS, Avg_Eff_JAZ_HP);
 
       //Energy usage heating rod
       var energyUsageHeatingRod = (parseFloat(EGen_sh_kWh_EDWW_MFH_NoEMS) + parseFloat(EGen_sh_kWh_EDWW_MFH_Brine_NoEMS) + parseFloat(EGen_hw_kWh_EDWW_MFH_NoEMS) + parseFloat(EGen_hw_kWh_EDWW_MFH_Brine_NoEMS)) / parseFloat(0.99);
