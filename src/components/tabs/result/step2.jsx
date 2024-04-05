@@ -121,19 +121,19 @@ class ResultStep2 extends React.Component {
                     <div style={{ marginRight: "10px" }}>
                       <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E", borderRadius: "12px" }}></div>
                     </div>
-                    <div>Produktion</div>
+                    <div>PV-Anlage</div>
                   </div>
                   <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A" }}>
                     <div style={{ marginRight: "10px" }}>
                       <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A", borderRadius: "12px" }}></div>
                     </div>
-                    <div>Bezug Netzstrom</div>
+                    <div>Vorteil durch EMS</div>
                   </div>
                   <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3" }}>
                     <div style={{ marginRight: "10px" }}>
                       <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3", borderRadius: "12px" }}></div>
                     </div>
-                    <div>Mit EMS</div>
+                    <div>Netzbezug</div>
                   </div>
                 </div>
 
@@ -157,19 +157,19 @@ class ResultStep2 extends React.Component {
                     <div style={{ marginRight: "10px" }}>
                       <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E", borderRadius: "12px" }}></div>
                     </div>
-                    <div>Verbrauch</div>
+                    <div>PV-Anlage</div>
                   </div>
                   <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A" }}>
                     <div style={{ marginRight: "10px" }}>
                       <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A", borderRadius: "12px" }}></div>
                     </div>
-                    <div>Einspeisung</div>
+                    <div>Netzeinspeisung</div>
                   </div>
                   <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3" }}>
                     <div style={{ marginRight: "10px" }}>
                       <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3", borderRadius: "12px" }}></div>
                     </div>
-                    <div>Mit EMS</div>
+                    <div>Vorteil durch EMS</div>
                   </div>
                 </div>
 
