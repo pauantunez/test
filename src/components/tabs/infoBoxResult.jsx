@@ -31,21 +31,34 @@ class InfoBoxResult extends React.Component {
   }
 
   energyUsageCombined = () => {
-    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
+    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH, offgridEMS, EGen_sh_kWh_HP_A_W_MFH_NoEMS, EGen_sh_kWh_HP_B_W_MFH_NoEMS, EGen_hw_kWh_HP_A_W_MFH_NoEMS, EGen_hw_kWh_HP_B_W_MFH_NoEMS, EGen_sh_kWh_EDWW_MFH_NoEMS, EGen_sh_kWh_EDWW_MFH_Brine_NoEMS, EGen_hw_kWh_EDWW_MFH_NoEMS, EGen_hw_kWh_EDWW_MFH_Brine_NoEMS, Avg_Eff_JAZ_HP_A_W_MFH_NoEMS, Avg_Eff_JAZ_HP_B_W_MFH_NoEMS } = this.context;
+
     var Avg_Eff_JAZ_HP;
 
-    if (heatpumpType === "1") {
-      Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_A_W_MFH;
+    if (offgridEMS === true) {
+      if (heatpumpType === "1") {
+        Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_A_W_MFH;
+      } else {
+        Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_B_W_MFH;
+      }
+      //Enegery usage heatpump
+      var energyUsageHeatpump = (parseFloat(EGen_sh_kWh_HP_A_W_MFH) + parseFloat(EGen_sh_kWh_HP_B_W_MFH) + parseFloat(EGen_hw_kWh_HP_A_W_MFH) + parseFloat(EGen_hw_kWh_HP_B_W_MFH)) / parseFloat(Avg_Eff_JAZ_HP);
+
+      //Energy usage heating rod
+      var energyUsageHeatingRod = (parseFloat(EGen_sh_kWh_EDWW_MFH) + parseFloat(EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(EGen_hw_kWh_EDWW_MFH) + parseFloat(EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
     } else {
-      Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_B_W_MFH;
+      if (heatpumpType === "1") {
+        Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_A_W_MFH_NoEMS;
+      } else {
+        Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_B_W_MFH_NoEMS;
+      }
+      var energyUsageHeatpump = (parseFloat(EGen_sh_kWh_HP_A_W_MFH_NoEMS) + parseFloat(EGen_sh_kWh_HP_B_W_MFH_NoEMS) + parseFloat(EGen_hw_kWh_HP_A_W_MFH_NoEMS) + parseFloat(EGen_hw_kWh_HP_B_W_MFH_NoEMS)) / parseFloat(Avg_Eff_JAZ_HP);
+      console.log("🚀 ~ InfoBoxResult ~ energyUsageHeatpump:", EGen_sh_kWh_HP_A_W_MFH_NoEMS, EGen_sh_kWh_HP_B_W_MFH_NoEMS, EGen_hw_kWh_HP_A_W_MFH_NoEMS, EGen_hw_kWh_HP_B_W_MFH_NoEMS, Avg_Eff_JAZ_HP);
+
+      //Energy usage heating rod
+      var energyUsageHeatingRod = (parseFloat(EGen_sh_kWh_EDWW_MFH_NoEMS) + parseFloat(EGen_sh_kWh_EDWW_MFH_Brine_NoEMS) + parseFloat(EGen_hw_kWh_EDWW_MFH_NoEMS) + parseFloat(EGen_hw_kWh_EDWW_MFH_Brine_NoEMS)) / parseFloat(0.99);
     }
-
-    //Enegery usage heatpump
-    var energyUsageHeatpump = (parseFloat(EGen_sh_kWh_HP_A_W_MFH) + parseFloat(EGen_sh_kWh_HP_B_W_MFH) + parseFloat(EGen_hw_kWh_HP_A_W_MFH) + parseFloat(EGen_hw_kWh_HP_B_W_MFH)) / parseFloat(Avg_Eff_JAZ_HP);
-
-    //Energy usage heating rod
-    var energyUsageHeatingRod = (parseFloat(EGen_sh_kWh_EDWW_MFH) + parseFloat(EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(EGen_hw_kWh_EDWW_MFH) + parseFloat(EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
-
+    /* console.log("🚀 ~ InfoBoxResult ~ ", energyUsageHeatpump, energyUsageHeatingRod, parseInt(energyUsagekWh), odometerIncreaseKWH); */
     return energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH;
   };
 
