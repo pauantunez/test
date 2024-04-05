@@ -128,7 +128,7 @@ class HeatDistribution extends React.Component {
   };
 
   render() {
-    const { heatDistributionValue, kfwValue, insulationValue, OilUsageLiters, BuildingSize, LNGUsage } = this.context;
+    const { heatDistributionValue, kfwValue } = this.context;
     var radiatorDisabled;
     var underfloorRadiatorDisable;
     var underfloorDisabled;
