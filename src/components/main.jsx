@@ -247,6 +247,30 @@ class Main extends React.Component {
     }
   };
 
+  getScenario = () => {
+    const { ev, preHeatTempOption, energyUsagekWh, BuildingSize, evProfile, buildingTypePreHeatOption, kfwValue, dualPreHeatOptionEVLookupTable, singlePreHeatOptionEVLookupTable, singlePreHeatOptionNoEVLookupTable, dualPreHeatOptionNoEVLookupTable, setScenarioInDatabase } = this.context;
+
+    let validateOptions = buildingTypePreHeatOption.find((o) => o.buildingType === kfwValue);
+    let scenarioInDatabase;
+    if (ev === "EV") {
+      if (validateOptions.option2 === "-") {
+        //if one, use singlePreHeatOptionNoEVLookupTable as lookup table
+        scenarioInDatabase = singlePreHeatOptionEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString() && o.evProfile === evProfile);
+        //this.context.goToView(6);
+      } else {
+        scenarioInDatabase = dualPreHeatOptionEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString() && o.evProfile === evProfile);
+      }
+    } else {
+      if (validateOptions.option2 === "-") {
+        //if one, use singlePreHeatOptionNoEVLookupTable as lookup table
+        scenarioInDatabase = singlePreHeatOptionNoEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString());
+      } else {
+        scenarioInDatabase = dualPreHeatOptionNoEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString());
+      }
+    }
+    setScenarioInDatabase(scenarioInDatabase.scenario);
+  };
+
   getResult = (kfw, scenario) => {
     const { backendUrl, setDatabaseResult, setDatabaseResultHouseHold, heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries, setLoading } = this.context;
 
@@ -442,6 +466,7 @@ class Main extends React.Component {
       } else if (activeView + 1 === 11) {
         setActiveMilestone(3);
         setMilestoneHeadline("Ergebnis");
+        this.getScenario();
         this.getResult(kfwValue + ev, scenarioInDatabase);
         this.getResultNoEMS(kfwValue + ev, scenarioInDatabase);
         /* this.breakEven(); */

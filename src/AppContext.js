@@ -38,6 +38,7 @@ class SimulatorProvider extends Component {
     disabledOilUsage: true,
     disabledLNGUsage: true,
     ev: "",
+    evProfile: "",
     pvOutput: 0,
     pvOutputkWh: 4,
     energyUsagekWh: "4000",
@@ -597,6 +598,11 @@ class SimulatorProvider extends Component {
       },
     ],
     buildingTypePreHeatOption: [
+      {
+        buildingType: "p_isolated",
+        option1: "55",
+        option2: "-",
+      },
       {
         buildingType: "un_ren_ext_",
         option1: "55",
@@ -1693,6 +1699,10 @@ class SimulatorProvider extends Component {
     this.setState((prevState) => ({ ev: result }));
   };
 
+  setEVProfile = (result) => {
+    this.setState((prevState) => ({ evProfile: result }));
+  };
+
   setOdometerIncrease = (result) => {
     this.setState((prevState) => ({ odometerIncrease: result }));
   };
@@ -2611,6 +2621,7 @@ class SimulatorProvider extends Component {
       energyUsagekWh,
       heatpumpType,
       ev,
+      evProfile,
       pvOutput,
       odometerIncrease,
       odometerIncreaseKWH,
@@ -2801,6 +2812,7 @@ class SimulatorProvider extends Component {
       setEnergyUsageKWH,
       setHeatpumpType,
       setEV,
+      setEVProfile,
       setOdometerIncrease,
       setOdometerIncreaseKWH,
       setHomeCharging,
@@ -2931,6 +2943,7 @@ class SimulatorProvider extends Component {
           energyUsagekWh,
           heatpumpType,
           ev,
+          evProfile,
           pvOutput,
           odometerIncrease,
           odometerIncreaseKWH,
@@ -3118,6 +3131,7 @@ class SimulatorProvider extends Component {
           setEnergyUsageKWH,
           setHeatpumpType,
           setEV,
+          setEVProfile,
           setOdometerIncrease,
           setOdometerIncreaseKWH,
           setHomeCharging,

@@ -66,7 +66,8 @@ class EV extends React.Component {
   };
 
   changeEVUsage = (type, value) => {
-    const { setScenarioInDatabase, BuildingSize, energyUsagekWh, buildingTypePreHeatOption, kfwValue, preHeatTempOption, singlePreHeatOptionEVLookupTable, dualPreHeatOptionEVLookupTable, odometerIncrease, homeCharging } = this.context;
+    const { setScenarioInDatabase, BuildingSize, energyUsagekWh, buildingTypePreHeatOption, kfwValue, preHeatTempOption, singlePreHeatOptionEVLookupTable, dualPreHeatOptionEVLookupTable, odometerIncrease, homeCharging, setEVProfile } = this.context;
+
     let evProfile;
 
     if (type === "homeCharging") {
@@ -74,6 +75,8 @@ class EV extends React.Component {
     } else {
       evProfile = homeCharging + value;
     }
+
+    setEVProfile(evProfile);
 
     let validateOptions = buildingTypePreHeatOption.find((o) => o.buildingType === kfwValue);
     let scenarioInDatabase;
@@ -83,11 +86,7 @@ class EV extends React.Component {
       scenarioInDatabase = singlePreHeatOptionEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString() && o.evProfile === evProfile);
       //this.context.goToView(6);
     } else {
-      if (preHeatTempOption === 1) {
-        scenarioInDatabase = dualPreHeatOptionEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString() && o.evProfile === evProfile);
-      } else {
-        scenarioInDatabase = dualPreHeatOptionEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString() && o.evProfile === evProfile);
-      }
+      scenarioInDatabase = dualPreHeatOptionEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString() && o.evProfile === evProfile);
     }
     setScenarioInDatabase(scenarioInDatabase.scenario);
   };
@@ -120,11 +119,7 @@ class EV extends React.Component {
         //if one, use singlePreHeatOptionNoEVLookupTable as lookup table
         scenarioInDatabase = singlePreHeatOptionNoEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString());
       } else {
-        if (preHeatTempOption === 1) {
-          scenarioInDatabase = dualPreHeatOptionNoEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString());
-        } else {
-          scenarioInDatabase = dualPreHeatOptionNoEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString());
-        }
+        scenarioInDatabase = dualPreHeatOptionNoEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString());
       }
       setScenarioInDatabase(scenarioInDatabase.scenario);
 

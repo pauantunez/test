@@ -60,12 +60,11 @@ class HeatDistribution extends React.Component {
     const { setPreHeatTempOption, buildingTypePreHeatOption, setHeatDistribution, kfwValue, setFwdBtn, steps, setSteps, activeView } = this.context;
 
     setHeatDistribution(event.target.value);
-
     let preHeatOptionValue = buildingTypePreHeatOption.find((o) => o.buildingType === kfwValue);
     if (preHeatOptionValue.option2 === "-") {
       setPreHeatTempOption(1);
     } else {
-      if (event.target.value === "Radiator") {
+      if (event.target.value === "Underfloor") {
         setPreHeatTempOption(1);
       } else {
         setPreHeatTempOption(2);
