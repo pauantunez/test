@@ -132,15 +132,15 @@ class HeatDistribution extends React.Component {
     var radiatorDisabled;
     var underfloorRadiatorDisable;
     var underfloorDisabled;
-    var ShBedarf;
-    if (kfwValue === "kfW_40_" || insulationValue === "kfW_40_" || kfwValue === "kfW_55_") {
+
+    if (kfwValue === "kfW_40_" || kfwValue === "kfW_55_") {
       radiatorDisabled = "disabled";
       underfloorRadiatorDisable = "disabled";
     }
-    if (kfwValue === "kfW_70_" || insulationValue === "kfW_70_" || kfwValue === "kfW_85_" || kfwValue === "kfW_100_") {
+    if (kfwValue === "kfW_70_" || kfwValue === "kfW_85_" || kfwValue === "kfW_100_") {
       radiatorDisabled = "disabled";
     }
-    if (insulationValue === "p_isolated" || insulationValue === "un_ren_") {
+    if (kfwValue === "p_isolated" || kfwValue === "un_ren_") {
       underfloorRadiatorDisable = "disabled";
       underfloorDisabled = "disabled";
     }
