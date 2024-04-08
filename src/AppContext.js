@@ -599,11 +599,6 @@ class SimulatorProvider extends Component {
     ],
     buildingTypePreHeatOption: [
       {
-        buildingType: "p_isolated",
-        option1: "55",
-        option2: "-",
-      },
-      {
         buildingType: "un_ren_ext_",
         option1: "55",
         option2: "-",

@@ -410,13 +410,13 @@ class HeatingSelection extends React.Component {
                           </div>
                           <div>
                             <span className="trackeable" data-event="heizenergiebedard-teilweise">
-                              <FormControlLabel value="p_isolated" control={<OilLNGRadio />} label="Teilweise isoliert" checked={insulationValue === "p_isolated"} onChange={this.inputInsulationValue} />
+                              <FormControlLabel value="un_ren_" control={<OilLNGRadio />} label="Teilweise isoliert" checked={insulationValue === "un_ren_"} onChange={this.inputInsulationValue} />
                             </span>
                             <InfoButton tooltipid="3" text="Die auschlaggebenden Faktoren für die Gebäudedämmung sind das Dach, die Gebäudehülle und die Fenster. Bei einer Teil-Dämmung wurde mindestens ein Faktor bereits auf den neusten Stand gebracht." color="#000" />
                           </div>
                           <div>
                             <span className="trackeable" data-event="heizenergiebedard-schlecht">
-                              <FormControlLabel value="un_ren_" control={<OilLNGRadio />} label="Schlecht bis gar nicht isoliert" checked={insulationValue === "un_ren_"} onChange={this.inputInsulationValue} />
+                              <FormControlLabel value="un_ren_ext_" control={<OilLNGRadio />} label="Schlecht bis gar nicht isoliert" checked={insulationValue === "un_ren_ext_"} onChange={this.inputInsulationValue} />
                             </span>
                             <InfoButton tooltipid="4" text="Die auschlaggebenden Faktoren für die Gebäudedämmung sind das Dach, die Gebäudehülle und die Fenster. Nicht isoliert bedeutet, dass noch kein Faktor auf den neusten Stand gebracht wurde." color="#000" />
                           </div>
