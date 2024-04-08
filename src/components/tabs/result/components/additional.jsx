@@ -306,7 +306,7 @@ class Additional extends React.Component {
               <div className="flexContent additional-flex" style={{ width: "100%", justifyContent: "space-between" }}>
                 <div style={{ paddingRight: "45px", paddingBottom: "10px" }}>
                   <h3>Ergebnisse speichern</h3>
-                  <div className="txt">Sichern Sie sich Ihre Ergebnisse, indem Sie diese als PDF jetzt herunterladen</div>
+                  <div className="txt">Sichern Sie sich Ihre Ergebnisse, indem Sie diese als PDF jetzt herunterladen.</div>
                 </div>
                 <div className="trackeable" data-event="result-part3-save-pdf" style={{ display: "flex", alignItems: "end" }}>
                   <Button disableRipple onClick={printPDF} variant="outlined" startIcon={this.context.selectedTheme === "buderus" ? <BuderusPDFIcon /> : <PDFIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular", border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "", color: this.context.selectedTheme === "buderus" ? "#000000" : "" }}>
@@ -373,7 +373,7 @@ class Additional extends React.Component {
                   <div className="flexContent additional-flex" style={{ width: "100%", justifyContent: "space-between", marginTop: "8px" }}>
                     <div style={{ paddingRight: "30px", paddingBottom: "10px" }}>
                       <h3>Kontakt zum Fachbetrieb</h3>
-                      <div>Finden Sie einen Experten in Ihrer Nähe, der Sie bei der Umsetzung unterstützt</div>
+                      <div>Finden Sie einen Experten in Ihrer Nähe, der Sie bei der Umsetzung unterstützt.</div>
                     </div>
                     <div className="trackeable" data-event="result-part3-contact" style={{ display: "flex", alignItems: "end" }}>
                       <a rel="noreferrer" href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/service-und-support/installateur-finden/dealersearch/" target="_blank" style={{ textDecoration: "none", display: "block" }}>
@@ -388,7 +388,7 @@ class Additional extends React.Component {
                   <div className="flexContent additional-flex" style={{ width: "100%", justifyContent: "space-between", marginTop: "8px" }}>
                     <div style={{ paddingRight: "30px", paddingBottom: "10px" }}>
                       <h3>Angebot für ein energieeffizientes System</h3>
-                      <div>Erhalten Sie ein kostenloses, unverbindliches Angebot von einem Installateur in Ihrer</div>
+                      <div>Erhalten Sie ein kostenloses, unverbindliches Angebot von einem Installateur in Ihrer Nähe.</div>
                     </div>
                     <div style={{ display: "flex", alignItems: "end" }}>
                       <a className="trackeable" data-event="result-part3-offer" rel="noreferrer" href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/beratung-und-kauf/angebot-anfordern/" target="_blank" style={{ textDecoration: "none", display: "block" }}>
