@@ -161,7 +161,7 @@ class InfoBoxResultPdf extends React.Component {
           {this.state.boxType === "left" && (
             <div>
               <div className="infobox-row-container">
-                <div className="infobox-row" style={{ display: "block", lineHeight: "24px", borderBottom: "none" }}>
+                <div className="infobox-row" style={{ fontSize: "14px",display: "block", lineHeight: "24px", borderBottom: "none" }}>
                   {this.state.displayed === "one-year" && (
                     <p>
                       Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{savingOnlyPV1year.toLocaleString("de-DE")} € Stromkosten </strong>pro Jahr sparen.

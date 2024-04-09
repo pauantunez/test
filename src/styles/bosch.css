@@ -1250,7 +1250,7 @@ a.card-input-narrow {
   align-content: space-between;
 }
 .results-page-two .infobox-container {
-  min-height: 255px;
+  min-height: 225px;
 }
 .noticeBottom {
   position: relative;
@@ -1771,6 +1771,17 @@ a.card-input-narrow {
     width: 150px !important;
   }
 
+  .two-blocks .card-input-narrow {
+    width: 118px !important;
+    height: 130px;
+  }
+  .two-blocks .panel-heading-narrow{
+    margin-top: 24px;
+  }
+  .two-blocks .panel-body {
+    font-size: 12px;
+  }
+
   .additional-links-container {
     flex-wrap: wrap;
   }
@@ -1888,6 +1899,9 @@ a.card-input-narrow {
 @media only screen and (max-width: 1000px) {
   .infobox-container {
     min-height: 280px;
+  }
+  .results-page-two .infobox-container {
+    min-height: 260px;
   }
   .results-page-one .infobox-container{
     min-height: 180px;
@@ -2102,4 +2116,22 @@ input[type=number] {
 .disabled{
   pointer-events: none;
   opacity: 0.3;
+}
+
+
+
+/* Print PDF styles */
+
+#printPdf-container .panel-body{
+  font-size: 14px!important;
+}
+#printPdf-container .panel-body.icons{
+  font-size: 10px!important;
+}
+#printPdf-container .infobox-row{
+  font-size: 13px!important;
+}
+#printPdf-container .infobox-row p{
+  font-size: 13px!important;
+  line-height: 150%;
 }
