@@ -402,7 +402,7 @@ class Additional extends React.Component {
               </>
             )}
 
-            <div className="cardContent" style={{ borderTop: "1px solid #E0E2E5", marginBottom: "40px" }}>
+            <div className="cardContent two-blocks" style={{ borderTop: "1px solid #E0E2E5", marginBottom: "40px" }}>
               <div className="flexContent" style={{ flexDirection: "column", justifyContent: "center", marginTop: "8px", width: "100%" }}>
                 <div style={{ paddingRight: "30px", paddingBottom: "10px" }}>
                   <h3>Wie komme ich zu einem energieeffizienten System?</h3>
@@ -460,647 +460,649 @@ class Additional extends React.Component {
             </div>
           </div>
         </div>
-        <div id="printPdf" style={{ position: "absolute", left: "0px", width: "795px", height: "1150px", display: "none" }}>
-          {this.context.selectedTheme === "buderus" ? (
-            <div style={{ position: "absolute", left: "600px" }}>
-              <BuderusLogo style={{ maxWidth: "200px" }} />
-            </div>
-          ) : (
-            <>
-              <div style={{ position: "absolute", left: "0px", top: "0px" }}>
-                <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
-              </div>
-              <div style={{ position: "absolute", left: "60px", top: "10px" }}>
-                <BoschLogo style={{ maxWidth: "200px" }} />
-              </div>
-              <div style={{ position: "absolute", left: "60px", top: "90px" }}>
-                <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
-              </div>
-            </>
-          )}
-
-          <div style={{ position: "absolute", left: "60px", top: "103px" }}>
-            <h1 style={{ marginBlockStart: "4px", marginBlockEnd: "5px" }}>Sparen Sie Stromkosten</h1>
-            <div style={{ fontSize: "14px" }}>mit der smarten Kombination aus Photovoltaik, Wärmepumpe, Wallbox und einem intelligenten Energiemanagementsystem.</div>
-          </div>
-          <div style={{ position: "absolute", left: "60px", top: "177px" }}>
-            <h3>Ergebnis Teil 1: Stromkosten und Amortisationszeit Ihrer PV-Anlage</h3>
-          </div>
-
-          <div style={{ position: "absolute", left: "60px", top: "225px" }}>
-            <div style={{ position: "absolute", left: "0px", width: "405px", transform: "scale(0.75)", transformOrigin: "top left" }}>
-              <h3 style={{ marginBlockStart: "4px", marginBlockEnd: "8px", fontSize: "14px" }}>Gesamtkosten Strom</h3>
-              {/* Gráfico barras 1 año */}
-              <CostPdf displayed="one-year" />
-            </div>
-            <div style={{ position: "absolute", left: "365px", width: "405px", transform: "scale(0.75)", transformOrigin: "top left" }}>
-              <h3 style={{ marginBlockStart: "4px", marginBlockEnd: "8px", fontSize: "14px" }}>Gesamtstromkosten über 20 Jahre</h3>
-              {/* Gráfico barras 20 años */}
-              <CostPdf displayed="twenty-years" />
-            </div>
-          </div>
-          <div style={{ position: "absolute", left: "60px", top: "550px" }}>
-            <div style={{ position: "absolute", left: "0px", width: "413px", transform: "scale(0.75)", transformOrigin: "top left" }}>
-              <InfoBoxResultPdf box="left" displayed="one-year" />
-            </div>
-            <div style={{ position: "absolute", left: "365px", width: "413px", transform: "scale(0.75)", transformOrigin: "top left" }}>
-              <InfoBoxResultPdf box="left" displayed="twenty-years" />
-            </div>
-          </div>
-          {/* <div style={{ position: "absolute", left: "60px", top: "605px", width: "865px", transform: "scale(0.80)", transformOrigin: "top left" }}>
-            <InfoBoxResultPdf box="left" displayed="one-year" />
-            <InfoBoxResultPdf box="left" displayed="twenty-years" />
-          </div> */}
-          <div style={{ position: "absolute", left: "60px", top: "745px" }}>
-            <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
-          </div>
-          <div style={{ position: "absolute", left: "60px", top: "765px", transform: "scale(0.85)", transformOrigin: "top left" }}>
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", width: "793px" }}>
-              <div style={{ width: "55%" }}>
-                <h3 style={{ marginTop: "0px", marginBlockStart: "0" }}>Amortisationszeit</h3>
-                <span style={{ display: "block", marginBottom: "15px" }}>
-                  Investitionskosten PV-System: <strong>{sessionStorage.getItem("InvestmentCostEUR").toLocaleString("DE-de")} €</strong>
-                </span>
-                <img alt="" src={breakEvenBase64} style={{ width: "440px" }} />
-                <div style={{ display: "flex", flexDirection: "column", marginTop: "25px", fontFamily: "Bosch-Regular", fontSize: "12px" }}>
-                  <div style={{ display: "flex", flexDirection: "row" }}>
-                    <div style={{ marginRight: "15px" }}>
-                      <div style={{ marginTop: "2px", width: "14px", height: "14px", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", borderRadius: "14px" }}></div>
-                    </div>
-                    <div>Kapitalentwicklung mit PV ohne Energiemanagementsystem </div>
-                  </div>
-                  <div style={{ display: "flex", flexDirection: "row", marginTop: "6px" }}>
-                    <div style={{ marginRight: "15px" }}>
-                      <div style={{ marginTop: "2px", width: "14px", height: "14px", background: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#18837E", borderRadius: "14px" }}></div>
-                    </div>
-                    <div>Kapitalentwicklung mit PV und mit Energiemanagementsystem *</div>
-                  </div>
-                </div>
-              </div>
-
-              <div style={{ width: "42%" }}>
-                <InfoBoxResultPdf box="right" />
-              </div>
-            </div>
-          </div>
-          <div style={{ position: "absolute", left: "60px", top: "1094px" }}>
-            <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
-          </div>
-        </div>
-
-        <div id="printPdf2" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
-          {this.context.selectedTheme === "buderus" ? (
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
-              <div style={{ marginLeft: "600px" }}>
-                <BuderusLogo style={{ maxWidth: "200px" }} />
-              </div>
-            </div>
-          ) : (
-            <>
-              <div style={{ postion: "relative", height: "10px" }}>
-                <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
-              </div>
-              <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
-                <div style={{ marginLeft: "60px" }}>
-                  <BoschLogo style={{ maxWidth: "200px" }} />
-                </div>
-              </div>
-              <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
-                <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
-              </div>
-            </>
-          )}
-
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "20px", paddingLeft: "60px", maxWidth: "815px" }}>
-            <h3>Ergebnis Teil 2: Stromverbrauch, Autarkie und Eigenverbrauch</h3>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "0px", paddingLeft: "60px", maxWidth: "815px" }}>
-            <h3 style={{ marginBlockStart: "4px", marginBlockEnd: "8px", fontSize: "14px" }}>Stromverbrauch</h3>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginLeft: "60px", maxWidth: "1000px" }}>
-            <div style={{ position: "relative", width: "730px", height: "253px" }}>
-              <div style={{ position: "absolute", top: "0", left: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <canvas id="pie3" width="440" height="273" />
-              </div>
-              <div style={{ position: "absolute", top: "0", left: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <canvas id="pie4" width="440" height="273" />
-              </div>
-              <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <InfoBoxResult box="electricity-use" />
-              </div>
-            </div>
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
-              <hr style={{ width: "675px", height: "1px", marginTop: "0px", background: "#999", border: "none", marginInlineStart: "0em" }} />
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "0px", paddingLeft: "0px", maxWidth: "815px" }}>
-              <h3 style={{ marginBlockStart: "4px", marginBlockEnd: "4px", fontSize: "14px" }}>Autarkie</h3>
-              <h3 style={{ fontFamily: "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "13px" }}>Mit Energiemanagementsystem</h3>
-            </div>
-            <div style={{ position: "relative", width: "730px", height: "283px" }}>
-              <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <canvas id="pie1" width="440" height="273" />
-              </div>
-              <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <canvas id="pie2" width="440" height="273" />
-              </div>
-              {/* <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <InfoBoxResult box="off-grid" />
-              </div> */}
-              <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <Box>
-                  <div className="infobox-container">
-                    <div className="infobox-row" style={{ display: "block", lineHeight: "22px", fontSize: "13px", borderBottom: "none" }}>
-                      <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Autarkiegrad: ca. {autarkiegradWithEMS}%</h3>
-                      <p>
-                        Das bedeutet: bis zu <strong>{autarkiegradWithEMS}%</strong> Ihres Gesamtstromverbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
-                      </p>
-                      <p>
-                        <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>{mitNoEMSPercentage}%</strong>.{" "}
-                      </p>
-                      <p>
-                        Ca.&nbsp;
-                        <strong>{mitGridUsagePercentage}%</strong>
-                        &nbsp;Ihres Gesamtstromverbrauchs beziehen Sie durch das <strong>öffentliche Stromnetz.</strong>
-                      </p>
-                    </div>
-                  </div>
-                </Box>
-              </div>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "0px", paddingLeft: "0px", maxWidth: "815px" }}>
-              <h3 style={{ fontFamily: "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "13px" }}>Ohne Energiemanagementsystem</h3>
-            </div>
-            <div style={{ position: "relative", width: "730px", height: "283px" }}>
-              <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <canvas id="pie1_NoEMS" width="440" height="273" />
-              </div>
-              <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <canvas id="pie2_NoEMS" width="440" height="273" />
-              </div>
-              {/* <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <InfoBoxResult box="off-grid" />
-              </div> */}
-              <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <Box>
-                  <div className="infobox-container">
-                    <div className="infobox-row" style={{ display: "block", lineHeight: "22px", fontSize: "13px", borderBottom: "none" }}>
-                      <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Autarkiegrad: ca. {ohnePvUsagePercentage}%</h3>
-                      <p>
-                        Das bedeutet: bis zu <strong>{ohnePvUsagePercentage}%</strong> Ihres Gesamtstromverbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
-                      </p>
-                      <p>
-                        <strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Autarkiegrad</strong> auf bis zu <strong>{autarkiegradWithEMS}%</strong> erhöhen.{" "}
-                      </p>
-                      <p>
-                        Ca.&nbsp;
-                        <strong>{ohneGridUsagePercentage}%</strong>
-                        &nbsp;Ihres Gesamtstromverbrauchs beziehen Sie durch das <strong>öffentliche Stromnetz.</strong>
-                      </p>
-                    </div>
-                  </div>
-                </Box>
-              </div>
-            </div>
-          </div>
-          <div style={{ position: "absolute", left: "60px", top: "1094px" }}>
-            <hr style={{ width: "690px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
-          </div>
-        </div>
-
-        <div id="printPdf3" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
-          {this.context.selectedTheme === "buderus" ? (
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
-              <div style={{ marginLeft: "600px" }}>
-                <BuderusLogo style={{ maxWidth: "200px" }} />
-              </div>
-            </div>
-          ) : (
-            <>
-              <div style={{ postion: "relative", height: "10px" }}>
-                <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
-              </div>
-              <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
-                <div style={{ marginLeft: "60px" }}>
-                  <BoschLogo style={{ maxWidth: "200px" }} />
-                </div>
-              </div>
-              <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
-                <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
-              </div>
-            </>
-          )}
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "20px", paddingLeft: "60px", maxWidth: "815px" }}>
-            <h3>Ergebnis Teil 2: Stromverbrauch, Autarkie und Eigenverbrauch</h3>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "0px", paddingLeft: "60px", maxWidth: "815px" }}>
-            <h3 style={{ marginBlockStart: "4px", marginBlockEnd: "8px", fontSize: "14px" }}>Eigenverbrauch</h3>
-            <h3 style={{ fontFamily: "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "13px" }}>Mit Energiemanagementsystem</h3>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginLeft: "60px", maxWidth: "1000px" }}>
-            <div style={{ position: "relative", width: "730px", height: "273px" }}>
-              <div style={{ position: "absolute", top: "0", left: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <canvas id="pie5" width="375" height="273" />
-              </div>
-              <div style={{ position: "absolute", top: "0", left: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <canvas id="pie6" width="375" height="273" />
-              </div>
-              {/* <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <InfoBoxResult box="household-use" />
-              </div> */}
-              <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <Box>
-                  <div className="infobox-container">
-                    <div className="infobox-row" style={{ display: "block", lineHeight: "22px", fontSize: "13px", borderBottom: "none" }}>
-                      <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Eigenverbrauchsanteil: ca. {eigenverbrauchsanteil}%</h3>
-                      <p>
-                        Das bedeutet: bis zu <strong>{Math.round(parseFloat(eigenverbrauchsanteil).toFixed(2))}%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
-                      </p>
-                      <p>
-                        <strong>Ohne ein Energiemanagementsystem</strong> beträgt der <strong>Eigenverbrauchsanteil</strong> lediglich ca. <strong>{MIT_HouseholdNoEMSpvPercent}%</strong>.{" "}
-                      </p>
-                      <p>
-                        Ca.&nbsp;
-                        <strong>{MIT_GridFeedPercentage}%</strong>
-                        &nbsp;Ihres eigens produzierten PV-Stroms speisen Sie ins <strong>öffentliche Stromnetz</strong> ein.
-                      </p>
-                    </div>
-                  </div>
-                </Box>
-              </div>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "0px", paddingLeft: "0px", maxWidth: "815px" }}>
-              <h3 style={{ fontFamily: "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "13px" }}>Ohne Energiemanagementsystem</h3>
-            </div>
-            <div style={{ position: "relative", width: "730px", height: "273px" }}>
-              <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <canvas id="pie7" width="375" height="273" />
-              </div>
-              <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <canvas id="pie8" width="375" height="273" />
-              </div>
-              {/* <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <InfoBoxResult box="household-use" />
-              </div> */}
-              <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
-                <Box>
-                  <div className="infobox-container">
-                    <div className="infobox-row" style={{ display: "block", lineHeight: "22px", fontSize: "13px", borderBottom: "none" }}>
-                      <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Eigenverbrauchsanteil: ca. {Onhe_HouseholdNoEMSpvPercent}%</h3>
-                      <p>
-                        Das bedeutet: bis zu <strong>{Math.round(parseFloat(Onhe_HouseholdNoEMSpvPercent).toFixed(2))}%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
-                      </p>
-                      <p>
-                        <strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Eigenverbrauchsanteil</strong> auf bis zu <strong>{eigenverbrauchsanteil}%</strong> erhöhen.{" "}
-                      </p>
-                      <p>
-                        Ca.&nbsp;
-                        <strong>{Onhe_GridFeedPercentageNoEMS}%</strong>
-                        &nbsp;Ihres eigens produzierten PV-Stroms speisen Sie ins <strong>öffentliche Stromnetz</strong> ein.
-                      </p>
-                    </div>
-                  </div>
-                </Box>
-              </div>
-            </div>
-          </div>
-          <div style={{ position: "absolute", left: "60px", top: "1094px" }}>
-            <hr style={{ width: "690px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
-          </div>
-        </div>
-
-        <div id="printPdf4" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
-          {this.context.selectedTheme === "buderus" ? (
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
-              <div style={{ marginLeft: "600px" }}>
-                <BuderusLogo style={{ maxWidth: "200px" }} />
-              </div>
-            </div>
-          ) : (
-            <>
-              <div style={{ postion: "relative", height: "10px" }}>
-                <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
-              </div>
-              <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
-                <div style={{ marginLeft: "60px" }}>
-                  <BoschLogo style={{ maxWidth: "200px" }} />
-                </div>
-              </div>
-              <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
-                <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
-              </div>
-            </>
-          )}
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginLeft: "60px", maxWidth: "1000px" }}>
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "20px", paddingLeft: "0px", maxWidth: "815px" }}>
-              <h3>Weitere Informationen</h3>
-              <h3 style={{ fontFamily: "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "13px" }}>Um weitere Informationen zu erhalten, scannen sie den jeweiligen QR-Code.</h3>
-            </div>
+        <div id="printPdf-container">
+          <div id="printPdf" style={{ position: "absolute", left: "0px", width: "795px", height: "1150px", display: "none" }}>
             {this.context.selectedTheme === "buderus" ? (
-              <>
-                <div className="cardContent" style={{ marginBottom: "40px" }}>
-                  <div className="flexContent additional-flex block-content" style={{ width: "100%", justifyContent: "space-between", marginTop: "8px" }}>
-                    <div className="block-container">
-                      <div className="block contact">
-                        <p>Fachbetriebe in ihrer Nähe</p>
-                        <div className="trackeable" data-event="result-part3-contact" style={{ display: "flex", alignItems: "end" }}>
-                          <a rel="noreferrer" href="https://www.buderus.de/de/services-tools/experten-in-ihrer-naehe/fachbetriebe-in-ihrer-naehe-21776" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                            <Button className="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
-                              Fachbetrieb suchen
-                            </Button>
-                          </a>
-                        </div>
-                      </div>
-                      <div className="block contact">
-                        <p>Angebot anfordern</p>
-                        <div className="trackeable" data-event="result-part3-offer" style={{ display: "flex", alignItems: "end" }}>
-                          <a rel="noreferrer" href="https://www.buderus.de/de/angebot-anfordern" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                            <Button className="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
-                              Unverbindliches Angebot anfordem
-                            </Button>
-                          </a>
-                        </div>
-                      </div>
-                      <div className="block contact">
-                        <p>Beratungshotline</p>
-                        <div style={{ display: "flex", alignItems: "end" }}>
-                          <a rel="noreferrer" href="https://www.buderus.de/de/kontakt-klimapaket" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                            <Button className="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
-                              Zur Beratungshotline
-                            </Button>
-                          </a>
-                        </div>
-                      </div>
-                      <div className="block contact">
-                        <p>Niederlassungssuche</p>
-                        <div style={{ display: "flex", alignItems: "end" }}>
-                          <a rel="noreferrer" href="https://www.buderus.de/de/niederlassungen" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                            <Button className="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
-                              Zur Niederlassungssuche
-                            </Button>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </>
+              <div style={{ position: "absolute", left: "600px" }}>
+                <BuderusLogo style={{ maxWidth: "200px" }} />
+              </div>
             ) : (
               <>
-                <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignContent: "center", alignItems: "center", textAlign: "center", marginTop: "0px", marginBottom: "0px", paddingLeft: "0px", maxWidth: "690px" }}>
-                  <div style={{ width: "25%" }}>
-                    <label>
-                      <input type="radio" name="heating" value="BuildingEnergyStandard" className="card-input-element" />
-                      <a href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/wissen/der-energiemanager/sektorenkopplung/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_tool&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance" rel="noreferrer" target="_blank" className="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
-                        <div className="panel-heading-narrow" style={{ marginTop: "20px" }}>
-                          {this.context.selectedTheme === "buderus" ? <BuderusPhotovoltaicIcon /> : <PhotovoltaicIcon />}
-                        </div>
-                        <div className="panel-body" style={{ fontSize: "10px" }}>
-                          Solarstromrechner
-                        </div>
-                      </a>
-                    </label>
-                    <div style={{ marginTop: "20px" }}>
-                      <img alt="sectorcoupling_tool" src={require(`../../../../assets/img/qr/sectorcoupling_tool.png`)} style={{ width: "90px" }} />
-                    </div>
-                  </div>
-                  <div style={{ width: "25%" }}>
-                    <label>
-                      <input type="radio" name="heating" value="BuildingEnergyStandard" className="card-input-element" />
-                      <a href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/service-und-support/installateur-finden/dealersearch/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_dealersearch&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance" rel="noreferrer" target="_blank" className="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
-                        <div className="panel-heading-narrow" style={{ marginTop: "20px" }}>
-                          {this.context.selectedTheme === "buderus" ? <BuderusContractIcon /> : <ContractIcon />}
-                        </div>
-                        <div className="panel-body" style={{ fontSize: "10px" }}>
-                          Unverbindliches
-                          <br />
-                          Angebot anfragen
-                        </div>
-                      </a>
-                    </label>
-                    <div style={{ marginTop: "20px" }}>
-                      <img alt="dealer_search" src={require(`../../../../assets/img/qr/dealer_search.png`)} style={{ width: "90px" }} />
-                    </div>
-                  </div>
-                  <div style={{ width: "25%" }}>
-                    <label>
-                      <input type="radio" name="heating" value="BuildingEnergyStandard" className="card-input-element" />
-                      <a href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/beratung-und-kauf/angebot-anfordern/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_lmt&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance" rel="noreferrer" target="_blank" className="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
-                        <div className="panel-heading-narrow" style={{ marginTop: "20px" }}>
-                          {this.context.selectedTheme === "buderus" ? <BuderusWrenchIcon /> : <WrenchIcon />}
-                        </div>
-                        <div className="panel-body" style={{ fontSize: "10px" }}>
-                          Kontakte zum
-                          <br />
-                          Fachbetrieb
-                        </div>
-                      </a>
-                    </label>
-                    <div style={{ marginTop: "20px" }}>
-                      <img alt="lmt" src={require(`../../../../assets/img/qr/lmt.png`)} style={{ width: "100px" }} />
-                    </div>
-                  </div>
+                <div style={{ position: "absolute", left: "0px", top: "0px" }}>
+                  <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
+                </div>
+                <div style={{ position: "absolute", left: "60px", top: "10px" }}>
+                  <BoschLogo style={{ maxWidth: "200px" }} />
+                </div>
+                <div style={{ position: "absolute", left: "60px", top: "90px" }}>
+                  <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
                 </div>
               </>
             )}
-          </div>
-          <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", maxWidth: "815px" }}>
-            <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginLeft: "60px", maxWidth: "1000px" }}>
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "20px", paddingLeft: "0px", maxWidth: "815px" }}>
-              <h3>Wie komme ich zu einem energieeffizienten System?</h3>
-              <h3 style={{ fontFamily: "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "13px" }}>Informationen zu unseren Produkten finden Sie unter den jeweiligen QR-Codes:</h3>
-            </div>
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignContent: "center", alignItems: "center", textAlign: "center", marginTop: "0px", marginBottom: "0px", paddingLeft: "0px", maxWidth: "690px" }}>
-              <div style={{ width: "25%" }}>
-                <label>
-                  <input type="radio" name="heating" value="BuildingEnergyStandard" className="card-input-element" />
-                  <a href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/waermepumpen-854510-c/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_heatpump&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance" rel="noreferrer" target="_blank" className="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
-                    <div className="panel-heading-narrow" style={{ marginTop: "20px" }}>
-                      {this.context.selectedTheme === "buderus" ? <BuderusHeatpumpSmallIcon /> : <HeatpumpSmallIcon />}
-                    </div>
-                    <div className="panel-body" style={{ fontSize: "10px" }}>
-                      Wärmepumpe
-                    </div>
-                  </a>
-                </label>
-                <div style={{ marginTop: "20px" }}>
-                  <img alt="heatpump" src={require(`../../../../assets/img/qr/heatpump.png`)} style={{ width: "100px" }} />
-                </div>
-              </div>
-              <div style={{ width: "25%" }}>
-                <label>
-                  <input type="radio" name="heating" value="BuildingEnergyStandard" className="card-input-element" />
-                  <a href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/solarthermieanlagen-854604-c/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_pv&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance" rel="noreferrer" target="_blank" className="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
-                    <div className="panel-heading-narrow" style={{ marginTop: "20px" }}>
-                      {this.context.selectedTheme === "buderus" ? <BuderusPhotovoltaicIcon /> : <PhotovoltaicIcon />}
-                    </div>
-                    <div className="panel-body" style={{ fontSize: "10px" }}>
-                      PV-Anlage
-                    </div>
-                  </a>
-                </label>
-                <div style={{ marginTop: "20px" }}>
-                  <img alt="pv" src={require(`../../../../assets/img/qr/pv.png`)} style={{ width: "100px" }} />
-                </div>
-              </div>
-              <div style={{ width: "25%" }}>
-                <label>
-                  <input type="radio" name="heating" value="BuildingEnergyStandard" className="card-input-element" />
-                  <a href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/power-charge-7000i-19378337-p/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_wallbox&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance" rel="noreferrer" target="_blank" className="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
-                    <div className="panel-heading-narrow" style={{ marginTop: "20px" }}>
-                      {this.context.selectedTheme === "buderus" ? <BuderusWallboxIcon /> : <WallboxIcon />}
-                    </div>
-                    <div className="panel-body" style={{ fontSize: "10px" }}>
-                      Wallbox
-                    </div>
-                  </a>
-                </label>
-                <div style={{ marginTop: "20px" }}>
-                  <img alt="" src={require(`../../../../assets/img/qr/wallbox.png`)} style={{ width: "100px" }} />
-                </div>
-              </div>
-              <div style={{ width: "25%" }}>
-                <label>
-                  <input type="radio" name="heating" value="BuildingEnergyStandard" className="card-input-element" />
-                  <a href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/energiemanagement-19317456-c/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_ems&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance" target="_blank" rel="noreferrer" className="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
-                    <div className="panel-heading-narrow" style={{ marginTop: "20px" }}>
-                      {this.context.selectedTheme === "buderus" ? <BuderusEnergyManagementIcon /> : <EnergyManagementIcon />}
-                    </div>
-                    <div className="panel-body" style={{ fontSize: "10px" }}>
-                      Energiemanage-
-                      <br />
-                      mentsystem
-                    </div>
-                  </a>
-                </label>
-                <div style={{ marginTop: "20px" }}>
-                  <img alt="" src={require(`../../../../assets/img/qr/ems.png`)} style={{ width: "100px" }} />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div style={{ position: "absolute", left: "60px", top: "1094px" }}>
-            <hr style={{ width: "690px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
-          </div>
-        </div>
 
-        <div id="printPdf5" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
-          {this.context.selectedTheme === "buderus" ? (
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
-              <div style={{ marginLeft: "600px" }}>
-                <BuderusLogo style={{ maxWidth: "200px" }} />
+            <div style={{ position: "absolute", left: "60px", top: "103px" }}>
+              <h1 style={{ marginBlockStart: "4px", marginBlockEnd: "5px" }}>Sparen Sie Stromkosten</h1>
+              <div style={{ fontSize: "14px" }}>mit der smarten Kombination aus Photovoltaik, Wärmepumpe, Wallbox und einem intelligenten Energiemanagementsystem.</div>
+            </div>
+            <div style={{ position: "absolute", left: "60px", top: "177px" }}>
+              <h3>Ergebnis Teil 1: Stromkosten und Amortisationszeit Ihrer PV-Anlage</h3>
+            </div>
+
+            <div style={{ position: "absolute", left: "60px", top: "225px" }}>
+              <div style={{ position: "absolute", left: "0px", width: "405px", transform: "scale(0.75)", transformOrigin: "top left" }}>
+                <h3 style={{ marginBlockStart: "4px", marginBlockEnd: "8px", fontSize: "14px" }}>Gesamtkosten Strom</h3>
+                {/* Gráfico barras 1 año */}
+                <CostPdf displayed="one-year" />
+              </div>
+              <div style={{ position: "absolute", left: "365px", width: "405px", transform: "scale(0.75)", transformOrigin: "top left" }}>
+                <h3 style={{ marginBlockStart: "4px", marginBlockEnd: "8px", fontSize: "14px" }}>Gesamtstromkosten über 20 Jahre</h3>
+                {/* Gráfico barras 20 años */}
+                <CostPdf displayed="twenty-years" />
               </div>
             </div>
-          ) : (
-            <>
-              <div style={{ postion: "relative", height: "10px" }}>
-                <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
+            <div style={{ position: "absolute", left: "60px", top: "550px" }}>
+              <div style={{ position: "absolute", left: "0px", width: "413px", transform: "scale(0.75)", transformOrigin: "top left" }}>
+                <InfoBoxResultPdf box="left" displayed="one-year" />
               </div>
+              <div style={{ position: "absolute", left: "365px", width: "413px", transform: "scale(0.75)", transformOrigin: "top left" }}>
+                <InfoBoxResultPdf box="left" displayed="twenty-years" />
+              </div>
+            </div>
+            {/* <div style={{ position: "absolute", left: "60px", top: "605px", width: "865px", transform: "scale(0.80)", transformOrigin: "top left" }}>
+              <InfoBoxResultPdf box="left" displayed="one-year" />
+              <InfoBoxResultPdf box="left" displayed="twenty-years" />
+            </div> */}
+            <div style={{ position: "absolute", left: "60px", top: "745px" }}>
+              <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
+            </div>
+            <div style={{ position: "absolute", left: "60px", top: "765px", transform: "scale(0.85)", transformOrigin: "top left" }}>
+              <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", width: "793px" }}>
+                <div style={{ width: "55%" }}>
+                  <h3 style={{ marginTop: "0px", marginBlockStart: "0" }}>Amortisationszeit</h3>
+                  <span style={{ display: "block", marginBottom: "15px" }}>
+                    Investitionskosten PV-System: <strong>{sessionStorage.getItem("InvestmentCostEUR").toLocaleString("DE-de")} €</strong>
+                  </span>
+                  <img alt="" src={breakEvenBase64} style={{ width: "440px" }} />
+                  <div style={{ display: "flex", flexDirection: "column", marginTop: "25px", fontFamily: "Bosch-Regular", fontSize: "12px" }}>
+                    <div style={{ display: "flex", flexDirection: "row" }}>
+                      <div style={{ marginRight: "15px" }}>
+                        <div style={{ marginTop: "2px", width: "14px", height: "14px", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", borderRadius: "14px" }}></div>
+                      </div>
+                      <div>Kapitalentwicklung mit PV ohne Energiemanagementsystem </div>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "row", marginTop: "6px" }}>
+                      <div style={{ marginRight: "15px" }}>
+                        <div style={{ marginTop: "2px", width: "14px", height: "14px", background: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#18837E", borderRadius: "14px" }}></div>
+                      </div>
+                      <div>Kapitalentwicklung mit PV und mit Energiemanagementsystem *</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{ width: "42%" }}>
+                  <InfoBoxResultPdf box="right" />
+                </div>
+              </div>
+            </div>
+            <div style={{ position: "absolute", left: "60px", top: "1094px" }}>
+              <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
+            </div>
+          </div>
+
+          <div id="printPdf2" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
+            {this.context.selectedTheme === "buderus" ? (
               <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
-                <div style={{ marginLeft: "60px" }}>
-                  <BoschLogo style={{ maxWidth: "200px" }} />
+                <div style={{ marginLeft: "600px" }}>
+                  <BuderusLogo style={{ maxWidth: "200px" }} />
+                </div>
+              </div>
+            ) : (
+              <>
+                <div style={{ postion: "relative", height: "10px" }}>
+                  <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
+                </div>
+                <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+                  <div style={{ marginLeft: "60px" }}>
+                    <BoschLogo style={{ maxWidth: "200px" }} />
+                  </div>
+                </div>
+                <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
+                  <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
+                </div>
+              </>
+            )}
+
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "20px", paddingLeft: "60px", maxWidth: "815px" }}>
+              <h3>Ergebnis Teil 2: Stromverbrauch, Autarkie und Eigenverbrauch</h3>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "0px", paddingLeft: "60px", maxWidth: "815px" }}>
+              <h3 style={{ marginBlockStart: "4px", marginBlockEnd: "8px", fontSize: "14px" }}>Stromverbrauch</h3>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginLeft: "60px", maxWidth: "1000px" }}>
+              <div style={{ position: "relative", width: "730px", height: "253px" }}>
+                <div style={{ position: "absolute", top: "0", left: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
+                  <canvas id="pie3" width="440" height="273" />
+                </div>
+                <div style={{ position: "absolute", top: "0", left: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
+                  <canvas id="pie4" width="440" height="273" />
+                </div>
+                <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
+                  <InfoBoxResult box="electricity-use" />
                 </div>
               </div>
               <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
-                <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
+                <hr style={{ width: "675px", height: "1px", marginTop: "0px", background: "#999", border: "none", marginInlineStart: "0em" }} />
               </div>
-            </>
-          )}
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginLeft: "60px", maxWidth: "1000px" }}>
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "15px", paddingLeft: "0px", maxWidth: "815px" }}>
-              <h3>Berechnungsgrundlage</h3>
+              <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "0px", paddingLeft: "0px", maxWidth: "815px" }}>
+                <h3 style={{ marginBlockStart: "4px", marginBlockEnd: "4px", fontSize: "14px" }}>Autarkie</h3>
+                <h3 style={{ fontFamily: "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "14px" }}>Mit Energiemanagementsystem</h3>
+              </div>
+              <div style={{ position: "relative", width: "730px", height: "283px" }}>
+                <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
+                  <canvas id="pie1" width="440" height="273" />
+                </div>
+                <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
+                  <canvas id="pie2" width="440" height="273" />
+                </div>
+                {/* <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
+                  <InfoBoxResult box="off-grid" />
+                </div> */}
+                <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
+                  <Box>
+                    <div className="infobox-container">
+                      <div className="infobox-row" style={{ display: "block", lineHeight: "22px", fontSize: "14px", borderBottom: "none" }}>
+                        <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Autarkiegrad: ca. {autarkiegradWithEMS}%</h3>
+                        <p>
+                          Das bedeutet: bis zu <strong>{autarkiegradWithEMS}%</strong> Ihres Gesamtstromverbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
+                        </p>
+                        <p>
+                          <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>{mitNoEMSPercentage}%</strong>.{" "}
+                        </p>
+                        <p>
+                          Ca.&nbsp;
+                          <strong>{mitGridUsagePercentage}%</strong>
+                          &nbsp;Ihres Gesamtstromverbrauchs beziehen Sie durch das <strong>öffentliche Stromnetz.</strong>
+                        </p>
+                      </div>
+                    </div>
+                  </Box>
+                </div>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "0px", paddingLeft: "0px", maxWidth: "815px" }}>
+                <h3 style={{ fontFamily: "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "14px" }}>Ohne Energiemanagementsystem</h3>
+              </div>
+              <div style={{ position: "relative", width: "730px", height: "283px" }}>
+                <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
+                  <canvas id="pie1_NoEMS" width="440" height="273" />
+                </div>
+                <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
+                  <canvas id="pie2_NoEMS" width="440" height="273" />
+                </div>
+                {/* <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
+                  <InfoBoxResult box="off-grid" />
+                </div> */}
+                <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
+                  <Box>
+                    <div className="infobox-container">
+                      <div className="infobox-row" style={{ display: "block", lineHeight: "22px", fontSize: "14px", borderBottom: "none" }}>
+                        <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Autarkiegrad: ca. {ohnePvUsagePercentage}%</h3>
+                        <p>
+                          Das bedeutet: bis zu <strong>{ohnePvUsagePercentage}%</strong> Ihres Gesamtstromverbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
+                        </p>
+                        <p>
+                          <strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Autarkiegrad</strong> auf bis zu <strong>{autarkiegradWithEMS}%</strong> erhöhen.{" "}
+                        </p>
+                        <p>
+                          Ca.&nbsp;
+                          <strong>{ohneGridUsagePercentage}%</strong>
+                          &nbsp;Ihres Gesamtstromverbrauchs beziehen Sie durch das <strong>öffentliche Stromnetz.</strong>
+                        </p>
+                      </div>
+                    </div>
+                  </Box>
+                </div>
+              </div>
             </div>
-            <div style={{ display: "flex", width: "100%", justifyContent: "flex-start" }}>
-              <div className="modal-content-width" style={{ position: "relative", width: "680px" }}>
-                <div style={{ display: "flex", flexDirection: "row", width: "100%", marginTop: "0px", marginBottom: "20px", textAlign: "left" }}>
-                  <div style={{ marginRight: "10px", transform: "scale(0.85)", transformOrigin: "top left" }}>{this.context.selectedTheme === "buderus" ? <BuderusInfoIcon /> : <InfoIcon />}</div>
-                  <h3 className="pdf-h3">
-                    <b>Bitte beachten Sie:</b> Die Ergebnisse des Tools basieren auf historischen Werten, simulierten Daten und darauf aufbauenden Optimierungen und können daher von tatsächlichen Verbräuchen und Erträgen abweichen. Die Daten werden regelmäßig kontrolliert und aktualisiert. Das Tool ersetzt nicht die exakte Planung durch eine/n von Ihnen beauftragte/n Planungsexperten/-expertin.
-                  </h3>
-                </div>
-              </div>
-            </div>
-
-            <div style={{ marginBottom: "15px" }}>
-              <h3 style={{ marginBlockStart: "4px", marginBlockEnd: "8px", fontSize: "14px" }}>Grundlage für die angezeigten Verbrauchs-, Ertrags- und Amortisationsabschätzungen sind folgende Annahmen:</h3>
-            </div>
-
-            <div style={{ display: "flex", width: "100%", justifyContent: "space-between" }}>
-              <div style={{ width: "50%", transform: "scale(0.80)", transformOrigin: "top left" }}>
-                <div>
-                  <InfoBoxCalculation box="calculation-1" />
-                </div>
-                <div style={{ marginTop: "25px" }}>
-                  <InfoBoxCalculation box="calculation-2" />
-                </div>
-              </div>
-              <div style={{ width: "50%", transform: "scale(0.80)", transformOrigin: "top left" }}>
-                <div>
-                  <InfoBoxCalculation box="calculation-5" />
-                </div>
-                <div style={{ marginTop: "25px" }}>
-                  <InfoBoxCalculation box="calculation-3" />
-                </div>
-              </div>
+            <div style={{ position: "absolute", left: "60px", top: "1094px" }}>
+              <hr style={{ width: "690px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
             </div>
           </div>
-          <div style={{ position: "absolute", left: "60px", top: "1094px" }}>
-            <hr style={{ width: "690px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
-          </div>
-        </div>
 
-        <div id="printPdf6" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
-          {this.context.selectedTheme === "buderus" ? (
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
-              <div style={{ marginLeft: "600px" }}>
-                <BuderusLogo style={{ maxWidth: "200px" }} />
-              </div>
-            </div>
-          ) : (
-            <>
-              <div style={{ postion: "relative", height: "10px" }}>
-                <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
-              </div>
+          <div id="printPdf3" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
+            {this.context.selectedTheme === "buderus" ? (
               <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
-                <div style={{ marginLeft: "60px" }}>
-                  <BoschLogo style={{ maxWidth: "200px" }} />
+                <div style={{ marginLeft: "600px" }}>
+                  <BuderusLogo style={{ maxWidth: "200px" }} />
                 </div>
               </div>
-              <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
-                <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
-              </div>
-            </>
-          )}
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginLeft: "60px", maxWidth: "1000px" }}>
-            <div style={{ marginBottom: "15px" }}>
-              <h3 style={{ marginBlockStart: "4px", marginBlockEnd: "8px", fontSize: "14px" }}>Grundlage für die angezeigten Verbrauchs-, Ertrags- und Amortisationsabschätzungen sind folgende Annahmen:</h3>
+            ) : (
+              <>
+                <div style={{ postion: "relative", height: "10px" }}>
+                  <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
+                </div>
+                <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+                  <div style={{ marginLeft: "60px" }}>
+                    <BoschLogo style={{ maxWidth: "200px" }} />
+                  </div>
+                </div>
+                <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
+                  <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
+                </div>
+              </>
+            )}
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "20px", paddingLeft: "60px", maxWidth: "815px" }}>
+              <h3>Ergebnis Teil 2: Stromverbrauch, Autarkie und Eigenverbrauch</h3>
             </div>
-
-            <div style={{ display: "flex", width: "100%", justifyContent: "space-between" }}>
-              <div style={{ width: "50%", transform: "scale(0.80)", transformOrigin: "top left" }}>
-                <div>
-                  <InfoBoxCalculation box="calculation-4" />
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "0px", paddingLeft: "60px", maxWidth: "815px" }}>
+              <h3 style={{ marginBlockStart: "4px", marginBlockEnd: "8px", fontSize: "14px" }}>Eigenverbrauch</h3>
+              <h3 style={{ fontFamily: "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "14px" }}>Mit Energiemanagementsystem</h3>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginLeft: "60px", maxWidth: "1000px" }}>
+              <div style={{ position: "relative", width: "730px", height: "273px" }}>
+                <div style={{ position: "absolute", top: "0", left: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
+                  <canvas id="pie5" width="375" height="273" />
                 </div>
-                <div style={{ marginTop: "25px" }}>
-                  <InfoBoxCalculation box="calculation-6" />
+                <div style={{ position: "absolute", top: "0", left: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
+                  <canvas id="pie6" width="375" height="273" />
                 </div>
-                <div style={{ marginTop: "25px" }}>
-                  <InfoBoxCalculation box="calculation-8" />
+                {/* <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
+                  <InfoBoxResult box="household-use" />
+                </div> */}
+                <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
+                  <Box>
+                    <div className="infobox-container">
+                      <div className="infobox-row" style={{ display: "block", lineHeight: "22px", fontSize: "14px", borderBottom: "none" }}>
+                        <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Eigenverbrauchsanteil: ca. {eigenverbrauchsanteil}%</h3>
+                        <p>
+                          Das bedeutet: bis zu <strong>{Math.round(parseFloat(eigenverbrauchsanteil).toFixed(2))}%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
+                        </p>
+                        <p>
+                          <strong>Ohne ein Energiemanagementsystem</strong> beträgt der <strong>Eigenverbrauchsanteil</strong> lediglich ca. <strong>{MIT_HouseholdNoEMSpvPercent}%</strong>.{" "}
+                        </p>
+                        <p>
+                          Ca.&nbsp;
+                          <strong>{MIT_GridFeedPercentage}%</strong>
+                          &nbsp;Ihres eigens produzierten PV-Stroms speisen Sie ins <strong>öffentliche Stromnetz</strong> ein.
+                        </p>
+                      </div>
+                    </div>
+                  </Box>
                 </div>
               </div>
-              <div style={{ width: "50%", transform: "scale(0.80)", transformOrigin: "top left" }}>
-                <div>
-                  <InfoBoxCalculation box="calculation-7" />
+              <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "0px", paddingLeft: "0px", maxWidth: "815px" }}>
+                <h3 style={{ fontFamily: "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "14px" }}>Ohne Energiemanagementsystem</h3>
+              </div>
+              <div style={{ position: "relative", width: "730px", height: "273px" }}>
+                <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
+                  <canvas id="pie7" width="375" height="273" />
                 </div>
-                <div style={{ marginTop: "25px" }}>
-                  <InfoBoxCalculation box="calculation-9" />
+                <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
+                  <canvas id="pie8" width="375" height="273" />
+                </div>
+                {/* <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
+                  <InfoBoxResult box="household-use" />
+                </div> */}
+                <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
+                  <Box>
+                    <div className="infobox-container">
+                      <div className="infobox-row" style={{ display: "block", lineHeight: "22px", fontSize: "14px", borderBottom: "none" }}>
+                        <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>Eigenverbrauchsanteil: ca. {Onhe_HouseholdNoEMSpvPercent}%</h3>
+                        <p>
+                          Das bedeutet: bis zu <strong>{Math.round(parseFloat(Onhe_HouseholdNoEMSpvPercent).toFixed(2))}%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
+                        </p>
+                        <p>
+                          <strong>Mit einem Energiemanagementsystem</strong> lässt sich der <strong>Eigenverbrauchsanteil</strong> auf bis zu <strong>{eigenverbrauchsanteil}%</strong> erhöhen.{" "}
+                        </p>
+                        <p>
+                          Ca.&nbsp;
+                          <strong>{Onhe_GridFeedPercentageNoEMS}%</strong>
+                          &nbsp;Ihres eigens produzierten PV-Stroms speisen Sie ins <strong>öffentliche Stromnetz</strong> ein.
+                        </p>
+                      </div>
+                    </div>
+                  </Box>
                 </div>
               </div>
+            </div>
+            <div style={{ position: "absolute", left: "60px", top: "1094px" }}>
+              <hr style={{ width: "690px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
             </div>
           </div>
-          <div style={{ position: "absolute", left: "60px", top: "1094px" }}>
-            <hr style={{ width: "690px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
+
+          <div id="printPdf4" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
+            {this.context.selectedTheme === "buderus" ? (
+              <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+                <div style={{ marginLeft: "600px" }}>
+                  <BuderusLogo style={{ maxWidth: "200px" }} />
+                </div>
+              </div>
+            ) : (
+              <>
+                <div style={{ postion: "relative", height: "10px" }}>
+                  <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
+                </div>
+                <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+                  <div style={{ marginLeft: "60px" }}>
+                    <BoschLogo style={{ maxWidth: "200px" }} />
+                  </div>
+                </div>
+                <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
+                  <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
+                </div>
+              </>
+            )}
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginLeft: "60px", maxWidth: "1000px" }}>
+              <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "20px", paddingLeft: "0px", maxWidth: "815px" }}>
+                <h3>Weitere Informationen</h3>
+                <h3 style={{ fontFamily: "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "14px" }}>Um weitere Informationen zu erhalten, scannen sie den jeweiligen QR-Code.</h3>
+              </div>
+              {this.context.selectedTheme === "buderus" ? (
+                <>
+                  <div className="cardContent" style={{ marginBottom: "40px" }}>
+                    <div className="flexContent additional-flex block-content" style={{ width: "100%", justifyContent: "space-between", marginTop: "8px" }}>
+                      <div className="block-container">
+                        <div className="block contact">
+                          <p>Fachbetriebe in ihrer Nähe</p>
+                          <div className="trackeable" data-event="result-part3-contact" style={{ display: "flex", alignItems: "end" }}>
+                            <a rel="noreferrer" href="https://www.buderus.de/de/services-tools/experten-in-ihrer-naehe/fachbetriebe-in-ihrer-naehe-21776" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                              <Button className="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
+                                Fachbetrieb suchen
+                              </Button>
+                            </a>
+                          </div>
+                        </div>
+                        <div className="block contact">
+                          <p>Angebot anfordern</p>
+                          <div className="trackeable" data-event="result-part3-offer" style={{ display: "flex", alignItems: "end" }}>
+                            <a rel="noreferrer" href="https://www.buderus.de/de/angebot-anfordern" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                              <Button className="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
+                                Unverbindliches Angebot anfordem
+                              </Button>
+                            </a>
+                          </div>
+                        </div>
+                        <div className="block contact">
+                          <p>Beratungshotline</p>
+                          <div style={{ display: "flex", alignItems: "end" }}>
+                            <a rel="noreferrer" href="https://www.buderus.de/de/kontakt-klimapaket" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                              <Button className="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
+                                Zur Beratungshotline
+                              </Button>
+                            </a>
+                          </div>
+                        </div>
+                        <div className="block contact">
+                          <p>Niederlassungssuche</p>
+                          <div style={{ display: "flex", alignItems: "end" }}>
+                            <a rel="noreferrer" href="https://www.buderus.de/de/niederlassungen" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                              <Button className="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
+                                Zur Niederlassungssuche
+                              </Button>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignContent: "center", alignItems: "center", textAlign: "center", marginTop: "0px", marginBottom: "0px", paddingLeft: "0px", maxWidth: "690px" }}>
+                    <div style={{ width: "25%" }}>
+                      <label>
+                        <input type="radio" name="heating" value="BuildingEnergyStandard" className="card-input-element" />
+                        <a href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/wissen/der-energiemanager/sektorenkopplung/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_tool&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance" rel="noreferrer" target="_blank" className="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
+                          <div className="panel-heading-narrow" style={{ marginTop: "20px" }}>
+                            {this.context.selectedTheme === "buderus" ? <BuderusPhotovoltaicIcon /> : <PhotovoltaicIcon />}
+                          </div>
+                          <div className="panel-body icons" style={{ fontSize: "10px" }}>
+                            Solarstromrechner
+                          </div>
+                        </a>
+                      </label>
+                      <div style={{ marginTop: "20px" }}>
+                        <img alt="sectorcoupling_tool" src={require(`../../../../assets/img/qr/sectorcoupling_tool.png`)} style={{ width: "90px" }} />
+                      </div>
+                    </div>
+                    <div style={{ width: "25%" }}>
+                      <label>
+                        <input type="radio" name="heating" value="BuildingEnergyStandard" className="card-input-element" />
+                        <a href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/service-und-support/installateur-finden/dealersearch/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_dealersearch&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance" rel="noreferrer" target="_blank" className="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
+                          <div className="panel-heading-narrow" style={{ marginTop: "20px" }}>
+                            {this.context.selectedTheme === "buderus" ? <BuderusContractIcon /> : <ContractIcon />}
+                          </div>
+                          <div className="panel-body icons" style={{ fontSize: "10px" }}>
+                            Unverbindliches
+                            <br />
+                            Angebot anfragen
+                          </div>
+                        </a>
+                      </label>
+                      <div style={{ marginTop: "20px" }}>
+                        <img alt="dealer_search" src={require(`../../../../assets/img/qr/dealer_search.png`)} style={{ width: "90px" }} />
+                      </div>
+                    </div>
+                    <div style={{ width: "25%" }}>
+                      <label>
+                        <input type="radio" name="heating" value="BuildingEnergyStandard" className="card-input-element" />
+                        <a href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/beratung-und-kauf/angebot-anfordern/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_lmt&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance" rel="noreferrer" target="_blank" className="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
+                          <div className="panel-heading-narrow" style={{ marginTop: "20px" }}>
+                            {this.context.selectedTheme === "buderus" ? <BuderusWrenchIcon /> : <WrenchIcon />}
+                          </div>
+                          <div className="panel-body icons" style={{ fontSize: "10px" }}>
+                            Kontakte zum
+                            <br />
+                            Fachbetrieb
+                          </div>
+                        </a>
+                      </label>
+                      <div style={{ marginTop: "20px" }}>
+                        <img alt="lmt" src={require(`../../../../assets/img/qr/lmt.png`)} style={{ width: "100px" }} />
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+            <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", maxWidth: "815px" }}>
+              <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginLeft: "60px", maxWidth: "1000px" }}>
+              <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "20px", paddingLeft: "0px", maxWidth: "815px" }}>
+                <h3>Wie komme ich zu einem energieeffizienten System?</h3>
+                <h3 style={{ fontFamily: "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "13px" }}>Informationen zu unseren Produkten finden Sie unter den jeweiligen QR-Codes:</h3>
+              </div>
+              <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignContent: "center", alignItems: "center", textAlign: "center", marginTop: "0px", marginBottom: "0px", paddingLeft: "0px", maxWidth: "690px" }}>
+                <div style={{ width: "25%" }}>
+                  <label>
+                    <input type="radio" name="heating" value="BuildingEnergyStandard" className="card-input-element" />
+                    <a href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/waermepumpen-854510-c/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_heatpump&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance" rel="noreferrer" target="_blank" className="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
+                      <div className="panel-heading-narrow" style={{ marginTop: "20px" }}>
+                        {this.context.selectedTheme === "buderus" ? <BuderusHeatpumpSmallIcon /> : <HeatpumpSmallIcon />}
+                      </div>
+                      <div className="panel-body icons" style={{ fontSize: "10px" }}>
+                        Wärmepumpe
+                      </div>
+                    </a>
+                  </label>
+                  <div style={{ marginTop: "20px" }}>
+                    <img alt="heatpump" src={require(`../../../../assets/img/qr/heatpump.png`)} style={{ width: "100px" }} />
+                  </div>
+                </div>
+                <div style={{ width: "25%" }}>
+                  <label>
+                    <input type="radio" name="heating" value="BuildingEnergyStandard" className="card-input-element" />
+                    <a href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/solarthermieanlagen-854604-c/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_pv&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance" rel="noreferrer" target="_blank" className="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
+                      <div className="panel-heading-narrow" style={{ marginTop: "20px" }}>
+                        {this.context.selectedTheme === "buderus" ? <BuderusPhotovoltaicIcon /> : <PhotovoltaicIcon />}
+                      </div>
+                      <div className="panel-body icons" style={{ fontSize: "10px" }}>
+                        PV-Anlage
+                      </div>
+                    </a>
+                  </label>
+                  <div style={{ marginTop: "20px" }}>
+                    <img alt="pv" src={require(`../../../../assets/img/qr/pv.png`)} style={{ width: "100px" }} />
+                  </div>
+                </div>
+                <div style={{ width: "25%" }}>
+                  <label>
+                    <input type="radio" name="heating" value="BuildingEnergyStandard" className="card-input-element" />
+                    <a href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/power-charge-7000i-19378337-p/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_wallbox&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance" rel="noreferrer" target="_blank" className="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
+                      <div className="panel-heading-narrow" style={{ marginTop: "20px" }}>
+                        {this.context.selectedTheme === "buderus" ? <BuderusWallboxIcon /> : <WallboxIcon />}
+                      </div>
+                      <div className="panel-body icons" style={{ fontSize: "10px" }}>
+                        Wallbox
+                      </div>
+                    </a>
+                  </label>
+                  <div style={{ marginTop: "20px" }}>
+                    <img alt="" src={require(`../../../../assets/img/qr/wallbox.png`)} style={{ width: "100px" }} />
+                  </div>
+                </div>
+                <div style={{ width: "25%" }}>
+                  <label>
+                    <input type="radio" name="heating" value="BuildingEnergyStandard" className="card-input-element" />
+                    <a href="https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/energiemanagement-19317456-c/?utm_source=pdf&utm_medium=qrcode&utm_campaign=202403_sectorcoupling_ems&utm_content=none&utm_creative_format=pdf&utm_marketing_tactic=performance" target="_blank" rel="noreferrer" className="panel panel-default card-input-narrow card-pdf-width" style={{ textDecoration: "none", marginLeft: "23px", width: "120px !important", height: "110px" }}>
+                      <div className="panel-heading-narrow" style={{ marginTop: "20px" }}>
+                        {this.context.selectedTheme === "buderus" ? <BuderusEnergyManagementIcon /> : <EnergyManagementIcon />}
+                      </div>
+                      <div className="panel-body icons" style={{ fontSize: "10px" }}>
+                        Energiemanage-
+                        <br />
+                        mentsystem
+                      </div>
+                    </a>
+                  </label>
+                  <div style={{ marginTop: "20px" }}>
+                    <img alt="" src={require(`../../../../assets/img/qr/ems.png`)} style={{ width: "100px" }} />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style={{ position: "absolute", left: "60px", top: "1094px" }}>
+              <hr style={{ width: "690px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
+            </div>
+          </div>
+
+          <div id="printPdf5" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
+            {this.context.selectedTheme === "buderus" ? (
+              <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+                <div style={{ marginLeft: "600px" }}>
+                  <BuderusLogo style={{ maxWidth: "200px" }} />
+                </div>
+              </div>
+            ) : (
+              <>
+                <div style={{ postion: "relative", height: "10px" }}>
+                  <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
+                </div>
+                <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+                  <div style={{ marginLeft: "60px" }}>
+                    <BoschLogo style={{ maxWidth: "200px" }} />
+                  </div>
+                </div>
+                <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
+                  <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
+                </div>
+              </>
+            )}
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginLeft: "60px", maxWidth: "1000px" }}>
+              <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "15px", paddingLeft: "0px", maxWidth: "815px" }}>
+                <h3>Berechnungsgrundlage</h3>
+              </div>
+              <div style={{ display: "flex", width: "100%", justifyContent: "flex-start" }}>
+                <div className="modal-content-width" style={{ position: "relative", width: "680px" }}>
+                  <div style={{ display: "flex", flexDirection: "row", width: "100%", marginTop: "0px", marginBottom: "20px", textAlign: "left" }}>
+                    <div style={{ marginRight: "10px", transform: "scale(0.85)", transformOrigin: "top left" }}>{this.context.selectedTheme === "buderus" ? <BuderusInfoIcon /> : <InfoIcon />}</div>
+                    <h3 className="pdf-h3">
+                      <b>Bitte beachten Sie:</b> Die Ergebnisse des Tools basieren auf historischen Werten, simulierten Daten und darauf aufbauenden Optimierungen und können daher von tatsächlichen Verbräuchen und Erträgen abweichen. Die Daten werden regelmäßig kontrolliert und aktualisiert. Das Tool ersetzt nicht die exakte Planung durch eine/n von Ihnen beauftragte/n Planungsexperten/-expertin.
+                    </h3>
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ marginBottom: "15px" }}>
+                <h3 style={{ marginBlockStart: "4px", marginBlockEnd: "8px", fontSize: "14px" }}>Grundlage für die angezeigten Verbrauchs-, Ertrags- und Amortisationsabschätzungen sind folgende Annahmen:</h3>
+              </div>
+
+              <div style={{ display: "flex", width: "100%", justifyContent: "space-between" }}>
+                <div style={{ width: "50%", transform: "scale(0.80)", transformOrigin: "top left" }}>
+                  <div>
+                    <InfoBoxCalculation box="calculation-1" />
+                  </div>
+                  <div style={{ marginTop: "25px" }}>
+                    <InfoBoxCalculation box="calculation-2" />
+                  </div>
+                </div>
+                <div style={{ width: "50%", transform: "scale(0.80)", transformOrigin: "top left" }}>
+                  <div>
+                    <InfoBoxCalculation box="calculation-5" />
+                  </div>
+                  <div style={{ marginTop: "25px" }}>
+                    <InfoBoxCalculation box="calculation-3" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style={{ position: "absolute", left: "60px", top: "1094px" }}>
+              <hr style={{ width: "690px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
+            </div>
+          </div>
+
+          <div id="printPdf6" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
+            {this.context.selectedTheme === "buderus" ? (
+              <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+                <div style={{ marginLeft: "600px" }}>
+                  <BuderusLogo style={{ maxWidth: "200px" }} />
+                </div>
+              </div>
+            ) : (
+              <>
+                <div style={{ postion: "relative", height: "10px" }}>
+                  <img src={require(`../../../../assets/img/top-line.png`)} alt="" style={{ position: "absolute", height: "10px", width: "795px", marginTop: "0" }} />
+                </div>
+                <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
+                  <div style={{ marginLeft: "60px" }}>
+                    <BoschLogo style={{ maxWidth: "200px" }} />
+                  </div>
+                </div>
+                <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
+                  <hr style={{ width: "675px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
+                </div>
+              </>
+            )}
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginLeft: "60px", maxWidth: "1000px" }}>
+              <div style={{ marginBottom: "15px" }}>
+                <h3 style={{ marginBlockStart: "4px", marginBlockEnd: "8px", fontSize: "14px" }}>Grundlage für die angezeigten Verbrauchs-, Ertrags- und Amortisationsabschätzungen sind folgende Annahmen:</h3>
+              </div>
+
+              <div style={{ display: "flex", width: "100%", justifyContent: "space-between" }}>
+                <div style={{ width: "50%", transform: "scale(0.80)", transformOrigin: "top left" }}>
+                  <div>
+                    <InfoBoxCalculation box="calculation-4" />
+                  </div>
+                  <div style={{ marginTop: "25px" }}>
+                    <InfoBoxCalculation box="calculation-6" />
+                  </div>
+                  <div style={{ marginTop: "25px" }}>
+                    <InfoBoxCalculation box="calculation-8" />
+                  </div>
+                </div>
+                <div style={{ width: "50%", transform: "scale(0.80)", transformOrigin: "top left" }}>
+                  <div>
+                    <InfoBoxCalculation box="calculation-7" />
+                  </div>
+                  <div style={{ marginTop: "25px" }}>
+                    <InfoBoxCalculation box="calculation-9" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style={{ position: "absolute", left: "60px", top: "1094px" }}>
+              <hr style={{ width: "690px", height: "1px", marginTop: "12px", background: "#999", border: "none" }} />
+            </div>
           </div>
         </div>
       </div>
