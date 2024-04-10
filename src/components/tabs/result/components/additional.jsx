@@ -376,7 +376,7 @@ class Additional extends React.Component {
                       <div>Finden Sie einen Experten in Ihrer Nähe, der Sie bei der Umsetzung unterstützt.</div>
                     </div>
                     <div className="trackeable" data-event="result-part3-contact" style={{ display: "flex", alignItems: "end" }}>
-                      <a rel="noreferrer" href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/service-und-support/installateur-finden/dealersearch/" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                      <a rel="noreferrer" href="http://www.bosch-hc.de/installateur" target="_blank" style={{ textDecoration: "none", display: "block" }}>
                         <Button variant="outlined" startIcon={<MagnifyingGlassIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
                           Jetzt Fachbetrieb finden
                         </Button>
@@ -391,7 +391,7 @@ class Additional extends React.Component {
                       <div>Erhalten Sie ein kostenloses, unverbindliches Angebot von einem Installateur in Ihrer Nähe.</div>
                     </div>
                     <div style={{ display: "flex", alignItems: "end" }}>
-                      <a className="trackeable" data-event="result-part3-offer" rel="noreferrer" href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/beratung-und-kauf/angebot-anfordern/" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                      <a className="trackeable" data-event="result-part3-offer" rel="noreferrer" href="http://www.bosch-hc.de/angebot" target="_blank" style={{ textDecoration: "none", display: "block" }}>
                         <Button variant="outlined" startIcon={<ContractIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
                           Angebot anfordern
                         </Button>
@@ -412,7 +412,7 @@ class Additional extends React.Component {
                   <div>
                     <label>
                       <input type="radio" name="heating" value="BuildingEnergyStandard" className="card-input-element" />
-                      <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/waermepumpe" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/waermepumpen-854510-c/"} target="_blank" className="panel panel-default card-input-narrow">
+                      <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/waermepumpe" : "http://www.bosch-hc.de/waermepumpe"} target="_blank" className="panel panel-default card-input-narrow">
                         <div className="panel-heading-narrow">{this.context.selectedTheme === "buderus" ? <BuderusHeatpumpSmallIcon /> : <HeatpumpSmallIcon />}</div>
                         <div className="panel-body trackeable" data-event="result-part3-heatpump">
                           Wärmepumpe
@@ -423,7 +423,7 @@ class Additional extends React.Component {
                   <div>
                     <label>
                       <input type="radio" name="heating" value="OilLNG" className="card-input-element" />
-                      <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/alle-produkte?query=&facetFilters=filterNames~categoryC:Produkt-Kategorie:9049:Photovoltaik%20und%20Energiemanagement;&pageNum=12" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/solarthermieanlagen-854604-c/"} target="_blank" className="panel panel-default card-input-narrow">
+                      <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/alle-produkte?query=&facetFilters=filterNames~categoryC:Produkt-Kategorie:9049:Photovoltaik%20und%20Energiemanagement;&pageNum=12" : "http://www.bosch-hc.de/pv"} target="_blank" className="panel panel-default card-input-narrow">
                         <div className="panel-heading-narrow">{this.context.selectedTheme === "buderus" ? <BuderusPhotovoltaicIcon /> : <PhotovoltaicIcon />}</div>
                         <div className="panel-body trackeable" data-event="result-part3-pv">
                           PV-Anlage
@@ -434,7 +434,7 @@ class Additional extends React.Component {
                   <div>
                     <label>
                       <input type="radio" name="heating" value="BuildingInsulation" className="card-input-element" />
-                      <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/alle-produkte/195985_logavolt-wls11i" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/power-charge-7000i-19378337-p/"} target="_blank" className="panel panel-default card-input-narrow">
+                      <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/alle-produkte/195985_logavolt-wls11i" : "http://www.bosch-hc.de/wallbox"} target="_blank" className="panel panel-default card-input-narrow">
                         <div className="panel-heading-narrow">{this.context.selectedTheme === "buderus" ? <BuderusWallboxIcon /> : <WallboxIcon />}</div>
                         <div className="panel-body trackeable" data-event="result-part3-wallbox">
                           Wallbox
@@ -445,7 +445,7 @@ class Additional extends React.Component {
                   <div>
                     <label>
                       <input type="radio" name="heating" value="BuildingInsulation" className="card-input-element" />
-                      <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/services-tools/apps/energiemanager-6036" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/energiemanagement-19317456-c/"} target="_blank" className="panel panel-default card-input-narrow">
+                      <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/services-tools/apps/energiemanager-6036" : "http://www.bosch-hc.de/energiemanagement"} target="_blank" className="panel panel-default card-input-narrow">
                         <div className="panel-heading-narrow">{this.context.selectedTheme === "buderus" ? <BuderusEnergyManagementIcon /> : <EnergyManagementIcon />}</div>
                         <div className="panel-body trackeable" data-event="result-part3-energie-management">
                           Energiemanage-
