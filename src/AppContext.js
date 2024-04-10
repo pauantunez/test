@@ -2100,7 +2100,7 @@ class SimulatorProvider extends Component {
           eventArray[eventParameterName2] = "sc_given_answer1";
           eventArray[parameterValue2] = "Energy building standard";
           eventArray[eventParameterName3] = "sc_given_answer2";
-          eventArray[parameterValue3] = "KfW 40";
+          eventArray[parameterValue3] = "KfW 40 2";
           break;
 
         case "heizenergiebefard-gebaude-55":

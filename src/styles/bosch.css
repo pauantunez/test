@@ -96,6 +96,10 @@ a.card-input-narrow {
   fill: #FFF;
 }
 
+.nav-label, .nav-label span{
+  font-family: 'Bosch-Medium'!important;
+}
+
 #houseSunSmallIcon {
   background-image: url("../assets/img/icons/house_sun_small.svg");
   width: 32px;

@@ -198,7 +198,7 @@ class CostPdf extends React.Component {
                 <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPv["savings"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                      <span style={{ background: "#FFF", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
                         {savingOnlyPV1year.toLocaleString("DE-de")}
                         <span>&nbsp;€</span>
                       </span>
@@ -212,7 +212,7 @@ class CostPdf extends React.Component {
                 <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPv["savings"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                      <span style={{ background: "#FFF", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
                         {savingOnlyPV20years.toLocaleString("DE-de")}
                         <span>&nbsp;€</span>
                       </span>
@@ -226,7 +226,7 @@ class CostPdf extends React.Component {
                 <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPv["cost"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                      <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
                         {costOnlyPV1year.toLocaleString("de-DE")}
                         <span>&nbsp;€</span>
                       </span>
@@ -240,7 +240,7 @@ class CostPdf extends React.Component {
                 <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPv["cost"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                      <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
                         {costOnlyPV20years.toLocaleString("de-DE")}
                         <span>&nbsp;€</span>
                       </span>
@@ -257,7 +257,7 @@ class CostPdf extends React.Component {
                 <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPvAndEMS["savings"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                      <span style={{ background: "#FFF", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
                         {savingPVandEMS1year.toLocaleString("DE-de")}
                         <span>&nbsp;€</span>
                       </span>
@@ -271,7 +271,7 @@ class CostPdf extends React.Component {
                 <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPvAndEms["savings"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: "#FFF", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                      <span style={{ background: "#FFF", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
                         {savingPVandEMS20years.toLocaleString("DE-de")}
                         <span>&nbsp;€</span>
                       </span>
@@ -285,7 +285,7 @@ class CostPdf extends React.Component {
                 <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPvAndEMS["cost"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                      <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
                         {costPVandEMS1year.toLocaleString("de-DE")}
                         <span>&nbsp;€</span>
                       </span>
@@ -299,7 +299,7 @@ class CostPdf extends React.Component {
                 <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPvAndEms["cost"]}px`, color: "white" }}>
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
-                      <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: "Bosch-Bold" }}>
+                      <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
                         {costPVandEMS20years.toLocaleString("de-DE")}
                         <span>&nbsp;€</span>
                       </span>
@@ -379,7 +379,7 @@ class CostPdf extends React.Component {
               </div>
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", marginTop: "12px", fontFamily: "Bosch-Regular", fontSize: "12px" }}>
+            <div style={{ display: "flex", flexDirection: "column", marginTop: "12px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "12px" }}>
               <div style={{ display: "flex", flexDirection: "row" }}>
                 <div style={{ marginRight: "15px" }}>
                   <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", borderRadius: "12px" }}></div>

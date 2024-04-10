@@ -150,7 +150,7 @@ class Investment extends React.Component {
       width: 24,
       height: 24,
       backgroundColor: this.context.selectedTheme === "buderus" ? "#FFFFFF" : "#8A9097",
-      fontFamily: "Bosch-Medium",
+      fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular",
       ".Mui-focusVisible &": {
         outline: "2px auto rgba(19,124,189,.6)",
         outlineOffset: 2,
@@ -217,7 +217,7 @@ class Investment extends React.Component {
                 </span>
               </div>
               <div className="flexRow" style={{ flexDirection: "column" }}>
-                <div style={{ marginTop: "10px", marginLeft: "10px", fontFamily: "Bosch-Regular" }}>
+                <div style={{ marginTop: "10px", marginLeft: "10px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular" }}>
                   <FormControl>
                     <RadioGroup sx={{ flexWrap: "inherit", flexDirection: "row" }} name="oil-lng-value" row>
                       <div className="label" style={{ display: "flex", flexDirection: "column" }}>

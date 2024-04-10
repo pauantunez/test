@@ -50,7 +50,7 @@ class InfoButton extends React.Component {
         boxShadow: "0px 0px 6px 0px rgba(0,0,0,0.6)",
         borderRadius: "0px",
         fontSize: "12px",
-        fontFamily: "Bosch-Regular",
+        fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular",
         lineHeight: "1.4",
         padding: "6px 6px 6px 8px",
         width: "150px", // <600 px

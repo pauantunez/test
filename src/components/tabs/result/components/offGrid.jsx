@@ -289,7 +289,7 @@ class OffGrid extends React.Component {
                       stroke: "#fff",
                       strokeWidth: 6,
                     },
-                    labels: { fill: ({ datum }) => datum.color, fontFamily: "Bosch-Bold", fontSize: "20px" },
+                    labels: { fill: ({ datum }) => datum.color, fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: "20px" },
                   }}
                   labelComponent={<VictoryLabel backgroundStyle={{ fill: "white" }} backgroundPadding={6} />}
                 />
@@ -307,7 +307,7 @@ class OffGrid extends React.Component {
                       stroke: "#fff",
                       strokeWidth: 0,
                     },
-                    labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" },
+                    labels: { fill: "white", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: "20px" },
                   }}
                 />
               </div>
@@ -326,7 +326,7 @@ class OffGrid extends React.Component {
                       stroke: "#fff",
                       strokeWidth: 6,
                     },
-                    labels: { fill: ({ datum }) => datum.color, fontFamily: "Bosch-Bold", fontSize: "20px" },
+                    labels: { fill: ({ datum }) => datum.color, fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: "20px" },
                   }}
                   labelComponent={<VictoryLabel backgroundStyle={{ fill: "white" }} backgroundPadding={6} />}
                 />
@@ -344,7 +344,7 @@ class OffGrid extends React.Component {
                       stroke: "#fff",
                       strokeWidth: 0,
                     },
-                    labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: "20px" },
+                    labels: { fill: "white", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: "20px" },
                   }}
                 />
               </div>
@@ -363,7 +363,7 @@ class OffGrid extends React.Component {
                       stroke: "#fff",
                       strokeWidth: 4,
                     },
-                    labels: { fill: ({ datum }) => datum.color, fontFamily: "Bosch-Bold", fontSize: pieLabelFontSize },
+                    labels: { fill: ({ datum }) => datum.color, fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: pieLabelFontSize },
                   }}
                   labelComponent={<VictoryLabel backgroundStyle={{ fill: "white" }} backgroundPadding={6} />}
                 />
@@ -382,7 +382,7 @@ class OffGrid extends React.Component {
                       stroke: "#fff",
                       strokeWidth: 0,
                     },
-                    labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: pieLabelFontSize },
+                    labels: { fill: "white", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: pieLabelFontSize },
                   }}
                 />
               </div>

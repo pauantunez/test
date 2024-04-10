@@ -440,7 +440,7 @@ class Main extends React.Component {
     const CustomButton = styled(Button)({
       textTransform: "none",
       borderRadius: "0px",
-      fontFamily: "Bosch-Regular",
+      fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular",
       backgroundColor: this.context.selectedTheme === "buderus" ? "#002d59" : "#007BC0",
       "&:hover": {
         backgroundColor: this.context.selectedTheme === "buderus" ? "#001d39" : "#00629A",
@@ -689,7 +689,7 @@ class Main extends React.Component {
           <div style={{ color: "#FFF", width: "100%", height: "100%", lineHeight: "36px", background: "#eee", marginTop: "0px", overflowY: "scroll" }}>
             <div style={{ display: "flex", flexDirection: "column", margin: "15px 25px 25px 15px" }}>
               <div>
-                <h3 style={{ fontFamily: "Bosch-Medium", color: "#000", marginBottom: "10px", fontSize: "20px", marginBlockStart: "0" }}>Gebäude</h3>
+                <h3 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Medium", color: "#000", marginBottom: "10px", fontSize: "20px", marginBlockStart: "0" }}>Gebäude</h3>
               </div>
               <Link
                 className={steps[0] === false ? "activeMobileLink" : "inactiveMobileLink"}
@@ -728,7 +728,7 @@ class Main extends React.Component {
                 </span>
               </Link>
               <div>
-                <h3 style={{ fontFamily: "Bosch-Medium", color: "#000", marginBottom: "10px", fontSize: "20px" }}>Ausstattung</h3>
+                <h3 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Medium", color: "#000", marginBottom: "10px", fontSize: "20px" }}>Ausstattung</h3>
               </div>
               <Link
                 className={steps[3] === false ? "activeMobileLink" : "inactiveMobileLink"}
@@ -791,7 +791,7 @@ class Main extends React.Component {
                 </span>
               </Link>
               <div>
-                <h3 style={{ fontFamily: "Bosch-Medium", color: "#000", marginBottom: "10px", fontSize: "20px" }}>Ökonomische Kenngrößen</h3>
+                <h3 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Medium", color: "#000", marginBottom: "10px", fontSize: "20px" }}>Ökonomische Kenngrößen</h3>
               </div>
               <Link
                 className={steps[8] === false ? "activeMobileLink" : "inactiveMobileLink"}
@@ -830,7 +830,7 @@ class Main extends React.Component {
                 </span>
               </Link>
               <div>
-                <h3 style={{ fontFamily: "Bosch-Medium", color: "#000", marginBottom: "10px", fontSize: "20px" }}>Ergebnis</h3>
+                <h3 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Medium", color: "#000", marginBottom: "10px", fontSize: "20px" }}>Ergebnis</h3>
               </div>
               <Link
                 className={steps[10] === false ? "activeMobileLink" : "inactiveMobileLink"}
@@ -877,7 +877,7 @@ class Main extends React.Component {
                 background: "#FFF",
                 textTransform: "none",
                 borderRadius: "0px",
-                fontFamily: "Bosch-Regular",
+                fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular",
                 color: this.context.selectedTheme === "buderus" ? "#000000" : "",
                 border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "",
                 "&:hover": {
@@ -907,7 +907,7 @@ class Main extends React.Component {
             <CustomButton
               id="CalcInfoBtn"
               startIcon={this.context.selectedTheme === "buderus" ? <BuderusInfoIcon /> : <InfoIcon />}
-              style={{ background: "#FFF", border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "1px solid #007BC0", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}
+              style={{ background: "#FFF", border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "1px solid #007BC0", textTransform: "none", borderRadius: "0px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular" }}
               className={activeView === 11 || activeView === 12 || activeView === 13 ? styles.show : styles.hide}
               onClick={() => {
                 /* var container = document.getElementsByClassName("home_homeContainer__CHK-E")[0];
@@ -915,7 +915,7 @@ class Main extends React.Component {
                 handleOpen();
               }}
             >
-              <span className="trackeable" style={{ fontSize: "12px", fontFamily: "Bosch-Regular", color: this.context.selectedTheme === "buderus" ? "#000000" : "#007BC0", cursor: "pointer" }} data-event={activeView === 11 ? "result-part1-berechnungsgrundlage" : activeView === 12 ? "result-part2-berechnungsgrundlage" : activeView === 13 ? "result-part3-berechnungsgrundlage" : ""}>
+              <span className="trackeable" style={{ fontSize: "12px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", color: this.context.selectedTheme === "buderus" ? "#000000" : "#007BC0", cursor: "pointer" }} data-event={activeView === 11 ? "result-part1-berechnungsgrundlage" : activeView === 12 ? "result-part2-berechnungsgrundlage" : activeView === 13 ? "result-part3-berechnungsgrundlage" : ""}>
                 Berechnugsgrundlage
               </span>
             </CustomButton>
@@ -925,7 +925,7 @@ class Main extends React.Component {
               variant="contained"
               endIcon={<ForwardThinIcon />}
               disabled={fwdBtn}
-              style={{ textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}
+              style={{ textTransform: "none", borderRadius: "0px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular" }}
               className={activeView !== 13 ? styles.show : styles.hide}
               onClick={() => {
                 if (activeView === 3 && directLink === true) {
@@ -1026,7 +1026,7 @@ class Main extends React.Component {
               variant="contained"
               startIcon={<HouseSmallIcon />}
               disabled={this.state.restart}
-              style={{ textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}
+              style={{ textTransform: "none", borderRadius: "0px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular" }}
               className={activeView === 13 ? styles.show : styles.hide}
               onClick={() => {
                 setActiveView(0);

@@ -239,7 +239,7 @@ class HeatingSelection extends React.Component {
       width: 24,
       height: 24,
       backgroundColor: this.context.selectedTheme === "buderus" ? "#FFFFFF" : "#8A9097",
-      fontFamily: "Bosch-Medium",
+      fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular",
       ".Mui-focusVisible &": {
         outline: "2px auto rgba(19,124,189,.6)",
         outlineOffset: 2,
@@ -270,6 +270,7 @@ class HeatingSelection extends React.Component {
     });
 
     function OilLNGRadio(props) {
+      const { selectedTheme } = React.useContext(AppContext);
       return (
         <Radio
           disableRipple
@@ -279,7 +280,7 @@ class HeatingSelection extends React.Component {
           sx={{
             "&, & + .MuiFormControlLabel-label": {
               marginRight: "5px",
-              fontFamily: "Bosch-Regular",
+              fontFamily: selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular",
             },
           }}
           {...props}
@@ -341,7 +342,7 @@ class HeatingSelection extends React.Component {
 
                 {/* Gebäudeenergiestandard */}
                 {BuildingEnegeryStandard === "BuildingEnergyStandard" && (
-                  <div className="label" style={{ marginTop: "30px", marginLeft: "10px", fontFamily: "Bosch-Regular" }}>
+                  <div className="label" style={{ marginTop: "30px", marginLeft: "10px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular" }}>
                     Welchen Energiestandard besitzt Ihr Gebäude?
                     <div style={{ marginTop: "15px" }}>
                       <FormControl>
@@ -369,7 +370,7 @@ class HeatingSelection extends React.Component {
 
                 {/* Öl oder Gasverbrauch */}
                 {BuildingEnegeryStandard === "OilLNG" && (
-                  <div className="label" style={{ marginTop: "30px", marginLeft: "10px", fontFamily: "Bosch-Regular" }}>
+                  <div className="label" style={{ marginTop: "30px", marginLeft: "10px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular" }}>
                     Nennen Sie uns entweder Ihren Gas- oder Ölverbrauch pro Jahr
                     <div style={{ marginTop: "40px" }}>
                       <FormControl>
@@ -391,7 +392,7 @@ class HeatingSelection extends React.Component {
 
                 {/* Gebäudeisolierung */}
                 {BuildingEnegeryStandard === "BuildingInsulation" && (
-                  <div className="label" style={{ marginTop: "30px", marginLeft: "10px", fontFamily: "Bosch-Regular" }}>
+                  <div className="label" style={{ marginTop: "30px", marginLeft: "10px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular" }}>
                     Wie gut ist Ihr Gebäude isoliert?
                     <div style={{ marginTop: "15px" }}>
                       <FormControl>

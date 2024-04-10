@@ -197,31 +197,31 @@ class Welcome extends React.Component {
             <div>{/*<img src={require(`../assets/img/house-placeholder.png`)} alt="" style={{width: '100%'}} />*/}</div>
             <div className="welcomeContainer" style={{ display: "flex" }}>
               <div className="left-container">
-                <p style={{ fontFamily: "Bosch-Bold", fontSize: "16px" }}>Sparen Sie Stromkosten – mit der smarten Kombination aus Photovoltaik, Wärmepumpe, Wallbox und einem intelligenten Energiemanagementsystem</p>
+                <p style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: "16px" }}>Sparen Sie Stromkosten – mit der smarten Kombination aus Photovoltaik, Wärmepumpe, Wallbox und einem intelligenten Energiemanagementsystem</p>
                 <p style={{ paddingTop: "25px" }}>Ermitteln Sie mit dem Tool für Ihr Einfamilienhaus:</p>
                 <div style={{ display: "flex", flexDirection: "column", lineHeight: "24px" }}>
                   <div style={{ display: "flex", flexDirection: "row", padding: "15px 0 15px 0" }}>
                     <div>{this.context.selectedTheme === "buderus" ? <BuderusCoinIcon style={{ paddingRight: "10px" }} /> : <CoinIcon style={{ paddingRight: "10px" }} />}</div>
                     <div>
-                      <span style={{ fontFamily: "Bosch-Bold" }}>Stromkostenersparnis:</span> Wieviel Stromkosten kann man durch eine PV-Anlage einsparen?
+                      <span style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold"}}>Stromkostenersparnis:</span> Wieviel Stromkosten kann man durch eine PV-Anlage einsparen?
                     </div>
                   </div>
                   <div style={{ display: "flex", flexDirection: "row", padding: "15px 0 15px 0" }}>
                     <div>{this.context.selectedTheme === "buderus" ? <BuderusPVSunIcon style={{ paddingRight: "10px" }} /> : <PVSunIcon style={{ paddingRight: "10px" }} />}</div>
                     <div>
-                      <span style={{ fontFamily: "Bosch-Bold" }}>Amortisationszeit:</span> Wann sind die Investitionskosten für eine PV-Anlage durch geringere jährliche Stromkosten erwirtschaftet?
+                      <span style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>Amortisationszeit:</span> Wann sind die Investitionskosten für eine PV-Anlage durch geringere jährliche Stromkosten erwirtschaftet?
                     </div>
                   </div>
                   <div style={{ display: "flex", flexDirection: "row", padding: "15px 0 15px 0" }}>
                     <div>{this.context.selectedTheme === "buderus" ? <BuderusElectricitySunIcon style={{ paddingRight: "10px" }} /> : <ElectricitySunIcon style={{ paddingRight: "10px" }} />}</div>
                     <div>
-                      <span style={{ fontFamily: "Bosch-Bold" }}>Autarkie:</span> Welchen Anteil des Strombedarfs können Sie durch eine PV-Anlage selbst produzieren?
+                      <span style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>Autarkie:</span> Welchen Anteil des Strombedarfs können Sie durch eine PV-Anlage selbst produzieren?
                     </div>
                   </div>
                   <div style={{ display: "flex", flexDirection: "row", padding: "15px 0 15px 0" }}>
                     <div>{this.context.selectedTheme === "buderus" ? <BuderusLightningSmallIcon style={{ paddingRight: "10px" }} /> : <LightningSmallIcon style={{ paddingRight: "10px" }} />}</div>
                     <div>
-                      <span style={{ fontFamily: "Bosch-Bold" }}>Eigenverbrauchsanteil:</span> Wieviel des selbst erzeugten PV-Stroms verbrauchen Sie selbst?
+                      <span style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>Eigenverbrauchsanteil:</span> Wieviel des selbst erzeugten PV-Stroms verbrauchen Sie selbst?
                     </div>
                   </div>
                 </div>
@@ -233,13 +233,13 @@ class Welcome extends React.Component {
             <div className="welcomeBtns" style={{ display: "flex", margin: "3% 5% 0 5%" }}>
               <div className="startBtn">
                 <span className="trackeable" data-event="jetzt-solarstromrechner-starten">
-                  <Link style={{ display: "inline-block", textAlign: "center", backgroundColor: this.context.selectedTheme === "buderus" ? "#002D59" : "#006a9b", color: this.context.selectedTheme === "buderus" ? "#FFFFFF" : "#FFF", textDecoration: "none", margin: "5px 10px 0 0", padding: "10px 20px 10px 20px", fontSize: "14px", fontFamily: "Bosch-Regular" }} to={this.context.selectedTheme === "buderus" ? "./main?theme=buderus" : "./main"}>
+                  <Link style={{ display: "inline-block", textAlign: "center", backgroundColor: this.context.selectedTheme === "buderus" ? "#002D59" : "#006a9b", color: this.context.selectedTheme === "buderus" ? "#FFFFFF" : "#FFF", textDecoration: "none", margin: "5px 10px 0 0", padding: "10px 20px 10px 20px", fontSize: "14px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular" }} to={this.context.selectedTheme === "buderus" ? "./main?theme=buderus" : "./main"}>
                     Jetzt Solarstromrechner starten
                   </Link>
                 </span>
               </div>
               <div className="explanationBtn">
-                <div className="calculationBase trackeable" onClick={handleOpen} style={{ fontSize: "12px", fontFamily: "Bosch-Regular", color: this.context.selectedTheme === "buderus" ? "#000000" : "#007BC0", cursor: "pointer" }} data-event="berechnungsgrundlage">
+                <div className="calculationBase trackeable" onClick={handleOpen} style={{ fontSize: "12px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", color: this.context.selectedTheme === "buderus" ? "#000000" : "#007BC0", cursor: "pointer" }} data-event="berechnungsgrundlage">
                   Berechnugsgrundlage
                 </div>
               </div>

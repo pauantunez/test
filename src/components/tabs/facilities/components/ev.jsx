@@ -203,7 +203,7 @@ class EV extends React.Component {
       width: 24,
       height: 24,
       backgroundColor: this.context.selectedTheme === "buderus" ? "#FFFFFF" : "#8A9097",
-      fontFamily: "Bosch-Medium",
+      fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular",
       ".Mui-focusVisible &": {
         outline: "2px auto rgba(19,124,189,.6)",
         outlineOffset: 2,
@@ -288,7 +288,7 @@ class EV extends React.Component {
 
               {/* EV */}
               {ev === "EV" && (
-                <div style={{ marginTop: "0px", marginLeft: "10px", fontFamily: "Bosch-Regular" }}>
+                <div style={{ marginTop: "0px", marginLeft: "10px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular" }}>
                   <div style={{ marginTop: "15px" }}>
                     <FormControl>
                       <RadioGroup name="charging-value">

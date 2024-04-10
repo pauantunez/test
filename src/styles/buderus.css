@@ -1,3 +1,24 @@
+@font-face {
+  font-family: 'HelveticaNeue-Roman';
+  src: local('HelveticaNeue-Roman'), url(../assets/fonts/HelveticaNeueLTW05-55Roman.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'HelveticaNeue-Thin';
+  src: local('HelveticaNeue-Thin'), url(../assets/fonts/HelveticaNeueLTW05-35Thin.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'HelveticaNeue-Medium';
+  src: local('HelveticaNeue-Medium'), url(../assets/fonts/HelveticaNeueLTW05-65Medium.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'HelveticaNeue-Bold';
+  src: local('HelveticaNeue-Bold'), url(../assets/fonts/HelveticaNeueLTW05-75Bold.woff2) format('woff2');
+}
+
+
 a {
   color: #007BC0;
 }
@@ -120,11 +141,11 @@ a.card-input-narrow {
 
 
 .generalStyle {
-  font-family: 'Helvetica-Neue-Roman' !important;
+  font-family: 'HelveticaNeue-Roman' !important;
 }
 
 .generalStyleRegular {
-  font-family: 'Helvetica-Neue-Roman' !important;
+  font-family: 'HelveticaNeue-Roman' !important;
 }
 
 .iconColorCompleted {
@@ -137,7 +158,7 @@ a.card-input-narrow {
 
 
 .disclaimerBtn {
-  font-family: 'Helvetica-Neue-Roman';
+  font-family: 'HelveticaNeue-Roman';
   font-weight: 500;
 }
 
@@ -161,14 +182,14 @@ a.card-input-narrow {
   text-decoration: none;
   padding: 10px 20px 10px 20px;
   font-size: 14px;
-  font-family: 'Helvetica-Neue-Roman' !important;
+  font-family: 'HelveticaNeue-Roman' !important;
 }
 .kontakt-btn{
   text-transform: none;
   background: none;
   border: none;
   border-radius: 0px;
-  font-family: Bosch-Regular;
+  font-family: 'HelveticaNeue-Roman';
   border-bottom: 1px solid rgb(0, 0, 0);
   color: rgb(0, 0, 0);
   -webkit-appearance: none;
@@ -213,6 +234,18 @@ a.card-input-narrow {
   top: 0;
   width: 100%;
   /*display: none;*/
+}
+
+.nav-label, .nav-label span{
+  font-family: 'HelveticaNeue-Roman'!important;
+}
+
+.Bosch-Medium {
+  font-family: 'HelveticaNeue-Roman'!important;
+}
+
+.panel-heading #Capa_1{
+  width: 80px;
 }
 
 /*.setupContainer {
@@ -325,12 +358,12 @@ a.card-input-narrow {
   }
 
   h1 {
-    font-family: 'Bosch-Medium';
+    font-family: 'HelveticaNeue-Roman';
     font-size: 24px !important;
   }
 
   h2 {
-    font-family: 'Bosch-Medium';
+    font-family: 'HelveticaNeue-Roman';
     font-size: 19px !important;
   }
 }
@@ -431,12 +464,12 @@ a.card-input-narrow {
   }
 
   h1 {
-    font-family: 'Bosch-Medium';
+    font-family: 'HelveticaNeue-Roman';
     font-size: 24px !important;
   }
 
   h2 {
-    font-family: 'Bosch-Medium';
+    font-family: 'HelveticaNeue-Roman';
     font-size: 19px !important;
   }
 }
@@ -1513,7 +1546,7 @@ a.card-input-narrow {
 
 .cardHeadline {
   text-align: left;
-  font-family: Bosch-Medium;
+  font-family: 'HelveticaNeue-Roman';
   padding: 22px 0 22px 10px;
   margin: 0;
 }
@@ -1523,7 +1556,7 @@ a.card-input-narrow {
   text-align: left;
   line-height: 1.5;
   padding: 0 0 10px 10px;
-  font-family: Bosch-Regular;
+  font-family: 'HelveticaNeue-Roman';
 }
 
 .panel-heading {
@@ -1542,7 +1575,7 @@ a.card-input-narrow {
 
 /*.panel-body {
   text-align: center;
-  font-family: Bosch-Regular;
+  font-family: 'HelveticaNeue-Roman';
   padding: 8px;
 }*/
 
@@ -1576,15 +1609,30 @@ a.card-input-narrow {
   width: 100%;
 }
 
+.cardContent #filled-basic{
+  border: 1px solid #706F6F;
+}
+.cardContent #filled-basic:focus{
+  border: 1px solid #ED7102;
+}
+.cardContent #filled-basic-label.Mui-focused{
+  color: #ED7102;
+}
+.cardContent .MuiInputBase-root::after, .cardContent .MuiInputBase-root::before{
+  border: 0px;
+  display: none;
+}
+
 .infobox-container {
   display: block;
   /* margin-top: 50px; */
   /*margin-left: 5px;*/
   padding: 10px;
-  background: #D8D8D8;
+  background: #EDEDED;
+  border: 1px solid #CCC;
   font-size: 14px;
-  font-family: Bosch-Regular;
-  box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.20);
+  font-family: 'HelveticaNeue-Roman';
+  /* box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.20); */
 }
 .results-page-one .infobox-container{
   min-height: 204px;
@@ -1606,7 +1654,7 @@ a.card-input-narrow {
   margin-left: 4px;
   margin-right: 6px;
   padding-top: 2px;
-  font-family: "Bosch-Regular";
+  font-family: 'HelveticaNeue-Roman';
 }
 .switch-box {
   float: left;
@@ -1614,7 +1662,7 @@ a.card-input-narrow {
 }
 
 .infobox-h3 {
-  font-family: Bosch-Medium;
+  font-family: 'HelveticaNeue-Roman';
   font-size: 14px;
   margin-block-start: unset;
   margin-block-end: unset;
@@ -1891,13 +1939,13 @@ a.card-input-narrow {
     height: 219px;
     width: 55px;
     text-align: left;
-    font-family: 'Bosch-Regular';
+    font-family: 'HelveticaNeue-Roman';
     font-size: 11px;
   }
 
   .panel-body {
     text-align: center;
-    font-family: 'Bosch-Regular';
+    font-family: 'HelveticaNeue-Roman';
     /* font-size: 12px; */
     padding: 11px 8px 11px 8px;
   }
@@ -2009,13 +2057,13 @@ a.card-input-narrow {
     height: 219px;
     width: 65px;
     text-align: right;
-    font-family: 'Bosch-Regular';
+    font-family: 'HelveticaNeue-Roman';
     font-size: 12px;
   }
 
   .panel-body {
     text-align: center;
-    font-family: 'Bosch-Regular';
+    font-family: 'HelveticaNeue-Roman';
     font-size: 14px;
     padding: 11px 11px 11px 11px;
   }
@@ -2038,7 +2086,7 @@ a.card-input-narrow {
   padding-bottom: 5px;
   text-decoration: none;
   font-size: 16px;
-  font-family: 'Bosch-Regular';
+  font-family: 'HelveticaNeue-Roman';
   cursor: pointer;
   color: #007bc0;
 }
@@ -2053,7 +2101,7 @@ a.card-input-narrow {
   padding-bottom: 5px;
   text-decoration: none;
   color: gray;
-  font-family: 'Bosch-Regular';
+  font-family: 'HelveticaNeue-Roman';
   cursor: pointer;
 }
 
@@ -2062,7 +2110,7 @@ a.card-input-narrow {
 }
 
 .pdf-h3 {
-  font-family: 'Bosch-Regular';
+  font-family: 'HelveticaNeue-Roman';
   font-size: 12px;
   font-weight: normal;
   margin-block: 4px 8px;
