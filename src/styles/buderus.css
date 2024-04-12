@@ -41,9 +41,9 @@ a {
   color: #000000;
 }
 
-.card-input:hover svg {
+/* .card-input:hover svg {
   fill: #FFF;
-}
+} */
 
 
 a.card-input-narrow {
@@ -123,9 +123,9 @@ a.card-input-narrow {
   color: #000000;
 }
 
-.card-input-element:checked+.card-input svg {
+/* .card-input-element:checked+.card-input svg {
   fill: #FFF;
-}
+} */
 
 #houseSunSmallIcon {
   background-image: url("../assets/img/icons/house_sun_small.svg");
@@ -1330,12 +1330,12 @@ a.card-input-narrow {
 .results-page-two .infobox-container{
   min-height: 255px;
 }
-.title-col-two{
-  margin-bottom: 26px;
+#break-even .title-col-two {
+  margin-bottom: 9px;
+  margin-top: 9px;
 }
-.graph-container{
-  margin-bottom: 69px;
-  min-height: 220px;
+#break-even .graph-container{
+  min-height: 289px;
 }
 .left-box .graph-container{
   margin-bottom: 0px;
@@ -1648,10 +1648,10 @@ a.card-input-narrow {
   min-height: 204px;
 }
 .results-page-one .right-box .infobox-container{
-  min-height: 244px;
+  min-height: 190px;
 }
 .results-page-one .left-box .infobox-container{
-  min-height: 244px;
+  min-height: 187px;
 }
 
 .switch-container {
@@ -1874,6 +1874,10 @@ a.card-input-narrow {
     flex-wrap: wrap;
     align-content: center;
     justify-content: center;
+  }
+  .flexRow.tabs {
+    align-content: start;
+    justify-content: start;
   }
 
   .additional-flex {
