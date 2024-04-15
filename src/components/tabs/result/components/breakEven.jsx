@@ -416,7 +416,8 @@ class BreakEven extends React.Component {
             color: "#000",
             font: {
               size: 12,
-              family: "Bosch-Regular",
+              /* family: "Bosch-Regular",*/
+              family: this.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular",
             },
           },
         },
@@ -432,7 +433,8 @@ class BreakEven extends React.Component {
             color: "#000",
             font: {
               size: 12,
-              family: "Bosch-Regular",
+              /* family: "Bosch-Regular", */
+              family: this.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular",
             },
             reverse: true,
             callback: function (value, index, ticks) {

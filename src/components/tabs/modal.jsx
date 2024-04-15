@@ -7,12 +7,13 @@ import Modal from "@mui/material/Modal";
 import InfoBoxCalculation from "./infoBoxCalculation";
 
 import { ReactComponent as CloseIcon } from "../../assets/img/icons/close.svg";
+
 import { ReactComponent as InfoIcon } from "../../assets/img/icons/info_large.svg";
 import { ReactComponent as ForwardThinIcon } from "../../assets/img/icons/arrow_forward_thin.svg";
 import { ReactComponent as BackThinIcon } from "../../assets/img/icons/arrow_back_thin.svg";
 
+import { ReactComponent as BuderusCloseIcon } from "../../assets/img/icons/buderus/close.svg";
 import { ReactComponent as BuderusBackThinIcon } from "../../assets/img/icons/buderus/arrow_back_thin.svg";
-
 import { ReactComponent as BuderusInfoIcon } from "../../assets/img/icons/buderus/info_large.svg";
 
 import { withTranslation } from "react-i18next";
@@ -81,7 +82,7 @@ class CalculationModal extends React.Component {
                     <h1>Berechnungsgrundlage 1/3</h1>
                   </div>
                   <div onClick={handleClose} style={{ position: "absolute", right: "0px", top: "10px", cursor: "pointer" }}>
-                    <CloseIcon />
+                    {this.context.selectedTheme === "buderus" ? <BuderusCloseIcon /> : <CloseIcon />}
                   </div>
                 </div>
               </div>

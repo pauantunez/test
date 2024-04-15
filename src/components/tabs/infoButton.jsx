@@ -36,18 +36,19 @@ class InfoButton extends React.Component {
   render() {
     const LightTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(({ theme }) => ({
       [`& .${tooltipClasses.arrow}`]: {
-        color: "#ffffff",
+        color: this.context.selectedTheme === "buderus" ? "#262626" : "#ffffff",
         fontSize: 16,
-        filter: "drop-shadow(-2px 1px 1px rgba(130,130,130,0.7))",
+        filter: this.context.selectedTheme === "buderus" ? "drop-shadow(0px 0px 0px rgba(0,0,0,0))" : "drop-shadow(-2px 1px 1px rgba(130,130,130,0.7))",
       },
       [`& .${tooltipClasses.tooltipArrow}`]: {
         /* boxShadow: "0px 0px 6px 0px rgba(0,0,0,0.6)", */
       },
       [`& .${tooltipClasses.tooltip}`]: {
-        backgroundColor: "#ffffff",
+        backgroundColor: this.context.selectedTheme === "buderus" ? "#262626" : "#ffffff",
         /*color: "#007BC0",*/
-        color: this.state.color,
-        boxShadow: "0px 0px 6px 0px rgba(0,0,0,0.6)",
+        /* color: this.state.color, */
+        color: this.context.selectedTheme === "buderus" ? "#fff" : "#ffffff",
+        boxShadow: this.context.selectedTheme === "buderus" ? "0px 0px 0px 0px" : "0px 0px 6px 0px rgba(0,0,0,0.6)",
         borderRadius: "0px",
         fontSize: "12px",
         fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular",

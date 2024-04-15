@@ -34,6 +34,9 @@ a {
   width: 190px;
   height: 170px;
 }
+body{
+  font-family: 'HelveticaNeue-Roman', -apple-system, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
 
 .card-input:hover {
   cursor: pointer;
@@ -1327,15 +1330,30 @@ a.card-input-narrow {
 .graphs-container, .wrapper-container {
   margin-bottom: 80px !important;
 }
-.results-page-two .infobox-container{
-  min-height: 255px;
+#editBtn svg{
+  fill: #fff;
 }
+
+.results-page-two .infobox-container{
+  min-height: 185px;
+}
+@media only screen and (max-width: 1005px) {
+  .results-page-two .infobox-container{
+    min-height: 220px;
+  }
+}
+@media only screen and (max-width: 900px) {
+  .results-page-two .infobox-container {
+    min-height: inherit;
+  }
+}
+
 #break-even .title-col-two {
   margin-bottom: 9px;
   margin-top: 9px;
 }
 #break-even .graph-container{
-  min-height: 289px;
+  min-height: 274px;
 }
 .left-box .graph-container{
   margin-bottom: 0px;
@@ -1465,9 +1483,6 @@ a.card-input-narrow {
     flex-direction: column;
     margin-bottom: 80px;
   }
-  .results-page-two .infobox-container {
-    min-height: inherit;
-  }
   .results-page-one .left-box .infobox-container {
     min-height: inherit!important;
   }
@@ -1549,6 +1564,13 @@ a.card-input-narrow {
   font-family: 'HelveticaNeue-Roman';
   padding: 22px 0 22px 10px;
   margin: 0;
+}
+
+.MuiTypography-root.MuiTypography-body1, #filled-basic-label, #filled-basic{
+  font-family: 'HelveticaNeue-Roman'!important;
+}
+.wrapper-container h3{
+  font-family: 'HelveticaNeue-Roman'!important;
 }
 
 .cardDescription {
