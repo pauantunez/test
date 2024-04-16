@@ -81,7 +81,7 @@ class CalculationModal extends React.Component {
                   <div className="text-alignment" style={{ width: "100%" }}>
                     <h1>Berechnungsgrundlage 1/3</h1>
                   </div>
-                  <div onClick={handleClose} style={{ position: "absolute", right: "0px", top: "10px", cursor: "pointer" }}>
+                  <div onClick={handleClose} style={{ position: "absolute", right: "0px", top: "10px", cursor: "pointer", width: "50px", height: "50px" }}>
                     {this.context.selectedTheme === "buderus" ? <BuderusCloseIcon /> : <CloseIcon />}
                   </div>
                 </div>
