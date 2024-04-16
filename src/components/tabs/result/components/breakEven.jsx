@@ -416,7 +416,8 @@ class BreakEven extends React.Component {
             color: "#000",
             font: {
               size: 12,
-              family: "Bosch-Regular",
+              /* family: "Bosch-Regular",*/
+              family: this.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular",
             },
           },
         },
@@ -432,7 +433,8 @@ class BreakEven extends React.Component {
             color: "#000",
             font: {
               size: 12,
-              family: "Bosch-Regular",
+              /* family: "Bosch-Regular", */
+              family: this.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular",
             },
             reverse: true,
             callback: function (value, index, ticks) {
@@ -447,7 +449,7 @@ class BreakEven extends React.Component {
       <div id="break-even">
         <div style={{ display: "flex", marginBottom: "20px", fontSize: "16px" }}>
           <div className="title-col-two">
-            Investitionskosten PV-System: <span style={{ fontFamily: "Bosch-Bold" }}> {heatpumpPV ? Math.abs(heatpumpPV[0].expenditure).toLocaleString("de-DE") + " €" : ""}</span>
+            Investitionskosten PV-System: <span style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}> {heatpumpPV ? Math.abs(heatpumpPV[0].expenditure).toLocaleString("de-DE") + " €" : ""}</span>
           </div>
         </div>
         {loading ? (
@@ -462,7 +464,7 @@ class BreakEven extends React.Component {
           </div>
         )}
 
-        <div style={{ display: "flex", flexDirection: "column", marginTop: "25px", fontFamily: "Bosch-Regular", fontSize: "12px" }}>
+        <div style={{ display: "flex", flexDirection: "column", marginTop: "25px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "12px" }}>
           <div style={{ display: "flex", flexDirection: "row" }}>
             <div style={{ marginRight: "15px" }}>
               <div style={{ marginTop: "2px", width: "14px", height: "14px", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", borderRadius: "14px" }}></div>

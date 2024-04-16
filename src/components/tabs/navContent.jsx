@@ -285,23 +285,23 @@ class NavContent extends React.Component {
     }));
 
     const ColorlibStepIconRoot = styled("div")(({ theme, ownerState }) => ({
-      backgroundColor: theme.palette.mode === "dark" ? theme.palette.grey[700] : "#ccc",
+      backgroundColor: theme.palette.mode === "dark" ? theme.palette.grey[700] : "#EDEDED",
       zIndex: 1,
       color: "#fff",
-      width: 32,
-      height: 32,
+      width: this.context.selectedTheme === "buderus" ? 64 : 32,
+      height: this.context.selectedTheme === "buderus" ? 64 : 32,
       display: "flex",
-      marginTop: "7px",
+      marginTop: this.context.selectedTheme === "buderus" ? "-10px" : "7px",
       borderRadius: this.context.selectedTheme === "buderus" ? "0" : "50%",
       justifyContent: "center",
       cursor: "pointer",
       alignItems: "center",
       ...(ownerState.active && {
-        background: this.context.selectedTheme === "buderus" ? "#000000" : "#007bc0",
+        background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007bc0",
         fontSize: "12px",
       }),
       ...(ownerState.completed && {
-        background: this.context.selectedTheme === "buderus" ? "#000000" : "#007bc0",
+        background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007bc0",
         fontSize: "12px",
       }),
     }));
@@ -424,7 +424,7 @@ class NavContent extends React.Component {
                     this.handleStep(0);
                   }}
                 >
-                  <span style={{ display: "block", marginTop: "-8px", fontSize: "13px", fontFamily: "Bosch-Medium" }}>Gebäude</span>
+                  <span class="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px" }}>Gebäude</span>
                 </StepLabel>
               </Step>
               <Step key="1">
@@ -458,7 +458,7 @@ class NavContent extends React.Component {
                     this.handleStep(4);
                   }}
                 >
-                  <span style={{ display: "block", marginTop: "-8px", fontSize: "13px", fontFamily: "Bosch-Medium" }}>Ausstattung</span>
+                  <span class="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px"}}>Ausstattung</span>
                 </StepLabel>
               </Step>
               <Step key="5">
@@ -492,7 +492,7 @@ class NavContent extends React.Component {
                     this.handleStep(8);
                   }}
                 >
-                  <span style={{ display: "block", marginTop: "-8px", fontSize: "13px", fontFamily: "Bosch-Medium" }}>Ökonomische Größen</span>
+                  <span class="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px" }}>Ökonomische Größen</span>
                 </StepLabel>
               </Step>
               <Step key="9">
@@ -518,7 +518,7 @@ class NavContent extends React.Component {
                     this.handleStep(11);
                   }}
                 >
-                  <span style={{ display: "block", marginTop: "-8px", fontSize: "13px", fontFamily: "Bosch-Medium" }}>
+                  <span class="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px"}}>
                     <span>
                       Ergebnis&nbsp;
                       {activeView === 11 && <span>(1/2)</span>}
@@ -550,7 +550,7 @@ class NavContent extends React.Component {
 
           {windowWidth < 900 && (
             <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", marginTop: "16px", marginLeft: "10px", marginRight: "10px" }}>
-              <div style={{ fontFamily: "Bosch-Bold", fontSize: "20px" }}>{milestoneHeadline}</div>
+              <div style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: "20px" }}>{milestoneHeadline}</div>
               <div onClick={this.handleClick}>
                 {!menuBackdrop && <MenuIcon />}
                 {menuBackdrop && <MenuCloseIcon />}

@@ -93,7 +93,7 @@ class ResultStep1 extends React.Component {
 
         <div className="pie-flex results-page-one" style={{ display: "flex", width: "100%", flexWrap: "nowrap", justifyContent: "space-between", alignContent: "center" }}>
           <div className="left-box" style={{ alignItems: "end" }}>
-            <div style={{ fontFamily: "Bosch-Bold", fontSize: "20px", textAlign: "left" }}> Gesamtkosten Strom</div>
+            <div style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: "20px", textAlign: "left" }}> Gesamtkosten Strom</div>
             <div style={{ marginTop: "20px" }}>
               <Cost />
               <div style={{ marginTop: "20px" }}>
@@ -103,7 +103,7 @@ class ResultStep1 extends React.Component {
           </div>
           <div className="flex-line" style={{ width: "2px", background: "#E0E2E5", marginLeft: "50px", marginRight: "50px" }}></div>
           <div className="right-box top-margins">
-            <div style={{ fontFamily: "Bosch-Bold", fontSize: "20px", textAlign: "left" }}>Amortisationszeit</div>
+            <div style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: "20px", textAlign: "left" }}>Amortisationszeit</div>
             <div style={{ marginTop: "20px" }}>
               <BreakEven />
               <div className="upper-space" style={{ marginTop: "20px" }}>

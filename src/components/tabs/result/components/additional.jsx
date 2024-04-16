@@ -300,7 +300,7 @@ class Additional extends React.Component {
 
     return (
       <div>
-        <div className="cardContainer last-step" style={{ flexDirection: "column", justifyContent: "center", alignItems: "center", fontFamily: "Bosch-Regular" }}>
+        <div className="cardContainer last-step" style={{ flexDirection: "column", justifyContent: "center", alignItems: "center", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular" }}>
           <div>
             <div className="cardContent" style={{ marginBottom: "40px" }}>
               <div className="flexContent additional-flex" style={{ width: "100%", justifyContent: "space-between" }}>
@@ -309,7 +309,7 @@ class Additional extends React.Component {
                   <div className="txt">Sichern Sie sich Ihre Ergebnisse, indem Sie diese als PDF jetzt herunterladen.</div>
                 </div>
                 <div className="trackeable" data-event="result-part3-save-pdf" style={{ display: "flex", alignItems: "end" }}>
-                  <Button disableRipple onClick={printPDF} variant="outlined" startIcon={this.context.selectedTheme === "buderus" ? <BuderusPDFIcon /> : <PDFIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular", border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "", color: this.context.selectedTheme === "buderus" ? "#000000" : "" }}>
+                  <Button disableRipple onClick={printPDF} variant="outlined" startIcon={this.context.selectedTheme === "buderus" ? <BuderusPDFIcon /> : <PDFIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "", color: this.context.selectedTheme === "buderus" ? "#000000" : "" }}>
                     Ergebnisse herunterladen
                   </Button>
                 </div>
@@ -406,7 +406,7 @@ class Additional extends React.Component {
               <div className="flexContent" style={{ flexDirection: "column", justifyContent: "center", marginTop: "8px", width: "100%" }}>
                 <div style={{ paddingRight: "30px", paddingBottom: "10px" }}>
                   <h3>Wie komme ich zu einem energieeffizienten System?</h3>
-                  <div style={{ fontFamily: "Bosch-Bold" }}>Informationen zu unseren Produkten</div>
+                  <div style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>Informationen zu unseren Produkten</div>
                 </div>
                 <div className="additional-links-container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", alignContent: "space-between" }}>
                   <div>
@@ -523,7 +523,7 @@ class Additional extends React.Component {
                     Investitionskosten PV-System: <strong>{sessionStorage.getItem("InvestmentCostEUR").toLocaleString("DE-de")} €</strong>
                   </span>
                   <img alt="" src={breakEvenBase64} style={{ width: "440px" }} />
-                  <div style={{ display: "flex", flexDirection: "column", marginTop: "25px", fontFamily: "Bosch-Regular", fontSize: "12px" }}>
+                  <div style={{ display: "flex", flexDirection: "column", marginTop: "25px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "12px" }}>
                     <div style={{ display: "flex", flexDirection: "row" }}>
                       <div style={{ marginRight: "15px" }}>
                         <div style={{ marginTop: "2px", width: "14px", height: "14px", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", borderRadius: "14px" }}></div>
@@ -589,13 +589,36 @@ class Additional extends React.Component {
                 <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
                   <InfoBoxResult box="electricity-use" />
                 </div>
+
+                
+                <div className="additional-flex first-col" style={{ position: "absolute", top: "240px", left: "0px", transform: "scale(0.85)", transformOrigin: "top left", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "12px" }}>
+                  <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896" }}>
+                    <div style={{ marginRight: "10px" }}>
+                      <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896", borderRadius: "12px" }}></div>
+                    </div>
+                    <div>Haushalt</div>
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#CC36BD" : "#004975" }}>
+                    <div style={{ marginRight: "10px" }}>
+                      <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#CC36BD" : "#004975", borderRadius: "12px" }}></div>
+                    </div>
+                    <div>Wärmepumpe</div>
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#C535BC" }}>
+                    <div style={{ marginRight: "10px" }}>
+                      <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#5278A2" : "#C535BC", borderRadius: "12px" }}></div>
+                    </div>
+                    <div>Elektro-Auto</div>
+                  </div>
+                </div>
+
               </div>
               <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
                 <hr style={{ width: "675px", height: "1px", marginTop: "0px", background: "#999", border: "none", marginInlineStart: "0em" }} />
               </div>
               <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "0px", paddingLeft: "0px", maxWidth: "815px" }}>
                 <h3 style={{ marginBlockStart: "4px", marginBlockEnd: "4px", fontSize: "14px" }}>Autarkie</h3>
-                <h3 style={{ fontFamily: "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "14px" }}>Mit Energiemanagementsystem</h3>
+                <h3 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "14px" }}>Mit Energiemanagementsystem</h3>
               </div>
               <div style={{ position: "relative", width: "730px", height: "283px" }}>
                 <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
@@ -604,6 +627,28 @@ class Additional extends React.Component {
                 <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
                   <canvas id="pie2" width="440" height="273" />
                 </div>
+
+                <div className="additional-flex second-col" style={{ position: "absolute", top: "240px", left: "0px", transform: "scale(0.85)", transformOrigin: "top left", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "12px" }}>
+                  <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" }}>
+                    <div style={{ marginRight: "10px" }}>
+                      <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E", borderRadius: "12px" }}></div>
+                    </div>
+                    <div>PV-Anlage</div>
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A" }}>
+                    <div style={{ marginRight: "10px" }}>
+                      <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A", borderRadius: "12px" }}></div>
+                    </div>
+                    <div>Vorteil durch EMS</div>
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3" }}>
+                    <div style={{ marginRight: "10px" }}>
+                      <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3", borderRadius: "12px" }}></div>
+                    </div>
+                    <div>Netzbezug</div>
+                  </div>
+                </div>
+
                 {/* <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
                   <InfoBoxResult box="off-grid" />
                 </div> */}
@@ -629,7 +674,7 @@ class Additional extends React.Component {
                 </div>
               </div>
               <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "0px", paddingLeft: "0px", maxWidth: "815px" }}>
-                <h3 style={{ fontFamily: "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "14px" }}>Ohne Energiemanagementsystem</h3>
+                <h3 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "14px" }}>Ohne Energiemanagementsystem</h3>
               </div>
               <div style={{ position: "relative", width: "730px", height: "283px" }}>
                 <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
@@ -638,6 +683,30 @@ class Additional extends React.Component {
                 <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
                   <canvas id="pie2_NoEMS" width="440" height="273" />
                 </div>
+
+
+                <div className="additional-flex third-col" style={{ position: "absolute", top: "240px", left: "0px", transform: "scale(0.85)", transformOrigin: "top left", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "12px" }}>
+                  <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" }}>
+                    <div style={{ marginRight: "10px" }}>
+                      <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E", borderRadius: "12px" }}></div>
+                    </div>
+                    <div>PV-Anlage</div>
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A" }}>
+                    <div style={{ marginRight: "10px" }}>
+                      <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A", borderRadius: "12px" }}></div>
+                    </div>
+                    <div>Vorteil durch EMS</div>
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3" }}>
+                    <div style={{ marginRight: "10px" }}>
+                      <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3", borderRadius: "12px" }}></div>
+                    </div>
+                    <div>Netzeinspeisung</div>
+                  </div>
+                </div>
+
+
                 {/* <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
                   <InfoBoxResult box="off-grid" />
                 </div> */}
@@ -695,7 +764,7 @@ class Additional extends React.Component {
             </div>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "0px", paddingLeft: "60px", maxWidth: "815px" }}>
               <h3 style={{ marginBlockStart: "4px", marginBlockEnd: "8px", fontSize: "14px" }}>Eigenverbrauch</h3>
-              <h3 style={{ fontFamily: "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "14px" }}>Mit Energiemanagementsystem</h3>
+              <h3 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "14px" }}>Mit Energiemanagementsystem</h3>
             </div>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginLeft: "60px", maxWidth: "1000px" }}>
               <div style={{ position: "relative", width: "730px", height: "273px" }}>
@@ -730,7 +799,7 @@ class Additional extends React.Component {
                 </div>
               </div>
               <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "0px", paddingLeft: "0px", maxWidth: "815px" }}>
-                <h3 style={{ fontFamily: "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "14px" }}>Ohne Energiemanagementsystem</h3>
+                <h3 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "14px" }}>Ohne Energiemanagementsystem</h3>
               </div>
               <div style={{ position: "relative", width: "730px", height: "273px" }}>
                 <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
@@ -794,7 +863,7 @@ class Additional extends React.Component {
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginLeft: "60px", maxWidth: "1000px" }}>
               <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "20px", paddingLeft: "0px", maxWidth: "815px" }}>
                 <h3>Weitere Informationen</h3>
-                <h3 style={{ fontFamily: "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "14px" }}>Um weitere Informationen zu erhalten, scannen sie den jeweiligen QR-Code.</h3>
+                <h3 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "14px" }}>Um weitere Informationen zu erhalten, scannen sie den jeweiligen QR-Code.</h3>
               </div>
               {this.context.selectedTheme === "buderus" ? (
                 <>
@@ -910,7 +979,7 @@ class Additional extends React.Component {
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginLeft: "60px", maxWidth: "1000px" }}>
               <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginTop: "0px", marginBottom: "20px", paddingLeft: "0px", maxWidth: "815px" }}>
                 <h3>Wie komme ich zu einem energieeffizienten System?</h3>
-                <h3 style={{ fontFamily: "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "13px" }}>Informationen zu unseren Produkten finden Sie unter den jeweiligen QR-Codes:</h3>
+                <h3 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "13px" }}>Informationen zu unseren Produkten finden Sie unter den jeweiligen QR-Codes:</h3>
               </div>
               <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignContent: "center", alignItems: "center", textAlign: "center", marginTop: "0px", marginBottom: "0px", paddingLeft: "0px", maxWidth: "690px" }}>
                 <div style={{ width: "25%" }}>

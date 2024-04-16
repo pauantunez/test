@@ -179,7 +179,7 @@ class HomeStorage extends React.Component {
 
               {/* Storage Size */}
               {homeStorage === "true" && (
-                <div style={{ marginTop: "0px", marginLeft: "0px", marginRight: "0px", fontFamily: "Bosch-Regular" }}>
+                <div style={{ marginTop: "0px", marginLeft: "0px", marginRight: "0px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular" }}>
                   <div className="txt" style={{ marginTop: "15px" }}>
                     Wie groß ist Ihr installierter oder geplanter Batteriespeicher?
                   </div>
@@ -203,7 +203,7 @@ class HomeStorage extends React.Component {
                       }}
                       onChange={this.inputStorageSize}
                     />
-                    <div className="slider-label" style={{ position: "relative", top: "5px", left: 0, fontFamily: "Bosch-Regular", fontSize: "12px" }}>
+                    <div className="slider-label" style={{ position: "relative", top: "5px", left: 0, fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "12px" }}>
                       <div style={{ position: "absolute", left: "0%", transform: "translateX(-50%)" }}>
                         <div style={{ width: "1px", height: "10px", background: "#000" }}></div>
                       </div>
@@ -217,7 +217,7 @@ class HomeStorage extends React.Component {
                         <div style={{ width: "1px", height: "10px", background: "#000" }}></div>
                       </div>
                     </div>
-                    <div className="slider-label" style={{ position: "relative", top: "17px", left: 0, fontFamily: "Bosch-Regular", fontSize: "16px" }}>
+                    <div className="slider-label" style={{ position: "relative", top: "17px", left: 0, fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "16px" }}>
                       <div style={{ position: "absolute", left: "0%", transform: "translateX(-50%)" }}>6</div>
                       <div style={{ position: "absolute", left: "33.333%", transform: "translateX(-50%)" }}>9</div>
                       <div style={{ position: "absolute", left: "66.6667%", transform: "translateX(-50%)" }}>12</div>

@@ -234,7 +234,7 @@ class ElectricityUse extends React.Component {
                     stroke: "#fff",
                     strokeWidth: 4,
                   },
-                  labels: { fill: ({ datum }) => datum.color, fontFamily: "Bosch-Bold", fontSize: pieLabelFontSize, backgroundcolor: ({ datum }) => datum.backgroundcolor },
+                  labels: { fill: ({ datum }) => datum.color, fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: pieLabelFontSize, backgroundcolor: ({ datum }) => datum.backgroundcolor },
                 }}
                 labelComponent={<VictoryLabel backgroundStyle={{ fill: "white" }} backgroundPadding={6} />}
               />
@@ -257,14 +257,14 @@ class ElectricityUse extends React.Component {
                     stroke: "#fff",
                     strokeWidth: 0,
                   },
-                  labels: { fill: "white", fontFamily: "Bosch-Bold", fontSize: pieLabelFontSize },
+                  labels: { fill: "white", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: pieLabelFontSize },
                 }}
               />
             </div>
           </div>
         </div>
 
-        <div className="additional-flex first-col" style={{ display: "flex", justifyContent: "space-around", fontFamily: "Bosch-Regular", fontSize: "14px" }}>
+        <div className="additional-flex first-col" style={{ display: "flex", justifyContent: "space-around", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "14px" }}>
           <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896" }}>
             <div style={{ marginRight: "10px" }}>
               <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896", borderRadius: "12px" }}></div>

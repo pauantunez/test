@@ -62,7 +62,9 @@ a.card-input-narrow {
   text-decoration: none;
 }
 
-
+.MuiSwitch-track{
+  background-color: #007BC0!important;
+}
 
 .background-light-grey {
   background: #EFF1F2;
@@ -94,6 +96,10 @@ a.card-input-narrow {
 
 .card-input-element:checked+.card-input svg {
   fill: #FFF;
+}
+
+.nav-label, .nav-label span{
+  font-family: 'Bosch-Medium'!important;
 }
 
 #houseSunSmallIcon {
@@ -1250,8 +1256,29 @@ a.card-input-narrow {
   align-content: space-between;
 }
 .results-page-two .infobox-container {
-  min-height: 225px;
+  min-height: 202px;
 }
+@media only screen and (max-width: 1060px) {
+  .results-page-two .infobox-container {
+    min-height: 218px;
+  }
+}
+@media only screen and (max-width: 960px) {
+  .results-page-two .infobox-container {
+    min-height: 238px;
+  }
+}
+@media only screen and (max-width: 920px) {
+  .results-page-two .infobox-container {
+    min-height: 260px;
+  }
+}
+@media only screen and (max-width: 900px) {
+  .results-page-two .infobox-container {
+    min-height: inherit;
+  }
+}
+
 .noticeBottom {
   position: relative;
   width: 100%;
@@ -1900,9 +1927,6 @@ a.card-input-narrow {
   .infobox-container {
     min-height: 280px;
   }
-  .results-page-two .infobox-container {
-    min-height: 260px;
-  }
   .results-page-one .infobox-container{
     min-height: 180px;
   }
@@ -1914,9 +1938,6 @@ a.card-input-narrow {
     flex-direction: column;
   }
   .infobox-container {
-    min-height: inherit;
-  }
-  .results-page-two .infobox-container {
     min-height: inherit;
   }
   .results-page-one .infobox-container{

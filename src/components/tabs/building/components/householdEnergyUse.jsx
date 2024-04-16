@@ -163,7 +163,7 @@ class HouseholdEnergyUse extends React.Component {
                     onChange={this.inputEnergyUsageKWH}
                   />
 
-                  <div className="slider-label" style={{ position: "relative", top: "5px", left: 0, fontFamily: "Bosch-Regular", fontSize: "12px" }}>
+                  <div className="slider-label" style={{ position: "relative", top: "5px", left: 0, fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "12px" }}>
                     <div style={{ position: "absolute", left: "0%", transform: "translateX(-50%)" }}>
                       <div style={{ width: "1px", height: "10px", background: "#000" }}></div>
                     </div>
@@ -177,7 +177,7 @@ class HouseholdEnergyUse extends React.Component {
                       <div style={{ width: "1px", height: "10px", background: "#000" }}></div>
                     </div>
                   </div>
-                  <div className="slider-label" style={{ position: "relative", top: "17px", left: 0, fontFamily: "Bosch-Regular", fontSize: "16px" }}>
+                  <div className="slider-label" style={{ position: "relative", top: "17px", left: 0, fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "16px" }}>
                     <div style={{ position: "absolute", left: "0%", transform: "translateX(-50%)" }}>2.000</div>
                     <div style={{ position: "absolute", left: "33%", transform: "translateX(-50%)" }}>4.000</div>
                     <div style={{ position: "absolute", left: "67%", transform: "translateX(-50%)" }}>6.000</div>

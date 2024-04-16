@@ -7,12 +7,13 @@ import Modal from "@mui/material/Modal";
 import InfoBoxCalculation from "./infoBoxCalculation";
 
 import { ReactComponent as CloseIcon } from "../../assets/img/icons/close.svg";
+
 import { ReactComponent as InfoIcon } from "../../assets/img/icons/info_large.svg";
 import { ReactComponent as ForwardThinIcon } from "../../assets/img/icons/arrow_forward_thin.svg";
 import { ReactComponent as BackThinIcon } from "../../assets/img/icons/arrow_back_thin.svg";
 
+import { ReactComponent as BuderusCloseIcon } from "../../assets/img/icons/buderus/close.svg";
 import { ReactComponent as BuderusBackThinIcon } from "../../assets/img/icons/buderus/arrow_back_thin.svg";
-
 import { ReactComponent as BuderusInfoIcon } from "../../assets/img/icons/buderus/info_large.svg";
 
 import { withTranslation } from "react-i18next";
@@ -81,7 +82,7 @@ class CalculationModal extends React.Component {
                     <h1>Berechnungsgrundlage 1/3</h1>
                   </div>
                   <div onClick={handleClose} style={{ position: "absolute", right: "0px", top: "10px", cursor: "pointer" }}>
-                    <CloseIcon />
+                    {this.context.selectedTheme === "buderus" ? <BuderusCloseIcon /> : <CloseIcon />}
                   </div>
                 </div>
               </div>
@@ -89,7 +90,7 @@ class CalculationModal extends React.Component {
               <div id="scrollable-container">
                 <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
                   <div className="modal-content-width" style={{ position: "relative" }}>
-                    <div style={{ display: "flex", flexDirection: "row", lineHeight: "24px", width: "100%", marginTop: "35px", marginBottom: "30px", fontFamily: "Bosch-Regular", textAlign: "left" }}>
+                    <div style={{ display: "flex", flexDirection: "row", lineHeight: "24px", width: "100%", marginTop: "35px", marginBottom: "30px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", textAlign: "left" }}>
                       <div style={{ marginRight: "10px" }}>{this.context.selectedTheme === "buderus" ? <BuderusInfoIcon /> : <InfoIcon />}</div>
                       <div>
                         <strong>Bitte beachten Sie:</strong> Die Ergebnisse des Tools basieren auf historischen Werten, simulierten Daten und darauf aufbauenden Optimierungen und können daher von tatsächlichen Verbräuchen und Erträgen abweichen. Die Daten werden regelmäßig kontrolliert und aktualisiert. Das Tool ersetzt nicht die exakte Planung durch eine/n von Ihnen beauftragte/n Planungsexperten/-expertin.
@@ -134,7 +135,7 @@ class CalculationModal extends React.Component {
                             style={{
                               textTransform: "none",
                               borderRadius: "0px",
-                              fontFamily: "Bosch-Regular",
+                              fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular",
                               backgroundColor: this.context.selectedTheme === "buderus" ? "#002d59" : "#007BC0",
                               "&:hover": {
                                 backgroundColor: this.context.selectedTheme === "buderus" ? "#001d39" : "#00629A",
@@ -206,7 +207,7 @@ class CalculationModal extends React.Component {
                             background: "#FFF",
                             textTransform: "none",
                             borderRadius: "0px",
-                            fontFamily: "Bosch-Regular",
+                            fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular",
                             color: this.context.selectedTheme === "buderus" ? "#000000" : "",
                             border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "",
                             "&:hover": {
@@ -228,7 +229,7 @@ class CalculationModal extends React.Component {
                           style={{
                             textTransform: "none",
                             borderRadius: "0px",
-                            fontFamily: "Bosch-Regular",
+                            fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular",
                             backgroundColor: this.context.selectedTheme === "buderus" ? "#002d59" : "#007BC0",
                             "&:hover": {
                               backgroundColor: this.context.selectedTheme === "buderus" ? "#001d39" : "#00629A",
@@ -296,7 +297,7 @@ class CalculationModal extends React.Component {
                             background: "#FFF",
                             textTransform: "none",
                             borderRadius: "0px",
-                            fontFamily: "Bosch-Regular",
+                            fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular",
                             color: this.context.selectedTheme === "buderus" ? "#000000" : "",
                             border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "",
                             "&:hover": {
@@ -315,7 +316,7 @@ class CalculationModal extends React.Component {
                           style={{
                             textTransform: "none",
                             borderRadius: "0px",
-                            fontFamily: "Bosch-Regular",
+                            fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular",
                             backgroundColor: this.context.selectedTheme === "buderus" ? "#002d59" : "#007BC0",
                             "&:hover": {
                               backgroundColor: this.context.selectedTheme === "buderus" ? "#001d39" : "#00629A",

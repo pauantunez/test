@@ -331,7 +331,7 @@ class Disclaimer extends React.Component {
                   this.toggleDisclaimer();
                 }}
                 className="btnBackground"
-                style={{ position: "absolute", top: "5px", right: "5px", borderRadius: "40px", width: "40px", height: "40px", color: "#fff", border: "none", fontFamily: "Bosch-Bold", background: btnColor }}
+                style={{ position: "absolute", top: "5px", right: "5px", borderRadius: "40px", width: "40px", height: "40px", color: "#fff", border: "none", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", background: btnColor }}
               >
                 x
               </Button>
@@ -345,7 +345,7 @@ class Disclaimer extends React.Component {
               this.toggleDisclaimer();
             }}
             className="disclaimerBtn"
-            style={{ fontFamily: "Bosch-Bold" }}
+            style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}
           >
             {t("disclaimer.button")}
           </Button>
