@@ -2190,3 +2190,13 @@ input[type=number] {
   pointer-events: none;
   opacity: 0.3;
 }
+
+
+/* Print PDF styles */
+
+#printPdf1 .cardContent, #printPdf2 .cardContent, #printPdf3 .cardContent, #printPdf4 .cardContent, #printPdf5 .cardContent, #printPdf6 .cardContent{
+  width: 636px;
+}
+#printPdf1 .flexContent.block-content .block-container .block.contact, #printPdf2 .flexContent.block-content .block-container .block.contact, #printPdf3 .flexContent.block-content .block-container .block.contact, #printPdf4 .flexContent.block-content .block-container .block.contact, #printPdf5 .flexContent.block-content .block-container .block.contact, #printPdf6 .flexContent.block-content .block-container .block.contact {
+  width: 45%;
+}
