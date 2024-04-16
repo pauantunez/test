@@ -593,7 +593,7 @@ class Additional extends React.Component {
                 </div>
 
                 
-                <div className="additional-flex first-col" style={{ position: "absolute", top: "240px", left: "0px", transform: "scale(0.85)", transformOrigin: "top left", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "12px" }}>
+                <div className="additional-flex first-col caption" style={{ position: "absolute", top: "240px", left: "0px", transform: "scale(0.85)", transformOrigin: "top left", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "12px" }}>
                   <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896" }}>
                     <div style={{ marginRight: "10px" }}>
                       <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896", borderRadius: "12px" }}></div>
@@ -630,7 +630,7 @@ class Additional extends React.Component {
                   <canvas id="pie2" width="440" height="273" />
                 </div>
 
-                <div className="additional-flex second-col" style={{ position: "absolute", top: "240px", left: "0px", transform: "scale(0.85)", transformOrigin: "top left", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "12px" }}>
+                <div className="additional-flex second-col caption" style={{ position: "absolute", top: "240px", left: "0px", transform: "scale(0.85)", transformOrigin: "top left", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "12px" }}>
                   <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" }}>
                     <div style={{ marginRight: "10px" }}>
                       <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E", borderRadius: "12px" }}></div>
@@ -687,7 +687,7 @@ class Additional extends React.Component {
                 </div>
 
 
-                <div className="additional-flex third-col" style={{ position: "absolute", top: "240px", left: "0px", transform: "scale(0.85)", transformOrigin: "top left", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "12px" }}>
+                <div className="additional-flex third-col caption" style={{ position: "absolute", top: "240px", left: "0px", transform: "scale(0.85)", transformOrigin: "top left", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "12px" }}>
                   <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" }}>
                     <div style={{ marginRight: "10px" }}>
                       <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E", borderRadius: "12px" }}></div>
@@ -739,7 +739,7 @@ class Additional extends React.Component {
             </div>
           </div>
 
-          <div id="printPdf3" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
+          <div id="printPdf3" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "block" }}>
             {this.context.selectedTheme === "buderus" ? (
               <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
                 <div style={{ marginLeft: "600px" }}>
@@ -770,12 +770,37 @@ class Additional extends React.Component {
             </div>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginLeft: "60px", maxWidth: "1000px" }}>
               <div style={{ position: "relative", width: "730px", height: "273px" }}>
+
                 <div style={{ position: "absolute", top: "0", left: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
                   <canvas id="pie5" width="375" height="273" />
                 </div>
+
                 <div style={{ position: "absolute", top: "0", left: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
                   <canvas id="pie6" width="375" height="273" />
                 </div>
+          
+                <div className="additional-flex second-col caption" style={{ position: "absolute", top: "240px", left: "0px", transform: "scale(0.85)", transformOrigin: "top left", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "12px" }}>
+                  <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" }}>
+                    <div style={{ marginRight: "10px" }}>
+                      <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E", borderRadius: "12px" }}></div>
+                    </div>
+                    <div>PV-Anlage</div>
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A" }}>
+                    <div style={{ marginRight: "10px" }}>
+                      <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A", borderRadius: "12px" }}></div>
+                    </div>
+                    <div>Vorteil durch EMS</div>
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3" }}>
+                    <div style={{ marginRight: "10px" }}>
+                      <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3", borderRadius: "12px" }}></div>
+                    </div>
+                    <div>Netzbezug</div>
+                  </div>
+                </div>
+                
+
                 {/* <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
                   <InfoBoxResult box="household-use" />
                 </div> */}
@@ -804,12 +829,37 @@ class Additional extends React.Component {
                 <h3 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "14px" }}>Ohne Energiemanagementsystem</h3>
               </div>
               <div style={{ position: "relative", width: "730px", height: "273px" }}>
+
                 <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
                   <canvas id="pie7" width="375" height="273" />
                 </div>
                 <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
                   <canvas id="pie8" width="375" height="273" />
                 </div>
+
+                
+                <div className="additional-flex third-col caption" style={{ position: "absolute", top: "240px", left: "0px", transform: "scale(0.85)", transformOrigin: "top left", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "12px" }}>
+                  <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" }}>
+                    <div style={{ marginRight: "10px" }}>
+                      <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E", borderRadius: "12px" }}></div>
+                    </div>
+                    <div>PV-Anlage</div>
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A" }}>
+                    <div style={{ marginRight: "10px" }}>
+                      <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A", borderRadius: "12px" }}></div>
+                    </div>
+                    <div>Vorteil durch EMS</div>
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3" }}>
+                    <div style={{ marginRight: "10px" }}>
+                      <div style={{ marginTop: "2px", width: "12px", height: "12px", background: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3", borderRadius: "12px" }}></div>
+                    </div>
+                    <div>Netzeinspeisung</div>
+                  </div>
+                </div>
+
+
                 {/* <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
                   <InfoBoxResult box="household-use" />
                 </div> */}

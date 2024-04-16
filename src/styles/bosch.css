@@ -2156,3 +2156,16 @@ input[type=number] {
   font-size: 13px!important;
   line-height: 150%;
 }
+
+#printPdf2 .caption{
+  flex-direction: column;
+  top: 196px!important;
+}
+
+@media only screen and (max-width: 1160px) {
+
+  #printPdf2 .caption{
+    top: 240px!important;
+  }
+
+}
