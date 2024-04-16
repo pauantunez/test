@@ -204,10 +204,12 @@ class InfoBoxCalculation extends React.Component {
               <div className="infobox-row borderDark Bosch-Medium" style={{ paddingBottom: "3px" }}>
                 <div className="width-50 padding-left-10" style={{ width: "28%" }}></div>
                 <div className="width-50" style={{ width: "33%" }}>
-                  Erdwärmepumpe
+                  Erd-
+                  wärmepumpe
                 </div>
                 <div className="width-50" style={{ lineHeight: "1.5", width: "39%" }}>
-                  Luft-Wasser-Wärmepumpe
+                  Luft-Wasser-
+                  Wärmepumpe
                 </div>
               </div>
               <div className="infobox-row">
@@ -318,7 +320,8 @@ class InfoBoxCalculation extends React.Component {
                   Heizbedarf pro Jahr in kWh/m²
                 </div>
                 <div className="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "33%" }}>
-                  Gebäudeenergiestandard
+                  Gebäudeenergie-
+                  standard
                 </div>
                 <div className="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "39%" }}>
                   Gebäudeisolierung
@@ -546,10 +549,12 @@ class InfoBoxCalculation extends React.Component {
               <div className="infobox-row borderDark Bosch-Medium" style={{ paddingBottom: "3px" }}>
                 <div className="width-50 padding-left-10" style={{ lineHeight: "1.5", width: "28%" }}></div>
                 <div className="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "33%" }}>
-                  Erdwärmepumpe
+                  Erd-
+                  wärmepumpe
                 </div>
                 <div className="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "39%" }}>
-                  Luft-Wasser-Wärmepumpe
+                  Luft-Wasser-
+                  Wärmepumpe
                 </div>
               </div>
               <div className="infobox-row">
@@ -568,10 +573,12 @@ class InfoBoxCalculation extends React.Component {
                   Funktion
                 </div>
                 <div className="width-50" style={{ lineHeight: "1.6", width: "33%" }}>
-                  Erdkollektor oder Erdsonde
+                  Erdkollektor o.
+                  Erdsonde
                 </div>
                 <div className="width-50" style={{ lineHeight: "1.6", lineBreak: "anywhere", width: "39%" }}>
-                  Ventilatoren/Luftfilter
+                  Ventilatoren/
+                  Luftfilter
                 </div>
               </div>
               <div className="infobox-row" style={{ border: "none" }}>
@@ -597,10 +604,12 @@ class InfoBoxCalculation extends React.Component {
               <div className="infobox-row" style={{ marginTop: "12px" }}>
                 <div className="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "28%" }}></div>
                 <div className="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "33%" }}>
-                  Geringe Leistungsschwankungen
+                  Geringe Leistungs-
+                  schwankungen
                 </div>
                 <div className="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "39%" }}>
-                  Geringe Investitionskosten
+                  Geringe Investitions-
+                  kosten
                 </div>
               </div>
             </div>

@@ -260,6 +260,8 @@ class Additional extends React.Component {
               html2canvas(divToDisplay5, {
                 useCORS: true,
                 allowTaint: false,
+                quality: 2,
+                scale: 4,
                 onclone: function (clonedDoc5) {
                   clonedDoc5.getElementById("printPdf5").style.display = "block";
                 },
@@ -948,7 +950,7 @@ class Additional extends React.Component {
                         </a>
                       </label>
                       <div style={{ marginTop: "20px" }}>
-                        <img alt="dealer_search" src={require(`../../../../assets/img/qr/dealer_search.png`)} style={{ width: "90px" }} />
+                        <img alt="dealer_search" src={require(`../../../../assets/img/qr/dealer_search.png`)} style={{ width: "100px" }} />
                       </div>
                     </div>
                     <div style={{ width: "25%" }}>
@@ -966,7 +968,7 @@ class Additional extends React.Component {
                         </a>
                       </label>
                       <div style={{ marginTop: "20px" }}>
-                        <img alt="lmt" src={require(`../../../../assets/img/qr/lmt.png`)} style={{ width: "100px" }} />
+                        <img alt="lmt" src={require(`../../../../assets/img/qr/lmt.png`)} style={{ width: "90px" }} />
                       </div>
                     </div>
                   </div>
