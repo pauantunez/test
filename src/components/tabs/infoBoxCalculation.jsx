@@ -549,11 +549,11 @@ class InfoBoxCalculation extends React.Component {
               <div className="infobox-row borderDark Bosch-Medium" style={{ paddingBottom: "3px" }}>
                 <div className="width-50 padding-left-10" style={{ lineHeight: "1.5", width: "28%" }}></div>
                 <div className="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "33%" }}>
-                  Erd-
+                  Erd-<br></br>
                   wärmepumpe
                 </div>
                 <div className="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "39%" }}>
-                  Luft-Wasser-
+                  Luft-Wasser-<br></br>
                   Wärmepumpe
                 </div>
               </div>
@@ -573,11 +573,11 @@ class InfoBoxCalculation extends React.Component {
                   Funktion
                 </div>
                 <div className="width-50" style={{ lineHeight: "1.6", width: "33%" }}>
-                  Erdkollektor o.
+                  Erdkollektor o.<br></br>
                   Erdsonde
                 </div>
                 <div className="width-50" style={{ lineHeight: "1.6", lineBreak: "anywhere", width: "39%" }}>
-                  Ventilatoren/
+                  Ventilatoren/<br></br>
                   Luftfilter
                 </div>
               </div>
