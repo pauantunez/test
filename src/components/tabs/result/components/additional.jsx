@@ -739,7 +739,7 @@ class Additional extends React.Component {
             </div>
           </div>
 
-          <div id="printPdf3" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "block" }}>
+          <div id="printPdf3" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
             {this.context.selectedTheme === "buderus" ? (
               <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
                 <div style={{ marginLeft: "600px" }}>
