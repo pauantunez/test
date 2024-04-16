@@ -2157,14 +2157,14 @@ input[type=number] {
   line-height: 150%;
 }
 
-#printPdf2 .caption{
+#printPdf2 .caption, #printPdf3 .caption{
   flex-direction: column;
   top: 196px!important;
 }
 
 @media only screen and (max-width: 1160px) {
 
-  #printPdf2 .caption{
+  #printPdf2 .caption, #printPdf3 .caption{
     top: 240px!important;
   }
 
