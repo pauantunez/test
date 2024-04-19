@@ -2210,3 +2210,30 @@ input[type=number] {
 #printPdf1 .flexContent.block-content .block-container .block.contact, #printPdf2 .flexContent.block-content .block-container .block.contact, #printPdf3 .flexContent.block-content .block-container .block.contact, #printPdf4 .flexContent.block-content .block-container .block.contact, #printPdf5 .flexContent.block-content .block-container .block.contact, #printPdf6 .flexContent.block-content .block-container .block.contact {
   width: 45%;
 }
+
+#printPdf-container .panel-body{
+  font-size: 14px!important;
+}
+#printPdf-container .panel-body.icons{
+  font-size: 10px!important;
+}
+#printPdf-container .infobox-row{
+  font-size: 13px!important;
+}
+#printPdf-container .infobox-row p{
+  font-size: 13px!important;
+  line-height: 150%;
+}
+
+#printPdf2 .caption, #printPdf3 .caption{
+  flex-direction: column;
+  top: 196px!important;
+}
+
+@media only screen and (max-width: 1160px) {
+
+  #printPdf2 .caption, #printPdf3 .caption{
+    top: 240px!important;
+  }
+
+}
