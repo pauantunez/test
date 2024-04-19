@@ -1294,6 +1294,16 @@ a.card-input-narrow {
   align-content: space-between;
 }
 
+.noticeBottom {
+  position: relative;
+  width: 100%;
+  color: #A4ABB3;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
 .step-one .cardLargeIcon, .step-two .cardLargeIcon, .step-three .cardLargeIcon, .step-four .cardLargeIcon, .step-five .cardLargeIcon, .step-six .cardLargeIcon, .step-seven .cardLargeIcon, .step-eight .cardLargeIcon, .step-nine .cardLargeIcon, .step-ten .cardLargeIcon, .step-eleven .cardLargeIcon{
   display: none;
 }
