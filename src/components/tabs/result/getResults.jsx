@@ -4,9 +4,13 @@ import { withTranslation } from "react-i18next";
 import resultService from "../../../services/results";
 import AppContext from "../../../AppContext";
 
-const calculateEnergyUsageCombined = (results, heatpumpType, energyUsagekWh, odometerIncreaseKWH) => {
-  var Avg_Eff_JAZ_HP;
+const calculateEnergyUsageCombined = (results, energyUsageHeatpump, energyUsagekWh, odometerIncreaseKWH) => {
+  return Math.round(energyUsageHeatpump + parseInt(energyUsagekWh) + odometerIncreaseKWH);
+};
+
+const heatpumpUsageKWH = (results, heatpumpType) => {
   const { EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = results;
+  var Avg_Eff_JAZ_HP;
 
   if (heatpumpType === "1") {
     Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_A_W_MFH;
@@ -14,13 +18,12 @@ const calculateEnergyUsageCombined = (results, heatpumpType, energyUsagekWh, odo
     Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_B_W_MFH;
   }
 
-  // Energy usage heatpump
+  //Enegery usage heatpump
   var energyUsageHeatpump = (parseFloat(EGen_sh_kWh_HP_A_W_MFH) + parseFloat(EGen_sh_kWh_HP_B_W_MFH) + parseFloat(EGen_hw_kWh_HP_A_W_MFH) + parseFloat(EGen_hw_kWh_HP_B_W_MFH)) / parseFloat(Avg_Eff_JAZ_HP);
 
-  // Energy usage heating rod
   var energyUsageHeatingRod = (parseFloat(EGen_sh_kWh_EDWW_MFH) + parseFloat(EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(EGen_hw_kWh_EDWW_MFH) + parseFloat(EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
 
-  return Math.round(energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH);
+  return Math.round(energyUsageHeatpump + energyUsageHeatingRod);
 };
 
 const calculateBreakEven = (results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, heatpumpType, energyUsagekWh, odometerIncreaseKWH, ems) => {
@@ -91,6 +94,8 @@ const GetResults = () => {
   const [energyUsageCombinedNoEms, setEnergyUsageCombinedNoEms] = useState(null);
   const [breakEven, setbreakEven] = useState([]);
   const [breakEvenNoEms, setbreakEvenNoEms] = useState([]);
+  const [energyUsageHeatpump, setenergyUsageHeatpump] = useState(null);
+  const [energyUsageHeatpumpNoEms, setenergyUsageHeatpumpNoEms] = useState(null);
 
   const context = useContext(AppContext);
   const { backendUrl, kfwValue, ev, heatpumpType, energyUsagekWh, odometerIncreaseKWH, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost } = context;
@@ -143,8 +148,10 @@ const GetResults = () => {
         .getResult(kfwValue + ev, scenario, tab, backendUrl, heatpumpType)
         .then((results) => {
           setCalculatedResults(results);
+          const energyUsageHeatpumpResult = heatpumpUsageKWH(results, heatpumpType);
+          setenergyUsageHeatpump(energyUsageHeatpumpResult);
 
-          const combined = calculateEnergyUsageCombined(results, heatpumpType, energyUsagekWh, odometerIncreaseKWH);
+          const combined = calculateEnergyUsageCombined(results, energyUsageHeatpumpResult, energyUsagekWh, odometerIncreaseKWH);
           if (sessionStorage.getItem("energyUsageCombined") !== "") {
             sessionStorage.setItem("energyUsageCombined", combined);
           }
@@ -167,7 +174,10 @@ const GetResults = () => {
         .then((results) => {
           setCalculatedResultsNoEms(results);
 
-          const combinedNoEms = calculateEnergyUsageCombined(results, heatpumpType, energyUsagekWh, odometerIncreaseKWH);
+          const energyUsageHeatpumpResultNoEms = heatpumpUsageKWH(results, heatpumpType);
+          setenergyUsageHeatpumpNoEms(energyUsageHeatpumpResultNoEms);
+
+          const combinedNoEms = calculateEnergyUsageCombined(results, energyUsageHeatpumpResultNoEms, energyUsagekWh, odometerIncreaseKWH);
           if (sessionStorage.getItem("energyUsageCombinedNoEms") !== "") {
             sessionStorage.setItem("energyUsageCombinedNoEms", combinedNoEms);
           }
@@ -182,8 +192,12 @@ const GetResults = () => {
 
   return (
     <div>
+      <p>energyUsageHeatpump: {energyUsageHeatpump}</p>
+      <p>energyUsageHeatpumpNoEms: {energyUsageHeatpumpNoEms}</p>
       <p>EnergyUsageCombinedEms: {energyUsageCombined}</p>
       <p>EnergyUsageCombinedNoEms: {energyUsageCombinedNoEms}</p>
+      <p>Elektro-Auro: {odometerIncreaseKWH}</p>
+      <p>Haushalt: {energyUsagekWh}</p>
       <div style={{ maxWidth: "300px", maxHeight: "150px", overflow: "auto" }}>
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
