@@ -71,6 +71,9 @@ a.card-input-narrow {
 .card-input-narrow:hover svg {
   fill: #FFF;
 }
+.card-input-narrow svg{
+  max-height: 45px!important;
+}
 
 .card-input-element:checked+.card-input-narrow {
   background: #007BC0;
@@ -1350,6 +1353,15 @@ a.card-input-narrow {
 }
 .flexContent.block-content .block-container .block.contact:hover{
   border-left: 6px solid #ED7102;
+}
+#printPdf-container .flexContent.block-content .block-container .block.contact{
+  margin-left: 10px;
+}
+#printPdf-container #editBtn{
+  display: none;
+}
+#printPdf-container .block.contact p{
+  font-size: 13px;
 }
 .graphs-container, .wrapper-container {
   margin-bottom: 80px !important;

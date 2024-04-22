@@ -203,6 +203,52 @@ class Additional extends React.Component {
     }
   });
 
+  const BuderusContactButtonPdf = styled(Button)({
+    // Basic styles
+    textTransform: "none",
+    backgroundColor: "none",
+    border: "none",
+    borderRadius: "0px",
+    fontFamily: "HelveticaNeue-Roman",
+    borderBottom: "1px solid rgb(0, 0, 0)",
+    color: "rgb(0, 0, 0)",
+    WebkitAppearance: "none",
+    MozAppearance: "none",
+    fontSize: "10px",
+    cursor: "pointer",
+    textAlign: "left",
+    paddingLeft: "0px",
+    lineHeight: "110%",
+    paddingBottom: "1px",
+  
+    // Hover state
+    "&:hover": {
+      border: "0px",
+      borderBottom: "1px solid rgb(0, 0, 0)",
+      background: "none"
+    },
+  
+    // Focus state
+    "&:focus": {
+      outline: "1px solid #fff",
+      outlineOffset: "-4px"
+    },
+  
+    // Styles for child SVG within the button
+    "& svg": {
+      width: "12px"
+    },
+  
+    // Styles for child span within the button
+    "& span": {
+      display: "block",
+      marginRight: "-4px",
+      marginLeft: "9px",
+      marginTop: "6px",
+      float: "right"
+    }
+  });
+
     //OffGrid
     // Mit
     var mitGridUsagePercentage = parseInt(sessionStorage.getItem("MIT_GridUsagePercentage"));
@@ -990,9 +1036,9 @@ class Additional extends React.Component {
                           <p>Fachbetriebe in ihrer Nähe</p>
                           <div className="trackeable" data-event="result-part3-contact" style={{ display: "flex", alignItems: "end" }}>
                             <a rel="noreferrer" href="https://www.buderus.de/de/services-tools/experten-in-ihrer-naehe/fachbetriebe-in-ihrer-naehe-21776" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                              <Button className="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
+                              <BuderusContactButtonPdf variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
                                 Fachbetrieb suchen
-                              </Button>
+                              </BuderusContactButtonPdf>
                             </a>
                           </div>
                         </div>
@@ -1000,9 +1046,9 @@ class Additional extends React.Component {
                           <p>Angebot anfordern</p>
                           <div className="trackeable" data-event="result-part3-offer" style={{ display: "flex", alignItems: "end" }}>
                             <a rel="noreferrer" href="https://www.buderus.de/de/angebot-anfordern" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                              <Button className="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
+                              <BuderusContactButtonPdf variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
                                 Unverbindliches Angebot anfordem
-                              </Button>
+                              </BuderusContactButtonPdf>
                             </a>
                           </div>
                         </div>
@@ -1010,9 +1056,9 @@ class Additional extends React.Component {
                           <p>Beratungshotline</p>
                           <div style={{ display: "flex", alignItems: "end" }}>
                             <a rel="noreferrer" href="https://www.buderus.de/de/kontakt-klimapaket" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                              <Button className="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
+                              <BuderusContactButtonPdf variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
                                 Zur Beratungshotline
-                              </Button>
+                              </BuderusContactButtonPdf>
                             </a>
                           </div>
                         </div>
@@ -1020,9 +1066,9 @@ class Additional extends React.Component {
                           <p>Niederlassungssuche</p>
                           <div style={{ display: "flex", alignItems: "end" }}>
                             <a rel="noreferrer" href="https://www.buderus.de/de/niederlassungen" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                              <Button className="kontakt-btn" variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
+                              <BuderusContactButtonPdf variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
                                 Zur Niederlassungssuche
-                              </Button>
+                              </BuderusContactButtonPdf>
                             </a>
                           </div>
                         </div>
