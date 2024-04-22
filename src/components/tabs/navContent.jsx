@@ -23,6 +23,7 @@ import FacilitiesStep4 from "./facilities/step4";
 import CostStep1 from "./cost/step1";
 import CostStep2 from "./cost/step2";
 import CostStep3 from "./cost/step3";
+import ResultGetResults from "./result/getResults";
 import ResultStep1 from "./result/step1";
 import ResultStep2 from "./result/step2";
 import ResultStep3 from "./result/step3";
@@ -424,7 +425,9 @@ class NavContent extends React.Component {
                     this.handleStep(0);
                   }}
                 >
-                  <span class="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px" }}>Gebäude</span>
+                  <span class="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px" }}>
+                    Gebäude
+                  </span>
                 </StepLabel>
               </Step>
               <Step key="1">
@@ -458,7 +461,9 @@ class NavContent extends React.Component {
                     this.handleStep(4);
                   }}
                 >
-                  <span class="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px"}}>Ausstattung</span>
+                  <span class="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px" }}>
+                    Ausstattung
+                  </span>
                 </StepLabel>
               </Step>
               <Step key="5">
@@ -492,7 +497,9 @@ class NavContent extends React.Component {
                     this.handleStep(8);
                   }}
                 >
-                  <span class="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px" }}>Ökonomische Größen</span>
+                  <span class="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px" }}>
+                    Ökonomische Größen
+                  </span>
                 </StepLabel>
               </Step>
               <Step key="9">
@@ -518,7 +525,7 @@ class NavContent extends React.Component {
                     this.handleStep(11);
                   }}
                 >
-                  <span class="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px"}}>
+                  <span class="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px" }}>
                     <span>
                       Ergebnis&nbsp;
                       {activeView === 11 && <span>(1/2)</span>}
@@ -571,7 +578,8 @@ class NavContent extends React.Component {
           {activeView === 8 && <CostStep1 />}
           {activeView === 9 && <CostStep2 />}
           {activeView === 10 && <CostStep3 />}
-          {activeView === 11 && <ResultStep1 />}
+          {activeView === 11 && <ResultGetResults />}
+          {/* {activeView === 11 && <ResultStep1 />} */}
           {activeView === 12 && <ResultStep2 />}
           {activeView === 13 && <ResultStep3 />}
         </Box>
