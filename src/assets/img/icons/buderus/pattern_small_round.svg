@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 13 12">
+  <defs>
+    <mask id="mask" x="-17.3" y="-13.1" width="49" height="47.3" maskUnits="userSpaceOnUse">
+      <g id="mask0_1046_95840" data-name="mask0 1046 95840">
+        <circle cx="6.2" cy="6" r="6" fill="#d9d9d9" stroke-width="0"/>
+      </g>
+    </mask>
+  </defs>
+  <g mask="url(#mask)">
+    <path d="M-4.4-13l-12.4,47M-2.1-13l-12.4,47M.3-13l-12.4,47M2.7-13l-12.4,47M5.1-13L-7.3,34M7.4-13L-5,34M9.8-13L-2.6,34M12.2-13L-.2,34M14.6-13L2.2,34M16.9-13L4.5,34M19.3-13L6.9,34M21.7-13l-12.4,47M24-13l-12.4,47M26.4-13l-12.4,47M28.8-13l-12.4,47M18.8,34L31.2-13" fill="none" stroke="#b2b2b2" stroke-miterlimit="10"/>
+  </g>
+</svg>
