@@ -271,23 +271,44 @@ const GetResults = () => {
       <p>gridFeedPercentageNoEms (Netzeinspeisung): {gridFeedPercentageNoEms}</p>
       <p>houseHoldPvPercentage (PV-Anlage) same for both cases ems+noems: {houseHoldPvPercentage}</p>
       <p>Benefit EMS (Vorteil durch EMS): {houseHoldPvPercentageNoEms - houseHoldPvPercentage}</p>
-      <div style={{ maxWidth: "300px", maxHeight: "150px", overflow: "auto" }}>
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-          <thead>
-            <tr>
-              <th>HeatpumpPVEms</th>
-              <th>HeatpumpPVNoEms</th>
-            </tr>
-          </thead>
-          <tbody>
-            {breakEven.map((item, index) => (
-              <tr key={index}>
-                <td>{item.expenditure}</td>
-                <td>{breakEvenNoEms[index].expenditure}</td>
+      <h1>Amortisationszeit</h1>
+      <div style={{ display: "flex" }}>
+        <div style={{ maxWidth: "300px", maxHeight: "150px", overflow: "auto", marginRight: "20px" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <thead>
+              <tr>
+                <th>Year</th>
+                <th>HeatpumpPVEms</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {breakEven.map((item, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{item.expenditure}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div style={{ maxWidth: "300px", maxHeight: "150px", overflow: "auto" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <thead>
+              <tr>
+                <th>Year</th>
+                <th>HeatpumpPVNoEms</th>
+              </tr>
+            </thead>
+            <tbody>
+              {breakEvenNoEms.map((item, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{item.expenditure}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
