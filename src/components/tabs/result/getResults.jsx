@@ -55,7 +55,7 @@ const calculatedHouseholdpvPercentage = (results) => {
   return householdpvPercent;
 };
 
-const calculateBreakEven = (results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, heatpumpType, energyUsagekWh, odometerIncreaseKWH, ems) => {
+const calculateBreakEven = (results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, heatpumpType, energyUsagekWh, odometerIncreaseKWH, ems, energyUsageHeatpump, energyUsageCombined, houseHoldPvPercentage, pvUsagePercentage) => {
   const { Avg_Eff_JAZ_HP_A_W_MFH, Avg_Eff_JAZ_HP_B_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH, EGen_sh_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_hw_kWh_EDWW_MFH_Brine, EGen_elc_kWh_PV_MFH, energy_to_grid_kWh_PV_MFH } = results;
 
   var investmentCostResult;
@@ -74,8 +74,12 @@ const calculateBreakEven = (results, PVcostLookupTable, pvOutputkWh, StorageCost
   var betriebskosten;
   var einspeiseverguetung;
   var einsparungen;
-
-  betriebskosten = -Math.abs(Math.round((investmentCostResult - 400) * 0.01));
+  if (ems) {
+    investmentCostResult = investmentCostResult - 400;
+    betriebskosten = -Math.abs(Math.round((investmentCostResult - 400) * 0.01));
+  } else {
+    betriebskosten = -Math.abs(Math.round(investmentCostResult * 0.01));
+  }
 
   var Avg_Eff_JAZ_HP;
   if (heatpumpType === "1") {
@@ -84,28 +88,20 @@ const calculateBreakEven = (results, PVcostLookupTable, pvOutputkWh, StorageCost
     Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_B_W_MFH;
   }
 
-  //Enegery usage heatpump
-  var energyUsageHeatpump = (parseFloat(EGen_sh_kWh_HP_A_W_MFH) + parseFloat(EGen_sh_kWh_HP_B_W_MFH) + parseFloat(EGen_hw_kWh_HP_A_W_MFH) + parseFloat(EGen_hw_kWh_HP_B_W_MFH)) / parseFloat(Avg_Eff_JAZ_HP);
   //Energy usage heating rod
   var energyUsageHeatingRod = (parseFloat(EGen_sh_kWh_EDWW_MFH) + parseFloat(EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(EGen_hw_kWh_EDWW_MFH) + parseFloat(EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
 
-  const energyUsageCombined = Math.round(energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH);
-
-  var householdNoEMSPercent = Math.round(((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(EGen_elc_kWh_PV_MFH)) * 100);
-
-  var pvUsagePercentNoEMS = Math.round(((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(energyUsageCombined)) * 100);
-
-  einspeiseverguetung = (EGen_elc_kWh_PV_MFH * (1 - parseFloat(householdNoEMSPercent) / 100) * parseFloat(gridRevenue.replace(",", "."))) / 100;
+  einspeiseverguetung = (EGen_elc_kWh_PV_MFH * (1 - parseFloat(houseHoldPvPercentage) / 100) * parseFloat(gridRevenue.replace(",", "."))) / 100;
 
   einspeiseverguetung = Math.round(einspeiseverguetung * 100) / 100;
 
   for (let index = 0; index < 50; index++) {
-    einsparungen = energyUsageCombined * (pvUsagePercentNoEMS / 100) * (parseFloat(electricityCost / 100) * Math.pow(1 + 0.02, index));
+    einsparungen = energyUsageCombined * (pvUsagePercentage / 100) * (parseFloat(electricityCost / 100) * Math.pow(1 + 0.02, index));
 
     einsparungen = Math.round(einsparungen * 100) / 100;
 
     if (heatpumpPV.length === 0) {
-      heatpumpPV.push({ expenditure: investmentCostResult + -400 });
+      heatpumpPV.push({ expenditure: investmentCostResult, runningCost: betriebskosten });
     } else {
       heatpumpPV.push({ expenditure: parseFloat(heatpumpPV[index - 1].expenditure) + betriebskosten + einspeiseverguetung + einsparungen });
     }
@@ -207,11 +203,12 @@ const GetResults = () => {
           sethouseHoldPvPercentageNoEms(houseHoldPvPercentageResult);
 
           /* TODO:Revisar */
-          /* const breakEvenResult = calculateBreakEven(results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, heatpumpType, energyUsagekWh, odometerIncreaseKWH, gridRevenue, electricityCost, PVcostLookupTable, heatpumpType, energyUsagekWh, odometerIncreaseKWH);
+          const breakEvenResult = calculateBreakEven(results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, heatpumpType, energyUsagekWh, odometerIncreaseKWH, true, energyUsageHeatpumpResult, combined, houseHoldPvPercentageResult, pvUsagePercentageResult);
+
           if (sessionStorage.getItem("heatpumpPVems") !== "") {
             sessionStorage.setItem("heatpumpPVems", JSON.stringify(breakEvenResult));
           }
-          setbreakEven(breakEvenResult); */
+          setbreakEven(breakEvenResult);
         })
 
         .catch((error) => {
@@ -244,6 +241,9 @@ const GetResults = () => {
 
           const houseHoldPvPercentageResult = calculatedHouseholdpvPercentage(results);
           sethouseHoldPvPercentage(houseHoldPvPercentageResult);
+
+          const breakEvenResult = calculateBreakEven(results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, heatpumpType, energyUsagekWh, odometerIncreaseKWH, false, energyUsageHeatpumpResultNoEms, combinedNoEms, houseHoldPvPercentageResult, pvUsagePercentageResult);
+          setbreakEvenNoEms(breakEvenResult);
         })
 
         .catch((error) => {
@@ -283,11 +283,11 @@ const GetResults = () => {
             {breakEven.map((item, index) => (
               <tr key={index}>
                 <td>{item.expenditure}</td>
+                <td>{breakEvenNoEms[index].expenditure}</td>
               </tr>
             ))}
           </tbody>
         </table>
-        <p>Stromverbrauch:</p>
       </div>
     </div>
   );
