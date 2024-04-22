@@ -38,9 +38,21 @@ const calculatepvUsagePercentage = (results, energyUsageCombined) => {
   const { energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = results;
 
   var pvUsagePercent = ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(energyUsageCombined)) * 100;
-  console.log("🚀 ~ calculatepvUsagePercentage ~ pvUsagePercent:", pvUsagePercent);
-
   return pvUsagePercent;
+};
+
+const calculatedgridFeedPercentage = (results) => {
+  const { energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = results;
+
+  var gridFeedPercent = 100 - ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(EGen_elc_kWh_PV_MFH)) * 100;
+
+  return gridFeedPercent;
+};
+const calculatedHouseholdpvPercentage = (results) => {
+  const { energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = results;
+  var householdpvPercent = ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(EGen_elc_kWh_PV_MFH)) * 100;
+
+  return householdpvPercent;
 };
 
 const calculateBreakEven = (results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, heatpumpType, energyUsagekWh, odometerIncreaseKWH, ems) => {
@@ -116,6 +128,11 @@ const GetResults = () => {
   const [gridUsagePercentage, setgridUsagePercentage] = useState(null);
   const [gridUsagePercentageNoEms, setgridUsagePercentageNoEms] = useState(null);
   const [pvUsagePercentage, setpvUsagePercentage] = useState(null);
+  const [pvUsagePercentageNoEms, setpvUsagePercentageNoEms] = useState(null);
+  const [gridFeedPercentage, setgridFeedPercentage] = useState(null);
+  const [gridFeedPercentageNoEms, setgridFeedPercentageNoEms] = useState(null);
+  const [houseHoldPvPercentage, sethouseHoldPvPercentage] = useState(null);
+  const [houseHoldPvPercentageNoEms, sethouseHoldPvPercentageNoEms] = useState(null);
 
   const context = useContext(AppContext);
   const { backendUrl, kfwValue, ev, heatpumpType, energyUsagekWh, odometerIncreaseKWH, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost } = context;
@@ -180,6 +197,15 @@ const GetResults = () => {
           const gridUsagePercentageResult = calculategridUsagePercentage(results, combined);
           setgridUsagePercentage(gridUsagePercentageResult);
 
+          const pvUsagePercentageResult = calculatepvUsagePercentage(results, combined);
+          setpvUsagePercentage(pvUsagePercentageResult);
+
+          const gridFeedPercentageResult = calculatedgridFeedPercentage(results);
+          setgridFeedPercentage(gridFeedPercentageResult);
+
+          const houseHoldPvPercentageResult = calculatedHouseholdpvPercentage(results);
+          sethouseHoldPvPercentageNoEms(houseHoldPvPercentageResult);
+
           /* TODO:Revisar */
           /* const breakEvenResult = calculateBreakEven(results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, heatpumpType, energyUsagekWh, odometerIncreaseKWH, gridRevenue, electricityCost, PVcostLookupTable, heatpumpType, energyUsagekWh, odometerIncreaseKWH);
           if (sessionStorage.getItem("heatpumpPVems") !== "") {
@@ -211,7 +237,13 @@ const GetResults = () => {
           setgridUsagePercentageNoEms(gridUsagePercentageResult);
 
           const pvUsagePercentageResult = calculatepvUsagePercentage(results, combinedNoEms);
-          setpvUsagePercentage(pvUsagePercentageResult);
+          setpvUsagePercentageNoEms(pvUsagePercentageResult);
+
+          const gridFeedPercentageResult = calculatedgridFeedPercentage(results);
+          setgridFeedPercentageNoEms(gridFeedPercentageResult);
+
+          const houseHoldPvPercentageResult = calculatedHouseholdpvPercentage(results);
+          sethouseHoldPvPercentage(houseHoldPvPercentageResult);
         })
 
         .catch((error) => {
@@ -232,9 +264,13 @@ const GetResults = () => {
       <h1>2 graph (Autarkie)</h1>
       <p>gridUsagePercentage (Netzbezug): {gridUsagePercentage}</p>
       <p>gridUsagePercentageNoEms (Netzbezug): {gridUsagePercentageNoEms}</p>
-      <p>pvUsagePercentage (PV-Anlage) same for both cases ems+noems: {pvUsagePercentage}</p>
-      <p>Benefit EMS (Vorteil durch EMS): {gridUsagePercentage - pvUsagePercentage}</p>
+      <p>pvUsagePercentage (PV-Anlage) same for both cases ems+noems: {pvUsagePercentageNoEms}</p>
+      <p>Benefit EMS (Vorteil durch EMS): {gridUsagePercentageNoEms - gridUsagePercentage}</p>
       <h1>3 graph (Eigenverbrauch)</h1>
+      <p>gridFeedPercentage (Netzeinspeisung): {gridFeedPercentage}</p>
+      <p>gridFeedPercentageNoEms (Netzeinspeisung): {gridFeedPercentageNoEms}</p>
+      <p>houseHoldPvPercentage (PV-Anlage) same for both cases ems+noems: {houseHoldPvPercentage}</p>
+      <p>Benefit EMS (Vorteil durch EMS): {houseHoldPvPercentageNoEms - houseHoldPvPercentage}</p>
       <div style={{ maxWidth: "300px", maxHeight: "150px", overflow: "auto" }}>
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>

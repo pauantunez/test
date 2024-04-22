@@ -101,7 +101,6 @@ class HouseholdUse extends React.Component {
     }
   };
 
-
   componentDidMount() {
     window.addEventListener("resize", this.handleResize);
 
@@ -217,6 +216,7 @@ class HouseholdUse extends React.Component {
       var roundedGridFeedPercentage = Math.round(parseFloat(this.gridFeedPercentage()));
       var roundedHouseholdUsagePercentage = Math.round(parseFloat(this.householdUsagePercentage()) - householdNoEMSpvPercent);
       var roundedHouseholdpvPercent = Math.round(parseFloat(householdNoEMSpvPercent));
+      console.log("🚀 ~ HouseholdUse ~ render ~ roundedHouseholdpvPercent:", roundedHouseholdpvPercent);
       roundedGridFeedPercentage = this.adjustPercentage(roundedGridFeedPercentage, roundedHouseholdUsagePercentage, roundedHouseholdpvPercent);
 
       if (sessionStorage.getItem("MIT_GridFeedPercentage") !== "") {
