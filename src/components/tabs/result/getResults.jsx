@@ -222,17 +222,19 @@ const GetResults = () => {
 
   return (
     <div>
-      <h1>1 graph</h1>
+      <h1>1 graph (Stromverbrauch)</h1>
       <p>energyUsageHeatpump: {energyUsageHeatpump}</p>
       <p>energyUsageHeatpumpNoEms: {energyUsageHeatpumpNoEms}</p>
       <p>EnergyUsageCombinedEms: {energyUsageCombined}</p>
       <p>EnergyUsageCombinedNoEms: {energyUsageCombinedNoEms}</p>
       <p>Elektro-Auro: {odometerIncreaseKWH}</p>
       <p>Haushalt: {energyUsagekWh}</p>
-      <h1>2 graph</h1>
+      <h1>2 graph (Autarkie)</h1>
       <p>gridUsagePercentage (Netzbezug): {gridUsagePercentage}</p>
       <p>gridUsagePercentageNoEms (Netzbezug): {gridUsagePercentageNoEms}</p>
-      <p>pvUsagePercentage (PV-Anlage): {pvUsagePercentage}</p>
+      <p>pvUsagePercentage (PV-Anlage) same for both cases ems+noems: {pvUsagePercentage}</p>
+      <p>Benefit EMS (Vorteil durch EMS): {gridUsagePercentage - pvUsagePercentage}</p>
+      <h1>3 graph (Eigenverbrauch)</h1>
       <div style={{ maxWidth: "300px", maxHeight: "150px", overflow: "auto" }}>
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
