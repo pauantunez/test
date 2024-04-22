@@ -8,7 +8,7 @@ const calculateEnergyUsageCombined = (results, energyUsageHeatpump, energyUsagek
   return Math.round(energyUsageHeatpump + parseInt(energyUsagekWh) + odometerIncreaseKWH);
 };
 
-const heatpumpUsageKWH = (results, heatpumpType) => {
+const calculateheatpumpUsageKWH = (results, heatpumpType) => {
   const { EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = results;
   var Avg_Eff_JAZ_HP;
 
@@ -24,6 +24,23 @@ const heatpumpUsageKWH = (results, heatpumpType) => {
   var energyUsageHeatingRod = (parseFloat(EGen_sh_kWh_EDWW_MFH) + parseFloat(EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(EGen_hw_kWh_EDWW_MFH) + parseFloat(EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
 
   return Math.round(energyUsageHeatpump + energyUsageHeatingRod);
+};
+
+const calculategridUsagePercentage = (results, energyUsageCombined) => {
+  const { energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = results;
+
+  var gridUsagePercent = 100 - ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(energyUsageCombined)) * 100;
+
+  return gridUsagePercent;
+};
+
+const calculatepvUsagePercentage = (results, energyUsageCombined) => {
+  const { energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = results;
+
+  var pvUsagePercent = ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(energyUsageCombined)) * 100;
+  console.log("🚀 ~ calculatepvUsagePercentage ~ pvUsagePercent:", pvUsagePercent);
+
+  return pvUsagePercent;
 };
 
 const calculateBreakEven = (results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, heatpumpType, energyUsagekWh, odometerIncreaseKWH, ems) => {
@@ -96,6 +113,9 @@ const GetResults = () => {
   const [breakEvenNoEms, setbreakEvenNoEms] = useState([]);
   const [energyUsageHeatpump, setenergyUsageHeatpump] = useState(null);
   const [energyUsageHeatpumpNoEms, setenergyUsageHeatpumpNoEms] = useState(null);
+  const [gridUsagePercentage, setgridUsagePercentage] = useState(null);
+  const [gridUsagePercentageNoEms, setgridUsagePercentageNoEms] = useState(null);
+  const [pvUsagePercentage, setpvUsagePercentage] = useState(null);
 
   const context = useContext(AppContext);
   const { backendUrl, kfwValue, ev, heatpumpType, energyUsagekWh, odometerIncreaseKWH, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost } = context;
@@ -148,7 +168,7 @@ const GetResults = () => {
         .getResult(kfwValue + ev, scenario, tab, backendUrl, heatpumpType)
         .then((results) => {
           setCalculatedResults(results);
-          const energyUsageHeatpumpResult = heatpumpUsageKWH(results, heatpumpType);
+          const energyUsageHeatpumpResult = calculateheatpumpUsageKWH(results, heatpumpType);
           setenergyUsageHeatpump(energyUsageHeatpumpResult);
 
           const combined = calculateEnergyUsageCombined(results, energyUsageHeatpumpResult, energyUsagekWh, odometerIncreaseKWH);
@@ -156,6 +176,10 @@ const GetResults = () => {
             sessionStorage.setItem("energyUsageCombined", combined);
           }
           setEnergyUsageCombined(combined);
+
+          const gridUsagePercentageResult = calculategridUsagePercentage(results, combined);
+          setgridUsagePercentage(gridUsagePercentageResult);
+
           /* TODO:Revisar */
           /* const breakEvenResult = calculateBreakEven(results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, heatpumpType, energyUsagekWh, odometerIncreaseKWH, gridRevenue, electricityCost, PVcostLookupTable, heatpumpType, energyUsagekWh, odometerIncreaseKWH);
           if (sessionStorage.getItem("heatpumpPVems") !== "") {
@@ -174,7 +198,7 @@ const GetResults = () => {
         .then((results) => {
           setCalculatedResultsNoEms(results);
 
-          const energyUsageHeatpumpResultNoEms = heatpumpUsageKWH(results, heatpumpType);
+          const energyUsageHeatpumpResultNoEms = calculateheatpumpUsageKWH(results, heatpumpType);
           setenergyUsageHeatpumpNoEms(energyUsageHeatpumpResultNoEms);
 
           const combinedNoEms = calculateEnergyUsageCombined(results, energyUsageHeatpumpResultNoEms, energyUsagekWh, odometerIncreaseKWH);
@@ -182,6 +206,12 @@ const GetResults = () => {
             sessionStorage.setItem("energyUsageCombinedNoEms", combinedNoEms);
           }
           setEnergyUsageCombinedNoEms(combinedNoEms);
+
+          const gridUsagePercentageResult = Math.round(calculategridUsagePercentage(results, combinedNoEms));
+          setgridUsagePercentageNoEms(gridUsagePercentageResult);
+
+          const pvUsagePercentageResult = calculatepvUsagePercentage(results, combinedNoEms);
+          setpvUsagePercentage(pvUsagePercentageResult);
         })
 
         .catch((error) => {
@@ -192,12 +222,17 @@ const GetResults = () => {
 
   return (
     <div>
+      <h1>1 graph</h1>
       <p>energyUsageHeatpump: {energyUsageHeatpump}</p>
       <p>energyUsageHeatpumpNoEms: {energyUsageHeatpumpNoEms}</p>
       <p>EnergyUsageCombinedEms: {energyUsageCombined}</p>
       <p>EnergyUsageCombinedNoEms: {energyUsageCombinedNoEms}</p>
       <p>Elektro-Auro: {odometerIncreaseKWH}</p>
       <p>Haushalt: {energyUsagekWh}</p>
+      <h1>2 graph</h1>
+      <p>gridUsagePercentage (Netzbezug): {gridUsagePercentage}</p>
+      <p>gridUsagePercentageNoEms (Netzbezug): {gridUsagePercentageNoEms}</p>
+      <p>pvUsagePercentage (PV-Anlage): {pvUsagePercentage}</p>
       <div style={{ maxWidth: "300px", maxHeight: "150px", overflow: "auto" }}>
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
