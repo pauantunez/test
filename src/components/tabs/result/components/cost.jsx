@@ -185,7 +185,6 @@ class Cost extends React.Component {
   energyUseEuro = (divided, years, bar) => {
     const { electricityCost } = this.context;
     var timeToNum;
-
     if (this.state.displayed === undefined) {
       timeToNum = parseInt(years);
     } else {
@@ -618,6 +617,7 @@ class Cost extends React.Component {
     }
 
     var costOnlyPV1year = parseInt(this.electricityCostPV1Years());
+    console.log("🚀 ~ Cost ~ render ~ costOnlyPV1year:", costOnlyPV1year);
     var costOnlyPV20years = parseInt(this.electricityCostPV20Years());
 
     if (sessionStorage.getItem("costOnlyPV1year") == null && costOnlyPV1year) {
