@@ -109,7 +109,7 @@ const calculateBreakEven = (results, PVcostLookupTable, pvOutputkWh, StorageCost
   return heatpumpPV;
 };
 
-const electricityCostNoPV1Year = (divided, years, energyUsageCombined, electricityCost) => {
+const calculateElectricityCostNoPV1Year = (divided, years, energyUsageCombined, electricityCost) => {
   var timeToNum = years;
 
   if (years === 1) {
@@ -117,13 +117,13 @@ const electricityCostNoPV1Year = (divided, years, energyUsageCombined, electrici
   }
 };
 
-const electricityCostNoPV20Years = (energyUsageCombined, electricityCost) => {
+const calculateElectricityCostNoPV20Years = (energyUsageCombined, electricityCost) => {
   const result = Math.abs((parseInt(energyUsageCombined) * (parseFloat(electricityCost) / 100) * (1 - (0.02 + 1) ** 20)) / 0.02);
 
   return result;
 };
 
-const electricityCostPV1Years = (mit_ems, result, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost) => {
+const calculateElectricityCostPV1Years = (mit_ems, result, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost) => {
   const { EGen_elc_kWh_PV_MFH } = result;
 
   var result;
@@ -158,6 +158,43 @@ const electricityCostPV1Years = (mit_ems, result, PVcostLookupTable, pvOutputkWh
   return Math.abs(result);
 };
 
+const calculateElectricityCostPV20Years = (mit_ems, result, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost) => {
+  const { EGen_elc_kWh_PV_MFH } = result;
+  var investmentCostResult;
+
+  let PVcostInTable = PVcostLookupTable.find((o) => o.pv === pvOutputkWh);
+  let StorageCostInTable = StorageCostLookupTable.find((o) => o.storage === homeStorageSize);
+
+  var feed_in_revenue;
+  var operating_costs;
+  var anual_cost_first_year;
+
+  if (homeStorageSize === "none") {
+    investmentCostResult = PVcostInTable.cost;
+  } else {
+    investmentCostResult = PVcostInTable.cost + StorageCostInTable.cost;
+  }
+
+  if (investmentCostEUR > 0) {
+    investmentCostResult = Math.abs(parseInt(investmentCostEUR) * -1);
+  }
+
+  if (mit_ems === true) {
+    feed_in_revenue = Math.abs(Math.round(EGen_elc_kWh_PV_MFH * (1 - parseFloat(sessionStorage.getItem("eigenverbrauchWithEms")) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
+    operating_costs = Math.abs(Math.round((investmentCostResult + 400) * 0.01));
+    anual_cost_first_year = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - parseFloat(sessionStorage.getItem("autarkiegradWithEMS")) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
+    anual_cost_first_year = Math.round(anual_cost_first_year * 100) / 100;
+  } else {
+    feed_in_revenue = (EGen_elc_kWh_PV_MFH * (1 - parseFloat(sessionStorage.getItem("householdNoEMSPercent")) / 100) * parseFloat(gridRevenue.replace(",", "."))) / 100;
+    feed_in_revenue = Math.round(feed_in_revenue * 100) / 100;
+    operating_costs = Math.abs(Math.round(investmentCostResult * 0.01));
+    anual_cost_first_year = Math.abs(operating_costs - feed_in_revenue + (1 - parseFloat(sessionStorage.getItem("pvUsagePercentNoEMS")) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02)));
+    anual_cost_first_year = Math.round(anual_cost_first_year * 100) / 100;
+  }
+  var result = Math.abs(Math.round((anual_cost_first_year * (1 - (0.02 + 1) ** 20)) / 0.02));
+  return Math.abs(result);
+};
+
 const GetResults = () => {
   const [tab, setTab] = useState(null);
   const [tabNoEms, setTabNoEms] = useState(null);
@@ -181,6 +218,9 @@ const GetResults = () => {
   const [cost1YearNoPV, setcost1YearNoPV] = useState(null);
   const [cost20YearNoPV, setcost20YearNoPV] = useState(null);
   const [cost1yearPV, setcost1yearPV] = useState(null);
+  const [cost1yearPVEMS, setcost1yearPVEMS] = useState(null);
+  const [cost20yearPV, setcost20yearPV] = useState(null);
+  const [cost20yearPVEMS, setcost20yearPVEMS] = useState(null);
 
   const context = useContext(AppContext);
   const { backendUrl, kfwValue, ev, heatpumpType, energyUsagekWh, odometerIncreaseKWH, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost } = context;
@@ -254,14 +294,23 @@ const GetResults = () => {
           const houseHoldPvPercentageResult = calculatedHouseholdpvPercentage(results);
           sethouseHoldPvPercentageNoEms(houseHoldPvPercentageResult);
 
-          const cost1yearNoPvResult = Math.abs(parseInt(electricityCostNoPV1Year(5, 1, combined, electricityCost).replace(".", "").replace(",", "")));
+          const cost1yearNoPvResult = Math.abs(parseInt(calculateElectricityCostNoPV1Year(5, 1, combined, electricityCost).replace(".", "").replace(",", "")));
           setcost1YearNoPV(cost1yearNoPvResult);
 
-          const cost20yearNoPvResult = Math.abs(parseInt(electricityCostNoPV20Years(combined, electricityCost)));
+          const cost20yearNoPvResult = Math.abs(parseInt(calculateElectricityCostNoPV20Years(combined, electricityCost)));
           setcost20YearNoPV(cost20yearNoPvResult);
 
-          const cost1yearPVResult = parseInt(electricityCostPV1Years(false, results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost));
+          const cost1yearPVResult = parseInt(calculateElectricityCostPV1Years(false, results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost));
           setcost1yearPV(cost1yearPVResult);
+
+          const cost1yearPVEMSResult = parseInt(calculateElectricityCostPV1Years(true, results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost));
+          setcost1yearPVEMS(cost1yearPVEMSResult);
+
+          const cost20yearPVResult = parseInt(calculateElectricityCostPV20Years(false, results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost));
+          setcost20yearPV(cost20yearPVResult);
+
+          const cost20yearPVEMSResult = parseInt(calculateElectricityCostPV20Years(true, results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost));
+          setcost20yearPVEMS(cost20yearPVEMSResult);
 
           /* TODO:Revisar */
           const breakEvenResult = calculateBreakEven(results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, heatpumpType, energyUsagekWh, odometerIncreaseKWH, true, energyUsageHeatpumpResult, combined, houseHoldPvPercentageResult, pvUsagePercentageResult);
@@ -335,7 +384,14 @@ const GetResults = () => {
       <h1>Gesamtkosten Strom</h1>
       <p>ohne PV (1year): {cost1YearNoPV}€</p>
       <p>ohne PV (20Years): {cost20YearNoPV}€</p>
-      <p>mit PV (1year): {cost1yearPV}</p>
+      <p>mit PV (1year): {cost1yearPV}€</p>
+      <p>saving PV (1year): {cost1YearNoPV - cost1yearPV}€</p>
+      <p>mit PV und EMS (1year): {cost1yearPVEMS}€</p>
+      <p>saving PV + EMS (1year): {cost1YearNoPV - cost1yearPVEMS}€</p>
+      <p>mit PV (20year): {cost20yearPV}€</p>
+      <p>saving PV (20year): {cost20YearNoPV - cost20yearPV}€</p>
+      <p>mit PV und EMS (20year): {cost20yearPVEMS}€</p>
+      <p>saving PV + EMS (20year): {cost20YearNoPV - cost20yearPVEMS}€</p>
       <h1>Amortisationszeit</h1>
       <div style={{ display: "flex" }}>
         <div style={{ maxWidth: "300px", maxHeight: "150px", overflow: "auto", marginRight: "20px" }}>
