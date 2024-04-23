@@ -578,10 +578,10 @@ class NavContent extends React.Component {
           {activeView === 8 && <CostStep1 />}
           {activeView === 9 && <CostStep2 />}
           {activeView === 10 && <CostStep3 />}
-          {activeView === 12 && <ResultGetResults />}
-          {activeView === 11 && <ResultStep1 />}
-          {/* {activeView === 12 && <ResultStep2 />} */}
-          {activeView === 13 && <ResultStep3 />}
+          {activeView === 11 && <ResultGetResults />}
+          {activeView === 12 && <ResultStep1 />}
+          {activeView === 13 && <ResultStep2 />}
+          {activeView === 14 && <ResultStep3 />}
         </Box>
       </div>
     );
