@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 import resultService from "../../../services/results";
 import AppContext from "../../../AppContext";
+import ResultContext from "../../../ResultContext";
 
 const calculateEnergyUsageCombined = (results, energyUsageHeatpump, energyUsagekWh, odometerIncreaseKWH) => {
   return Math.round(energyUsageHeatpump + parseInt(energyUsagekWh) + odometerIncreaseKWH);
@@ -196,7 +197,59 @@ const calculateElectricityCostPV20Years = (mit_ems, result, PVcostLookupTable, p
 };
 
 const GetResults = () => {
-  const [tab, setTab] = useState(null);
+  const {
+    tab,
+    setTab,
+    tabNoEms,
+    setTabNoEms,
+    scenario,
+    setScenario,
+    calculatedResults,
+    setCalculatedResults,
+    calculatedResultsNoEms,
+    setCalculatedResultsNoEms,
+    energyUsageCombined,
+    setEnergyUsageCombined,
+    energyUsageCombinedNoEms,
+    setEnergyUsageCombinedNoEms,
+    breakEven,
+    setBreakEven,
+    breakEvenNoEms,
+    setBreakEvenNoEms,
+    energyUsageHeatpump,
+    setEnergyUsageHeatpump,
+    energyUsageHeatpumpNoEms,
+    setEnergyUsageHeatpumpNoEms,
+    gridUsagePercentage,
+    setGridUsagePercentage,
+    gridUsagePercentageNoEms,
+    setGridUsagePercentageNoEms,
+    pvUsagePercentage,
+    setPvUsagePercentage,
+    pvUsagePercentageNoEms,
+    setPvUsagePercentageNoEms,
+    gridFeedPercentage,
+    setGridFeedPercentage,
+    gridFeedPercentageNoEms,
+    setGridFeedPercentageNoEms,
+    houseHoldPvPercentage,
+    setHouseHoldPvPercentage,
+    houseHoldPvPercentageNoEms,
+    setHouseHoldPvPercentageNoEms,
+    cost1YearNoPV,
+    setCost1YearNoPV,
+    cost20YearNoPV,
+    setCost20YearNoPV,
+    cost1yearPV,
+    setCost1yearPV,
+    cost1yearPVEMS,
+    setCost1yearPVEMS,
+    cost20yearPV,
+    setCost20yearPV,
+    cost20yearPVEMS,
+    setCost20yearPVEMS,
+  } = useContext(ResultContext);
+  /* const [tab, setTab] = useState(null);
   const [tabNoEms, setTabNoEms] = useState(null);
   const [scenario, setScenario] = useState(null);
   const [calculatedResults, setCalculatedResults] = useState([]);
@@ -220,7 +273,7 @@ const GetResults = () => {
   const [cost1yearPV, setcost1yearPV] = useState(null);
   const [cost1yearPVEMS, setcost1yearPVEMS] = useState(null);
   const [cost20yearPV, setcost20yearPV] = useState(null);
-  const [cost20yearPVEMS, setcost20yearPVEMS] = useState(null);
+  const [cost20yearPVEMS, setcost20yearPVEMS] = useState(null); */
 
   const context = useContext(AppContext);
   const { backendUrl, kfwValue, ev, heatpumpType, energyUsagekWh, odometerIncreaseKWH, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, setActiveView } = context;
@@ -277,7 +330,7 @@ const GetResults = () => {
           // Procesamiento de los resultados de la primera solicitud
           setCalculatedResults(results);
           const energyUsageHeatpumpResult = calculateheatpumpUsageKWH(results, heatpumpType);
-          setenergyUsageHeatpump(energyUsageHeatpumpResult);
+          setEnergyUsageHeatpump(energyUsageHeatpumpResult);
 
           const combined = calculateEnergyUsageCombined(results, energyUsageHeatpumpResult, energyUsagekWh, odometerIncreaseKWH);
           if (sessionStorage.getItem("energyUsageCombined") !== "") {
@@ -286,46 +339,46 @@ const GetResults = () => {
           setEnergyUsageCombined(combined);
 
           const gridUsagePercentageResult = calculategridUsagePercentage(results, combined);
-          setgridUsagePercentage(gridUsagePercentageResult);
+          setGridUsagePercentage(gridUsagePercentageResult);
 
           const pvUsagePercentageResult = calculatepvUsagePercentage(results, combined);
-          setpvUsagePercentage(pvUsagePercentageResult);
+          setPvUsagePercentage(pvUsagePercentageResult);
 
           const gridFeedPercentageResult = calculatedgridFeedPercentage(results);
-          setgridFeedPercentage(gridFeedPercentageResult);
+          setGridFeedPercentage(gridFeedPercentageResult);
 
           const houseHoldPvPercentageResult = calculatedHouseholdpvPercentage(results);
-          sethouseHoldPvPercentageNoEms(houseHoldPvPercentageResult);
+          setHouseHoldPvPercentageNoEms(houseHoldPvPercentageResult);
 
           const cost1yearNoPvResult = Math.abs(parseInt(calculateElectricityCostNoPV1Year(5, 1, combined, electricityCost).replace(".", "").replace(",", "")));
-          setcost1YearNoPV(cost1yearNoPvResult);
+          setCost1YearNoPV(cost1yearNoPvResult);
 
           const cost20yearNoPvResult = Math.abs(parseInt(calculateElectricityCostNoPV20Years(combined, electricityCost)));
-          setcost20YearNoPV(cost20yearNoPvResult);
+          setCost20YearNoPV(cost20yearNoPvResult);
 
           const cost1yearPVResult = parseInt(calculateElectricityCostPV1Years(false, results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost));
-          setcost1yearPV(cost1yearPVResult);
+          setCost1yearPV(cost1yearPVResult);
 
           const cost1yearPVEMSResult = parseInt(calculateElectricityCostPV1Years(true, results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost));
-          setcost1yearPVEMS(cost1yearPVEMSResult);
+          setCost1yearPVEMS(cost1yearPVEMSResult);
 
           const cost20yearPVResult = parseInt(calculateElectricityCostPV20Years(false, results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost));
-          setcost20yearPV(cost20yearPVResult);
+          setCost20yearPV(cost20yearPVResult);
 
           const cost20yearPVEMSResult = parseInt(calculateElectricityCostPV20Years(true, results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost));
-          setcost20yearPVEMS(cost20yearPVEMSResult);
+          setCost20yearPVEMS(cost20yearPVEMSResult);
 
           const breakEvenResult = calculateBreakEven(results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, heatpumpType, energyUsagekWh, odometerIncreaseKWH, true, energyUsageHeatpumpResult, combined, houseHoldPvPercentageResult, pvUsagePercentageResult);
 
           if (sessionStorage.getItem("heatpumpPVems") !== "") {
             sessionStorage.setItem("heatpumpPVems", JSON.stringify(breakEvenResult));
           }
-          setbreakEven(breakEvenResult);
+          setBreakEven(breakEvenResult);
 
           // Procesamiento de los resultados de la segunda solicitud
           setCalculatedResultsNoEms(resultsNoEMS);
           const energyUsageHeatpumpResultNoEms = calculateheatpumpUsageKWH(resultsNoEMS, heatpumpType);
-          setenergyUsageHeatpumpNoEms(energyUsageHeatpumpResultNoEms);
+          setEnergyUsageHeatpumpNoEms(energyUsageHeatpumpResultNoEms);
 
           const combinedNoEms = calculateEnergyUsageCombined(resultsNoEMS, energyUsageHeatpumpResultNoEms, energyUsagekWh, odometerIncreaseKWH);
           if (sessionStorage.getItem("energyUsageCombinedNoEms") !== "") {
@@ -334,21 +387,21 @@ const GetResults = () => {
           setEnergyUsageCombinedNoEms(combinedNoEms);
 
           const gridUsagePercentageResultNoEms = Math.round(calculategridUsagePercentage(resultsNoEMS, combinedNoEms));
-          setgridUsagePercentageNoEms(gridUsagePercentageResultNoEms);
+          setGridUsagePercentageNoEms(gridUsagePercentageResultNoEms);
 
           const pvUsagePercentageResultNoEms = calculatepvUsagePercentage(resultsNoEMS, combinedNoEms);
-          setpvUsagePercentageNoEms(pvUsagePercentageResultNoEms);
+          setPvUsagePercentageNoEms(pvUsagePercentageResultNoEms);
 
           const gridFeedPercentageResultNoEms = calculatedgridFeedPercentage(resultsNoEMS);
-          setgridFeedPercentageNoEms(gridFeedPercentageResultNoEms);
+          setGridFeedPercentageNoEms(gridFeedPercentageResultNoEms);
 
           const houseHoldPvPercentageResultNoEms = calculatedHouseholdpvPercentage(resultsNoEMS);
-          sethouseHoldPvPercentage(houseHoldPvPercentageResultNoEms);
+          setHouseHoldPvPercentage(houseHoldPvPercentageResultNoEms);
 
           const breakEvenResultNoEms = calculateBreakEven(resultsNoEMS, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, heatpumpType, energyUsagekWh, odometerIncreaseKWH, false, energyUsageHeatpumpResultNoEms, combinedNoEms, houseHoldPvPercentageResultNoEms, pvUsagePercentageResultNoEms);
-          setbreakEvenNoEms(breakEvenResultNoEms);
+          setBreakEvenNoEms(breakEvenResultNoEms);
 
-          setActiveView(12);
+          /* setActiveView(12); */
         })
         .catch((error) => {
           console.error("Error al obtener resultados:", error);
