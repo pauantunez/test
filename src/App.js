@@ -4,7 +4,6 @@ import "./App.css";
 import Main from "./components/main";
 import Welcome from "./components/welcome";
 import { SimulatorProvider } from "./AppContext";
-import { ResultProvider } from "./ResultContext";
 
 class App extends React.Component {
   componentDidMount() {}
@@ -15,13 +14,11 @@ class App extends React.Component {
         <Suspense fallback="loading">
           <div className="App">
             <SimulatorProvider>
-              <ResultProvider>
-                <Route exact path="/" render={(props) => <Redirect to="/deDE/welcome" />} />
+              <Route exact path="/" render={(props) => <Redirect to="/deDE/welcome" />} />
 
-                <Route exact path="/:lang/main" component={Main} />
+              <Route exact path="/:lang/main" component={Main} />
 
-                <Route exact path="/:lang/welcome" component={Welcome} />
-              </ResultProvider>
+              <Route exact path="/:lang/welcome" component={Welcome} />
             </SimulatorProvider>
           </div>
         </Suspense>

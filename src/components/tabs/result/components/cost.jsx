@@ -581,7 +581,8 @@ class Cost extends React.Component {
   };
 
   render() {
-    const { loading } = this.context;
+    const { loading, energyUsageHeatpump } = this.context;
+    console.log("🚀 ~ Cost ~ render ~ energyUsageHeatpump:", energyUsageHeatpump);
 
     const { costOverTime } = this.context;
     // Ohne PV

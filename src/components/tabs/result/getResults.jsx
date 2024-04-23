@@ -197,6 +197,35 @@ const calculateElectricityCostPV20Years = (mit_ems, result, PVcostLookupTable, p
 };
 
 const GetResults = () => {
+  /* const [tab, setTab] = useState(null);
+  const [tabNoEms, setTabNoEms] = useState(null);
+  const [scenario, setScenario] = useState(null);
+  const [calculatedResults, setCalculatedResults] = useState([]);
+  const [calculatedResultsNoEms, setCalculatedResultsNoEms] = useState([]);
+  const [energyUsageCombined, setEnergyUsageCombined] = useState(null);
+  const [energyUsageCombinedNoEms, setEnergyUsageCombinedNoEms] = useState(null);
+  const [breakEven, setbreakEven] = useState([]);
+  const [breakEvenNoEms, setbreakEvenNoEms] = useState([]);
+  const [energyUsageHeatpump, setenergyUsageHeatpump] = useState("test");
+  const [energyUsageHeatpumpNoEms, setenergyUsageHeatpumpNoEms] = useState(null);
+  const [gridUsagePercentage, setgridUsagePercentage] = useState(null);
+  const [gridUsagePercentageNoEms, setgridUsagePercentageNoEms] = useState(null);
+  const [pvUsagePercentage, setpvUsagePercentage] = useState(null);
+  const [pvUsagePercentageNoEms, setpvUsagePercentageNoEms] = useState(null);
+  const [gridFeedPercentage, setgridFeedPercentage] = useState(null);
+  const [gridFeedPercentageNoEms, setgridFeedPercentageNoEms] = useState(null);
+  const [houseHoldPvPercentage, sethouseHoldPvPercentage] = useState(null);
+  const [houseHoldPvPercentageNoEms, sethouseHoldPvPercentageNoEms] = useState(null);
+  const [cost1YearNoPV, setcost1YearNoPV] = useState(null);
+  const [cost20YearNoPV, setcost20YearNoPV] = useState(null);
+  const [cost1yearPV, setcost1yearPV] = useState(null);
+  const [cost1yearPVEMS, setcost1yearPVEMS] = useState(null);
+  const [cost20yearPV, setcost20yearPV] = useState(null);
+  const [cost20yearPVEMS, setcost20yearPVEMS] = useState(null); */
+
+  const context = useContext(AppContext);
+  const { backendUrl, kfwValue, ev, heatpumpType, energyUsagekWh, odometerIncreaseKWH, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, setActiveView } = context;
+
   const {
     tab,
     setTab,
@@ -248,35 +277,7 @@ const GetResults = () => {
     setCost20yearPV,
     cost20yearPVEMS,
     setCost20yearPVEMS,
-  } = useContext(ResultContext);
-  /* const [tab, setTab] = useState(null);
-  const [tabNoEms, setTabNoEms] = useState(null);
-  const [scenario, setScenario] = useState(null);
-  const [calculatedResults, setCalculatedResults] = useState([]);
-  const [calculatedResultsNoEms, setCalculatedResultsNoEms] = useState([]);
-  const [energyUsageCombined, setEnergyUsageCombined] = useState(null);
-  const [energyUsageCombinedNoEms, setEnergyUsageCombinedNoEms] = useState(null);
-  const [breakEven, setbreakEven] = useState([]);
-  const [breakEvenNoEms, setbreakEvenNoEms] = useState([]);
-  const [energyUsageHeatpump, setenergyUsageHeatpump] = useState("test");
-  const [energyUsageHeatpumpNoEms, setenergyUsageHeatpumpNoEms] = useState(null);
-  const [gridUsagePercentage, setgridUsagePercentage] = useState(null);
-  const [gridUsagePercentageNoEms, setgridUsagePercentageNoEms] = useState(null);
-  const [pvUsagePercentage, setpvUsagePercentage] = useState(null);
-  const [pvUsagePercentageNoEms, setpvUsagePercentageNoEms] = useState(null);
-  const [gridFeedPercentage, setgridFeedPercentage] = useState(null);
-  const [gridFeedPercentageNoEms, setgridFeedPercentageNoEms] = useState(null);
-  const [houseHoldPvPercentage, sethouseHoldPvPercentage] = useState(null);
-  const [houseHoldPvPercentageNoEms, sethouseHoldPvPercentageNoEms] = useState(null);
-  const [cost1YearNoPV, setcost1YearNoPV] = useState(null);
-  const [cost20YearNoPV, setcost20YearNoPV] = useState(null);
-  const [cost1yearPV, setcost1yearPV] = useState(null);
-  const [cost1yearPVEMS, setcost1yearPVEMS] = useState(null);
-  const [cost20yearPV, setcost20yearPV] = useState(null);
-  const [cost20yearPVEMS, setcost20yearPVEMS] = useState(null); */
-
-  const context = useContext(AppContext);
-  const { backendUrl, kfwValue, ev, heatpumpType, energyUsagekWh, odometerIncreaseKWH, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, setActiveView } = context;
+  } = context;
 
   useEffect(() => {
     getScenario();
@@ -287,7 +288,7 @@ const GetResults = () => {
   }, [tab, scenario]);
 
   const getScenario = () => {
-    const { ev, preHeatTempOption, energyUsagekWh, BuildingSize, evProfile, buildingTypePreHeatOption, kfwValue, dualPreHeatOptionEVLookupTable, singlePreHeatOptionEVLookupTable, singlePreHeatOptionNoEVLookupTable, dualPreHeatOptionNoEVLookupTable, setScenarioInDatabase } = context;
+    const { ev, preHeatTempOption, energyUsagekWh, BuildingSize, evProfile, buildingTypePreHeatOption, kfwValue, dualPreHeatOptionEVLookupTable, singlePreHeatOptionEVLookupTable, singlePreHeatOptionNoEVLookupTable, dualPreHeatOptionNoEVLookupTable, setScenarioInDatabase, setScenario } = context;
 
     let validateOptions = buildingTypePreHeatOption.find((o) => o.buildingType === kfwValue);
     let scenarioInDatabase;
@@ -309,7 +310,7 @@ const GetResults = () => {
   };
 
   const getTab = () => {
-    const { tabEntries, pvOutputkWh, homeStorageSizekWh } = context;
+    const { tabEntries, pvOutputkWh, homeStorageSizekWh, setTab } = context;
     let tabInTable = tabEntries.find((o) => {
       return o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Ja";
     });
