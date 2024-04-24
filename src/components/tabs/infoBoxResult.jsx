@@ -78,24 +78,9 @@ class InfoBoxResult extends React.Component {
     return gridUsagePercent;
   };
 
-  findClosestPositionTo0 = () => {
-    const { heatpumpPV } = this.context;
-    let closestPosition = 0;
-    let closestValue = Math.abs(heatpumpPV[0].expenditure);
-    for (let i = 1; i < heatpumpPV.length; i++) {
-      const actualValue = Math.abs(heatpumpPV[i].expenditure);
-
-      if (actualValue < closestValue) {
-        closestValue = actualValue;
-        closestPosition = i;
-      }
-    }
-
-    return closestPosition;
-  };
-
   breakEvenPV = () => {
-    const heatpumpPV = JSON.parse(sessionStorage.getItem("heatpumpPV"));
+    const { breakEvenNoEms } = this.context;
+    const heatpumpPV = breakEvenNoEms;
     if (!heatpumpPV || heatpumpPV.length === 0) {
       return null;
     }
@@ -113,11 +98,8 @@ class InfoBoxResult extends React.Component {
   };
 
   breakEvenPVems = () => {
-    /* const { heatpumpPV, heatpumpPVems } = this.context;
-    let yearBreakEven = heatpumpPVems.findIndex((n) => n.expenditure > 0);
-
-    return yearBreakEven; */
-    const heatpumpPVems = JSON.parse(sessionStorage.getItem("heatpumpPVems"));
+    const { breakEven } = this.context;
+    const heatpumpPVems = breakEven;
     if (!heatpumpPVems || heatpumpPVems.length === 0) {
       return null;
     }
@@ -136,8 +118,9 @@ class InfoBoxResult extends React.Component {
   };
 
   breakEvenPoint = () => {
-    const heatpumpPVems = JSON.parse(sessionStorage.getItem("heatpumpPVems"));
-    const heatpumpPV = JSON.parse(sessionStorage.getItem("heatpumpPV"));
+    const { breakEven, breakEvenNoEms } = this.context;
+    const heatpumpPVems = breakEven;
+    const heatpumpPV = breakEvenNoEms;
     if (!heatpumpPV || heatpumpPV.length === 0 || !heatpumpPVems || heatpumpPVems.length === 0) {
       return null;
     }
@@ -146,13 +129,6 @@ class InfoBoxResult extends React.Component {
         return index;
       }
     }
-  };
-
-  amortizationDifference = () => {
-    const { heatpumpPV, heatpumpPVems } = this.context;
-
-    let difference = heatpumpPV[0].expenditure - heatpumpPVems[0].expenditure;
-    return difference;
   };
 
   goToView = (newValue) => {

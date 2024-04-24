@@ -548,7 +548,7 @@ const GetResults = () => {
             <tbody>
               {breakEven.map((item, index) => (
                 <tr key={index}>
-                  <td>{index + 1}</td>
+                  <td>{index}</td>
                   <td>{item.expenditure}</td>
                 </tr>
               ))}
@@ -566,7 +566,7 @@ const GetResults = () => {
             <tbody>
               {breakEvenNoEms.map((item, index) => (
                 <tr key={index}>
-                  <td>{index + 1}</td>
+                  <td>{index}</td>
                   <td>{item.expenditure}</td>
                 </tr>
               ))}
