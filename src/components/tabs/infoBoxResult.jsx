@@ -138,7 +138,7 @@ class InfoBoxResult extends React.Component {
   };
 
   render() {
-    const { costOverTime, offgridEMS, householdEMS, cost1YearNoPV, cost1yearPV, cost20YearNoPV, cost20yearPV, cost1yearPVEMS, cost20yearPVEMS, energyUsageCombined, energyUsageCombinedNoEms, pvUsagePercentageNoEms, gridUsagePercentage, gridUsagePercentageNoEms } = this.context;
+    const { costOverTime, offgridEMS, householdEMS, cost1YearNoPV, cost1yearPV, cost20YearNoPV, cost20yearPV, cost1yearPVEMS, cost20yearPVEMS, energyUsageCombined, energyUsageCombinedNoEms, pvUsagePercentageNoEms, gridUsagePercentage, gridUsagePercentageNoEms, houseHoldPvPercentage, houseHoldPvPercentageNoEms, gridFeedPercentage, gridFeedPercentageNoEms } = this.context;
 
     // Electricity savings
     var savingOnlyPV1year = cost1YearNoPV - cost1yearPV;
@@ -161,14 +161,12 @@ class InfoBoxResult extends React.Component {
 
     //household-use
     // Mit
-    var MIT_GridFeedPercentage = parseInt(sessionStorage.getItem("MIT_GridFeedPercentage"));
-    var MIT_HouseholdUsagePercentage = parseInt(sessionStorage.getItem("MIT_HouseholdUsagePercentage"));
-    var MIT_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("MIT_HouseholdNoEMSpvPercent"));
-    var eigenverbrauchsanteil = MIT_HouseholdUsagePercentage + MIT_HouseholdNoEMSpvPercent;
+    var MIT_GridFeedPercentage = Math.round(gridFeedPercentage);
+    var eigenverbrauchsanteil = Math.round(parseFloat(houseHoldPvPercentage)) + Math.round(parseFloat(houseHoldPvPercentageNoEms - houseHoldPvPercentage));
 
     // Ohne
-    var Onhe_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent"));
-    var Onhe_GridFeedPercentageNoEMS = parseInt(sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS"));
+    var Onhe_HouseholdNoEMSpvPercent = Math.round(parseFloat(houseHoldPvPercentage));
+    var Onhe_GridFeedPercentageNoEMS = Math.round(gridFeedPercentageNoEms);
 
     return (
       <Box component="span" className="infobox-container" style={{ fontSize: "16px", fontWeight: "400", boxShadow: "none", marginLeft: "0px", /*maxWidth: '500px',*/ padding: "16px" }}>
@@ -332,7 +330,7 @@ class InfoBoxResult extends React.Component {
 
                   {householdEMS === true && (
                     <p>
-                      <strong>Ohne ein Energiemanagementsystem</strong> beträgt der <strong>Eigenverbrauchsanteil</strong> lediglich ca. <strong>{MIT_HouseholdNoEMSpvPercent}%</strong>.{" "}
+                      <strong>Ohne ein Energiemanagementsystem</strong> beträgt der <strong>Eigenverbrauchsanteil</strong> lediglich ca. <strong>{Onhe_HouseholdNoEMSpvPercent}%</strong>.{" "}
                     </p>
                   )}
                   {householdEMS === false && (
