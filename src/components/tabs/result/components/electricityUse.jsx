@@ -169,9 +169,9 @@ class ElectricityUse extends React.Component {
       <div>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div style={{ position: "relative", width: "100%", height: "300px", top: "0", left: "0" /*maxWidth: '450px'*/ }}>
-            <div id="electricityUse-1" className="pieContainer" style={{ position: "absolute", width: "100%", height: "300px", display: offgridEMS ? "" : "none" }}>
+            <div id="electricityUse-1" className="pieContainer" style={{ position: "absolute", width: "100%", height: "300px" }}>
               <VictoryPie
-                data={VictoryPieData2EMS}
+                data={offgridEMS ? VictoryPieData2EMS : VictoryPieData2NoEMS}
                 width={pieChartSize}
                 padding={{ top: 0 }}
                 pointerEvents="auto"
@@ -193,54 +193,9 @@ class ElectricityUse extends React.Component {
               />
             </div>
 
-            <div id="electricityUse-2" className="pieContainer" style={{ position: "absolute", width: "100%", height: "300px", display: offgridEMS ? "" : "none" }}>
+            <div id="electricityUse-2" className="pieContainer" style={{ position: "absolute", width: "100%", height: "300px" }}>
               <VictoryPie
-                data={VictoryPieDataEMS}
-                width={pieChartSize}
-                padding={{ top: 0 }}
-                pointerEvents="auto"
-                colorScale={colorScale}
-                labelComponent={<CustomLabelComponent iconSize={pieIconSize} fontSize={pieLabelFontSize} xPositionIconMargin={xPositionIconMargin} yPositionIconMargin={yPositionIconMargin} xPositionEVIconMargin={xPositionEVIconMargin} yPositionEVIconMargin={yPositionEVIconMargin} xPositionHouseholdIconMargin={xPositionHouseholdIconMargin} yPositionHouseholdIconMargin={yPositionHouseholdIconMargin} xPositionHeatpumpLabel={xPositionHeatpumpLabel} xPositionEVLabel={xPositionEVLabel} xPositionHouseholdLabel={xPositionHouseholdLabel} yPositionHeatpumpLabel={yPositionHeatpumpLabel} yPositionEVLabel={yPositionEVLabel} yPositionHouseholdLabel={yPositionHouseholdLabel} />}
-                style={{
-                  pointerEvents: "auto",
-                  userSelect: "auto",
-                  touchAction: "auto",
-                  data: {
-                    fillOpacity: 0,
-                    stroke: "#fff",
-                    strokeWidth: 0,
-                  },
-                  labels: { fill: "white", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: pieLabelFontSize },
-                }}
-              />
-            </div>
-            <div id="electricityUse-1-noems" className="pieContainer" style={{ position: "absolute", width: "100%", height: "300px", display: offgridEMS ? "none" : "" }}>
-              <VictoryPie
-                data={VictoryPieData2NoEMS}
-                width={pieChartSize}
-                padding={{ top: 0 }}
-                pointerEvents="auto"
-                colorScale={colorScale}
-                labelRadius={({ innerRadius }) => innerRadius + innerRadiusMargin}
-                innerRadius={0}
-                style={{
-                  pointerEvents: "auto",
-                  userSelect: "auto",
-                  touchAction: "auto",
-                  data: {
-                    fillOpacity: 1,
-                    stroke: "#fff",
-                    strokeWidth: 4,
-                  },
-                  labels: { fill: ({ datum }) => datum.color, fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: pieLabelFontSize, backgroundcolor: ({ datum }) => datum.backgroundcolor },
-                }}
-                labelComponent={<VictoryLabel backgroundStyle={{ fill: "white" }} backgroundPadding={6} />}
-              />
-            </div>
-
-            <div id="electricityUse-2-noems" className="pieContainer" style={{ position: "absolute", width: "100%", height: "300px", display: offgridEMS ? "none" : "" }}>
-              <VictoryPie
-                data={VictoryPieDataNoEMS}
+                data={offgridEMS ? VictoryPieDataEMS : VictoryPieDataNoEMS}
                 width={pieChartSize}
                 padding={{ top: 0 }}
                 pointerEvents="auto"
