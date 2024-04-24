@@ -1526,6 +1526,12 @@ class SimulatorProvider extends Component {
     breakEvenNoEms: [],
     energyUsageHeatpump: null,
     energyUsageHeatpumpNoEms: null,
+    energyUsageHeatpumpPercentage: null,
+    energyUsageHeatpumpPercentageNoEms: null,
+    energyUsageEvPercentage: null,
+    energyUsageEvPercentageNoEms: null,
+    energyUsageHouseHoldPercentage: null,
+    energyUsageHouseHoldPercentageNoEms: null,
     gridUsagePercentage: null,
     gridUsagePercentageNoEms: null,
     pvUsagePercentage: null,
@@ -2099,6 +2105,24 @@ class SimulatorProvider extends Component {
   };
   setEnergyUsageHeatpumpNoEms = (value) => {
     this.setState((prevState) => ({ energyUsageHeatpumpNoEms: value }));
+  };
+  setEnergyUsageHeatpumpPercentage = (value) => {
+    this.setState((prevState) => ({ energyUsageHeatpumpPercentage: value }));
+  };
+  setEnergyUsageHeatpumpPercentageNoEms = (value) => {
+    this.setState((prevState) => ({ energyUsageHeatpumpPercentageNoEms: value }));
+  };
+  setEnergyUsageEvPercentage = (value) => {
+    this.setState((prevState) => ({ energyUsageEvPercentage: value }));
+  };
+  setEnergyUsageEvPercentageNoEms = (value) => {
+    this.setState((prevState) => ({ energyUsageEvPercentageNoEms: value }));
+  };
+  setEnergyUsageHouseHoldPercentage = (value) => {
+    this.setState((prevState) => ({ energyUsageHouseHoldPercentage: value }));
+  };
+  setEnergyUsageHouseHoldPercentageNoEms = (value) => {
+    this.setState((prevState) => ({ energyUsageHouseHoldPercentageNoEms: value }));
   };
   setGridUsagePercentage = (value) => {
     this.setState((prevState) => ({ gridUsagePercentage: value }));
@@ -2885,6 +2909,12 @@ class SimulatorProvider extends Component {
       cost1yearPVEMS,
       cost20yearPV,
       cost20yearPVEMS,
+      energyUsageHeatpumpPercentage,
+      energyUsageHeatpumpPercentageNoEms,
+      energyUsageEvPercentage,
+      energyUsageEvPercentageNoEms,
+      energyUsageHouseHoldPercentage,
+      energyUsageHouseHoldPercentageNoEms,
     } = this.state;
     const {
       setProduct,
@@ -3030,6 +3060,12 @@ class SimulatorProvider extends Component {
       setCost1yearPVEMS,
       setCost20yearPV,
       setCost20yearPVEMS,
+      setEnergyUsageHeatpumpPercentage,
+      setEnergyUsageHeatpumpPercentageNoEms,
+      setEnergyUsageEvPercentage,
+      setEnergyUsageEvPercentageNoEms,
+      setEnergyUsageHouseHoldPercentage,
+      setEnergyUsageHouseHoldPercentageNoEms,
     } = this;
 
     return (
@@ -3375,6 +3411,12 @@ class SimulatorProvider extends Component {
           cost1yearPVEMS,
           cost20yearPV,
           cost20yearPVEMS,
+          energyUsageHeatpumpPercentage,
+          energyUsageHeatpumpPercentageNoEms,
+          energyUsageEvPercentage,
+          energyUsageEvPercentageNoEms,
+          energyUsageHouseHoldPercentage,
+          energyUsageHouseHoldPercentageNoEms,
           setTab,
           setTabNoEms,
           setScenario,
@@ -3400,6 +3442,12 @@ class SimulatorProvider extends Component {
           setCost1yearPVEMS,
           setCost20yearPV,
           setCost20yearPVEMS,
+          setEnergyUsageHeatpumpPercentage,
+          setEnergyUsageHeatpumpPercentageNoEms,
+          setEnergyUsageEvPercentage,
+          setEnergyUsageEvPercentageNoEms,
+          setEnergyUsageHouseHoldPercentage,
+          setEnergyUsageHouseHoldPercentageNoEms,
         }}
       >
         {children}

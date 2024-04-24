@@ -27,6 +27,16 @@ const calculateheatpumpUsageKWH = (results, heatpumpType) => {
   return Math.round(energyUsageHeatpump + energyUsageHeatingRod);
 };
 
+const calculateEnergyUsagePercentage = (source, energyUsageHeatpump, energyUsageCombined, energyUsagekWh, odometerIncreaseKWH) => {
+  if (source === "heatpump") {
+    return parseFloat((energyUsageHeatpump / energyUsageCombined) * 100).toFixed(2);
+  } else if (source === "household") {
+    return parseFloat((parseInt(energyUsagekWh) / energyUsageCombined) * 100).toFixed(2);
+  } else if (source === "ev") {
+    return parseFloat((parseInt(odometerIncreaseKWH) / energyUsageCombined) * 100).toFixed(2);
+  }
+};
+
 const calculategridUsagePercentage = (results, energyUsageCombined) => {
   const { energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = results;
 
@@ -283,6 +293,18 @@ const GetResults = () => {
     setCost20yearPV,
     cost20yearPVEMS,
     setCost20yearPVEMS,
+    energyUsageHeatpumpPercentage,
+    setEnergyUsageHeatpumpPercentage,
+    energyUsageHeatpumpPercentageNoEms,
+    setEnergyUsageHeatpumpPercentageNoEms,
+    energyUsageEvPercentage,
+    setEnergyUsageEvPercentage,
+    energyUsageEvPercentageNoEms,
+    setEnergyUsageEvPercentageNoEms,
+    energyUsageHouseHoldPercentage,
+    setEnergyUsageHouseHoldPercentage,
+    energyUsageHouseHoldPercentageNoEms,
+    setEnergyUsageHouseHoldPercentageNoEms,
   } = context;
 
   useEffect(() => {
@@ -340,8 +362,16 @@ const GetResults = () => {
           setEnergyUsageHeatpump(energyUsageHeatpumpResult);
 
           const combined = calculateEnergyUsageCombined(results, energyUsageHeatpumpResult, energyUsagekWh, odometerIncreaseKWH);
-
           setEnergyUsageCombined(combined);
+
+          const energyUsageHeatpumpPercentageResult = calculateEnergyUsagePercentage("heatpump", energyUsageHeatpumpResult, combined, energyUsagekWh, odometerIncreaseKWH);
+          setEnergyUsageHeatpumpPercentage(energyUsageHeatpumpPercentageResult);
+
+          const energyUsageEvPercentageResult = calculateEnergyUsagePercentage("ev", energyUsageHeatpumpResult, combined, energyUsagekWh, odometerIncreaseKWH);
+          setEnergyUsageEvPercentage(energyUsageEvPercentageResult);
+
+          const energyUsageHouseHoldPercentageResult = calculateEnergyUsagePercentage("household", energyUsageHeatpumpResult, combined, energyUsagekWh, odometerIncreaseKWH);
+          setEnergyUsageHouseHoldPercentage(energyUsageHouseHoldPercentageResult);
 
           const gridUsagePercentageResult = calculategridUsagePercentage(results, combined);
           setGridUsagePercentage(gridUsagePercentageResult);
@@ -383,8 +413,16 @@ const GetResults = () => {
           setEnergyUsageHeatpumpNoEms(energyUsageHeatpumpResultNoEms);
 
           const combinedNoEms = calculateEnergyUsageCombined(resultsNoEMS, energyUsageHeatpumpResultNoEms, energyUsagekWh, odometerIncreaseKWH);
-
           setEnergyUsageCombinedNoEms(combinedNoEms);
+
+          const energyUsageHeatpumpPercentageResultNoEms = calculateEnergyUsagePercentage("heatpump", energyUsageHeatpumpResultNoEms, combinedNoEms, energyUsagekWh, odometerIncreaseKWH);
+          setEnergyUsageHeatpumpPercentageNoEms(energyUsageHeatpumpPercentageResultNoEms);
+
+          const energyUsageEvPercentageResultNoEms = calculateEnergyUsagePercentage("ev", energyUsageHeatpumpResultNoEms, combinedNoEms, energyUsagekWh, odometerIncreaseKWH);
+          setEnergyUsageEvPercentageNoEms(energyUsageEvPercentageResultNoEms);
+
+          const energyUsageHouseHoldPercentageResultNoEms = calculateEnergyUsagePercentage("household", energyUsageHeatpumpResultNoEms, combinedNoEms, energyUsagekWh, odometerIncreaseKWH);
+          setEnergyUsageHouseHoldPercentageNoEms(energyUsageHouseHoldPercentageResultNoEms);
 
           const gridUsagePercentageResultNoEms = Math.round(calculategridUsagePercentage(resultsNoEMS, combinedNoEms));
           setGridUsagePercentageNoEms(gridUsagePercentageResultNoEms);
@@ -413,11 +451,17 @@ const GetResults = () => {
     <div>
       <h1>1 graph (Stromverbrauch)</h1>
       <p>energyUsageHeatpump: {energyUsageHeatpump}</p>
+      <p>energyUsageHeatpump Percentage: {energyUsageHeatpumpPercentage}</p>
       <p>energyUsageHeatpumpNoEms: {energyUsageHeatpumpNoEms}</p>
+      <p>energyUsageHeatpumpNoEms Percentage: {energyUsageHeatpumpPercentageNoEms}</p>
       <p>EnergyUsageCombinedEms: {energyUsageCombined}</p>
       <p>EnergyUsageCombinedNoEms: {energyUsageCombinedNoEms}</p>
       <p>Elektro-Auro: {odometerIncreaseKWH}</p>
+      <p>Elektro-Auro Percentage: {energyUsageEvPercentage}</p>
+      <p>Elektro-Auro PercentageNoEms: {energyUsageEvPercentageNoEms}</p>
       <p>Haushalt: {energyUsagekWh}</p>
+      <p>Haushalt Percentage: {energyUsageHouseHoldPercentage}</p>
+      <p>Haushalt PercentageNoEms: {energyUsageHouseHoldPercentageNoEms}</p>
       <h1>2 graph (Autarkie)</h1>
       <p>gridUsagePercentage (Netzbezug): {gridUsagePercentage}</p>
       <p>gridUsagePercentageNoEms (Netzbezug): {gridUsagePercentageNoEms}</p>
