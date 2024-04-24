@@ -63,24 +63,9 @@ class InfoBoxResultPdf extends React.Component {
     return gridUsagePercent;
   };
 
-  findClosestPositionTo0 = () => {
-    const { heatpumpPV } = this.context;
-    let closestPosition = 0;
-    let closestValue = Math.abs(heatpumpPV[0].expenditure);
-    for (let i = 1; i < heatpumpPV.length; i++) {
-      const actualValue = Math.abs(heatpumpPV[i].expenditure);
-
-      if (actualValue < closestValue) {
-        closestValue = actualValue;
-        closestPosition = i;
-      }
-    }
-
-    return closestPosition;
-  };
-
   breakEvenPV = () => {
-    const { heatpumpPV } = this.context;
+    const { breakEvenNoEms } = this.context;
+    const heatpumpPV = breakEvenNoEms;
     let closestPosition = 0;
     let closestValue = Math.abs(heatpumpPV[0].expenditure);
     for (let i = 1; i < heatpumpPV.length; i++) {
@@ -95,7 +80,8 @@ class InfoBoxResultPdf extends React.Component {
   };
 
   breakEvenPVems = () => {
-    const { heatpumpPVems } = this.context;
+    const { breakEven } = this.context;
+    const heatpumpPVems = breakEven;
     let closestPosition = 0;
     let closestValue = Math.abs(heatpumpPVems[0].expenditure);
     for (let i = 1; i < heatpumpPVems.length; i++) {
@@ -111,20 +97,14 @@ class InfoBoxResultPdf extends React.Component {
   };
 
   breakEvenPoint = () => {
-    const { heatpumpPV, heatpumpPVems } = this.context;
-
+    const { breakEven, breakEvenNoEms } = this.context;
+    const heatpumpPVems = breakEven;
+    const heatpumpPV = breakEvenNoEms;
     for (let index = 0; index < heatpumpPV.length; index++) {
       if (heatpumpPVems[index].expenditure > heatpumpPV[index].expenditure) {
         return index;
       }
     }
-  };
-
-  amortizationDifference = () => {
-    const { heatpumpPV, heatpumpPVems } = this.context;
-
-    let difference = heatpumpPV[0].expenditure - heatpumpPVems[0].expenditure;
-    return difference;
   };
 
   goToView = (newValue) => {
