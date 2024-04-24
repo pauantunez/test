@@ -137,7 +137,7 @@ class Additional extends React.Component {
   };
 
   render() {
-    const { breakEvenBase64, setBackdrop, gridUsagePercentage, pvUsagePercentageNoEms, gridUsagePercentageNoEms } = this.context;
+    const { breakEvenBase64, setBackdrop, gridUsagePercentage, pvUsagePercentageNoEms, gridUsagePercentageNoEms, gridFeedPercentage, houseHoldPvPercentage, houseHoldPvPercentageNoEms, gridFeedPercentageNoEms } = this.context;
 
     //OffGrid
     // Mit
@@ -150,14 +150,12 @@ class Additional extends React.Component {
 
     //household-use
     // Mit
-    var MIT_GridFeedPercentage = parseInt(sessionStorage.getItem("MIT_GridFeedPercentage"));
-    var MIT_HouseholdUsagePercentage = parseInt(sessionStorage.getItem("MIT_HouseholdUsagePercentage"));
-    var MIT_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("MIT_HouseholdNoEMSpvPercent"));
-    var eigenverbrauchsanteil = MIT_HouseholdUsagePercentage + MIT_HouseholdNoEMSpvPercent;
+    var MIT_GridFeedPercentage = Math.round(gridFeedPercentage);
+    var eigenverbrauchsanteil = Math.round(parseFloat(houseHoldPvPercentage)) + Math.round(parseFloat(houseHoldPvPercentageNoEms - houseHoldPvPercentage));
 
     // Ohne
-    var Onhe_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent_NoEMS"));
-    var Onhe_GridFeedPercentageNoEMS = parseInt(sessionStorage.getItem("Onhe_GridFeedPercentage_NoEMS"));
+    var Onhe_HouseholdNoEMSpvPercent = Math.round(parseFloat(houseHoldPvPercentage));
+    var Onhe_GridFeedPercentageNoEMS = Math.round(gridFeedPercentageNoEms);
 
     const addFooters = (doc) => {
       const pageCount = doc.internal.getNumberOfPages();
@@ -805,7 +803,7 @@ class Additional extends React.Component {
                           Das bedeutet: bis zu <strong>{Math.round(parseFloat(eigenverbrauchsanteil).toFixed(2))}%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
                         </p>
                         <p>
-                          <strong>Ohne ein Energiemanagementsystem</strong> beträgt der <strong>Eigenverbrauchsanteil</strong> lediglich ca. <strong>{MIT_HouseholdNoEMSpvPercent}%</strong>.{" "}
+                          <strong>Ohne ein Energiemanagementsystem</strong> beträgt der <strong>Eigenverbrauchsanteil</strong> lediglich ca. <strong>{Onhe_HouseholdNoEMSpvPercent}%</strong>.{" "}
                         </p>
                         <p>
                           Ca.&nbsp;
