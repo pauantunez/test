@@ -138,7 +138,7 @@ class InfoBoxResult extends React.Component {
   };
 
   render() {
-    const { costOverTime, offgridEMS, householdEMS, cost1YearNoPV, cost1yearPV, cost20YearNoPV, cost20yearPV, cost1yearPVEMS, cost20yearPVEMS } = this.context;
+    const { costOverTime, offgridEMS, householdEMS, cost1YearNoPV, cost1yearPV, cost20YearNoPV, cost20yearPV, cost1yearPVEMS, cost20yearPVEMS, energyUsageCombined, energyUsageCombinedNoEms } = this.context;
 
     // Electricity savings
     var savingOnlyPV1year = cost1YearNoPV - cost1yearPV;
@@ -255,7 +255,7 @@ class InfoBoxResult extends React.Component {
               <div className="infobox-row-container">
                 <div className="infobox-row" style={{ display: "block", lineHeight: "24px", fontSize: "14px", borderBottom: "none" }}>
                   <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>
-                    Stromverbrauch gesamt: {Math.round(this.energyUsageCombined()).toLocaleString("de-DE")} kWh
+                    Stromverbrauch gesamt: {Math.round(offgridEMS ? energyUsageCombined : energyUsageCombinedNoEms).toLocaleString("de-DE")} kWh
                     <IconButton
                       id="editBtn"
                       aria-label="edit"
