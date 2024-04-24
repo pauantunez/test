@@ -138,7 +138,7 @@ class InfoBoxResult extends React.Component {
   };
 
   render() {
-    const { costOverTime, offgridEMS, householdEMS, cost1YearNoPV, cost1yearPV, cost20YearNoPV, cost20yearPV, cost1yearPVEMS, cost20yearPVEMS, energyUsageCombined, energyUsageCombinedNoEms } = this.context;
+    const { costOverTime, offgridEMS, householdEMS, cost1YearNoPV, cost1yearPV, cost20YearNoPV, cost20yearPV, cost1yearPVEMS, cost20yearPVEMS, energyUsageCombined, energyUsageCombinedNoEms, pvUsagePercentageNoEms, gridUsagePercentage, gridUsagePercentageNoEms } = this.context;
 
     // Electricity savings
     var savingOnlyPV1year = cost1YearNoPV - cost1yearPV;
@@ -152,14 +152,12 @@ class InfoBoxResult extends React.Component {
 
     //OffGrid
     // Mit
-    var mitGridUsagePercentage = parseInt(sessionStorage.getItem("MIT_GridUsagePercentage"));
-    var mitNoEMSPercentage = parseInt(sessionStorage.getItem("MIT_NoEMSPercentageOffGrid"));
-    var mitPvUsagePercentage = parseInt(sessionStorage.getItem("MIT_PvUsagePercentage"));
-    var autarkiegradWithEMS = mitNoEMSPercentage + mitPvUsagePercentage;
+    var mitGridUsagePercentage = Math.round(gridUsagePercentage);
+    var autarkiegradWithEMS = Math.round(pvUsagePercentageNoEms) + Math.round(gridUsagePercentageNoEms - gridUsagePercentage);
 
     // Ohne
-    var ohneGridUsagePercentage = parseInt(sessionStorage.getItem("OHNE_GridUsagePercentage"));
-    var ohnePvUsagePercentage = parseInt(sessionStorage.getItem("OHNE_PvUsagePercentage"));
+    var ohneGridUsagePercentage = Math.round(gridUsagePercentageNoEms);
+    var ohnePvUsagePercentage = Math.round(pvUsagePercentageNoEms);
 
     //household-use
     // Mit
@@ -295,7 +293,7 @@ class InfoBoxResult extends React.Component {
 
                   {offgridEMS === true && (
                     <p>
-                      <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>{mitNoEMSPercentage}%</strong>.{" "}
+                      <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>{ohnePvUsagePercentage}%</strong>.{" "}
                     </p>
                   )}
                   {offgridEMS === false && (
