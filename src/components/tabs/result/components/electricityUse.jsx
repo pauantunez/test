@@ -117,56 +117,6 @@ class ElectricityUse extends React.Component {
     }
   };
 
-  heatpumpUsageKWH = (type) => {
-    const { heatpumpType, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
-    var Avg_Eff_JAZ_HP;
-
-    if (heatpumpType === "1") {
-      Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_A_W_MFH;
-    } else {
-      Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_B_W_MFH;
-    }
-
-    //Enegery usage heatpump
-    var energyUsageHeatpump = (parseFloat(EGen_sh_kWh_HP_A_W_MFH) + parseFloat(EGen_sh_kWh_HP_B_W_MFH) + parseFloat(EGen_hw_kWh_HP_A_W_MFH) + parseFloat(EGen_hw_kWh_HP_B_W_MFH)) / parseFloat(Avg_Eff_JAZ_HP);
-
-    var energyUsageHeatingRod = (parseFloat(EGen_sh_kWh_EDWW_MFH) + parseFloat(EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(EGen_hw_kWh_EDWW_MFH) + parseFloat(EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
-
-    return energyUsageHeatpump + energyUsageHeatingRod;
-  };
-
-  energyUsageCombined = () => {
-    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
-    var Avg_Eff_JAZ_HP;
-
-    if (heatpumpType === "1") {
-      Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_A_W_MFH;
-    } else {
-      Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_B_W_MFH;
-    }
-
-    //Enegery usage heatpump
-    var energyUsageHeatpump = (parseFloat(EGen_sh_kWh_HP_A_W_MFH) + parseFloat(EGen_sh_kWh_HP_B_W_MFH) + parseFloat(EGen_hw_kWh_HP_A_W_MFH) + parseFloat(EGen_hw_kWh_HP_B_W_MFH)) / parseFloat(Avg_Eff_JAZ_HP);
-
-    //Energy usage heating rod
-    var energyUsageHeatingRod = (parseFloat(EGen_sh_kWh_EDWW_MFH) + parseFloat(EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(EGen_hw_kWh_EDWW_MFH) + parseFloat(EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
-
-    // return energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH;
-    return energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH;
-  };
-
-  energyUsagePercentage = (source) => {
-    const { heatpumpCombinedUsage, energyUsagekWh, odometerIncreaseKWH } = this.context;
-
-    if (source === "heatpump") {
-      return parseFloat((this.heatpumpUsageKWH() / heatpumpCombinedUsage) * 100).toFixed(2);
-    } else if (source === "household") {
-      return parseFloat((parseInt(energyUsagekWh) / heatpumpCombinedUsage) * 100).toFixed(2);
-    } else if (source === "ev") {
-      return parseFloat((parseInt(odometerIncreaseKWH) / heatpumpCombinedUsage) * 100).toFixed(2);
-    }
-  };
-
   componentDidMount() {
     window.addEventListener("resize", this.handleResize);
 
@@ -179,12 +129,6 @@ class ElectricityUse extends React.Component {
 
     setElectricityUse1SVG(electricityUseChart1_svg[0]);
     setElectricityUse2SVG(electricityUseChart2_svg[0]);
-
-    setHeatpumpCombinedUsage(this.energyUsageCombined());
-
-    setTimeout(() => {
-      this.energyUsagePercentage();
-    }, "1000");
   }
 
   adjustPercentage(value1, value2, value3 = 0) {
@@ -200,25 +144,34 @@ class ElectricityUse extends React.Component {
   }
 
   render() {
-    const { odometerIncreaseKWH, pieChartSize, pieIconSize, innerRadiusMargin, pieLabelFontSize, xPositionHeatpumpLabel, xPositionEVLabel, xPositionHouseholdLabel, yPositionHeatpumpLabel, yPositionEVLabel, yPositionHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin, energyUsagekWh } = this.context;
+    const { odometerIncreaseKWH, pieChartSize, pieIconSize, innerRadiusMargin, pieLabelFontSize, xPositionHeatpumpLabel, xPositionEVLabel, xPositionHouseholdLabel, yPositionHeatpumpLabel, yPositionEVLabel, yPositionHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin, energyUsagekWh, energyUsageHeatpump, energyUsageHeatpumpNoEms, energyUsageHeatpumpPercentage, energyUsageEvPercentage, energyUsageHouseHoldPercentage, energyUsageHeatpumpPercentageNoEms, energyUsageEvPercentageNoEms, energyUsageHouseHoldPercentageNoEms, offgridEMS } = this.context;
 
-    const VictoryPieData = [{ x: 3, y: this.heatpumpUsageKWH(), name: "heatpump", label: parseInt(this.heatpumpUsageKWH()).toLocaleString("de-DE") + " kWh", img: "/img/heatpump_small.svg", color: this.context.selectedTheme === "buderus" ? "#CC36BD" : "#004975" }, ...(odometerIncreaseKWH !== 0 ? [{ x: 2, y: odometerIncreaseKWH, name: "ev", label: odometerIncreaseKWH.toLocaleString("de-DE") + " kWh", img: "/img/ev_small.svg", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#C535BC" }] : []), { x: 1, y: parseInt(energyUsagekWh), name: "household", label: energyUsagekWh.toLocaleString("de-DE") + " kWh", img: "/img/household_small.svg", color: this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896" }];
+    const VictoryPieDataEMS = [{ x: 3, y: energyUsageHeatpump, name: "heatpump", label: parseInt(energyUsageHeatpump).toLocaleString("de-DE") + " kWh", img: "/img/heatpump_small.svg", color: this.context.selectedTheme === "buderus" ? "#CC36BD" : "#004975" }, ...(odometerIncreaseKWH !== 0 ? [{ x: 2, y: odometerIncreaseKWH, name: "ev", label: odometerIncreaseKWH.toLocaleString("de-DE") + " kWh", img: "/img/ev_small.svg", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#C535BC" }] : []), { x: 1, y: parseInt(energyUsagekWh), name: "household", label: energyUsagekWh.toLocaleString("de-DE") + " kWh", img: "/img/household_small.svg", color: this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896" }];
+
+    const VictoryPieDataNoEMS = [{ x: 3, y: energyUsageHeatpumpNoEms, name: "heatpump", label: parseInt(energyUsageHeatpumpNoEms).toLocaleString("de-DE") + " kWh", img: "/img/heatpump_small.svg", color: this.context.selectedTheme === "buderus" ? "#CC36BD" : "#004975" }, ...(odometerIncreaseKWH !== 0 ? [{ x: 2, y: odometerIncreaseKWH, name: "ev", label: odometerIncreaseKWH.toLocaleString("de-DE") + " kWh", img: "/img/ev_small.svg", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#C535BC" }] : []), { x: 1, y: parseInt(energyUsagekWh), name: "household", label: energyUsagekWh.toLocaleString("de-DE") + " kWh", img: "/img/household_small.svg", color: this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896" }];
 
     // Rounded values for VictoryPieData2
-    var roundedEnergyUsagePercentageHeatpump = Math.round(parseFloat(this.energyUsagePercentage("heatpump")));
-    var roundedEnergyUsagePercentageEv = Math.round(parseFloat(this.energyUsagePercentage("ev")));
-    var roundedHouseholdNoEMSpvPercentHousehold = Math.round(parseFloat(this.energyUsagePercentage("household")));
-    roundedEnergyUsagePercentageHeatpump = this.adjustPercentage(roundedEnergyUsagePercentageHeatpump, roundedEnergyUsagePercentageEv, roundedHouseholdNoEMSpvPercentHousehold);
-    const VictoryPieData2 = [{ x: 3, y: this.heatpumpUsageKWH(), name: "heatpump", label: roundedEnergyUsagePercentageHeatpump + "%", img: "/img/heatpump_small.svg", color: this.context.selectedTheme === "buderus" ? "#CC36BD" : "#004975" }, ...(odometerIncreaseKWH !== 0 ? [{ x: 2, y: odometerIncreaseKWH, name: "ev", label: roundedEnergyUsagePercentageEv + "%", img: "/img/ev_small.svg", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#C535BC" }] : []), { x: 1, y: parseInt(energyUsagekWh), name: "household", label: roundedHouseholdNoEMSpvPercentHousehold + "%", img: "/img/household_small.svg", color: this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896" }];
+    var roundedEnergyUsageHeatpumpPercentage = Math.round(energyUsageHeatpumpPercentage);
+    var roundedEnergyUsageEvPercentage = Math.round(energyUsageEvPercentage);
+    var roundedEnergyUsageHouseHoldPercentage = Math.round(energyUsageHouseHoldPercentage);
+    roundedEnergyUsageHeatpumpPercentage = this.adjustPercentage(roundedEnergyUsageHeatpumpPercentage, roundedEnergyUsageEvPercentage, roundedEnergyUsageHouseHoldPercentage);
+    const VictoryPieData2EMS = [{ x: 3, y: energyUsageHeatpump, name: "heatpump", label: roundedEnergyUsageHeatpumpPercentage + "%", img: "/img/heatpump_small.svg", color: this.context.selectedTheme === "buderus" ? "#CC36BD" : "#004975" }, ...(odometerIncreaseKWH !== 0 ? [{ x: 2, y: odometerIncreaseKWH, name: "ev", label: roundedEnergyUsageEvPercentage + "%", img: "/img/ev_small.svg", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#C535BC" }] : []), { x: 1, y: parseInt(energyUsagekWh), name: "household", label: roundedEnergyUsageHouseHoldPercentage + "%", img: "/img/household_small.svg", color: this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896" }];
     const colorScale = [this.context.selectedTheme === "buderus" ? "#CC36BD" : "#004975", odometerIncreaseKWH !== 0 ? (this.context.selectedTheme === "buderus" ? "#5278A2" : "#C535BC") : undefined, this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896"].filter((color) => color !== undefined);
+
+    var roundedEnergyUsageHeatpumpPercentageNoEms = Math.round(energyUsageHeatpumpPercentageNoEms);
+    var roundedEnergyUsageEvPercentageNoEms = Math.round(energyUsageEvPercentageNoEms);
+    var roundedEnergyUsageHouseHoldPercentageNoEms = Math.round(energyUsageHouseHoldPercentageNoEms);
+    roundedEnergyUsageHeatpumpPercentageNoEms = this.adjustPercentage(roundedEnergyUsageHeatpumpPercentageNoEms, roundedEnergyUsageEvPercentageNoEms, roundedEnergyUsageHouseHoldPercentageNoEms);
+
+    const VictoryPieData2NoEMS = [{ x: 3, y: energyUsageHeatpump, name: "heatpump", label: roundedEnergyUsageHeatpumpPercentageNoEms + "%", img: "/img/heatpump_small.svg", color: this.context.selectedTheme === "buderus" ? "#CC36BD" : "#004975" }, ...(odometerIncreaseKWH !== 0 ? [{ x: 2, y: odometerIncreaseKWH, name: "ev", label: roundedEnergyUsageEvPercentageNoEms + "%", img: "/img/ev_small.svg", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#C535BC" }] : []), { x: 1, y: parseInt(energyUsagekWh), name: "household", label: roundedEnergyUsageHouseHoldPercentageNoEms + "%", img: "/img/household_small.svg", color: this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896" }];
 
     return (
       <div>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div style={{ position: "relative", width: "100%", height: "300px", top: "0", left: "0" /*maxWidth: '450px'*/ }}>
-            <div id="electricityUse-1" className="pieContainer" style={{ position: "absolute", width: "100%", height: "300px" }}>
+            <div id="electricityUse-1" className="pieContainer" style={{ position: "absolute", width: "100%", height: "300px", display: offgridEMS ? "" : "none" }}>
               <VictoryPie
-                data={VictoryPieData2}
+                data={VictoryPieData2EMS}
                 width={pieChartSize}
                 padding={{ top: 0 }}
                 pointerEvents="auto"
@@ -240,9 +193,54 @@ class ElectricityUse extends React.Component {
               />
             </div>
 
-            <div id="electricityUse-2" className="pieContainer" style={{ position: "absolute", width: "100%", height: "300px" }}>
+            <div id="electricityUse-2" className="pieContainer" style={{ position: "absolute", width: "100%", height: "300px", display: offgridEMS ? "" : "none" }}>
               <VictoryPie
-                data={VictoryPieData}
+                data={VictoryPieDataEMS}
+                width={pieChartSize}
+                padding={{ top: 0 }}
+                pointerEvents="auto"
+                colorScale={colorScale}
+                labelComponent={<CustomLabelComponent iconSize={pieIconSize} fontSize={pieLabelFontSize} xPositionIconMargin={xPositionIconMargin} yPositionIconMargin={yPositionIconMargin} xPositionEVIconMargin={xPositionEVIconMargin} yPositionEVIconMargin={yPositionEVIconMargin} xPositionHouseholdIconMargin={xPositionHouseholdIconMargin} yPositionHouseholdIconMargin={yPositionHouseholdIconMargin} xPositionHeatpumpLabel={xPositionHeatpumpLabel} xPositionEVLabel={xPositionEVLabel} xPositionHouseholdLabel={xPositionHouseholdLabel} yPositionHeatpumpLabel={yPositionHeatpumpLabel} yPositionEVLabel={yPositionEVLabel} yPositionHouseholdLabel={yPositionHouseholdLabel} />}
+                style={{
+                  pointerEvents: "auto",
+                  userSelect: "auto",
+                  touchAction: "auto",
+                  data: {
+                    fillOpacity: 0,
+                    stroke: "#fff",
+                    strokeWidth: 0,
+                  },
+                  labels: { fill: "white", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: pieLabelFontSize },
+                }}
+              />
+            </div>
+            <div id="electricityUse-1-noems" className="pieContainer" style={{ position: "absolute", width: "100%", height: "300px", display: offgridEMS ? "none" : "" }}>
+              <VictoryPie
+                data={VictoryPieData2NoEMS}
+                width={pieChartSize}
+                padding={{ top: 0 }}
+                pointerEvents="auto"
+                colorScale={colorScale}
+                labelRadius={({ innerRadius }) => innerRadius + innerRadiusMargin}
+                innerRadius={0}
+                style={{
+                  pointerEvents: "auto",
+                  userSelect: "auto",
+                  touchAction: "auto",
+                  data: {
+                    fillOpacity: 1,
+                    stroke: "#fff",
+                    strokeWidth: 4,
+                  },
+                  labels: { fill: ({ datum }) => datum.color, fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: pieLabelFontSize, backgroundcolor: ({ datum }) => datum.backgroundcolor },
+                }}
+                labelComponent={<VictoryLabel backgroundStyle={{ fill: "white" }} backgroundPadding={6} />}
+              />
+            </div>
+
+            <div id="electricityUse-2-noems" className="pieContainer" style={{ position: "absolute", width: "100%", height: "300px", display: offgridEMS ? "none" : "" }}>
+              <VictoryPie
+                data={VictoryPieDataNoEMS}
                 width={pieChartSize}
                 padding={{ top: 0 }}
                 pointerEvents="auto"
