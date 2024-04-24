@@ -173,7 +173,7 @@ class Cost extends React.Component {
     var savingOnlyPV20years = cost20YearNoPV - cost20yearPV;
 
     var savingPVandEMS1year = cost1YearNoPV - cost1yearPVEMS;
-    var savingPVandEMS20years = cost20YearNoPV - cost20yearPV;
+    var savingPVandEMS20years = cost20YearNoPV - cost20yearPVEMS;
 
     // 1 year bar heights
     var oneYearHeightMitPv = this.getBarHeights(cost1YearNoPV, cost1yearPV, savingOnlyPV1year);
@@ -336,7 +336,7 @@ class Cost extends React.Component {
                       <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                           <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
-                            {cost20yearPV ? cost20yearPV.toLocaleString("de-DE") : ""}
+                            {cost20yearPVEMS ? cost20yearPVEMS.toLocaleString("de-DE") : ""}
                             <span>&nbsp;€</span>
                           </span>
                         </div>

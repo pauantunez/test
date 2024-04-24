@@ -162,14 +162,14 @@ class InfoBoxResult extends React.Component {
   };
 
   render() {
-    const { costOverTime, offgridEMS, householdEMS } = this.context;
+    const { costOverTime, offgridEMS, householdEMS, cost1YearNoPV, cost1yearPV, cost20YearNoPV, cost20yearPV, cost1yearPVEMS, cost20yearPVEMS } = this.context;
 
     // Electricity savings
-    var savingOnlyPV1year = parseInt(sessionStorage.getItem("savingOnlyPV1year"));
-    var savingOnlyPV20years = parseInt(sessionStorage.getItem("savingOnlyPV20years"));
+    var savingOnlyPV1year = cost1YearNoPV - cost1yearPV;
+    var savingOnlyPV20years = cost20YearNoPV - cost20yearPV;
 
-    var savingPVandEMS1year = parseInt(sessionStorage.getItem("savingPVandEMS1year"));
-    var savingPVandEMS20years = parseInt(sessionStorage.getItem("savingPVandEMS20years"));
+    var savingPVandEMS1year = cost1YearNoPV - cost1yearPVEMS;
+    var savingPVandEMS20years = cost20YearNoPV - cost20yearPVEMS;
 
     var savingOnlyPv1yearMinusSavingEMS1year = savingPVandEMS1year - savingOnlyPV1year;
     var savingOnlyPv20yearsMinusSavingEMS20years = savingPVandEMS20years - savingOnlyPV20years;

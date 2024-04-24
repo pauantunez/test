@@ -134,13 +134,14 @@ class InfoBoxResultPdf extends React.Component {
   };
 
   render() {
+    const { cost1YearNoPV, cost1yearPV, cost20YearNoPV, cost20yearPV, cost1yearPVEMS, cost20yearPVEMS } = this.context;
     // Electricity savings
 
-    var savingOnlyPV1year = parseInt(sessionStorage.getItem("savingOnlyPV1year"));
-    var savingOnlyPV20years = parseInt(sessionStorage.getItem("savingOnlyPV20years"));
+    var savingOnlyPV1year = cost1YearNoPV - cost1yearPV;
+    var savingOnlyPV20years = cost20YearNoPV - cost20yearPV;
 
-    var savingPVandEMS1year = parseInt(sessionStorage.getItem("savingPVandEMS1year"));
-    var savingPVandEMS20years = parseInt(sessionStorage.getItem("savingPVandEMS20years"));
+    var savingPVandEMS1year = cost1YearNoPV - cost1yearPVEMS;
+    var savingPVandEMS20years = cost20YearNoPV - cost20yearPVEMS;
 
     var savingOnlyPv1yearMinusSavingEMS1year = savingPVandEMS1year - savingOnlyPV1year;
     var savingOnlyPv20yearsMinusSavingEMS20years = savingPVandEMS20years - savingOnlyPV20years;
@@ -161,7 +162,7 @@ class InfoBoxResultPdf extends React.Component {
           {this.state.boxType === "left" && (
             <div>
               <div className="infobox-row-container">
-                <div className="infobox-row" style={{ fontSize: "14px",display: "block", lineHeight: "24px", borderBottom: "none" }}>
+                <div className="infobox-row" style={{ fontSize: "14px", display: "block", lineHeight: "24px", borderBottom: "none" }}>
                   {this.state.displayed === "one-year" && (
                     <p>
                       Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{savingOnlyPV1year.toLocaleString("de-DE")} € Stromkosten </strong>pro Jahr sparen.
