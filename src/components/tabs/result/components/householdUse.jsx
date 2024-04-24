@@ -76,8 +76,6 @@ class HouseholdUse extends React.Component {
 
     setFwdBtn(false);
     this.handleResize();
-
-    this.householdUsagePercentage();
   }
 
   handleResize = () => {
@@ -140,44 +138,6 @@ class HouseholdUse extends React.Component {
     }
   }
 
-  changeInfoBoxValue = (type, value) => {
-    this.setState({ infoBoxCombinedHouseholdUsage: value });
-  };
-
-  householdUsagePercentage = (type) => {
-    const { setInfoBoxCombinedHouseholdUsage, HH_energy_to_grid_kWh_PV_MFH, HH_EGen_elc_kWh_PV_MFH } = this.context;
-
-    var pvUsagePercent = ((parseFloat(HH_EGen_elc_kWh_PV_MFH) - parseFloat(HH_energy_to_grid_kWh_PV_MFH)) / parseFloat(HH_EGen_elc_kWh_PV_MFH)) * 100;
-
-    if (!this.state.infoBoxCombinedHouseholdUsage) {
-      setInfoBoxCombinedHouseholdUsage(pvUsagePercent);
-      this.setState({ infoBoxCombinedHouseholdUsage: true });
-    }
-
-    return pvUsagePercent;
-  };
-
-  gridFeedPercentage = (type) => {
-    const { setInfoBoxHouseholdGridFeed, HH_energy_to_grid_kWh_PV_MFH, HH_EGen_elc_kWh_PV_MFH } = this.context;
-
-    var gridFeedPercent = 100 - ((parseFloat(HH_EGen_elc_kWh_PV_MFH) - parseFloat(HH_energy_to_grid_kWh_PV_MFH)) / parseFloat(HH_EGen_elc_kWh_PV_MFH)) * 100;
-
-    if (!this.state.infoBoxHouseholdGridFeed) {
-      setInfoBoxHouseholdGridFeed(gridFeedPercent);
-      this.setState({ infoBoxHouseholdGridFeed: true });
-    }
-
-    return gridFeedPercent;
-  };
-
-  gridFeedPercentageNoEMS = (type) => {
-    const { householdNoEMSpvPercent } = this.context;
-
-    var gridFeedPercentNoEMS = 100 - parseFloat(householdNoEMSpvPercent);
-
-    return gridFeedPercentNoEMS;
-  };
-
   adjustPercentage(value1, value2, value3 = 0) {
     const total = value1 + value2 + value3;
 
@@ -191,221 +151,150 @@ class HouseholdUse extends React.Component {
   }
 
   render() {
-    const { loadingHousehold, householdNoEMSpvPercent, householdEMS, pieChartSize, pieIconSize, innerRadiusMargin, pieLabelFontSize, xPositionHeatpumpLabel, xPositionEVLabel, xPositionHouseholdLabel, yPositionHeatpumpLabel, yPositionEVLabel, yPositionHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin } = this.context;
-    var VictoryPieData = [];
-    var VictoryPieData2 = [];
-    var VictoryPieDataPDFWithEMS = [];
-    var VictoryPieDataPDFWithoutEMS = [];
-    var pieColors = [];
-    var pieColorsPDFWithEMS = [];
-    var pieColorsPDFWithoutEMS = [];
+    const { loadingHousehold, householdNoEMSpvPercent, householdEMS, pieChartSize, pieIconSize, innerRadiusMargin, pieLabelFontSize, xPositionHeatpumpLabel, xPositionEVLabel, xPositionHouseholdLabel, yPositionHeatpumpLabel, yPositionEVLabel, yPositionHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin, gridFeedPercentage, houseHoldPvPercentageNoEms, houseHoldPvPercentage, gridFeedPercentageNoEms, offgridEMS } = this.context;
 
-    var roundedGridFeedPercentageNoEMS = Math.round(parseFloat(this.gridFeedPercentageNoEMS()));
-    var roundedHouseholdpvPercentNoEMS = Math.round(parseFloat(householdNoEMSpvPercent));
+    var roundedGridFeedPercentage = Math.round(parseFloat(gridFeedPercentage));
+    const roundedHouseholdUsagePercentage = Math.round(parseFloat(houseHoldPvPercentageNoEms - houseHoldPvPercentage));
+    const roundedHouseholdpvPercent = Math.round(parseFloat(houseHoldPvPercentage));
+    roundedGridFeedPercentage = this.adjustPercentage(roundedGridFeedPercentage, roundedHouseholdUsagePercentage, roundedHouseholdpvPercent);
+
+    var roundedGridFeedPercentageNoEMS = Math.round(parseFloat(gridFeedPercentageNoEms));
+    var roundedHouseholdpvPercentNoEMS = Math.round(parseFloat(houseHoldPvPercentage));
     roundedHouseholdpvPercentNoEMS = this.adjustPercentage(roundedHouseholdpvPercentNoEMS, roundedGridFeedPercentageNoEMS);
 
-    if (sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent") !== "") {
-      sessionStorage.setItem("Onhe_HouseholdNoEMSpvPercent_NoEMS", roundedHouseholdpvPercentNoEMS);
-    }
-    if (sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS") !== "") {
-      sessionStorage.setItem("Onhe_GridFeedPercentage_NoEMS", roundedGridFeedPercentageNoEMS);
-    }
-
-    if (householdEMS === true) {
-      // Rounded values for VictoryPieData2
-      var roundedGridFeedPercentage = Math.round(parseFloat(this.gridFeedPercentage()));
-      var roundedHouseholdUsagePercentage = Math.round(parseFloat(this.householdUsagePercentage()) - householdNoEMSpvPercent);
-      var roundedHouseholdpvPercent = Math.round(parseFloat(householdNoEMSpvPercent));
-      roundedGridFeedPercentage = this.adjustPercentage(roundedGridFeedPercentage, roundedHouseholdUsagePercentage, roundedHouseholdpvPercent);
-
-      if (sessionStorage.getItem("MIT_GridFeedPercentage") !== "") {
-        sessionStorage.setItem("MIT_GridFeedPercentage", roundedGridFeedPercentage);
-      }
-      if (sessionStorage.getItem("MIT_HouseholdUsagePercentage") !== "") {
-        sessionStorage.setItem("MIT_HouseholdUsagePercentage", roundedHouseholdUsagePercentage);
-      }
-      if (sessionStorage.getItem("MIT_HouseholdNoEMSpvPercent") !== "") {
-        sessionStorage.setItem("MIT_HouseholdNoEMSpvPercent", roundedHouseholdpvPercent);
-      }
-
-      VictoryPieData = [
-        { x: 3, y: roundedGridFeedPercentage, name: "grid", label: "3.000 kWh", img: "/img/grid_out.svg", color: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3" },
-        { x: 2, y: roundedHouseholdUsagePercentage, name: "plug", label: "1.400 kWh", img: "/img/plug.svg", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A" },
-        { x: 1, y: roundedHouseholdpvPercent, name: "pv", label: "1.000 kWh", img: "/img/house_pv.svg", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" },
-      ];
-      VictoryPieData2 = [
-        { x: 3, y: roundedGridFeedPercentage, name: "grid", label: roundedGridFeedPercentage + "%", img: "/img/grid_out.svg", color: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3" },
-        { x: 2, y: roundedHouseholdUsagePercentage, name: "plug", label: roundedHouseholdUsagePercentage + "%", img: "/img/plug.svg", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A" },
-        { x: 1, y: roundedHouseholdpvPercent, name: "pv", label: roundedHouseholdpvPercent + "%", img: "/img/house_pv.svg", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" },
-      ];
-      pieColors = [this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3", this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A", this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E"];
-    } else if (householdEMS === false) {
-      // Rounded values for VictoryPieData2.
-      roundedGridFeedPercentageNoEMS = Math.round(parseFloat(this.gridFeedPercentageNoEMS()));
-      var roundedHouseholdNoEMSpvPercent = Math.round(parseFloat(householdNoEMSpvPercent));
-      roundedHouseholdNoEMSpvPercent = this.adjustPercentage(roundedHouseholdNoEMSpvPercent, roundedGridFeedPercentageNoEMS);
-
-      if (sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent") !== "") {
-        sessionStorage.setItem("Onhe_HouseholdNoEMSpvPercent", roundedHouseholdNoEMSpvPercent);
-      }
-      if (sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS") !== "") {
-        sessionStorage.setItem("Onhe_GridFeedPercentageNoEMS", roundedGridFeedPercentageNoEMS);
-      }
-
-      VictoryPieData = [
-        { x: 2, y: roundedGridFeedPercentageNoEMS, name: "grid", label: "3.000 kWh", img: "/img/grid_out.svg", color: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3" },
-        { x: 1, y: roundedHouseholdNoEMSpvPercent, name: "pv", label: "1.000 kWh", img: "/img/house_pv.svg", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" },
-      ];
-      VictoryPieData2 = [
-        { x: 2, y: roundedGridFeedPercentageNoEMS, name: "grid", label: roundedGridFeedPercentageNoEMS + "%", img: "/img/grid_out.svg", color: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3" },
-        { x: 1, y: roundedHouseholdNoEMSpvPercent, name: "pv", label: roundedHouseholdNoEMSpvPercent + "%", img: "/img/house_pv.svg", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" },
-      ];
-      pieColors = [this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3", this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E"];
-    }
-
-    // Data for PDF victory pie
-    VictoryPieDataPDFWithEMS = [
-      { x: 3, y: parseInt(sessionStorage.getItem("MIT_GridFeedPercentage")), name: "grid", label: sessionStorage.getItem("MIT_GridFeedPercentage") + "%", img: "img/grid_in.svg", color: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3" },
-      { x: 2, y: parseInt(sessionStorage.getItem("MIT_HouseholdUsagePercentage")), name: "plug", label: sessionStorage.getItem("MIT_HouseholdUsagePercentage") + " %", img: "img/plug.svg", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A" },
-      { x: 1, y: parseInt(sessionStorage.getItem("MIT_HouseholdNoEMSpvPercent")), name: "pv", label: sessionStorage.getItem("MIT_HouseholdNoEMSpvPercent") + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" },
+    const VictoryPieData = [
+      { x: 3, y: roundedGridFeedPercentage, name: "grid", label: roundedGridFeedPercentage + "%", img: "/img/grid_out.svg", color: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3" },
+      { x: 2, y: roundedHouseholdUsagePercentage, name: "plug", label: roundedHouseholdUsagePercentage + "%", img: "/img/plug.svg", color: this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A" },
+      { x: 1, y: roundedHouseholdpvPercent, name: "pv", label: roundedHouseholdpvPercent + "%", img: "/img/house_pv.svg", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" },
     ];
-    pieColorsPDFWithEMS = [this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3", this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A", this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E"];
 
-    VictoryPieDataPDFWithoutEMS = [
-      { x: 3, y: parseInt(sessionStorage.getItem("Onhe_GridFeedPercentage_NoEMS")), name: "grid", label: sessionStorage.getItem("Onhe_GridFeedPercentage_NoEMS") + " %", img: "img/grid_in.svg", color: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3" },
-      { x: 1, y: parseInt(sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent_NoEMS")), name: "pv", label: sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent_NoEMS") + " %", img: "https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w100", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" },
+    const pieColors = [this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3", this.context.selectedTheme === "buderus" ? "#5278A2" : "#00884A", this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E"];
+
+    const VictoryPieDataNoEms = [
+      { x: 2, y: roundedGridFeedPercentageNoEMS, name: "grid", label: roundedGridFeedPercentageNoEMS + "%", img: "/img/grid_out.svg", color: this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3" },
+      { x: 1, y: roundedHouseholdpvPercentNoEMS, name: "pv", label: roundedHouseholdpvPercentNoEMS + "%", img: "/img/house_pv.svg", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" },
     ];
-    pieColorsPDFWithoutEMS = [this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3", this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E"];
+    const pieColorsNoEms = [this.context.selectedTheme === "buderus" ? "#75ACE7" : "#A4ABB3", this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E"];
 
     return (
       <div>
-        {!loadingHousehold && (
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <div style={{ position: "relative", width: "100%", height: "300px", top: "0", left: "0" /*maxWidth: '450px'*/ }}>
-              <div id="householdUse-1-hidden" style={{ position: "absolute", width: "100%", height: "300px", display: "none" }}>
-                <VictoryPie
-                  data={VictoryPieDataPDFWithEMS}
-                  width={pieChartSize}
-                  padding={{ top: 0 }}
-                  colorScale={pieColorsPDFWithEMS}
-                  labelRadius={({ innerRadius }) => innerRadius + innerRadiusMargin}
-                  innerRadius={0}
-                  style={{
-                    data: {
-                      fillOpacity: 1,
-                      stroke: "#fff",
-                      strokeWidth: 6,
-                    },
-                    labels: { fill: ({ datum }) => datum.color, fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: "20px" },
-                  }}
-                  labelComponent={<VictoryLabel backgroundStyle={{ fill: "white" }} backgroundPadding={6} />}
-                />
-              </div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <div style={{ position: "relative", width: "100%", height: "300px", top: "0", left: "0" /*maxWidth: '450px'*/ }}>
+            <div id="householdUse-1-hidden" style={{ position: "absolute", width: "100%", height: "300px", display: "none" }}>
+              <VictoryPie
+                data={VictoryPieData}
+                width={pieChartSize}
+                padding={{ top: 0 }}
+                colorScale={pieColors}
+                labelRadius={({ innerRadius }) => innerRadius + innerRadiusMargin}
+                innerRadius={0}
+                style={{
+                  data: {
+                    fillOpacity: 1,
+                    stroke: "#fff",
+                    strokeWidth: 6,
+                  },
+                  labels: { fill: ({ datum }) => datum.color, fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: "20px" },
+                }}
+                labelComponent={<VictoryLabel backgroundStyle={{ fill: "white" }} backgroundPadding={6} />}
+              />
+            </div>
 
-              <div id="householdUse-2-hidden" style={{ position: "absolute", width: "100%", height: "300px", display: "none" }}>
-                <VictoryPie
-                  data={VictoryPieDataPDFWithEMS}
-                  width={pieChartSize}
-                  padding={{ top: 0 }}
-                  colorScale={pieColorsPDFWithEMS}
-                  labelComponent={<CustomLabelComponent iconSize={pieIconSize} fontSize={"20px"} xPositionIconMargin={xPositionIconMargin} yPositionIconMargin={yPositionIconMargin} xPositionEVIconMargin={xPositionEVIconMargin} yPositionEVIconMargin={yPositionEVIconMargin} xPositionHouseholdIconMargin={xPositionHouseholdIconMargin} yPositionHouseholdIconMargin={yPositionHouseholdIconMargin} xPositionHeatpumpLabel={xPositionHeatpumpLabel} xPositionEVLabel={xPositionEVLabel} xPositionHouseholdLabel={xPositionHouseholdLabel} yPositionHeatpumpLabel={yPositionHeatpumpLabel} yPositionEVLabel={yPositionEVLabel} yPositionHouseholdLabel={yPositionHouseholdLabel} />}
-                  style={{
-                    data: {
-                      fillOpacity: 0,
-                      stroke: "#fff",
-                      strokeWidth: 0,
-                    },
-                    labels: { fill: "white", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: "20px" },
-                  }}
-                />
-              </div>
+            <div id="householdUse-2-hidden" style={{ position: "absolute", width: "100%", height: "300px", display: "none" }}>
+              <VictoryPie
+                data={VictoryPieData}
+                width={pieChartSize}
+                padding={{ top: 0 }}
+                colorScale={pieColors}
+                labelComponent={<CustomLabelComponent iconSize={pieIconSize} fontSize={"20px"} xPositionIconMargin={xPositionIconMargin} yPositionIconMargin={yPositionIconMargin} xPositionEVIconMargin={xPositionEVIconMargin} yPositionEVIconMargin={yPositionEVIconMargin} xPositionHouseholdIconMargin={xPositionHouseholdIconMargin} yPositionHouseholdIconMargin={yPositionHouseholdIconMargin} xPositionHeatpumpLabel={xPositionHeatpumpLabel} xPositionEVLabel={xPositionEVLabel} xPositionHouseholdLabel={xPositionHouseholdLabel} yPositionHeatpumpLabel={yPositionHeatpumpLabel} yPositionEVLabel={yPositionEVLabel} yPositionHouseholdLabel={yPositionHouseholdLabel} />}
+                style={{
+                  data: {
+                    fillOpacity: 0,
+                    stroke: "#fff",
+                    strokeWidth: 0,
+                  },
+                  labels: { fill: "white", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: "20px" },
+                }}
+              />
+            </div>
 
-              <div id="householdUse-1-noEMS-hidden" style={{ position: "absolute", width: "100%", height: "300px", display: "none" }}>
-                <VictoryPie
-                  data={VictoryPieDataPDFWithoutEMS}
-                  width={pieChartSize}
-                  padding={{ top: 0 }}
-                  colorScale={pieColorsPDFWithoutEMS}
-                  labelRadius={({ innerRadius }) => innerRadius + innerRadiusMargin}
-                  innerRadius={0}
-                  style={{
-                    data: {
-                      fillOpacity: 1,
-                      stroke: "#fff",
-                      strokeWidth: 6,
-                    },
-                    labels: { fill: ({ datum }) => datum.color, fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: "20px" },
-                  }}
-                  labelComponent={<VictoryLabel backgroundStyle={{ fill: "white" }} backgroundPadding={6} />}
-                />
-              </div>
+            <div id="householdUse-1-noEMS-hidden" style={{ position: "absolute", width: "100%", height: "300px", display: "none" }}>
+              <VictoryPie
+                data={VictoryPieDataNoEms}
+                width={pieChartSize}
+                padding={{ top: 0 }}
+                colorScale={pieColorsNoEms}
+                labelRadius={({ innerRadius }) => innerRadius + innerRadiusMargin}
+                innerRadius={0}
+                style={{
+                  data: {
+                    fillOpacity: 1,
+                    stroke: "#fff",
+                    strokeWidth: 6,
+                  },
+                  labels: { fill: ({ datum }) => datum.color, fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: "20px" },
+                }}
+                labelComponent={<VictoryLabel backgroundStyle={{ fill: "white" }} backgroundPadding={6} />}
+              />
+            </div>
 
-              <div id="householdUse-2-noEMS-hidden" style={{ position: "absolute", width: "100%", height: "300px", display: "none" }}>
-                <VictoryPie
-                  data={VictoryPieDataPDFWithoutEMS}
-                  width={pieChartSize}
-                  padding={{ top: 0 }}
-                  colorScale={pieColorsPDFWithoutEMS}
-                  labelComponent={<CustomLabelComponent iconSize={pieIconSize} fontSize={"20px"} xPositionIconMargin={xPositionIconMargin} yPositionIconMargin={yPositionIconMargin} xPositionEVIconMargin={xPositionEVIconMargin} yPositionEVIconMargin={yPositionEVIconMargin} xPositionHouseholdIconMargin={xPositionHouseholdIconMargin} yPositionHouseholdIconMargin={yPositionHouseholdIconMargin} xPositionHeatpumpLabel={xPositionHeatpumpLabel} xPositionEVLabel={xPositionEVLabel} xPositionHouseholdLabel={xPositionHouseholdLabel} yPositionHeatpumpLabel={yPositionHeatpumpLabel} yPositionEVLabel={yPositionEVLabel} yPositionHouseholdLabel={yPositionHouseholdLabel} />}
-                  style={{
-                    data: {
-                      fillOpacity: 0,
-                      stroke: "#fff",
-                      strokeWidth: 0,
-                    },
-                    labels: { fill: "white", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: "20px" },
-                  }}
-                />
-              </div>
+            <div id="householdUse-2-noEMS-hidden" style={{ position: "absolute", width: "100%", height: "300px", display: "none" }}>
+              <VictoryPie
+                data={VictoryPieDataNoEms}
+                width={pieChartSize}
+                padding={{ top: 0 }}
+                colorScale={pieColorsNoEms}
+                labelComponent={<CustomLabelComponent iconSize={pieIconSize} fontSize={"20px"} xPositionIconMargin={xPositionIconMargin} yPositionIconMargin={yPositionIconMargin} xPositionEVIconMargin={xPositionEVIconMargin} yPositionEVIconMargin={yPositionEVIconMargin} xPositionHouseholdIconMargin={xPositionHouseholdIconMargin} yPositionHouseholdIconMargin={yPositionHouseholdIconMargin} xPositionHeatpumpLabel={xPositionHeatpumpLabel} xPositionEVLabel={xPositionEVLabel} xPositionHouseholdLabel={xPositionHouseholdLabel} yPositionHeatpumpLabel={yPositionHeatpumpLabel} yPositionEVLabel={yPositionEVLabel} yPositionHouseholdLabel={yPositionHouseholdLabel} />}
+                style={{
+                  data: {
+                    fillOpacity: 0,
+                    stroke: "#fff",
+                    strokeWidth: 0,
+                  },
+                  labels: { fill: "white", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: "20px" },
+                }}
+              />
+            </div>
 
-              <div id="householdUse-1" style={{ position: "absolute", width: "100%", height: "300px" }}>
-                <VictoryPie
-                  data={VictoryPieData2}
-                  width={pieChartSize}
-                  padding={{ top: 0 }}
-                  colorScale={pieColors}
-                  labelRadius={({ innerRadius }) => innerRadius + innerRadiusMargin}
-                  innerRadius={0}
-                  style={{
-                    data: {
-                      fillOpacity: 1,
-                      stroke: "#fff",
-                      strokeWidth: 4,
-                    },
-                    labels: { fill: ({ datum }) => datum.color, border: "2px solid red", background: "white", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: pieLabelFontSize },
-                  }}
-                  labelComponent={<VictoryLabel backgroundStyle={{ fill: "white" }} backgroundPadding={6} />}
-                />
-              </div>
+            <div id="householdUse-1" style={{ position: "absolute", width: "100%", height: "300px" }}>
+              <VictoryPie
+                data={offgridEMS ? VictoryPieData : VictoryPieDataNoEms}
+                width={pieChartSize}
+                padding={{ top: 0 }}
+                colorScale={offgridEMS ? pieColors : pieColorsNoEms}
+                labelRadius={({ innerRadius }) => innerRadius + innerRadiusMargin}
+                innerRadius={0}
+                style={{
+                  data: {
+                    fillOpacity: 1,
+                    stroke: "#fff",
+                    strokeWidth: 4,
+                  },
+                  labels: { fill: ({ datum }) => datum.color, border: "2px solid red", background: "white", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: pieLabelFontSize },
+                }}
+                labelComponent={<VictoryLabel backgroundStyle={{ fill: "white" }} backgroundPadding={6} />}
+              />
+            </div>
 
-              <div id="householdUse-2" style={{ position: "absolute", width: "100%", height: "300px" }}>
-                <VictoryPie
-                  data={VictoryPieData}
-                  width={pieChartSize}
-                  padding={{ top: 0 }}
-                  colorScale={pieColors}
-                  labelComponent={<CustomLabelComponent iconSize={pieIconSize} fontSize={pieLabelFontSize} xPositionIconMargin={xPositionIconMargin} yPositionIconMargin={yPositionIconMargin} xPositionEVIconMargin={xPositionEVIconMargin} yPositionEVIconMargin={yPositionEVIconMargin} xPositionHouseholdIconMargin={xPositionHouseholdIconMargin} yPositionHouseholdIconMargin={yPositionHouseholdIconMargin} xPositionHeatpumpLabel={xPositionHeatpumpLabel} xPositionEVLabel={xPositionEVLabel} xPositionHouseholdLabel={xPositionHouseholdLabel} yPositionHeatpumpLabel={yPositionHeatpumpLabel} yPositionEVLabel={yPositionEVLabel} yPositionHouseholdLabel={yPositionHouseholdLabel} />}
-                  style={{
-                    data: {
-                      fillOpacity: 0,
-                      stroke: "#fff",
-                      strokeWidth: 0,
-                    },
-                    labels: { fill: "white", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: pieLabelFontSize },
-                  }}
-                />
-              </div>
+            <div id="householdUse-2" style={{ position: "absolute", width: "100%", height: "300px" }}>
+              <VictoryPie
+                data={offgridEMS ? VictoryPieData : VictoryPieDataNoEms}
+                width={pieChartSize}
+                padding={{ top: 0 }}
+                colorScale={offgridEMS ? pieColors : pieColorsNoEms}
+                labelComponent={<CustomLabelComponent iconSize={pieIconSize} fontSize={pieLabelFontSize} xPositionIconMargin={xPositionIconMargin} yPositionIconMargin={yPositionIconMargin} xPositionEVIconMargin={xPositionEVIconMargin} yPositionEVIconMargin={yPositionEVIconMargin} xPositionHouseholdIconMargin={xPositionHouseholdIconMargin} yPositionHouseholdIconMargin={yPositionHouseholdIconMargin} xPositionHeatpumpLabel={xPositionHeatpumpLabel} xPositionEVLabel={xPositionEVLabel} xPositionHouseholdLabel={xPositionHouseholdLabel} yPositionHeatpumpLabel={yPositionHeatpumpLabel} yPositionEVLabel={yPositionEVLabel} yPositionHouseholdLabel={yPositionHouseholdLabel} />}
+                style={{
+                  data: {
+                    fillOpacity: 0,
+                    stroke: "#fff",
+                    strokeWidth: 0,
+                  },
+                  labels: { fill: "white", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: pieLabelFontSize },
+                }}
+              />
             </div>
           </div>
-        )}
-
-        {loadingHousehold && (
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <div style={{ position: "relative", width: "100%", height: "300px", top: "0", left: "0" }}>
-              <div style={{ position: "absolute", left: "50%", top: "100px" }}>Lädt...</div>
-            </div>
-          </div>
-        )}
+        </div>
 
         <div data-html2canvas-ignore style={{ display: "flex", marginTop: "0px", justifyContent: "flex-start", flexDirection: "row" }}>
           {/* <div className="trackeable" data-event="result-part2-switch-energiemanagement">
