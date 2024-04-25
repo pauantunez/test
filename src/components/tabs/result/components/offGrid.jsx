@@ -186,7 +186,7 @@ class OffGrid extends React.Component {
                 data={VictoryPieData}
                 width={pieChartSize}
                 padding={{ top: 0 }}
-                colorScale={VictoryPieData}
+                colorScale={pieColors}
                 labelRadius={({ innerRadius }) => innerRadius + innerRadiusMargin}
                 innerRadius={0}
                 style={{
