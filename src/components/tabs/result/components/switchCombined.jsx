@@ -83,54 +83,13 @@ class CombinedSwitch extends React.Component {
 
   componentDidMount() {}
 
-  energyUsageCombined = (result) => {
-    const { heatpumpType, setHouseholdNoEMSpvPercent, setNoEMSPercentage, setNoEMScombinedEnergyUseKWH, energyUsagekWh, odometerIncreaseKWH } = this.context;
-    var Avg_Eff_JAZ_HP;
-
-    if (heatpumpType === "1") {
-      Avg_Eff_JAZ_HP = result.Avg_Eff_JAZ_HP_A_W_MFH;
-    } else {
-      Avg_Eff_JAZ_HP = result.Avg_Eff_JAZ_HP_B_W_MFH;
-    }
-
-    //Enegery usage heatpump
-    var energyUsageHeatpump = (parseFloat(result.EGen_sh_kWh_HP_A_W_MFH) + parseFloat(result.EGen_sh_kWh_HP_B_W_MFH) + parseFloat(result.EGen_hw_kWh_HP_A_W_MFH) + parseFloat(result.EGen_hw_kWh_HP_B_W_MFH)) / parseFloat(Avg_Eff_JAZ_HP);
-
-    //Energy usage heating rod
-    var energyUsageHeatingRod = (parseFloat(result.EGen_sh_kWh_EDWW_MFH) + parseFloat(result.EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(result.EGen_hw_kWh_EDWW_MFH) + parseFloat(result.EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
-
-    var combinedResult = energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH;
-    setNoEMScombinedEnergyUseKWH(combinedResult);
-
-    var pvUsagePercentNoEMS = ((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(combinedResult)) * 100;
-    setNoEMSPercentage(pvUsagePercentNoEMS);
-
-    var householdNoEMSPercent = ((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(result.EGen_elc_kWh_PV_MFH)) * 100;
-
-    setHouseholdNoEMSpvPercent(householdNoEMSPercent);
-
-    return energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH;
-  };
-
   changeStatus = (event) => {
-    const { setLoadingOffGrid, kfwValue, ev, setOffgridEMS, scenarioInDatabase, tabEntries, setTabToSelect, pvOutputkWh, homeStorageSizekWh, setHouseholdEMS, setLoadingHousehold } = this.context;
+    const { setLoadingOffGrid, setOffgridEMS, setHouseholdEMS, setLoadingHousehold } = this.context;
     setOffgridEMS(event.target.checked);
     setLoadingOffGrid(true);
 
     setHouseholdEMS(event.target.checked);
     setLoadingHousehold(true);
-
-    var emsValue;
-    if (event.target.checked) {
-      emsValue = "Ja";
-    } else {
-      emsValue = "Nein";
-    }
-
-    let tabInTable = tabEntries.find((o) => {
-      return o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === emsValue;
-    });
-    setTabToSelect(tabInTable.Tab);
   };
 
   render() {
