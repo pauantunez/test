@@ -1,6 +1,4 @@
-import React, { Component, createContext, useState } from "react";
-
-import ResultContext from "./ResultContext";
+import React, { Component, createContext } from "react";
 
 import i18n from "i18next";
 

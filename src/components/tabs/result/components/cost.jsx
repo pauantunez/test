@@ -131,7 +131,7 @@ class Cost extends React.Component {
   static contextType = AppContext;
 
   componentWillMount() {
-    const { setFwdBtn, setCostOverTime, kfwValue, ev, scenarioInDatabase } = this.context;
+    const { setFwdBtn, setCostOverTime } = this.context;
     setCostOverTime("1");
     setFwdBtn(false);
   }

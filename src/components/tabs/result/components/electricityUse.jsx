@@ -120,7 +120,7 @@ class ElectricityUse extends React.Component {
   componentDidMount() {
     window.addEventListener("resize", this.handleResize);
 
-    const { setHeatpumpCombinedUsage, setElectricityUse1SVG, setElectricityUse2SVG } = this.context;
+    const { setElectricityUse1SVG, setElectricityUse2SVG } = this.context;
 
     const electricityUseChart1 = document.getElementById("electricityUse-1");
     const electricityUseChart2 = document.getElementById("electricityUse-2");

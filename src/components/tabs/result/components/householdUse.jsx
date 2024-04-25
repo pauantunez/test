@@ -151,7 +151,7 @@ class HouseholdUse extends React.Component {
   }
 
   render() {
-    const { loadingHousehold, householdNoEMSpvPercent, householdEMS, pieChartSize, pieIconSize, innerRadiusMargin, pieLabelFontSize, xPositionHeatpumpLabel, xPositionEVLabel, xPositionHouseholdLabel, yPositionHeatpumpLabel, yPositionEVLabel, yPositionHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin, gridFeedPercentage, houseHoldPvPercentageNoEms, houseHoldPvPercentage, gridFeedPercentageNoEms, offgridEMS } = this.context;
+    const { pieChartSize, pieIconSize, innerRadiusMargin, pieLabelFontSize, xPositionHeatpumpLabel, xPositionEVLabel, xPositionHouseholdLabel, yPositionHeatpumpLabel, yPositionEVLabel, yPositionHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin, gridFeedPercentage, houseHoldPvPercentageNoEms, gridFeedPercentageNoEms, offgridEMS } = this.context;
 
     var roundedGridFeedPercentage = Math.round(parseFloat(gridFeedPercentage));
     const roundedHouseholdUsagePercentage = Math.round(parseFloat(gridFeedPercentageNoEms - gridFeedPercentage));

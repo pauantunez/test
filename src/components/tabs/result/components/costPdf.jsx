@@ -132,9 +132,7 @@ class CostPdf extends React.Component {
   };
 
   render() {
-    const { loading, cost1YearNoPV, cost20YearNoPV, cost1yearPV, cost1yearPVEMS, cost20yearPV, cost20yearPVEMS } = this.context;
-
-    const { costOverTime } = this.context;
+    const { cost1YearNoPV, cost20YearNoPV, cost1yearPV, cost1yearPVEMS, cost20yearPV, cost20yearPVEMS } = this.context;
 
     var savingOnlyPV1year = cost1YearNoPV - cost1yearPV;
     var savingOnlyPV20years = cost20YearNoPV - cost20yearPV;

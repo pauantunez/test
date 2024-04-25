@@ -80,7 +80,7 @@ class NavContent extends React.Component {
   }
 
   handleStep(step) {
-    const { kfwValue, ev, scenarioInDatabase, selectedTab, activeView, setActiveView, setActiveStep, steps, setFwdBtn, setMenu } = this.context;
+    const { selectedTab, activeView, setActiveView, setActiveStep, steps, setFwdBtn, setMenu } = this.context;
     if (activeView !== step) {
       if (step !== 0) {
         if (steps[step - 1] === false) {

@@ -119,7 +119,7 @@ class BreakEven extends React.Component {
   }
 
   componentDidMount() {
-    const { setBreakEvenBase64, loading } = this.context;
+    const { setBreakEvenBase64 } = this.context;
 
     setTimeout(() => {
       const breakEvenCanvas = document.getElementById("breakEvenChart");
@@ -229,7 +229,7 @@ class BreakEven extends React.Component {
   };
 
   render() {
-    const { loading, breakEven, breakEvenNoEms } = this.context;
+    const { breakEven, breakEvenNoEms } = this.context;
 
     // Create datapoints arrays
     const numYears01 = this.breakEvenPV(breakEven);
@@ -386,17 +386,10 @@ class BreakEven extends React.Component {
             Investitionskosten PV-System: <span style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}> {breakEvenNoEms ? Math.abs(breakEvenNoEms[0].expenditure).toLocaleString("de-DE") + " €" : ""}</span>
           </div>
         </div>
-        {loading ? (
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <div style={{ position: "relative", width: "100%", height: "220px", top: "0", left: "0" }}>
-              <div style={{ position: "absolute", left: "50%", top: "100px" }}>Lädt...</div>
-            </div>
-          </div>
-        ) : (
-          <div className="graph-container" style={{ maxWidth: "550px" }}>
-            <Line id="breakEvenChart" options={lineOptions} data={lineData} />
-          </div>
-        )}
+
+        <div className="graph-container" style={{ maxWidth: "550px" }}>
+          <Line id="breakEvenChart" options={lineOptions} data={lineData} />
+        </div>
 
         <div style={{ display: "flex", flexDirection: "column", marginTop: "25px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "12px" }}>
           <div style={{ display: "flex", flexDirection: "row" }}>

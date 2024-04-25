@@ -151,7 +151,7 @@ class OffGrid extends React.Component {
   }
 
   render() {
-    const { loadingOffGrid, noEMSPercentageOffGrid, pieChartSize, pieIconSize, innerRadiusMargin, pieLabelFontSize, xPositionHeatpumpLabel, xPositionEVLabel, xPositionHouseholdLabel, yPositionHeatpumpLabel, yPositionEVLabel, yPositionHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin, offgridEMS, gridUsagePercentage, gridUsagePercentageNoEms, pvUsagePercentageNoEms } = this.context;
+    const { pieChartSize, pieIconSize, innerRadiusMargin, pieLabelFontSize, xPositionHeatpumpLabel, xPositionEVLabel, xPositionHouseholdLabel, yPositionHeatpumpLabel, yPositionEVLabel, yPositionHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin, offgridEMS, gridUsagePercentage, gridUsagePercentageNoEms, pvUsagePercentageNoEms } = this.context;
 
     var roundedGridUsagePercentage = Math.round(parseFloat(gridUsagePercentage));
     const roundedPvUsagePercentage = Math.round(parseFloat(gridUsagePercentageNoEms - gridUsagePercentage));
