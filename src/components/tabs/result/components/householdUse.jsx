@@ -154,12 +154,12 @@ class HouseholdUse extends React.Component {
     const { loadingHousehold, householdNoEMSpvPercent, householdEMS, pieChartSize, pieIconSize, innerRadiusMargin, pieLabelFontSize, xPositionHeatpumpLabel, xPositionEVLabel, xPositionHouseholdLabel, yPositionHeatpumpLabel, yPositionEVLabel, yPositionHouseholdLabel, xPositionIconMargin, yPositionIconMargin, xPositionEVIconMargin, yPositionEVIconMargin, xPositionHouseholdIconMargin, yPositionHouseholdIconMargin, gridFeedPercentage, houseHoldPvPercentageNoEms, houseHoldPvPercentage, gridFeedPercentageNoEms, offgridEMS } = this.context;
 
     var roundedGridFeedPercentage = Math.round(parseFloat(gridFeedPercentage));
-    const roundedHouseholdUsagePercentage = Math.round(parseFloat(houseHoldPvPercentageNoEms - houseHoldPvPercentage));
-    const roundedHouseholdpvPercent = Math.round(parseFloat(houseHoldPvPercentage));
+    const roundedHouseholdUsagePercentage = Math.round(parseFloat(gridFeedPercentageNoEms - gridFeedPercentage));
+    const roundedHouseholdpvPercent = Math.round(parseFloat(houseHoldPvPercentageNoEms));
     roundedGridFeedPercentage = this.adjustPercentage(roundedGridFeedPercentage, roundedHouseholdUsagePercentage, roundedHouseholdpvPercent);
 
     var roundedGridFeedPercentageNoEMS = Math.round(parseFloat(gridFeedPercentageNoEms));
-    var roundedHouseholdpvPercentNoEMS = Math.round(parseFloat(houseHoldPvPercentage));
+    var roundedHouseholdpvPercentNoEMS = Math.round(parseFloat(houseHoldPvPercentageNoEms));
     roundedHouseholdpvPercentNoEMS = this.adjustPercentage(roundedHouseholdpvPercentNoEMS, roundedGridFeedPercentageNoEMS);
 
     const VictoryPieData = [
