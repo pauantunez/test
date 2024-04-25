@@ -163,7 +163,6 @@ const calculateElectricityCostPV1Years = (mit_ems, results, PVcostLookupTable, p
     feed_in_revenue = Math.abs(Math.round(EGen_elc_kWh_PV_MFH * (1 - parseFloat(eigenverbrauchWithEms) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
     operating_costs = Math.abs(Math.round((investmentCostResult + 400) * 0.01));
     result = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - Math.round(parseFloat(autarkiegradWithEMS)) / 100) * parseInt(energyUsageCombined) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
-    console.log("🚀 ~ calculateElectricityCostPV1Years ~ autarkiegradWithEMS:", autarkiegradWithEMS);
   } else {
     feed_in_revenue = Math.abs(Math.round(EGen_elc_kWh_PV_MFH * (1 - parseFloat(houseHoldPvPercentageNoEms) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
     operating_costs = Math.abs(Math.round(investmentCostResult * 0.01));
@@ -175,7 +174,7 @@ const calculateElectricityCostPV1Years = (mit_ems, results, PVcostLookupTable, p
 };
 
 const calculateElectricityCostPV20Years = (mit_ems, results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, energyUsageCombined, pvUsagePercentageNoEms, pvUsagePercentage, houseHoldPvPercentageNoEms, houseHoldPvPercentage) => {
-  const { EGen_elc_kWh_PV_MFH } = result;
+  const { EGen_elc_kWh_PV_MFH } = results;
   var investmentCostResult;
 
   const autarkiegradWithEMS = pvUsagePercentage;

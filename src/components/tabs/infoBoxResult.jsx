@@ -58,7 +58,7 @@ class InfoBoxResult extends React.Component {
       //Energy usage heating rod
       energyUsageHeatingRod = (parseFloat(EGen_sh_kWh_EDWW_MFH_NoEMS) + parseFloat(EGen_sh_kWh_EDWW_MFH_Brine_NoEMS) + parseFloat(EGen_hw_kWh_EDWW_MFH_NoEMS) + parseFloat(EGen_hw_kWh_EDWW_MFH_Brine_NoEMS)) / parseFloat(0.99);
     }
-    /* console.log("🚀 ~ InfoBoxResult ~ ", energyUsageHeatpump, energyUsageHeatingRod, parseInt(energyUsagekWh), odometerIncreaseKWH); */
+    
     return energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH;
   };
 
