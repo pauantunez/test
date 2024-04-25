@@ -136,6 +136,18 @@ class Additional extends React.Component {
     v8.start();
   };
 
+  adjustPercentage(value1, value2, value3 = 0) {
+    const total = value1 + value2 + value3;
+
+    if (total > 100) {
+      return value1 - 1;
+    } else if (total < 100) {
+      return value1 + 1;
+    } else {
+      return value1;
+    }
+  }
+
   render() {
     const { breakEvenBase64, setBackdrop, gridUsagePercentage, pvUsagePercentageNoEms, gridUsagePercentageNoEms, gridFeedPercentage, houseHoldPvPercentage, houseHoldPvPercentageNoEms, gridFeedPercentageNoEms } = this.context;
 
@@ -151,10 +163,11 @@ class Additional extends React.Component {
     //household-use
     // Mit
     var MIT_GridFeedPercentage = Math.round(gridFeedPercentage);
-    var eigenverbrauchsanteil = Math.round(parseFloat(houseHoldPvPercentage)) + Math.round(parseFloat(houseHoldPvPercentageNoEms - houseHoldPvPercentage));
+    var eigenverbrauchsanteil = Math.round(parseFloat(houseHoldPvPercentageNoEms)) + Math.round(parseFloat(houseHoldPvPercentage - houseHoldPvPercentageNoEms));
+    MIT_GridFeedPercentage = this.adjustPercentage(MIT_GridFeedPercentage, Math.round(houseHoldPvPercentageNoEms), Math.round(houseHoldPvPercentage - houseHoldPvPercentageNoEms));
 
     // Ohne
-    var Onhe_HouseholdNoEMSpvPercent = Math.round(parseFloat(houseHoldPvPercentage));
+    var Onhe_HouseholdNoEMSpvPercent = Math.round(parseFloat(houseHoldPvPercentageNoEms));
     var Onhe_GridFeedPercentageNoEMS = Math.round(gridFeedPercentageNoEms);
 
     const addFooters = (doc) => {

@@ -137,6 +137,18 @@ class InfoBoxResult extends React.Component {
     setActiveView(newValue);
   };
 
+  adjustPercentage(value1, value2, value3 = 0) {
+    const total = value1 + value2 + value3;
+
+    if (total > 100) {
+      return value1 - 1;
+    } else if (total < 100) {
+      return value1 + 1;
+    } else {
+      return value1;
+    }
+  }
+
   render() {
     const { costOverTime, offgridEMS, householdEMS, cost1YearNoPV, cost1yearPV, cost20YearNoPV, cost20yearPV, cost1yearPVEMS, cost20yearPVEMS, energyUsageCombined, energyUsageCombinedNoEms, pvUsagePercentageNoEms, gridUsagePercentage, gridUsagePercentageNoEms, houseHoldPvPercentage, houseHoldPvPercentageNoEms, gridFeedPercentage, gridFeedPercentageNoEms } = this.context;
 
@@ -162,10 +174,11 @@ class InfoBoxResult extends React.Component {
     //household-use
     // Mit
     var MIT_GridFeedPercentage = Math.round(gridFeedPercentage);
-    var eigenverbrauchsanteil = Math.round(parseFloat(houseHoldPvPercentage)) + Math.round(parseFloat(houseHoldPvPercentageNoEms - houseHoldPvPercentage));
+    var eigenverbrauchsanteil = Math.round(parseFloat(houseHoldPvPercentageNoEms)) + Math.round(parseFloat(houseHoldPvPercentage - houseHoldPvPercentageNoEms));
+    MIT_GridFeedPercentage = this.adjustPercentage(MIT_GridFeedPercentage, Math.round(houseHoldPvPercentageNoEms), Math.round(houseHoldPvPercentage - houseHoldPvPercentageNoEms));
 
     // Ohne
-    var Onhe_HouseholdNoEMSpvPercent = Math.round(parseFloat(houseHoldPvPercentage));
+    var Onhe_HouseholdNoEMSpvPercent = Math.round(parseFloat(houseHoldPvPercentageNoEms));
     var Onhe_GridFeedPercentageNoEMS = Math.round(gridFeedPercentageNoEms);
 
     return (
