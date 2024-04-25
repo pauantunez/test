@@ -120,18 +120,17 @@ class BreakEven extends React.Component {
 
   componentDidMount() {
     const { setBreakEvenBase64, loading } = this.context;
-    if (loading) {
-      setTimeout(() => {
-        const breakEvenCanvas = document.getElementById("breakEvenChart");
-        if (breakEvenCanvas) {
-          breakEvenCanvas.toBlob((blob) => {
-            const url = URL.createObjectURL(blob);
 
-            setBreakEvenBase64(url);
-          });
-        }
-      }, 1000);
-    }
+    setTimeout(() => {
+      const breakEvenCanvas = document.getElementById("breakEvenChart");
+      if (breakEvenCanvas) {
+        breakEvenCanvas.toBlob((blob) => {
+          const url = URL.createObjectURL(blob);
+
+          setBreakEvenBase64(url);
+        });
+      }
+    }, 1000);
   }
 
   onInputchange(event) {
