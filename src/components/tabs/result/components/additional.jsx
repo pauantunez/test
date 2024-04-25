@@ -472,7 +472,7 @@ class Additional extends React.Component {
           </div>
         </div>
         <div id="printPdf-container">
-          <div id="printPdf" style={{ position: "absolute", left: "0px", width: "795px", height: "1150px", display: "none" }}>
+          <div id="printPdf" style={{ position: "absolute", left: "0px", width: "795px", height: "1150px" /* , display: "none" */ }}>
             {this.context.selectedTheme === "buderus" ? (
               <div style={{ position: "absolute", left: "600px" }}>
                 <BuderusLogo style={{ maxWidth: "200px" }} />
