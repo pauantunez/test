@@ -1,7 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import AppContext from "../../../../AppContext";
-import axios from "axios";
 
 import { withTranslation } from "react-i18next";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title } from "chart.js";
@@ -81,20 +80,7 @@ class CustomSwitch extends React.Component {
     setLoadingOffGrid(true);
   }
 
-  componentDidMount() {
-    this.getInitialResult();
-  }
-
-  getInitialResult = () => {
-    const { scenarioInDatabase, kfwValue, ev, homeStorageSizekWh, pvOutputkWh, tabEntries } = this.context;
-
-    //find the correct TAB for the "NO EMS" case
-    let tabInTable = tabEntries.find((o) => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Nein");
-
-    //call getResult for the correct TAB
-    this.getResult(kfwValue + ev, scenarioInDatabase, tabInTable.Tab);
-    this.getResultNoEMS(kfwValue + ev, scenarioInDatabase);
-  };
+  componentDidMount() {}
 
   energyUsageCombined = (result) => {
     const { heatpumpType, setHouseholdNoEMSpvPercent, setNoEMSPercentage, setNoEMScombinedEnergyUseKWH, energyUsagekWh, odometerIncreaseKWH } = this.context;
@@ -140,64 +126,6 @@ class CustomSwitch extends React.Component {
       return o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === emsValue;
     });
     setTabToSelect(tabInTable.Tab);
-
-    setTimeout(() => {
-      this.getResult(kfwValue + ev, scenarioInDatabase);
-    }, "1000");
-  };
-
-  getResult = (kfw, scenario, noEMSTab) => {
-    const { backendUrl, setLoadingOffGrid, setDatabaseResult, heatpumpType, tabToSelect } = this.context;
-    var tab;
-    if (noEMSTab) {
-      tab = noEMSTab;
-    } else {
-      tab = tabToSelect.toString();
-    }
-    axios
-      .get(backendUrl, {
-        params: {
-          Document: kfw,
-          ScenNo: scenario,
-          ConfigNo: heatpumpType.toString(),
-          Tab: tab,
-        },
-      })
-      .then((res) => {
-        if (res.data.data.length !== 0) {
-          if (noEMSTab) {
-            this.energyUsageCombined(res.data.data[0]);
-          } else {
-            setDatabaseResult(res.data.data[0]);
-          }
-          setLoadingOffGrid(false);
-        }
-        sessionStorage.setItem("Autarkie_energy_to_grid_kWh_PV_MFH", res.data.data[0].energy_to_grid_kWh_PV_MFH);
-      });
-  };
-
-  getResultNoEMS = (kfw, scenario, noEMSTab) => {
-    const { backendUrl, setDatabaseResultNoEMS, heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries } = this.context;
-
-    let tabInTable = tabEntries.find((o) => {
-      return o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Nein";
-    });
-
-    axios
-      .get(backendUrl, {
-        params: {
-          Document: kfw,
-          ScenNo: scenario,
-          ConfigNo: heatpumpType.toString(),
-          Tab: tabInTable.Tab,
-        },
-      })
-      .then((res) => {
-        if (res.data.data.length !== 0) {
-          setDatabaseResultNoEMS(res.data.data[0]);
-        }
-        //sessionStorage.setItem("Autarkie_energy_to_grid_kWh_PV_MFH", res.data.data[0].energy_to_grid_kWh_PV_MFH);
-      });
   };
 
   render() {
