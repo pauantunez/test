@@ -127,7 +127,7 @@ class Main extends React.Component {
 
   componentWillReceiveProps = (nextProps, nextContext) => {
     //isEnd
-    if (nextContext.activeView === 13) {
+    if (nextContext.activeView === 14) {
       this.setState({
         fwdBtn: true,
         backBtn: false,
@@ -889,7 +889,7 @@ class Main extends React.Component {
               }}
             >
               {activeView === 11 && <span>Zurück</span>}
-              {activeView === 12 && <span>Ergebnis Teil 1</span>}
+              {activeView === 13 && <span>Ergebnis Teil 1</span>}
               {activeView === 0 && <span>Zurück</span>}
               {activeView === 1 && <span>Zurück</span>}
               {activeView === 2 && <span>Zurück</span>}
@@ -901,21 +901,22 @@ class Main extends React.Component {
               {activeView === 8 && <span>Zurück</span>}
               {activeView === 9 && <span>Zurück</span>}
               {activeView === 10 && <span>Zurück</span>}
-              {activeView === 13 && <span>Ergebnis Teil 2</span>}
+              {activeView === 12 && <span>Zurück</span>}
+              {activeView === 14 && <span>Ergebnis Teil 2</span>}
             </Button>
 
             <CustomButton
               id="CalcInfoBtn"
               startIcon={this.context.selectedTheme === "buderus" ? <BuderusInfoIcon /> : <InfoIcon />}
               style={{ background: "#FFF", border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "1px solid #007BC0", textTransform: "none", borderRadius: "0px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular" }}
-              className={activeView === 11 || activeView === 12 || activeView === 13 ? styles.show : styles.hide}
+              className={activeView === 12 || activeView === 13 || activeView === 14 ? styles.show : styles.hide}
               onClick={() => {
                 /* var container = document.getElementsByClassName("home_homeContainer__CHK-E")[0];
                 container.style.display = "none"; */
                 handleOpen();
               }}
             >
-              <span className="trackeable" style={{ fontSize: "12px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", color: this.context.selectedTheme === "buderus" ? "#000000" : "#007BC0", cursor: "pointer" }} data-event={activeView === 11 ? "result-part1-berechnungsgrundlage" : activeView === 12 ? "result-part2-berechnungsgrundlage" : activeView === 13 ? "result-part3-berechnungsgrundlage" : ""}>
+              <span className="trackeable" style={{ fontSize: "12px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", color: this.context.selectedTheme === "buderus" ? "#000000" : "#007BC0", cursor: "pointer" }} data-event={activeView === 12 ? "result-part1-berechnungsgrundlage" : activeView === 13 ? "result-part2-berechnungsgrundlage" : activeView === 14 ? "result-part3-berechnungsgrundlage" : ""}>
                 Berechnugsgrundlage
               </span>
             </CustomButton>
@@ -926,7 +927,7 @@ class Main extends React.Component {
               endIcon={<ForwardThinIcon />}
               disabled={fwdBtn}
               style={{ textTransform: "none", borderRadius: "0px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular" }}
-              className={activeView !== 13 ? styles.show : styles.hide}
+              className={activeView !== 14 ? styles.show : styles.hide}
               onClick={() => {
                 if (activeView === 3 && directLink === true) {
                   setDirectLink(false);
@@ -994,7 +995,8 @@ class Main extends React.Component {
               }}
             >
               {activeView === 10 && <span>Ergebnis Teil 1</span>}
-              {activeView === 11 && (
+              {activeView === 11 && <span>Ergebnis Teil 1</span>}
+              {activeView === 12 && (
                 <span className="trackeable" data-event="result-part1-next">
                   Ergebnis Teil 2
                 </span>
@@ -1014,7 +1016,7 @@ class Main extends React.Component {
               {activeView === 7 && <span>Weiter</span>}
               {activeView === 8 && <span>Weiter</span>}
               {activeView === 9 && <span>Weiter</span>}
-              {activeView === 12 && (
+              {activeView === 13 && (
                 <span className="trackeable" data-event="result-part2-next">
                   Zusatz
                 </span>
@@ -1027,7 +1029,7 @@ class Main extends React.Component {
               startIcon={<HouseSmallIcon />}
               disabled={this.state.restart}
               style={{ textTransform: "none", borderRadius: "0px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular" }}
-              className={activeView === 13 ? styles.show : styles.hide}
+              className={activeView === 14 ? styles.show : styles.hide}
               onClick={() => {
                 setActiveView(0);
               }}

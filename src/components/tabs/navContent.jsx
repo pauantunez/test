@@ -528,9 +528,9 @@ class NavContent extends React.Component {
                   <span class="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px" }}>
                     <span>
                       Ergebnis&nbsp;
-                      {activeView === 11 && <span>(1/2)</span>}
-                      {activeView === 12 && <span>(2/2)</span>}
+                      {activeView === 12 && <span>(1/2)</span>}
                       {activeView === 13 && <span>(2/2)</span>}
+                      {activeView === 14 && <span>(2/2)</span>}
                     </span>
                   </span>
                 </StepLabel>
