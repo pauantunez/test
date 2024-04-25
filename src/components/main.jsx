@@ -492,9 +492,8 @@ class Main extends React.Component {
       } else if (activeView - 1 <= 10) {
         setActiveMilestone(2);
         setMilestoneHeadline("Ökonomische Größen");
-      } else if (activeView - 1 <= 11) {
-        /* this.getResultNoEMS(kfwValue + ev, scenarioInDatabase);
-        this.getResult(kfwValue + ev, scenarioInDatabase); */
+      } else if (activeView - 1 === 11) {
+        setActiveView(activeView - 2);
       }
     };
 
