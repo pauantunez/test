@@ -34,7 +34,9 @@ const getResultNoEMS = (kfw, scenario, tabInTable, backendUrl, heatpumpType) => 
     });
 };
 
-export default {
+const resultsService = {
   getResult,
   getResultNoEMS,
 };
+
+export default resultsService;
