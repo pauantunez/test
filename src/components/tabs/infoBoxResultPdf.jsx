@@ -63,24 +63,9 @@ class InfoBoxResultPdf extends React.Component {
     return gridUsagePercent;
   };
 
-  findClosestPositionTo0 = () => {
-    const { heatpumpPV } = this.context;
-    let closestPosition = 0;
-    let closestValue = Math.abs(heatpumpPV[0].expenditure);
-    for (let i = 1; i < heatpumpPV.length; i++) {
-      const actualValue = Math.abs(heatpumpPV[i].expenditure);
-
-      if (actualValue < closestValue) {
-        closestValue = actualValue;
-        closestPosition = i;
-      }
-    }
-
-    return closestPosition;
-  };
-
   breakEvenPV = () => {
-    const { heatpumpPV } = this.context;
+    const { breakEvenNoEms } = this.context;
+    const heatpumpPV = breakEvenNoEms;
     let closestPosition = 0;
     let closestValue = Math.abs(heatpumpPV[0].expenditure);
     for (let i = 1; i < heatpumpPV.length; i++) {
@@ -95,7 +80,8 @@ class InfoBoxResultPdf extends React.Component {
   };
 
   breakEvenPVems = () => {
-    const { heatpumpPVems } = this.context;
+    const { breakEven } = this.context;
+    const heatpumpPVems = breakEven;
     let closestPosition = 0;
     let closestValue = Math.abs(heatpumpPVems[0].expenditure);
     for (let i = 1; i < heatpumpPVems.length; i++) {
@@ -111,20 +97,14 @@ class InfoBoxResultPdf extends React.Component {
   };
 
   breakEvenPoint = () => {
-    const { heatpumpPV, heatpumpPVems } = this.context;
-
+    const { breakEven, breakEvenNoEms } = this.context;
+    const heatpumpPVems = breakEven;
+    const heatpumpPV = breakEvenNoEms;
     for (let index = 0; index < heatpumpPV.length; index++) {
       if (heatpumpPVems[index].expenditure > heatpumpPV[index].expenditure) {
         return index;
       }
     }
-  };
-
-  amortizationDifference = () => {
-    const { heatpumpPV, heatpumpPVems } = this.context;
-
-    let difference = heatpumpPV[0].expenditure - heatpumpPVems[0].expenditure;
-    return difference;
   };
 
   goToView = (newValue) => {
@@ -134,13 +114,14 @@ class InfoBoxResultPdf extends React.Component {
   };
 
   render() {
+    const { cost1YearNoPV, cost1yearPV, cost20YearNoPV, cost20yearPV, cost1yearPVEMS, cost20yearPVEMS } = this.context;
     // Electricity savings
 
-    var savingOnlyPV1year = parseInt(sessionStorage.getItem("savingOnlyPV1year"));
-    var savingOnlyPV20years = parseInt(sessionStorage.getItem("savingOnlyPV20years"));
+    var savingOnlyPV1year = cost1YearNoPV - cost1yearPV;
+    var savingOnlyPV20years = cost20YearNoPV - cost20yearPV;
 
-    var savingPVandEMS1year = parseInt(sessionStorage.getItem("savingPVandEMS1year"));
-    var savingPVandEMS20years = parseInt(sessionStorage.getItem("savingPVandEMS20years"));
+    var savingPVandEMS1year = cost1YearNoPV - cost1yearPVEMS;
+    var savingPVandEMS20years = cost20YearNoPV - cost20yearPVEMS;
 
     var savingOnlyPv1yearMinusSavingEMS1year = savingPVandEMS1year - savingOnlyPV1year;
     var savingOnlyPv20yearsMinusSavingEMS20years = savingPVandEMS20years - savingOnlyPV20years;
@@ -161,7 +142,7 @@ class InfoBoxResultPdf extends React.Component {
           {this.state.boxType === "left" && (
             <div>
               <div className="infobox-row-container">
-                <div className="infobox-row" style={{ fontSize: "14px",display: "block", lineHeight: "24px", borderBottom: "none" }}>
+                <div className="infobox-row" style={{ fontSize: "14px", display: "block", lineHeight: "24px", borderBottom: "none" }}>
                   {this.state.displayed === "one-year" && (
                     <p>
                       Mit einer <strong>PV-Anlage</strong> lassen sich bis zu <strong>{savingOnlyPV1year.toLocaleString("de-DE")} € Stromkosten </strong>pro Jahr sparen.

@@ -137,8 +137,20 @@ class Additional extends React.Component {
     v8.start();
   };
 
+  adjustPercentage(value1, value2, value3 = 0) {
+    const total = value1 + value2 + value3;
+
+    if (total > 100) {
+      return value1 - 1;
+    } else if (total < 100) {
+      return value1 + 1;
+    } else {
+      return value1;
+    }
+  }
+
   render() {
-    const { breakEvenBase64, setBackdrop } = this.context;
+    const { breakEvenBase64, setBackdrop, gridUsagePercentage, pvUsagePercentageNoEms, gridUsagePercentageNoEms, gridFeedPercentage, houseHoldPvPercentage, houseHoldPvPercentageNoEms, gridFeedPercentageNoEms } = this.context;
 
 /*  text-transform: none;
   background: none;
@@ -251,25 +263,22 @@ class Additional extends React.Component {
 
     //OffGrid
     // Mit
-    var mitGridUsagePercentage = parseInt(sessionStorage.getItem("MIT_GridUsagePercentage"));
-    var mitNoEMSPercentage = parseInt(sessionStorage.getItem("MIT_NoEMSPercentageOffGrid"));
-    var mitPvUsagePercentage = parseInt(sessionStorage.getItem("MIT_PvUsagePercentage"));
-    var autarkiegradWithEMS = mitNoEMSPercentage + mitPvUsagePercentage;
+    var mitGridUsagePercentage = Math.round(gridUsagePercentage);
+    var autarkiegradWithEMS = Math.round(pvUsagePercentageNoEms) + Math.round(gridUsagePercentageNoEms - gridUsagePercentage);
 
     // Ohne
-    var ohneGridUsagePercentage = parseInt(sessionStorage.getItem("OHNE_GridUsagePercentage_NoEMS"));
-    var ohnePvUsagePercentage = parseInt(sessionStorage.getItem("OHNE_PvUsagePercentage_NoEMS"));
+    var ohneGridUsagePercentage = Math.round(gridUsagePercentageNoEms);
+    var ohnePvUsagePercentage = Math.round(pvUsagePercentageNoEms);
 
     //household-use
     // Mit
-    var MIT_GridFeedPercentage = parseInt(sessionStorage.getItem("MIT_GridFeedPercentage"));
-    var MIT_HouseholdUsagePercentage = parseInt(sessionStorage.getItem("MIT_HouseholdUsagePercentage"));
-    var MIT_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("MIT_HouseholdNoEMSpvPercent"));
-    var eigenverbrauchsanteil = MIT_HouseholdUsagePercentage + MIT_HouseholdNoEMSpvPercent;
+    var MIT_GridFeedPercentage = Math.round(gridFeedPercentage);
+    var eigenverbrauchsanteil = Math.round(parseFloat(houseHoldPvPercentageNoEms)) + Math.round(parseFloat(houseHoldPvPercentage - houseHoldPvPercentageNoEms));
+    MIT_GridFeedPercentage = this.adjustPercentage(MIT_GridFeedPercentage, Math.round(houseHoldPvPercentageNoEms), Math.round(houseHoldPvPercentage - houseHoldPvPercentageNoEms));
 
     // Ohne
-    var Onhe_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent_NoEMS"));
-    var Onhe_GridFeedPercentageNoEMS = parseInt(sessionStorage.getItem("Onhe_GridFeedPercentage_NoEMS"));
+    var Onhe_HouseholdNoEMSpvPercent = Math.round(parseFloat(houseHoldPvPercentageNoEms));
+    var Onhe_GridFeedPercentageNoEMS = Math.round(gridFeedPercentageNoEms);
 
     const addFooters = (doc) => {
       const pageCount = doc.internal.getNumberOfPages();
@@ -702,7 +711,6 @@ class Additional extends React.Component {
                   <InfoBoxResult box="electricity-use" />
                 </div>
 
-                
                 <div className="additional-flex first-col caption" style={{ position: "absolute", top: "240px", left: "0px", transform: "scale(0.85)", transformOrigin: "top left", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "12px" }}>
                   <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#996193" : "#9E2896" }}>
                     <div style={{ marginRight: "10px" }}>
@@ -723,7 +731,6 @@ class Additional extends React.Component {
                     <div>Elektro-Auto</div>
                   </div>
                 </div>
-
               </div>
               <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}>
                 <hr style={{ width: "675px", height: "1px", marginTop: "0px", background: "#999", border: "none", marginInlineStart: "0em" }} />
@@ -773,7 +780,7 @@ class Additional extends React.Component {
                           Das bedeutet: bis zu <strong>{autarkiegradWithEMS}%</strong> Ihres Gesamtstromverbrauchs wird durch die <strong>eigene PV-Anlage produziert.</strong>
                         </p>
                         <p>
-                          <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>{mitNoEMSPercentage}%</strong>.{" "}
+                          <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>{ohnePvUsagePercentage}%</strong>.{" "}
                         </p>
                         <p>
                           Ca.&nbsp;
@@ -796,7 +803,6 @@ class Additional extends React.Component {
                   <canvas id="pie2_NoEMS" width="440" height="273" />
                 </div>
 
-
                 <div className="additional-flex third-col caption" style={{ position: "absolute", top: "240px", left: "0px", transform: "scale(0.85)", transformOrigin: "top left", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "12px" }}>
                   <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" }}>
                     <div style={{ marginRight: "10px" }}>
@@ -817,7 +823,6 @@ class Additional extends React.Component {
                     <div>Netzeinspeisung</div>
                   </div>
                 </div>
-
 
                 {/* <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
                   <InfoBoxResult box="off-grid" />
@@ -880,7 +885,6 @@ class Additional extends React.Component {
             </div>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginLeft: "60px", maxWidth: "1000px" }}>
               <div style={{ position: "relative", width: "730px", height: "273px" }}>
-
                 <div style={{ position: "absolute", top: "0", left: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
                   <canvas id="pie5" width="375" height="273" />
                 </div>
@@ -888,7 +892,7 @@ class Additional extends React.Component {
                 <div style={{ position: "absolute", top: "0", left: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
                   <canvas id="pie6" width="375" height="273" />
                 </div>
-          
+
                 <div className="additional-flex second-col caption" style={{ position: "absolute", top: "240px", left: "0px", transform: "scale(0.85)", transformOrigin: "top left", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "12px" }}>
                   <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" }}>
                     <div style={{ marginRight: "10px" }}>
@@ -909,7 +913,6 @@ class Additional extends React.Component {
                     <div>Netzbezug</div>
                   </div>
                 </div>
-                
 
                 {/* <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
                   <InfoBoxResult box="household-use" />
@@ -923,7 +926,7 @@ class Additional extends React.Component {
                           Das bedeutet: bis zu <strong>{Math.round(parseFloat(eigenverbrauchsanteil).toFixed(2))}%</strong> Ihres eigens produzierten PV-Stroms <strong>verbrauchen Sie selbst.</strong>
                         </p>
                         <p>
-                          <strong>Ohne ein Energiemanagementsystem</strong> beträgt der <strong>Eigenverbrauchsanteil</strong> lediglich ca. <strong>{MIT_HouseholdNoEMSpvPercent}%</strong>.{" "}
+                          <strong>Ohne ein Energiemanagementsystem</strong> beträgt der <strong>Eigenverbrauchsanteil</strong> lediglich ca. <strong>{Onhe_HouseholdNoEMSpvPercent}%</strong>.{" "}
                         </p>
                         <p>
                           Ca.&nbsp;
@@ -939,7 +942,6 @@ class Additional extends React.Component {
                 <h3 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "14px" }}>Ohne Energiemanagementsystem</h3>
               </div>
               <div style={{ position: "relative", width: "730px", height: "273px" }}>
-
                 <div style={{ position: "absolute", top: "0", transform: "scale(0.85)", transformOrigin: "top left" }}>
                   <canvas id="pie7" width="375" height="273" />
                 </div>
@@ -947,7 +949,6 @@ class Additional extends React.Component {
                   <canvas id="pie8" width="375" height="273" />
                 </div>
 
-                
                 <div className="additional-flex third-col caption" style={{ position: "absolute", top: "240px", left: "0px", transform: "scale(0.85)", transformOrigin: "top left", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "12px" }}>
                   <div style={{ display: "flex", flexDirection: "row", color: this.context.selectedTheme === "buderus" ? "#F8D927" : "#18837E" }}>
                     <div style={{ marginRight: "10px" }}>
@@ -968,7 +969,6 @@ class Additional extends React.Component {
                     <div>Netzeinspeisung</div>
                   </div>
                 </div>
-
 
                 {/* <div style={{ position: "absolute", top: "0", left: "400px", transform: "scale(0.85)", transformOrigin: "top left" }}>
                   <InfoBoxResult box="household-use" />

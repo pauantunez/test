@@ -132,28 +132,21 @@ class CostPdf extends React.Component {
   };
 
   render() {
-    var OHNE_PV_cost1year = parseInt(sessionStorage.getItem("OHNE_PV_cost1year"));
-    var OHNE_PV_cost20years = parseInt(sessionStorage.getItem("OHNE_PV_cost20years"));
+    const { cost1YearNoPV, cost20YearNoPV, cost1yearPV, cost1yearPVEMS, cost20yearPV, cost20yearPVEMS } = this.context;
 
-    var costOnlyPV1year = parseInt(sessionStorage.getItem("costOnlyPV1year"));
-    var costOnlyPV20years = parseInt(sessionStorage.getItem("costOnlyPV20years"));
+    var savingOnlyPV1year = cost1YearNoPV - cost1yearPV;
+    var savingOnlyPV20years = cost20YearNoPV - cost20yearPV;
 
-    var costPVandEMS1year = parseInt(sessionStorage.getItem("costPVandEMS1year"));
-    var costPVandEMS20years = parseInt(sessionStorage.getItem("costPVandEMS20years"));
-
-    var savingOnlyPV1year = parseInt(sessionStorage.getItem("savingOnlyPV1year"));
-    var savingOnlyPV20years = parseInt(sessionStorage.getItem("savingOnlyPV20years"));
-
-    var savingPVandEMS1year = parseInt(sessionStorage.getItem("savingPVandEMS1year"));
-    var savingPVandEMS20years = parseInt(sessionStorage.getItem("savingPVandEMS20years"));
+    var savingPVandEMS1year = cost1YearNoPV - cost1yearPVEMS;
+    var savingPVandEMS20years = cost20YearNoPV - cost20yearPVEMS;
 
     // 1 year bar heights
-    var oneYearHeightMitPv = this.getBarHeights(OHNE_PV_cost1year, costOnlyPV1year, savingOnlyPV1year);
-    var oneYearHeightMitPvAndEMS = this.getBarHeights(OHNE_PV_cost1year, costPVandEMS1year, savingPVandEMS1year);
+    var oneYearHeightMitPv = this.getBarHeights(cost1YearNoPV, cost1yearPV, savingOnlyPV1year);
+    var oneYearHeightMitPvAndEMS = this.getBarHeights(cost1YearNoPV, cost1yearPVEMS, savingPVandEMS1year);
 
     // 20 years bar heights
-    var twentyYearsHeightMitPv = this.getBarHeights(OHNE_PV_cost20years, costOnlyPV20years, savingOnlyPV20years);
-    var twentyYearsHeightMitPvAndEms = this.getBarHeights(OHNE_PV_cost20years, costPVandEMS20years, savingPVandEMS20years);
+    var twentyYearsHeightMitPv = this.getBarHeights(cost20YearNoPV, cost20yearPV, savingOnlyPV20years);
+    var twentyYearsHeightMitPvAndEms = this.getBarHeights(cost20YearNoPV, cost20yearPV, savingPVandEMS20years);
 
     return (
       <div>
@@ -184,9 +177,9 @@ class CostPdf extends React.Component {
             {/* ohne PV */}
             <div style={{ display: "flex", width: "73px", height: `212px`, background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", marginTop: "auto" }}>
               <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
-                {this.state.displayed === "one-year" && OHNE_PV_cost1year.toLocaleString("de-DE")}
+                {this.state.displayed === "one-year" && cost1YearNoPV.toLocaleString("de-DE")}
                 {this.state.displayed === "one-year" && <span>&nbsp;€</span>}
-                {this.state.displayed === "twenty-years" && OHNE_PV_cost20years.toLocaleString("de-DE")}
+                {this.state.displayed === "twenty-years" && cost20YearNoPV.toLocaleString("de-DE")}
                 {this.state.displayed === "twenty-years" && <span>&nbsp;€</span>}
               </div>
             </div>
@@ -227,7 +220,7 @@ class CostPdf extends React.Component {
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
-                        {costOnlyPV1year.toLocaleString("de-DE")}
+                        {cost1yearPV.toLocaleString("de-DE")}
                         <span>&nbsp;€</span>
                       </span>
                     </div>
@@ -241,7 +234,7 @@ class CostPdf extends React.Component {
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
-                        {costOnlyPV20years.toLocaleString("de-DE")}
+                        {cost20yearPV.toLocaleString("de-DE")}
                         <span>&nbsp;€</span>
                       </span>
                     </div>
@@ -286,7 +279,7 @@ class CostPdf extends React.Component {
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
-                        {costPVandEMS1year.toLocaleString("de-DE")}
+                        {cost1yearPVEMS.toLocaleString("de-DE")}
                         <span>&nbsp;€</span>
                       </span>
                     </div>
@@ -300,7 +293,7 @@ class CostPdf extends React.Component {
                   <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                       <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
-                        {costPVandEMS20years.toLocaleString("de-DE")}
+                        {cost20yearPVEMS.toLocaleString("de-DE")}
                         <span>&nbsp;€</span>
                       </span>
                     </div>
@@ -314,28 +307,28 @@ class CostPdf extends React.Component {
             <div style={{ display: "flex", flexDirection: "row" }}>
               <div className="bar-chart-left-legend">
                 <div>
-                  {this.state.displayed === "one-year" && this.divideValuesForChart(5, OHNE_PV_cost1year) + " €"}
-                  {this.state.displayed === "twenty-years" && this.divideValuesForChart(5, OHNE_PV_cost20years) + " €"}
+                  {this.state.displayed === "one-year" && this.divideValuesForChart(5, cost1YearNoPV) + " €"}
+                  {this.state.displayed === "twenty-years" && this.divideValuesForChart(5, cost20YearNoPV) + " €"}
                 </div>
                 <div>
-                  {this.state.displayed === "one-year" && this.divideValuesForChart(4, OHNE_PV_cost1year) + " €"}
-                  {this.state.displayed === "twenty-years" && this.divideValuesForChart(4, OHNE_PV_cost20years) + " €"}
+                  {this.state.displayed === "one-year" && this.divideValuesForChart(4, cost1YearNoPV) + " €"}
+                  {this.state.displayed === "twenty-years" && this.divideValuesForChart(4, cost20YearNoPV) + " €"}
                 </div>
                 <div>
-                  {this.state.displayed === "one-year" && this.divideValuesForChart(3, OHNE_PV_cost1year) + " €"}
-                  {this.state.displayed === "twenty-years" && this.divideValuesForChart(3, OHNE_PV_cost20years) + " €"}
+                  {this.state.displayed === "one-year" && this.divideValuesForChart(3, cost1YearNoPV) + " €"}
+                  {this.state.displayed === "twenty-years" && this.divideValuesForChart(3, cost20YearNoPV) + " €"}
                 </div>
                 <div>
-                  {this.state.displayed === "one-year" && this.divideValuesForChart(2, OHNE_PV_cost1year) + " €"}
-                  {this.state.displayed === "twenty-years" && this.divideValuesForChart(2, OHNE_PV_cost20years) + " €"}
+                  {this.state.displayed === "one-year" && this.divideValuesForChart(2, cost1YearNoPV) + " €"}
+                  {this.state.displayed === "twenty-years" && this.divideValuesForChart(2, cost20YearNoPV) + " €"}
                 </div>
                 <div>
-                  {this.state.displayed === "one-year" && this.divideValuesForChart(1, OHNE_PV_cost1year) + " €"}
-                  {this.state.displayed === "twenty-years" && this.divideValuesForChart(1, OHNE_PV_cost20years) + " €"}
+                  {this.state.displayed === "one-year" && this.divideValuesForChart(1, cost1YearNoPV) + " €"}
+                  {this.state.displayed === "twenty-years" && this.divideValuesForChart(1, cost20YearNoPV) + " €"}
                 </div>
                 <div>
-                  {this.state.displayed === "one-year" && this.divideValuesForChart(0, OHNE_PV_cost1year) + " €"}
-                  {this.state.displayed === "twenty-year" && this.divideValuesForChart(0, OHNE_PV_cost20years) + " €"}
+                  {this.state.displayed === "one-year" && this.divideValuesForChart(0, cost1YearNoPV) + " €"}
+                  {this.state.displayed === "twenty-year" && this.divideValuesForChart(0, cost20YearNoPV) + " €"}
                 </div>
               </div>
               <div data-html2canvas-ignore className="cost-chart-width" style={{ display: "flex", flexDirection: "column", marginLeft: "3px" }}>

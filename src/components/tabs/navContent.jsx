@@ -23,11 +23,10 @@ import FacilitiesStep4 from "./facilities/step4";
 import CostStep1 from "./cost/step1";
 import CostStep2 from "./cost/step2";
 import CostStep3 from "./cost/step3";
+import ResultGetResults from "./result/getResults";
 import ResultStep1 from "./result/step1";
 import ResultStep2 from "./result/step2";
 import ResultStep3 from "./result/step3";
-
-import axios from "axios";
 
 import { withTranslation } from "react-i18next";
 
@@ -80,86 +79,8 @@ class NavContent extends React.Component {
     }
   }
 
-  getResult = (kfw, scenario) => {
-    const { backendUrl, setDatabaseResult, setDatabaseResultHouseHold, heatpumpType, tabToSelect } = this.context;
-
-    axios
-      .get(backendUrl, {
-        params: { Document: kfw, ScenNo: scenario, ConfigNo: heatpumpType.toString(), Tab: tabToSelect.toString() },
-      })
-      .then((res) => {
-        if (res.data.data.length !== 0) {
-          setDatabaseResult(res.data.data[0]);
-          setDatabaseResultHouseHold(res.data.data[0]);
-        }
-      });
-  };
-
-  breakEven = (year) => {
-    const { electricityCost, gridRevenue, electricityCostHouseholdPercentage, pvOutputkWh, homeStorageSize, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, addHeatpumpPVems } = this.context;
-    var investmentCostResult;
-    this.setState({ heatpumpPVems: [] });
-
-    let PVcostInTable = PVcostLookupTable.find((o) => o.pv === pvOutputkWh);
-    if (homeStorageSize === "none") {
-      investmentCostResult = -Math.abs(PVcostInTable.cost);
-    } else {
-      let StorageCostInTable = StorageCostLookupTable.find((o) => o.storage === homeStorageSize);
-      investmentCostResult = -Math.abs(PVcostInTable.cost + StorageCostInTable.cost);
-    }
-
-    if (investmentCostEUR > 0) {
-      investmentCostResult = parseInt(investmentCostEUR) * -1;
-    }
-
-    const betriebskosten = (1 / 100) * (investmentCostResult + -400);
-    const einspeiseverguetung = pvOutputkWh * 1000 * (1 - (electricityCostHouseholdPercentage + 10) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100);
-
-    for (let index = 0; index < 50; index++) {
-      const einsparungen = pvOutputkWh * 1000 * ((electricityCostHouseholdPercentage + 10) / 100) * (parseFloat(electricityCost / 100) * (1 + 0.02) ** [index + 1] - parseFloat(gridRevenue.replace(",", ".") / 100));
-      if (this.state.heatpumpPVems.length === 0) {
-        this.state.heatpumpPVems.push({ expenditure: investmentCostResult + -400 });
-      } else {
-        this.state.heatpumpPVems.push({ expenditure: parseFloat(this.state.heatpumpPVems[index - 1].expenditure) + betriebskosten + einspeiseverguetung + einsparungen });
-      }
-    }
-    addHeatpumpPVems(this.state.heatpumpPVems);
-  };
-
-  breakEvenPVonly = (year) => {
-    const { electricityCost, gridRevenue, electricityCostHouseholdPercentage, pvOutputkWh, homeStorageSize, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, addHeatpumpPV } = this.context;
-    var investmentCostResult;
-
-    let PVcostInTable = PVcostLookupTable.find((o) => o.pv === pvOutputkWh);
-    if (homeStorageSize === "none") {
-      investmentCostResult = -Math.abs(PVcostInTable.cost);
-    } else {
-      let StorageCostInTable = StorageCostLookupTable.find((o) => o.storage === homeStorageSize);
-      investmentCostResult = -Math.abs(PVcostInTable.cost + StorageCostInTable.cost);
-    }
-    if (investmentCostEUR > 0) {
-      investmentCostResult = parseInt(investmentCostEUR) * -1;
-    }
-
-    this.setState({ heatpumpPV: [] });
-
-    const betriebskosten = (1 / 100) * investmentCostResult;
-    const einspeiseverguetung = pvOutputkWh * 1000 * (1 - electricityCostHouseholdPercentage / 100) * parseFloat(gridRevenue.replace(",", ".") / 100);
-
-    for (let index = 0; index < 50; index++) {
-      const einsparungen = pvOutputkWh * 1000 * (electricityCostHouseholdPercentage / 100) * (parseFloat(electricityCost / 100) * (1 + 0.02) ** [index + 1] - parseFloat(gridRevenue.replace(",", ".") / 100));
-
-      if (this.state.heatpumpPV.length === 0) {
-        this.state.heatpumpPV.push({ expenditure: investmentCostResult, runningCost: betriebskosten });
-      } else {
-        this.state.heatpumpPV.push({ expenditure: parseFloat(this.state.heatpumpPV[index - 1].expenditure) + betriebskosten + einspeiseverguetung + einsparungen });
-      }
-    }
-    addHeatpumpPV(this.state.heatpumpPV);
-  };
-
   handleStep(step) {
-    const { kfwValue, ev, scenarioInDatabase, selectedTab, activeView, setActiveView, setActiveStep, steps, setFwdBtn, setMenu } = this.context;
+    const { selectedTab, activeView, setActiveView, setActiveStep, steps, setFwdBtn, setMenu } = this.context;
     if (activeView !== step) {
       if (step !== 0) {
         if (steps[step - 1] === false) {
@@ -173,12 +94,6 @@ class NavContent extends React.Component {
         setActiveStep(selectedTab.toString() + "-" + step.toString());
         setFwdBtn(true);
         setMenu(false);
-      }
-
-      if (step === 11) {
-        this.getResult(kfwValue + ev, scenarioInDatabase);
-        this.breakEven();
-        this.breakEvenPVonly();
       }
     }
   }
@@ -424,7 +339,9 @@ class NavContent extends React.Component {
                     this.handleStep(0);
                   }}
                 >
-                  <span class="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px" }}>Gebäude</span>
+                  <span className="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px" }}>
+                    Gebäude
+                  </span>
                 </StepLabel>
               </Step>
               <Step key="1">
@@ -458,7 +375,9 @@ class NavContent extends React.Component {
                     this.handleStep(4);
                   }}
                 >
-                  <span class="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px"}}>Ausstattung</span>
+                  <span className="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px" }}>
+                    Ausstattung
+                  </span>
                 </StepLabel>
               </Step>
               <Step key="5">
@@ -492,7 +411,9 @@ class NavContent extends React.Component {
                     this.handleStep(8);
                   }}
                 >
-                  <span class="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px" }}>Ökonomische Größen</span>
+                  <span className="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px" }}>
+                    Ökonomische Größen
+                  </span>
                 </StepLabel>
               </Step>
               <Step key="9">
@@ -518,12 +439,12 @@ class NavContent extends React.Component {
                     this.handleStep(11);
                   }}
                 >
-                  <span class="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px"}}>
+                  <span className="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px" }}>
                     <span>
                       Ergebnis&nbsp;
-                      {activeView === 11 && <span>(1/2)</span>}
-                      {activeView === 12 && <span>(2/2)</span>}
+                      {activeView === 12 && <span>(1/2)</span>}
                       {activeView === 13 && <span>(2/2)</span>}
+                      {activeView === 14 && <span>(2/2)</span>}
                     </span>
                   </span>
                 </StepLabel>
@@ -571,9 +492,10 @@ class NavContent extends React.Component {
           {activeView === 8 && <CostStep1 />}
           {activeView === 9 && <CostStep2 />}
           {activeView === 10 && <CostStep3 />}
-          {activeView === 11 && <ResultStep1 />}
-          {activeView === 12 && <ResultStep2 />}
-          {activeView === 13 && <ResultStep3 />}
+          {activeView === 11 && <ResultGetResults />}
+          {activeView === 12 && <ResultStep1 />}
+          {activeView === 13 && <ResultStep2 />}
+          {activeView === 14 && <ResultStep3 />}
         </Box>
       </div>
     );

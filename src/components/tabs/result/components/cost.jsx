@@ -1,7 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import AppContext from "../../../../AppContext";
-import axios from "axios";
 
 import { withTranslation } from "react-i18next";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title } from "chart.js";
@@ -132,255 +131,20 @@ class Cost extends React.Component {
   static contextType = AppContext;
 
   componentWillMount() {
-    const { setFwdBtn, setCostOverTime, kfwValue, ev, scenarioInDatabase } = this.context;
+    const { setFwdBtn, setCostOverTime } = this.context;
     setCostOverTime("1");
-    this.getResultNoEMS(kfwValue + ev, scenarioInDatabase);
     setFwdBtn(false);
   }
 
-  componentDidMount() {
-    const { loading } = this.context;
+  componentDidMount() {}
 
-    if (!loading) {
-      this.getHeatpumpCombinedUsage();
-      this.runningCostPVonly();
-    }
-  }
-
-  componentDidUpdate() {
-    const { loading } = this.context;
-    if (!loading) {
-      this.getHeatpumpCombinedUsage();
-      this.resultWithPV();
-      this.resultWithPVandEMS();
-    }
-  }
-
-  inputPower_kW_PV_MFH = (event) => {
-    const { setPower_kW_PV_MFH } = this.context;
-
-    setPower_kW_PV_MFH(event.target.value);
-  };
-
-  inputTCO_thermal_EUR_a = (event) => {
-    const { setTCO_thermal_EUR_a } = this.context;
-
-    setTCO_thermal_EUR_a(event.target.value);
-  };
+  componentDidUpdate() {}
 
   onInputchange(event) {
     this.setState({
       [event.target.name]: event.target.value,
     });
   }
-
-  async toggleModal() {
-    if (this.state.overlayToggle) {
-      this.setState({ overlayToggle: false });
-    } else {
-      this.setState({ overlayToggle: true });
-    }
-  }
-
-  energyUseEuro = (divided, years, bar) => {
-    const { electricityCost } = this.context;
-    var timeToNum;
-
-    if (this.state.displayed === undefined) {
-      timeToNum = parseInt(years);
-    } else {
-      if (this.state.displayed === "single") {
-        timeToNum = 1;
-      } else {
-        timeToNum = 20;
-      }
-    }
-    if (!bar) {
-      if (years === 1) {
-        // return '- ' + Math.round(parseInt(sessionStorage.getItem("energyUsageCombined")) * (electricityCost / 100) / 5 * divided * timeToNum).toLocaleString("de-DE") + ' €';
-        return Math.round(((parseInt(sessionStorage.getItem("energyUsageCombined")) * (electricityCost / 100)) / 5) * divided * timeToNum).toLocaleString("de-DE") + " €";
-      } else {
-        // return '- ' + parseInt(this.electricityCostNoPV20Years() / 5 * divided).toLocaleString("de-DE") + ' €'
-        return parseInt((this.electricityCostNoPV20Years() / 5) * divided).toLocaleString("de-DE") + " €";
-      }
-    } else {
-      return Math.round(((parseInt(sessionStorage.getItem("energyUsageCombined")) * (electricityCost / 100)) / 5) * divided * timeToNum);
-    }
-  };
-
-  energyUseEuroNegative = (multiplier, result) => {
-    return "+ " + parseInt((result / 5) * multiplier).toLocaleString("de-DE") + " €";
-  };
-
-  electricityCostPV = () => {
-    const { pvOutput, electricityCostOffGridPercentage, electricityCost } = this.context;
-
-    var pvOutputKW;
-
-    if (pvOutput === 0) {
-      pvOutputKW = 4;
-    } else if (pvOutput === 1) {
-      pvOutputKW = 7;
-    } else if (pvOutput === 2) {
-      pvOutputKW = 10;
-    } else if (pvOutput === 3) {
-      pvOutputKW = 14;
-    }
-
-    return (parseInt(pvOutputKW) * 1000 * (1 - parseFloat(electricityCostOffGridPercentage) / 10000) * (parseFloat(electricityCost) / 100)).toFixed(0);
-  };
-
-  electricityCostPVEMS = () => {
-    const { gridRevenue, pvOutput, electricityCostOffGridPercentage, electricityCost } = this.context;
-
-    var pvOutputKW;
-
-    if (pvOutput === 0) {
-      pvOutputKW = 4;
-    } else if (pvOutput === 1) {
-      pvOutputKW = 7;
-    } else if (pvOutput === 2) {
-      pvOutputKW = 10;
-    } else if (pvOutput === 3) {
-      pvOutputKW = 14;
-    }
-
-    const result = ((parseInt(pvOutputKW) * 1000 * (1 - parseFloat(electricityCostOffGridPercentage / 10000) - parseFloat(gridRevenue.replace(",", ".")) / 100) * parseFloat(electricityCost)) / 100).toFixed(0);
-
-    return result;
-  };
-
-  electricityCostNoPV20Years = () => {
-    const { electricityCost } = this.context;
-
-    const result = Math.abs((parseInt(sessionStorage.getItem("energyUsageCombined")) * (parseFloat(electricityCost) / 100) * (1 - (0.02 + 1) ** 20)) / 0.02);
-
-    return result;
-  };
-
-  electricityCostPV20Years = (mit_ems) => {
-    const { PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, pvOutputkWh, homeStorageSize, electricityCost, gridRevenue, EGen_elc_kWh_PV_MFH } = this.context;
-    var investmentCostResult;
-
-    let PVcostInTable = PVcostLookupTable.find((o) => o.pv === pvOutputkWh);
-    let StorageCostInTable = StorageCostLookupTable.find((o) => o.storage === homeStorageSize);
-
-    var feed_in_revenue;
-    var operating_costs;
-    var anual_cost_first_year;
-
-    if (homeStorageSize === "none") {
-      investmentCostResult = PVcostInTable.cost;
-    } else {
-      investmentCostResult = PVcostInTable.cost + StorageCostInTable.cost;
-    }
-
-    if (investmentCostEUR > 0) {
-      investmentCostResult = Math.abs(parseInt(investmentCostEUR) * -1);
-    }
-
-    if (mit_ems === true) {
-      feed_in_revenue = Math.abs(Math.round(EGen_elc_kWh_PV_MFH * (1 - parseFloat(sessionStorage.getItem("eigenverbrauchWithEms")) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
-      operating_costs = Math.abs(Math.round((investmentCostResult + 400) * 0.01));
-      anual_cost_first_year = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - parseFloat(sessionStorage.getItem("autarkiegradWithEMS")) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
-      anual_cost_first_year = Math.round(anual_cost_first_year * 100) / 100;
-    } else {
-      feed_in_revenue = (EGen_elc_kWh_PV_MFH * (1 - parseFloat(sessionStorage.getItem("householdNoEMSPercent")) / 100) * parseFloat(gridRevenue.replace(",", "."))) / 100;
-      feed_in_revenue = Math.round(feed_in_revenue * 100) / 100;
-      operating_costs = Math.abs(Math.round(investmentCostResult * 0.01));
-      anual_cost_first_year = Math.abs(operating_costs - feed_in_revenue + (1 - parseFloat(sessionStorage.getItem("pvUsagePercentNoEMS")) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02)));
-      anual_cost_first_year = Math.round(anual_cost_first_year * 100) / 100;
-    }
-    var result = Math.abs(Math.round((anual_cost_first_year * (1 - (0.02 + 1) ** 20)) / 0.02));
-    return Math.abs(result);
-  };
-
-  electricityCostPV1Years = (mit_ems) => {
-    const { PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, pvOutputkWh, homeStorageSize, electricityCost, gridRevenue, EGen_elc_kWh_PV_MFH } = this.context;
-
-    var result;
-    var operating_costs;
-    var feed_in_revenue;
-
-    var investmentCostResult;
-
-    let PVcostInTable = PVcostLookupTable.find((o) => o.pv === pvOutputkWh);
-    let StorageCostInTable = StorageCostLookupTable.find((o) => o.storage === homeStorageSize);
-
-    if (homeStorageSize === "none") {
-      investmentCostResult = PVcostInTable.cost;
-    } else {
-      investmentCostResult = PVcostInTable.cost + StorageCostInTable.cost;
-    }
-
-    if (investmentCostEUR > 0) {
-      investmentCostResult = Math.abs(parseInt(investmentCostEUR) * -1);
-    }
-
-    if (mit_ems === true) {
-      feed_in_revenue = Math.abs(Math.round(EGen_elc_kWh_PV_MFH * (1 - parseFloat(sessionStorage.getItem("eigenverbrauchWithEms")) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
-      operating_costs = Math.abs(Math.round((investmentCostResult + 400) * 0.01));
-      result = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - parseFloat(sessionStorage.getItem("autarkiegradWithEMS")) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
-    } else {
-      feed_in_revenue = Math.abs(Math.round(EGen_elc_kWh_PV_MFH * (1 - parseFloat(sessionStorage.getItem("householdNoEMSPercent")) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
-      operating_costs = Math.abs(Math.round(investmentCostResult * 0.01));
-      result = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - parseFloat(sessionStorage.getItem("pvUsagePercentNoEMS")) / 100) * parseInt(sessionStorage.getItem("energyUsageCombined")) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
-    }
-
-    return Math.abs(result);
-  };
-
-  runningCostPVonly = () => {
-    const { electricityCost, electricityCostOffGridPercentage } = this.context;
-    var totalRunning = 0;
-
-    if (!this.state.ranOnce) {
-      for (let index = 0; index < 20; index++) {
-        if (this.state.runningCostPVonly.length === 0) {
-          this.state.runningCostPVonly.push({ expenditure: -Math.abs((1 - electricityCostOffGridPercentage / 100) * 4000 * ((electricityCost / 100) * (1 + 0.02))) });
-        } else {
-          this.state.runningCostPVonly.push({ expenditure: parseFloat(this.state.runningCostPVonly[index - 1].expenditure) * (1 + 0.02) });
-        }
-      }
-
-      for (var i = 0; i < this.state.runningCostPVonly.length; i++) {
-        totalRunning += this.state.runningCostPVonly[i].expenditure;
-      }
-
-      this.setState({ totalRunningCostPVonly: totalRunning });
-      this.setState({ ranOnce: true });
-
-      this.runningCostPVems();
-    }
-  };
-
-  runningCostPVems = () => {
-    const { heatpumpPV, electricityCost, electricityCostOffGridPercentage } = this.context;
-    var totalRunning = 0;
-
-    if (!this.state.ranOnceEMS) {
-      for (let index = 0; index < 20; index++) {
-        if (this.state.runningCostPVems.length === 0) {
-          this.state.runningCostPVems.push({ expenditure: Math.abs(heatpumpPV[0].runningCost + (1 - (electricityCostOffGridPercentage + 10) / 100) * 4000 * ((electricityCost / 100) * (1 + 0.02))) });
-        } else {
-          this.state.runningCostPVems.push({ expenditure: parseFloat(this.state.runningCostPVems[index - 1].expenditure) * (1 + 0.02) });
-        }
-      }
-
-      for (var i = 0; i < this.state.runningCostPVems.length; i++) {
-        totalRunning += this.state.runningCostPVems[i].expenditure;
-      }
-
-      this.setState({ totalRunningCostPVems: totalRunning });
-      this.setState({ ranOnceEMS: true });
-    }
-
-    return -Math.abs((1 - electricityCostOffGridPercentage / 100) * 4000 * ((electricityCost / 100) * (1 + 0.02)));
-  };
-
-  runningCostPVemsDisplay = () => {
-    return 8888;
-  };
 
   inputCostOverTime = (event) => {
     const { setCostOverTime } = this.context;
@@ -395,274 +159,28 @@ class Cost extends React.Component {
     return heights;
   };
 
-  resultWithPV = () => {
-    const { costOverTime, setElectricityCostPVsavings } = this.context;
-    var result;
-
-    if (costOverTime === "1") {
-      result = this.electricityCostPV() - this.energyUseEuro(5, 1, true);
-    } else {
-      result = parseInt(parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVonly);
-    }
-
-    if (this.state.electricityCostPVsavings !== result) {
-      this.setState({ electricityCostPVsavings: result });
-      setElectricityCostPVsavings(result);
-    }
-
-    return result;
-  };
-
-  resultWithPVandEMS = () => {
-    const { costOverTime, setElectricityCostPVEMSsavings } = this.context;
-    var result;
-
-    if (costOverTime === "1") {
-      result = this.electricityCostPVEMS() - this.energyUseEuro(5, 1, true);
-    } else {
-      result = parseInt(parseFloat(this.electricityCostPV20Years()) + this.state.totalRunningCostPVems);
-    }
-
-    if (this.state.electricityCostPVEMSsavings !== result) {
-      this.setState({ electricityCostPVEMSsavings: result });
-      setElectricityCostPVEMSsavings(result);
-    }
-
-    return result;
-  };
-
-  whichChartLegend = () => {
-    const { costOverTime, electricityCostPVsavings, electricityCostPVEMSsavings } = this.context;
-
-    if (costOverTime === "1") {
-      return electricityCostPVsavings;
-    } else {
-      return electricityCostPVEMSsavings;
-    }
-  };
-
-  getHighestValue = (value1, value2, value3) => {
-    if (value1 >= value2 && value1 >= value3) {
-      return value1;
-    } else if (value2 >= value1 && value2 >= value3) {
-      return value2;
-    } else {
-      return value3;
-    }
-  };
-
   divideValuesForChart = (step, value) => {
     return parseInt((value / 5) * step).toLocaleString("de-DE");
   };
 
-  energyUsageCombined = (result) => {
-    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH } = this.context;
-    var Avg_Eff_JAZ_HP;
-    if (heatpumpType === "1") {
-      Avg_Eff_JAZ_HP = result.Avg_Eff_JAZ_HP_A_W_MFH;
-    } else {
-      Avg_Eff_JAZ_HP = result.Avg_Eff_JAZ_HP_B_W_MFH;
-    }
-
-    //Enegery usage heatpump
-    var energyUsageHeatpump = (parseFloat(result.EGen_sh_kWh_HP_A_W_MFH) + parseFloat(result.EGen_sh_kWh_HP_B_W_MFH) + parseFloat(result.EGen_hw_kWh_HP_A_W_MFH) + parseFloat(result.EGen_hw_kWh_HP_B_W_MFH)) / parseFloat(Avg_Eff_JAZ_HP);
-
-    //Energy usage heating rod
-    var energyUsageHeatingRod = (parseFloat(result.EGen_sh_kWh_EDWW_MFH) + parseFloat(result.EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(result.EGen_hw_kWh_EDWW_MFH) + parseFloat(result.EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
-
-    const energyUsageCombined = Math.round(energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH);
-    if (sessionStorage.getItem("energyUsageCombined") == null && energyUsageCombined) {
-      sessionStorage.setItem("energyUsageCombined", energyUsageCombined);
-    }
-
-    var pvUsagePercentNoEMS = Math.round(((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(energyUsageCombined)) * 100);
-    if (sessionStorage.getItem("pvUsagePercentNoEMS") == null && pvUsagePercentNoEMS) {
-      sessionStorage.setItem("pvUsagePercentNoEMS", pvUsagePercentNoEMS);
-    }
-
-    var householdNoEMSPercent = Math.round(((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(result.EGen_elc_kWh_PV_MFH)) * 100);
-
-    if (sessionStorage.getItem("householdNoEMSPercent") == null && householdNoEMSPercent) {
-      sessionStorage.setItem("householdNoEMSPercent", householdNoEMSPercent);
-    }
-  };
-
-  getHeatpumpCombinedUsage = () => {
-    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, EGen_hw_kWh_EDWW_MFH_Brine, EGen_hw_kWh_EDWW_MFH, EGen_sh_kWh_EDWW_MFH_Brine, EGen_sh_kWh_EDWW_MFH, Avg_Eff_JAZ_HP_B_W_MFH, Avg_Eff_JAZ_HP_A_W_MFH, EGen_sh_kWh_HP_A_W_MFH, EGen_sh_kWh_HP_B_W_MFH, EGen_hw_kWh_HP_A_W_MFH, EGen_hw_kWh_HP_B_W_MFH } = this.context;
-    var Avg_Eff_JAZ_HP;
-    if (heatpumpType === "1") {
-      Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_A_W_MFH;
-    } else {
-      Avg_Eff_JAZ_HP = Avg_Eff_JAZ_HP_B_W_MFH;
-    }
-
-    //Enegery usage heatpump
-    var energyUsageHeatpump = (parseFloat(EGen_sh_kWh_HP_A_W_MFH) + parseFloat(EGen_sh_kWh_HP_B_W_MFH) + parseFloat(EGen_hw_kWh_HP_A_W_MFH) + parseFloat(EGen_hw_kWh_HP_B_W_MFH)) / parseFloat(Avg_Eff_JAZ_HP);
-
-    //Energy usage heating rod
-    var energyUsageHeatingRod = (parseFloat(EGen_sh_kWh_EDWW_MFH) + parseFloat(EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(EGen_hw_kWh_EDWW_MFH) + parseFloat(EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
-
-    const HeatpumpCombinedUsage = energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH;
-    if (sessionStorage.getItem("HeatpumpCombinedUsage") == null && HeatpumpCombinedUsage) {
-      sessionStorage.setItem("HeatpumpCombinedUsage", HeatpumpCombinedUsage);
-    }
-  };
-
-  gridUsagePercentage = (type) => {
-    const { setInfoBoxOffGridGridUsage, energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = this.context;
-
-    var gridUsagePercent = 100 - ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(sessionStorage.getItem("HeatpumpCombinedUsage"))) * 100;
-
-    if (!this.state.infoBoxOffGridGridUsage) {
-      setInfoBoxOffGridGridUsage(gridUsagePercent);
-      this.setState({ infoBoxOffGridGridUsage: true });
-    }
-
-    return gridUsagePercent;
-  };
-
-  pvUsagePercentage = (type) => {
-    const { energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = this.context;
-
-    var pvUsagePercent = ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(sessionStorage.getItem("HeatpumpCombinedUsage"))) * 100;
-
-    return pvUsagePercent;
-  };
-
-  adjustPercentage(value1, value2, value3 = 0) {
-    const total = value1 + value2 + value3;
-
-    if (total > 100) {
-      return value1 - 1;
-    } else if (total < 100) {
-      return value1 + 1;
-    } else {
-      return value1;
-    }
-  }
-
-  getResultNoEMS = (kfw, scenario, noEMSTab) => {
-    const { backendUrl, setDatabaseResultNoEMS, heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries } = this.context;
-    let tabInTable = tabEntries.find((o) => {
-      return o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Nein";
-    });
-
-    axios
-      .get(backendUrl, {
-        params: {
-          Document: kfw,
-          ScenNo: scenario,
-          ConfigNo: heatpumpType.toString(),
-          Tab: tabInTable.Tab,
-        },
-      })
-      .then((res) => {
-        if (res.data.data.length !== 0) {
-          this.energyUsageCombined(res.data.data[0]);
-          setDatabaseResultNoEMS(res.data.data[0]);
-        }
-        //sessionStorage.setItem("Autarkie_energy_to_grid_kWh_PV_MFH", res.data.data[0].energy_to_grid_kWh_PV_MFH);
-      });
-  };
-
-  gridFeedPercentage = (type) => {
-    const { energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = this.context;
-
-    var gridFeedPercent = 100 - ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(EGen_elc_kWh_PV_MFH)) * 100;
-
-    return gridFeedPercent;
-  };
-
-  householdUsagePercentage = (type) => {
-    const { energy_to_grid_kWh_PV_MFH, EGen_elc_kWh_PV_MFH } = this.context;
-
-    var pvUsagePercent = ((parseFloat(EGen_elc_kWh_PV_MFH) - parseFloat(energy_to_grid_kWh_PV_MFH)) / parseFloat(EGen_elc_kWh_PV_MFH)) * 100;
-
-    return pvUsagePercent;
-  };
-
   render() {
-    const { loading } = this.context;
+    const { loading, cost1YearNoPV, cost20YearNoPV, cost1yearPV, cost1yearPVEMS, cost20yearPV, cost20yearPVEMS } = this.context;
 
     const { costOverTime } = this.context;
-    // Ohne PV
-    var OHNE_PV_cost1year = Math.abs(parseInt(this.energyUseEuro(5, 1).replace(".", "").replace(",", "")));
-    var OHNE_PV_cost20years = Math.abs(parseInt(this.electricityCostNoPV20Years()));
 
-    if (sessionStorage.getItem("OHNE_PV_cost1year") == null && OHNE_PV_cost1year) {
-      sessionStorage.setItem("OHNE_PV_cost1year", OHNE_PV_cost1year);
-    }
+    var savingOnlyPV1year = cost1YearNoPV - cost1yearPV;
+    var savingOnlyPV20years = cost20YearNoPV - cost20yearPV;
 
-    if (sessionStorage.getItem("OHNE_PV_cost20years") == null && OHNE_PV_cost20years) {
-      sessionStorage.setItem("OHNE_PV_cost20years", OHNE_PV_cost20years);
-    }
-
-    //Calculate offgrid and HouseHold
-    var roundedNoEMSGridUsagePercentage = Math.round(parseFloat(this.gridUsagePercentage()));
-    var roundedNoEMSPvUsagePercentage = Math.round(parseFloat(this.pvUsagePercentage() - Math.round(sessionStorage.getItem("pvUsagePercentNoEMS"))));
-    var roundedNoEMSPercentageOffGrid = Math.round(parseFloat(sessionStorage.getItem("pvUsagePercentNoEMS")));
-    roundedNoEMSPercentageOffGrid = this.adjustPercentage(roundedNoEMSPercentageOffGrid, roundedNoEMSGridUsagePercentage, roundedNoEMSPvUsagePercentage); // Rounded values for VictoryPieDataTest
-    const autarkiegradWithEMS = roundedNoEMSPercentageOffGrid + roundedNoEMSPvUsagePercentage;
-
-    if (sessionStorage.getItem("autarkiegradWithEMS") == null && autarkiegradWithEMS) {
-      sessionStorage.setItem("autarkiegradWithEMS", autarkiegradWithEMS);
-    }
-
-    var roundedHouseholdUsagePercentage = Math.round(parseFloat(this.householdUsagePercentage()) - sessionStorage.getItem("householdNoEMSPercent"));
-    var roundedHouseholdpvPercent = Math.round(parseFloat(sessionStorage.getItem("householdNoEMSPercent")));
-
-    const eigenverbrauchWithEms = roundedHouseholdpvPercent + roundedHouseholdUsagePercentage;
-
-    if (sessionStorage.getItem("eigenverbrauchWithEms") == null && eigenverbrauchWithEms) {
-      sessionStorage.setItem("eigenverbrauchWithEms", eigenverbrauchWithEms);
-    }
-
-    var costOnlyPV1year = parseInt(this.electricityCostPV1Years());
-    var costOnlyPV20years = parseInt(this.electricityCostPV20Years());
-
-    if (sessionStorage.getItem("costOnlyPV1year") == null && costOnlyPV1year) {
-      sessionStorage.setItem("costOnlyPV1year", costOnlyPV1year);
-    }
-    if (sessionStorage.getItem("costOnlyPV20years") == null && costOnlyPV20years) {
-      sessionStorage.setItem("costOnlyPV20years", costOnlyPV20years);
-    }
-
-    var savingOnlyPV1year = OHNE_PV_cost1year - costOnlyPV1year;
-    var savingOnlyPV20years = OHNE_PV_cost20years - costOnlyPV20years;
-    if (sessionStorage.getItem("savingOnlyPV1year") == null && savingOnlyPV1year) {
-      sessionStorage.setItem("savingOnlyPV1year", savingOnlyPV1year);
-    }
-
-    if (sessionStorage.getItem("savingOnlyPV20years") == null && savingOnlyPV20years) {
-      sessionStorage.setItem("savingOnlyPV20years", savingOnlyPV20years);
-    }
-
-    // Mit PV und EMS
-    var costPVandEMS1year = parseInt(parseInt(this.electricityCostPV1Years(true)));
-    var costPVandEMS20years = parseInt(this.electricityCostPV20Years(true));
-    if (sessionStorage.getItem("costPVandEMS1year") == null && costPVandEMS1year) {
-      sessionStorage.setItem("costPVandEMS1year", costPVandEMS1year);
-    }
-    if (sessionStorage.getItem("costPVandEMS20years") == null && costPVandEMS20years) {
-      sessionStorage.setItem("costPVandEMS20years", costPVandEMS20years);
-    }
-
-    var savingPVandEMS1year = OHNE_PV_cost1year - costPVandEMS1year;
-    var savingPVandEMS20years = OHNE_PV_cost20years - costPVandEMS20years;
-    if (sessionStorage.getItem("savingPVandEMS1year") == null && savingPVandEMS1year) {
-      sessionStorage.setItem("savingPVandEMS1year", savingPVandEMS1year);
-    }
-    if (sessionStorage.getItem("savingPVandEMS20years") == null && savingPVandEMS20years) {
-      sessionStorage.setItem("savingPVandEMS20years", savingPVandEMS20years);
-    }
+    var savingPVandEMS1year = cost1YearNoPV - cost1yearPVEMS;
+    var savingPVandEMS20years = cost20YearNoPV - cost20yearPVEMS;
 
     // 1 year bar heights
-    var oneYearHeightMitPv = this.getBarHeights(OHNE_PV_cost1year, costOnlyPV1year, savingOnlyPV1year);
-    var oneYearHeightMitPvAndEMS = this.getBarHeights(OHNE_PV_cost1year, costPVandEMS1year, savingPVandEMS1year);
+    var oneYearHeightMitPv = this.getBarHeights(cost1YearNoPV, cost1yearPV, savingOnlyPV1year);
+    var oneYearHeightMitPvAndEMS = this.getBarHeights(cost1YearNoPV, cost1yearPVEMS, savingPVandEMS1year);
 
     // 20 years bar heights
-    var twentyYearsHeightMitPv = this.getBarHeights(OHNE_PV_cost20years, costOnlyPV20years, savingOnlyPV20years);
-    var twentyYearsHeightMitPvAndEms = this.getBarHeights(OHNE_PV_cost20years, costPVandEMS20years, savingPVandEMS20years);
+    var twentyYearsHeightMitPv = this.getBarHeights(cost20YearNoPV, cost20yearPV, savingOnlyPV20years);
+    var twentyYearsHeightMitPvAndEms = this.getBarHeights(cost20YearNoPV, cost20yearPV, savingPVandEMS20years);
 
     return (
       <div>
@@ -701,9 +219,9 @@ class Cost extends React.Component {
                 {/* ohne PV */}
                 <div style={{ display: "flex", width: "73px", height: `212px`, background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", marginTop: "auto" }}>
                   <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%", fontSize: "12px", textAlign: "center" }}>
-                    {costOverTime === "1" && OHNE_PV_cost1year.toLocaleString("de-DE")}
+                    {costOverTime === "1" && cost1YearNoPV.toLocaleString("de-DE")}
                     {costOverTime === "1" && <span>&nbsp;€</span>}
-                    {costOverTime === "20" && OHNE_PV_cost20years.toLocaleString("de-DE")}
+                    {costOverTime === "20" && cost20YearNoPV.toLocaleString("de-DE")}
                     {costOverTime === "20" && <span>&nbsp;€</span>}
                   </div>
                 </div>
@@ -744,7 +262,7 @@ class Cost extends React.Component {
                       <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                           <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
-                            {costOnlyPV1year ? costOnlyPV1year.toLocaleString("de-DE") : ""}
+                            {cost1yearPV ? cost1yearPV.toLocaleString("de-DE") : ""}
                             <span>&nbsp;€</span>
                           </span>
                         </div>
@@ -758,7 +276,7 @@ class Cost extends React.Component {
                       <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                           <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
-                            {costOnlyPV20years ? costOnlyPV20years.toLocaleString("de-DE") : ""}
+                            {cost20yearPV ? cost20yearPV.toLocaleString("de-DE") : ""}
                             <span>&nbsp;€</span>
                           </span>
                         </div>
@@ -803,7 +321,7 @@ class Cost extends React.Component {
                       <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                           <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
-                            {costPVandEMS1year ? costPVandEMS1year.toLocaleString("de-DE") : ""}
+                            {cost1yearPVEMS ? cost1yearPVEMS.toLocaleString("de-DE") : ""}
                             <span>&nbsp;€</span>
                           </span>
                         </div>
@@ -817,7 +335,7 @@ class Cost extends React.Component {
                       <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                           <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
-                            {costPVandEMS20years ? costPVandEMS20years.toLocaleString("de-DE") : ""}
+                            {cost20yearPVEMS ? cost20yearPVEMS.toLocaleString("de-DE") : ""}
                             <span>&nbsp;€</span>
                           </span>
                         </div>
@@ -831,28 +349,28 @@ class Cost extends React.Component {
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <div className="bar-chart-left-legend">
                     <div>
-                      {costOverTime === "1" && this.divideValuesForChart(5, OHNE_PV_cost1year) + " €"}
-                      {costOverTime === "20" && this.divideValuesForChart(5, OHNE_PV_cost20years) + " €"}
+                      {costOverTime === "1" && this.divideValuesForChart(5, cost1YearNoPV) + " €"}
+                      {costOverTime === "20" && this.divideValuesForChart(5, cost20YearNoPV) + " €"}
                     </div>
                     <div>
-                      {costOverTime === "1" && this.divideValuesForChart(4, OHNE_PV_cost1year) + " €"}
-                      {costOverTime === "20" && this.divideValuesForChart(4, OHNE_PV_cost20years) + " €"}
+                      {costOverTime === "1" && this.divideValuesForChart(4, cost1YearNoPV) + " €"}
+                      {costOverTime === "20" && this.divideValuesForChart(4, cost20YearNoPV) + " €"}
                     </div>
                     <div>
-                      {costOverTime === "1" && this.divideValuesForChart(3, OHNE_PV_cost1year) + " €"}
-                      {costOverTime === "20" && this.divideValuesForChart(3, OHNE_PV_cost20years) + " €"}
+                      {costOverTime === "1" && this.divideValuesForChart(3, cost1YearNoPV) + " €"}
+                      {costOverTime === "20" && this.divideValuesForChart(3, cost20YearNoPV) + " €"}
                     </div>
                     <div>
-                      {costOverTime === "1" && this.divideValuesForChart(2, OHNE_PV_cost1year) + " €"}
-                      {costOverTime === "20" && this.divideValuesForChart(2, OHNE_PV_cost20years) + " €"}
+                      {costOverTime === "1" && this.divideValuesForChart(2, cost1YearNoPV) + " €"}
+                      {costOverTime === "20" && this.divideValuesForChart(2, cost20YearNoPV) + " €"}
                     </div>
                     <div>
-                      {costOverTime === "1" && this.divideValuesForChart(1, OHNE_PV_cost1year) + " €"}
-                      {costOverTime === "20" && this.divideValuesForChart(1, OHNE_PV_cost20years) + " €"}
+                      {costOverTime === "1" && this.divideValuesForChart(1, cost1YearNoPV) + " €"}
+                      {costOverTime === "20" && this.divideValuesForChart(1, cost20YearNoPV) + " €"}
                     </div>
                     <div>
-                      {costOverTime === "1" && this.divideValuesForChart(0, OHNE_PV_cost1year) + " €"}
-                      {costOverTime === "20" && this.divideValuesForChart(0, OHNE_PV_cost20years) + " €"}
+                      {costOverTime === "1" && this.divideValuesForChart(0, cost1YearNoPV) + " €"}
+                      {costOverTime === "20" && this.divideValuesForChart(0, cost20YearNoPV) + " €"}
                     </div>
                   </div>
                   <div data-html2canvas-ignore className="cost-chart-width" style={{ display: "flex", flexDirection: "column", marginLeft: "3px" }}>
