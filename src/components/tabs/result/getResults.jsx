@@ -187,15 +187,15 @@ const calculateElectricityCostPV20Years = (mit_ems, results, PVcostLookupTable, 
   }
 
   if (mit_ems === true) {
-    feed_in_revenue = Math.abs(Math.round(EGen_elc_kWh_PV_MFH * (1 - parseFloat(eigenverbrauchWithEms) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
+    feed_in_revenue = Math.abs(Math.round(EGen_elc_kWh_PV_MFH * (1 - parseFloat(Math.round(eigenverbrauchWithEms)) / 100) * parseFloat(gridRevenue.replace(",", ".") / 100)));
     operating_costs = Math.abs(Math.round((investmentCostResult + 400) * 0.01));
-    anual_cost_first_year = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - parseFloat(autarkiegradWithEMS) / 100) * parseInt(energyUsageCombined) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
+    anual_cost_first_year = Math.abs(Math.round(operating_costs - feed_in_revenue + (1 - parseFloat(Math.round(autarkiegradWithEMS)) / 100) * parseInt(energyUsageCombined) * ((parseFloat(electricityCost) / 100) * (1 + 0.02))));
     anual_cost_first_year = Math.round(anual_cost_first_year * 100) / 100;
   } else {
-    feed_in_revenue = (EGen_elc_kWh_PV_MFH * (1 - parseFloat(houseHoldPvPercentage) / 100) * parseFloat(gridRevenue.replace(",", "."))) / 100;
+    feed_in_revenue = (EGen_elc_kWh_PV_MFH * (1 - parseFloat(Math.round(houseHoldPvPercentageNoEms)) / 100) * parseFloat(gridRevenue.replace(",", "."))) / 100;
     feed_in_revenue = Math.round(feed_in_revenue * 100) / 100;
     operating_costs = Math.abs(Math.round(investmentCostResult * 0.01));
-    anual_cost_first_year = Math.abs(operating_costs - feed_in_revenue + (1 - parseFloat(pvUsagePercentageNoEms) / 100) * parseInt(energyUsageCombined) * ((parseFloat(electricityCost) / 100) * (1 + 0.02)));
+    anual_cost_first_year = Math.abs(operating_costs - feed_in_revenue + (1 - parseFloat(Math.round(pvUsagePercentageNoEms)) / 100) * parseInt(energyUsageCombined) * ((parseFloat(electricityCost) / 100) * (1 + 0.02)));
     anual_cost_first_year = Math.round(anual_cost_first_year * 100) / 100;
   }
   var result = Math.abs(Math.round((anual_cost_first_year * (1 - (0.02 + 1) ** 20)) / 0.02));
