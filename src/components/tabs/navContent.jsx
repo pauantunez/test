@@ -339,7 +339,7 @@ class NavContent extends React.Component {
                     this.handleStep(0);
                   }}
                 >
-                  <span class="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px" }}>
+                  <span className="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px" }}>
                     Gebäude
                   </span>
                 </StepLabel>
@@ -375,7 +375,7 @@ class NavContent extends React.Component {
                     this.handleStep(4);
                   }}
                 >
-                  <span class="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px" }}>
+                  <span className="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px" }}>
                     Ausstattung
                   </span>
                 </StepLabel>
@@ -411,7 +411,7 @@ class NavContent extends React.Component {
                     this.handleStep(8);
                   }}
                 >
-                  <span class="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px" }}>
+                  <span className="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px" }}>
                     Ökonomische Größen
                   </span>
                 </StepLabel>
@@ -439,7 +439,7 @@ class NavContent extends React.Component {
                     this.handleStep(11);
                   }}
                 >
-                  <span class="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px" }}>
+                  <span className="nav-label" style={{ display: "block", marginTop: "-8px", fontSize: "13px" }}>
                     <span>
                       Ergebnis&nbsp;
                       {activeView === 12 && <span>(1/2)</span>}
