@@ -86,17 +86,17 @@ const calculateBreakEven = (results, PVcostLookupTable, pvOutputkWh, StorageCost
   var einsparungen;
   if (ems) {
     investmentCostResult = investmentCostResult - 400;
-    betriebskosten = -Math.abs(Math.round((investmentCostResult - 400) * 0.01));
+    betriebskosten = -Math.abs(Math.round(investmentCostResult * 0.01));
   } else {
     betriebskosten = -Math.abs(Math.round(investmentCostResult * 0.01));
   }
 
-  einspeiseverguetung = (EGen_elc_kWh_PV_MFH * (1 - parseFloat(houseHoldPvPercentage) / 100) * parseFloat(gridRevenue.replace(",", "."))) / 100;
+  einspeiseverguetung = (EGen_elc_kWh_PV_MFH * (1 - parseFloat(Math.round(houseHoldPvPercentage)) / 100) * parseFloat(gridRevenue.replace(",", "."))) / 100;
 
   einspeiseverguetung = Math.round(einspeiseverguetung * 100) / 100;
 
   for (let index = 0; index < 50; index++) {
-    einsparungen = energyUsageCombined * (pvUsagePercentage / 100) * (parseFloat(electricityCost / 100) * Math.pow(1 + 0.02, index));
+    einsparungen = energyUsageCombined * (Math.round(pvUsagePercentage) / 100) * (parseFloat(electricityCost / 100) * Math.pow(1 + 0.02, index));
 
     einsparungen = Math.round(einsparungen * 100) / 100;
 
