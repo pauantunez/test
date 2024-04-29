@@ -265,6 +265,7 @@ const GetResults = () => {
     setEnergyUsageHouseHoldPercentage,
     energyUsageHouseHoldPercentageNoEms,
     setEnergyUsageHouseHoldPercentageNoEms,
+    selectedTheme,
   } = context;
 
   const getDebugFromUrl = () => {
@@ -415,7 +416,7 @@ const GetResults = () => {
 
             const breakEvenResultNoEms = calculateBreakEven(resultsNoEMS, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, heatpumpType, energyUsagekWh, odometerIncreaseKWH, false, energyUsageHeatpumpResultNoEms, combinedNoEms, houseHoldPvPercentageResultNoEms, pvUsagePercentageResultNoEms);
             setBreakEvenNoEms(breakEvenResultNoEms);
-            setLoading(false);
+            /* setLoading(false); */
             if (debug === false) {
               setActiveView(12);
             }
@@ -431,7 +432,7 @@ const GetResults = () => {
   if (loading) {
     return (
       <div className="loading-results">
-        <img src={require(`../../../assets/img/loading-results.gif`)} alt="Loading..." style={{ width: "217px" }} />
+        <img src={selectedTheme === "buderus" ? require(`../../../assets/img/loading-results.gif`) : require(`../../../assets/img/loading-results.gif`)} alt="Loading..." style={{ width: "217px" }} />
       </div>
     );
   }
