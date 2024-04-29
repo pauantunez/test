@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 import resultService from "../../../services/results";
 import AppContext from "../../../AppContext";
+import loadingGif from "../../../assets/img/loading-results.gif";
 
 const calculateEnergyUsageCombined = (results, energyUsageHeatpump, energyUsagekWh, odometerIncreaseKWH) => {
   return Math.round(energyUsageHeatpump + parseInt(energyUsagekWh) + odometerIncreaseKWH);
@@ -430,15 +431,13 @@ const GetResults = () => {
   );
   if (loading) {
     return (
-      <div class="loading-results">
-        <img src={require(`../../../assets/img/loading-results.gif`)} alt="Loading..." style={{ width: "217px" }} />
+      <div className="loading-results">
+        <img src={loadingGif} alt="Loading..." style={{ width: "217px" }} />
       </div>
     );
   }
   return (
     <div>
-      <div class="loading-results"></div>
-
       <h1>1 graph (Stromverbrauch)</h1>
       <p>energyUsageHeatpump: {energyUsageHeatpump}</p>
       <p>energyUsageHeatpump Percentage: {energyUsageHeatpumpPercentage}</p>
