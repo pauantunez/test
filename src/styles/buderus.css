@@ -1774,12 +1774,6 @@ a.card-input-narrow {
 .loading-results{
   width: 96%;
   height: 700px;
-  position: absolute;
-  z-index: 999;
-  background: #fff;
-  overflow: hidden;
-  background: url('../assets/img/buderus/loading-results.gif') no-repeat center center #fff;
-  background-size: 217px;
 }
 .loading-results img{
   margin: auto;
