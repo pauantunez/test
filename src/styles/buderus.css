@@ -1771,6 +1771,25 @@ a.card-input-narrow {
   /* background: repeating-linear-gradient(-45deg, #B2B2B2, #B2B2B2 2px, transparent 2px, transparent 3px); */
 }
 
+.loading-results{
+  width: 96%;
+  height: 700px;
+  position: absolute;
+  z-index: 999;
+  background: #fff;
+  overflow: hidden;
+  background: url('../assets/img/buderus/loading-results.gif') no-repeat center center #fff;
+  background-size: 217px;
+}
+.loading-results img{
+  margin: auto;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+
 @media print {}
 
 @media only screen and (min-width: 300px) and (max-width: 699px) {
