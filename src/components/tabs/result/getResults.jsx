@@ -416,7 +416,7 @@ const GetResults = () => {
 
             const breakEvenResultNoEms = calculateBreakEven(resultsNoEMS, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, heatpumpType, energyUsagekWh, odometerIncreaseKWH, false, energyUsageHeatpumpResultNoEms, combinedNoEms, houseHoldPvPercentageResultNoEms, pvUsagePercentageResultNoEms);
             setBreakEvenNoEms(breakEvenResultNoEms);
-            /* setLoading(false); */
+            setLoading(false);
             if (debug === false) {
               setActiveView(12);
             }
