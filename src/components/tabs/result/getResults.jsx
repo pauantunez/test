@@ -437,6 +437,9 @@ const GetResults = () => {
   }
   return (
     <div>
+      <div class="loading-results">
+        <img src={require(`../../../assets/img/loading-results.gif`)} alt="Loading..." style={{ width: "217px" }} />
+      </div>
 
       <h1>1 graph (Stromverbrauch)</h1>
       <p>energyUsageHeatpump: {energyUsageHeatpump}</p>

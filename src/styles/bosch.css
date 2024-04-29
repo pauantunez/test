@@ -1633,7 +1633,7 @@ a.card-input-narrow {
 }
 
 .loading-results{
-  width: 100%;
+  width: 96%;
   height: 700px;
   position: absolute;
   z-index: 999;
