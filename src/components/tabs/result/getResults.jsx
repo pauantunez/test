@@ -432,7 +432,7 @@ const GetResults = () => {
   if (loading) {
     return (
       <div className="loading-results">
-        <img src={selectedTheme === "buderus" ? require(`../../../assets/img/loading-results.gif`) : require(`../../../assets/img/loading-results.gif`)} alt="Loading..." style={{ width: "217px" }} />
+        <img src={selectedTheme === "buderus" ? require(`../../../assets/img/buderus/loading-results.gif`) : require(`../../../assets/img/loading-results.gif`)} alt="Loading..." style={{ width: "217px" }} />
       </div>
     );
   }
