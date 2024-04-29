@@ -430,13 +430,17 @@ const GetResults = () => {
   );
   if (loading) {
     return (
-      <div>
-        <img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="Loading..." />
+      <div class="loading-results">
+        <img src={require(`../../../assets/img/loading-results.gif`)} alt="Loading..." style={{ width: "217px" }} />
       </div>
     );
   }
   return (
     <div>
+      <div class="loading-results">
+        <img src={require(`../../../assets/img/loading-results.gif`)} alt="Loading..." style={{ width: "217px" }} />
+      </div>
+
       <h1>1 graph (Stromverbrauch)</h1>
       <p>energyUsageHeatpump: {energyUsageHeatpump}</p>
       <p>energyUsageHeatpump Percentage: {energyUsageHeatpumpPercentage}</p>

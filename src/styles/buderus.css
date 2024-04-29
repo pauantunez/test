@@ -1371,16 +1371,16 @@ a.card-input-narrow {
 }
 
 .results-page-two .infobox-container{
-  min-height: 185px;
+  height: 185px;
 }
 @media only screen and (max-width: 1005px) {
   .results-page-two .infobox-container{
-    min-height: 220px;
+    height: 220px;
   }
 }
 @media only screen and (max-width: 900px) {
   .results-page-two .infobox-container {
-    min-height: inherit;
+    height: inherit;
   }
 }
 
@@ -1520,10 +1520,10 @@ a.card-input-narrow {
     margin-bottom: 80px;
   }
   .results-page-one .left-box .infobox-container {
-    min-height: inherit!important;
+    height: inherit!important;
   }
   .results-page-one .right-box .infobox-container {
-    min-height: inherit!important;
+    height: inherit!important;
   }
 
   .flex-line {
@@ -1703,13 +1703,13 @@ a.card-input-narrow {
   color: #FFF;
 }
 .results-page-one .infobox-container{
-  min-height: 204px;
+  height: 204px;
 }
 .results-page-one .right-box .infobox-container{
-  min-height: 190px;
+  height: 190px;
 }
 .results-page-one .left-box .infobox-container{
-  min-height: 187px;
+  height: 187px;
 }
 
 .switch-container {
@@ -1992,10 +1992,10 @@ a.card-input-narrow {
     margin-top: -50px;
   }
   .infobox-container .results-page-one{
-    min-height: 220px;
+    height: 220px;
   }
   .infobox-container .results-page-two{
-    min-height: 220px;
+    height: 220px;
   }
 
 
