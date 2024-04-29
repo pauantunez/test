@@ -180,7 +180,8 @@ class Cost extends React.Component {
 
     // 20 years bar heights
     var twentyYearsHeightMitPv = this.getBarHeights(cost20YearNoPV, cost20yearPV, savingOnlyPV20years);
-    var twentyYearsHeightMitPvAndEms = this.getBarHeights(cost20YearNoPV, cost20yearPV, savingPVandEMS20years);
+    var twentyYearsHeightMitPvAndEms = this.getBarHeights(cost20YearNoPV, cost20yearPVEMS, savingPVandEMS20years);
+    console.log("🚀 ~ Cost ~ render ~ twentyYearsHeightMitPvAndEms:", twentyYearsHeightMitPvAndEms);
 
     return (
       <div>
