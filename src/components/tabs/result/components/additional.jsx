@@ -30,6 +30,7 @@ import { ReactComponent as BuderusEnergyManagementIcon } from "../../../../asset
 import { ReactComponent as BuderusWrenchIcon } from "../../../../assets/img/icons/buderus/wrench_small.svg";
 import { ReactComponent as BuderusInfoIcon } from "../../../../assets/img/icons/buderus/info_large.svg";
 import { ReactComponent as BuderusLinkIcon } from "../../../../assets/img/icons/buderus/arrow_fwd_large.svg";
+/* import { ReactComponent as BuderusLinkIconPdf } from "../../../../assets/img/icons/buderus/arrow_fwd_large.png"; */
 
 import "rc-slider/assets/index.css";
 import Button from "@mui/material/Button";
@@ -1000,7 +1001,7 @@ class Additional extends React.Component {
             </div>
           </div>
 
-          <div id="printPdf4" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
+          <div id="printPdf4" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "block" }}>
             {this.context.selectedTheme === "buderus" ? (
               <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
                 <div style={{ marginLeft: "600px" }}>
