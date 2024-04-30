@@ -1001,7 +1001,7 @@ class Additional extends React.Component {
             </div>
           </div>
 
-          <div id="printPdf4" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "block" }}>
+          <div id="printPdf4" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
             {this.context.selectedTheme === "buderus" ? (
               <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
                 <div style={{ marginLeft: "600px" }}>
@@ -1035,52 +1035,24 @@ class Additional extends React.Component {
                       <div className="block-container">
                         <div className="block contact">
                           <p>Fachbetriebe in ihrer Nähe</p>
-                          <div className="trackeable" data-event="result-part3-contact" style={{ display: "flex", alignItems: "end" }}>
-                            <a rel="noreferrer" href="https://www.buderus.de/de/services-tools/experten-in-ihrer-naehe/fachbetriebe-in-ihrer-naehe-21776" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                              <BuderusContactButtonPdf variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
-                                Fachbetrieb suchen
-                              </BuderusContactButtonPdf>
-                            </a>
-                          </div>
                           <div class="qr-container">
                             <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_dealer_search.png`)} style={{ width: "70px" }} />
                           </div>
                         </div>
                         <div className="block contact">
                           <p>Angebot anfordern</p>
-                          <div className="trackeable" data-event="result-part3-offer" style={{ display: "flex", alignItems: "end" }}>
-                            <a rel="noreferrer" href="https://www.buderus.de/de/angebot-anfordern" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                              <BuderusContactButtonPdf variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
-                                Unverbindliches Angebot anfordem
-                              </BuderusContactButtonPdf>
-                            </a>
-                          </div>
                           <div class="qr-container">
                             <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_lmt.png`)} style={{ width: "70px" }} />
                           </div>
                         </div>
                         <div className="block contact">
                           <p>Beratungshotline</p>
-                          <div style={{ display: "flex", alignItems: "end" }}>
-                            <a rel="noreferrer" href="https://www.buderus.de/de/kontakt-klimapaket" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                              <BuderusContactButtonPdf variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
-                                Zur Beratungshotline
-                              </BuderusContactButtonPdf>
-                            </a>
-                          </div>
                           <div class="qr-container">
                             <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_hotline.png`)} style={{ width: "70px" }} />
                           </div>
                         </div>
                         <div className="block contact">
                           <p>Niederlassungssuche</p>
-                          <div style={{ display: "flex", alignItems: "end" }}>
-                            <a rel="noreferrer" href="https://www.buderus.de/de/niederlassungen" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                              <BuderusContactButtonPdf variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
-                                Zur Niederlassungssuche
-                              </BuderusContactButtonPdf>
-                            </a>
-                          </div>
                           <div class="qr-container">
                             <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_branch.png`)} style={{ width: "70px" }} />
                           </div>
