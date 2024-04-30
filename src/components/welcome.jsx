@@ -16,6 +16,8 @@ import { ReactComponent as BuderusPVSunIcon } from "../assets/img/icons/buderus/
 import { ReactComponent as BuderusElectricitySunIcon } from "../assets/img/icons/buderus/electricity_sun_small.svg";
 import { ReactComponent as BuderusLightningSmallIcon } from "../assets/img/icons/buderus/lightning_small.svg";
 
+import Dependencies from "./dependencies/dependencies";
+
 import PropTypes from "prop-types";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -185,6 +187,14 @@ class Welcome extends React.Component {
     }
   };
 
+  isInFrame = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("forceFrameMode")) {
+      return true;
+    }
+    return window.self !== window.top;
+  };
+
   render() {
     const { setCalculationModal } = this.context;
 
@@ -203,7 +213,7 @@ class Welcome extends React.Component {
                   <div style={{ display: "flex", flexDirection: "row", padding: "15px 0 15px 0" }}>
                     <div>{this.context.selectedTheme === "buderus" ? <BuderusCoinIcon style={{ paddingRight: "10px" }} /> : <CoinIcon style={{ paddingRight: "10px" }} />}</div>
                     <div>
-                      <span style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold"}}>Stromkostenersparnis:</span> Wieviel Stromkosten kann man durch eine PV-Anlage einsparen?
+                      <span style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>Stromkostenersparnis:</span> Wieviel Stromkosten kann man durch eine PV-Anlage einsparen?
                     </div>
                   </div>
                   <div style={{ display: "flex", flexDirection: "row", padding: "15px 0 15px 0" }}>
@@ -250,6 +260,7 @@ class Welcome extends React.Component {
         <div className="noticeBottom">Hinweis: Die Ergebnisse beruhen auf Annahmen und können in der Realität abweichen. Bitte besprechen Sie die Details mit einem Fachbetrieb in Ihrer Nähe.</div>
 
         <CalculationModal />
+        {!this.isInFrame() && <Dependencies />}
       </div>
     );
   }
