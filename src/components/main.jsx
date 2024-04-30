@@ -2,7 +2,6 @@ import React from "react";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import { withRouter } from "react-router";
-import axios from "axios";
 import AppContext from "../AppContext";
 import NavContent from "./tabs/navContent";
 import { withTranslation } from "react-i18next";
@@ -33,6 +32,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Link from "@mui/material/Link";
 
 import CalculationModal from "./tabs/modal";
+
+import Dependencies from "./dependencies/dependencies";
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -127,7 +128,7 @@ class Main extends React.Component {
 
   componentWillReceiveProps = (nextProps, nextContext) => {
     //isEnd
-    if (nextContext.activeView === 13) {
+    if (nextContext.activeView === 14) {
       this.setState({
         fwdBtn: true,
         backBtn: false,
@@ -247,191 +248,12 @@ class Main extends React.Component {
     }
   };
 
-  getScenario = () => {
-    const { ev, preHeatTempOption, energyUsagekWh, BuildingSize, evProfile, buildingTypePreHeatOption, kfwValue, dualPreHeatOptionEVLookupTable, singlePreHeatOptionEVLookupTable, singlePreHeatOptionNoEVLookupTable, dualPreHeatOptionNoEVLookupTable, setScenarioInDatabase } = this.context;
-
-    let validateOptions = buildingTypePreHeatOption.find((o) => o.buildingType === kfwValue);
-    let scenarioInDatabase;
-    if (ev === "EV") {
-      if (validateOptions.option2 === "-") {
-        //if one, use singlePreHeatOptionNoEVLookupTable as lookup table
-        scenarioInDatabase = singlePreHeatOptionEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString() && o.evProfile === evProfile);
-        //this.context.goToView(6);
-      } else {
-        scenarioInDatabase = dualPreHeatOptionEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString() && o.evProfile === evProfile);
-      }
-    } else {
-      if (validateOptions.option2 === "-") {
-        //if one, use singlePreHeatOptionNoEVLookupTable as lookup table
-        scenarioInDatabase = singlePreHeatOptionNoEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString());
-      } else {
-        scenarioInDatabase = dualPreHeatOptionNoEVLookupTable.find((o) => o.option === preHeatTempOption.toString() && o.kwh === energyUsagekWh.toString() && o.sqm === BuildingSize.toString());
-      }
+  isInFrame = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("forceFrameMode")) {
+      return true;
     }
-    setScenarioInDatabase(scenarioInDatabase.scenario);
-  };
-
-  getResult = (kfw, scenario) => {
-    const { backendUrl, setDatabaseResult, setDatabaseResultHouseHold, heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries, setLoading } = this.context;
-
-    setLoading(true);
-    let tabInTable = tabEntries.find((o) => {
-      return o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Ja";
-    });
-    axios
-      .get(backendUrl, {
-        params: { Document: kfw, ScenNo: scenario, ConfigNo: heatpumpType.toString(), Tab: tabInTable.Tab },
-      })
-      .then((res) => {
-        if (res.data.data.length !== 0) {
-          setDatabaseResult(res.data.data[0]);
-          setDatabaseResultHouseHold(res.data.data[0]);
-          this.breakEven(res.data.data[0]);
-          setLoading(false);
-        }
-      });
-  };
-
-  getResultNoEMS = (kfw, scenario, noEMSTab) => {
-    const { backendUrl, heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries } = this.context;
-    let tabInTable = tabEntries.find((o) => {
-      return o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Nein";
-    });
-
-    axios
-      .get(backendUrl, {
-        params: {
-          Document: kfw,
-          ScenNo: scenario,
-          ConfigNo: heatpumpType.toString(),
-          Tab: tabInTable.Tab,
-        },
-      })
-      .then((res) => {
-        if (res.data.data.length !== 0) {
-          this.breakEvenPVonly(res.data.data[0]);
-        }
-        //sessionStorage.setItem("Autarkie_energy_to_grid_kWh_PV_MFH", res.data.data[0].energy_to_grid_kWh_PV_MFH);
-      });
-  };
-
-  breakEven = (result) => {
-    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, electricityCost, gridRevenue, pvOutputkWh, homeStorageSize, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, addHeatpumpPVems } = this.context;
-    var investmentCostResult;
-    this.setState({ heatpumpPVems: [] });
-
-    let PVcostInTable = PVcostLookupTable.find((o) => o.pv === pvOutputkWh);
-    let StorageCostInTable = StorageCostLookupTable.find((o) => o.storage === homeStorageSize);
-    if (homeStorageSize === "none") {
-      investmentCostResult = -Math.abs(PVcostInTable.cost);
-    } else {
-      investmentCostResult = -Math.abs(PVcostInTable.cost + StorageCostInTable.cost);
-    }
-    if (investmentCostEUR > 0) {
-      investmentCostResult = parseInt(investmentCostEUR) * -1;
-    }
-    var betriebskosten;
-    var einspeiseverguetung;
-    var einsparungen;
-
-    betriebskosten = -Math.abs(Math.round((investmentCostResult - 400) * 0.01));
-
-    var Avg_Eff_JAZ_HP;
-    if (heatpumpType === "1") {
-      Avg_Eff_JAZ_HP = result.Avg_Eff_JAZ_HP_A_W_MFH;
-    } else {
-      Avg_Eff_JAZ_HP = result.Avg_Eff_JAZ_HP_B_W_MFH;
-    }
-
-    //Enegery usage heatpump
-    var energyUsageHeatpump = (parseFloat(result.EGen_sh_kWh_HP_A_W_MFH) + parseFloat(result.EGen_sh_kWh_HP_B_W_MFH) + parseFloat(result.EGen_hw_kWh_HP_A_W_MFH) + parseFloat(result.EGen_hw_kWh_HP_B_W_MFH)) / parseFloat(Avg_Eff_JAZ_HP);
-    //Energy usage heating rod
-    var energyUsageHeatingRod = (parseFloat(result.EGen_sh_kWh_EDWW_MFH) + parseFloat(result.EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(result.EGen_hw_kWh_EDWW_MFH) + parseFloat(result.EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
-
-    const energyUsageCombined = Math.round(energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH);
-
-    var householdNoEMSPercent = Math.round(((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(result.EGen_elc_kWh_PV_MFH)) * 100);
-
-    var pvUsagePercentNoEMS = Math.round(((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(energyUsageCombined)) * 100);
-
-    einspeiseverguetung = (result.EGen_elc_kWh_PV_MFH * (1 - parseFloat(householdNoEMSPercent) / 100) * parseFloat(gridRevenue.replace(",", "."))) / 100;
-
-    einspeiseverguetung = Math.round(einspeiseverguetung * 100) / 100;
-
-    for (let index = 0; index < 50; index++) {
-      einsparungen = energyUsageCombined * (pvUsagePercentNoEMS / 100) * (parseFloat(electricityCost / 100) * Math.pow(1 + 0.02, index));
-
-      einsparungen = Math.round(einsparungen * 100) / 100;
-
-      if (this.state.heatpumpPVems.length === 0) {
-        this.state.heatpumpPVems.push({ expenditure: investmentCostResult + -400 });
-      } else {
-        this.state.heatpumpPVems.push({ expenditure: parseFloat(this.state.heatpumpPVems[index - 1].expenditure) + betriebskosten + einspeiseverguetung + einsparungen });
-      }
-    }
-    if (sessionStorage.getItem("heatpumpPVems") !== "") {
-      sessionStorage.setItem("heatpumpPVems", JSON.stringify(this.state.heatpumpPVems));
-    }
-
-    addHeatpumpPVems(this.state.heatpumpPVems);
-  };
-
-  breakEvenPVonly = (result) => {
-    const { heatpumpType, energyUsagekWh, odometerIncreaseKWH, electricityCost, gridRevenue, pvOutputkWh, homeStorageSize, PVcostLookupTable, investmentCostEUR, StorageCostLookupTable, addHeatpumpPV } = this.context;
-    var investmentCostResult;
-
-    let PVcostInTable = PVcostLookupTable.find((o) => o.pv === pvOutputkWh);
-    let StorageCostInTable = StorageCostLookupTable.find((o) => o.storage === homeStorageSize);
-    if (homeStorageSize === "none") {
-      investmentCostResult = -Math.abs(PVcostInTable.cost);
-    } else {
-      investmentCostResult = -Math.abs(PVcostInTable.cost + StorageCostInTable.cost);
-    }
-    if (investmentCostEUR > 0) {
-      investmentCostResult = parseInt(investmentCostEUR) * -1;
-    }
-    this.setState({ heatpumpPV: [] });
-    var betriebskosten;
-    var einspeiseverguetung;
-    var einsparungen;
-
-    betriebskosten = -Math.abs(Math.round(investmentCostResult * 0.01));
-    var Avg_Eff_JAZ_HP;
-    if (heatpumpType === "1") {
-      Avg_Eff_JAZ_HP = result.Avg_Eff_JAZ_HP_A_W_MFH;
-    } else {
-      Avg_Eff_JAZ_HP = result.Avg_Eff_JAZ_HP_B_W_MFH;
-    }
-    //Enegery usage heatpump
-    var energyUsageHeatpump = (parseFloat(result.EGen_sh_kWh_HP_A_W_MFH) + parseFloat(result.EGen_sh_kWh_HP_B_W_MFH) + parseFloat(result.EGen_hw_kWh_HP_A_W_MFH) + parseFloat(result.EGen_hw_kWh_HP_B_W_MFH)) / parseFloat(Avg_Eff_JAZ_HP);
-    //Energy usage heating rod
-    var energyUsageHeatingRod = (parseFloat(result.EGen_sh_kWh_EDWW_MFH) + parseFloat(result.EGen_sh_kWh_EDWW_MFH_Brine) + parseFloat(result.EGen_hw_kWh_EDWW_MFH) + parseFloat(result.EGen_hw_kWh_EDWW_MFH_Brine)) / parseFloat(0.99);
-
-    const energyUsageCombined = Math.round(energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH);
-
-    var householdNoEMSPercent = Math.round(((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(result.EGen_elc_kWh_PV_MFH)) * 100);
-
-    var pvUsagePercentNoEMS = Math.round(((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(energyUsageCombined)) * 100);
-
-    einspeiseverguetung = (result.EGen_elc_kWh_PV_MFH * (1 - parseFloat(householdNoEMSPercent) / 100) * parseFloat(gridRevenue.replace(",", "."))) / 100;
-    einspeiseverguetung = Math.round(einspeiseverguetung * 100) / 100;
-
-    for (let index = 0; index < 50; index++) {
-      einsparungen = energyUsageCombined * (pvUsagePercentNoEMS / 100) * (parseFloat(electricityCost / 100) * Math.pow(1 + 0.02, index));
-
-      einsparungen = Math.round(einsparungen * 100) / 100;
-
-      if (this.state.heatpumpPV.length === 0) {
-        this.state.heatpumpPV.push({ expenditure: investmentCostResult, runningCost: betriebskosten });
-      } else {
-        this.state.heatpumpPV.push({ expenditure: parseFloat(this.state.heatpumpPV[index - 1].expenditure) + betriebskosten + einspeiseverguetung + einsparungen });
-      }
-    }
-    if (sessionStorage.getItem("heatpumpPV") !== "") {
-      sessionStorage.setItem("heatpumpPV", JSON.stringify(this.state.heatpumpPV));
-    }
-
-    addHeatpumpPV(this.state.heatpumpPV);
+    return window.self !== window.top;
   };
 
   render() {
@@ -448,7 +270,7 @@ class Main extends React.Component {
       // Agrega más estilos según sea necesario
     });
 
-    const { kfwValue, ev, scenarioInDatabase, menuBackdrop, steps, menuOpen, setActiveView, setNavDirection, setDirectLink, activeView, fwdBtn, setFwdBtn, setActiveMilestone, setMilestoneHeadline, backdrop, directLink, sendGAEvent, BuildingEnegeryStandard, OilUsageLiters, OilLNGValue, LNGUsage, homeCharging, odometerIncrease, homeStorageSize, pvOutput, energyUsagekWh, disabledInvestmentCost, investmentCostEUR, electricityCost, gridRevenue, setCalculationModal } = this.context;
+    const { menuBackdrop, steps, menuOpen, setActiveView, setNavDirection, setDirectLink, activeView, fwdBtn, setFwdBtn, setActiveMilestone, setMilestoneHeadline, backdrop, directLink, sendGAEvent, BuildingEnegeryStandard, OilUsageLiters, OilLNGValue, LNGUsage, homeCharging, odometerIncrease, homeStorageSize, pvOutput, energyUsagekWh, disabledInvestmentCost, investmentCostEUR, electricityCost, gridRevenue, setCalculationModal } = this.context;
 
     const handleOpen = () => setCalculationModal(true);
 
@@ -466,11 +288,6 @@ class Main extends React.Component {
       } else if (activeView + 1 === 11) {
         setActiveMilestone(3);
         setMilestoneHeadline("Ergebnis");
-        this.getScenario();
-        this.getResult(kfwValue + ev, scenarioInDatabase);
-        this.getResultNoEMS(kfwValue + ev, scenarioInDatabase);
-        /* this.breakEven(); */
-        /* this.breakEvenPVonly(); */
       }
     };
 
@@ -492,9 +309,8 @@ class Main extends React.Component {
       } else if (activeView - 1 <= 10) {
         setActiveMilestone(2);
         setMilestoneHeadline("Ökonomische Größen");
-      } else if (activeView - 1 <= 11) {
-        this.getResultNoEMS(kfwValue + ev, scenarioInDatabase);
-        this.getResult(kfwValue + ev, scenarioInDatabase);
+      } else if (activeView - 1 === 11) {
+        setActiveView(activeView - 2);
       }
     };
 
@@ -889,7 +705,7 @@ class Main extends React.Component {
               }}
             >
               {activeView === 11 && <span>Zurück</span>}
-              {activeView === 12 && <span>Ergebnis Teil 1</span>}
+              {activeView === 13 && <span>Ergebnis Teil 1</span>}
               {activeView === 0 && <span>Zurück</span>}
               {activeView === 1 && <span>Zurück</span>}
               {activeView === 2 && <span>Zurück</span>}
@@ -901,21 +717,22 @@ class Main extends React.Component {
               {activeView === 8 && <span>Zurück</span>}
               {activeView === 9 && <span>Zurück</span>}
               {activeView === 10 && <span>Zurück</span>}
-              {activeView === 13 && <span>Ergebnis Teil 2</span>}
+              {activeView === 12 && <span>Zurück</span>}
+              {activeView === 14 && <span>Ergebnis Teil 2</span>}
             </Button>
 
             <CustomButton
               id="CalcInfoBtn"
               startIcon={this.context.selectedTheme === "buderus" ? <BuderusInfoIcon /> : <InfoIcon />}
               style={{ background: "#FFF", border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "1px solid #007BC0", textTransform: "none", borderRadius: "0px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular" }}
-              className={activeView === 11 || activeView === 12 || activeView === 13 ? styles.show : styles.hide}
+              className={activeView === 12 || activeView === 13 || activeView === 14 ? styles.show : styles.hide}
               onClick={() => {
                 /* var container = document.getElementsByClassName("home_homeContainer__CHK-E")[0];
                 container.style.display = "none"; */
                 handleOpen();
               }}
             >
-              <span className="trackeable" style={{ fontSize: "12px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", color: this.context.selectedTheme === "buderus" ? "#000000" : "#007BC0", cursor: "pointer" }} data-event={activeView === 11 ? "result-part1-berechnungsgrundlage" : activeView === 12 ? "result-part2-berechnungsgrundlage" : activeView === 13 ? "result-part3-berechnungsgrundlage" : ""}>
+              <span className="trackeable" style={{ fontSize: "12px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", color: this.context.selectedTheme === "buderus" ? "#000000" : "#007BC0", cursor: "pointer" }} data-event={activeView === 12 ? "result-part1-berechnungsgrundlage" : activeView === 13 ? "result-part2-berechnungsgrundlage" : activeView === 14 ? "result-part3-berechnungsgrundlage" : ""}>
                 Berechnugsgrundlage
               </span>
             </CustomButton>
@@ -926,7 +743,7 @@ class Main extends React.Component {
               endIcon={<ForwardThinIcon />}
               disabled={fwdBtn}
               style={{ textTransform: "none", borderRadius: "0px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular" }}
-              className={activeView !== 13 ? styles.show : styles.hide}
+              className={activeView !== 14 ? styles.show : styles.hide}
               onClick={() => {
                 if (activeView === 3 && directLink === true) {
                   setDirectLink(false);
@@ -994,7 +811,8 @@ class Main extends React.Component {
               }}
             >
               {activeView === 10 && <span>Ergebnis Teil 1</span>}
-              {activeView === 11 && (
+              {activeView === 11 && <span>Ergebnis Teil 1</span>}
+              {activeView === 12 && (
                 <span className="trackeable" data-event="result-part1-next">
                   Ergebnis Teil 2
                 </span>
@@ -1014,7 +832,7 @@ class Main extends React.Component {
               {activeView === 7 && <span>Weiter</span>}
               {activeView === 8 && <span>Weiter</span>}
               {activeView === 9 && <span>Weiter</span>}
-              {activeView === 12 && (
+              {activeView === 13 && (
                 <span className="trackeable" data-event="result-part2-next">
                   Zusatz
                 </span>
@@ -1027,7 +845,7 @@ class Main extends React.Component {
               startIcon={<HouseSmallIcon />}
               disabled={this.state.restart}
               style={{ textTransform: "none", borderRadius: "0px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular" }}
-              className={activeView === 13 ? styles.show : styles.hide}
+              className={activeView === 14 ? styles.show : styles.hide}
               onClick={() => {
                 setActiveView(0);
               }}
@@ -1039,6 +857,7 @@ class Main extends React.Component {
           </div>
         </div>
         <CalculationModal />
+        {!this.isInFrame() && <Dependencies />}
       </div>
     );
   }

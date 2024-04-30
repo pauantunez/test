@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, createContext } from "react";
 
 import i18n from "i18next";
 
-export const AppContext = React.createContext();
+export const AppContext = createContext();
 export const SimulatorConsumer = AppContext.Consumer;
 
 const queryString = window.location.search;
@@ -1512,6 +1512,38 @@ class SimulatorProvider extends Component {
     HH_EGen_hw_kWh_EDWW_MFH_Brine_NoEMS: 0,
     backendUrl: `https://sectorcoupling-api.thernovotools.com/results`,
     //backendUrl: `https://bosch-endkundentool-api.azurewebsites.net/results`,
+    // Estados del segundo contexto
+    tab: null,
+    tabNoEms: null,
+    scenario: null,
+    calculatedResults: [],
+    calculatedResultsNoEms: [],
+    energyUsageCombined: null,
+    energyUsageCombinedNoEms: null,
+    breakEven: [],
+    breakEvenNoEms: [],
+    energyUsageHeatpump: null,
+    energyUsageHeatpumpNoEms: null,
+    energyUsageHeatpumpPercentage: null,
+    energyUsageHeatpumpPercentageNoEms: null,
+    energyUsageEvPercentage: null,
+    energyUsageEvPercentageNoEms: null,
+    energyUsageHouseHoldPercentage: null,
+    energyUsageHouseHoldPercentageNoEms: null,
+    gridUsagePercentage: null,
+    gridUsagePercentageNoEms: null,
+    pvUsagePercentage: null,
+    pvUsagePercentageNoEms: null,
+    gridFeedPercentage: null,
+    gridFeedPercentageNoEms: null,
+    houseHoldPvPercentage: null,
+    houseHoldPvPercentageNoEms: null,
+    cost1YearNoPV: null,
+    cost20YearNoPV: null,
+    cost1yearPV: null,
+    cost1yearPVEMS: null,
+    cost20yearPV: null,
+    cost20yearPVEMS: null,
   };
 
   setProduct = (product) => {
@@ -2037,6 +2069,100 @@ class SimulatorProvider extends Component {
 
   setSelectedTheme = (value) => {
     this.setState((prevState) => ({ selectedTheme: value }));
+  };
+
+  setTab = (value) => {
+    this.setState((prevState) => ({ tab: value }));
+  };
+  setTabNoEms = (value) => {
+    this.setState((prevState) => ({ tabNoEms: value }));
+  };
+  setScenario = (value) => {
+    this.setState((prevState) => ({ scenario: value }));
+  };
+  setCalculatedResults = (value) => {
+    this.setState((prevState) => ({ calculatedResults: value }));
+  };
+  setCalculatedResultsNoEms = (value) => {
+    this.setState((prevState) => ({ calculatedResultsNoEms: value }));
+  };
+  setEnergyUsageCombined = (value) => {
+    this.setState((prevState) => ({ energyUsageCombined: value }));
+  };
+  setEnergyUsageCombinedNoEms = (value) => {
+    this.setState((prevState) => ({ energyUsageCombinedNoEms: value }));
+  };
+  setBreakEven = (value) => {
+    this.setState((prevState) => ({ breakEven: value }));
+  };
+  setBreakEvenNoEms = (value) => {
+    this.setState((prevState) => ({ breakEvenNoEms: value }));
+  };
+  setEnergyUsageHeatpump = (value) => {
+    this.setState((prevState) => ({ energyUsageHeatpump: value }));
+  };
+  setEnergyUsageHeatpumpNoEms = (value) => {
+    this.setState((prevState) => ({ energyUsageHeatpumpNoEms: value }));
+  };
+  setEnergyUsageHeatpumpPercentage = (value) => {
+    this.setState((prevState) => ({ energyUsageHeatpumpPercentage: value }));
+  };
+  setEnergyUsageHeatpumpPercentageNoEms = (value) => {
+    this.setState((prevState) => ({ energyUsageHeatpumpPercentageNoEms: value }));
+  };
+  setEnergyUsageEvPercentage = (value) => {
+    this.setState((prevState) => ({ energyUsageEvPercentage: value }));
+  };
+  setEnergyUsageEvPercentageNoEms = (value) => {
+    this.setState((prevState) => ({ energyUsageEvPercentageNoEms: value }));
+  };
+  setEnergyUsageHouseHoldPercentage = (value) => {
+    this.setState((prevState) => ({ energyUsageHouseHoldPercentage: value }));
+  };
+  setEnergyUsageHouseHoldPercentageNoEms = (value) => {
+    this.setState((prevState) => ({ energyUsageHouseHoldPercentageNoEms: value }));
+  };
+  setGridUsagePercentage = (value) => {
+    this.setState((prevState) => ({ gridUsagePercentage: value }));
+  };
+  setGridUsagePercentageNoEms = (value) => {
+    this.setState((prevState) => ({ gridUsagePercentageNoEms: value }));
+  };
+  setPvUsagePercentage = (value) => {
+    this.setState((prevState) => ({ pvUsagePercentage: value }));
+  };
+  setPvUsagePercentageNoEms = (value) => {
+    this.setState((prevState) => ({ pvUsagePercentageNoEms: value }));
+  };
+  setGridFeedPercentage = (value) => {
+    this.setState((prevState) => ({ gridFeedPercentage: value }));
+  };
+  setGridFeedPercentageNoEms = (value) => {
+    this.setState((prevState) => ({ gridFeedPercentageNoEms: value }));
+  };
+  setHouseHoldPvPercentage = (value) => {
+    this.setState((prevState) => ({ houseHoldPvPercentage: value }));
+  };
+  setHouseHoldPvPercentageNoEms = (value) => {
+    this.setState((prevState) => ({ houseHoldPvPercentageNoEms: value }));
+  };
+  setCost1YearNoPV = (value) => {
+    this.setState((prevState) => ({ cost1YearNoPV: value }));
+  };
+  setCost20YearNoPV = (value) => {
+    this.setState((prevState) => ({ cost20YearNoPV: value }));
+  };
+  setCost1yearPV = (value) => {
+    this.setState((prevState) => ({ cost1yearPV: value }));
+  };
+  setCost1yearPVEMS = (value) => {
+    this.setState((prevState) => ({ cost1yearPVEMS: value }));
+  };
+  setCost20yearPV = (value) => {
+    this.setState((prevState) => ({ cost20yearPV: value }));
+  };
+  setCost20yearPVEMS = (value) => {
+    this.setState((prevState) => ({ cost20yearPVEMS: value }));
   };
 
   goToView = (newValue, directLink) => {
@@ -2756,6 +2882,37 @@ class SimulatorProvider extends Component {
       directLink,
       selectedTheme,
       backendUrl,
+      tab,
+      tabNoEms,
+      scenario,
+      calculatedResults,
+      calculatedResultsNoEms,
+      energyUsageCombined,
+      energyUsageCombinedNoEms,
+      breakEven,
+      breakEvenNoEms,
+      energyUsageHeatpump,
+      energyUsageHeatpumpNoEms,
+      gridUsagePercentage,
+      gridUsagePercentageNoEms,
+      pvUsagePercentage,
+      pvUsagePercentageNoEms,
+      gridFeedPercentage,
+      gridFeedPercentageNoEms,
+      houseHoldPvPercentage,
+      houseHoldPvPercentageNoEms,
+      cost1YearNoPV,
+      cost20YearNoPV,
+      cost1yearPV,
+      cost1yearPVEMS,
+      cost20yearPV,
+      cost20yearPVEMS,
+      energyUsageHeatpumpPercentage,
+      energyUsageHeatpumpPercentageNoEms,
+      energyUsageEvPercentage,
+      energyUsageEvPercentageNoEms,
+      energyUsageHouseHoldPercentage,
+      energyUsageHouseHoldPercentageNoEms,
     } = this.state;
     const {
       setProduct,
@@ -2876,6 +3033,37 @@ class SimulatorProvider extends Component {
       setDirectLink,
       setSelectedTheme,
       sendGAEvent,
+      setTab,
+      setTabNoEms,
+      setScenario,
+      setCalculatedResults,
+      setCalculatedResultsNoEms,
+      setEnergyUsageCombined,
+      setEnergyUsageCombinedNoEms,
+      setBreakEven,
+      setBreakEvenNoEms,
+      setEnergyUsageHeatpump,
+      setEnergyUsageHeatpumpNoEms,
+      setGridUsagePercentage,
+      setGridUsagePercentageNoEms,
+      setPvUsagePercentage,
+      setPvUsagePercentageNoEms,
+      setGridFeedPercentage,
+      setGridFeedPercentageNoEms,
+      setHouseHoldPvPercentage,
+      setHouseHoldPvPercentageNoEms,
+      setCost1YearNoPV,
+      setCost20YearNoPV,
+      setCost1yearPV,
+      setCost1yearPVEMS,
+      setCost20yearPV,
+      setCost20yearPVEMS,
+      setEnergyUsageHeatpumpPercentage,
+      setEnergyUsageHeatpumpPercentageNoEms,
+      setEnergyUsageEvPercentage,
+      setEnergyUsageEvPercentageNoEms,
+      setEnergyUsageHouseHoldPercentage,
+      setEnergyUsageHouseHoldPercentageNoEms,
     } = this;
 
     return (
@@ -3196,6 +3384,68 @@ class SimulatorProvider extends Component {
           setSelectedTheme,
           sendGAEvent,
           backendUrl,
+          tab,
+          tabNoEms,
+          scenario,
+          calculatedResults,
+          calculatedResultsNoEms,
+          energyUsageCombined,
+          energyUsageCombinedNoEms,
+          breakEven,
+          breakEvenNoEms,
+          energyUsageHeatpump,
+          energyUsageHeatpumpNoEms,
+          gridUsagePercentage,
+          gridUsagePercentageNoEms,
+          pvUsagePercentage,
+          pvUsagePercentageNoEms,
+          gridFeedPercentage,
+          gridFeedPercentageNoEms,
+          houseHoldPvPercentage,
+          houseHoldPvPercentageNoEms,
+          cost1YearNoPV,
+          cost20YearNoPV,
+          cost1yearPV,
+          cost1yearPVEMS,
+          cost20yearPV,
+          cost20yearPVEMS,
+          energyUsageHeatpumpPercentage,
+          energyUsageHeatpumpPercentageNoEms,
+          energyUsageEvPercentage,
+          energyUsageEvPercentageNoEms,
+          energyUsageHouseHoldPercentage,
+          energyUsageHouseHoldPercentageNoEms,
+          setTab,
+          setTabNoEms,
+          setScenario,
+          setCalculatedResults,
+          setCalculatedResultsNoEms,
+          setEnergyUsageCombined,
+          setEnergyUsageCombinedNoEms,
+          setBreakEven,
+          setBreakEvenNoEms,
+          setEnergyUsageHeatpump,
+          setEnergyUsageHeatpumpNoEms,
+          setGridUsagePercentage,
+          setGridUsagePercentageNoEms,
+          setPvUsagePercentage,
+          setPvUsagePercentageNoEms,
+          setGridFeedPercentage,
+          setGridFeedPercentageNoEms,
+          setHouseHoldPvPercentage,
+          setHouseHoldPvPercentageNoEms,
+          setCost1YearNoPV,
+          setCost20YearNoPV,
+          setCost1yearPV,
+          setCost1yearPVEMS,
+          setCost20yearPV,
+          setCost20yearPVEMS,
+          setEnergyUsageHeatpumpPercentage,
+          setEnergyUsageHeatpumpPercentageNoEms,
+          setEnergyUsageEvPercentage,
+          setEnergyUsageEvPercentageNoEms,
+          setEnergyUsageHouseHoldPercentage,
+          setEnergyUsageHouseHoldPercentageNoEms,
         }}
       >
         {children}

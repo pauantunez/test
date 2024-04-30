@@ -119,72 +119,25 @@ class BreakEven extends React.Component {
   }
 
   componentDidMount() {
-    const { setBreakEvenBase64, loading } = this.context;
-    if (loading) {
-      setTimeout(() => {
-        const breakEvenCanvas = document.getElementById("breakEvenChart");
-        if (breakEvenCanvas) {
-          breakEvenCanvas.toBlob((blob) => {
-            const url = URL.createObjectURL(blob);
+    const { setBreakEvenBase64 } = this.context;
 
-            setBreakEvenBase64(url);
-          });
-        }
-      }, 1000);
-    }
+    setTimeout(() => {
+      const breakEvenCanvas = document.getElementById("breakEvenChart");
+      if (breakEvenCanvas) {
+        breakEvenCanvas.toBlob((blob) => {
+          const url = URL.createObjectURL(blob);
+
+          setBreakEvenBase64(url);
+        });
+      }
+    }, 1000);
   }
-
-  inputPower_kW_PV_MFH = (event) => {
-    const { setPower_kW_PV_MFH } = this.context;
-
-    setPower_kW_PV_MFH(event.target.value);
-  };
-
-  inputTCO_thermal_EUR_a = (event) => {
-    const { setTCO_thermal_EUR_a } = this.context;
-
-    setTCO_thermal_EUR_a(event.target.value);
-  };
 
   onInputchange(event) {
     this.setState({
       [event.target.name]: event.target.value,
     });
   }
-
-  async toggleModal() {
-    if (this.state.overlayToggle) {
-      this.setState({ overlayToggle: false });
-    } else {
-      this.setState({ overlayToggle: true });
-    }
-  }
-
-  energyUseEuro = (divided) => {
-    const { energyUsagekWh, electricityCost, costOverTime } = this.context;
-    const timeToNum = parseInt(costOverTime);
-
-    return Math.round(((energyUsagekWh * (electricityCost / 100)) / 6) * divided * timeToNum).toLocaleString("de-DE") + " €";
-  };
-
-  inputCostOverTime = (event) => {
-    const { setCostOverTime } = this.context;
-    setCostOverTime(event.target.value);
-  };
-
-  investmentCost = () => {
-    const { pvOutputkWh, PVcostLookupTable, investmentCostEUR } = this.context;
-
-    let PVcostInTable = PVcostLookupTable.find((o) => o.pv === pvOutputkWh);
-
-    let investmentCostResult = Math.abs(PVcostInTable.cost);
-
-    if (investmentCostEUR > 0) {
-      investmentCostResult = parseInt(investmentCostEUR) * -1;
-    }
-
-    return investmentCostResult;
-  };
 
   findClosestPositionTo0(data) {
     let closestPosition = 0;
@@ -229,13 +182,12 @@ class BreakEven extends React.Component {
     }
   }
 
-  breakEvenPV = () => {
-    const heatpumpPV = JSON.parse(sessionStorage.getItem("heatpumpPV"));
+  breakEvenPV = (breakEven) => {
     let closestPosition = 0;
-    if (heatpumpPV) {
-      let closestValue = Math.abs(heatpumpPV[0].expenditure);
-      for (let i = 1; i < heatpumpPV.length; i++) {
-        const actualValue = Math.abs(heatpumpPV[i].expenditure);
+    if (breakEven) {
+      let closestValue = Math.abs(breakEven[0].expenditure);
+      for (let i = 1; i < breakEven.length; i++) {
+        const actualValue = Math.abs(breakEven[i].expenditure);
 
         if (actualValue < closestValue) {
           closestValue = actualValue;
@@ -246,67 +198,49 @@ class BreakEven extends React.Component {
     return closestPosition;
   };
 
-  breakEvenPVems = () => {
-    const heatpumpPVems = JSON.parse(sessionStorage.getItem("heatpumpPVems"));
-    let closestPosition = 0;
-    let closestValue = Math.abs(heatpumpPVems[0].expenditure);
-    for (let i = 1; i < heatpumpPVems.length; i++) {
-      const actualValue = Math.abs(heatpumpPVems[i].expenditure);
-
-      if (actualValue < closestValue) {
-        closestValue = actualValue;
-        closestPosition = i;
+  // Function to create datapoints array up to a certain position
+  createDataPoints = (dataArray, position) => {
+    var points = [];
+    if (dataArray) {
+      for (var i = 0; i <= position; i++) {
+        if (dataArray[i] !== undefined) {
+          points.push(dataArray[i].expenditure);
+        } else {
+          // Handle cases where dataArray[i] might be undefined
+          points.push(null); // or some other default value
+        }
       }
     }
+    return points;
+  };
 
-    return closestPosition;
+  createDataPoints3 = (length) => {
+    var points = new Array(length).fill(null);
+
+    // Set first and last positions to 0
+    points[0] = 0;
+    points[length - 1] = 0;
+
+    // Calculate middle index and set it to 0
+    var middleIndex = Math.floor(length / 2);
+    points[middleIndex] = 0;
+
+    return points;
   };
 
   render() {
-    const { loading } = this.context;
-
-    const heatpumpPVems = JSON.parse(sessionStorage.getItem("heatpumpPVems"));
-    const heatpumpPV = JSON.parse(sessionStorage.getItem("heatpumpPV"));
-
-    // Function to create datapoints array up to a certain position
-    function createDataPoints(dataArray, position) {
-      var points = [];
-      if (dataArray) {
-        for (var i = 0; i <= position; i++) {
-          if (dataArray[i] !== undefined) {
-            points.push(dataArray[i].expenditure);
-          } else {
-            // Handle cases where dataArray[i] might be undefined
-            points.push(null); // or some other default value
-          }
-        }
-      }
-      return points;
-    }
+    const { breakEven, breakEvenNoEms } = this.context;
 
     // Create datapoints arrays
-    const numYears01 = this.breakEvenPV();
-    const datapoints = createDataPoints(heatpumpPVems, numYears01 + 3);
+    const numYears01 = this.breakEvenPV(breakEven);
+    const datapoints = this.createDataPoints(breakEven, numYears01 + 3);
     const closestPosition01 = this.findClosestPositionTo0(datapoints);
-    const datapoints2 = createDataPoints(heatpumpPV, numYears01 + 3);
+    const datapoints2 = this.createDataPoints(breakEvenNoEms, numYears01 + 3);
     const closestPosition02 = this.findClosestPositionTo0(datapoints2);
 
     const closestIntersectionPosition = this.findIntersectionPosition(datapoints, datapoints2);
 
-    function createDataPoints3(length) {
-      var points = new Array(length).fill(null);
-
-      // Set first and last positions to 0
-      points[0] = 0;
-      points[length - 1] = 0;
-
-      // Calculate middle index and set it to 0
-      var middleIndex = Math.floor(length / 2);
-      points[middleIndex] = 0;
-
-      return points;
-    }
-    const datapoints3 = createDataPoints3(numYears01 + 5 + 1); // Adding 1 because array is zero-indexed
+    const datapoints3 = this.createDataPoints3(numYears01 + 5 + 1); // Adding 1 because array is zero-indexed
     var labels_values = [];
     for (var i = 0; i <= numYears01 + 5; i++) {
       labels_values.push(i.toString());
@@ -449,20 +383,13 @@ class BreakEven extends React.Component {
       <div id="break-even">
         <div style={{ display: "flex", marginBottom: "20px", fontSize: "16px" }}>
           <div className="title-col-two">
-            Investitionskosten PV-System: <span style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}> {heatpumpPV ? Math.abs(heatpumpPV[0].expenditure).toLocaleString("de-DE") + " €" : ""}</span>
+            Investitionskosten PV-System: <span style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}> {breakEvenNoEms ? Math.abs(breakEvenNoEms[0].expenditure).toLocaleString("de-DE") + " €" : ""}</span>
           </div>
         </div>
-        {loading ? (
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <div style={{ position: "relative", width: "100%", height: "220px", top: "0", left: "0" }}>
-              <div style={{ position: "absolute", left: "50%", top: "100px" }}>Lädt...</div>
-            </div>
-          </div>
-        ) : (
-          <div className="graph-container" style={{ maxWidth: "550px" }}>
-            <Line id="breakEvenChart" options={lineOptions} data={lineData} />
-          </div>
-        )}
+
+        <div className="graph-container" style={{ maxWidth: "550px" }}>
+          <Line id="breakEvenChart" options={lineOptions} data={lineData} />
+        </div>
 
         <div style={{ display: "flex", flexDirection: "column", marginTop: "25px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "12px" }}>
           <div style={{ display: "flex", flexDirection: "row" }}>

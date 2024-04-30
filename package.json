@@ -26,6 +26,7 @@
     "i18next": "^21.1.1",
     "i18next-browser-languagedetector": "^6.1.4",
     "improved-yarn-audit": "^3.0.0",
+    "json-loader": "^0.5.7",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.6.0",
     "just-validate": "^4.2.0",

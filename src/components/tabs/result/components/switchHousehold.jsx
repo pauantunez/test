@@ -1,7 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import AppContext from "../../../../AppContext";
-import axios from "axios";
 
 import { withTranslation } from "react-i18next";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title } from "chart.js";
@@ -81,20 +80,7 @@ class HouseholdSwitch extends React.Component {
     setLoadingHousehold(true);
   }
 
-  componentDidMount() {
-    this.getInitialResult();
-  }
-
-  getInitialResult = () => {
-    const { scenarioInDatabase, kfwValue, ev, homeStorageSizekWh, pvOutputkWh, tabEntries } = this.context;
-
-    //find the correct TAB for the "NO EMS" case
-    let tabInTable = tabEntries.find((o) => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Nein");
-
-    //call getResult for the correct TAB
-    this.getResult(kfwValue + ev, scenarioInDatabase, tabInTable.Tab);
-    this.getResultNoEMS(kfwValue + ev, scenarioInDatabase);
-  };
+  componentDidMount() {}
 
   energyUsageCombined = (result) => {
     const { setHouseholdNoEMSpvPercent } = this.context;
@@ -102,51 +88,6 @@ class HouseholdSwitch extends React.Component {
     var householdNoEMSPercent = ((parseFloat(result.EGen_elc_kWh_PV_MFH) - parseFloat(result.energy_to_grid_kWh_PV_MFH)) / parseFloat(result.EGen_elc_kWh_PV_MFH)) * 100;
 
     setHouseholdNoEMSpvPercent(householdNoEMSPercent);
-  };
-
-  getResult = (kfw, scenario, noEMSTab) => {
-    const { backendUrl, setLoadingHousehold, setDatabaseResultHouseHold, heatpumpType, tabToSelectEigenverbrauch } = this.context;
-    var tab;
-    if (noEMSTab) {
-      tab = noEMSTab;
-    } else {
-      tab = tabToSelectEigenverbrauch.toString();
-    }
-    axios
-      .get(backendUrl, {
-        params: { Document: kfw, ScenNo: scenario, ConfigNo: heatpumpType.toString(), Tab: tab },
-      })
-      .then((res) => {
-        if (res.data.data.length !== 0) {
-          if (noEMSTab) {
-            this.energyUsageCombined(res.data.data[0]);
-          } else {
-            setDatabaseResultHouseHold(res.data.data[0]);
-          }
-
-          setLoadingHousehold(false);
-        }
-      });
-  };
-
-  getResultNoEMS = (kfw, scenario, noEMSTab) => {
-    const { backendUrl, setDatabaseResultHouseHoldNoEMS, heatpumpType, homeStorageSizekWh, pvOutputkWh, tabEntries } = this.context;
-
-    let tabInTable = tabEntries.find((o) => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === "Nein");
-    axios
-      .get(backendUrl, {
-        params: {
-          Document: kfw,
-          ScenNo: scenario,
-          ConfigNo: heatpumpType.toString(),
-          Tab: tabInTable.Tab,
-        },
-      })
-      .then((res) => {
-        if (res.data.data.length !== 0) {
-          setDatabaseResultHouseHoldNoEMS(res.data.data[0]);
-        }
-      });
   };
 
   inputHouseholdEMS = (event) => {
@@ -162,12 +103,6 @@ class HouseholdSwitch extends React.Component {
 
     let tabInTable = tabEntries.find((o) => o.PV_size === pvOutputkWh.toString() && o.Storage_size === homeStorageSizekWh.toString() && o.EMS === emsValue);
     setTabToSelectEigenverbrauch(tabInTable.Tab);
-
-    setTimeout(() => {
-      this.getResult(kfwValue + ev, scenarioInDatabase);
-    }, "2000");
-
-    this.getInitialResult();
   };
 
   render() {

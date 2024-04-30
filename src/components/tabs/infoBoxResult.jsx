@@ -58,7 +58,7 @@ class InfoBoxResult extends React.Component {
       //Energy usage heating rod
       energyUsageHeatingRod = (parseFloat(EGen_sh_kWh_EDWW_MFH_NoEMS) + parseFloat(EGen_sh_kWh_EDWW_MFH_Brine_NoEMS) + parseFloat(EGen_hw_kWh_EDWW_MFH_NoEMS) + parseFloat(EGen_hw_kWh_EDWW_MFH_Brine_NoEMS)) / parseFloat(0.99);
     }
-    /* console.log("🚀 ~ InfoBoxResult ~ ", energyUsageHeatpump, energyUsageHeatingRod, parseInt(energyUsagekWh), odometerIncreaseKWH); */
+    
     return energyUsageHeatpump + energyUsageHeatingRod + parseInt(energyUsagekWh) + odometerIncreaseKWH;
   };
 
@@ -78,24 +78,9 @@ class InfoBoxResult extends React.Component {
     return gridUsagePercent;
   };
 
-  findClosestPositionTo0 = () => {
-    const { heatpumpPV } = this.context;
-    let closestPosition = 0;
-    let closestValue = Math.abs(heatpumpPV[0].expenditure);
-    for (let i = 1; i < heatpumpPV.length; i++) {
-      const actualValue = Math.abs(heatpumpPV[i].expenditure);
-
-      if (actualValue < closestValue) {
-        closestValue = actualValue;
-        closestPosition = i;
-      }
-    }
-
-    return closestPosition;
-  };
-
   breakEvenPV = () => {
-    const heatpumpPV = JSON.parse(sessionStorage.getItem("heatpumpPV"));
+    const { breakEvenNoEms } = this.context;
+    const heatpumpPV = breakEvenNoEms;
     if (!heatpumpPV || heatpumpPV.length === 0) {
       return null;
     }
@@ -113,11 +98,8 @@ class InfoBoxResult extends React.Component {
   };
 
   breakEvenPVems = () => {
-    /* const { heatpumpPV, heatpumpPVems } = this.context;
-    let yearBreakEven = heatpumpPVems.findIndex((n) => n.expenditure > 0);
-
-    return yearBreakEven; */
-    const heatpumpPVems = JSON.parse(sessionStorage.getItem("heatpumpPVems"));
+    const { breakEven } = this.context;
+    const heatpumpPVems = breakEven;
     if (!heatpumpPVems || heatpumpPVems.length === 0) {
       return null;
     }
@@ -136,8 +118,9 @@ class InfoBoxResult extends React.Component {
   };
 
   breakEvenPoint = () => {
-    const heatpumpPVems = JSON.parse(sessionStorage.getItem("heatpumpPVems"));
-    const heatpumpPV = JSON.parse(sessionStorage.getItem("heatpumpPV"));
+    const { breakEven, breakEvenNoEms } = this.context;
+    const heatpumpPVems = breakEven;
+    const heatpumpPV = breakEvenNoEms;
     if (!heatpumpPV || heatpumpPV.length === 0 || !heatpumpPVems || heatpumpPVems.length === 0) {
       return null;
     }
@@ -148,53 +131,55 @@ class InfoBoxResult extends React.Component {
     }
   };
 
-  amortizationDifference = () => {
-    const { heatpumpPV, heatpumpPVems } = this.context;
-
-    let difference = heatpumpPV[0].expenditure - heatpumpPVems[0].expenditure;
-    return difference;
-  };
-
   goToView = (newValue) => {
     const { setActiveView, setDirectLink } = this.context;
     setDirectLink(true);
     setActiveView(newValue);
   };
 
+  adjustPercentage(value1, value2, value3 = 0) {
+    const total = value1 + value2 + value3;
+
+    if (total > 100) {
+      return value1 - 1;
+    } else if (total < 100) {
+      return value1 + 1;
+    } else {
+      return value1;
+    }
+  }
+
   render() {
-    const { costOverTime, offgridEMS, householdEMS } = this.context;
+    const { costOverTime, offgridEMS, householdEMS, cost1YearNoPV, cost1yearPV, cost20YearNoPV, cost20yearPV, cost1yearPVEMS, cost20yearPVEMS, energyUsageCombined, energyUsageCombinedNoEms, pvUsagePercentageNoEms, gridUsagePercentage, gridUsagePercentageNoEms, houseHoldPvPercentage, houseHoldPvPercentageNoEms, gridFeedPercentage, gridFeedPercentageNoEms } = this.context;
 
     // Electricity savings
-    var savingOnlyPV1year = parseInt(sessionStorage.getItem("savingOnlyPV1year"));
-    var savingOnlyPV20years = parseInt(sessionStorage.getItem("savingOnlyPV20years"));
+    var savingOnlyPV1year = cost1YearNoPV - cost1yearPV;
+    var savingOnlyPV20years = cost20YearNoPV - cost20yearPV;
 
-    var savingPVandEMS1year = parseInt(sessionStorage.getItem("savingPVandEMS1year"));
-    var savingPVandEMS20years = parseInt(sessionStorage.getItem("savingPVandEMS20years"));
+    var savingPVandEMS1year = cost1YearNoPV - cost1yearPVEMS;
+    var savingPVandEMS20years = cost20YearNoPV - cost20yearPVEMS;
 
     var savingOnlyPv1yearMinusSavingEMS1year = savingPVandEMS1year - savingOnlyPV1year;
     var savingOnlyPv20yearsMinusSavingEMS20years = savingPVandEMS20years - savingOnlyPV20years;
 
     //OffGrid
     // Mit
-    var mitGridUsagePercentage = parseInt(sessionStorage.getItem("MIT_GridUsagePercentage"));
-    var mitNoEMSPercentage = parseInt(sessionStorage.getItem("MIT_NoEMSPercentageOffGrid"));
-    var mitPvUsagePercentage = parseInt(sessionStorage.getItem("MIT_PvUsagePercentage"));
-    var autarkiegradWithEMS = mitNoEMSPercentage + mitPvUsagePercentage;
+    var mitGridUsagePercentage = Math.round(gridUsagePercentage);
+    var autarkiegradWithEMS = Math.round(pvUsagePercentageNoEms) + Math.round(gridUsagePercentageNoEms - gridUsagePercentage);
 
     // Ohne
-    var ohneGridUsagePercentage = parseInt(sessionStorage.getItem("OHNE_GridUsagePercentage"));
-    var ohnePvUsagePercentage = parseInt(sessionStorage.getItem("OHNE_PvUsagePercentage"));
+    var ohneGridUsagePercentage = Math.round(gridUsagePercentageNoEms);
+    var ohnePvUsagePercentage = Math.round(pvUsagePercentageNoEms);
 
     //household-use
     // Mit
-    var MIT_GridFeedPercentage = parseInt(sessionStorage.getItem("MIT_GridFeedPercentage"));
-    var MIT_HouseholdUsagePercentage = parseInt(sessionStorage.getItem("MIT_HouseholdUsagePercentage"));
-    var MIT_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("MIT_HouseholdNoEMSpvPercent"));
-    var eigenverbrauchsanteil = MIT_HouseholdUsagePercentage + MIT_HouseholdNoEMSpvPercent;
+    var MIT_GridFeedPercentage = Math.round(gridFeedPercentage);
+    var eigenverbrauchsanteil = Math.round(parseFloat(houseHoldPvPercentageNoEms)) + Math.round(parseFloat(houseHoldPvPercentage - houseHoldPvPercentageNoEms));
+    MIT_GridFeedPercentage = this.adjustPercentage(MIT_GridFeedPercentage, Math.round(houseHoldPvPercentageNoEms), Math.round(houseHoldPvPercentage - houseHoldPvPercentageNoEms));
 
     // Ohne
-    var Onhe_HouseholdNoEMSpvPercent = parseInt(sessionStorage.getItem("Onhe_HouseholdNoEMSpvPercent"));
-    var Onhe_GridFeedPercentageNoEMS = parseInt(sessionStorage.getItem("Onhe_GridFeedPercentageNoEMS"));
+    var Onhe_HouseholdNoEMSpvPercent = Math.round(parseFloat(houseHoldPvPercentageNoEms));
+    var Onhe_GridFeedPercentageNoEMS = Math.round(gridFeedPercentageNoEms);
 
     return (
       <Box component="span" className="infobox-container" style={{ fontSize: "16px", fontWeight: "400", boxShadow: "none", marginLeft: "0px", /*maxWidth: '500px',*/ padding: "16px" }}>
@@ -279,7 +264,7 @@ class InfoBoxResult extends React.Component {
               <div className="infobox-row-container">
                 <div className="infobox-row" style={{ display: "block", lineHeight: "24px", fontSize: "14px", borderBottom: "none" }}>
                   <h3 style={{ marginBlockStart: "0", marginBlockEnd: "8px" }}>
-                    Stromverbrauch gesamt: {Math.round(this.energyUsageCombined()).toLocaleString("de-DE")} kWh
+                    Stromverbrauch gesamt: {Math.round(offgridEMS ? energyUsageCombined : energyUsageCombinedNoEms).toLocaleString("de-DE")} kWh
                     <IconButton
                       id="editBtn"
                       aria-label="edit"
@@ -319,7 +304,7 @@ class InfoBoxResult extends React.Component {
 
                   {offgridEMS === true && (
                     <p>
-                      <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>{mitNoEMSPercentage}%</strong>.{" "}
+                      <strong>Ohne ein Energiemanagementsystem</strong> beträgt ihr <strong>Autarkiegrad</strong> lediglich ca. <strong>{ohnePvUsagePercentage}%</strong>.{" "}
                     </p>
                   )}
                   {offgridEMS === false && (
@@ -358,7 +343,7 @@ class InfoBoxResult extends React.Component {
 
                   {householdEMS === true && (
                     <p>
-                      <strong>Ohne ein Energiemanagementsystem</strong> beträgt der <strong>Eigenverbrauchsanteil</strong> lediglich ca. <strong>{MIT_HouseholdNoEMSpvPercent}%</strong>.{" "}
+                      <strong>Ohne ein Energiemanagementsystem</strong> beträgt der <strong>Eigenverbrauchsanteil</strong> lediglich ca. <strong>{Onhe_HouseholdNoEMSpvPercent}%</strong>.{" "}
                     </p>
                   )}
                   {householdEMS === false && (

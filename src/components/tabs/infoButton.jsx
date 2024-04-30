@@ -47,7 +47,7 @@ class InfoButton extends React.Component {
         backgroundColor: this.context.selectedTheme === "buderus" ? "#262626" : "#ffffff",
         /*color: "#007BC0",*/
         /* color: this.state.color, */
-        color: this.context.selectedTheme === "buderus" ? "#fff" : "#ffffff",
+        color: this.context.selectedTheme === "buderus" ? "#fff" : "#007BC0",
         boxShadow: this.context.selectedTheme === "buderus" ? "0px 0px 0px 0px" : "0px 0px 6px 0px rgba(0,0,0,0.6)",
         borderRadius: "0px",
         fontSize: "12px",
