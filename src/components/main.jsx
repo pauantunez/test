@@ -35,7 +35,6 @@ import CalculationModal from "./tabs/modal";
 
 import Dependencies from "./dependencies/dependencies";
 
-
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 var productEntry;
@@ -247,6 +246,14 @@ class Main extends React.Component {
     if (activeView === 0 && selectedTab === 2) {
       return true;
     }
+  };
+
+  isInFrame = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("forceFrameMode")) {
+      return true;
+    }
+    return window.self !== window.top;
   };
 
   render() {
@@ -850,8 +857,8 @@ class Main extends React.Component {
           </div>
         </div>
         <CalculationModal />
-        <Dependencies />
-              </div>
+        {!this.isInFrame() && <Dependencies />}
+      </div>
     );
   }
 }
