@@ -1000,7 +1000,7 @@ class Additional extends React.Component {
             </div>
           </div>
 
-          <div id="printPdf4" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
+          <div id="printPdf4" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "block" }}>
             {this.context.selectedTheme === "buderus" ? (
               <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
                 <div style={{ marginLeft: "600px" }}>
@@ -1041,6 +1041,9 @@ class Additional extends React.Component {
                               </BuderusContactButtonPdf>
                             </a>
                           </div>
+                          <div style={{ marginTop: "20px" }}>
+                        <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_dealer_search.png`)} style={{ width: "90px" }} />
+                      </div>
                         </div>
                         <div className="block contact">
                           <p>Angebot anfordern</p>
@@ -1051,6 +1054,9 @@ class Additional extends React.Component {
                               </BuderusContactButtonPdf>
                             </a>
                           </div>
+                          <div style={{ marginTop: "20px" }}>
+                        <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_lmt.png`)} style={{ width: "90px" }} />
+                      </div>
                         </div>
                         <div className="block contact">
                           <p>Beratungshotline</p>
@@ -1061,6 +1067,9 @@ class Additional extends React.Component {
                               </BuderusContactButtonPdf>
                             </a>
                           </div>
+                          <div style={{ marginTop: "20px" }}>
+                        <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_hotline.png`)} style={{ width: "90px" }} />
+                      </div>
                         </div>
                         <div className="block contact">
                           <p>Niederlassungssuche</p>
@@ -1071,7 +1080,10 @@ class Additional extends React.Component {
                               </BuderusContactButtonPdf>
                             </a>
                           </div>
-                        </div>
+                          <div style={{ marginTop: "20px" }}>
+                        <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_branch.png`)} style={{ width: "90px" }} />
+                      </div>
+                        </div>                       
                       </div>
                     </div>
                   </div>
@@ -1157,7 +1169,12 @@ class Additional extends React.Component {
                     </a>
                   </label>
                   <div style={{ marginTop: "20px" }}>
+                  {this.context.selectedTheme === "buderus" ? (
+                    <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_heatpump.png`)} style={{ width: "100px" }} />
+                  ):(
                     <img alt="heatpump" src={require(`../../../../assets/img/qr/heatpump.png`)} style={{ width: "100px" }} />
+                  )
+                }
                   </div>
                 </div>
                 <div style={{ width: "25%" }}>
@@ -1173,7 +1190,11 @@ class Additional extends React.Component {
                     </a>
                   </label>
                   <div style={{ marginTop: "20px" }}>
+                  {this.context.selectedTheme === "buderus" ? (
+                    <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_pv.png`)} style={{ width: "100px" }} />
+                  ):(
                     <img alt="pv" src={require(`../../../../assets/img/qr/pv.png`)} style={{ width: "100px" }} />
+                  )}
                   </div>
                 </div>
                 <div style={{ width: "25%" }}>
@@ -1189,8 +1210,14 @@ class Additional extends React.Component {
                     </a>
                   </label>
                   <div style={{ marginTop: "20px" }}>
+                  {this.context.selectedTheme === "buderus" ? (
+                    <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_wallbox.png`)} style={{ width: "100px" }} />
+                  ):(                    
                     <img alt="" src={require(`../../../../assets/img/qr/wallbox.png`)} style={{ width: "100px" }} />
+                    
+                  )}
                   </div>
+                  
                 </div>
                 <div style={{ width: "25%" }}>
                   <label>
@@ -1207,7 +1234,11 @@ class Additional extends React.Component {
                     </a>
                   </label>
                   <div style={{ marginTop: "20px" }}>
-                    <img alt="" src={require(`../../../../assets/img/qr/ems.png`)} style={{ width: "100px" }} />
+                  {this.context.selectedTheme === "buderus" ? (
+                    <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_ems.png`)} style={{ width: "100px" }} />
+                  ):(
+                    <img alt="heatpump" src={require(`../../../../assets/img/qr/ems.png`)} style={{ width: "110px" }} />
+                  )}
                   </div>
                 </div>
               </div>
