@@ -199,7 +199,7 @@ class BreakEven extends React.Component {
   };
 
   // Function to create datapoints array up to a certain position
-  createDataPoints = (dataArray, position) => {
+  /* createDataPoints = (dataArray, position) => {
     var points = [];
     if (dataArray) {
       for (var i = 0; i <= position; i++) {
@@ -212,18 +212,40 @@ class BreakEven extends React.Component {
       }
     }
     return points;
+  }; */
+
+  createDataPoints = (dataArray, position) => {
+    var points = [];
+    if (dataArray) {
+      for (var i = 0; i < dataArray.length && i <= position; i++) {
+        if (dataArray[i] !== undefined) {
+          points.push(dataArray[i].expenditure);
+
+          if (i !== position && i < dataArray.length - 1) {
+            const nextValue = dataArray[i + 1].expenditure;
+            points.push((dataArray[i].expenditure + nextValue) / 2);
+          }
+        } else {
+          points.push(null);
+        }
+      }
+    }
+    return points;
   };
 
-  createDataPoints3 = (length) => {
-    var points = new Array(length).fill(null);
+  createDataPoints3 = (dataArray) => {
+    var points = [];
 
-    // Set first and last positions to 0
-    points[0] = 0;
-    points[length - 1] = 0;
-
-    // Calculate middle index and set it to 0
-    var middleIndex = Math.floor(length / 2);
-    points[middleIndex] = 0;
+    if (dataArray) {
+      const length = dataArray.length + 1;
+      for (var i = 0; i < length; i++) {
+        if (i === 0 || i === Math.floor(length / 2) || i === length - 1) {
+          points.push(0);
+        } else {
+          points.push(null);
+        }
+      }
+    }
 
     return points;
   };
@@ -235,15 +257,18 @@ class BreakEven extends React.Component {
     const numYears01 = this.breakEvenPV(breakEven);
     const datapoints = this.createDataPoints(breakEven, numYears01 + 3);
     const closestPosition01 = this.findClosestPositionTo0(datapoints);
+
     const datapoints2 = this.createDataPoints(breakEvenNoEms, numYears01 + 3);
     const closestPosition02 = this.findClosestPositionTo0(datapoints2);
-
     const closestIntersectionPosition = this.findIntersectionPosition(datapoints, datapoints2);
 
-    const datapoints3 = this.createDataPoints3(numYears01 + 5 + 1); // Adding 1 because array is zero-indexed
+    const datapoints3 = this.createDataPoints3(datapoints);
+
     var labels_values = [];
-    for (var i = 0; i <= numYears01 + 5; i++) {
-      labels_values.push(i.toString());
+    for (let i = 0; i <= numYears01 + 3; i++) {
+      labels_values.push(i.toString()); // Añade el valor del año como string
+      // Añade un string vacío entre cada año, excepto al final
+      labels_values.push("");
     }
 
     const lineData = {
