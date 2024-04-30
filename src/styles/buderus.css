@@ -1364,7 +1364,7 @@ a.card-input-narrow {
   font-size: 13px;
 }
 .graphs-container, .wrapper-container {
-  margin-bottom: 80px !important;
+  margin-bottom: 80px !important; 
 }
 #editBtn svg{
   fill: #fff;
