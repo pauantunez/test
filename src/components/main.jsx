@@ -33,6 +33,9 @@ import Link from "@mui/material/Link";
 
 import CalculationModal from "./tabs/modal";
 
+import Dependencies from "./dependencies/dependencies";
+
+
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 var productEntry;
@@ -847,7 +850,8 @@ class Main extends React.Component {
           </div>
         </div>
         <CalculationModal />
-      </div>
+        <Dependencies />
+              </div>
     );
   }
 }
