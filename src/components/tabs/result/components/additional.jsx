@@ -30,6 +30,7 @@ import { ReactComponent as BuderusEnergyManagementIcon } from "../../../../asset
 import { ReactComponent as BuderusWrenchIcon } from "../../../../assets/img/icons/buderus/wrench_small.svg";
 import { ReactComponent as BuderusInfoIcon } from "../../../../assets/img/icons/buderus/info_large.svg";
 import { ReactComponent as BuderusLinkIcon } from "../../../../assets/img/icons/buderus/arrow_fwd_large.svg";
+/* import { ReactComponent as BuderusLinkIconPdf } from "../../../../assets/img/icons/buderus/arrow_fwd_large.png"; */
 
 import "rc-slider/assets/index.css";
 import Button from "@mui/material/Button";
@@ -1041,9 +1042,9 @@ class Additional extends React.Component {
                               </BuderusContactButtonPdf>
                             </a>
                           </div>
-                          <div style={{ marginTop: "20px" }}>
-                        <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_dealer_search.png`)} style={{ width: "90px" }} />
-                      </div>
+                          <div class="qr-container">
+                            <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_dealer_search.png`)} style={{ width: "70px" }} />
+                          </div>
                         </div>
                         <div className="block contact">
                           <p>Angebot anfordern</p>
@@ -1054,9 +1055,9 @@ class Additional extends React.Component {
                               </BuderusContactButtonPdf>
                             </a>
                           </div>
-                          <div style={{ marginTop: "20px" }}>
-                        <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_lmt.png`)} style={{ width: "90px" }} />
-                      </div>
+                          <div class="qr-container">
+                            <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_lmt.png`)} style={{ width: "70px" }} />
+                          </div>
                         </div>
                         <div className="block contact">
                           <p>Beratungshotline</p>
@@ -1067,9 +1068,9 @@ class Additional extends React.Component {
                               </BuderusContactButtonPdf>
                             </a>
                           </div>
-                          <div style={{ marginTop: "20px" }}>
-                        <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_hotline.png`)} style={{ width: "90px" }} />
-                      </div>
+                          <div class="qr-container">
+                            <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_hotline.png`)} style={{ width: "70px" }} />
+                          </div>
                         </div>
                         <div className="block contact">
                           <p>Niederlassungssuche</p>
@@ -1080,9 +1081,9 @@ class Additional extends React.Component {
                               </BuderusContactButtonPdf>
                             </a>
                           </div>
-                          <div style={{ marginTop: "20px" }}>
-                        <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_branch.png`)} style={{ width: "90px" }} />
-                      </div>
+                          <div class="qr-container">
+                            <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_branch.png`)} style={{ width: "70px" }} />
+                          </div>
                         </div>                       
                       </div>
                     </div>
@@ -1155,7 +1156,7 @@ class Additional extends React.Component {
                 <h3>Wie komme ich zu einem energieeffizienten System?</h3>
                 <h3 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontWeight: "normal", marginBlockStart: "0px", marginBlockEnd: "0px", fontSize: "13px" }}>Informationen zu unseren Produkten finden Sie unter den jeweiligen QR-Codes:</h3>
               </div>
-              <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignContent: "center", alignItems: "center", textAlign: "center", marginTop: "0px", marginBottom: "0px", paddingLeft: "0px", maxWidth: "690px" }}>
+              <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignContent: "center", alignItems: "flex-start", textAlign: "center", marginTop: "0px", marginBottom: "0px", paddingLeft: "0px", maxWidth: "690px" }}>
                 <div style={{ width: "25%" }}>
                   <label>
                     <input type="radio" name="heating" value="BuildingEnergyStandard" className="card-input-element" />
@@ -1170,9 +1171,9 @@ class Additional extends React.Component {
                   </label>
                   <div style={{ marginTop: "20px" }}>
                   {this.context.selectedTheme === "buderus" ? (
-                    <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_heatpump.png`)} style={{ width: "100px" }} />
+                    <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_heatpump.png`)} style={{ width: "70px" }} />
                   ):(
-                    <img alt="heatpump" src={require(`../../../../assets/img/qr/heatpump.png`)} style={{ width: "100px" }} />
+                    <img alt="heatpump" src={require(`../../../../assets/img/qr/heatpump.png`)} style={{ width: "70px" }} />
                   )
                 }
                   </div>
@@ -1191,9 +1192,9 @@ class Additional extends React.Component {
                   </label>
                   <div style={{ marginTop: "20px" }}>
                   {this.context.selectedTheme === "buderus" ? (
-                    <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_pv.png`)} style={{ width: "100px" }} />
+                    <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_pv.png`)} style={{ width: "70px" }} />
                   ):(
-                    <img alt="pv" src={require(`../../../../assets/img/qr/pv.png`)} style={{ width: "100px" }} />
+                    <img alt="pv" src={require(`../../../../assets/img/qr/pv.png`)} style={{ width: "70px" }} />
                   )}
                   </div>
                 </div>
@@ -1211,9 +1212,9 @@ class Additional extends React.Component {
                   </label>
                   <div style={{ marginTop: "20px" }}>
                   {this.context.selectedTheme === "buderus" ? (
-                    <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_wallbox.png`)} style={{ width: "100px" }} />
+                    <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_wallbox.png`)} style={{ width: "70px" }} />
                   ):(                    
-                    <img alt="" src={require(`../../../../assets/img/qr/wallbox.png`)} style={{ width: "100px" }} />
+                    <img alt="" src={require(`../../../../assets/img/qr/wallbox.png`)} style={{ width: "70px" }} />
                     
                   )}
                   </div>
@@ -1235,9 +1236,9 @@ class Additional extends React.Component {
                   </label>
                   <div style={{ marginTop: "20px" }}>
                   {this.context.selectedTheme === "buderus" ? (
-                    <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_ems.png`)} style={{ width: "100px" }} />
+                    <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_ems.png`)} style={{ width: "70px" }} />
                   ):(
-                    <img alt="heatpump" src={require(`../../../../assets/img/qr/ems.png`)} style={{ width: "110px" }} />
+                    <img alt="heatpump" src={require(`../../../../assets/img/qr/ems.png`)} style={{ width: "70px" }} />
                   )}
                   </div>
                 </div>
