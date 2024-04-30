@@ -11107,7 +11107,7 @@ const LicensesData = () => {
       {Object.entries(licensesData[0]).map(([packageName, licenseDetails]) => {
         return (
           <p key={packageName}>
-            <strong>{packageName}</strong>
+            <span>{packageName}</span>
             <br />
             <a href={licenseDetails.repository} rel="noreferrer" target="_blank">
               {licenseDetails.licenses} License

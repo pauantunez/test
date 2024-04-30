@@ -141,7 +141,13 @@ a.card-input-narrow {
 }
 
 .btnBackground {
-  background: #ee6103;
+  background: #007bc0;
+}
+.licenze-popup{
+  margin: 10px;
+  top: 50%;
+  height: 490px;
+  padding: 0px 30px;
 }
 
 .headlineColor {
@@ -365,6 +371,7 @@ a.card-input-narrow {
     text-align: right !important;
     color: #000 !important;
     z-index: 9999999 !important;
+    cursor: pointer;
   }
 
   .imprintBtn {

@@ -169,7 +169,13 @@ a.card-input-narrow {
 }
 
 .btnBackground {
-  background: #ee6103;
+  background: #002d59;
+}
+.licenze-popup{
+  margin: 10px;
+  top: 50%;
+  height: 490px;
+  padding: 0px 30px;
 }
 
 .headlineColor {
@@ -436,6 +442,7 @@ a.card-input-narrow {
     text-align: right !important;
     color: #000 !important;
     z-index: 9999999 !important;
+    cursor: pointer;
   }
 
   .imprintBtn {
@@ -1343,7 +1350,7 @@ a.card-input-narrow {
   padding: 20px 8px;
   border-left: 6px solid #3C3C3B;
   width: 22%;
-  height: 170px;
+  height: 120px;
   display: flex;
   align-content: center;
   justify-content: space-around;
@@ -1378,6 +1385,7 @@ a.card-input-narrow {
 }
 #printPdf4 .block.contact p {
   font-size: 11px;
+  text-align: center;
 }
 .qr-container{
   margin-top: 20px;
