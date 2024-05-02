@@ -260,7 +260,22 @@ class Welcome extends React.Component {
         <div className="noticeBottom">Hinweis: Die Ergebnisse beruhen auf Annahmen und können in der Realität abweichen. Bitte besprechen Sie die Details mit einem Fachbetrieb in Ihrer Nähe.</div>
 
         <CalculationModal />
-        {!this.isInFrame() && <Dependencies />}
+        <Dependencies />
+        {!this.isInFrame() && (
+          <div>
+            <a className="imprintBtn btn btn-secondary" href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/impressum/" style={{ textDecoration: "none", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Medium" }} target="_blank" rel="noreferrer">
+              Impressum
+            </a>
+            <span>&nbsp;|&nbsp;</span>
+            <a className="imprintBtn btn btn-secondary" href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/datenschutz/" style={{ textDecoration: "none", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Medium" }} target="_blank" rel="noreferrer">
+              Datenschutz
+            </a>
+            <span>&nbsp;|&nbsp;</span>
+            <a className="imprintBtn btn btn-secondary" href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/allgemeine-geschaeftsbedingungen/" style={{ textDecoration: "none", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Medium" }} target="_blank" rel="noreferrer">
+              Allgemeine Geschäftsbedingungen
+            </a>
+          </div>
+        )}
       </div>
     );
   }

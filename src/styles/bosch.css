@@ -253,7 +253,7 @@ a.card-input-narrow {
 
   .disclaimerBtn {
     position: fixed;
-    top: 0%;
+    /* top: 0%; */
     right: 0%;
     background-color: rgba(255, 255, 255, 0.5) !important;
     border-radius: 0px !important;
@@ -267,15 +267,15 @@ a.card-input-narrow {
   }
 
   .imprintBtn {
-    position: fixed;
+    /* position: fixed;
     top: 0%;
-    left: 0%;
+    left: 0%; */
     background-color: rgba(255, 255, 255, 0.5) !important;
     border-radius: 0px !important;
     border: none !important;
     font-size: 10px !important;
     text-align: right !important;
-    color: #000 !important;
+    color: #a4abb3 !important;
     padding: 3px !important;
     z-index: 9999999 !important;
 
@@ -362,7 +362,7 @@ a.card-input-narrow {
 
   .disclaimerBtn {
     position: fixed;
-    bottom: 0%;
+    /* bottom: 0%; */
     right: 0%;
     background: transparent !important;
     border-radius: 0px !important;
@@ -375,9 +375,10 @@ a.card-input-narrow {
   }
 
   .imprintBtn {
-    position: fixed;
+    /* position: fixed;
     bottom: 0%;
-    left: 0%;
+    left: 0%; */
+    margin-left:2px;
     background: transparent !important;
     border-radius: 0px !important;
     border: none !important;
