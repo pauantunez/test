@@ -377,7 +377,10 @@ class BreakEven extends React.Component {
               size: 12,
               /* family: "Bosch-Regular",*/
               family: this.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular",
+              style: "normal",
             },
+            maxRotation: 0, // Evita la rotación de los labels del eje x
+            minRotation: 0, // Evita la rotación de los labels del eje x
           },
         },
         y: {
