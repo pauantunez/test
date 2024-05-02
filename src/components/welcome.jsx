@@ -262,7 +262,7 @@ class Welcome extends React.Component {
         <CalculationModal />
         <Dependencies />
         {!this.isInFrame() && (
-          <div>
+          <div class="left-bottom-links">
             <a className="imprintBtn btn btn-secondary" href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/impressum/" style={{ textDecoration: "none", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Medium" }} target="_blank" rel="noreferrer">
               Impressum
             </a>

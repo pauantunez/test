@@ -359,11 +359,27 @@ a.card-input-narrow {
     -webkit-box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.5);
     box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.5);
   }
+  .left-bottom-links{
+    margin-left: 20px;
+    margin-bottom: 20px;
+  }
+  .left-bottom-links a.imprintBtn{
+    color: #A4ABB3!important;
+    font-family: Bosch-Regular !important;
+  }
+  .left-bottom-links span{
+    color: #A4ABB3!important;
+  }
+  .right-bottom-links{
+    margin-right: 20px;
+    margin-bottom: 20px;
+    float: right;
+  }
 
   .disclaimerBtn {
-    position: fixed;
-    /* bottom: 0%; */
-    right: 0%;
+    /* position: fixed;
+    /* bottom: 0%;
+    right: 0%; */
     background: transparent !important;
     border-radius: 0px !important;
     border: none !important;
