@@ -53,7 +53,7 @@ class SimulatorProvider extends Component {
     investmentCost: "",
     disabledInvestmentCost: true,
     investmentCostEUR: "",
-    electricityCost: "35",
+    electricityCost: "40",
     gridRevenue: "8,2",
     costOverTime: "1",
     selectedBackgroundAudio: "",

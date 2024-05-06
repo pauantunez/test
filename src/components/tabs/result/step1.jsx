@@ -115,7 +115,7 @@ class ResultStep1 extends React.Component {
 
         {/* <div className="welcomeBtns" style={{display: 'flex', margin: '3% 5% 0 5%'}}>
           <div className="explanationBtn">
-            <div className="calculationBase trackeable" onClick={handleOpen} style={{fontSize: '12px', fontFamily: 'Bosch-Regular', color: '#007BC0', cursor: 'pointer'}} data-event="berechnungsgrundlage">Berechnugsgrundlage</div>
+            <div className="calculationBase trackeable" onClick={handleOpen} style={{fontSize: '12px', fontFamily: 'Bosch-Regular', color: '#007BC0', cursor: 'pointer'}} data-event="berechnungsgrundlage">Berechnungsgrundlage</div>
           </div>
         </div> */}
       </div>

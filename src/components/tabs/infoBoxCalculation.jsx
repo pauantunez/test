@@ -146,11 +146,11 @@ class InfoBoxCalculation extends React.Component {
           {this.state.boxType === "1-row-1-col-electricity" && (
             <div>
               <div className="infobox-row-container">
-                <div className="infobox-row" style={{ display: "block", lineHeight: "20px", borderBottom: "none" }}>
-                  Der Durschnittsstrompreis im 2. Halbjahr 2022 lag bei 35 Ct/kWh.
+                <div className="infobox-row" style={{ display: "block", lineHeight: "20px", borderBottom: "none" }}>      
+                  Der Durchschnittsstrompreis im 2. Halbjahr 2023 lag bei 40 ct / kWh 
                   <br />
                   (inkl. MwSt.){" "}
-                  <a href="https://www-genesis.destatis.de/genesis/online?operation=previous&levelindex=1&step=1&titel=Ergebnis&levelid=1688366713147&acceptscookies=false#abreadcrumb" rel="noreferrer" target="_blank">
+                  <a href="https://www-genesis.destatis.de/genesis/online?sequenz=tabelleErgebnis&selectionname=61243-0001&language=de#abreadcrumb" rel="noreferrer" target="_blank">
                     Quelle Destatis
                   </a>
                 </div>

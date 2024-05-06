@@ -445,6 +445,7 @@ const GetResults = () => {
       <p>energyUsageHeatpumpNoEms Percentage: {energyUsageHeatpumpPercentageNoEms}</p>
       <p>EnergyUsageCombinedEms: {energyUsageCombined}</p>
       <p>EnergyUsageCombinedNoEms: {energyUsageCombinedNoEms}</p>
+      <p>ElectricityCost: {electricityCost}</p>
       <p>Elektro-Auro: {odometerIncreaseKWH}</p>
       <p>Elektro-Auro Percentage: {energyUsageEvPercentage}</p>
       <p>Elektro-Auro PercentageNoEms: {energyUsageEvPercentageNoEms}</p>
