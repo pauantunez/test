@@ -23,10 +23,22 @@ class ElectricityCost extends React.Component {
 
   static contextType = AppContext;
 
-  componentDidMount() {}
+  componentDidMount() {
+
+    const { setElectricityCost,electricityCost,selectedTheme } = this.context;
+    if(selectedTheme === "buderus")
+    {
+      this.setState({ electricityCost: 40 });   
+      setElectricityCost(40);   
+    }
+    else{ 
+      this.setState({ electricityCost: electricityCost });        
+    }
+    
+  }
 
   componentWillMount() {
-    const { setFwdBtn, steps, activeView, electricityCost } = this.context;
+    const { setFwdBtn, steps, activeView, electricityCost, selectedTheme } = this.context;
 
     if (steps[activeView] === false) {
       setFwdBtn(true);
@@ -34,6 +46,7 @@ class ElectricityCost extends React.Component {
     if (electricityCost) {
       setFwdBtn(false);
     }
+    
   }
 
   async toggleModal() {
@@ -123,7 +136,7 @@ class ElectricityCost extends React.Component {
   };
 
   render() {
-    const { electricityCost } = this.context;
+    const { electricityCost } = this.state;
 
     return (
       <div>
@@ -140,7 +153,7 @@ class ElectricityCost extends React.Component {
               </div>
               <div className="flexRow" style={{ flexDirection: "column" }}>
                 <div className="input-margins">
-                  <TextField id="filled-basic" style={{ width: "100%" }} name="electricityCost" placeholder="35" type="number" value={electricityCost} label="Stromkosten in Ct/kWh (inkl. MwSt.)" variant="filled" InputLabelProps={{ shrink: true }} onChange={this.inputElectricityCost} onKeyDown={this.avoidPointAndCharacters} />
+                  <TextField id="filled-basic" style={{ width: "100%" }} name="electricityCost" placeholder={electricityCost} type="number" value={electricityCost} label="Stromkosten in Ct/kWh (inkl. MwSt.)" variant="filled" InputLabelProps={{ shrink: true }} onChange={this.inputElectricityCost} onKeyDown={this.avoidPointAndCharacters} />
                 </div>
                 <div style={{ marginTop: "70px" }}>
                   <InfoBox box="1-row-1-col-electricity" />
