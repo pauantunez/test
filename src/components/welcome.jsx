@@ -251,7 +251,7 @@ class Welcome extends React.Component {
               </div>
               <div className="explanationBtn">
                 <div className="calculationBase trackeable" onClick={handleOpen} style={{ fontSize: "12px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", color: this.context.selectedTheme === "buderus" ? "#000000" : "#007BC0", cursor: "pointer" }} data-event="berechnungsgrundlage">
-                  Berechnugsgrundlage
+                Berechnungsgrundlage
                 </div>
               </div>
             </div>

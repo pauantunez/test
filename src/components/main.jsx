@@ -723,7 +723,7 @@ class Main extends React.Component {
               }}
             >
               <span className="trackeable" style={{ fontSize: "12px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", color: this.context.selectedTheme === "buderus" ? "#000000" : "#007BC0", cursor: "pointer" }} data-event={activeView === 12 ? "result-part1-berechnungsgrundlage" : activeView === 13 ? "result-part2-berechnungsgrundlage" : activeView === 14 ? "result-part3-berechnungsgrundlage" : ""}>
-                Berechnugsgrundlage
+                Berechnungsgrundlage
               </span>
             </CustomButton>
 
