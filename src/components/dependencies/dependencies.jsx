@@ -68,7 +68,7 @@ class Disclaimer extends React.Component {
           className="disclaimerBtn"
           style={{ fontFamily: "Bosch-Regular" }}
         >
-          Licenze OSS
+          OSS Lizenzen
         </Button>
       </div>
     );
