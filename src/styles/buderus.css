@@ -351,6 +351,14 @@ a.card-input-narrow {
     padding: 3px !important;
     z-index: 9999999 !important;
   }
+
+  .licenze-popup{
+    width: 80%;
+  }
+  .welcomeContainer .right-container img{
+    width: 85%;
+  }
+
   
 
   .imprintBtn {
