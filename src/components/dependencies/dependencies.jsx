@@ -40,7 +40,7 @@ class Disclaimer extends React.Component {
             <div style={{ width: "100%", fontSize: "15px", fontFamily: fontRegular }}>
               <div>
                 <p>
-                  <strong>Licenze OSS</strong>
+                  <strong>OSS Lizenzen</strong>
                 </p>
 
                 <LicensesData />

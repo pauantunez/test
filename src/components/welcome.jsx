@@ -207,6 +207,7 @@ class Welcome extends React.Component {
             <div>{/*<img src={require(`../assets/img/house-placeholder.png`)} alt="" style={{width: '100%'}} />*/}</div>
             <div className="welcomeContainer" style={{ display: "flex" }}>
               <div className="left-container">
+              <p style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: "16px" }}>{this.context.selectedTheme === "buderus" ? "Solarstromrechner von Buderus: So viel Einsparung ist möglich!" : "Solarstromrechner von Bosch: So viel Einsparung ist möglich!"}</p>
                 <p style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: "16px" }}>Sparen Sie Stromkosten – mit der smarten Kombination aus Photovoltaik, Wärmepumpe, Wallbox und einem intelligenten Energiemanagementsystem</p>
                 <p style={{ paddingTop: "25px" }}>Ermitteln Sie mit dem Tool für Ihr Einfamilienhaus:</p>
                 <div style={{ display: "flex", flexDirection: "column", lineHeight: "24px" }}>
