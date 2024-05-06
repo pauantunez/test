@@ -279,7 +279,10 @@ a.card-input-narrow {
     color: #A4ABB3 !important;
     padding: 3px !important;
     z-index: 9999999 !important;
+  }
 
+  .licenze-popup{
+    width: 80%;
   }
 
   .imprintBtn {
