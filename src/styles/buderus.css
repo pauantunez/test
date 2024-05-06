@@ -339,15 +339,15 @@ a.card-input-narrow {
   }
 
   .disclaimerBtn {
-    position: fixed;
-    /* top: 0%; */
-    right: 0%;
+    /* position: fixed;
+    top: 0%;
+    right: 0%; */
     background-color: rgba(255, 255, 255, 0.5) !important;
     border-radius: 0px !important;
     border: none !important;
     font-size: 10px !important;
     text-align: right !important;
-    color: #000 !important;
+    color: #A4ABB3 !important;
     padding: 3px !important;
     z-index: 9999999 !important;
 

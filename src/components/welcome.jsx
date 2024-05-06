@@ -207,7 +207,7 @@ class Welcome extends React.Component {
             <div>{/*<img src={require(`../assets/img/house-placeholder.png`)} alt="" style={{width: '100%'}} />*/}</div>
             <div className="welcomeContainer" style={{ display: "flex" }}>
               <div className="left-container">
-              <p style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: "16px" }}>{this.context.selectedTheme === "buderus" ? "Solarstromrechner von Buderus: So viel Einsparung ist möglich!" : "Solarstromrechner von Bosch: So viel Einsparung ist möglich!"}</p>
+              <h2 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Medium", fontSize: "16px" }}>{this.context.selectedTheme === "buderus" ? "Solarstromrechner von Buderus: So viel Einsparung ist möglich!" : "Solarstromrechner von Bosch: So viel Einsparung ist möglich!"}</h2>
                 <p style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold", fontSize: "16px" }}>Sparen Sie Stromkosten – mit der smarten Kombination aus Photovoltaik, Wärmepumpe, Wallbox und einem intelligenten Energiemanagementsystem</p>
                 <p style={{ paddingTop: "25px" }}>Ermitteln Sie mit dem Tool für Ihr Einfamilienhaus:</p>
                 <div style={{ display: "flex", flexDirection: "column", lineHeight: "24px" }}>
@@ -238,7 +238,7 @@ class Welcome extends React.Component {
                 </div>
               </div>
               <div className="right-container" style={{ display: "flex", justifyContent: "end" }}>
-                <img src={this.context.selectedTheme === "buderus" ? require(`../assets/img/buderus/preview.png`) : require(`../assets/img/preview.png`)} alt="" style={{ width: this.context.selectedTheme === "buderus" ? "" : "85%", height: "auto", objectFit: "contain", margin: "14px" }} />
+                <img src={this.context.selectedTheme === "buderus" ? require(`../assets/img/buderus/preview.png`) : require(`../assets/img/preview.png`)} alt="" style={{ width: this.context.selectedTheme === "buderus" ? "85%" : "85%", height: "auto", objectFit: "contain", margin: "14px" }} />
               </div>
             </div>
             <div className="welcomeBtns" style={{ display: "flex", margin: "3% 5% 0 5%" }}>
