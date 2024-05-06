@@ -238,7 +238,7 @@ class Welcome extends React.Component {
                 </div>
               </div>
               <div className="right-container" style={{ display: "flex", justifyContent: "end" }}>
-                <img src={this.context.selectedTheme === "buderus" ? require(`../assets/img/buderus/preview.png`) : require(`../assets/img/preview.png`)} alt="" style={{ width: this.context.selectedTheme === "buderus" ? "85%" : "85%", height: "auto", objectFit: "contain", margin: "14px" }} />
+                <img src={this.context.selectedTheme === "buderus" ? require(`../assets/img/buderus/preview.png`) : require(`../assets/img/preview.png`)} alt="" style={{ width: this.context.selectedTheme === "buderus" ? "" : "85%", height: "auto", objectFit: "contain", margin: "14px" }} />
               </div>
             </div>
             <div className="welcomeBtns" style={{ display: "flex", margin: "3% 5% 0 5%" }}>
