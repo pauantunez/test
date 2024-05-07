@@ -151,7 +151,7 @@ class Additional extends React.Component {
   }
 
   render() {
-    const { breakEvenBase64, setBackdrop, gridUsagePercentage, pvUsagePercentageNoEms, gridUsagePercentageNoEms, gridFeedPercentage, houseHoldPvPercentage, houseHoldPvPercentageNoEms, gridFeedPercentageNoEms } = this.context;
+    const { breakEvenNoEms, breakEvenBase64, setBackdrop, gridUsagePercentage, pvUsagePercentageNoEms, gridUsagePercentageNoEms, gridFeedPercentage, houseHoldPvPercentage, houseHoldPvPercentageNoEms, gridFeedPercentageNoEms } = this.context;
 
 /*  text-transform: none;
   background: none;
@@ -642,7 +642,7 @@ class Additional extends React.Component {
                 <div style={{ width: "55%" }}>
                   <h3 style={{ marginTop: "0px", marginBlockStart: "0" }}>Amortisationszeit</h3>
                   <span style={{ display: "block", marginBottom: "15px" }}>
-                    Investitionskosten PV-System: <strong>{sessionStorage.getItem("InvestmentCostEUR").toLocaleString("DE-de")} €</strong>
+                    Investitionskosten PV-System: <strong>{Math.abs(breakEvenNoEms[0].expenditure).toLocaleString("de-DE")} €</strong>
                   </span>
                   <img alt="" src={breakEvenBase64} style={{ width: "440px" }} />
                   <div style={{ display: "flex", flexDirection: "column", marginTop: "25px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", fontSize: "12px" }}>

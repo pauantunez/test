@@ -320,7 +320,7 @@ class InfoBoxCalculation extends React.Component {
                   Heizbedarf pro Jahr in kWh/m²
                 </div>
                 <div className="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "33%" }}>
-                  Gebäudeenergie-
+                  Gebäudeenergie-<br/>
                   standard
                 </div>
                 <div className="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "39%" }}>
@@ -604,11 +604,11 @@ class InfoBoxCalculation extends React.Component {
               <div className="infobox-row" style={{ marginTop: "12px" }}>
                 <div className="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "28%" }}></div>
                 <div className="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "33%" }}>
-                  Geringe Leistungs-
+                  Geringe Leistungs-<br/>
                   schwankungen
                 </div>
                 <div className="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "39%" }}>
-                  Geringe Investitions-
+                  Geringe Investitions-<br/>
                   kosten
                 </div>
               </div>
