@@ -68,7 +68,7 @@ class CalculationModal extends React.Component {
       border: "none",
       boxShadow: 24,
       p: 0,
-      overflow: "scroll",
+      // overflow: "scroll",
     };
 
     return (
