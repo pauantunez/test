@@ -1445,6 +1445,27 @@ a.card-input-narrow {
 .left-box .graph-container{
   margin-bottom: 0px;
 }
+.modal-container-padding .txt-block{
+  font-size: 14px;
+  line-height: 140%;
+}
+.info-icon{
+  height: 72px;
+}
+.modal-content-width h3{
+  font-size: 16px;
+  margin: 6px 0px;
+}
+.modal-content-box-width .infobox-container {
+  font-size: 13px;
+  line-height: 140%;
+}
+.infobox-row .width-50{
+  font-size: 13px;
+}
+.modal-content-box-width .top-30{
+  margin-bottom: 5px;
+}
 
 @media only screen and (max-width: 1200px) {
 
