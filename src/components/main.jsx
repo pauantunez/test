@@ -737,7 +737,7 @@ class Main extends React.Component {
               onClick={() => {
                 if (activeView === 3 && directLink === true) {
                   setDirectLink(false);
-                  setActiveView(12);
+                  setActiveView(13);
                 } else if (activeView === 1 && BuildingEnegeryStandard === "OilLNG") {
                   if (OilLNGValue === "oil-usage") {
                     sendGAEvent("heizenergiebedard-olverbrauch", OilUsageLiters, window.location.href);
