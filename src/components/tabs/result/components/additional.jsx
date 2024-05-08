@@ -153,11 +153,11 @@ class Additional extends React.Component {
   render() {
     const { breakEvenNoEms, breakEvenBase64, setBackdrop, gridUsagePercentage, pvUsagePercentageNoEms, gridUsagePercentageNoEms, gridFeedPercentage, houseHoldPvPercentage, houseHoldPvPercentageNoEms, gridFeedPercentageNoEms } = this.context;
 
-/*  text-transform: none;
+    /*  text-transform: none;
   background: none;
   border: none;
   border-radius: 0px;
-  font-family: 'HelveticaNeue-Roman';
+  fontFamily: 'HelveticaNeue-Roman';
   border-bottom: 1px solid rgb(0, 0, 0);
   color: rgb(0, 0, 0);
   -webkit-appearance: none;
@@ -169,98 +169,97 @@ class Additional extends React.Component {
   line-height: 110%;
   padding-bottom: 1px;*/
 
-
-  const BuderusContactButton = styled(Button)({
-    // Basic styles
-    textTransform: "none",
-    backgroundColor: "none",
-    border: "none",
-    borderRadius: "0px",
-    fontFamily: "HelveticaNeue-Roman",
-    borderBottom: "1px solid rgb(0, 0, 0)",
-    color: "rgb(0, 0, 0)",
-    WebkitAppearance: "none",
-    MozAppearance: "none",
-    fontSize: "12px",
-    cursor: "pointer",
-    textAlign: "left",
-    paddingLeft: "0px",
-    lineHeight: "110%",
-    paddingBottom: "1px",
-  
-    // Hover state
-    "&:hover": {
-      border: "0px",
+    const BuderusContactButton = styled(Button)({
+      // Basic styles
+      textTransform: "none",
+      backgroundColor: "none",
+      border: "none",
+      borderRadius: "0px",
+      fontFamily: "HelveticaNeue-Roman",
       borderBottom: "1px solid rgb(0, 0, 0)",
-      background: "none"
-    },
-  
-    // Focus state
-    "&:focus": {
-      outline: "1px solid #fff",
-      outlineOffset: "-4px"
-    },
-  
-    // Styles for child SVG within the button
-    "& svg": {
-      width: "12px"
-    },
-  
-    // Styles for child span within the button
-    "& span": {
-      display: "block",
-      marginRight: "-4px",
-      marginLeft: "9px",
-      marginTop: "6px",
-      float: "right"
-    }
-  });
+      color: "rgb(0, 0, 0)",
+      WebkitAppearance: "none",
+      MozAppearance: "none",
+      fontSize: "12px",
+      cursor: "pointer",
+      textAlign: "left",
+      paddingLeft: "0px",
+      lineHeight: "110%",
+      paddingBottom: "1px",
 
-  const BuderusContactButtonPdf = styled(Button)({
-    // Basic styles
-    textTransform: "none",
-    backgroundColor: "none",
-    border: "none",
-    borderRadius: "0px",
-    fontFamily: "HelveticaNeue-Roman",
-    borderBottom: "1px solid rgb(0, 0, 0)",
-    color: "rgb(0, 0, 0)",
-    WebkitAppearance: "none",
-    MozAppearance: "none",
-    fontSize: "10px",
-    cursor: "pointer",
-    textAlign: "left",
-    paddingLeft: "0px",
-    lineHeight: "110%",
-    paddingBottom: "1px",
-  
-    // Hover state
-    "&:hover": {
-      border: "0px",
+      // Hover state
+      "&:hover": {
+        border: "0px",
+        borderBottom: "1px solid rgb(0, 0, 0)",
+        background: "none",
+      },
+
+      // Focus state
+      "&:focus": {
+        outline: "1px solid #fff",
+        outlineOffset: "-4px",
+      },
+
+      // Styles for child SVG within the button
+      "& svg": {
+        width: "12px",
+      },
+
+      // Styles for child span within the button
+      "& span": {
+        display: "block",
+        marginRight: "-4px",
+        marginLeft: "9px",
+        marginTop: "6px",
+        float: "right",
+      },
+    });
+
+    const BuderusContactButtonPdf = styled(Button)({
+      // Basic styles
+      textTransform: "none",
+      backgroundColor: "none",
+      border: "none",
+      borderRadius: "0px",
+      fontFamily: "HelveticaNeue-Roman",
       borderBottom: "1px solid rgb(0, 0, 0)",
-      background: "none"
-    },
-  
-    // Focus state
-    "&:focus": {
-      outline: "1px solid #fff",
-      outlineOffset: "-4px"
-    },
-  
-    // Styles for child SVG within the button
-    "& svg": {
-      width: "12px"
-    },
-  
-    // Styles for child span within the button
-    "& span": {
-      display: "block",
-      marginRight: "-4px",
-      marginLeft: "9px",
-      marginTop: "6px",
-      float: "right"
-    }
-  });
+      color: "rgb(0, 0, 0)",
+      WebkitAppearance: "none",
+      MozAppearance: "none",
+      fontSize: "10px",
+      cursor: "pointer",
+      textAlign: "left",
+      paddingLeft: "0px",
+      lineHeight: "110%",
+      paddingBottom: "1px",
+
+      // Hover state
+      "&:hover": {
+        border: "0px",
+        borderBottom: "1px solid rgb(0, 0, 0)",
+        background: "none",
+      },
+
+      // Focus state
+      "&:focus": {
+        outline: "1px solid #fff",
+        outlineOffset: "-4px",
+      },
+
+      // Styles for child SVG within the button
+      "& svg": {
+        width: "12px",
+      },
+
+      // Styles for child span within the button
+      "& span": {
+        display: "block",
+        marginRight: "-4px",
+        marginLeft: "9px",
+        marginTop: "6px",
+        float: "right",
+      },
+    });
 
     //OffGrid
     // Mit
@@ -459,7 +458,7 @@ class Additional extends React.Component {
                         <p>Angebot anfordern</p>
                         <div className="trackeable" data-event="result-part3-offer" style={{ display: "flex", alignItems: "end" }}>
                           <a rel="noreferrer" href="https://www.buderus.de/de/angebot-anfordern" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                            <BuderusContactButton disableRipple  variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
+                            <BuderusContactButton disableRipple variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
                               Unverbindliches Angebot anfordem
                             </BuderusContactButton>
                           </a>
@@ -479,7 +478,7 @@ class Additional extends React.Component {
                         <p>Niederlassungssuche</p>
                         <div style={{ display: "flex", alignItems: "end" }}>
                           <a rel="noreferrer" href="https://www.buderus.de/de/niederlassungen" target="_blank" style={{ textDecoration: "none", display: "block" }}>
-                            <BuderusContactButton disableRipple  variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
+                            <BuderusContactButton disableRipple variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
                               Zur Niederlassungssuche
                             </BuderusContactButton>
                           </a>
@@ -1056,7 +1055,7 @@ class Additional extends React.Component {
                           <div class="qr-container">
                             <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_branch.png`)} style={{ width: "70px" }} />
                           </div>
-                        </div>                       
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1141,14 +1140,7 @@ class Additional extends React.Component {
                       </div>
                     </a>
                   </label>
-                  <div style={{ marginTop: "20px" }}>
-                  {this.context.selectedTheme === "buderus" ? (
-                    <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_heatpump.png`)} style={{ width: "70px" }} />
-                  ):(
-                    <img alt="heatpump" src={require(`../../../../assets/img/qr/heatpump.png`)} style={{ width: "70px" }} />
-                  )
-                }
-                  </div>
+                  <div style={{ marginTop: "20px" }}>{this.context.selectedTheme === "buderus" ? <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_heatpump.png`)} style={{ width: "70px" }} /> : <img alt="heatpump" src={require(`../../../../assets/img/qr/heatpump.png`)} style={{ width: "70px" }} />}</div>
                 </div>
                 <div style={{ width: "25%" }}>
                   <label>
@@ -1162,13 +1154,7 @@ class Additional extends React.Component {
                       </div>
                     </a>
                   </label>
-                  <div style={{ marginTop: "20px" }}>
-                  {this.context.selectedTheme === "buderus" ? (
-                    <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_pv.png`)} style={{ width: "70px" }} />
-                  ):(
-                    <img alt="pv" src={require(`../../../../assets/img/qr/pv.png`)} style={{ width: "70px" }} />
-                  )}
-                  </div>
+                  <div style={{ marginTop: "20px" }}>{this.context.selectedTheme === "buderus" ? <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_pv.png`)} style={{ width: "70px" }} /> : <img alt="pv" src={require(`../../../../assets/img/qr/pv.png`)} style={{ width: "70px" }} />}</div>
                 </div>
                 <div style={{ width: "25%" }}>
                   <label>
@@ -1182,15 +1168,7 @@ class Additional extends React.Component {
                       </div>
                     </a>
                   </label>
-                  <div style={{ marginTop: "20px" }}>
-                  {this.context.selectedTheme === "buderus" ? (
-                    <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_wallbox.png`)} style={{ width: "70px" }} />
-                  ):(                    
-                    <img alt="" src={require(`../../../../assets/img/qr/wallbox.png`)} style={{ width: "70px" }} />
-                    
-                  )}
-                  </div>
-                  
+                  <div style={{ marginTop: "20px" }}>{this.context.selectedTheme === "buderus" ? <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_wallbox.png`)} style={{ width: "70px" }} /> : <img alt="" src={require(`../../../../assets/img/qr/wallbox.png`)} style={{ width: "70px" }} />}</div>
                 </div>
                 <div style={{ width: "25%" }}>
                   <label>
@@ -1206,13 +1184,7 @@ class Additional extends React.Component {
                       </div>
                     </a>
                   </label>
-                  <div style={{ marginTop: "20px" }}>
-                  {this.context.selectedTheme === "buderus" ? (
-                    <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_ems.png`)} style={{ width: "70px" }} />
-                  ):(
-                    <img alt="heatpump" src={require(`../../../../assets/img/qr/ems.png`)} style={{ width: "70px" }} />
-                  )}
-                  </div>
+                  <div style={{ marginTop: "20px" }}>{this.context.selectedTheme === "buderus" ? <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_ems.png`)} style={{ width: "70px" }} /> : <img alt="heatpump" src={require(`../../../../assets/img/qr/ems.png`)} style={{ width: "70px" }} />}</div>
                 </div>
               </div>
             </div>

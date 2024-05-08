@@ -68,7 +68,7 @@ function CustomLabelComponent(props) {
   return (
     <React.Fragment>
       {iconToUse}
-      <text x={xPositionLabel} y={yPositionLabel} className="small" fill={datum.color} font-family="Bosch-Bold" font-size={fontSize}>
+      <text x={xPositionLabel} y={yPositionLabel} className="small" fill={datum.color} fontFamily="Bosch-Bold" font-size={fontSize}>
         {datum.label}
       </text>
     </React.Fragment>
