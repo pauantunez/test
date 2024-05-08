@@ -266,6 +266,7 @@ const GetResults = () => {
     energyUsageHouseHoldPercentageNoEms,
     setEnergyUsageHouseHoldPercentageNoEms,
     selectedTheme,
+    setFwdBtn,
   } = context;
 
   const getDebugFromUrl = () => {
@@ -287,7 +288,7 @@ const GetResults = () => {
       getTab();
       const { setFwdBtn } = context;
 
-      setFwdBtn(false);
+      setFwdBtn(true);
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
     [tab, scenario]
   );
