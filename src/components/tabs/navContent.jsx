@@ -83,7 +83,7 @@ class NavContent extends React.Component {
     const { selectedTab, activeView, setActiveView, setActiveStep, steps, setFwdBtn, setMenu } = this.context;
     if (activeView !== step) {
       if (step !== 0) {
-        if (steps[step - 1] === false) {
+        if (steps[step] === false) {
           setActiveView(step);
           setActiveStep(selectedTab.toString() + "-" + step.toString());
           setFwdBtn(true);
@@ -122,6 +122,7 @@ class NavContent extends React.Component {
 
   render() {
     const { windowWidth, activeView, activeMilestone, milestoneHeadline, menuBackdrop } = this.context;
+    console.log("🚀 ~ NavContent ~ render ~ activeMilestone:", activeMilestone);
 
     function EmptyIcon(props) {
       return (

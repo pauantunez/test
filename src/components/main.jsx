@@ -156,21 +156,24 @@ class Main extends React.Component {
     }
   }
 
-  handleStep(step) {
-    const { selectedTab, activeView, setActiveView, setActiveStep, steps, setFwdBtn, setMenuBackdrop } = this.context;
+  handleStep(step, mileston) {
+    console.log("🚀 ~ Main ~ handleStep ~ mileston:", mileston);
+    const { selectedTab, activeView, setActiveView, setActiveStep, setActiveMilestone, steps, setFwdBtn, setMenuBackdrop } = this.context;
     if (activeView !== step) {
       if (step !== 0) {
-        if (steps[step - 1] === false) {
+        if (steps[step] === false) {
           setActiveView(step);
           setActiveStep(selectedTab.toString() + "-" + step.toString());
           setFwdBtn(true);
           setMenuBackdrop(false);
+          setActiveMilestone(mileston);
         }
       } else {
         setActiveView(step);
         setActiveStep(selectedTab.toString() + "-" + step.toString());
         setFwdBtn(true);
         setMenuBackdrop(false);
+        setActiveMilestone(mileston);
       }
     }
   }
@@ -260,6 +263,7 @@ class Main extends React.Component {
     });
 
     const { menuBackdrop, steps, setActiveView, setNavDirection, setDirectLink, activeView, fwdBtn, setFwdBtn, setActiveMilestone, setMilestoneHeadline, directLink, sendGAEvent, BuildingEnegeryStandard, OilUsageLiters, OilLNGValue, LNGUsage, homeCharging, odometerIncrease, homeStorageSize, pvOutput, energyUsagekWh, disabledInvestmentCost, investmentCostEUR, electricityCost, gridRevenue, setCalculationModal } = this.context;
+    console.log("🚀 ~ Main ~ render ~ steps:", steps);
 
     const handleOpen = () => setCalculationModal(true);
 
@@ -322,7 +326,7 @@ class Main extends React.Component {
               <Link
                 className={steps[0] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
-                  this.handleStep(0);
+                  this.handleStep(0, 0);
                 }}
               >
                 <span>Gebäudegröße</span>
@@ -334,7 +338,7 @@ class Main extends React.Component {
               <Link
                 className={steps[1] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
-                  this.handleStep(1);
+                  this.handleStep(1, 0);
                 }}
               >
                 <span>Heizenergiebedarf</span>
@@ -346,7 +350,7 @@ class Main extends React.Component {
               <Link
                 className={steps[2] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
-                  this.handleStep(2);
+                  this.handleStep(2, 0);
                 }}
               >
                 <span>Wärmeverteilsystem</span>
@@ -358,7 +362,7 @@ class Main extends React.Component {
               <Link
                 className={steps[3] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
-                  this.handleStep(3);
+                  this.handleStep(3, 0);
                 }}
               >
                 <span>Haushaltsstromverbrauch</span>
@@ -373,7 +377,7 @@ class Main extends React.Component {
               <Link
                 className={steps[4] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
-                  this.handleStep(4);
+                  this.handleStep(4, 1);
                 }}
               >
                 <span>Wärmepumpe</span>
@@ -385,7 +389,7 @@ class Main extends React.Component {
               <Link
                 className={steps[5] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
-                  this.handleStep(5);
+                  this.handleStep(5, 1);
                 }}
               >
                 <span>Elektroauto</span>
@@ -397,7 +401,7 @@ class Main extends React.Component {
               <Link
                 className={steps[6] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
-                  this.handleStep(6);
+                  this.handleStep(6, 1);
                 }}
               >
                 <span>PV-Leistung</span>
@@ -409,7 +413,7 @@ class Main extends React.Component {
               <Link
                 className={steps[7] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
-                  this.handleStep(7);
+                  this.handleStep(7, 1);
                 }}
               >
                 <span>Batteriespeicher</span>
@@ -424,7 +428,7 @@ class Main extends React.Component {
               <Link
                 className={steps[8] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
-                  this.handleStep(8);
+                  this.handleStep(8, 2);
                 }}
               >
                 <span>Investitionskosten</span>
@@ -436,7 +440,7 @@ class Main extends React.Component {
               <Link
                 className={steps[9] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
-                  this.handleStep(9);
+                  this.handleStep(9, 2);
                 }}
               >
                 <span>Stromkosten</span>
@@ -448,7 +452,7 @@ class Main extends React.Component {
               <Link
                 className={steps[10] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
-                  this.handleStep(10);
+                  this.handleStep(10, 2);
                 }}
               >
                 <span>Einspeisevergütung</span>
@@ -463,7 +467,7 @@ class Main extends React.Component {
               <Link
                 className={steps[11] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
-                  this.handleStep(11);
+                  this.handleStep(11, 3);
                 }}
               >
                 <span>Ergebnis</span>
@@ -601,9 +605,11 @@ class Main extends React.Component {
                   nextTab();
                 } else if (activeView === 9) {
                   sendGAEvent("stromkosten-amount", electricityCost, window.location.href);
+                  steps[activeView + 1] = false;
                   nextTab();
                 } else if (activeView === 10) {
                   sendGAEvent("einspeisevergütung-amount", gridRevenue, window.location.href);
+                  steps[activeView + 1] = false;
                   nextTab();
                 } else {
                   nextTab();
