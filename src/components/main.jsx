@@ -27,7 +27,6 @@ import { ReactComponent as BuderusBackThinIcon } from "../assets/img/icons/buder
 import { ReactComponent as BuderusInfoIcon } from "../assets/img/icons/buderus/info.svg";
 
 import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
 
 import Link from "@mui/material/Link";
 
@@ -260,7 +259,7 @@ class Main extends React.Component {
       // Agrega más estilos según sea necesario
     });
 
-    const { menuBackdrop, steps, menuOpen, setActiveView, setNavDirection, setDirectLink, activeView, fwdBtn, setFwdBtn, setActiveMilestone, setMilestoneHeadline, backdrop, directLink, sendGAEvent, BuildingEnegeryStandard, OilUsageLiters, OilLNGValue, LNGUsage, homeCharging, odometerIncrease, homeStorageSize, pvOutput, energyUsagekWh, disabledInvestmentCost, investmentCostEUR, electricityCost, gridRevenue, setCalculationModal } = this.context;
+    const { menuBackdrop, steps, setActiveView, setNavDirection, setDirectLink, activeView, fwdBtn, setFwdBtn, setActiveMilestone, setMilestoneHeadline, directLink, sendGAEvent, BuildingEnegeryStandard, OilUsageLiters, OilLNGValue, LNGUsage, homeCharging, odometerIncrease, homeStorageSize, pvOutput, energyUsagekWh, disabledInvestmentCost, investmentCostEUR, electricityCost, gridRevenue, setCalculationModal } = this.context;
 
     const handleOpen = () => setCalculationModal(true);
 

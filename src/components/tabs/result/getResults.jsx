@@ -266,7 +266,6 @@ const GetResults = () => {
     energyUsageHouseHoldPercentageNoEms,
     setEnergyUsageHouseHoldPercentageNoEms,
     selectedTheme,
-    setFwdBtn,
   } = context;
 
   const getDebugFromUrl = () => {

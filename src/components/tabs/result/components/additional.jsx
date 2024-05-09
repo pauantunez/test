@@ -215,52 +215,6 @@ class Additional extends React.Component {
       },
     });
 
-    const BuderusContactButtonPdf = styled(Button)({
-      // Basic styles
-      textTransform: "none",
-      backgroundColor: "none",
-      border: "none",
-      borderRadius: "0px",
-      fontFamily: "HelveticaNeue-Roman",
-      borderBottom: "1px solid rgb(0, 0, 0)",
-      color: "rgb(0, 0, 0)",
-      WebkitAppearance: "none",
-      MozAppearance: "none",
-      fontSize: "10px",
-      cursor: "pointer",
-      textAlign: "left",
-      paddingLeft: "0px",
-      lineHeight: "110%",
-      paddingBottom: "1px",
-
-      // Hover state
-      "&:hover": {
-        border: "0px",
-        borderBottom: "1px solid rgb(0, 0, 0)",
-        background: "none",
-      },
-
-      // Focus state
-      "&:focus": {
-        outline: "1px solid #fff",
-        outlineOffset: "-4px",
-      },
-
-      // Styles for child SVG within the button
-      "& svg": {
-        width: "12px",
-      },
-
-      // Styles for child span within the button
-      "& span": {
-        display: "block",
-        marginRight: "-4px",
-        marginLeft: "9px",
-        marginTop: "6px",
-        float: "right",
-      },
-    });
-
     //OffGrid
     // Mit
     var mitGridUsagePercentage = Math.round(gridUsagePercentage);
