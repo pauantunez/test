@@ -122,7 +122,6 @@ class NavContent extends React.Component {
 
   render() {
     const { windowWidth, activeView, activeMilestone, milestoneHeadline, menuBackdrop } = this.context;
-    console.log("🚀 ~ NavContent ~ render ~ activeMilestone:", activeMilestone);
 
     function EmptyIcon(props) {
       return (

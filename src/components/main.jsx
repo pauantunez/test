@@ -156,9 +156,8 @@ class Main extends React.Component {
     }
   }
 
-  handleStep(step, mileston) {
-    console.log("🚀 ~ Main ~ handleStep ~ mileston:", mileston);
-    const { selectedTab, activeView, setActiveView, setActiveStep, setActiveMilestone, steps, setFwdBtn, setMenuBackdrop } = this.context;
+  handleStep(step, mileston, milestoneHeadline) {
+    const { selectedTab, activeView, setActiveView, setActiveStep, setActiveMilestone, steps, setFwdBtn, setMenuBackdrop, setMilestoneHeadline } = this.context;
     if (activeView !== step) {
       if (step !== 0) {
         if (steps[step] === false) {
@@ -167,6 +166,7 @@ class Main extends React.Component {
           setFwdBtn(true);
           setMenuBackdrop(false);
           setActiveMilestone(mileston);
+          setMilestoneHeadline(milestoneHeadline);
         }
       } else {
         setActiveView(step);
@@ -174,6 +174,7 @@ class Main extends React.Component {
         setFwdBtn(true);
         setMenuBackdrop(false);
         setActiveMilestone(mileston);
+        setMilestoneHeadline(milestoneHeadline);
       }
     }
   }
@@ -263,7 +264,6 @@ class Main extends React.Component {
     });
 
     const { menuBackdrop, steps, setActiveView, setNavDirection, setDirectLink, activeView, fwdBtn, setFwdBtn, setActiveMilestone, setMilestoneHeadline, directLink, sendGAEvent, BuildingEnegeryStandard, OilUsageLiters, OilLNGValue, LNGUsage, homeCharging, odometerIncrease, homeStorageSize, pvOutput, energyUsagekWh, disabledInvestmentCost, investmentCostEUR, electricityCost, gridRevenue, setCalculationModal } = this.context;
-    console.log("🚀 ~ Main ~ render ~ steps:", steps);
 
     const handleOpen = () => setCalculationModal(true);
 
@@ -326,7 +326,7 @@ class Main extends React.Component {
               <Link
                 className={steps[0] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
-                  this.handleStep(0, 0);
+                  this.handleStep(0, 0, "Gebäude");
                 }}
               >
                 <span>Gebäudegröße</span>
@@ -338,7 +338,7 @@ class Main extends React.Component {
               <Link
                 className={steps[1] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
-                  this.handleStep(1, 0);
+                  this.handleStep(1, 0, "Gebäude");
                 }}
               >
                 <span>Heizenergiebedarf</span>
@@ -350,7 +350,7 @@ class Main extends React.Component {
               <Link
                 className={steps[2] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
-                  this.handleStep(2, 0);
+                  this.handleStep(2, 0, "Gebäude");
                 }}
               >
                 <span>Wärmeverteilsystem</span>
@@ -362,7 +362,7 @@ class Main extends React.Component {
               <Link
                 className={steps[3] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
-                  this.handleStep(3, 0);
+                  this.handleStep(3, 0, "Gebäude");
                 }}
               >
                 <span>Haushaltsstromverbrauch</span>
@@ -377,7 +377,7 @@ class Main extends React.Component {
               <Link
                 className={steps[4] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
-                  this.handleStep(4, 1);
+                  this.handleStep(4, 1, "Ausstattung");
                 }}
               >
                 <span>Wärmepumpe</span>
@@ -389,7 +389,7 @@ class Main extends React.Component {
               <Link
                 className={steps[5] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
-                  this.handleStep(5, 1);
+                  this.handleStep(5, 1, "Ausstattung");
                 }}
               >
                 <span>Elektroauto</span>
@@ -401,7 +401,7 @@ class Main extends React.Component {
               <Link
                 className={steps[6] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
-                  this.handleStep(6, 1);
+                  this.handleStep(6, 1, "Ausstattung");
                 }}
               >
                 <span>PV-Leistung</span>
@@ -413,7 +413,7 @@ class Main extends React.Component {
               <Link
                 className={steps[7] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
-                  this.handleStep(7, 1);
+                  this.handleStep(7, 1, "Ausstattung");
                 }}
               >
                 <span>Batteriespeicher</span>
@@ -428,7 +428,7 @@ class Main extends React.Component {
               <Link
                 className={steps[8] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
-                  this.handleStep(8, 2);
+                  this.handleStep(8, 2, "Ökonomische Kenngrößen");
                 }}
               >
                 <span>Investitionskosten</span>
@@ -440,7 +440,7 @@ class Main extends React.Component {
               <Link
                 className={steps[9] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
-                  this.handleStep(9, 2);
+                  this.handleStep(9, 2, "Ökonomische Kenngrößen");
                 }}
               >
                 <span>Stromkosten</span>
@@ -452,7 +452,7 @@ class Main extends React.Component {
               <Link
                 className={steps[10] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
-                  this.handleStep(10, 2);
+                  this.handleStep(10, 2, "Ökonomische Kenngrößen");
                 }}
               >
                 <span>Einspeisevergütung</span>
@@ -467,7 +467,7 @@ class Main extends React.Component {
               <Link
                 className={steps[11] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
-                  this.handleStep(11, 3);
+                  this.handleStep(11, 3, "Ergebnis");
                 }}
               >
                 <span>Ergebnis</span>
