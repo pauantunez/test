@@ -30,6 +30,7 @@ function CustomLabelComponent(props) {
   const xPositionHouseholdIconMargin = props.xPositionHouseholdIconMargin;
   const yPositionHouseholdIconMargin = props.yPositionHouseholdIconMargin;
   const xPositionHeatpumpLabel = props.xPositionHeatpumpLabel;
+
   const xPositionEVLabel = props.xPositionEVLabel;
   const xPositionHouseholdLabel = props.xPositionHouseholdLabel;
   const yPositionHeatpumpLabel = props.yPositionHeatpumpLabel;
@@ -68,6 +69,7 @@ function CustomLabelComponent(props) {
   return (
     <React.Fragment>
       {iconToUse}
+      <rect x={xPositionLabel - 5} y={yPositionLabel - 10} width="80px" height="15px" fill="white" />
       <text x={xPositionLabel} y={yPositionLabel} className="small" fill={datum.color} fontFamily="Bosch-Bold" font-size={fontSize}>
         {datum.label}
       </text>
