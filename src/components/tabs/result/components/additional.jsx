@@ -1075,7 +1075,7 @@ class Additional extends React.Component {
                           </div>
                         </a>
                       </label>
-                      <p>www.bosch-hc.de/solarstromrechner</p>
+                      <p style={{ fontSize: "10px" }}>bosch-hc.de/solarstromrechner</p>
                       <div>
                         <img alt="sectorcoupling_tool" src={require(`../../../../assets/img/qr/sectorcoupling_tool.png`)} style={{ width: "90px" }} />
                       </div>
@@ -1094,7 +1094,7 @@ class Additional extends React.Component {
                           </div>
                         </a>
                       </label>
-                      <p>www.bosch-hc.de/angebot</p>
+                      <p style={{ fontSize: "10px" }}>bosch-hc.de/angebot</p>
                       <div>
                         <img alt="dealer_search" src={require(`../../../../assets/img/qr/dealer_search.png`)} style={{ width: "100px" }} />
                       </div>
@@ -1113,7 +1113,7 @@ class Additional extends React.Component {
                           </div>
                         </a>
                       </label>
-                      <p>www.bosch-hc.de/installateur</p>
+                      <p style={{ fontSize: "10px" }}>bosch-hc.de/installateur</p>
                       <div>
                         <img alt="lmt" src={require(`../../../../assets/img/qr/lmt.png`)} style={{ width: "90px" }} />
                       </div>
@@ -1143,7 +1143,7 @@ class Additional extends React.Component {
                       </div>
                     </a>
                   </label>
-                  <p>www.bosch-hc.de/waermepumpe</p>
+                  <p style={{ fontSize: "10px" }}>bosch-hc.de/waermepumpe</p>
                   <div>{this.context.selectedTheme === "buderus" ? <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_heatpump.png`)} style={{ width: "70px" }} /> : <img alt="heatpump" src={require(`../../../../assets/img/qr/heatpump.png`)} style={{ width: "70px" }} />}</div>
                 </div>
                 <div style={{ width: "25%" }}>
@@ -1158,8 +1158,8 @@ class Additional extends React.Component {
                       </div>
                     </a>
                   </label>
-                  <p>www.bosch-hc.de/pv</p>
-                  <div style={{ marginTop: "37px" }}>{this.context.selectedTheme === "buderus" ? <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_pv.png`)} style={{ width: "70px" }} /> : <img alt="pv" src={require(`../../../../assets/img/qr/pv.png`)} style={{ width: "70px" }} />}</div>
+                  <p style={{ fontSize: "10px" }}>bosch-hc.de/pv</p>
+                  <div>{this.context.selectedTheme === "buderus" ? <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_pv.png`)} style={{ width: "70px" }} /> : <img alt="pv" src={require(`../../../../assets/img/qr/pv.png`)} style={{ width: "70px" }} />}</div>
                 </div>
                 <div style={{ width: "25%" }}>
                   <label>
@@ -1173,7 +1173,7 @@ class Additional extends React.Component {
                       </div>
                     </a>
                   </label>
-                  <p>www.bosch-hc.de/wallbox</p>
+                  <p style={{ fontSize: "10px" }}>bosch-hc.de/wallbox</p>
                   <div>{this.context.selectedTheme === "buderus" ? <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_wallbox.png`)} style={{ width: "70px" }} /> : <img alt="" src={require(`../../../../assets/img/qr/wallbox.png`)} style={{ width: "70px" }} />}</div>
                 </div>
                 <div style={{ width: "25%" }}>
@@ -1190,7 +1190,7 @@ class Additional extends React.Component {
                       </div>
                     </a>
                   </label>
-                  <p>www.bosch-hc.de/energiemanagement</p>
+                  <p style={{ fontSize: "10px" }}>bosch-hc.de/energiemanagement</p>
                   <div>{this.context.selectedTheme === "buderus" ? <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_ems.png`)} style={{ width: "70px" }} /> : <img alt="heatpump" src={require(`../../../../assets/img/qr/ems.png`)} style={{ width: "70px" }} />}</div>
                 </div>
               </div>
