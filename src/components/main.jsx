@@ -503,7 +503,7 @@ class Main extends React.Component {
                   this.handleStep(0);
                 }}
               >
-                <span>Gebäudeenergiestandard</span>
+                <span>Gebäudegröße</span>
                 <span style={{ display: "block", alignItems: "end" }}>
                   {steps[0] === false && <FwdBtnIcon />}
                   {steps[0] === true && <FwdBtnInactiveIcon />}
@@ -515,7 +515,7 @@ class Main extends React.Component {
                   this.handleStep(1);
                 }}
               >
-                <span>Heizverteilsystem</span>
+                <span>Heizenergiebedarf</span>
                 <span style={{ display: "block", alignItems: "end" }}>
                   {steps[1] === false && <FwdBtnIcon />}
                   {steps[1] === true && <FwdBtnInactiveIcon />}
@@ -527,34 +527,34 @@ class Main extends React.Component {
                   this.handleStep(2);
                 }}
               >
-                <span>Stromverbrauch</span>
+                <span>Wärmeverteilsystem</span>
                 <span style={{ display: "block", alignItems: "end" }}>
                   {steps[2] === false && <FwdBtnIcon />}
                   {steps[2] === true && <FwdBtnInactiveIcon />}
                 </span>
               </Link>
-              <div>
-                <h3 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Medium", color: "#000", marginBottom: "10px", fontSize: "20px" }}>Ausstattung</h3>
-              </div>
               <Link
                 className={steps[3] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(3);
                 }}
               >
-                <span>PV-Leistung</span>
+                <span>Haushaltsstromverbrauch</span>
                 <span style={{ display: "block", alignItems: "end" }}>
                   {steps[3] === false && <FwdBtnIcon />}
                   {steps[3] === true && <FwdBtnInactiveIcon />}
                 </span>
               </Link>
+              <div>
+                <h3 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Medium", color: "#000", marginBottom: "10px", fontSize: "20px" }}>Ausstattung</h3>
+              </div>
               <Link
                 className={steps[4] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(4);
                 }}
               >
-                <span>Solarstromspeicher / Batteriespeicher</span>
+                <span>Wärmepumpe</span>
                 <span style={{ display: "block", alignItems: "end" }}>
                   {steps[4] === false && <FwdBtnIcon />}
                   {steps[4] === true && <FwdBtnInactiveIcon />}
@@ -578,7 +578,7 @@ class Main extends React.Component {
                   this.handleStep(6);
                 }}
               >
-                <span>Wärmepumpe</span>
+                <span>PV-Leistung</span>
                 <span style={{ display: "block", alignItems: "end" }}>
                   {steps[6] === false && <FwdBtnIcon />}
                   {steps[6] === true && <FwdBtnInactiveIcon />}
@@ -590,7 +590,7 @@ class Main extends React.Component {
                   this.handleStep(7);
                 }}
               >
-                <span>Energiemanagement</span>
+                <span>Batteriespeicher</span>
                 <span style={{ display: "block", alignItems: "end" }}>
                   {steps[7] === false && <FwdBtnIcon />}
                   {steps[7] === true && <FwdBtnInactiveIcon />}
