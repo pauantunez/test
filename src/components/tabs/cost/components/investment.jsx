@@ -32,7 +32,7 @@ class Investment extends React.Component {
   componentWillMount() {
     const { setFwdBtn, steps, activeView } = this.context;
 
-    if (steps[activeView] === false) {
+    if (steps[activeView + 1] === false) {
       setFwdBtn(false);
     }
   }
@@ -102,11 +102,11 @@ class Investment extends React.Component {
 
     if (validate.isInteger(inputNumber)) {
       setFwdBtn(false);
-      steps[activeView] = false;
+      steps[activeView + 1] = false;
       /* this.context.goToView(9); */
     } else {
       setFwdBtn(true);
-      steps[activeView] = true;
+      steps[activeView + 1] = true;
     }
 
     setSteps({ ...steps });
@@ -121,12 +121,12 @@ class Investment extends React.Component {
       setDisabledInvestmentCost(false);
 
       setFwdBtn(true);
-      steps[activeView] = true;
+      steps[activeView + 1] = true;
     } else if (event.target.value === "false") {
       setDisabledInvestmentCost(true);
 
       setFwdBtn(false);
-      steps[activeView] = false;
+      steps[activeView + 1] = false;
       this.context.goToView(9);
       setFwdBtn(true);
     }

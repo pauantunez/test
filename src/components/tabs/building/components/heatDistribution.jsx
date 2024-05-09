@@ -32,7 +32,7 @@ class HeatDistribution extends React.Component {
   componentWillMount() {
     const { setFwdBtn, steps, activeView } = this.context;
 
-    if (steps[activeView] === false) {
+    if (steps[activeView + 1] === false) {
       setFwdBtn(false);
     }
   }
@@ -72,7 +72,7 @@ class HeatDistribution extends React.Component {
     }
 
     setFwdBtn(false);
-    steps[activeView] = false;
+    steps[activeView + 1] = false;
     setSteps({ ...steps });
     this.context.goToView(3);
     setFwdBtn(true);

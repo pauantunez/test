@@ -28,7 +28,7 @@ class GridRevenue extends React.Component {
   componentWillMount() {
     const { setFwdBtn, steps, activeView, gridRevenue } = this.context;
 
-    if (steps[activeView] === false) {
+    if (steps[activeView + 1] === false) {
       setFwdBtn(false);
     }
     if (gridRevenue) {
@@ -136,10 +136,10 @@ class GridRevenue extends React.Component {
 
     if (validate.isInteger(inputNumber)) {
       setFwdBtn(false);
-      steps[activeView] = false;
+      steps[activeView + 1] = false;
     } else {
       setFwdBtn(true);
-      steps[activeView] = true;
+      steps[activeView + 1] = true;
     }
 
     setSteps({ ...steps });

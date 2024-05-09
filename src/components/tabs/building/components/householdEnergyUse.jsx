@@ -35,10 +35,10 @@ class HouseholdEnergyUse extends React.Component {
   componentWillMount() {
     const { setFwdBtn, steps, setSteps, activeView } = this.context;
 
-    steps[activeView] = false;
+    steps[activeView + 1] = false;
     setSteps({ ...steps });
 
-    if (steps[activeView] === false) {
+    if (steps[activeView + 1] === false) {
       setFwdBtn(false);
     }
   }
@@ -111,10 +111,10 @@ class HouseholdEnergyUse extends React.Component {
 
     if (validate.isInteger(inputNumber)) {
       setFwdBtn(false);
-      steps[activeView] = false;
+      steps[activeView + 1] = false;
     } else {
       setFwdBtn(true);
-      steps[activeView] = true;
+      steps[activeView + 1] = true;
     }
 
     setSteps({ ...steps });

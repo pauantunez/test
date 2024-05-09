@@ -306,183 +306,6 @@ class Main extends React.Component {
 
     return (
       <div className={styles.homeContainer}>
-        {menuOpen && (
-          <div style={{ position: "absolute", width: "100%", height: "100%", marginTop: "90px", marginLeft: "10px", background: "#eee", overflowY: "scroll", zIndex: "999999" }}>
-            <div style={{ display: "flex", flexDirection: "column", margin: "25px" }}>
-              <div>
-                <h3 style={{ marginBottom: "10px", fontSize: "20px", marginBlockStart: "0", color: "#000" }}>Gebäude</h3>
-              </div>
-              <Link
-                className={steps[0] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(0);
-                }}
-              >
-                <span>Gebäudeenergiestandard</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[0] === false && <FwdBtnIcon />}
-                  {steps[0] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-              <Link
-                className={steps[1] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(1);
-                }}
-              >
-                <span>Heizverteilsystem</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[1] === false && <FwdBtnIcon />}
-                  {steps[1] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-              <Link
-                className={steps[2] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(2);
-                }}
-              >
-                <span>Stromverbrauch</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[2] === false && <FwdBtnIcon />}
-                  {steps[2] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-              <div>
-                <h3 style={{ marginBottom: "10px", fontSize: "20px" }}>Ausstattung</h3>
-              </div>
-              <Link
-                className={steps[3] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(3);
-                }}
-              >
-                <span>PV-Leistung</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[3] === false && <FwdBtnIcon />}
-                  {steps[3] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-              <Link
-                className={steps[4] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(4);
-                }}
-              >
-                <span>Solarstromspeicher / Batteriespeicher</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[4] === false && <FwdBtnIcon />}
-                  {steps[4] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-              <Link
-                className={steps[5] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(5);
-                }}
-              >
-                <span>Elektroauto</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[5] === false && <FwdBtnIcon />}
-                  {steps[5] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-              <Link
-                className={steps[6] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(6);
-                }}
-              >
-                <span>Wärmepumpe</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[6] === false && <FwdBtnIcon />}
-                  {steps[6] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-              <Link
-                className={steps[7] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(7);
-                }}
-              >
-                <span>Energiemanagement</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[7] === false && <FwdBtnIcon />}
-                  {steps[7] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-              <div>
-                <h3 style={{ marginBottom: "10px", fontSize: "20px" }}>Ökonomische Kenngrößen</h3>
-              </div>
-              <Link
-                className={steps[8] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(8);
-                }}
-              >
-                <span>Investitionskosten</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[8] === false && <FwdBtnIcon />}
-                  {steps[8] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-              <Link
-                className={steps[9] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(9);
-                }}
-              >
-                <span>Stromkosten</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[9] === false && <FwdBtnIcon />}
-                  {steps[9] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-              <Link
-                className={steps[10] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(10);
-                }}
-              >
-                <span>Einspeisevergütung</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[10] === false && <FwdBtnIcon />}
-                  {steps[10] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-              <div>
-                <h3 style={{ marginBottom: "10px", fontSize: "20px" }}>Ergebnis</h3>
-              </div>
-              <Link
-                className={steps[10] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(11);
-                }}
-              >
-                <span>Stromkosten und Amortisationszeit Ihrer PV-Anlage</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[10] === false && <FwdBtnIcon />}
-                  {steps[10] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-              <Link
-                className={steps[10] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(12);
-                }}
-              >
-                <span>Stromverbrauch, Autarkie und Eigenverbrauch</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[10] === false && <FwdBtnIcon />}
-                  {steps[10] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-            </div>
-          </div>
-        )}
-        <Backdrop sx={{ color: "#fff", zIndex: "9999999" }} open={backdrop}>
-          <CircularProgress color="inherit" />
-        </Backdrop>
         <Backdrop sx={{ color: "#fff", zIndex: "9999999" }} open={menuBackdrop}>
           <div
             style={{ position: "absolute", right: "8px", top: "13px" }}
@@ -639,27 +462,15 @@ class Main extends React.Component {
                 <h3 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Medium", color: "#000", marginBottom: "10px", fontSize: "20px" }}>Ergebnis</h3>
               </div>
               <Link
-                className={steps[10] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                className={steps[11] === false ? "activeMobileLink" : "inactiveMobileLink"}
                 onClick={() => {
                   this.handleStep(11);
                 }}
               >
-                <span>Stromkosten und Amortisationszeit Ihrer PV-Anlage</span>
+                <span>Ergebnis</span>
                 <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[10] === false && <FwdBtnIcon />}
-                  {steps[10] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-              <Link
-                className={steps[10] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(12);
-                }}
-              >
-                <span>Stromverbrauch, Autarkie und Eigenverbrauch</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[10] === false && <FwdBtnIcon />}
-                  {steps[10] === true && <FwdBtnInactiveIcon />}
+                  {steps[11] === false && <FwdBtnIcon />}
+                  {steps[11] === true && <FwdBtnInactiveIcon />}
                 </span>
               </Link>
             </div>

@@ -41,7 +41,7 @@ class EV extends React.Component {
   componentWillMount() {
     const { setFwdBtn, steps, activeView } = this.context;
 
-    if (steps[activeView] === false) {
+    if (steps[activeView + 1] === false) {
       setFwdBtn(false);
     }
   }
@@ -101,10 +101,10 @@ class EV extends React.Component {
     if (event.target.value === "EV") {
       if (odometerIncrease !== "" && homeCharging !== "") {
         setFwdBtn(false);
-        steps[activeView] = false;
+        steps[activeView + 1] = false;
       } else {
         setFwdBtn(true);
-        steps[activeView] = true;
+        steps[activeView + 1] = true;
       }
     } else {
       //noEV
@@ -124,7 +124,7 @@ class EV extends React.Component {
       setScenarioInDatabase(scenarioInDatabase.scenario);
 
       setFwdBtn(false);
-      steps[activeView] = false;
+      steps[activeView + 1] = false;
     }
     setSteps({ ...steps });
   };
@@ -153,7 +153,7 @@ class EV extends React.Component {
       this.changeEVUsage("odometerIncrease", event.target.value);
 
       setFwdBtn(false);
-      steps[activeView] = false;
+      steps[activeView + 1] = false;
       setSteps({ ...steps });
     }
   };
@@ -166,7 +166,7 @@ class EV extends React.Component {
       this.changeEVUsage("homeCharging", event.target.value);
 
       setFwdBtn(false);
-      steps[activeView] = false;
+      steps[activeView + 1] = false;
       setSteps({ ...steps });
     }
   };

@@ -35,10 +35,10 @@ class PVOutput extends React.Component {
   componentWillMount() {
     const { setFwdBtn, steps, setSteps, activeView } = this.context;
 
-    steps[activeView] = false;
+    steps[activeView + 1] = false;
     setSteps({ ...steps });
 
-    if (steps[activeView] === false) {
+    if (steps[activeView + 1] === false) {
       setFwdBtn(false);
     }
   }

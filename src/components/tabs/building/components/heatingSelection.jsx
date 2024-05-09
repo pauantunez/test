@@ -41,7 +41,7 @@ class HeatingSelection extends React.Component {
   componentWillMount() {
     const { setFwdBtn, steps, activeView } = this.context;
 
-    if (steps[activeView] === false) {
+    if (steps[activeView + 1] === false) {
       setFwdBtn(false);
     }
   }
@@ -70,7 +70,7 @@ class HeatingSelection extends React.Component {
     setDisabledOilUsage(true);
 
     setFwdBtn(true);
-    steps[activeView] = true;
+    steps[activeView + 1] = true;
     setSteps({ ...steps });
 
     if (event.target.value === "BuildingEnergyStandard") {
@@ -87,7 +87,7 @@ class HeatingSelection extends React.Component {
 
     setFwdBtn(true);
 
-    steps[activeView] = false;
+    steps[activeView + 1] = false;
     setSteps({ ...steps });
     this.context.goToView(2);
   };
@@ -99,7 +99,7 @@ class HeatingSelection extends React.Component {
 
     setFwdBtn(true);
 
-    steps[activeView] = false;
+    steps[activeView + 1] = false;
     setSteps({ ...steps });
     this.context.goToView(2);
   };
@@ -113,13 +113,13 @@ class HeatingSelection extends React.Component {
       setDisabledLNGUsage(true);
       setLNGUsage("");
       setFwdBtn(true);
-      steps[activeView] = true;
+      steps[activeView + 1] = true;
     } else if (event.target.value === "lng-usage") {
       setDisabledOilUsage(true);
       setDisabledLNGUsage(false);
       setOilUsageLiters("");
       setFwdBtn(true);
-      steps[activeView] = true;
+      steps[activeView + 1] = true;
     }
 
     setSteps({ ...steps });
@@ -170,10 +170,10 @@ class HeatingSelection extends React.Component {
       }
 
       setFwdBtn(false);
-      steps[activeView] = false;
+      steps[activeView + 1] = false;
     } else {
       setFwdBtn(true);
-      steps[activeView] = true;
+      steps[activeView + 1] = true;
     }
 
     setSteps({ ...steps });
@@ -221,10 +221,10 @@ class HeatingSelection extends React.Component {
       }
 
       setFwdBtn(false);
-      steps[activeView] = false;
+      steps[activeView + 1] = false;
     } else {
       setFwdBtn(true);
-      steps[activeView] = true;
+      steps[activeView + 1] = true;
     }
 
     setSteps({ ...steps });

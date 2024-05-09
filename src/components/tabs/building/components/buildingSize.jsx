@@ -56,7 +56,7 @@ class BuildingSize extends React.Component {
     setBuildingSize(event.target.value);
 
     setFwdBtn(false);
-    steps[activeView] = false;
+    steps[activeView + 1] = false;
     setSteps({ ...steps });
     goToView(1);
     setFwdBtn(true);

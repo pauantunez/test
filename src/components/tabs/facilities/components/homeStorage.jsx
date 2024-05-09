@@ -34,7 +34,7 @@ class HomeStorage extends React.Component {
   componentWillMount() {
     const { setFwdBtn, steps, activeView } = this.context;
 
-    if (steps[activeView] === false) {
+    if (steps[activeView + 1] === false) {
       setFwdBtn(false);
     }
   }
@@ -86,7 +86,7 @@ class HomeStorage extends React.Component {
       setFwdBtn(false);
     }
 
-    steps[activeView] = false;
+    steps[activeView + 1] = false;
     setSteps({ ...steps });
   };
 
