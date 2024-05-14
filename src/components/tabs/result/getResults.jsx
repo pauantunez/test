@@ -436,6 +436,8 @@ const GetResults = () => {
       </div>
     );
   }
+  if (debug === true) {
+  }
   return (
     <div>
       <h1>1 graph (Stromverbrauch)</h1>
