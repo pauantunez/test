@@ -443,7 +443,7 @@ const GetResults = () => {
     // Error page
     return (
       <div>
-        <h1>Huch! Etwas ist schief gelaufen.</h1>
+        <h1>Ups, etwas ist schief gelaufen.</h1>
         <p>Es scheint ein Fehler beim Laden der Ergebnisse aufgetreten zu sein. Bitte versuchen Sie es erneut.</p>
       </div>
     );
