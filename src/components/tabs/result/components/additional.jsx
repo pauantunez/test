@@ -988,25 +988,25 @@ class Additional extends React.Component {
                       <div className="block-container">
                         <div className="block contact">
                           <p>Fachbetriebe in ihrer Nähe</p>
-                          <div class="qr-container">
+                          <div className="qr-container">
                             <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_dealer_search.png`)} style={{ width: "70px" }} />
                           </div>
                         </div>
                         <div className="block contact">
                           <p>Angebot anfordern</p>
-                          <div class="qr-container">
+                          <div className="qr-container">
                             <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_lmt.png`)} style={{ width: "70px" }} />
                           </div>
                         </div>
                         <div className="block contact">
                           <p>Beratungshotline</p>
-                          <div class="qr-container">
+                          <div className="qr-container">
                             <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_hotline.png`)} style={{ width: "70px" }} />
                           </div>
                         </div>
                         <div className="block contact">
                           <p>Niederlassungssuche</p>
-                          <div class="qr-container">
+                          <div className="qr-container">
                             <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_branch.png`)} style={{ width: "70px" }} />
                           </div>
                         </div>

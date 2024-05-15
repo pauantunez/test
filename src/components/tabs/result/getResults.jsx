@@ -277,6 +277,8 @@ const GetResults = () => {
 
   const [loading, setLoading] = useState(true);
 
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     setDebug(getDebugFromUrl());
   }, []);
@@ -424,6 +426,7 @@ const GetResults = () => {
           .catch((error) => {
             console.error("Error al obtener resultados:", error);
             setLoading(false);
+            setError(error);
           });
       }
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -436,6 +439,16 @@ const GetResults = () => {
       </div>
     );
   }
+  if (error) {
+    // Error page
+    return (
+      <div>
+        <h1>Huch! Etwas ist schief gelaufen.</h1>
+        <p>Es scheint ein Fehler beim Laden der Ergebnisse aufgetreten zu sein. Bitte versuchen Sie es erneut.</p>
+      </div>
+    );
+  }
+
   if (debug === true) {
   }
   return (

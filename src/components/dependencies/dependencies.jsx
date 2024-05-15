@@ -34,7 +34,7 @@ class Disclaimer extends React.Component {
     const { overlayToggle } = this.state;
 
     return (
-      <div class="right-bottom-links">
+      <div className="right-bottom-links">
         <div className={`licenze-popup ${overlayToggle ? styles.show : styles.hide} ${styles.disclaimerContainer} ${styles.scaleDisclaimerContainer}`} style={{ zIndex: "99999999999" }}>
           <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "left", height: "100%", overflow: "auto" }}>
             <div style={{ width: "100%", fontSize: "15px", fontFamily: fontRegular }}>

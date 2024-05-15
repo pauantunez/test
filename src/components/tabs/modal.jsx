@@ -91,8 +91,10 @@ class CalculationModal extends React.Component {
                 <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
                   <div className="modal-content-width" style={{ position: "relative" }}>
                     <div style={{ display: "flex", flexDirection: "row", lineHeight: "24px", width: "100%", marginTop: "10px", marginBottom: "5px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", textAlign: "left" }}>
-                      <div class="info-icon" style={{ marginRight: "10px" }}>{this.context.selectedTheme === "buderus" ? <BuderusInfoIcon /> : <InfoIcon />}</div>
-                      <div class="txt-block">
+                      <div className="info-icon" style={{ marginRight: "10px" }}>
+                        {this.context.selectedTheme === "buderus" ? <BuderusInfoIcon /> : <InfoIcon />}
+                      </div>
+                      <div className="txt-block">
                         <strong>Bitte beachten Sie:</strong> Die Ergebnisse des Tools basieren auf historischen Werten, simulierten Daten und darauf aufbauenden Optimierungen und können daher von tatsächlichen Verbräuchen und Erträgen abweichen. Die Daten werden regelmäßig kontrolliert und aktualisiert. Das Tool ersetzt nicht die exakte Planung durch eine/n von Ihnen beauftragte/n Planungsexperten/-expertin.
                       </div>
                     </div>
