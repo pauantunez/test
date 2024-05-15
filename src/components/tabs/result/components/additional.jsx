@@ -249,11 +249,33 @@ class Additional extends React.Component {
 
     const printPDF = () => {
       this.convertPies();
-
       setBackdrop(true);
-
       const pdf = new jsPDF("p", "mm", "a4");
 
+      if (this.context.selectedTheme === "buderus") {
+        const printHomePdf = document.getElementById("printHomePdf");
+        html2canvas(printHomePdf, {
+          useCORS: true,
+          quality: 2,
+          scale: 4,
+          allowTaint: false,
+          onclone: function (clonedDoc) {
+            clonedDoc.getElementById("printHomePdf").style.display = "block";
+          },
+        }).then(function (canvas) {
+          const divImage = canvas.toDataURL("image/jpeg", 1.0);
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = pdf.internal.pageSize.getHeight();
+          pdf.addImage(divImage, "JPG", 0, 0, pdfWidth, pdfHeight, null, "NONE");
+          pdf.addPage("a4", "portrait");
+          continueAddingPages(pdf);
+        });
+      } else {
+        continueAddingPages(pdf);
+      }
+    };
+
+    const continueAddingPages = (pdf) => {
       const divToDisplay = document.getElementById("printPdf");
       const divToDisplay2 = document.getElementById("printPdf2");
       const divToDisplay3 = document.getElementById("printPdf3");
@@ -271,14 +293,9 @@ class Additional extends React.Component {
         },
       }).then(function (canvas) {
         const divImage = canvas.toDataURL("image/jpeg", 1.0);
-
         const pdfWidth = pdf.internal.pageSize.getWidth();
-
         const pdfHeight = pdf.internal.pageSize.getHeight();
-
         pdf.addImage(divImage, "JPG", 0, 0, pdfWidth, pdfHeight, null, "NONE");
-        pdf.setFont("BoschSans-Bold", "normal");
-        pdf.setFontSize(12);
         pdf.addPage("a4", "portrait");
 
         html2canvas(divToDisplay2, {
@@ -291,10 +308,8 @@ class Additional extends React.Component {
           },
         }).then(function (canvas2) {
           const divImage2 = canvas2.toDataURL("image/jpeg", 1.0);
-
           const pdfWidth = pdf.internal.pageSize.getWidth();
           const pdfHeight = pdf.internal.pageSize.getHeight();
-
           pdf.addImage(divImage2, "JPG", 0, 0, pdfWidth, pdfHeight, null, "NONE");
           pdf.addPage("a4", "portrait");
 
@@ -310,7 +325,6 @@ class Additional extends React.Component {
             const divImage3 = canvas3.toDataURL("image/jpeg", 1.0);
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = pdf.internal.pageSize.getHeight();
-
             pdf.addImage(divImage3, "JPG", 0, 0, pdfWidth, pdfHeight, null, "NONE");
             pdf.addPage("a4", "portrait");
 
@@ -326,7 +340,6 @@ class Additional extends React.Component {
               const divImage4 = canvas4.toDataURL("image/jpeg", 1.0);
               const pdfWidth = pdf.internal.pageSize.getWidth();
               const pdfHeight = pdf.internal.pageSize.getHeight();
-
               pdf.addImage(divImage4, "JPG", 0, 0, pdfWidth, pdfHeight, null, "NONE");
               pdf.addPage("a4", "portrait");
 
@@ -342,7 +355,6 @@ class Additional extends React.Component {
                 const divImage5 = canvas5.toDataURL("image/jpeg", 1.0);
                 const pdfWidth = pdf.internal.pageSize.getWidth();
                 const pdfHeight = pdf.internal.pageSize.getHeight();
-
                 pdf.addImage(divImage5, "JPG", 0, 0, pdfWidth, pdfHeight, null, "NONE");
                 pdf.addPage("a4", "portrait");
 
@@ -358,7 +370,6 @@ class Additional extends React.Component {
                   const divImage6 = canvas6.toDataURL("image/jpeg", 1.0);
                   const pdfWidth = pdf.internal.pageSize.getWidth();
                   const pdfHeight = pdf.internal.pageSize.getHeight();
-
                   pdf.addImage(divImage6, "JPG", 0, 0, pdfWidth, pdfHeight, null, "NONE");
 
                   addFooters(pdf);
@@ -536,6 +547,9 @@ class Additional extends React.Component {
           </div>
         </div>
         <div id="printPdf-container">
+          <div id="printHomePdf" style={{ position: "absolute", left: "0px", width: "795px", height: "1150px", display: "none" }}>
+            <img src={require(`../../../../assets/img/buderus/homepage_pdf.jpg`)} alt="" style={{ position: "absolute" /* , height: "10px" */, width: "795px", marginTop: "0" }} />
+          </div>
           <div id="printPdf" style={{ position: "absolute", left: "0px", width: "795px", height: "1150px", display: "none" }}>
             {this.context.selectedTheme === "buderus" ? (
               <div style={{ position: "absolute", left: "600px" }}>
