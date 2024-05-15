@@ -1413,7 +1413,7 @@ a.card-input-narrow {
   text-align: center;
 }
 .qr-container{
-  margin-top: 20px;
+  /* margin-top: 20px; */
   width: 100%;
   text-align: center;
 }
