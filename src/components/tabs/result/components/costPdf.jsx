@@ -154,7 +154,7 @@ class CostPdf extends React.Component {
           <div>
             <label>
               {this.state.displayed === undefined && <input type="radio" name="heating" value="1" className={this.context.selectedTheme === "buderus" ? "card-input-element-result" : "card-input-element"} checked={this.state.displayed === "one-year"} />}
-              {this.state.displayed === "one-year" && <input type="radio" name="single-year" id="single-year" value="1" className={this.context.selectedTheme === "buderus" ? "card-input-element-result" : "card-input-element"} checked="true" />}
+              {this.state.displayed === "one-year" && <input type="radio" name="single-year" id="single-year" value="1" className={this.context.selectedTheme === "buderus" ? "card-input-element-result" : "card-input-element"} defaultChecked="true" />}
               <div className="panel panel-default card-input-wide background-light-grey" style={{ height: "40px", width: "100%", fontSize: "14px", margin: "0", border: "none" }}>
                 <div className="panel-body">Gesamtkosten pro Jahr</div>
               </div>
@@ -163,7 +163,7 @@ class CostPdf extends React.Component {
           <div>
             <label>
               {this.state.displayed === undefined && <input type="radio" name="heating" value="20" className={this.context.selectedTheme === "buderus" ? "card-input-element-result" : "card-input-element"} checked={this.state.displayed === "twenty-years"} />}
-              {this.state.displayed === "twenty-years" && <input type="radio" name="multi-year" id="multi-year" value="20" className={this.context.selectedTheme === "buderus" ? "card-input-element-result" : "card-input-element"} checked="true" />}
+              {this.state.displayed === "twenty-years" && <input type="radio" name="multi-year" id="multi-year" value="20" className={this.context.selectedTheme === "buderus" ? "card-input-element-result" : "card-input-element"} defaultChecked="true" />}
               <div className="panel panel-default card-input-wide background-light-grey" style={{ height: "40px", width: "100%", fontSize: "14px", margin: "0", border: "none" }}>
                 <div className="panel-body trackeable" data-event="gesamtkosten-strom-20-years">
                   Gesamtkosten über 20 Jahre

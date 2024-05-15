@@ -954,7 +954,7 @@ class Additional extends React.Component {
             </div>
           </div>
 
-          <div id="printPdf4" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px", display: "none" }}>
+          <div id="printPdf4" style={{ position: "absolute", left: "730px", width: "795px", height: "1150px" /* , display: "none" */ }}>
             {this.context.selectedTheme === "buderus" ? (
               <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems: "center" }}>
                 <div style={{ marginLeft: "600px" }}>
@@ -991,24 +991,28 @@ class Additional extends React.Component {
                           <div className="qr-container">
                             <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_dealer_search.png`)} style={{ width: "70px" }} />
                           </div>
+                          <p>buderus.de/fachbetrieb</p>
                         </div>
                         <div className="block contact">
                           <p>Angebot anfordern</p>
                           <div className="qr-container">
                             <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_lmt.png`)} style={{ width: "70px" }} />
                           </div>
+                          <p>buderus.de/angebot</p>
                         </div>
                         <div className="block contact">
                           <p>Beratungshotline</p>
                           <div className="qr-container">
                             <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_hotline.png`)} style={{ width: "70px" }} />
                           </div>
+                          <p>buderus.de/hotline</p>
                         </div>
                         <div className="block contact">
                           <p>Niederlassungssuche</p>
                           <div className="qr-container">
                             <img alt="lmt" src={require(`../../../../assets/img/qr/buderus_branch.png`)} style={{ width: "70px" }} />
                           </div>
+                          <p>buderus.de/niederlassung</p>
                         </div>
                       </div>
                     </div>
@@ -1097,7 +1101,7 @@ class Additional extends React.Component {
                       </div>
                     </a>
                   </label>
-                  {this.context.selectedTheme === "buderus" ? <p style={{ fontSize: "10px" }}></p> : <p style={{ fontSize: "10px" }}>bosch-hc.de/waermepumpe</p>}
+                  {this.context.selectedTheme === "buderus" ? <p style={{ fontSize: "10px" }}>buderus.de/waermepumpe</p> : <p style={{ fontSize: "10px" }}>bosch-hc.de/waermepumpe</p>}
                   <div>{this.context.selectedTheme === "buderus" ? <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_heatpump.png`)} style={{ width: "70px" }} /> : <img alt="heatpump" src={require(`../../../../assets/img/qr/heatpump.png`)} style={{ width: "70px" }} />}</div>
                 </div>
                 <div style={{ width: "25%" }}>
@@ -1112,7 +1116,7 @@ class Additional extends React.Component {
                       </div>
                     </a>
                   </label>
-                  {this.context.selectedTheme === "buderus" ? <p style={{ fontSize: "10px" }}></p> : <p style={{ fontSize: "10px" }}>bosch-hc.de/pv</p>}
+                  {this.context.selectedTheme === "buderus" ? <p style={{ fontSize: "10px" }}>buderus.de/pv</p> : <p style={{ fontSize: "10px" }}>bosch-hc.de/pv</p>}
                   <div>{this.context.selectedTheme === "buderus" ? <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_pv.png`)} style={{ width: "70px" }} /> : <img alt="pv" src={require(`../../../../assets/img/qr/pv.png`)} style={{ width: "70px" }} />}</div>
                 </div>
                 <div style={{ width: "25%" }}>
@@ -1127,7 +1131,7 @@ class Additional extends React.Component {
                       </div>
                     </a>
                   </label>
-                  {this.context.selectedTheme === "buderus" ? <p style={{ fontSize: "10px" }}></p> : <p style={{ fontSize: "10px" }}>bosch-hc.de/wallbox</p>}
+                  {this.context.selectedTheme === "buderus" ? <p style={{ fontSize: "10px" }}>buderus.de/wallbox</p> : <p style={{ fontSize: "10px" }}>bosch-hc.de/wallbox</p>}
                   <div>{this.context.selectedTheme === "buderus" ? <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_wallbox.png`)} style={{ width: "70px" }} /> : <img alt="" src={require(`../../../../assets/img/qr/wallbox.png`)} style={{ width: "70px" }} />}</div>
                 </div>
                 <div style={{ width: "25%" }}>
@@ -1144,7 +1148,7 @@ class Additional extends React.Component {
                       </div>
                     </a>
                   </label>
-                  {this.context.selectedTheme === "buderus" ? <p style={{ fontSize: "10px" }}></p> : <p style={{ fontSize: "10px" }}>bosch-hc.de/energiemanagement</p>}
+                  {this.context.selectedTheme === "buderus" ? <p style={{ fontSize: "10px" }}>buderus.de/ems</p> : <p style={{ fontSize: "10px" }}>bosch-hc.de/energiemanagement</p>}
                   <div>{this.context.selectedTheme === "buderus" ? <img alt="heatpump" src={require(`../../../../assets/img/qr/buderus_ems.png`)} style={{ width: "70px" }} /> : <img alt="heatpump" src={require(`../../../../assets/img/qr/ems.png`)} style={{ width: "70px" }} />}</div>
                 </div>
               </div>
