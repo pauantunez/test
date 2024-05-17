@@ -236,14 +236,23 @@ class Additional extends React.Component {
 
     const addFooters = (doc) => {
       const pageCount = doc.internal.getNumberOfPages();
+      let year = new Date().getFullYear();
 
       doc.setFontSize(10);
 
-      for (var i = 1; i <= pageCount; i++) {
+      var i;
+
+      if (this.context.selectedTheme === "buderus") {
+        i = 2;
+      } else {
+        i = 1;
+      }
+
+      for (i; i <= pageCount; i++) {
         doc.setPage(i);
         doc.setFont("BoschSans-Medium", "normal");
         doc.setFontSize(10);
-        doc.text("© Bosch Thermotechnik GmbH 2024", 15.5, doc.internal.pageSize.getHeight() - 7);
+        doc.text("© Bosch Thermotechnik GmbH " + year, 15.5, doc.internal.pageSize.getHeight() - 7);
       }
     };
 
