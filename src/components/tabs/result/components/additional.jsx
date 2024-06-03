@@ -557,7 +557,7 @@ class Additional extends React.Component {
         </div>
         <div id="printPdf-container">
           <div id="printHomePdf" style={{ position: "absolute", left: "0px", width: "795px", height: "1150px", display: "none" }}>
-            <img src={require(`../../../../assets/img/buderus/homepage_pdf.jpg`)} alt="" style={{ position: "absolute" /* , height: "10px" */, width: "795px", marginTop: "0" }} />
+            <img src={require(`../../../../assets/img/buderus/homepage_pdf.png`)} alt="" style={{ position: "absolute" /* , height: "10px" */, width: "795px", marginTop: "0" }} />
           </div>
           <div id="printPdf" style={{ position: "absolute", left: "0px", width: "795px", height: "1150px", display: "none" }}>
             {this.context.selectedTheme === "buderus" ? (
