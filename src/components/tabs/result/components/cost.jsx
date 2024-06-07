@@ -14,8 +14,6 @@ import { ReactComponent as BuderusLightningIcon } from "../../../../assets/img/i
 import { ReactComponent as BuderusPVIcon } from "../../../../assets/img/icons/buderus/photovoltaic_chart.svg";
 import { ReactComponent as BuderusElectricityIcon } from "../../../../assets/img/icons/buderus/electricity_sun_chart.svg";
 
-import { isSafari } from "react-device-detect";
-
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title);
 
 export const options = {
@@ -231,7 +229,7 @@ class Cost extends React.Component {
                   {/* Pattern bar 1 year */}
                   {costOverTime === "1" && (
                     <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPv["savings"]}px`, color: "white" }}>
-                      <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
+                      <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={"pattern"}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
                           <span style={{ background: "#FFF", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
                             {savingOnlyPV1year ? savingOnlyPV1year.toLocaleString("DE-de") : ""}
@@ -245,7 +243,7 @@ class Cost extends React.Component {
                   {/* Pattern bar 20 years */}
                   {costOverTime === "20" && (
                     <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPv["savings"]}px`, color: "white" }}>
-                      <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
+                      <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={"pattern"}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
                           <span style={{ background: "#FFF", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
                             {savingOnlyPV20years ? savingOnlyPV20years.toLocaleString("DE-de") : ""}
@@ -259,7 +257,7 @@ class Cost extends React.Component {
                   {/* Blue bar 1 year */}
                   {costOverTime === "1" && (
                     <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPv["cost"]}px`, color: "white" }}>
-                      <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
+                      <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={"pattern"}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                           <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
                             {cost1yearPV ? cost1yearPV.toLocaleString("de-DE") : ""}
@@ -273,7 +271,7 @@ class Cost extends React.Component {
                   {/* Blue bar 20 years */}
                   {costOverTime === "20" && (
                     <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPv["cost"]}px`, color: "white" }}>
-                      <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
+                      <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={"pattern"}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                           <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
                             {cost20yearPV ? cost20yearPV.toLocaleString("de-DE") : ""}
@@ -290,7 +288,7 @@ class Cost extends React.Component {
                   {/* Pattern bar 1 year */}
                   {costOverTime === "1" && (
                     <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPvAndEMS["savings"]}px`, color: "white" }}>
-                      <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
+                      <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={"pattern"}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
                           <span style={{ background: "#FFF", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
                             {savingPVandEMS1year ? savingPVandEMS1year.toLocaleString("DE-de") : ""}
@@ -304,7 +302,7 @@ class Cost extends React.Component {
                   {/* Pattern bar 20 years */}
                   {costOverTime === "20" && (
                     <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPvAndEms["savings"]}px`, color: "white" }}>
-                      <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
+                      <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={"pattern"}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", color: this.context.selectedTheme === "buderus" ? "#B2B2B2" : "#007BC0", fontSize: "12px", width: "100%", height: "100%" }}>
                           <span style={{ background: "#FFF", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
                             {savingPVandEMS20years ? savingPVandEMS20years.toLocaleString("DE-de") : ""}
@@ -318,7 +316,7 @@ class Cost extends React.Component {
                   {/* Blue bar 1 year */}
                   {costOverTime === "1" && (
                     <div style={{ display: "flex", width: "73px", height: `${oneYearHeightMitPvAndEMS["cost"]}px`, color: "white" }}>
-                      <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
+                      <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={"pattern"}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                           <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
                             {cost1yearPVEMS ? cost1yearPVEMS.toLocaleString("de-DE") : ""}
@@ -332,7 +330,7 @@ class Cost extends React.Component {
                   {/* Blue bar 20 years */}
                   {costOverTime === "20" && (
                     <div style={{ display: "flex", width: "73px", height: `${twentyYearsHeightMitPvAndEms["cost"]}px`, color: "white" }}>
-                      <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={isSafari ? "pattern-safari" : "pattern"}>
+                      <div style={{ width: "100%", height: "100%", textAlign: "center" }} className={"pattern"}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", color: "white", fontSize: "12px", width: "100%", height: "100%" }}>
                           <span style={{ background: this.context.selectedTheme === "buderus" ? "#3C3C3B" : "#007BC0", padding: "3px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Bold" : "Bosch-Bold" }}>
                             {cost20yearPVEMS ? cost20yearPVEMS.toLocaleString("de-DE") : ""}
