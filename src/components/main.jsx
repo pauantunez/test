@@ -61,6 +61,7 @@ TabPanel.propTypes = {
 class Main extends React.Component {
   constructor(props) {
     super(props);
+    this.mainRef = React.createRef();
 
     this.state = {
       audio: "audiofile.mp3",
@@ -78,6 +79,7 @@ class Main extends React.Component {
       scenNo: "",
       heatpumpPVems: [],
       heatpumpPV: [],
+      activeView: 0,
     };
   }
 
@@ -121,6 +123,27 @@ class Main extends React.Component {
         trackeableElement.dataset.handled = true;
       }
     });
+  }
+
+  scrollToTop() {
+    if (this.mainRef.current) {
+      this.mainRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+
+  componentDidMount() {
+    this.scrollToTop();
+  }
+
+  componentDidUpdate() {
+    const { activeView } = this.context;
+    if (activeView !== this.state.activeView) {
+      // Actualiza el estado con la nueva vista activa
+      this.setState({ activeView }, () => {
+        // Desplaza al componente Main cuando cambia la vista activa
+        this.scrollToTop();
+      });
+    }
   }
 
   componentWillReceiveProps = (nextProps, nextContext) => {
@@ -308,361 +331,363 @@ class Main extends React.Component {
     };
 
     return (
-      <div className={styles.homeContainer}>
-        <Backdrop sx={{ color: "#fff", zIndex: "9999999" }} open={menuBackdrop}>
-          <div
-            style={{ position: "absolute", right: "8px", top: "13px" }}
-            onClick={() => {
-              this.handleClick();
-            }}
-          >
-            <MenuCloseIcon />
-          </div>
-          <div style={{ color: "#FFF", width: "100%", height: "100%", lineHeight: "36px", background: "#eee", marginTop: "0px", overflowY: "scroll" }}>
-            <div style={{ display: "flex", flexDirection: "column", margin: "15px 25px 25px 15px" }}>
-              <div>
-                <h3 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Medium", color: "#000", marginBottom: "10px", fontSize: "20px", marginBlockStart: "0" }}>Gebäude</h3>
+      <div ref={this.mainRef}>
+        <div className={styles.homeContainer}>
+          <Backdrop sx={{ color: "#fff", zIndex: "9999999" }} open={menuBackdrop}>
+            <div
+              style={{ position: "absolute", right: "8px", top: "13px" }}
+              onClick={() => {
+                this.handleClick();
+              }}
+            >
+              <MenuCloseIcon />
+            </div>
+            <div style={{ color: "#FFF", width: "100%", height: "100%", lineHeight: "36px", background: "#eee", marginTop: "0px", overflowY: "scroll" }}>
+              <div style={{ display: "flex", flexDirection: "column", margin: "15px 25px 25px 15px" }}>
+                <div>
+                  <h3 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Medium", color: "#000", marginBottom: "10px", fontSize: "20px", marginBlockStart: "0" }}>Gebäude</h3>
+                </div>
+                <Link
+                  className={steps[0] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                  onClick={() => {
+                    this.handleStep(0, 0, "Gebäude");
+                  }}
+                >
+                  <span>Gebäudegröße</span>
+                  <span style={{ display: "block", alignItems: "end" }}>
+                    {steps[0] === false && <FwdBtnIcon />}
+                    {steps[0] === true && <FwdBtnInactiveIcon />}
+                  </span>
+                </Link>
+                <Link
+                  className={steps[1] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                  onClick={() => {
+                    this.handleStep(1, 0, "Gebäude");
+                  }}
+                >
+                  <span>Heizenergiebedarf</span>
+                  <span style={{ display: "block", alignItems: "end" }}>
+                    {steps[1] === false && <FwdBtnIcon />}
+                    {steps[1] === true && <FwdBtnInactiveIcon />}
+                  </span>
+                </Link>
+                <Link
+                  className={steps[2] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                  onClick={() => {
+                    this.handleStep(2, 0, "Gebäude");
+                  }}
+                >
+                  <span>Wärmeverteilsystem</span>
+                  <span style={{ display: "block", alignItems: "end" }}>
+                    {steps[2] === false && <FwdBtnIcon />}
+                    {steps[2] === true && <FwdBtnInactiveIcon />}
+                  </span>
+                </Link>
+                <Link
+                  className={steps[3] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                  onClick={() => {
+                    this.handleStep(3, 0, "Gebäude");
+                  }}
+                >
+                  <span>Haushaltsstromverbrauch</span>
+                  <span style={{ display: "block", alignItems: "end" }}>
+                    {steps[3] === false && <FwdBtnIcon />}
+                    {steps[3] === true && <FwdBtnInactiveIcon />}
+                  </span>
+                </Link>
+                <div>
+                  <h3 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Medium", color: "#000", marginBottom: "10px", fontSize: "20px" }}>Ausstattung</h3>
+                </div>
+                <Link
+                  className={steps[4] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                  onClick={() => {
+                    this.handleStep(4, 1, "Ausstattung");
+                  }}
+                >
+                  <span>Wärmepumpe</span>
+                  <span style={{ display: "block", alignItems: "end" }}>
+                    {steps[4] === false && <FwdBtnIcon />}
+                    {steps[4] === true && <FwdBtnInactiveIcon />}
+                  </span>
+                </Link>
+                <Link
+                  className={steps[5] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                  onClick={() => {
+                    this.handleStep(5, 1, "Ausstattung");
+                  }}
+                >
+                  <span>Elektroauto</span>
+                  <span style={{ display: "block", alignItems: "end" }}>
+                    {steps[5] === false && <FwdBtnIcon />}
+                    {steps[5] === true && <FwdBtnInactiveIcon />}
+                  </span>
+                </Link>
+                <Link
+                  className={steps[6] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                  onClick={() => {
+                    this.handleStep(6, 1, "Ausstattung");
+                  }}
+                >
+                  <span>PV-Leistung</span>
+                  <span style={{ display: "block", alignItems: "end" }}>
+                    {steps[6] === false && <FwdBtnIcon />}
+                    {steps[6] === true && <FwdBtnInactiveIcon />}
+                  </span>
+                </Link>
+                <Link
+                  className={steps[7] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                  onClick={() => {
+                    this.handleStep(7, 1, "Ausstattung");
+                  }}
+                >
+                  <span>Batteriespeicher</span>
+                  <span style={{ display: "block", alignItems: "end" }}>
+                    {steps[7] === false && <FwdBtnIcon />}
+                    {steps[7] === true && <FwdBtnInactiveIcon />}
+                  </span>
+                </Link>
+                <div>
+                  <h3 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Medium", color: "#000", marginBottom: "10px", fontSize: "20px" }}>Ökonomische Kenngrößen</h3>
+                </div>
+                <Link
+                  className={steps[8] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                  onClick={() => {
+                    this.handleStep(8, 2, "Ökonomische Kenngrößen");
+                  }}
+                >
+                  <span>Investitionskosten</span>
+                  <span style={{ display: "block", alignItems: "end" }}>
+                    {steps[8] === false && <FwdBtnIcon />}
+                    {steps[8] === true && <FwdBtnInactiveIcon />}
+                  </span>
+                </Link>
+                <Link
+                  className={steps[9] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                  onClick={() => {
+                    this.handleStep(9, 2, "Ökonomische Kenngrößen");
+                  }}
+                >
+                  <span>Stromkosten</span>
+                  <span style={{ display: "block", alignItems: "end" }}>
+                    {steps[9] === false && <FwdBtnIcon />}
+                    {steps[9] === true && <FwdBtnInactiveIcon />}
+                  </span>
+                </Link>
+                <Link
+                  className={steps[10] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                  onClick={() => {
+                    this.handleStep(10, 2, "Ökonomische Kenngrößen");
+                  }}
+                >
+                  <span>Einspeisevergütung</span>
+                  <span style={{ display: "block", alignItems: "end" }}>
+                    {steps[10] === false && <FwdBtnIcon />}
+                    {steps[10] === true && <FwdBtnInactiveIcon />}
+                  </span>
+                </Link>
+                <div>
+                  <h3 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Medium", color: "#000", marginBottom: "10px", fontSize: "20px" }}>Ergebnis</h3>
+                </div>
+                <Link
+                  className={steps[11] === false ? "activeMobileLink" : "inactiveMobileLink"}
+                  onClick={() => {
+                    this.handleStep(11, 3, "Ergebnis");
+                  }}
+                >
+                  <span>Ergebnis</span>
+                  <span style={{ display: "block", alignItems: "end" }}>
+                    {steps[11] === false && <FwdBtnIcon />}
+                    {steps[11] === true && <FwdBtnInactiveIcon />}
+                  </span>
+                </Link>
               </div>
-              <Link
-                className={steps[0] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(0, 0, "Gebäude");
-                }}
-              >
-                <span>Gebäudegröße</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[0] === false && <FwdBtnIcon />}
-                  {steps[0] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-              <Link
-                className={steps[1] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(1, 0, "Gebäude");
-                }}
-              >
-                <span>Heizenergiebedarf</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[1] === false && <FwdBtnIcon />}
-                  {steps[1] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-              <Link
-                className={steps[2] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(2, 0, "Gebäude");
-                }}
-              >
-                <span>Wärmeverteilsystem</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[2] === false && <FwdBtnIcon />}
-                  {steps[2] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-              <Link
-                className={steps[3] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(3, 0, "Gebäude");
-                }}
-              >
-                <span>Haushaltsstromverbrauch</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[3] === false && <FwdBtnIcon />}
-                  {steps[3] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-              <div>
-                <h3 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Medium", color: "#000", marginBottom: "10px", fontSize: "20px" }}>Ausstattung</h3>
-              </div>
-              <Link
-                className={steps[4] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(4, 1, "Ausstattung");
-                }}
-              >
-                <span>Wärmepumpe</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[4] === false && <FwdBtnIcon />}
-                  {steps[4] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-              <Link
-                className={steps[5] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(5, 1, "Ausstattung");
-                }}
-              >
-                <span>Elektroauto</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[5] === false && <FwdBtnIcon />}
-                  {steps[5] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-              <Link
-                className={steps[6] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(6, 1, "Ausstattung");
-                }}
-              >
-                <span>PV-Leistung</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[6] === false && <FwdBtnIcon />}
-                  {steps[6] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-              <Link
-                className={steps[7] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(7, 1, "Ausstattung");
-                }}
-              >
-                <span>Batteriespeicher</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[7] === false && <FwdBtnIcon />}
-                  {steps[7] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-              <div>
-                <h3 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Medium", color: "#000", marginBottom: "10px", fontSize: "20px" }}>Ökonomische Kenngrößen</h3>
-              </div>
-              <Link
-                className={steps[8] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(8, 2, "Ökonomische Kenngrößen");
-                }}
-              >
-                <span>Investitionskosten</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[8] === false && <FwdBtnIcon />}
-                  {steps[8] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-              <Link
-                className={steps[9] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(9, 2, "Ökonomische Kenngrößen");
-                }}
-              >
-                <span>Stromkosten</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[9] === false && <FwdBtnIcon />}
-                  {steps[9] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-              <Link
-                className={steps[10] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(10, 2, "Ökonomische Kenngrößen");
-                }}
-              >
-                <span>Einspeisevergütung</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[10] === false && <FwdBtnIcon />}
-                  {steps[10] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
-              <div>
-                <h3 style={{ fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Medium", color: "#000", marginBottom: "10px", fontSize: "20px" }}>Ergebnis</h3>
-              </div>
-              <Link
-                className={steps[11] === false ? "activeMobileLink" : "inactiveMobileLink"}
-                onClick={() => {
-                  this.handleStep(11, 3, "Ergebnis");
-                }}
-              >
-                <span>Ergebnis</span>
-                <span style={{ display: "block", alignItems: "end" }}>
-                  {steps[11] === false && <FwdBtnIcon />}
-                  {steps[11] === true && <FwdBtnInactiveIcon />}
-                </span>
-              </Link>
+            </div>
+          </Backdrop>
+          <div className={styles.setupContainer}>
+            <div className={styles.toolMargin}>
+              <Box sx={{ width: "100%" }}>
+                <NavContent theme={selectedTheme} />
+              </Box>
             </div>
           </div>
-        </Backdrop>
-        <div className={styles.setupContainer}>
-          <div className={styles.toolMargin}>
-            <Box sx={{ width: "100%" }}>
-              <NavContent theme={selectedTheme} />
-            </Box>
-          </div>
-        </div>
-        <div className="bottomNav" style={{ position: isMobile ? "absolute" : "fixed", width: "100%", bottom: "3%", zIndex: "999999" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", marginLeft: "3%", marginRight: "3%" }}>
-            <Button
-              id="previousTabBtn"
-              variant="outlined"
-              startIcon={this.context.selectedTheme === "buderus" ? <BuderusBackThinIcon /> : <BackThinIcon />}
-              disabled={this.state.backBtn}
-              sx={{
-                background: "#FFF",
-                textTransform: "none",
-                borderRadius: "0px",
-                fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular",
-                color: this.context.selectedTheme === "buderus" ? "#000000" : "",
-                border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "",
-                "&:hover": {
+          <div className="bottomNav" style={{ position: isMobile ? "absolute" : "fixed", width: "100%", bottom: "3%", zIndex: "999999" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", marginLeft: "3%", marginRight: "3%" }}>
+              <Button
+                id="previousTabBtn"
+                variant="outlined"
+                startIcon={this.context.selectedTheme === "buderus" ? <BuderusBackThinIcon /> : <BackThinIcon />}
+                disabled={this.state.backBtn}
+                sx={{
+                  background: "#FFF",
+                  textTransform: "none",
+                  borderRadius: "0px",
+                  fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular",
+                  color: this.context.selectedTheme === "buderus" ? "#000000" : "",
                   border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "",
-                },
-              }}
-              onClick={() => {
-                previousTab();
-              }}
-            >
-              {activeView === 11 && <span>Zurück</span>}
-              {activeView === 13 && <span>Ergebnis Teil 1</span>}
-              {activeView === 0 && <span>Zurück</span>}
-              {activeView === 1 && <span>Zurück</span>}
-              {activeView === 2 && <span>Zurück</span>}
-              {activeView === 3 && <span>Zurück</span>}
-              {activeView === 4 && <span>Zurück</span>}
-              {activeView === 5 && <span>Zurück</span>}
-              {activeView === 6 && <span>Zurück</span>}
-              {activeView === 7 && <span>Zurück</span>}
-              {activeView === 8 && <span>Zurück</span>}
-              {activeView === 9 && <span>Zurück</span>}
-              {activeView === 10 && <span>Zurück</span>}
-              {activeView === 12 && <span>Zurück</span>}
-              {activeView === 14 && <span>Ergebnis Teil 2</span>}
-            </Button>
+                  "&:hover": {
+                    border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "",
+                  },
+                }}
+                onClick={() => {
+                  previousTab();
+                }}
+              >
+                {activeView === 11 && <span>Zurück</span>}
+                {activeView === 13 && <span>Ergebnis Teil 1</span>}
+                {activeView === 0 && <span>Zurück</span>}
+                {activeView === 1 && <span>Zurück</span>}
+                {activeView === 2 && <span>Zurück</span>}
+                {activeView === 3 && <span>Zurück</span>}
+                {activeView === 4 && <span>Zurück</span>}
+                {activeView === 5 && <span>Zurück</span>}
+                {activeView === 6 && <span>Zurück</span>}
+                {activeView === 7 && <span>Zurück</span>}
+                {activeView === 8 && <span>Zurück</span>}
+                {activeView === 9 && <span>Zurück</span>}
+                {activeView === 10 && <span>Zurück</span>}
+                {activeView === 12 && <span>Zurück</span>}
+                {activeView === 14 && <span>Ergebnis Teil 2</span>}
+              </Button>
 
-            <CustomButton
-              id="CalcInfoBtn"
-              startIcon={this.context.selectedTheme === "buderus" ? <BuderusInfoIcon /> : <InfoIcon />}
-              style={{ background: "#FFF", border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "1px solid #007BC0", textTransform: "none", borderRadius: "0px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular" }}
-              className={activeView === 12 || activeView === 13 || activeView === 14 ? styles.show : styles.hide}
-              onClick={() => {
-                /* var container = document.getElementsByClassName("home_homeContainer__CHK-E")[0];
+              <CustomButton
+                id="CalcInfoBtn"
+                startIcon={this.context.selectedTheme === "buderus" ? <BuderusInfoIcon /> : <InfoIcon />}
+                style={{ background: "#FFF", border: this.context.selectedTheme === "buderus" ? "1px solid #000000" : "1px solid #007BC0", textTransform: "none", borderRadius: "0px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular" }}
+                className={activeView === 12 || activeView === 13 || activeView === 14 ? styles.show : styles.hide}
+                onClick={() => {
+                  /* var container = document.getElementsByClassName("home_homeContainer__CHK-E")[0];
                 container.style.display = "none"; */
-                handleOpen();
-              }}
-            >
-              <span className="trackeable" style={{ fontSize: "12px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", color: this.context.selectedTheme === "buderus" ? "#000000" : "#007BC0", cursor: "pointer" }} data-event={activeView === 12 ? "result-part1-berechnungsgrundlage" : activeView === 13 ? "result-part2-berechnungsgrundlage" : activeView === 14 ? "result-part3-berechnungsgrundlage" : ""}>
-                Berechnungsgrundlage
-              </span>
-            </CustomButton>
+                  handleOpen();
+                }}
+              >
+                <span className="trackeable" style={{ fontSize: "12px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", color: this.context.selectedTheme === "buderus" ? "#000000" : "#007BC0", cursor: "pointer" }} data-event={activeView === 12 ? "result-part1-berechnungsgrundlage" : activeView === 13 ? "result-part2-berechnungsgrundlage" : activeView === 14 ? "result-part3-berechnungsgrundlage" : ""}>
+                  Berechnungsgrundlage
+                </span>
+              </CustomButton>
 
-            <CustomButton
-              id="nextTabBtn"
-              variant="contained"
-              endIcon={<ForwardThinIcon />}
-              disabled={fwdBtn}
-              style={{ textTransform: "none", borderRadius: "0px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular" }}
-              className={activeView !== 14 ? styles.show : styles.hide}
-              onClick={() => {
-                if (activeView === 3 && directLink === true) {
-                  setDirectLink(false);
-                  setActiveView(13);
-                } else if (activeView === 1 && BuildingEnegeryStandard === "OilLNG") {
-                  if (OilLNGValue === "oil-usage") {
-                    sendGAEvent("heizenergiebedard-olverbrauch", OilUsageLiters, window.location.href);
+              <CustomButton
+                id="nextTabBtn"
+                variant="contained"
+                endIcon={<ForwardThinIcon />}
+                disabled={fwdBtn}
+                style={{ textTransform: "none", borderRadius: "0px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular" }}
+                className={activeView !== 14 ? styles.show : styles.hide}
+                onClick={() => {
+                  if (activeView === 3 && directLink === true) {
+                    setDirectLink(false);
+                    setActiveView(13);
+                  } else if (activeView === 1 && BuildingEnegeryStandard === "OilLNG") {
+                    if (OilLNGValue === "oil-usage") {
+                      sendGAEvent("heizenergiebedard-olverbrauch", OilUsageLiters, window.location.href);
+                      nextTab();
+                    } else {
+                      sendGAEvent("heizenergiebedard-gasverbrauch", LNGUsage, window.location.href);
+                      nextTab();
+                    }
+                  } else if (activeView === 3) {
+                    var value;
+                    if (energyUsagekWh === 0) value = 4000;
+                    else if (energyUsagekWh === 1) value = 6000;
+                    else value = 8000;
+
+                    sendGAEvent("haushaltsstromverbrauch-kwh", value, window.location.href);
+                    nextTab();
+                  } else if (activeView === 5) {
+                    if (homeCharging === "Commuter_") {
+                      sendGAEvent("elektroauto-das-eauto-kann", null, window.location.href);
+                      nextTab();
+                    } else {
+                      sendGAEvent("elektroauto-das-eauto-wird", null, window.location.href);
+                      nextTab();
+                    }
+
+                    if (odometerIncrease === "10k") {
+                      sendGAEvent("elektroauto-10000", 10000, window.location.href);
+                      nextTab();
+                    } else {
+                      sendGAEvent("elektroauto-20000", 20000, window.location.href);
+                      nextTab();
+                    }
+                  } else if (activeView === 6) {
+                    if (pvOutput === 0) value = 4;
+                    else if (pvOutput === 1) value = 7;
+                    else if (pvOutput === 2) value = 10;
+                    else value = 14;
+
+                    sendGAEvent("pv-leistung-kwp", value, window.location.href);
+                    nextTab();
+                  } else if (activeView === 7) {
+                    if (homeStorageSize === 0) value = 6;
+                    else if (homeStorageSize === 1) value = 9;
+                    else if (homeStorageSize === 2) value = 12;
+                    else value = 15;
+
+                    sendGAEvent("batteriespeicher-kwh", value, window.location.href);
+                    nextTab();
+                  } else if (activeView === 8 && !disabledInvestmentCost) {
+                    sendGAEvent("investitionskosten-amount", investmentCostEUR, window.location.href);
+                    nextTab();
+                  } else if (activeView === 9) {
+                    sendGAEvent("stromkosten-amount", electricityCost, window.location.href);
+                    steps[activeView + 1] = false;
+                    nextTab();
+                  } else if (activeView === 10) {
+                    sendGAEvent("einspeisevergütung-amount", gridRevenue, window.location.href);
+                    steps[activeView + 1] = false;
                     nextTab();
                   } else {
-                    sendGAEvent("heizenergiebedard-gasverbrauch", LNGUsage, window.location.href);
                     nextTab();
                   }
-                } else if (activeView === 3) {
-                  var value;
-                  if (energyUsagekWh === 0) value = 4000;
-                  else if (energyUsagekWh === 1) value = 6000;
-                  else value = 8000;
+                }}
+              >
+                {activeView === 10 && <span>Ergebnis Teil 1</span>}
+                {activeView === 11 && <span>Ergebnis Teil 1</span>}
+                {activeView === 12 && (
+                  <span className="trackeable" data-event="result-part1-next">
+                    Ergebnis Teil 2
+                  </span>
+                )}
+                {activeView === 0 && <span>Weiter</span>}
+                {activeView === 1 && <span>Weiter</span>}
+                {activeView === 2 && <span>Weiter</span>}
+                {activeView === 3 && directLink === false && <span>Weiter</span>}
+                {activeView === 3 && directLink === true && (
+                  <span className="trackeable" data-event="haushaltsstromverbrauch-back-to-result">
+                    Zurück zum Ergebnis
+                  </span>
+                )}
+                {activeView === 4 && <span>Weiter</span>}
+                {activeView === 5 && <span>Weiter</span>}
+                {activeView === 6 && <span>Weiter</span>}
+                {activeView === 7 && <span>Weiter</span>}
+                {activeView === 8 && <span>Weiter</span>}
+                {activeView === 9 && <span>Weiter</span>}
+                {activeView === 13 && (
+                  <span className="trackeable" data-event="result-part2-next">
+                    Zusatz
+                  </span>
+                )}
+              </CustomButton>
 
-                  sendGAEvent("haushaltsstromverbrauch-kwh", value, window.location.href);
-                  nextTab();
-                } else if (activeView === 5) {
-                  if (homeCharging === "Commuter_") {
-                    sendGAEvent("elektroauto-das-eauto-kann", null, window.location.href);
-                    nextTab();
-                  } else {
-                    sendGAEvent("elektroauto-das-eauto-wird", null, window.location.href);
-                    nextTab();
-                  }
-
-                  if (odometerIncrease === "10k") {
-                    sendGAEvent("elektroauto-10000", 10000, window.location.href);
-                    nextTab();
-                  } else {
-                    sendGAEvent("elektroauto-20000", 20000, window.location.href);
-                    nextTab();
-                  }
-                } else if (activeView === 6) {
-                  if (pvOutput === 0) value = 4;
-                  else if (pvOutput === 1) value = 7;
-                  else if (pvOutput === 2) value = 10;
-                  else value = 14;
-
-                  sendGAEvent("pv-leistung-kwp", value, window.location.href);
-                  nextTab();
-                } else if (activeView === 7) {
-                  if (homeStorageSize === 0) value = 6;
-                  else if (homeStorageSize === 1) value = 9;
-                  else if (homeStorageSize === 2) value = 12;
-                  else value = 15;
-
-                  sendGAEvent("batteriespeicher-kwh", value, window.location.href);
-                  nextTab();
-                } else if (activeView === 8 && !disabledInvestmentCost) {
-                  sendGAEvent("investitionskosten-amount", investmentCostEUR, window.location.href);
-                  nextTab();
-                } else if (activeView === 9) {
-                  sendGAEvent("stromkosten-amount", electricityCost, window.location.href);
-                  steps[activeView + 1] = false;
-                  nextTab();
-                } else if (activeView === 10) {
-                  sendGAEvent("einspeisevergütung-amount", gridRevenue, window.location.href);
-                  steps[activeView + 1] = false;
-                  nextTab();
-                } else {
-                  nextTab();
-                }
-              }}
-            >
-              {activeView === 10 && <span>Ergebnis Teil 1</span>}
-              {activeView === 11 && <span>Ergebnis Teil 1</span>}
-              {activeView === 12 && (
-                <span className="trackeable" data-event="result-part1-next">
-                  Ergebnis Teil 2
+              <CustomButton
+                id="restartBtn"
+                variant="contained"
+                startIcon={<HouseSmallIcon />}
+                disabled={this.state.restart}
+                style={{ textTransform: "none", borderRadius: "0px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular" }}
+                className={activeView === 14 ? styles.show : styles.hide}
+                onClick={() => {
+                  setActiveView(0);
+                }}
+              >
+                <span className="trackeable" data-event="result-part3-back-to-startpage">
+                  Zurück zum Start
                 </span>
-              )}
-              {activeView === 0 && <span>Weiter</span>}
-              {activeView === 1 && <span>Weiter</span>}
-              {activeView === 2 && <span>Weiter</span>}
-              {activeView === 3 && directLink === false && <span>Weiter</span>}
-              {activeView === 3 && directLink === true && (
-                <span className="trackeable" data-event="haushaltsstromverbrauch-back-to-result">
-                  Zurück zum Ergebnis
-                </span>
-              )}
-              {activeView === 4 && <span>Weiter</span>}
-              {activeView === 5 && <span>Weiter</span>}
-              {activeView === 6 && <span>Weiter</span>}
-              {activeView === 7 && <span>Weiter</span>}
-              {activeView === 8 && <span>Weiter</span>}
-              {activeView === 9 && <span>Weiter</span>}
-              {activeView === 13 && (
-                <span className="trackeable" data-event="result-part2-next">
-                  Zusatz
-                </span>
-              )}
-            </CustomButton>
-
-            <CustomButton
-              id="restartBtn"
-              variant="contained"
-              startIcon={<HouseSmallIcon />}
-              disabled={this.state.restart}
-              style={{ textTransform: "none", borderRadius: "0px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular" }}
-              className={activeView === 14 ? styles.show : styles.hide}
-              onClick={() => {
-                setActiveView(0);
-              }}
-            >
-              <span className="trackeable" data-event="result-part3-back-to-startpage">
-                Zurück zum Start
-              </span>
-            </CustomButton>
+              </CustomButton>
+            </div>
           </div>
+          <CalculationModal />
         </div>
-        <CalculationModal />
       </div>
     );
   }
