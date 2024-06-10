@@ -1621,6 +1621,12 @@ a.card-input-narrow {
   margin-bottom: 80px !important;
 }
 
+@media only screen and (max-width: 700px) {
+  .graphs-container, .wrapper-container{
+    margin-bottom: 130px !important;
+  }
+}
+
 .infobox-h3 {
   font-family: Bosch-Medium;
   font-size: 14px;
