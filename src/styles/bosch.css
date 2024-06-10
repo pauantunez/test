@@ -1654,7 +1654,7 @@ a.card-input-narrow {
 }
 
 .pattern-round {
-  background-image: url("../assets/img/icons/pattern_small_round.svg");
+  background-image: url("../assets/img/icons/pattern_small_round.png");
   background-color: transparent;
   opacity: 1;
   /*background: repeating-linear-gradient(-45deg, #747474, #18837E 2px, transparent 2px, transparent 3px);*/
