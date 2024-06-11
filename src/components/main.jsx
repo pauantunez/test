@@ -127,7 +127,8 @@ class Main extends React.Component {
 
   scrollToTop() {
     if (this.mainRef.current) {
-      this.mainRef.current.scrollIntoView({ behavior: "smooth" });
+      const offsetTop = this.mainRef.current.getBoundingClientRect().top + window.pageYOffset - 150;
+      window.scrollTo({ top: offsetTop, behavior: "smooth" });
     }
   }
 
