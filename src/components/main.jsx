@@ -127,7 +127,7 @@ class Main extends React.Component {
 
   scrollToTop() {
     if (this.mainRef.current) {
-      this.mainRef.current.scrollIntoView({ behavior: "smooth" });
+      this.mainRef.current.scrollIntoView();
     }
   }
 
