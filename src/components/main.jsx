@@ -126,9 +126,7 @@ class Main extends React.Component {
   }
 
   scrollToTop() {
-    if (this.mainRef.current) {
-          
-          if (this.mainRef.current) {       
+    if (this.mainRef.current) {      
             // Access the header height from the parent window
             const headerElement = window.parent.document.getElementById('header');                 
             const targetPosition = this.mainRef.current.getBoundingClientRect().top + window.scrollY;
@@ -141,7 +139,6 @@ class Main extends React.Component {
               top: targetPosition,
               behavior: 'smooth'
             });
-          }
 
     }
     
