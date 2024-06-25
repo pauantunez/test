@@ -128,10 +128,10 @@ class Main extends React.Component {
   scrollToTop() {
     if (this.mainRef.current)
        {          
-            if ( $('#root').outerWidth() > 1102) {
-              window.scrollTo({top: $('#hc_sectorcoupling').offset().top - 170});
+            if (  document.getElementById('root').offsetWidth > 1102) {
+              window.scrollTo({top: this.mainRef.current + 170});
             } else {
-              window.scrollTo({top: $('#hc_sectorcoupling').offset().top - 140});
+              window.scrollTo({top: this.mainRef.current + 140});
             }
     }
     
