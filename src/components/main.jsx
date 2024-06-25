@@ -126,11 +126,16 @@ class Main extends React.Component {
   }
 
   scrollToTop() {
-    if (this.mainRef.current) {
-      this.mainRef.current.scrollIntoView();
+    if (this.mainRef.current)
+       {          
+            if ( $('#root').outerWidth() > 1102) {
+              window.scrollTo({top: $('#hc_sectorcoupling').offset().top - 170});
+            } else {
+              window.scrollTo({top: $('#hc_sectorcoupling').offset().top - 140});
+            }
     }
+    
   }
-
 
   componentDidMount() {
     this.scrollToTop();
