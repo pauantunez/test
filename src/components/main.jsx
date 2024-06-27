@@ -126,15 +126,19 @@ class Main extends React.Component {
   }
 
   scrollToTop() {
-    if (this.mainRef.current)
-       {          
-            if (  document.getElementById('root').offsetWidth > 1102) {
-              window.scrollTo({top: this.mainRef.current + 170});
-            } else {
-              window.scrollTo({top: this.mainRef.current + 140});
-            }
+    if (this.mainRef.current) {
+      if (document.getElementById("root").offsetWidth > 1102) {
+        window.parent.scrollTo({
+          top: 6550,
+          behavior: "smooth",
+        });
+      } else {
+        window.parent.scrollTo({
+          top: 9000,
+          behavior: "smooth",
+        });
+      }
     }
-    
   }
 
   componentDidMount() {
