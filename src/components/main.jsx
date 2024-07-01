@@ -127,6 +127,14 @@ class Main extends React.Component {
     });
   }
 
+  isInFrame = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("forceFrameMode")) {
+      return true;
+    }
+    return window.self !== window.top;
+  };
+
   scrollToTop() {
     var parentBody = window.parent.document.body;
 
@@ -140,7 +148,9 @@ class Main extends React.Component {
   }
 
   componentDidMount() {
-    this.scrollToTop();
+    if (this.isInFrame()) {
+      this.scrollToTop();
+    }
   }
 
   componentDidUpdate() {
@@ -149,7 +159,10 @@ class Main extends React.Component {
       // Actualiza el estado con la nueva vista activa
       this.setState({ activeView }, () => {
         // Desplaza al componente Main cuando cambia la vista activa
-        this.scrollToTop();
+
+        if (this.isInFrame()) {
+          this.scrollToTop();
+        }
       });
     }
   }
