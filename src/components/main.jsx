@@ -32,6 +32,8 @@ import Link from "@mui/material/Link";
 
 import CalculationModal from "./tabs/modal";
 
+import $ from "jquery";
+
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 var productEntry;
@@ -126,17 +128,13 @@ class Main extends React.Component {
   }
 
   scrollToTop() {
+    var parentBody = window.parent.document.body;
+
     if (this.mainRef.current) {
       if (document.getElementById("root").offsetWidth > 1102) {
-        window.parent.scrollTo({
-          top: 6550,
-          behavior: "smooth",
-        });
+        window.parent.scrollTo({ top: $("#hc_sectorcoupling", parentBody).offset().top - 170 });
       } else {
-        window.parent.scrollTo({
-          top: 9000,
-          behavior: "smooth",
-        });
+        window.parent.scrollTo({ top: $("#hc_sectorcoupling", parentBody).offset().top - 140 });
       }
     }
   }
