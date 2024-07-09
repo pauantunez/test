@@ -246,7 +246,7 @@ class Welcome extends React.Component {
               <div className="startBtn">
                 <span className="trackeable" data-event="jetzt-solarstromrechner-starten">
                   <Link style={{ display: "inline-block", textAlign: "center", backgroundColor: this.context.selectedTheme === "buderus" ? "#002D59" : "#006a9b", color: this.context.selectedTheme === "buderus" ? "#FFFFFF" : "#FFF", textDecoration: "none", margin: "5px 10px 0 0", padding: "10px 20px 10px 20px", fontSize: "14px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular" }} to={this.context.selectedTheme === "buderus" ? "./main?theme=buderus" : "./main"}>
-                    Jetzt Solarstromrechner starten
+                    {this.context.selectedTheme === "buderus" ? "Jetzt Photovoltaikstromrechner starten" : "Jetzt Solarstromrechner starten"}
                   </Link>
                 </span>
               </div>

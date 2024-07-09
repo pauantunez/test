@@ -308,10 +308,20 @@ a.card-input-narrow {
     text-align: left;
   }
   #CalcInfoBtn{
-    margin-left: 3%;
     position: absolute;
+    /* margin-left: 3%;
     bottom: 45px;
-    left: 0px;
+    left: 0px; */
+    left: 40%;
+    right: 60%;
+    padding: 4px 8px;
+  }
+  #CalcInfoBtn span.trackeable{
+    display: none;
+  }
+  #CalcInfoBtn .MuiButton-startIcon{
+    margin-right: 0px;
+    margin-left: 0px;
   }
   .infobox-row-container{
     font-size: 14px;
@@ -358,7 +368,10 @@ a.card-input-narrow {
   .welcomeContainer .right-container img{
     width: 85%;
   }
-
+  .welcomeContainer {
+    display: flex;
+    flex-direction: column!important;
+  }
   
 
   .imprintBtn {
@@ -1856,6 +1869,14 @@ a.card-input-narrow {
   bottom: 0px;
 }
 
+.welcomeContainer {
+  display: flex;
+  flex-direction: row;
+}
+.welcomeContainer .right-container img{
+  max-width: 420px;
+}
+
 @media print {}
 
 @media only screen and (min-width: 300px) and (max-width: 699px) {
@@ -2004,7 +2025,7 @@ a.card-input-narrow {
   }
 
   .welcomeContainer {
-    flex-direction: column;
+    flex-direction: row;
     margin: 3% 3% 0px;
   }
 
