@@ -146,8 +146,8 @@ class InfoBoxCalculation extends React.Component {
           {this.state.boxType === "1-row-1-col-electricity" && (
             <div>
               <div className="infobox-row-container">
-                <div className="infobox-row" style={{ display: "block", lineHeight: "20px", borderBottom: "none" }}>      
-                  Der Durchschnittsstrompreis im 2. Halbjahr 2023 lag bei 40 ct / kWh 
+                <div className="infobox-row" style={{ display: "block", lineHeight: "20px", borderBottom: "none" }}>
+                  Der Durchschnittsstrompreis im 2. Halbjahr 2023 lag bei 40 ct / kWh
                   <br />
                   (inkl. MwSt.){" "}
                   <a href="https://www-genesis.destatis.de/genesis/online?sequenz=tabelleErgebnis&selectionname=61243-0001&language=de#abreadcrumb" rel="noreferrer" target="_blank">
@@ -204,12 +204,10 @@ class InfoBoxCalculation extends React.Component {
               <div className="infobox-row borderDark Bosch-Medium" style={{ paddingBottom: "3px" }}>
                 <div className="width-50 padding-left-10" style={{ width: "28%" }}></div>
                 <div className="width-50" style={{ width: "33%" }}>
-                  Erd-
-                  wärmepumpe
+                  Erd- wärmepumpe
                 </div>
                 <div className="width-50" style={{ lineHeight: "1.5", width: "39%" }}>
-                  Luft-Wasser-
-                  Wärmepumpe
+                  Luft-Wasser- Wärmepumpe
                 </div>
               </div>
               <div className="infobox-row">
@@ -320,7 +318,8 @@ class InfoBoxCalculation extends React.Component {
                   Heizbedarf pro Jahr in kWh/m²
                 </div>
                 <div className="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "33%" }}>
-                  Gebäudeenergie-<br/>
+                  Gebäudeenergie-
+                  <br />
                   standard
                 </div>
                 <div className="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "39%" }}>
@@ -431,7 +430,7 @@ class InfoBoxCalculation extends React.Component {
                   Heizkörper
                 </div>
                 <div className="width-50" style={{ lineHeight: "1.6", width: "50%" }}>
-                  35/45 °C
+                  55 °C
                 </div>
               </div>
               <div className="infobox-row">
@@ -439,7 +438,7 @@ class InfoBoxCalculation extends React.Component {
                   Fußbodenheizung und Heizkörper
                 </div>
                 <div className="width-50" style={{ lineHeight: "1.6", width: "50%" }}>
-                  55 °C
+                  45 °C
                 </div>
               </div>
             </div>
@@ -604,11 +603,13 @@ class InfoBoxCalculation extends React.Component {
               <div className="infobox-row" style={{ marginTop: "12px" }}>
                 <div className="width-50 padding-left-10" style={{ lineHeight: "2.9", width: "28%" }}></div>
                 <div className="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "33%" }}>
-                  Geringe Leistungs-<br/>
+                  Geringe Leistungs-
+                  <br />
                   schwankungen
                 </div>
                 <div className="width-50" style={{ lineHeight: "1.5", lineBreak: "anywhere", width: "39%" }}>
-                  Geringe Investitions-<br/>
+                  Geringe Investitions-
+                  <br />
                   kosten
                 </div>
               </div>
