@@ -149,7 +149,7 @@ class Main extends React.Component {
 
   componentDidMount() {
     if (this.isInFrame()) {
-      /* this.scrollToTop(); */
+      this.scrollToTop();
     }
   }
 
@@ -161,7 +161,7 @@ class Main extends React.Component {
         // Desplaza al componente Main cuando cambia la vista activa
 
         if (this.isInFrame()) {
-          /* this.scrollToTop(); */
+          this.scrollToTop();
         }
       });
     }
