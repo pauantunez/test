@@ -136,20 +136,20 @@ class Main extends React.Component {
   };
 
   scrollToTop() {
-    var parentBody = window.parent.document.body;
-
+    /* alert("entra"); */
     if (this.mainRef.current) {
-      if (document.getElementById("root").offsetWidth > 1102) {
-        window.parent.scrollTo({ top: $("#hc_sectorcoupling", parentBody).offset().top - 170 });
-      } else {
-        window.parent.scrollTo({ top: $("#hc_sectorcoupling", parentBody).offset().top - 140 });
-      }
+      window.parent.postMessage(
+        {
+          type: "SCROLL_EVENT",
+        },
+        "*"
+      );
     }
   }
 
   componentDidMount() {
     if (this.isInFrame()) {
-      //this.scrollToTop();
+      this.scrollToTop();
     }
   }
 
@@ -161,7 +161,7 @@ class Main extends React.Component {
         // Desplaza al componente Main cuando cambia la vista activa
 
         if (this.isInFrame()) {
-          //this.scrollToTop();
+          this.scrollToTop();
         }
       });
     }
