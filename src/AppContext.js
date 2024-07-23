@@ -2180,7 +2180,9 @@ class SimulatorProvider extends Component {
       eventParameterName2 = "eventParameterName2",
       parameterValue2 = "parameterValue2",
       eventParameterName3 = "eventParameterName3",
-      parameterValue3 = "parameterValue3";
+      parameterValue3 = "parameterValue3",
+      eventParameterName4 = "eventParameterName4",
+      parameterValue4 = "parameterValue4";
 
     var eventArray = [];
 
@@ -2386,7 +2388,7 @@ class SimulatorProvider extends Component {
           break;
 
         // ev.jsx - excel 7
-        case "elektroauto-das-eauto-kann":
+        case "elektroauto-das-eauto-kann-10k":
           eventArray[eventName] = "sc_answers";
           eventArray[eventParameterName1] = "sc_question";
           eventArray[parameterValue1] = "E-car";
@@ -2394,9 +2396,22 @@ class SimulatorProvider extends Component {
           eventArray[parameterValue2] = "Yes";
           eventArray[eventParameterName3] = "sc_given_answer2";
           eventArray[parameterValue3] = "Car only rarely charged during the day";
+          eventArray[eventParameterName4] = "sc_given_answer3";
+          eventArray[parameterValue4] = "10000";
+          break;
+        case "elektroauto-das-eauto-kann-20k":
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_question";
+          eventArray[parameterValue1] = "E-car";
+          eventArray[eventParameterName2] = "sc_given_answer1";
+          eventArray[parameterValue2] = "Yes";
+          eventArray[eventParameterName3] = "sc_given_answer2";
+          eventArray[parameterValue3] = "Car only rarely charged during the day";
+          eventArray[eventParameterName4] = "sc_given_answer3";
+          eventArray[parameterValue4] = "20000";
           break;
 
-        case "elektroauto-das-eauto-wird":
+        case "elektroauto-das-eauto-wird-10k":
           eventArray[eventName] = "sc_answers";
           eventArray[eventParameterName1] = "sc_question";
           eventArray[parameterValue1] = "E-car";
@@ -2404,26 +2419,19 @@ class SimulatorProvider extends Component {
           eventArray[parameterValue2] = "Yes";
           eventArray[eventParameterName3] = "sc_given_answer2";
           eventArray[parameterValue3] = "Car mainly charged during the day";
+          eventArray[eventParameterName4] = "sc_given_answer3";
+          eventArray[parameterValue4] = "10000";
           break;
-
-        case "elektroauto-10000":
-          eventArray[eventName] = "sc_answers";
-          eventArray[eventParameterName1] = "sc_question";
-          eventArray[parameterValue1] = "E-car";
-          eventArray[eventParameterName3] = "sc_given_answer1";
-          eventArray[parameterValue2] = "Yes";
-          eventArray[eventParameterName3] = "sc_given_answer2";
-          eventArray[parameterValue2] = "Annual output 10000";
-          break;
-
-        case "elektroauto-20000":
+        case "elektroauto-das-eauto-wird-20k":
           eventArray[eventName] = "sc_answers";
           eventArray[eventParameterName1] = "sc_question";
           eventArray[parameterValue1] = "E-car";
           eventArray[eventParameterName2] = "sc_given_answer1";
           eventArray[parameterValue2] = "Yes";
           eventArray[eventParameterName3] = "sc_given_answer2";
-          eventArray[parameterValue3] = "Annual output 20000";
+          eventArray[parameterValue3] = "Car mainly charged during the day";
+          eventArray[eventParameterName4] = "sc_given_answer3";
+          eventArray[parameterValue4] = "20000";
           break;
 
         case "elektroauto-nein":
@@ -2499,148 +2507,114 @@ class SimulatorProvider extends Component {
 
         // result part 1 - excel 13
         case "gesamtkosten-strom-20-years":
-          eventArray[eventName] = "sc_answers";
-          eventArray[eventParameterName1] = "sc_result";
-          eventArray[parameterValue1] = "Result part 1";
-          eventArray[eventParameterName2] = "sc_clicked_element";
-          eventArray[parameterValue2] = "Total cost electricity";
+          eventArray[eventName] = "sc_result1";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "Total cost electricity";
           break;
 
         case "result-part1-berechnungsgrundlage":
-          eventArray[eventName] = "sc_answers";
-          eventArray[eventParameterName1] = "sc_result";
-          eventArray[parameterValue1] = "Result part 1";
-          eventArray[eventParameterName2] = "sc_clicked_element";
-          eventArray[parameterValue2] = "Calculation basis";
+          eventArray[eventName] = "sc_result1";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "Calculation basis";
           break;
 
         case "result-part1-next":
-          eventArray[eventName] = "sc_answers";
-          eventArray[eventParameterName1] = "sc_result";
-          eventArray[parameterValue1] = "Result part 1";
-          eventArray[eventParameterName2] = "sc_clicked_element";
-          eventArray[parameterValue2] = "Next";
+          eventArray[eventName] = "sc_result1";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "Result page 2";
           break;
 
         // result part 2 - excel 14
         case "result-part2-infoicons":
-          eventArray[eventName] = "sc_answers";
-          eventArray[eventParameterName1] = "sc_result";
-          eventArray[parameterValue1] = "Result part 2";
-          eventArray[eventParameterName2] = "sc_clicked_element";
-          eventArray[parameterValue2] = "Info icons";
+          eventArray[eventName] = "sc_result2";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "Info icons";
           break;
 
         case "result-part2-switch-energiemanagement":
-          eventArray[eventName] = "sc_answers";
-          eventArray[eventParameterName1] = "sc_result";
-          eventArray[parameterValue1] = "Result part 2";
-          eventArray[eventParameterName2] = "sc_clicked_element";
-          eventArray[parameterValue2] = "With Energy management";
+          eventArray[eventName] = "sc_result2";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "With Energy management";
           break;
 
         case "result-part2-berechnungsgrundlage":
-          eventArray[eventName] = "sc_answers";
-          eventArray[eventParameterName1] = "sc_result";
-          eventArray[parameterValue1] = "Result part 2";
-          eventArray[eventParameterName2] = "sc_clicked_element";
-          eventArray[parameterValue2] = "Calculation basis";
+          eventArray[eventName] = "sc_result2";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "Calculation basis";
           break;
 
         case "result-part2-change-electricity":
-          eventArray[eventName] = "sc_answers";
-          eventArray[eventParameterName1] = "sc_result";
-          eventArray[parameterValue1] = "Result part 2";
-          eventArray[eventParameterName2] = "sc_clicked_element";
-          eventArray[parameterValue2] = "Change electricity consumption";
+          eventArray[eventName] = "sc_result2";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "Change electricity consumption";
           break;
 
         case "result-part2-next":
-          eventArray[eventName] = "sc_answers";
-          eventArray[eventParameterName1] = "sc_result";
-          eventArray[parameterValue1] = "Result part 2";
-          eventArray[eventParameterName2] = "sc_clicked_element";
-          eventArray[parameterValue2] = "Next";
+          eventArray[eventName] = "sc_result2";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "Next steps";
           break;
 
         // result part 3 - excel 15
         case "result-part3-save-pdf":
-          eventArray[eventName] = "sc_answers";
-          eventArray[eventParameterName1] = "sc_result";
-          eventArray[parameterValue1] = "Next steps";
-          eventArray[eventParameterName2] = "sc_clicked_element";
-          eventArray[parameterValue2] = "Save";
+          eventArray[eventName] = "sc_result3";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "Download";
           break;
 
         case "result-part3-contact":
-          eventArray[eventName] = "sc_answers";
-          eventArray[eventParameterName1] = "sc_result";
-          eventArray[parameterValue1] = "Next steps";
-          eventArray[eventParameterName2] = "sc_clicked_element";
-          eventArray[parameterValue2] = "Contact";
+          eventArray[eventName] = "sc_result3";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "Contact";
           break;
         case "result-part3-offer":
-          eventArray[eventName] = "sc_answers";
-          eventArray[eventParameterName1] = "sc_result";
-          eventArray[parameterValue1] = "Next steps";
-          eventArray[eventParameterName2] = "sc_clicked_element";
-          eventArray[parameterValue2] = "Angebot";
+          eventArray[eventName] = "sc_result3";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "LMT";
           break;
 
         case "result-part3-heatpump":
-          eventArray[eventName] = "sc_answers";
-          eventArray[eventParameterName1] = "sc_result";
-          eventArray[parameterValue1] = "Next steps";
-          eventArray[eventParameterName2] = "sc_clicked_element";
-          eventArray[parameterValue2] = "Product";
-          eventArray[eventParameterName3] = "sc_clicked_element2";
-          eventArray[parameterValue3] = "Heat pump";
+          eventArray[eventName] = "sc_result3";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "Product";
+          eventArray[eventParameterName2] = "sc_clicked_element2";
+          eventArray[parameterValue2] = "Heat pump";
           break;
 
         case "result-part3-pv":
-          eventArray[eventName] = "sc_answers";
-          eventArray[eventParameterName1] = "sc_result";
-          eventArray[parameterValue1] = "Next steps";
-          eventArray[eventParameterName2] = "sc_clicked_element";
-          eventArray[parameterValue2] = "Product";
-          eventArray[eventParameterName3] = "sc_clicked_element2";
-          eventArray[parameterValue3] = "PV";
+          eventArray[eventName] = "sc_result3";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "Product";
+          eventArray[eventParameterName2] = "sc_clicked_element2";
+          eventArray[parameterValue2] = "PV";
           break;
 
         case "result-part3-wallbox":
-          eventArray[eventName] = "sc_answers";
-          eventArray[eventParameterName1] = "sc_result";
-          eventArray[parameterValue1] = "Next steps";
-          eventArray[eventParameterName2] = "sc_clicked_element";
-          eventArray[parameterValue2] = "Product";
-          eventArray[eventParameterName3] = "sc_clicked_element2";
-          eventArray[parameterValue3] = "Wallbox";
+          eventArray[eventName] = "sc_result3";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "Product";
+          eventArray[eventParameterName2] = "sc_clicked_element2";
+          eventArray[parameterValue2] = "Wallbox";
           break;
 
         case "result-part3-energie-management":
-          eventArray[eventName] = "sc_answers";
-          eventArray[eventParameterName1] = "sc_result";
-          eventArray[parameterValue1] = "Next steps";
-          eventArray[eventParameterName2] = "sc_clicked_element";
-          eventArray[parameterValue2] = "Product";
-          eventArray[eventParameterName3] = "sc_clicked_element2";
-          eventArray[parameterValue3] = "Energy management";
+          eventArray[eventName] = "sc_result3";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "Product";
+          eventArray[eventParameterName2] = "sc_clicked_element2";
+          eventArray[parameterValue2] = "Energy management";
           break;
 
         case "result-part3-berechnungsgrundlage":
-          eventArray[eventName] = "sc_answers";
-          eventArray[eventParameterName1] = "sc_result";
-          eventArray[parameterValue1] = "Next steps";
-          eventArray[eventParameterName2] = "sc_clicked_element";
-          eventArray[parameterValue2] = "Calculation basis";
+          eventArray[eventName] = "sc_result3";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "Calculation basis";
           break;
 
         case "result-part3-back-to-startpage":
-          eventArray[eventName] = "sc_answers";
-          eventArray[eventParameterName1] = "sc_result";
-          eventArray[parameterValue1] = "Next steps";
-          eventArray[eventParameterName2] = "sc_clicked_element";
-          eventArray[parameterValue2] = "Back to startpage";
+          eventArray[eventName] = "sc_result3";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "Back to startpage";
           break;
         default:
       }
@@ -2655,6 +2629,8 @@ class SimulatorProvider extends Component {
           event_parameterValue2: eventArray[parameterValue2],
           event_parameterName3: eventArray[eventParameterName3],
           event_parameterValue3: eventArray[parameterValue3],
+          event_parameterName4: eventArray[eventParameterName4],
+          event_parameterValue4: eventArray[parameterValue4],
           eventAction: location,
         },
         "*"

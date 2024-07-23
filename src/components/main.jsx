@@ -614,21 +614,33 @@ class Main extends React.Component {
                     sendGAEvent("haushaltsstromverbrauch-kwh", value, window.location.href);
                     nextTab();
                   } else if (activeView === 5) {
+
                     if (homeCharging === "Commuter_") {
-                      sendGAEvent("elektroauto-das-eauto-kann", null, window.location.href);
-                      nextTab();
+
+                      if (odometerIncrease === "10k") {
+                        sendGAEvent("elektroauto-das-eauto-kann-10k", null, window.location.href);
+                        //console.log("🚀 ~ Main ~ render ~ elektroauto-das-eauto-kann-10k:");
+                        nextTab();
+                      } else {
+                        sendGAEvent("elektroauto-das-eauto-kann-20k", null, window.location.href);
+                        //console.log("🚀 ~ Main ~ render ~ elektroauto-das-eauto-kann-20k:");
+                        nextTab();
+                      }
+
+
                     } else {
-                      sendGAEvent("elektroauto-das-eauto-wird", null, window.location.href);
-                      nextTab();
+                      if (odometerIncrease === "10k") {
+                        sendGAEvent("elektroauto-das-eauto-wird-10k", null, window.location.href);
+                        //console.log("🚀 ~ Main ~ render ~ elektroauto-das-eauto-wird-10k:");
+                        nextTab();
+                      } else {
+                        sendGAEvent("elektroauto-das-eauto-wird-20k", null, window.location.href);
+                        //console.log("🚀 ~ Main ~ render ~ elektroauto-das-eauto-wird-20k:");
+                        nextTab();
+                      }
                     }
 
-                    if (odometerIncrease === "10k") {
-                      sendGAEvent("elektroauto-10000", 10000, window.location.href);
-                      nextTab();
-                    } else {
-                      sendGAEvent("elektroauto-20000", 20000, window.location.href);
-                      nextTab();
-                    }
+
                   } else if (activeView === 6) {
                     if (pvOutput === 0) value = 4;
                     else if (pvOutput === 1) value = 7;
