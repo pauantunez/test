@@ -554,7 +554,11 @@ class Main extends React.Component {
                 }}
               >
                 {activeView === 11 && <span>Zurück</span>}
-                {activeView === 13 && <span>Ergebnis Teil 1</span>}
+                {activeView === 13 && (
+                  <span className="trackeable" data-event="result-part2-previous">
+                    Ergebnis Teil 1
+                  </span>
+                )}
                 {activeView === 0 && <span>Zurück</span>}
                 {activeView === 1 && <span>Zurück</span>}
                 {activeView === 2 && <span>Zurück</span>}
@@ -567,7 +571,11 @@ class Main extends React.Component {
                 {activeView === 9 && <span>Zurück</span>}
                 {activeView === 10 && <span>Zurück</span>}
                 {activeView === 12 && <span>Zurück</span>}
-                {activeView === 14 && <span>Ergebnis Teil 2</span>}
+                {activeView === 14 && (
+                  <span className="trackeable" data-event="result-part1-next">
+                    Ergebnis Teil 2
+                  </span>
+                )}
               </Button>
 
               <CustomButton

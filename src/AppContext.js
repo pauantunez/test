@@ -2555,6 +2555,12 @@ class SimulatorProvider extends Component {
           eventArray[parameterValue1] = "Next steps";
           break;
 
+        case "result-part2-previous":
+          eventArray[eventName] = "sc_result2";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "Result page 1";
+          break;
+
         // result part 3 - excel 15
         case "result-part3-save-pdf":
           eventArray[eventName] = "sc_result3";
@@ -2609,6 +2615,12 @@ class SimulatorProvider extends Component {
           eventArray[eventName] = "sc_result3";
           eventArray[eventParameterName1] = "sc_clicked_element";
           eventArray[parameterValue1] = "Calculation basis";
+          break;
+
+        case "result-part3-previous":
+          eventArray[eventName] = "sc_result3";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "Result page 2";
           break;
 
         case "result-part3-back-to-startpage":
