@@ -36,6 +36,8 @@ class ResultStep1 extends React.Component {
 
   componentDidMount() {
     sessionStorage.clear();
+    const { sendGAEvent } = this.context;
+    sendGAEvent('sc-result1', null, window.location.href);
   }
 
   energyUsageCombined = () => {

@@ -2504,127 +2504,136 @@ class SimulatorProvider extends Component {
           eventArray[eventParameterName2] = "sc_given_answer1";
           eventArray[parameterValue2] = value;
           break;
+        // See results pages
+        case "sc-result1":
+          eventArray[eventName] = "sc_result";
+          eventArray[eventParameterName1] = "sc_load_results";
+          eventArray[parameterValue1] = "Result page 1";
+          break;
+        case "sc-result2":
+          eventArray[eventName] = "sc_result";
+          eventArray[eventParameterName1] = "sc_load_results";
+          eventArray[parameterValue1] = "Result page 2";
+          break;
+        case "sc-result3":
+          eventArray[eventName] = "sc_result";
+          eventArray[eventParameterName1] = "sc_load_results";
+          eventArray[parameterValue1] = "Result page 3";
+          break;
 
         // result part 1 - excel 13
+
         case "gesamtkosten-strom-20-years":
-          eventArray[eventName] = "sc_result1";
+          eventArray[eventName] = "sc_answers";
           eventArray[eventParameterName1] = "sc_clicked_element";
           eventArray[parameterValue1] = "Total cost electricity";
           break;
 
         case "result-part1-berechnungsgrundlage":
-          eventArray[eventName] = "sc_result1";
+          eventArray[eventName] = "sc_answers";
           eventArray[eventParameterName1] = "sc_clicked_element";
           eventArray[parameterValue1] = "Calculation basis";
           break;
 
         case "result-part1-next":
-          eventArray[eventName] = "sc_result1";
+          eventArray[eventName] = "sc_answers";
           eventArray[eventParameterName1] = "sc_clicked_element";
           eventArray[parameterValue1] = "Result page 2";
           break;
 
         // result part 2 - excel 14
         case "result-part2-infoicons":
-          eventArray[eventName] = "sc_result2";
+          eventArray[eventName] = "sc_answers";
           eventArray[eventParameterName1] = "sc_clicked_element";
           eventArray[parameterValue1] = "Info icons";
           break;
 
         case "result-part2-switch-energiemanagement":
-          eventArray[eventName] = "sc_result2";
+          eventArray[eventName] = "sc_answers";
           eventArray[eventParameterName1] = "sc_clicked_element";
           eventArray[parameterValue1] = "With Energy management";
           break;
 
         case "result-part2-berechnungsgrundlage":
-          eventArray[eventName] = "sc_result2";
+          eventArray[eventName] = "sc_answers";
           eventArray[eventParameterName1] = "sc_clicked_element";
           eventArray[parameterValue1] = "Calculation basis";
           break;
 
         case "result-part2-change-electricity":
-          eventArray[eventName] = "sc_result2";
+          eventArray[eventName] = "sc_answers";
           eventArray[eventParameterName1] = "sc_clicked_element";
           eventArray[parameterValue1] = "Change electricity consumption";
           break;
 
         case "result-part2-next":
-          eventArray[eventName] = "sc_result2";
+          eventArray[eventName] = "sc_answers";
           eventArray[eventParameterName1] = "sc_clicked_element";
           eventArray[parameterValue1] = "Next steps";
           break;
 
         case "result-part2-previous":
-          eventArray[eventName] = "sc_result2";
+          eventArray[eventName] = "sc_answers";
           eventArray[eventParameterName1] = "sc_clicked_element";
           eventArray[parameterValue1] = "Result page 1";
           break;
 
         // result part 3 - excel 15
         case "result-part3-save-pdf":
-          eventArray[eventName] = "sc_result3";
+          eventArray[eventName] = "sc_result_download";
           eventArray[eventParameterName1] = "sc_clicked_element";
           eventArray[parameterValue1] = "Download";
           break;
 
         case "result-part3-contact":
-          eventArray[eventName] = "sc_result3";
+          eventArray[eventName] = "sc_result_contact";
           eventArray[eventParameterName1] = "sc_clicked_element";
           eventArray[parameterValue1] = "Contact";
           break;
         case "result-part3-offer":
-          eventArray[eventName] = "sc_result3";
+          eventArray[eventName] = "sc_result_LMT";
           eventArray[eventParameterName1] = "sc_clicked_element";
           eventArray[parameterValue1] = "LMT";
           break;
 
         case "result-part3-heatpump":
-          eventArray[eventName] = "sc_result3";
-          eventArray[eventParameterName1] = "sc_clicked_element";
-          eventArray[parameterValue1] = "Product";
-          eventArray[eventParameterName2] = "sc_clicked_element2";
+          eventArray[eventName] = "sc_result_products";
+          eventArray[eventParameterName2] = "sc_clicked_element";
           eventArray[parameterValue2] = "Heat pump";
           break;
 
         case "result-part3-pv":
-          eventArray[eventName] = "sc_result3";
-          eventArray[eventParameterName1] = "sc_clicked_element";
-          eventArray[parameterValue1] = "Product";
-          eventArray[eventParameterName2] = "sc_clicked_element2";
+          eventArray[eventName] = "sc_result_products";
+          eventArray[eventParameterName2] = "sc_clicked_element";
           eventArray[parameterValue2] = "PV";
           break;
 
         case "result-part3-wallbox":
-          eventArray[eventName] = "sc_result3";
-          eventArray[eventParameterName1] = "sc_clicked_element";
-          eventArray[parameterValue1] = "Product";
-          eventArray[eventParameterName2] = "sc_clicked_element2";
+          eventArray[eventName] = "sc_result_products";
+          eventArray[eventParameterName2] = "sc_clicked_element";
           eventArray[parameterValue2] = "Wallbox";
           break;
 
         case "result-part3-energie-management":
-          eventArray[eventName] = "sc_result3";
-          eventArray[eventParameterName1] = "sc_clicked_element";
-          eventArray[parameterValue1] = "Product";
-          eventArray[eventParameterName2] = "sc_clicked_element2";
+          eventArray[eventName] = "sc_result_products";
+          eventArray[eventParameterName2] = "sc_clicked_element";
           eventArray[parameterValue2] = "Energy management";
           break;
 
         case "result-part3-berechnungsgrundlage":
-          eventArray[eventName] = "sc_result3";
+          eventArray[eventName] = "sc_answers";
           eventArray[eventParameterName1] = "sc_clicked_element";
           eventArray[parameterValue1] = "Calculation basis";
           break;
 
         case "result-part3-previous":
-          eventArray[eventName] = "sc_result3";
+          eventArray[eventName] = "sc_answers";
           eventArray[eventParameterName1] = "sc_clicked_element";
           eventArray[parameterValue1] = "Result page 2";
           break;
 
         case "result-part3-back-to-startpage":
-          eventArray[eventName] = "sc_result3";
+          eventArray[eventName] = "sc_answers";
           eventArray[eventParameterName1] = "sc_clicked_element";
           eventArray[parameterValue1] = "Back to startpage";
           break;

@@ -53,6 +53,9 @@ class ResultStep2 extends React.Component {
     //   //setLoadingOffGrid(false)
     //   //setLoadingHousehold(false)
     // }, 500);
+
+    const { sendGAEvent } = this.context;
+    sendGAEvent('sc-result2', null, window.location.href);
   }
 
   inputPower_kW_PV_MFH = (event) => {

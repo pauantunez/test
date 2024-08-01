@@ -63,6 +63,8 @@ class Additional extends React.Component {
 
   componentDidMount() {
     this.convertPies();
+    const { sendGAEvent } = this.context;
+    sendGAEvent('sc-result3', null, window.location.href);
   }
 
   inputPVOutput = (value) => {
