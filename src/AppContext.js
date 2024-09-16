@@ -2506,17 +2506,17 @@ class SimulatorProvider extends Component {
           break;
         // See results pages
         case "sc-result1":
-          eventArray[eventName] = "sc_result";
+          eventArray[eventName] = "sc_result1";
           eventArray[eventParameterName1] = "sc_load_results";
           eventArray[parameterValue1] = "Result page 1";
           break;
         case "sc-result2":
-          eventArray[eventName] = "sc_result";
+          eventArray[eventName] = "sc_result2";
           eventArray[eventParameterName1] = "sc_load_results";
           eventArray[parameterValue1] = "Result page 2";
           break;
         case "sc-result3":
-          eventArray[eventName] = "sc_result";
+          eventArray[eventName] = "sc_result3";
           eventArray[eventParameterName1] = "sc_load_results";
           eventArray[parameterValue1] = "Result page 3";
           break;
@@ -2533,12 +2533,6 @@ class SimulatorProvider extends Component {
           eventArray[eventName] = "sc_answers";
           eventArray[eventParameterName1] = "sc_clicked_element";
           eventArray[parameterValue1] = "Calculation basis";
-          break;
-
-        case "result-part1-next":
-          eventArray[eventName] = "sc_answers";
-          eventArray[eventParameterName1] = "sc_clicked_element";
-          eventArray[parameterValue1] = "Result page 2";
           break;
 
         // result part 2 - excel 14
@@ -2564,12 +2558,6 @@ class SimulatorProvider extends Component {
           eventArray[eventName] = "sc_answers";
           eventArray[eventParameterName1] = "sc_clicked_element";
           eventArray[parameterValue1] = "Change electricity consumption";
-          break;
-
-        case "result-part2-next":
-          eventArray[eventName] = "sc_answers";
-          eventArray[eventParameterName1] = "sc_clicked_element";
-          eventArray[parameterValue1] = "Next steps";
           break;
 
         case "result-part2-previous":

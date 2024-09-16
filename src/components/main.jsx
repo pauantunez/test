@@ -571,11 +571,7 @@ class Main extends React.Component {
                 {activeView === 9 && <span>Zurück</span>}
                 {activeView === 10 && <span>Zurück</span>}
                 {activeView === 12 && <span>Zurück</span>}
-                {activeView === 14 && (
-                  <span className="trackeable" data-event="result-part1-next">
-                    Ergebnis Teil 2
-                  </span>
-                )}
+                {activeView === 14 && <span className="trackeable">Ergebnis Teil 2</span>}
               </Button>
 
               <CustomButton
@@ -622,9 +618,7 @@ class Main extends React.Component {
                     sendGAEvent("haushaltsstromverbrauch-kwh", value, window.location.href);
                     nextTab();
                   } else if (activeView === 5) {
-
                     if (homeCharging === "Commuter_") {
-
                       if (odometerIncrease === "10k") {
                         sendGAEvent("elektroauto-das-eauto-kann-10k", null, window.location.href);
                         //console.log("🚀 ~ Main ~ render ~ elektroauto-das-eauto-kann-10k:");
@@ -634,8 +628,6 @@ class Main extends React.Component {
                         //console.log("🚀 ~ Main ~ render ~ elektroauto-das-eauto-kann-20k:");
                         nextTab();
                       }
-
-
                     } else {
                       if (odometerIncrease === "10k") {
                         sendGAEvent("elektroauto-das-eauto-wird-10k", null, window.location.href);
@@ -647,8 +639,6 @@ class Main extends React.Component {
                         nextTab();
                       }
                     }
-
-
                   } else if (activeView === 6) {
                     if (pvOutput === 0) value = 4;
                     else if (pvOutput === 1) value = 7;
@@ -683,11 +673,7 @@ class Main extends React.Component {
               >
                 {activeView === 10 && <span>Ergebnis Teil 1</span>}
                 {activeView === 11 && <span>Ergebnis Teil 1</span>}
-                {activeView === 12 && (
-                  <span className="trackeable" data-event="result-part1-next">
-                    Ergebnis Teil 2
-                  </span>
-                )}
+                {activeView === 12 && <span className="trackeable">Ergebnis Teil 2</span>}
                 {activeView === 0 && <span>Weiter</span>}
                 {activeView === 1 && <span>Weiter</span>}
                 {activeView === 2 && <span>Weiter</span>}
@@ -704,7 +690,7 @@ class Main extends React.Component {
                 {activeView === 8 && <span>Weiter</span>}
                 {activeView === 9 && <span>Weiter</span>}
                 {activeView === 13 && (
-                  <span className="trackeable" data-event="result-part2-next">
+                  <span className="trackeable" >
                     Zusatz
                   </span>
                 )}
