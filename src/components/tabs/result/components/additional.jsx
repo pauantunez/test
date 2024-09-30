@@ -520,7 +520,7 @@ class Additional extends React.Component {
                   <div>
                     <label>
                       <input type="radio" name="heating" value="OilLNG" className="card-input-element" />
-                      <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/alle-produkte?query=&facetFilters=filterNames~categoryC:Produkt-Kategorie:9049:Photovoltaik%20und%20Energiemanagement;&pageNum=12" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/solar-und-pv-anlagen-854604-c/"} target="_blank" className="panel panel-default card-input-narrow">
+                      <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/produkte/produkte-uebersicht/photovoltaik-das-haus-wird-zum-kraftwerk-15304" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/solar-und-pv-anlagen-854604-c/"} target="_blank" className="panel panel-default card-input-narrow">
                         <div className="panel-heading-narrow">{this.context.selectedTheme === "buderus" ? <BuderusPhotovoltaicIcon /> : <PhotovoltaicIcon />}</div>
                         <div className="panel-body trackeable" data-event="result-part3-pv">
                           PV-Anlage
