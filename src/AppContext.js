@@ -2583,6 +2583,16 @@ class SimulatorProvider extends Component {
           eventArray[eventParameterName1] = "sc_clicked_element";
           eventArray[parameterValue1] = "LMT";
           break;
+        case "result-part3-hotline":
+          eventArray[eventName] = "sc_result_hotline";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "hotline";
+          break;
+        case "result-part3-branchsearch":
+          eventArray[eventName] = "sc_result_branchsearch";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "branchsearch";
+          break;
 
         case "result-part3-heatpump":
           eventArray[eventName] = "sc_result_products";
@@ -2628,22 +2638,24 @@ class SimulatorProvider extends Component {
         default:
       }
 
-      window.parent.postMessage(
-        {
-          event: "GA4event",
-          event_name: eventArray[eventName],
-          event_parameterName1: eventArray[eventParameterName1],
-          event_parameterValue1: eventArray[parameterValue1],
-          event_parameterName2: eventArray[eventParameterName2],
-          event_parameterValue2: eventArray[parameterValue2],
-          event_parameterName3: eventArray[eventParameterName3],
-          event_parameterValue3: eventArray[parameterValue3],
-          event_parameterName4: eventArray[eventParameterName4],
-          event_parameterValue4: eventArray[parameterValue4],
-          eventAction: location,
-        },
-        "*"
-      );
+      if (eventArray[eventName] != '') {
+        window.parent.postMessage(
+          {
+            event: "GA4event",
+            event_name: eventArray[eventName],
+            event_parameterName1: eventArray[eventParameterName1],
+            event_parameterValue1: eventArray[parameterValue1],
+            event_parameterName2: eventArray[eventParameterName2],
+            event_parameterValue2: eventArray[parameterValue2],
+            event_parameterName3: eventArray[eventParameterName3],
+            event_parameterValue3: eventArray[parameterValue3],
+            event_parameterName4: eventArray[eventParameterName4],
+            event_parameterValue4: eventArray[parameterValue4],
+            eventAction: location,
+          },
+          "*"
+        );
+      }
     }
 
     document.addEventListener("DOMContentLoaded", (event) => {

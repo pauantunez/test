@@ -420,9 +420,9 @@ class Additional extends React.Component {
                       <h3>Kontakt zum Fachbetrieb</h3>
                     </div>
                     <div className="block-container">
-                      <div className="block contact">
+                      <div data-event="result-part3-contact" className="trackeable block contact">
                         <p>Fachbetriebe in ihrer Nähe</p>
-                        <div className="trackeable" data-event="result-part3-contact" style={{ display: "flex", alignItems: "end" }}>
+                        <div style={{ display: "flex", alignItems: "end" }}>
                           <a rel="noreferrer" href="https://www.buderus.de/de/services-tools/experten-in-ihrer-naehe/fachbetriebe-in-ihrer-naehe-21776" target="_blank" style={{ textDecoration: "none", display: "block" }}>
                             <BuderusContactButton disableRipple variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
                               Fachbetrieb suchen
@@ -430,9 +430,9 @@ class Additional extends React.Component {
                           </a>
                         </div>
                       </div>
-                      <div className="block contact">
+                      <div data-event="result-part3-offer" className="trackeable block contact">
                         <p>Angebot anfordern</p>
-                        <div className="trackeable" data-event="result-part3-offer" style={{ display: "flex", alignItems: "end" }}>
+                        <div style={{ display: "flex", alignItems: "end" }}>
                           <a rel="noreferrer" href="https://www.buderus.de/de/angebot-anfordern" target="_blank" style={{ textDecoration: "none", display: "block" }}>
                             <BuderusContactButton disableRipple variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
                               Unverbindliches Angebot anfordem
@@ -440,7 +440,7 @@ class Additional extends React.Component {
                           </a>
                         </div>
                       </div>
-                      <div className="block contact">
+                      <div data-event="result-part3-hotline" className="trackeable block contact">
                         <p>Beratungshotline</p>
                         <div style={{ display: "flex", alignItems: "end" }}>
                           <a rel="noreferrer" href="https://www.buderus.de/de/kontakt-klimapaket" target="_blank" style={{ textDecoration: "none", display: "block" }}>
@@ -450,7 +450,7 @@ class Additional extends React.Component {
                           </a>
                         </div>
                       </div>
-                      <div className="block contact">
+                      <div data-event="result-part3-branchsearch" className="trackeable block contact">
                         <p>Niederlassungssuche</p>
                         <div style={{ display: "flex", alignItems: "end" }}>
                           <a rel="noreferrer" href="https://www.buderus.de/de/niederlassungen" target="_blank" style={{ textDecoration: "none", display: "block" }}>
@@ -487,8 +487,8 @@ class Additional extends React.Component {
                       <h3>Angebot für ein energieeffizientes System</h3>
                       <div>Erhalten Sie ein kostenloses, unverbindliches Angebot von einem Installateur in Ihrer Nähe.</div>
                     </div>
-                    <div style={{ display: "flex", alignItems: "end" }}>
-                      <a className="trackeable" data-event="result-part3-offer" rel="noreferrer" href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/beratung-und-kauf/angebot-anfordern/" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                    <div className="trackeable" data-event="result-part3-offer" style={{ display: "flex", alignItems: "end" }}>
+                      <a rel="noreferrer" href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/beratung-und-kauf/angebot-anfordern/" target="_blank" style={{ textDecoration: "none", display: "block" }}>
                         <Button variant="outlined" startIcon={<ContractIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
                           Angebot anfordern
                         </Button>
@@ -509,9 +509,9 @@ class Additional extends React.Component {
                   <div>
                     <label>
                       <input type="radio" name="heating" value="BuildingEnergyStandard" className="card-input-element" />
-                      <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/waermepumpe" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/waermepumpen-854510-c/"} target="_blank" className="panel panel-default card-input-narrow">
+                      <a rel="noreferrer" data-event="result-part3-heatpump" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/waermepumpe" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/waermepumpen-854510-c/"} target="_blank" className="trackeable panel panel-default card-input-narrow">
                         <div className="panel-heading-narrow">{this.context.selectedTheme === "buderus" ? <BuderusHeatpumpSmallIcon /> : <HeatpumpSmallIcon />}</div>
-                        <div className="panel-body trackeable" data-event="result-part3-heatpump">
+                        <div className="panel-body">
                           Wärmepumpe
                         </div>
                       </a>
@@ -520,9 +520,9 @@ class Additional extends React.Component {
                   <div>
                     <label>
                       <input type="radio" name="heating" value="OilLNG" className="card-input-element" />
-                      <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/produkte/produkte-uebersicht/photovoltaik-das-haus-wird-zum-kraftwerk-15304" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/solar-und-pv-anlagen-854604-c/"} target="_blank" className="panel panel-default card-input-narrow">
+                      <a rel="noreferrer" data-event="result-part3-pv" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/produkte/produkte-uebersicht/photovoltaik-das-haus-wird-zum-kraftwerk-15304" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/solar-und-pv-anlagen-854604-c/"} target="_blank" className="trackeable panel panel-default card-input-narrow">
                         <div className="panel-heading-narrow">{this.context.selectedTheme === "buderus" ? <BuderusPhotovoltaicIcon /> : <PhotovoltaicIcon />}</div>
-                        <div className="panel-body trackeable" data-event="result-part3-pv">
+                        <div className="panel-body" >
                           PV-Anlage
                         </div>
                       </a>
@@ -531,9 +531,9 @@ class Additional extends React.Component {
                   <div>
                     <label>
                       <input type="radio" name="heating" value="BuildingInsulation" className="card-input-element" />
-                      <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/alle-produkte/195985_logavolt-wls11i" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/power-charge-7000i-19378337-p/"} target="_blank" className="panel panel-default card-input-narrow">
+                      <a rel="noreferrer" data-event="result-part3-wallbox" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/alle-produkte/195985_logavolt-wls11i" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/power-charge-7000i-19378337-p/"} target="_blank" className="trackeable panel panel-default card-input-narrow">
                         <div className="panel-heading-narrow">{this.context.selectedTheme === "buderus" ? <BuderusWallboxIcon /> : <WallboxIcon />}</div>
-                        <div className="panel-body trackeable" data-event="result-part3-wallbox">
+                        <div className="panel-body" >
                           Wallbox
                         </div>
                       </a>
@@ -542,9 +542,9 @@ class Additional extends React.Component {
                   <div>
                     <label>
                       <input type="radio" name="heating" value="BuildingInsulation" className="card-input-element" />
-                      <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/services-tools/apps/energiemanager-6036" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/energiemanagement-19317456-c/"} target="_blank" className="panel panel-default card-input-narrow">
+                      <a rel="noreferrer" data-event="result-part3-energie-management" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/services-tools/apps/energiemanager-6036" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/energiemanagement-19317456-c/"} target="_blank" className="trackeable panel panel-default card-input-narrow">
                         <div className="panel-heading-narrow">{this.context.selectedTheme === "buderus" ? <BuderusEnergyManagementIcon /> : <EnergyManagementIcon />}</div>
-                        <div className="panel-body trackeable" data-event="result-part3-energie-management">
+                        <div className="panel-body">
                           Energiemanage-
                           <br />
                           mentsystem
