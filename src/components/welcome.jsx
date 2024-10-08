@@ -73,7 +73,7 @@ class Welcome extends React.Component {
 
   componentWillMount() {
     this.context.getTheme();
-    const { products /* , sendGAEvent */ } = this.context;
+    const { products, sendGAEvent } = this.context;
     const productsProps = Object.getOwnPropertyNames(products);
     var foundTheme = 0;
 
@@ -97,13 +97,14 @@ class Welcome extends React.Component {
       import("../styles/" + productsProps[0] + ".css");
     }
 
-    /* document.body.addEventListener("click", (event) => {
+    document.body.addEventListener("click", (event) => {
       var trackeableElement = event.target.closest(".trackeable");
       if (trackeableElement) {
         var eventName = trackeableElement.dataset.event;
         sendGAEvent(eventName, null, window.location.href);
+        console.log("🚀 ~ Welcome event:" + eventName);
       }
-    }); */
+    });
   }
 
   componentWillReceiveProps = (nextProps, nextContext) => {

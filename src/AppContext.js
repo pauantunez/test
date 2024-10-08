@@ -2223,7 +2223,7 @@ class SimulatorProvider extends Component {
           eventArray[eventParameterName2] = "sc_given_answer1";
           eventArray[parameterValue2] = "Energy building standard";
           eventArray[eventParameterName3] = "sc_given_answer2";
-          eventArray[parameterValue3] = "KfW 40 2";
+          eventArray[parameterValue3] = "KfW 40";
           break;
 
         case "heizenergiebefard-gebaude-55":
@@ -2596,26 +2596,26 @@ class SimulatorProvider extends Component {
 
         case "result-part3-heatpump":
           eventArray[eventName] = "sc_result_products";
-          eventArray[eventParameterName2] = "sc_clicked_element";
-          eventArray[parameterValue2] = "Heat pump";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "Heat pump";
           break;
 
         case "result-part3-pv":
           eventArray[eventName] = "sc_result_products";
-          eventArray[eventParameterName2] = "sc_clicked_element";
-          eventArray[parameterValue2] = "PV";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "PV";
           break;
 
         case "result-part3-wallbox":
           eventArray[eventName] = "sc_result_products";
-          eventArray[eventParameterName2] = "sc_clicked_element";
-          eventArray[parameterValue2] = "Wallbox";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "Wallbox";
           break;
 
         case "result-part3-energie-management":
           eventArray[eventName] = "sc_result_products";
-          eventArray[eventParameterName2] = "sc_clicked_element";
-          eventArray[parameterValue2] = "Energy management";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "Energy management";
           break;
 
         case "result-part3-berechnungsgrundlage":
@@ -2639,6 +2639,7 @@ class SimulatorProvider extends Component {
       }
 
       if (eventArray[eventName] != '') {
+        console.log("🚀 ~ Event:" + eventArray[eventName]);
         window.parent.postMessage(
           {
             event: "GA4event",

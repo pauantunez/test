@@ -610,12 +610,11 @@ class Main extends React.Component {
                       nextTab();
                     }
                   } else if (activeView === 3) {
-                    var value;
+                    /*var value;
                     if (energyUsagekWh === 0) value = 4000;
                     else if (energyUsagekWh === 1) value = 6000;
-                    else value = 8000;
-
-                    sendGAEvent("haushaltsstromverbrauch-kwh", value, window.location.href);
+                    else value = 8000;*/
+                    sendGAEvent("haushaltsstromverbrauch-kwh", energyUsagekWh, window.location.href);
                     nextTab();
                   } else if (activeView === 5) {
                     if (homeCharging === "Commuter_") {
