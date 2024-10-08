@@ -73,7 +73,7 @@ class Welcome extends React.Component {
 
   componentWillMount() {
     this.context.getTheme();
-    const { products, sendGAEvent } = this.context;
+    const { products /*, sendGAEvent*/ } = this.context;
     const productsProps = Object.getOwnPropertyNames(products);
     var foundTheme = 0;
 
@@ -97,14 +97,14 @@ class Welcome extends React.Component {
       import("../styles/" + productsProps[0] + ".css");
     }
 
-    document.body.addEventListener("click", (event) => {
-      var trackeableElement = event.target.closest(".trackeable");
-      if (trackeableElement) {
-        var eventName = trackeableElement.dataset.event;
-        sendGAEvent(eventName, null, window.location.href);
-        console.log("🚀 ~ Welcome event:" + eventName);
-      }
-    });
+    /*  document.body.addEventListener("click", (event) => {
+       var trackeableElement = event.target.closest(".trackeable");
+       if (trackeableElement) {
+         var eventName = trackeableElement.dataset.event;
+         sendGAEvent(eventName, null, window.location.href);
+         console.log("🚀 ~ Welcome event:" + eventName);
+       }
+     });*/
   }
 
   componentWillReceiveProps = (nextProps, nextContext) => {
@@ -199,7 +199,11 @@ class Welcome extends React.Component {
   render() {
     const { setCalculationModal } = this.context;
 
-    const handleOpen = () => setCalculationModal(true);
+    const handleOpen = () => {
+      const { sendGAEvent } = this.context;
+      sendGAEvent('berechnungsgrundlage', null, window.location.href);
+      setCalculationModal(true);
+    };
 
     return (
       <div className={styles.homeContainer}>
@@ -251,8 +255,8 @@ class Welcome extends React.Component {
                   </Link>
                 </span>
               </div>
-              <div className="explanationBtn">
-                <div className="calculationBase trackeable" onClick={handleOpen} style={{ fontSize: "12px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", color: this.context.selectedTheme === "buderus" ? "#000000" : "#007BC0", cursor: "pointer" }} data-event="berechnungsgrundlage">
+              <div className="explanationBtn trackeable" data-event="berechnungsgrundlage">
+                <div className="calculationBase" onClick={handleOpen} style={{ fontSize: "12px", fontFamily: this.context.selectedTheme === "buderus" ? "HelveticaNeue-Roman" : "Bosch-Regular", color: this.context.selectedTheme === "buderus" ? "#000000" : "#007BC0", cursor: "pointer" }} >
                   Berechnungsgrundlage
                 </div>
               </div>
