@@ -420,46 +420,46 @@ class Additional extends React.Component {
                       <h3>Kontakt zum Fachbetrieb</h3>
                     </div>
                     <div className="block-container">
-                      <div data-event="result-part3-contact" className="trackeable block contact">
-                        <p>Fachbetriebe in ihrer Nähe</p>
+                      <a rel="noreferrer" href="https://www.buderus.de/de/services-tools/experten-in-ihrer-naehe/fachbetriebe-in-ihrer-naehe-21776" target="_blank" data-event="result-part3-contact" className="trackeable block contact" style={{ textDecoration: "none" }}>
+                        <p style={{ color: "#000" }}>Fachbetriebe in ihrer Nähe</p>
                         <div style={{ display: "flex", alignItems: "end" }}>
-                          <a rel="noreferrer" href="https://www.buderus.de/de/services-tools/experten-in-ihrer-naehe/fachbetriebe-in-ihrer-naehe-21776" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                          <span>
                             <BuderusContactButton disableRipple variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
                               Fachbetrieb suchen
                             </BuderusContactButton>
-                          </a>
+                          </span>
                         </div>
-                      </div>
-                      <div data-event="result-part3-offer" className="trackeable block contact">
-                        <p>Angebot anfordern</p>
+                      </a>
+                      <a rel="noreferrer" href="https://www.buderus.de/de/angebot-anfordern" target="_blank" data-event="result-part3-offer" className="trackeable block contact" style={{ textDecoration: "none" }}>
+                        <p style={{ color: "#000" }}>Angebot anfordern</p>
                         <div style={{ display: "flex", alignItems: "end" }}>
-                          <a rel="noreferrer" href="https://www.buderus.de/de/angebot-anfordern" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                          <span>
                             <BuderusContactButton disableRipple variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
                               Unverbindliches Angebot anfordem
                             </BuderusContactButton>
-                          </a>
+                          </span>
                         </div>
-                      </div>
-                      <div data-event="result-part3-hotline" className="trackeable block contact">
-                        <p>Beratungshotline</p>
+                      </a>
+                      <a rel="noreferrer" href="https://www.buderus.de/de/kontakt-klimapaket" target="_blank" data-event="result-part3-hotline" className="trackeable block contact" style={{ textDecoration: "none" }}>
+                        <p style={{ color: "#000" }}>Beratungshotline</p>
                         <div style={{ display: "flex", alignItems: "end" }}>
-                          <a rel="noreferrer" href="https://www.buderus.de/de/kontakt-klimapaket" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                          <span>
                             <BuderusContactButton disableRipple variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
                               Zur Beratungshotline
                             </BuderusContactButton>
-                          </a>
+                          </span>
                         </div>
-                      </div>
-                      <div data-event="result-part3-branchsearch" className="trackeable block contact">
-                        <p>Niederlassungssuche</p>
+                      </a>
+                      <a rel="noreferrer" href="https://www.buderus.de/de/niederlassungen" target="_blank" data-event="result-part3-branchsearch" className="trackeable block contact" style={{ textDecoration: "none" }}>
+                        <p style={{ color: "#000" }}>Niederlassungssuche</p>
                         <div style={{ display: "flex", alignItems: "end" }}>
-                          <a rel="noreferrer" href="https://www.buderus.de/de/niederlassungen" target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                          <span>
                             <BuderusContactButton disableRipple variant="outlined" endIcon={<BuderusLinkIcon />} disabled={this.state.restart}>
                               Zur Niederlassungssuche
                             </BuderusContactButton>
-                          </a>
+                          </span>
                         </div>
-                      </div>
+                      </a>
                     </div>
                   </div>
                 </div>
