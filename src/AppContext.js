@@ -2641,7 +2641,7 @@ class SimulatorProvider extends Component {
       }
 
       if (eventArray[eventName] != '') {
-        //console.log("🚀 ~ Event:" + eventArray[eventName]);
+        console.log("~ Event:" + eventArray[eventName]);
         window.parent.postMessage(
           {
             event: "GA4event",
