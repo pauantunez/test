@@ -2194,7 +2194,9 @@ class SimulatorProvider extends Component {
           break;
 
         case "berechnungsgrundlage":
-          eventArray[eventName] = "sc_calculation_basis";
+          eventArray[eventName] = "sc_answers";
+          eventArray[eventParameterName1] = "sc_clicked_element";
+          eventArray[parameterValue1] = "Calculation basis";
           break;
 
         // buildingSize.jsx - excel 2
