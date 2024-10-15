@@ -283,16 +283,13 @@ const GetResults = () => {
     setDebug(getDebugFromUrl());
   }, []);
 
-  useEffect(
-    () => {
-      getScenario();
-      getTab();
-      const { setFwdBtn } = context;
+  useEffect(() => {
+    getScenario();
+    getTab();
+    const { setFwdBtn } = context;
 
-      setFwdBtn(true);
-    }, // eslint-disable-next-line react-hooks/exhaustive-deps
-    [tab, scenario]
-  );
+    setFwdBtn(true);
+  }, [tab, scenario]);
 
   const getScenario = () => {
     const { ev, preHeatTempOption, energyUsagekWh, BuildingSize, evProfile, buildingTypePreHeatOption, kfwValue, dualPreHeatOptionEVLookupTable, singlePreHeatOptionEVLookupTable, singlePreHeatOptionNoEVLookupTable, dualPreHeatOptionNoEVLookupTable, setScenarioInDatabase, setScenario } = context;
@@ -328,110 +325,107 @@ const GetResults = () => {
     setTabNoEms(tabInTableNoEms);
   };
 
-  useEffect(
-    () => {
-      if (tab !== null && scenario !== null) {
-        const getResultPromise = resultService.getResult(kfwValue + ev, scenario, tab, backendUrl, heatpumpType);
-        const getResultNoEMSPromise = resultService.getResultNoEMS(kfwValue + ev, scenario, tabNoEms, backendUrl, heatpumpType);
+  useEffect(() => {
+    if (tab !== null && scenario !== null) {
+      const getResultPromise = resultService.getResult(kfwValue + ev, scenario, tab, backendUrl, heatpumpType);
+      const getResultNoEMSPromise = resultService.getResultNoEMS(kfwValue + ev, scenario, tabNoEms, backendUrl, heatpumpType);
 
-        Promise.all([getResultPromise, getResultNoEMSPromise])
-          .then(([results, resultsNoEMS]) => {
-            // Procesamiento de los resultados de la primera solicitud
-            setCalculatedResults(results);
-            const energyUsageHeatpumpResult = calculateheatpumpUsageKWH(results, heatpumpType);
-            setEnergyUsageHeatpump(energyUsageHeatpumpResult);
+      Promise.all([getResultPromise, getResultNoEMSPromise])
+        .then(([results, resultsNoEMS]) => {
+          // Procesamiento de los resultados de la primera solicitud
+          setCalculatedResults(results);
+          const energyUsageHeatpumpResult = calculateheatpumpUsageKWH(results, heatpumpType);
+          setEnergyUsageHeatpump(energyUsageHeatpumpResult);
 
-            const combined = calculateEnergyUsageCombined(results, energyUsageHeatpumpResult, energyUsagekWh, odometerIncreaseKWH);
-            setEnergyUsageCombined(combined);
+          const combined = calculateEnergyUsageCombined(results, energyUsageHeatpumpResult, energyUsagekWh, odometerIncreaseKWH);
+          setEnergyUsageCombined(combined);
 
-            const energyUsageHeatpumpPercentageResult = calculateEnergyUsagePercentage("heatpump", energyUsageHeatpumpResult, combined, energyUsagekWh, odometerIncreaseKWH);
-            setEnergyUsageHeatpumpPercentage(energyUsageHeatpumpPercentageResult);
+          const energyUsageHeatpumpPercentageResult = calculateEnergyUsagePercentage("heatpump", energyUsageHeatpumpResult, combined, energyUsagekWh, odometerIncreaseKWH);
+          setEnergyUsageHeatpumpPercentage(energyUsageHeatpumpPercentageResult);
 
-            const energyUsageEvPercentageResult = calculateEnergyUsagePercentage("ev", energyUsageHeatpumpResult, combined, energyUsagekWh, odometerIncreaseKWH);
-            setEnergyUsageEvPercentage(energyUsageEvPercentageResult);
+          const energyUsageEvPercentageResult = calculateEnergyUsagePercentage("ev", energyUsageHeatpumpResult, combined, energyUsagekWh, odometerIncreaseKWH);
+          setEnergyUsageEvPercentage(energyUsageEvPercentageResult);
 
-            const energyUsageHouseHoldPercentageResult = calculateEnergyUsagePercentage("household", energyUsageHeatpumpResult, combined, energyUsagekWh, odometerIncreaseKWH);
-            setEnergyUsageHouseHoldPercentage(energyUsageHouseHoldPercentageResult);
+          const energyUsageHouseHoldPercentageResult = calculateEnergyUsagePercentage("household", energyUsageHeatpumpResult, combined, energyUsagekWh, odometerIncreaseKWH);
+          setEnergyUsageHouseHoldPercentage(energyUsageHouseHoldPercentageResult);
 
-            const gridUsagePercentageResult = calculategridUsagePercentage(results, combined);
-            setGridUsagePercentage(gridUsagePercentageResult);
+          const gridUsagePercentageResult = calculategridUsagePercentage(results, combined);
+          setGridUsagePercentage(gridUsagePercentageResult);
 
-            const pvUsagePercentageResult = calculatepvUsagePercentage(results, combined);
-            setPvUsagePercentage(pvUsagePercentageResult);
+          const pvUsagePercentageResult = calculatepvUsagePercentage(results, combined);
+          setPvUsagePercentage(pvUsagePercentageResult);
 
-            const gridFeedPercentageResult = calculatedgridFeedPercentage(results);
-            setGridFeedPercentage(gridFeedPercentageResult);
+          const gridFeedPercentageResult = calculatedgridFeedPercentage(results);
+          setGridFeedPercentage(gridFeedPercentageResult);
 
-            const houseHoldPvPercentageResult = calculatedHouseholdpvPercentage(results);
-            setHouseHoldPvPercentage(houseHoldPvPercentageResult);
+          const houseHoldPvPercentageResult = calculatedHouseholdpvPercentage(results);
+          setHouseHoldPvPercentage(houseHoldPvPercentageResult);
 
-            const cost1yearNoPvResult = Math.abs(parseInt(calculateElectricityCostNoPV1Year(5, 1, combined, electricityCost).replace(".", "").replace(",", "")));
-            setCost1YearNoPV(cost1yearNoPvResult);
+          const cost1yearNoPvResult = Math.abs(parseInt(calculateElectricityCostNoPV1Year(5, 1, combined, electricityCost).replace(".", "").replace(",", "")));
+          setCost1YearNoPV(cost1yearNoPvResult);
 
-            const cost20yearNoPvResult = Math.abs(parseInt(calculateElectricityCostNoPV20Years(combined, electricityCost)));
-            setCost20YearNoPV(cost20yearNoPvResult);
+          const cost20yearNoPvResult = Math.abs(parseInt(calculateElectricityCostNoPV20Years(combined, electricityCost)));
+          setCost20YearNoPV(cost20yearNoPvResult);
 
-            const breakEvenResult = calculateBreakEven(results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, heatpumpType, energyUsagekWh, odometerIncreaseKWH, true, energyUsageHeatpumpResult, combined, houseHoldPvPercentageResult, pvUsagePercentageResult);
+          const breakEvenResult = calculateBreakEven(results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, heatpumpType, energyUsagekWh, odometerIncreaseKWH, true, energyUsageHeatpumpResult, combined, houseHoldPvPercentageResult, pvUsagePercentageResult);
 
-            setBreakEven(breakEvenResult);
+          setBreakEven(breakEvenResult);
 
-            // Procesamiento de los resultados de la segunda solicitud
-            setCalculatedResultsNoEms(resultsNoEMS);
-            const energyUsageHeatpumpResultNoEms = calculateheatpumpUsageKWH(resultsNoEMS, heatpumpType);
-            setEnergyUsageHeatpumpNoEms(energyUsageHeatpumpResultNoEms);
+          // Procesamiento de los resultados de la segunda solicitud
+          setCalculatedResultsNoEms(resultsNoEMS);
+          const energyUsageHeatpumpResultNoEms = calculateheatpumpUsageKWH(resultsNoEMS, heatpumpType);
+          setEnergyUsageHeatpumpNoEms(energyUsageHeatpumpResultNoEms);
 
-            const combinedNoEms = calculateEnergyUsageCombined(resultsNoEMS, energyUsageHeatpumpResultNoEms, energyUsagekWh, odometerIncreaseKWH);
-            setEnergyUsageCombinedNoEms(combinedNoEms);
+          const combinedNoEms = calculateEnergyUsageCombined(resultsNoEMS, energyUsageHeatpumpResultNoEms, energyUsagekWh, odometerIncreaseKWH);
+          setEnergyUsageCombinedNoEms(combinedNoEms);
 
-            const energyUsageHeatpumpPercentageResultNoEms = calculateEnergyUsagePercentage("heatpump", energyUsageHeatpumpResultNoEms, combinedNoEms, energyUsagekWh, odometerIncreaseKWH);
-            setEnergyUsageHeatpumpPercentageNoEms(energyUsageHeatpumpPercentageResultNoEms);
+          const energyUsageHeatpumpPercentageResultNoEms = calculateEnergyUsagePercentage("heatpump", energyUsageHeatpumpResultNoEms, combinedNoEms, energyUsagekWh, odometerIncreaseKWH);
+          setEnergyUsageHeatpumpPercentageNoEms(energyUsageHeatpumpPercentageResultNoEms);
 
-            const energyUsageEvPercentageResultNoEms = calculateEnergyUsagePercentage("ev", energyUsageHeatpumpResultNoEms, combinedNoEms, energyUsagekWh, odometerIncreaseKWH);
-            setEnergyUsageEvPercentageNoEms(energyUsageEvPercentageResultNoEms);
+          const energyUsageEvPercentageResultNoEms = calculateEnergyUsagePercentage("ev", energyUsageHeatpumpResultNoEms, combinedNoEms, energyUsagekWh, odometerIncreaseKWH);
+          setEnergyUsageEvPercentageNoEms(energyUsageEvPercentageResultNoEms);
 
-            const energyUsageHouseHoldPercentageResultNoEms = calculateEnergyUsagePercentage("household", energyUsageHeatpumpResultNoEms, combinedNoEms, energyUsagekWh, odometerIncreaseKWH);
-            setEnergyUsageHouseHoldPercentageNoEms(energyUsageHouseHoldPercentageResultNoEms);
+          const energyUsageHouseHoldPercentageResultNoEms = calculateEnergyUsagePercentage("household", energyUsageHeatpumpResultNoEms, combinedNoEms, energyUsagekWh, odometerIncreaseKWH);
+          setEnergyUsageHouseHoldPercentageNoEms(energyUsageHouseHoldPercentageResultNoEms);
 
-            const gridUsagePercentageResultNoEms = Math.round(calculategridUsagePercentage(resultsNoEMS, combinedNoEms));
-            setGridUsagePercentageNoEms(gridUsagePercentageResultNoEms);
+          const gridUsagePercentageResultNoEms = Math.round(calculategridUsagePercentage(resultsNoEMS, combinedNoEms));
+          setGridUsagePercentageNoEms(gridUsagePercentageResultNoEms);
 
-            const pvUsagePercentageResultNoEms = calculatepvUsagePercentage(resultsNoEMS, combinedNoEms);
-            setPvUsagePercentageNoEms(pvUsagePercentageResultNoEms);
+          const pvUsagePercentageResultNoEms = calculatepvUsagePercentage(resultsNoEMS, combinedNoEms);
+          setPvUsagePercentageNoEms(pvUsagePercentageResultNoEms);
 
-            const gridFeedPercentageResultNoEms = calculatedgridFeedPercentage(resultsNoEMS);
-            setGridFeedPercentageNoEms(gridFeedPercentageResultNoEms);
+          const gridFeedPercentageResultNoEms = calculatedgridFeedPercentage(resultsNoEMS);
+          setGridFeedPercentageNoEms(gridFeedPercentageResultNoEms);
 
-            const houseHoldPvPercentageResultNoEms = calculatedHouseholdpvPercentage(resultsNoEMS);
-            setHouseHoldPvPercentageNoEms(houseHoldPvPercentageResultNoEms);
+          const houseHoldPvPercentageResultNoEms = calculatedHouseholdpvPercentage(resultsNoEMS);
+          setHouseHoldPvPercentageNoEms(houseHoldPvPercentageResultNoEms);
 
-            const cost1yearPVResult = parseInt(calculateElectricityCostPV1Years(false, resultsNoEMS, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, combinedNoEms, pvUsagePercentageResultNoEms, pvUsagePercentageResult, houseHoldPvPercentageResultNoEms, houseHoldPvPercentageResult));
-            setCost1yearPV(cost1yearPVResult);
+          const cost1yearPVResult = parseInt(calculateElectricityCostPV1Years(false, resultsNoEMS, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, combinedNoEms, pvUsagePercentageResultNoEms, pvUsagePercentageResult, houseHoldPvPercentageResultNoEms, houseHoldPvPercentageResult));
+          setCost1yearPV(cost1yearPVResult);
 
-            const cost1yearPVEMSResult = parseInt(calculateElectricityCostPV1Years(true, results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, combined, pvUsagePercentageResultNoEms, pvUsagePercentageResult, houseHoldPvPercentageResultNoEms, houseHoldPvPercentageResult));
-            setCost1yearPVEMS(cost1yearPVEMSResult);
+          const cost1yearPVEMSResult = parseInt(calculateElectricityCostPV1Years(true, results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, combined, pvUsagePercentageResultNoEms, pvUsagePercentageResult, houseHoldPvPercentageResultNoEms, houseHoldPvPercentageResult));
+          setCost1yearPVEMS(cost1yearPVEMSResult);
 
-            const cost20yearPVResult = parseInt(calculateElectricityCostPV20Years(false, resultsNoEMS, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, combinedNoEms, pvUsagePercentageResultNoEms, pvUsagePercentageResult, houseHoldPvPercentageResultNoEms, houseHoldPvPercentageResult));
-            setCost20yearPV(cost20yearPVResult);
+          const cost20yearPVResult = parseInt(calculateElectricityCostPV20Years(false, resultsNoEMS, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, combinedNoEms, pvUsagePercentageResultNoEms, pvUsagePercentageResult, houseHoldPvPercentageResultNoEms, houseHoldPvPercentageResult));
+          setCost20yearPV(cost20yearPVResult);
 
-            const cost20yearPVEMSResult = parseInt(calculateElectricityCostPV20Years(true, results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, combined, pvUsagePercentageResultNoEms, pvUsagePercentageResult, houseHoldPvPercentageResultNoEms, houseHoldPvPercentageResult));
-            setCost20yearPVEMS(cost20yearPVEMSResult);
+          const cost20yearPVEMSResult = parseInt(calculateElectricityCostPV20Years(true, results, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, combined, pvUsagePercentageResultNoEms, pvUsagePercentageResult, houseHoldPvPercentageResultNoEms, houseHoldPvPercentageResult));
+          setCost20yearPVEMS(cost20yearPVEMSResult);
 
-            const breakEvenResultNoEms = calculateBreakEven(resultsNoEMS, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, heatpumpType, energyUsagekWh, odometerIncreaseKWH, false, energyUsageHeatpumpResultNoEms, combinedNoEms, houseHoldPvPercentageResultNoEms, pvUsagePercentageResultNoEms);
-            setBreakEvenNoEms(breakEvenResultNoEms);
-            setLoading(false);
-            if (debug === false) {
-              setActiveView(12);
-            }
-          })
-          .catch((error) => {
-            console.error("Error al obtener resultados:", error);
-            setLoading(false);
-            setError(error);
-          });
-      }
-    }, // eslint-disable-next-line react-hooks/exhaustive-deps
-    [tab, scenario]
-  );
+          const breakEvenResultNoEms = calculateBreakEven(resultsNoEMS, PVcostLookupTable, pvOutputkWh, StorageCostLookupTable, homeStorageSize, investmentCostEUR, gridRevenue, electricityCost, heatpumpType, energyUsagekWh, odometerIncreaseKWH, false, energyUsageHeatpumpResultNoEms, combinedNoEms, houseHoldPvPercentageResultNoEms, pvUsagePercentageResultNoEms);
+          setBreakEvenNoEms(breakEvenResultNoEms);
+          setLoading(false);
+          if (debug === false) {
+            setActiveView(12);
+          }
+        })
+        .catch((error) => {
+          console.error("Error al obtener resultados:", error);
+          setLoading(false);
+          setError(error);
+        });
+    }
+  }, [tab, scenario]);
   if (loading) {
     return (
       <div className="loading-results">
