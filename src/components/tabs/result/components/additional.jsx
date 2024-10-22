@@ -504,7 +504,7 @@ class Additional extends React.Component {
                   </div>
                   <div className="flexContent" style={{ width: "100%", justifyContent: "space-between", marginTop: "8px" }}>
                     <div style={{ paddingRight: "30px", paddingBottom: "10px" }}>
-                      <h3>Angebot für ein energieeffizientes System</h3>
+                      <h3>Angebot von einem Fachbetrieb</h3>
                       <div>Erhalten Sie ein kostenloses, unverbindliches Angebot von einem Installateur in Ihrer Nähe.</div>
                     </div>
                     <div style={{ display: "flex", alignItems: "end" }}>
