@@ -36,6 +36,16 @@ a.card-input-narrow {
   width: 190px;
   height: 150px;
 }
+.small-icons .card-input-narrow {
+  margin: 5px 20px 0 0;
+  padding: 0px;
+  border: 1px solid #CCC;
+  width: 135px;
+  height: 150px;
+}
+.last-step .cardContent.two-blocks .flexContent{
+  width: 43%;
+}
 
 .card-input-narrow:hover {
   cursor: pointer;
@@ -1243,6 +1253,30 @@ a.card-input-narrow {
   /*margin-right: 27%;*/
   /*justify-content: start;
   align-items: start;*/
+}
+.last-step .cardContent {
+  width: 1024px;
+}
+@media only screen and (max-width: 1024px) {
+  .last-step .cardContent {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 900px) {
+  .cardContent.two-blocks, .cardContent{
+    flex-direction: column;
+  }
+  .flexContent.small-icons{
+    padding-right: 0px!important;
+    margin-bottom: 20px;
+  }
+  .flexContent.small-icons .additional-links-container{
+    align-items: flex-start!important;
+    place-content: flex-start!important;
+  }
+  .flexContent.small-icons .additional-links-container > div{
+    margin-right: 20px;
+  }
 }
 
 .bottomNav #previousTabBtn{
