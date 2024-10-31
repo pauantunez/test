@@ -690,8 +690,9 @@ class Main extends React.Component {
                 {activeView === 9 && <span>Weiter</span>}
                 {activeView === 13 && (
                   <span className="trackeable" >
-                    Zusatz
+                    {this.context.selectedTheme === "buderus" ? "Zusatz" : "Nächste Schritte"}
                   </span>
+                  
                 )}
               </CustomButton>
 
