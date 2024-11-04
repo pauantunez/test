@@ -530,9 +530,9 @@ class Additional extends React.Component {
                     <div>
                       <label>
                         <input type="radio" name="heating" value="BuildingEnergyStandard" className="card-input-element" />
-                        <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/waermepumpe" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/waermepumpen-854510-c/"} target="_blank" className="panel panel-default card-input-narrow">
+                        <a rel="noreferrer" data-event="result-part3-heatpump" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/waermepumpe" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/waermepumpen-854510-c/"} target="_blank" className="trackeable panel panel-default card-input-narrow">
                           <div className="panel-heading-narrow">{this.context.selectedTheme === "buderus" ? <BuderusHeatpumpSmallIcon /> : <HeatpumpSmallIcon />}</div>
-                          <div className="panel-body trackeable" data-event="result-part3-heatpump">
+                          <div className="panel-body">
                             Wärmepumpe
                           </div>
                         </a>
@@ -541,9 +541,9 @@ class Additional extends React.Component {
                     <div>
                       <label>
                         <input type="radio" name="heating" value="OilLNG" className="card-input-element" />
-                        <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/produkte/produkte-uebersicht/photovoltaik-das-haus-wird-zum-kraftwerk-15304" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/solar-und-pv-anlagen-854604-c/"} target="_blank" className="panel panel-default card-input-narrow">
+                        <a rel="noreferrer" data-event="result-part3-pv" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/produkte/produkte-uebersicht/photovoltaik-das-haus-wird-zum-kraftwerk-15304" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/solar-und-pv-anlagen-854604-c/"} target="_blank" className="trackeable panel panel-default card-input-narrow">
                           <div className="panel-heading-narrow">{this.context.selectedTheme === "buderus" ? <BuderusPhotovoltaicIcon /> : <PhotovoltaicIcon />}</div>
-                          <div className="panel-body trackeable" data-event="result-part3-pv">
+                          <div className="panel-body" >
                             PV-Anlage
                           </div>
                         </a>
@@ -552,9 +552,9 @@ class Additional extends React.Component {
                     <div>
                       <label>
                         <input type="radio" name="heating" value="BuildingInsulation" className="card-input-element" />
-                        <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/alle-produkte/195985_logavolt-wls11i" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/power-charge-7000i-19378337-p/"} target="_blank" className="panel panel-default card-input-narrow">
+                        <a rel="noreferrer" data-event="result-part3-wallbox" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/alle-produkte/195985_logavolt-wls11i" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/power-charge-7000i-19378337-p/"} target="_blank" className="trackeable panel panel-default card-input-narrow">
                           <div className="panel-heading-narrow">{this.context.selectedTheme === "buderus" ? <BuderusWallboxIcon /> : <WallboxIcon />}</div>
-                          <div className="panel-body trackeable" data-event="result-part3-wallbox">
+                          <div className="panel-body">
                             Wallbox
                           </div>
                         </a>
@@ -563,9 +563,9 @@ class Additional extends React.Component {
                     <div>
                       <label>
                         <input type="radio" name="heating" value="BuildingInsulation" className="card-input-element" />
-                        <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/services-tools/apps/energiemanager-6036" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/energiemanagement-19317456-c/"} target="_blank" className="panel panel-default card-input-narrow">
+                        <a rel="noreferrer" data-event="result-part3-energie-management" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/services-tools/apps/energiemanager-6036" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/energiemanagement-19317456-c/"} target="_blank" className="trackeable panel panel-default card-input-narrow">
                           <div className="panel-heading-narrow">{this.context.selectedTheme === "buderus" ? <BuderusEnergyManagementIcon /> : <EnergyManagementIcon />}</div>
-                          <div className="panel-body trackeable" data-event="result-part3-energie-management">
+                          <div className="panel-body" >
                             Energiemanage-
                             <br />
                             mentsystem
@@ -587,9 +587,9 @@ class Additional extends React.Component {
                     <div>
                       <label>
                         <input type="radio" name="heating" value="BuildingEnergyStandard" className="card-input-element" />
-                        <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/waermepumpe" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/waermepumpen-854510-c/"} target="_blank" className="panel panel-default card-input-narrow">
+                        <a rel="noreferrer" data-event="result-part3-heatpump" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/waermepumpe" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/waermepumpen-854510-c/"} target="_blank" className="trackeable panel panel-default card-input-narrow">
                           <div className="panel-heading-narrow">{this.context.selectedTheme === "buderus" ? <BuderusHeatpumpSmallIcon /> : <HeatpumpSmallIcon />}</div>
-                          <div className="panel-body trackeable" data-event="result-part3-heatpump">
+                          <div className="panel-body">
                             Wärmepumpe
                           </div>
                         </a>
@@ -598,9 +598,9 @@ class Additional extends React.Component {
                     <div>
                       <label>
                         <input type="radio" name="heating" value="BuildingInsulation" className="card-input-element" />
-                        <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/alle-produkte/195985_logavolt-wls11i" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/power-charge-7000i-19378337-p/"} target="_blank" className="panel panel-default card-input-narrow">
+                        <a rel="noreferrer" data-event="result-part3-wallbox" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/alle-produkte/195985_logavolt-wls11i" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/power-charge-7000i-19378337-p/"} target="_blank" className="trackeable panel panel-default card-input-narrow">
                           <div className="panel-heading-narrow">{this.context.selectedTheme === "buderus" ? <BuderusWallboxIcon /> : <WallboxIcon />}</div>
-                          <div className="panel-body trackeable" data-event="result-part3-wallbox">
+                          <div className="panel-body">
                             Wallbox
                           </div>
                         </a>
@@ -609,9 +609,9 @@ class Additional extends React.Component {
                     <div>
                       <label>
                         <input type="radio" name="heating" value="BuildingInsulation" className="card-input-element" />
-                        <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/services-tools/apps/energiemanager-6036" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/energiemanagement-19317456-c/"} target="_blank" className="panel panel-default card-input-narrow">
+                        <a rel="noreferrer" data-event="result-part3-energie-management" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/services-tools/apps/energiemanager-6036" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/energiemanagement-19317456-c/"} target="_blank" className="trackeable panel panel-default card-input-narrow">
                           <div className="panel-heading-narrow">{this.context.selectedTheme === "buderus" ? <BuderusEnergyManagementIcon /> : <EnergyManagementIcon />}</div>
-                          <div className="panel-body trackeable" data-event="result-part3-energie-management">
+                          <div className="panel-body">
                             Energiemanage-
                             <br />
                             mentsystem
@@ -638,7 +638,7 @@ class Additional extends React.Component {
                 <div className="flexContent" style={{ flexDirection: "column", justifyContent: "center", marginTop: "8px", width: "100%" }}>
                   <div>Die gute Nachricht: über unseren Power Meter 7001 lässt sich herstellerunabhängig jede PV Anlage in unser Gesamtsystem inklusive dem Bosch Energiemanager integrieren.</div>
 
-                  <div className="trackeable" data-event="result-part3-contact" style={{ display: "flex", alignItems: "end", paddingTop: "20px" }}>
+                  <div className="trackeable" data-event="result-part3-pv" style={{ display: "flex", alignItems: "end", paddingTop: "20px" }}>
                     <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/produkte/produkte-uebersicht/photovoltaik-das-haus-wird-zum-kraftwerk-15304" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/solar-und-pv-anlagen-854604-c/"} target="_blank" style={{ textDecoration: "none", display: "block" }}>
                       <Button variant="outlined" startIcon={<MagnifyingGlassIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
                         Mehr Infos hier
