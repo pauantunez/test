@@ -639,7 +639,7 @@ class Additional extends React.Component {
                   <div>Die gute Nachricht: über unseren Power Meter 7001 lässt sich herstellerunabhängig jede PV Anlage in unser Gesamtsystem inklusive dem Bosch Energiemanager integrieren.</div>
 
                   <div className="trackeable" data-event="result-part3-pv" style={{ display: "flex", alignItems: "end", paddingTop: "20px" }}>
-                    <a rel="noreferrer" href={this.context.selectedTheme === "buderus" ? "https://www.buderus.de/de/produkte/produkte-uebersicht/photovoltaik-das-haus-wird-zum-kraftwerk-15304" : "https://www.bosch-homecomfort.com/de/de/ocs/wohngebaeude/solar-und-pv-anlagen-854604-c/"} target="_blank" style={{ textDecoration: "none", display: "block" }}>
+                    <a rel="noreferrer" href="https://www.bosch-homecomfort.com/de/de/wohngebaeude/wissen/heizungssteuerung/der-energiemanager/#section-2851197" target="_blank" style={{ textDecoration: "none", display: "block" }}>
                       <Button variant="outlined" startIcon={<MagnifyingGlassIcon />} disabled={this.state.restart} style={{ width: "250px", height: "50px", textTransform: "none", borderRadius: "0px", fontFamily: "Bosch-Regular" }}>
                         Mehr Infos hier
                       </Button>
